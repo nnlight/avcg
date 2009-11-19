@@ -30,7 +30,7 @@ void DrawBuffer::ConfigureDa()
 	dims[AXIS_X] = drawing_area->allocation.width;
 	dims[AXIS_Y] = drawing_area->allocation.height;
 
-	m_Pixmap = gdk_pixmap_new( drawing_area->window,			/* òîëüêî äëÿ äåôîëòíîé ãëóáèíû ïåðåäàåì */
+	m_Pixmap = gdk_pixmap_new( drawing_area->window,			/* Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð´Ð»Ñ Ð´ÐµÑ„Ð¾Ð»Ñ‚Ð½Ð¾Ð¹ Ð³Ð»ÑƒÐ±Ð¸Ð½Ñ‹ Ð¿ÐµÑ€ÐµÐ´Ð°ÐµÐ¼ */
                                drawing_area->allocation.width,
                                drawing_area->allocation.height,
                                -1);
@@ -105,7 +105,7 @@ void DrawBuffer::MoveVisibleArea( gint delta,
 {
 	bool is_need_new_pixmap = false;
 	gint new_pixmap_dims[AXIS_LAST];
-	gint old_pixmap_pose[AXIS_LAST] = {0,0}; /* ïîëîæåíèå ñòàðîé îòíîñèòåëüíî íîâîé */
+	gint old_pixmap_pose[AXIS_LAST] = {0,0}; /* Ð¿Ð¾Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ ÑÑ‚Ð°Ñ€Ð¾Ð¹ Ð¾Ñ‚Ð½Ð¾ÑÐ¸Ñ‚ÐµÐ»ÑŒÐ½Ð¾ Ð½Ð¾Ð²Ð¾Ð¹ */
 	new_pixmap_dims[AXIS_X] = m_PixmapDims[AXIS_X];
 	new_pixmap_dims[AXIS_Y] = m_PixmapDims[AXIS_Y];
 
@@ -133,7 +133,7 @@ void DrawBuffer::MoveVisibleArea( gint delta,
 							TRUE,
 							0, 0,
 							new_pixmap_dims[AXIS_X], new_pixmap_dims[AXIS_X]);
-		/* êîïèðóåì ñîäåðæèìîå ñòàðîé */
+		/* ÐºÐ¾Ð¿Ð¸Ñ€ÑƒÐµÐ¼ ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ð¼Ð¾Ðµ ÑÑ‚Ð°Ñ€Ð¾Ð¹ */
 		gdk_draw_drawable( new_pixmap,
 						   m_da->style->fg_gc[GTK_WIDGET_STATE (m_da)],
 					       m_Pixmap,
@@ -142,7 +142,7 @@ void DrawBuffer::MoveVisibleArea( gint delta,
 						   /* dst x,y */
                            old_pixmap_pose[AXIS_X], old_pixmap_pose[AXIS_Y],
 						   m_PixmapDims[AXIS_X], m_PixmapDims[AXIS_Y]);
-		/* ïîäìåíÿåì */
+		/* Ð¿Ð¾Ð´Ð¼ÐµÐ½ÑÐµÐ¼ */
 		{
 			g_object_unref( m_Pixmap);
 			m_Pixmap = new_pixmap;
@@ -153,10 +153,10 @@ void DrawBuffer::MoveVisibleArea( gint delta,
 		}
 	}
 
-	/* â ýòîé òî÷êå ìû ãàðàíòèðóåì, ÷òî â m_Pixmap õâàòèò ìåñòî ÷òîáû ñäâèíóòü VisibleArea */
-	m_VisibleAreaBase[axis] += delta; /* ñäâèãàåì visible area :) */
+	/* Ð² ÑÑ‚Ð¾Ð¹ Ñ‚Ð¾Ñ‡ÐºÐµ Ð¼Ñ‹ Ð³Ð°Ñ€Ð°Ð½Ñ‚Ð¸Ñ€ÑƒÐµÐ¼, Ñ‡Ñ‚Ð¾ Ð² m_Pixmap Ñ…Ð²Ð°Ñ‚Ð¸Ñ‚ Ð¼ÐµÑÑ‚Ð¾ Ñ‡Ñ‚Ð¾Ð±Ñ‹ ÑÐ´Ð²Ð¸Ð½ÑƒÑ‚ÑŒ VisibleArea */
+	m_VisibleAreaBase[axis] += delta; /* ÑÐ´Ð²Ð¸Ð³Ð°ÐµÐ¼ visible area :) */
 	/* Now invalidate the affected region of the drawing area. */
-	/* èíâàëèäèðóåì âñþ drawing_area (äîëæíî áóäåò ïîòîì expose_event ïðèéòè) */
+	/* Ð¸Ð½Ð²Ð°Ð»Ð¸Ð´Ð¸Ñ€ÑƒÐµÐ¼ Ð²ÑÑŽ drawing_area (Ð´Ð¾Ð»Ð¶Ð½Ð¾ Ð±ÑƒÐ´ÐµÑ‚ Ð¿Ð¾Ñ‚Ð¾Ð¼ expose_event Ð¿Ñ€Ð¸Ð¹Ñ‚Ð¸) */
 	InvalidateDa( NULL);
 	return;
 } /* DrawBuffer::MoveVisibleArea */
@@ -175,7 +175,7 @@ void DrawBuffer::InvalidateDa( const GdkRectangle *update_rect)
 	GdkRectangle rect_var;
 	if ( !update_rect )
 	{
-		/* åñëè ïîäàëè NULL, òî èíâàëèäèðóåì âñþ drawing_area */
+		/* ÐµÑÐ»Ð¸ Ð¿Ð¾Ð´Ð°Ð»Ð¸ NULL, Ñ‚Ð¾ Ð¸Ð½Ð²Ð°Ð»Ð¸Ð´Ð¸Ñ€ÑƒÐµÐ¼ Ð²ÑÑŽ drawing_area */
 		assert( m_da->allocation.width == m_VisibleAreaDims[AXIS_X] );
 		assert( m_da->allocation.height == m_VisibleAreaDims[AXIS_Y] );
 		rect_var.x = 0;
@@ -185,8 +185,8 @@ void DrawBuffer::InvalidateDa( const GdkRectangle *update_rect)
 
 		update_rect = &rect_var;
 	}
-	/* äàííûé ìåòîä ðàáîòàåò â òåðìèíàõ êîîðäèíàò drawing_area */
-	/* (ïîòîì äîëæíî áóäåò ïðèéòè expose_event)*/
+	/* Ð´Ð°Ð½Ð½Ñ‹Ð¹ Ð¼ÐµÑ‚Ð¾Ð´ Ñ€Ð°Ð±Ð¾Ñ‚Ð°ÐµÑ‚ Ð² Ñ‚ÐµÑ€Ð¼Ð¸Ð½Ð°Ñ… ÐºÐ¾Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚ drawing_area */
+	/* (Ð¿Ð¾Ñ‚Ð¾Ð¼ Ð´Ð¾Ð»Ð¶Ð½Ð¾ Ð±ÑƒÐ´ÐµÑ‚ Ð¿Ñ€Ð¸Ð¹Ñ‚Ð¸ expose_event)*/
 	gdk_window_invalidate_rect( m_da->window,
 								update_rect,
 								FALSE);
