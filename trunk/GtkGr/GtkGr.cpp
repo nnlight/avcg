@@ -34,10 +34,10 @@ static gboolean CloseCallback( GtkWindow *window)
 	gtk_widget_destroy( dialog);
 	if ( response == GTK_RESPONSE_YES )
 	{
-		return FALSE; /* закрываемся*/
+		return FALSE; /* Р·Р°РєСЂС‹РІР°РµРјСЃСЏ*/
 	} else
 	{
-		return TRUE;  /* отбой */
+		return TRUE;  /* РѕС‚Р±РѕР№ */
 	}
 }
 
@@ -302,6 +302,7 @@ da_motion_notify_event_cb( GtkWidget      *da,
 int _tmain(int argc, _TCHAR* argv[])
 {
 	printf("Hello, its GtkGr! (sizeof(_TCHAR)=%d) (sizeof(gchar)=%d)\n",  sizeof(_TCHAR), sizeof(gchar));
+	printf("sizeof(long)=%d\n",  sizeof(long));
 	
 	
 	
@@ -309,17 +310,17 @@ int _tmain(int argc, _TCHAR* argv[])
 	GtkWidget *main_window;
 
 
-	// Иннициализация GTK;
+	// РРЅРЅРёС†РёР°Р»РёР·Р°С†РёСЏ GTK;
 	gtk_init(&iDummy,NULL) ;
 	// assert( sizeof(_TCHAR) == sizeof(char) );
 	// gtk_init(&argc,(char***)&argv) ;
-	// создаем главное окно
+	// СЃРѕР·РґР°РµРј РіР»Р°РІРЅРѕРµ РѕРєРЅРѕ
 	main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	// выставляем величину окантовки внутренней области главного окна
+	// РІС‹СЃС‚Р°РІР»СЏРµРј РІРµР»РёС‡РёРЅСѓ РѕРєР°РЅС‚РѕРІРєРё РІРЅСѓС‚СЂРµРЅРЅРµР№ РѕР±Р»Р°СЃС‚Рё РіР»Р°РІРЅРѕРіРѕ РѕРєРЅР°
 	gtk_container_set_border_width( GTK_CONTAINER(main_window), 5);
-	// сигнал ("delete_event") - принудительное закрытие главного окна
+	// СЃРёРіРЅР°Р» ("delete_event") - РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕРµ Р·Р°РєСЂС‹С‚РёРµ РіР»Р°РІРЅРѕРіРѕ РѕРєРЅР°
 	gtk_signal_connect( GTK_OBJECT(main_window),"delete_event", GTK_SIGNAL_FUNC(CloseCallback),NULL );
-	// сигнал ("destroy") - уничтожение главного окна
+	// СЃРёРіРЅР°Р» ("destroy") - СѓРЅРёС‡С‚РѕР¶РµРЅРёРµ РіР»Р°РІРЅРѕРіРѕ РѕРєРЅР°
 	gtk_signal_connect( GTK_OBJECT(main_window),"destroy", GTK_SIGNAL_FUNC(gtk_main_quit), NULL);
 
 
@@ -332,7 +333,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	std::auto_ptr<DrawBuffer> draw_buffer( new DrawBuffer( da));
 	DrawBuffer *db = draw_buffer.get();
 
-	/* добавляем к da обработчики событий */
+	/* РґРѕР±Р°РІР»СЏРµРј Рє da РѕР±СЂР°Р±РѕС‚С‡РёРєРё СЃРѕР±С‹С‚РёР№ */
 	g_signal_connect( da, "expose-event", G_CALLBACK( da_expose_event_cb), db);
 	g_signal_connect( da, "configure-event", G_CALLBACK( da_configure_event_cb), db);
 	g_signal_connect( da, "motion-notify-event", G_CALLBACK( da_motion_notify_event_cb), db);
@@ -346,11 +347,11 @@ int _tmain(int argc, _TCHAR* argv[])
 								| GDK_POINTER_MOTION_MASK
 								| GDK_POINTER_MOTION_HINT_MASK);
 
-	// сигнал ("key_press_event")
+	// СЃРёРіРЅР°Р» ("key_press_event")
 	gtk_signal_connect( GTK_OBJECT(main_window),"key_press_event", GTK_SIGNAL_FUNC(key_press_cb), db);
 
 
-	// отображение основного окна
+	// РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РѕСЃРЅРѕРІРЅРѕРіРѕ РѕРєРЅР°
 	gtk_widget_show_all( main_window);
 	gtk_main();
 	return 0;
