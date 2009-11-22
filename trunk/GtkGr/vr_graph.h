@@ -6,8 +6,7 @@
 
 using namespace std;
 
-
-enum VRColor
+enum Color_t
 {
 	WHITE        = 0,
 	BLUE         = 1,
@@ -56,8 +55,8 @@ public:
 	string label_;
 	int x_,y_;
 	int width_, height_;
-	VRColor color_;
-	VRColor bcolor_; // цвет границы
+	Color_t color_;
+	Color_t bcolor_; // цвет границы
 	int borderw_;    // ширина границы
 	int stretch_;
 	int shrink_;
@@ -80,7 +79,7 @@ public:
 	/* не предназначен для иcпользования в качестве базового класса */
 	~VRGraph();
 
-	void AddNode( int x, int y, const char *title, const char *label);
+	void AddNode( DrawBuffer *draw_buffer, int x, int y, const char *title, const char *label);
 	void Expose( DrawBuffer *draw_buffer, int x, int y, int width, int height);
 private:
 	typedef list<VRNode*> nodes_t;

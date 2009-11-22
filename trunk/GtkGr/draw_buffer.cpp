@@ -124,7 +124,8 @@ void DrawBuffer::ButtonPress( gint x, gint y)
 
 void DrawBuffer::ButtonPress2( gint x, gint y)
 {
-		m_VRGraph->AddNode( x + m_VisibleAreaBase[AXIS_X] - m_VRGBase[AXIS_X], 
+		m_VRGraph->AddNode( this,
+							x + m_VisibleAreaBase[AXIS_X] - m_VRGBase[AXIS_X], 
 							y + m_VisibleAreaBase[AXIS_Y] - m_VRGBase[AXIS_Y], 
 							"title", " label\nnext line");
 		m_VRGraph->Expose( this, 0,0,0,0);
@@ -225,7 +226,13 @@ void DrawBuffer::InvalidateDa( const GdkRectangle *update_rect)
 								FALSE);
 } /* DrawBuffer::InvalidateDa */
 
-
+void DrawBuffer::GetTextPixelSize( const char *text, int *width_p, int *height_p)
+{
+	PangoLayout *layout;
+	layout = gtk_widget_create_pango_layout( m_da, text);
+	pango_layout_get_pixel_size( layout, width_p, height_p);
+	g_object_unref( layout);
+}
 void DrawBuffer::SetLineWidth( int line_width)
 {
 	gdk_gc_set_line_attributes( m_GC, line_width, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
