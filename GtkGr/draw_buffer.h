@@ -3,6 +3,9 @@
 
 #include "stdafx.h"
 #include <gtk/gtk.h>
+//#include <glib.h>
+//#include <glib-object.h>
+
 
 enum Axis_t
 {
