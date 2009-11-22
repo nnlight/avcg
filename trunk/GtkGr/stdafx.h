@@ -11,6 +11,7 @@
 #include <tchar.h>
 #include <memory>
 #include <string>
+#include <list>
 
 #include <gtk/gtk.h>
 

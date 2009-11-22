@@ -1,11 +1,14 @@
 #include "draw_buffer.h"
+#include "vr_graph.h"
 
 
-DrawBuffer::DrawBuffer( GtkWidget *drawing_area)
+DrawBuffer::DrawBuffer( GtkWidget *drawing_area, VRGraph *vr_graph)
 	: m_da( drawing_area)
 	, m_Pixmap( NULL)
+	, m_VRGraph( vr_graph)
 {
 	g_object_ref( m_da);
+	m_GC = NULL;
 } /* DrawBuffer::DrawBuffer */
 
 DrawBuffer::~DrawBuffer()
@@ -15,6 +18,10 @@ DrawBuffer::~DrawBuffer()
 		g_object_unref( m_Pixmap);
 	}
 	g_object_unref( m_da);
+	if ( m_GC)
+	{
+		g_object_unref( m_GC);
+	}
 } /* DrawBuffer::~DrawBuffer */
 
 void DrawBuffer::ConfigureDa()
@@ -25,6 +32,11 @@ void DrawBuffer::ConfigureDa()
 		g_object_unref( m_Pixmap);
 		m_Pixmap = NULL;
 	}
+	if (m_GC)
+	{
+		g_object_unref( m_GC);
+		m_GC = NULL;
+	}
 	
 	gint dims[AXIS_LAST];
 	dims[AXIS_X] = drawing_area->allocation.width;
@@ -34,12 +46,22 @@ void DrawBuffer::ConfigureDa()
                                drawing_area->allocation.width,
                                drawing_area->allocation.height,
                                -1);
+
+	m_GC = gdk_gc_new( m_Pixmap);
+	GdkColor fg_color = {0,0,0,0};
+	gdk_gc_set_rgb_fg_color( m_GC, &fg_color);
+	GdkColor bg_color = {0,0,0,65000};
+	gdk_gc_set_rgb_bg_color( m_GC, &bg_color);
+
 	m_VisibleAreaBase[AXIS_X] = 0;
 	m_VisibleAreaBase[AXIS_Y] = 0;
 	m_VisibleAreaDims[AXIS_X] = dims[AXIS_X];
 	m_VisibleAreaDims[AXIS_Y] = dims[AXIS_Y];
 	m_PixmapDims[AXIS_X] = dims[AXIS_X];
 	m_PixmapDims[AXIS_Y] = dims[AXIS_Y];
+
+	m_VRGBase[AXIS_X] = 0;
+	m_VRGBase[AXIS_Y] = 0;
   
 	/* Initialize the pixmap to white */
   gdk_draw_rectangle( m_Pixmap,
@@ -100,6 +122,15 @@ void DrawBuffer::ButtonPress( gint x, gint y)
 	    draw_brush( m_da, x,y, m_VisibleAreaBase[AXIS_X] + x, m_VisibleAreaBase[AXIS_Y] + y, m_Pixmap);
 }
 
+void DrawBuffer::ButtonPress2( gint x, gint y)
+{
+		m_VRGraph->AddNode( x + m_VisibleAreaBase[AXIS_X] - m_VRGBase[AXIS_X], 
+							y + m_VisibleAreaBase[AXIS_Y] - m_VRGBase[AXIS_Y], 
+							"title", " label\nnext line");
+		m_VRGraph->Expose( this, 0,0,0,0);
+		InvalidateDa( NULL);
+}
+
 void DrawBuffer::MoveVisibleArea( gint delta,
 								  Axis_t axis)
 {
@@ -151,6 +182,8 @@ void DrawBuffer::MoveVisibleArea( gint delta,
 			m_VisibleAreaBase[AXIS_X] += old_pixmap_pose[AXIS_X];
 			m_VisibleAreaBase[AXIS_Y] += old_pixmap_pose[AXIS_Y];
 		}
+		m_VRGBase[AXIS_X] += old_pixmap_pose[AXIS_X];
+		m_VRGBase[AXIS_Y] += old_pixmap_pose[AXIS_Y];
 	}
 
 	/* в этой точке мы гарантируем, что в m_Pixmap хватит место чтобы сдвинуть VisibleArea */
@@ -192,3 +225,31 @@ void DrawBuffer::InvalidateDa( const GdkRectangle *update_rect)
 								FALSE);
 } /* DrawBuffer::InvalidateDa */
 
+
+void DrawBuffer::SetLineWidth( int line_width)
+{
+	gdk_gc_set_line_attributes( m_GC, line_width, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
+}
+void DrawBuffer::DrawLine()
+{
+}
+void DrawBuffer::DrawRectangle( vrgint x, vrgint y, int width, int height, bool filled)
+{
+	gboolean pm_filled = filled ? TRUE : FALSE;
+	gint pm_x = m_VRGBase[AXIS_X] + x;
+	gint pm_y = m_VRGBase[AXIS_Y] + y;
+
+	gdk_draw_rectangle( m_Pixmap, m_GC, pm_filled, 
+						pm_x, pm_y, 
+						width, height);
+}
+void DrawBuffer::DrawText( vrgint x, vrgint y, const char *text)
+{
+	gint pm_x = m_VRGBase[AXIS_X] + x;
+	gint pm_y = m_VRGBase[AXIS_Y] + y;
+	PangoLayout *layout;
+	layout = gtk_widget_create_pango_layout( m_da, text);
+	/*pango_layout_get_pixel_size (layout, &w, &h);*/
+	gdk_draw_layout( m_Pixmap, m_GC, pm_x, pm_y, layout);
+	g_object_unref( layout);
+}
