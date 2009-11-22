@@ -2,6 +2,7 @@
 #define _DRAW_BUFFER_H_
 
 #include "stdafx.h"
+#include <gtk/gtk.h>
 
 enum Axis_t
 {
@@ -10,6 +11,7 @@ enum Axis_t
 	AXIS_LAST
 };
 
+/* forward declaration */
 class VRGraph;
 /**
  * Осуществляет хранение графического изображения графа (m_Pixmap)
@@ -32,11 +34,11 @@ private:
 	gint m_VisibleAreaDims[AXIS_LAST];
 	gint m_PixmapDims[AXIS_LAST];
 	
-	/* gc для vrg-функций */
-	typedef int vrgint; /* "маркер" того, что координаты в терминах VRGraph */
 	VRGraph *m_VRGraph;
 	gint m_VRGBase[AXIS_LAST]; /* позиция центра VRGraph'а (ноль vrg-координат) */
+	/* gc для vrg-функций */
 	GdkGC *m_GC;
+	typedef int vrgint; /* "маркер" того, что координаты в терминах VRGraph */
 public:
 	DrawBuffer( GtkWidget *drawing_area, VRGraph *vr_graph);
 	/* не предназначен для иcпользования в качестве базового класса */
@@ -51,6 +53,7 @@ public:
 
 	void PKey();
 	
+	void GetTextPixelSize( const char *text, int *width_p, int *height_p);
 	/* vrg-функции */
 	void SetLineWidth( int line_width);
 	void DrawLine();

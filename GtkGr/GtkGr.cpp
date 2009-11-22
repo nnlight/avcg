@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 
-#include <gtk-2.0\gtk\gtk.h>
+#include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include "draw_buffer.h"
 #include "vr_graph.h"
@@ -19,7 +19,8 @@
 
 
 
-static gboolean CloseCallback( GtkWindow *window)
+static gboolean 
+CloseCallback( GtkWindow *window)
 {
 	GtkWidget *dialog, *label;
 
@@ -40,136 +41,8 @@ static gboolean CloseCallback( GtkWindow *window)
 	{
 		return TRUE;  /* отбой */
 	}
-}
+} /* CloseCallback */
 
-
-/* Pixmap for scribble area, to store current scribbles */
-static GdkPixmap *pixmap = NULL;
-
-
-/* Create a new pixmap of the appropriate size to store our scribbles */
-static gboolean
-scribble_configure_event (GtkWidget         *widget,
-                          GdkEventConfigure *event,
-                          gpointer           data)
-{
-	g_print("configure_event\n");
-  if (pixmap)
-    g_object_unref (pixmap);
-
-  pixmap = gdk_pixmap_new (widget->window,
-                           widget->allocation.width,
-                           widget->allocation.height,
-                           -1);
-
-  /* Initialize the pixmap to white */
-  gdk_draw_rectangle (pixmap,
-                      widget->style->white_gc,
-                      TRUE,
-                      0, 0,
-                      widget->allocation.width,
-                      widget->allocation.height);
-
-  /* We've handled the configure event, no need for further processing. */
-  return TRUE;
-}
-
-/* Redraw the screen from the pixmap */
-static gboolean
-scribble_expose_event (GtkWidget      *widget,
-                       GdkEventExpose *event,
-                       gpointer        data)
-{
-  	g_print("expose_event\n");
-/* We use the "foreground GC" for the widget since it already exists,
-   * but honestly any GC would work. The only thing to worry about
-   * is whether the GC has an inappropriate clip region set.
-   */
-
-  gdk_draw_drawable (widget->window,
-                     widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
-                     pixmap,
-                     /* Only copy the area that was exposed. */
-                     event->area.x, event->area.y,
-                     event->area.x, event->area.y,
-                     event->area.width, event->area.height);
-
-  return FALSE;
-}
-
-/* Draw a rectangle on the screen */
-static void
-draw_brush (GtkWidget *widget,
-            gdouble    x,
-            gdouble    y)
-{
-  GdkRectangle update_rect;
-
-  update_rect.x = (int)(x - 3);
-  update_rect.y = (int)(y - 3);
-  update_rect.width = 6;
-  update_rect.height = 6;
-
-  /* Paint to the pixmap, where we store our state */
-  gdk_draw_rectangle (pixmap,
-                      widget->style->black_gc,
-                      TRUE,
-                      update_rect.x, update_rect.y,
-                      update_rect.width, update_rect.height);
-
-  /* Now invalidate the affected region of the drawing area. */
-  gdk_window_invalidate_rect (widget->window,
-                              &update_rect,
-                              FALSE);
-}
-
-static gboolean
-scribble_button_press_event (GtkWidget      *widget,
-                             GdkEventButton *event,
-                             gpointer        data)
-{
-  	g_print("button_press_event\n");
-  if (pixmap == NULL)
-    return FALSE; /* paranoia check, in case we haven't gotten a configure event */
-
-  if (event->button == 1)
-    draw_brush (widget, event->x, event->y);
-
-  /* We've handled the event, stop processing */
-  return TRUE;
-}
-
-static gboolean
-scribble_motion_notify_event (GtkWidget      *widget,
-                              GdkEventMotion *event,
-                              gpointer        data)
-{
-  	g_print("motion_notify_event\n");
-  int x, y;
-  GdkModifierType state;
-
-  if (pixmap == NULL)
-    return FALSE; /* paranoia check, in case we haven't gotten a configure event */
-
-  /* This call is very important; it requests the next motion event.
-   * If you don't call gdk_window_get_pointer() you'll only get
-   * a single motion event. The reason is that we specified
-   * GDK_POINTER_MOTION_HINT_MASK to gtk_widget_set_events().
-   * If we hadn't specified that, we could just use event->x, event->y
-   * as the pointer location. But we'd also get deluged in events.
-   * By requesting the next event as we handle the current one,
-   * we avoid getting a huge number of events faster than we
-   * can cope.
-   */
-
-  gdk_window_get_pointer (event->window, &x, &y, &state);
-
-  if (state & GDK_BUTTON1_MASK)
-    draw_brush (widget, x, y);
-
-  /* We've handled it, stop processing */
-  return TRUE;
-}
 
 static gint 
 key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data)
