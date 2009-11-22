@@ -8,6 +8,7 @@
 #include "draw_buffer.h"
 #include "vr_graph.h"
 
+#ifdef WIN32
 #pragma comment(lib,"gthread-2.0.lib")
 #pragma comment(lib,"gtk-win32-2.0.lib")
 #pragma comment(lib,"glib-2.0.lib")
@@ -16,7 +17,7 @@
 #pragma comment(lib,"gdk_pixbuf-2.0.lib")
 #pragma comment(lib,"pango-1.0.lib")
 #pragma comment(lib,"pangowin32-1.0.lib")
-
+#endif
 
 
 static gboolean 
@@ -182,9 +183,15 @@ da_motion_notify_event_cb( GtkWidget      *da,
 
 
 
+#ifdef WIN32
 int _tmain(int argc, _TCHAR* argv[])
+#else
+int main(int argc, char *argv[])
+#endif
 {
+#ifdef WIN32
 	printf("Hello, its GtkGr! (sizeof(_TCHAR)=%d) (sizeof(gchar)=%d)\n",  sizeof(_TCHAR), sizeof(gchar));
+#endif
 	printf("sizeof(long)=%d\n",  sizeof(long));
 	
 	
