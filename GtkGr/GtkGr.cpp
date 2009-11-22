@@ -6,6 +6,7 @@
 #include <gtk-2.0\gtk\gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include "draw_buffer.h"
+#include "vr_graph.h"
 
 #pragma comment(lib,"gthread-2.0.lib")
 #pragma comment(lib,"gtk-win32-2.0.lib")
@@ -264,7 +265,16 @@ da_button_press_event_cb( GtkWidget      *da,
 	DrawBuffer *db = (DrawBuffer *)data;
   	if (g_DaPrintEvents ) g_print("button_press_event\n");
 
-	db->ButtonPress( (int)event->x, (int)event->y);
+	if (event->button == 1)
+	{
+		db->ButtonPress( (int)event->x, (int)event->y);
+	} else if (event->button == 2)
+	{
+		db->ButtonPress2( (int)event->x, (int)event->y);
+	} else
+	{
+		printf("unhandled button press %d\n", event->button);
+	}
   
 	return TRUE;    /* We've handled it, stop processing */
 } /* da_button_press_event_cb */
@@ -330,7 +340,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	gtk_container_add( GTK_CONTAINER(main_window), da);
 
-	std::auto_ptr<DrawBuffer> draw_buffer( new DrawBuffer( da));
+	std::auto_ptr<VRGraph> vr_graph( new VRGraph());
+	std::auto_ptr<DrawBuffer> draw_buffer( new DrawBuffer( da, vr_graph.get()));
 	DrawBuffer *db = draw_buffer.get();
 
 	/* добавляем к da обработчики событий */
