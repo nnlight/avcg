@@ -87,7 +87,7 @@ void VRGraph::AddNode( int x, int y, const char *title, const char *label)
 } /* VRGraph::AddNode */
 
 /**
- * Отрисовать заданную область в draw_buffer
+ * РћС‚СЂРёСЃРѕРІР°С‚СЊ Р·Р°РґР°РЅРЅСѓСЋ РѕР±Р»Р°СЃС‚СЊ РІ draw_buffer
  */
 void VRGraph::Expose( DrawBuffer *draw_buffer, int x, int y, int width, int height)
 {
