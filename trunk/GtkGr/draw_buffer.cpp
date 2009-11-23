@@ -77,6 +77,7 @@ void DrawBuffer::ExposeDa( gint x,
 						   gint width, 
 						   gint height)
 {
+	m_VRGraph->Expose( this, 0,0,0,0);
 	gdk_draw_drawable( m_da->window,
                        m_da->style->fg_gc[GTK_WIDGET_STATE (m_da)],
 					   m_Pixmap,
