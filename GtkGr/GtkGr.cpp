@@ -30,7 +30,8 @@ CloseCallback( GtkWindow *window)
 							GTK_STOCK_YES, GTK_RESPONSE_YES,
 							GTK_STOCK_NO, GTK_RESPONSE_NO,
 							NULL);
-	label = gtk_label_new ("Do you really want to quit?");
+	gtk_container_set_border_width( GTK_CONTAINER(dialog), 10);
+	label = gtk_label_new ("\nDo you really want to quit?\n");
 	gtk_container_add( GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), label);
 	gtk_widget_show( label);
 	int response = gtk_dialog_run( GTK_DIALOG(dialog));
