@@ -1,0 +1,3315 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ADJEDGE	alloc.h	/^} *ADJEDGE;$/;"	t	typeref:struct:adjedge
+AINTERN	alloc.h	677;"	d
+AKANTE	alloc.h	675;"	d
+ALIGN	globals.h	160;"	d
+ALIGN	grammar.h	50;"	d
+ALIGN	grammar.h	752;"	d
+ALIGN	lex.yy.c	1990;"	d	file:
+ALIGN	lex.yy.c	6179;"	d	file:
+ALIGN	y.tab.c	348;"	d	file:
+ALIGN	y.tab.c	7929;"	d	file:
+ALLOC_H	alloc.h	45;"	d
+AL_BOTTOM	alloc.h	118;"	d
+AL_CENTER	alloc.h	117;"	d
+AL_TOP	alloc.h	116;"	d
+AMFIXED	alloc.h	147;"	d
+AMFREE	alloc.h	148;"	d
+ANEXT	alloc.h	676;"	d
+ANSI_C	globals.h	106;"	d
+AQUAMARINE	alloc.h	99;"	d
+AREVERT	alloc.h	491;"	d
+ASLINE	alloc.h	142;"	d
+ASNONE	alloc.h	140;"	d
+ASNONESPEC	alloc.h	143;"	d
+ASSERT_AVAIL	globals.h	235;"	d
+ASSOLID	alloc.h	141;"	d
+BASECMAPSIZE	alloc.h	68;"	d
+BEGIN	lex.yy.c	168;"	d	file:
+BISONGEN	lex.yy.c	1778;"	d	file:
+BISONGEN	y.tab.c	147;"	d	file:
+BLACK	alloc.h	74;"	d
+BLUE	alloc.h	75;"	d
+BOTTOM_TO_TOP	alloc.h	112;"	d
+BOX	alloc.h	152;"	d
+BREVERT	alloc.h	492;"	d
+BuildCont	y.tab.c	/^syntaxtree BuildCont(int mtag,union special *x,YYLTYPE *l)$/;"	f
+BuildTree	y.tab.c	/^yysyntaxtree BuildTree(int mtag,int len,union special *x,YYLTYPE *l, ...)$/;"	f
+CEDGE	alloc.h	233;"	d
+CEDGE2	alloc.h	235;"	d
+CENTER	alloc.h	127;"	d
+CHECKNODE	globals.h	225;"	d
+CHECK_ASSERTIONS	globals.h	227;"	d
+CHECK_TIMING	globals.h	243;"	d
+CINTERN	alloc.h	236;"	d
+CMAPSIZE	alloc.h	67;"	d
+COFFSET	alloc.h	63;"	d
+COLOR	alloc.h	72;"	d
+CONNECT	alloc.h	/^} *CONNECT;$/;"	t	typeref:struct:connect
+COPY	y.tab.c	329;"	d	file:
+CTARGET	alloc.h	232;"	d
+CTARGET2	alloc.h	234;"	d
+CYAN	alloc.h	80;"	d
+ConstructorArity	y.tab.c	/^int ConstructorArity(int i)$/;"	f
+ConstructorName	y.tab.c	/^const char *ConstructorName(int i)$/;"	f
+Copy	y.tab.c	/^yysyntaxtree Copy(yysyntaxtree x)$/;"	f
+DARKBLUE	alloc.h	83;"	d
+DARKCYAN	alloc.h	88;"	d
+DARKGREEN	alloc.h	85;"	d
+DARKGREY	alloc.h	82;"	d
+DARKMAGENTA	alloc.h	87;"	d
+DARKRED	alloc.h	84;"	d
+DARKYELLOW	alloc.h	86;"	d
+DASHED	alloc.h	135;"	d
+DEBUG	alloc.c	161;"	d	file:
+DEBUG	globals.h	224;"	d
+DEBUG	globals.h	330;"	d
+DEBUG	timelim.c	112;"	d	file:
+DEPTH	alloc.h	/^} DEPTH;$/;"	t	typeref:struct:depth_entry
+DINFO	alloc.h	754;"	d
+DLLIST	alloc.h	/^} *DLLIST;$/;"	t	typeref:struct:dllist
+DNODE	alloc.h	752;"	d
+DNX	alloc.h	753;"	d
+DOTTED	alloc.h	134;"	d
+DPRED	alloc.h	750;"	d
+DSUCC	alloc.h	751;"	d
+Dataname	options.c	/^char	Dataname[ 801];     \/* Filename that is actual input        *\/$/;"	v
+Decode	lex.yy.c	/^char *Decode(long x)$/;"	f
+EANCHOR	alloc.h	645;"	d
+EARROWBCOL	alloc.h	644;"	d
+EARROWBSIZE	alloc.h	642;"	d
+EARROWBSTYLE	alloc.h	640;"	d
+EARROWCOL	alloc.h	643;"	d
+EARROWSIZE	alloc.h	641;"	d
+EARROWSTYLE	alloc.h	639;"	d
+EART	alloc.h	649;"	d
+EBBENDX	alloc.h	625;"	d
+EBBENDY	alloc.h	626;"	d
+EBEFORE	alloc.h	648;"	d
+ECHO	lex.yy.c	2230;"	d	file:
+ECLASS	alloc.h	635;"	d
+ECOLOR	alloc.h	638;"	d
+EEND	alloc.h	620;"	d
+EENDX	alloc.h	627;"	d
+EENDY	alloc.h	628;"	d
+EHORDER	alloc.h	637;"	d
+EINTERN	alloc.h	653;"	d
+EINVISIBLE	alloc.h	650;"	d
+EKIND	alloc.h	687;"	d
+ELABEL	alloc.h	631;"	d
+ELABELCOL	alloc.h	632;"	d
+ELLIPSE	alloc.h	154;"	d
+ELNODE	alloc.h	646;"	d
+ELSTYLE	alloc.h	633;"	d
+ENEXT	alloc.h	647;"	d
+EOB_ACT_CONTINUE_SCAN	lex.yy.c	217;"	d	file:
+EOB_ACT_END_OF_FILE	lex.yy.c	218;"	d	file:
+EOB_ACT_LAST_MATCH	lex.yy.c	219;"	d	file:
+EORI	alloc.h	629;"	d
+EORI2	alloc.h	630;"	d
+EPRIO	alloc.h	636;"	d
+ESOURCEX	alloc.h	683;"	d
+ESOURCEY	alloc.h	684;"	d
+ESTART	alloc.h	619;"	d
+ESTARTX	alloc.h	621;"	d
+ESTARTY	alloc.h	622;"	d
+ETARGETX	alloc.h	685;"	d
+ETARGETY	alloc.h	686;"	d
+ETBENDX	alloc.h	623;"	d
+ETBENDY	alloc.h	624;"	d
+ETHICKNESS	alloc.h	634;"	d
+EWEIGHTP	alloc.h	652;"	d
+EWEIGHTS	alloc.h	651;"	d
+FAST_X11_DRAWING	globals.h	318;"	d
+FCLOSE	globals.h	369;"	d
+FFLUSH	globals.h	370;"	d
+FLEXINT_H	lex.yy.c	54;"	d	file:
+FLEX_BETA	lex.yy.c	22;"	d	file:
+FLEX_DEBUG	lex.yy.c	417;"	d	file:
+FLEX_SCANNER	lex.yy.c	17;"	d	file:
+FOLDING_H	folding.h	70;"	d
+FPRINTF	globals.h	367;"	d
+FREE	globals.h	371;"	d
+Fatal_error	main.c	/^void Fatal_error(char *x,char *y)$/;"	f
+FreeHash	lex.yy.c	/^void FreeHash(void)$/;"	f
+GEDGE	alloc.h	/^} *GEDGE;$/;"	t	typeref:struct:gedge
+GLOBALS_H	globals.h	87;"	d
+GNINTERN	alloc.h	512;"	d
+GNLIST	alloc.h	/^} *GNLIST;$/;"	t	typeref:struct:gnlist
+GNNEXT	alloc.h	511;"	d
+GNNODE	alloc.h	510;"	d
+GNODE	alloc.h	/^} *GNODE;$/;"	t	typeref:struct:gnode
+GOLD	alloc.h	89;"	d
+GREEN	alloc.h	77;"	d
+GRPRINT_H	grprint.h	74;"	d
+G_arrowmode	options.c	/^int     G_arrowmode;		\/* arrow drawing mode                 *\/$/;"	v
+G_color	options.c	/^int     G_color;		\/* background color                   *\/$/;"	v
+G_dirtyel	options.c	/^int     G_dirtyel;		\/* edge labels dirty (1) or not (0)   *\/$/;"	v
+G_displayel	options.c	/^int     G_displayel;		\/* edge labels drawn (1) or not (0)   *\/$/;"	v
+G_dspace	options.c	/^int 	G_dspace;		\/* space between dummy nodes	      *\/$/;"	v
+G_dxraster	options.c	/^int 	G_dxraster;		\/* x-raster for dummy nodes	      *\/$/;"	v
+G_flat_factor	options.c	/^int G_flat_factor = 70;$/;"	v
+G_folding	options.c	/^int     G_folding;		\/* global graph folded (1) or not (0) *\/$/;"	v
+G_height	options.c	/^int     G_width, G_height;	\/* size of the open part of window    *\/ $/;"	v
+G_height_set	options.c	/^int     G_height_set;		\/* indicates that the height was set. *\/$/;"	v
+G_orientation	options.c	/^int     G_orientation;		\/* top-to-bottom, or left-to-right    *\/$/;"	v
+G_portsharing	options.c	/^int     G_portsharing;		\/* edge sharing between the ports     *\/$/;"	v
+G_shrink	options.c	/^int     G_shrink, G_stretch;	\/* global scaling factors             *\/$/;"	v
+G_spline	options.c	/^int G_spline = 0;$/;"	v
+G_stretch	options.c	/^int     G_shrink, G_stretch;	\/* global scaling factors             *\/$/;"	v
+G_timelimit	options.c	/^int 	G_timelimit = 0;	\/* Limitation in the running time$/;"	v
+G_title	options.c	/^char    *G_title;		\/* title of the global graph          *\/$/;"	v
+G_width	options.c	/^int     G_width, G_height;	\/* size of the open part of window    *\/ $/;"	v
+G_width_set	options.c	/^int     G_width_set;		\/* indicates that the width  was set. *\/$/;"	v
+G_x	options.c	/^long    G_x, G_y;		\/* window location on the root screen *\/$/;"	v
+G_xbase	options.c	/^int     G_xbase, G_ybase;	\/* location of the origin (0,0)       *\/$/;"	v
+G_xmax	options.c	/^int     G_xmax, G_ymax;		\/* maximal size of window             *\/$/;"	v
+G_xraster	options.c	/^int 	G_xraster;		\/* x-raster for real nodes            *\/$/;"	v
+G_xspace	options.c	/^int     G_xspace, G_yspace;	\/* offset of drawing area             *\/$/;"	v
+G_xymax_final	options.c	/^int	G_xymax_final = 0;$/;"	v
+G_y	options.c	/^long    G_x, G_y;		\/* window location on the root screen *\/$/;"	v
+G_yalign	options.c	/^int     G_yalign;$/;"	v
+G_ybase	options.c	/^int     G_xbase, G_ybase;	\/* location of the origin (0,0)       *\/$/;"	v
+G_ymax	options.c	/^int     G_xmax, G_ymax;		\/* maximal size of window             *\/$/;"	v
+G_yraster	options.c	/^int 	G_yraster;		\/* y-raster for real nodes	      *\/$/;"	v
+G_yspace	options.c	/^int     G_xspace, G_yspace;	\/* offset of drawing area             *\/$/;"	v
+HASHGENSTD	grammar.h	736;"	d
+HASHGENSTD	grammar.h	737;"	d
+HASHGENSTD	lex.yy.c	1974;"	d	file:
+HASHGENSTD	lex.yy.c	1975;"	d	file:
+HashInsert	lex.yy.c	/^long HashInsert(register char *s)$/;"	f
+HashTableSize	lex.yy.c	/^long HashTableSize(void)$/;"	f
+IALIGN	globals.h	161;"	d
+IALIGN	grammar.h	51;"	d
+IALIGN	grammar.h	753;"	d
+IALIGN	lex.yy.c	1991;"	d	file:
+IALIGN	lex.yy.c	6180;"	d	file:
+IALIGN	y.tab.c	349;"	d	file:
+IALIGN	y.tab.c	7930;"	d	file:
+INITIAL	lex.yy.c	2107;"	d	file:
+INT16_MAX	lex.yy.c	96;"	d	file:
+INT16_MIN	lex.yy.c	87;"	d	file:
+INT32_MAX	lex.yy.c	99;"	d	file:
+INT32_MIN	lex.yy.c	90;"	d	file:
+INT8_MAX	lex.yy.c	93;"	d	file:
+INT8_MIN	lex.yy.c	84;"	d	file:
+KHAKI	alloc.h	100;"	d
+LEFT	alloc.h	128;"	d
+LEFT_TO_RIGHT	alloc.h	110;"	d
+LEXWORD_ABOVE	y.tab.c	/^     LEXWORD_ABOVE = 258,$/;"	e	enum:yytokentype	file:
+LEXWORD_ABOVE	y.tab.c	2184;"	d	file:
+LEXWORD_ABOVE	y.tab.h	/^     LEXWORD_ABOVE = 258,$/;"	e	enum:yytokentype
+LEXWORD_ABOVE	y.tab.h	280;"	d
+LEXWORD_ANCHOR	y.tab.c	/^     LEXWORD_ANCHOR = 260,$/;"	e	enum:yytokentype	file:
+LEXWORD_ANCHOR	y.tab.c	2186;"	d	file:
+LEXWORD_ANCHOR	y.tab.h	/^     LEXWORD_ANCHOR = 260,$/;"	e	enum:yytokentype
+LEXWORD_ANCHOR	y.tab.h	282;"	d
+LEXWORD_ANCHORPOINTS	y.tab.c	/^     LEXWORD_ANCHORPOINTS = 259,$/;"	e	enum:yytokentype	file:
+LEXWORD_ANCHORPOINTS	y.tab.c	2185;"	d	file:
+LEXWORD_ANCHORPOINTS	y.tab.h	/^     LEXWORD_ANCHORPOINTS = 259,$/;"	e	enum:yytokentype
+LEXWORD_ANCHORPOINTS	y.tab.h	281;"	d
+LEXWORD_AQUAMARINE	y.tab.c	/^     LEXWORD_AQUAMARINE = 261,$/;"	e	enum:yytokentype	file:
+LEXWORD_AQUAMARINE	y.tab.c	2187;"	d	file:
+LEXWORD_AQUAMARINE	y.tab.h	/^     LEXWORD_AQUAMARINE = 261,$/;"	e	enum:yytokentype
+LEXWORD_AQUAMARINE	y.tab.h	283;"	d
+LEXWORD_AROUND	y.tab.c	/^     LEXWORD_AROUND = 262,$/;"	e	enum:yytokentype	file:
+LEXWORD_AROUND	y.tab.c	2188;"	d	file:
+LEXWORD_AROUND	y.tab.h	/^     LEXWORD_AROUND = 262,$/;"	e	enum:yytokentype
+LEXWORD_AROUND	y.tab.h	284;"	d
+LEXWORD_ARROWCOLOR	y.tab.c	/^     LEXWORD_ARROWCOLOR = 266,$/;"	e	enum:yytokentype	file:
+LEXWORD_ARROWCOLOR	y.tab.c	2192;"	d	file:
+LEXWORD_ARROWCOLOR	y.tab.h	/^     LEXWORD_ARROWCOLOR = 266,$/;"	e	enum:yytokentype
+LEXWORD_ARROWCOLOR	y.tab.h	288;"	d
+LEXWORD_ARROWHEIGHT	y.tab.c	/^     LEXWORD_ARROWHEIGHT = 264,$/;"	e	enum:yytokentype	file:
+LEXWORD_ARROWHEIGHT	y.tab.c	2190;"	d	file:
+LEXWORD_ARROWHEIGHT	y.tab.h	/^     LEXWORD_ARROWHEIGHT = 264,$/;"	e	enum:yytokentype
+LEXWORD_ARROWHEIGHT	y.tab.h	286;"	d
+LEXWORD_ARROWMODE	y.tab.c	/^     LEXWORD_ARROWMODE = 263,$/;"	e	enum:yytokentype	file:
+LEXWORD_ARROWMODE	y.tab.c	2189;"	d	file:
+LEXWORD_ARROWMODE	y.tab.h	/^     LEXWORD_ARROWMODE = 263,$/;"	e	enum:yytokentype
+LEXWORD_ARROWMODE	y.tab.h	285;"	d
+LEXWORD_ARROWSIZE	y.tab.c	/^     LEXWORD_ARROWSIZE = 268,$/;"	e	enum:yytokentype	file:
+LEXWORD_ARROWSIZE	y.tab.c	2194;"	d	file:
+LEXWORD_ARROWSIZE	y.tab.h	/^     LEXWORD_ARROWSIZE = 268,$/;"	e	enum:yytokentype
+LEXWORD_ARROWSIZE	y.tab.h	290;"	d
+LEXWORD_ARROWSTYLE	y.tab.c	/^     LEXWORD_ARROWSTYLE = 267,$/;"	e	enum:yytokentype	file:
+LEXWORD_ARROWSTYLE	y.tab.c	2193;"	d	file:
+LEXWORD_ARROWSTYLE	y.tab.h	/^     LEXWORD_ARROWSTYLE = 267,$/;"	e	enum:yytokentype
+LEXWORD_ARROWSTYLE	y.tab.h	289;"	d
+LEXWORD_ARROWWIDTH	y.tab.c	/^     LEXWORD_ARROWWIDTH = 265,$/;"	e	enum:yytokentype	file:
+LEXWORD_ARROWWIDTH	y.tab.c	2191;"	d	file:
+LEXWORD_ARROWWIDTH	y.tab.h	/^     LEXWORD_ARROWWIDTH = 265,$/;"	e	enum:yytokentype
+LEXWORD_ARROWWIDTH	y.tab.h	287;"	d
+LEXWORD_BACKEDGE	y.tab.c	/^     LEXWORD_BACKEDGE = 272,$/;"	e	enum:yytokentype	file:
+LEXWORD_BACKEDGE	y.tab.c	2198;"	d	file:
+LEXWORD_BACKEDGE	y.tab.h	/^     LEXWORD_BACKEDGE = 272,$/;"	e	enum:yytokentype
+LEXWORD_BACKEDGE	y.tab.h	294;"	d
+LEXWORD_BARROWCOLOR	y.tab.c	/^     LEXWORD_BARROWCOLOR = 269,$/;"	e	enum:yytokentype	file:
+LEXWORD_BARROWCOLOR	y.tab.c	2195;"	d	file:
+LEXWORD_BARROWCOLOR	y.tab.h	/^     LEXWORD_BARROWCOLOR = 269,$/;"	e	enum:yytokentype
+LEXWORD_BARROWCOLOR	y.tab.h	291;"	d
+LEXWORD_BARROWSIZE	y.tab.c	/^     LEXWORD_BARROWSIZE = 271,$/;"	e	enum:yytokentype	file:
+LEXWORD_BARROWSIZE	y.tab.c	2197;"	d	file:
+LEXWORD_BARROWSIZE	y.tab.h	/^     LEXWORD_BARROWSIZE = 271,$/;"	e	enum:yytokentype
+LEXWORD_BARROWSIZE	y.tab.h	293;"	d
+LEXWORD_BARROWSTYLE	y.tab.c	/^     LEXWORD_BARROWSTYLE = 270,$/;"	e	enum:yytokentype	file:
+LEXWORD_BARROWSTYLE	y.tab.c	2196;"	d	file:
+LEXWORD_BARROWSTYLE	y.tab.h	/^     LEXWORD_BARROWSTYLE = 270,$/;"	e	enum:yytokentype
+LEXWORD_BARROWSTYLE	y.tab.h	292;"	d
+LEXWORD_BARY	y.tab.c	/^     LEXWORD_BARY = 274,$/;"	e	enum:yytokentype	file:
+LEXWORD_BARY	y.tab.c	2200;"	d	file:
+LEXWORD_BARY	y.tab.h	/^     LEXWORD_BARY = 274,$/;"	e	enum:yytokentype
+LEXWORD_BARY	y.tab.h	296;"	d
+LEXWORD_BARYCENTER	y.tab.c	/^     LEXWORD_BARYCENTER = 273,$/;"	e	enum:yytokentype	file:
+LEXWORD_BARYCENTER	y.tab.c	2199;"	d	file:
+LEXWORD_BARYCENTER	y.tab.h	/^     LEXWORD_BARYCENTER = 273,$/;"	e	enum:yytokentype
+LEXWORD_BARYCENTER	y.tab.h	295;"	d
+LEXWORD_BARYMEDIAN	y.tab.c	/^     LEXWORD_BARYMEDIAN = 275,$/;"	e	enum:yytokentype	file:
+LEXWORD_BARYMEDIAN	y.tab.c	2201;"	d	file:
+LEXWORD_BARYMEDIAN	y.tab.h	/^     LEXWORD_BARYMEDIAN = 275,$/;"	e	enum:yytokentype
+LEXWORD_BARYMEDIAN	y.tab.h	297;"	d
+LEXWORD_BEHIND	y.tab.c	/^     LEXWORD_BEHIND = 276,$/;"	e	enum:yytokentype	file:
+LEXWORD_BEHIND	y.tab.c	2202;"	d	file:
+LEXWORD_BEHIND	y.tab.h	/^     LEXWORD_BEHIND = 276,$/;"	e	enum:yytokentype
+LEXWORD_BEHIND	y.tab.h	298;"	d
+LEXWORD_BELOW	y.tab.c	/^     LEXWORD_BELOW = 277,$/;"	e	enum:yytokentype	file:
+LEXWORD_BELOW	y.tab.c	2203;"	d	file:
+LEXWORD_BELOW	y.tab.h	/^     LEXWORD_BELOW = 277,$/;"	e	enum:yytokentype
+LEXWORD_BELOW	y.tab.h	299;"	d
+LEXWORD_BENTNEAREDGE	y.tab.c	/^     LEXWORD_BENTNEAREDGE = 287,$/;"	e	enum:yytokentype	file:
+LEXWORD_BENTNEAREDGE	y.tab.c	2213;"	d	file:
+LEXWORD_BENTNEAREDGE	y.tab.h	/^     LEXWORD_BENTNEAREDGE = 287,$/;"	e	enum:yytokentype
+LEXWORD_BENTNEAREDGE	y.tab.h	309;"	d
+LEXWORD_BLACK	y.tab.c	/^     LEXWORD_BLACK = 278,$/;"	e	enum:yytokentype	file:
+LEXWORD_BLACK	y.tab.c	2204;"	d	file:
+LEXWORD_BLACK	y.tab.h	/^     LEXWORD_BLACK = 278,$/;"	e	enum:yytokentype
+LEXWORD_BLACK	y.tab.h	300;"	d
+LEXWORD_BLUE	y.tab.c	/^     LEXWORD_BLUE = 279,$/;"	e	enum:yytokentype	file:
+LEXWORD_BLUE	y.tab.c	2205;"	d	file:
+LEXWORD_BLUE	y.tab.h	/^     LEXWORD_BLUE = 279,$/;"	e	enum:yytokentype
+LEXWORD_BLUE	y.tab.h	301;"	d
+LEXWORD_BMAX	y.tab.c	/^     LEXWORD_BMAX = 280,$/;"	e	enum:yytokentype	file:
+LEXWORD_BMAX	y.tab.c	2206;"	d	file:
+LEXWORD_BMAX	y.tab.h	/^     LEXWORD_BMAX = 280,$/;"	e	enum:yytokentype
+LEXWORD_BMAX	y.tab.h	302;"	d
+LEXWORD_BORDERCOLOR	y.tab.c	/^     LEXWORD_BORDERCOLOR = 281,$/;"	e	enum:yytokentype	file:
+LEXWORD_BORDERCOLOR	y.tab.c	2207;"	d	file:
+LEXWORD_BORDERCOLOR	y.tab.h	/^     LEXWORD_BORDERCOLOR = 281,$/;"	e	enum:yytokentype
+LEXWORD_BORDERCOLOR	y.tab.h	303;"	d
+LEXWORD_BORDERWIDTH	y.tab.c	/^     LEXWORD_BORDERWIDTH = 282,$/;"	e	enum:yytokentype	file:
+LEXWORD_BORDERWIDTH	y.tab.c	2208;"	d	file:
+LEXWORD_BORDERWIDTH	y.tab.h	/^     LEXWORD_BORDERWIDTH = 282,$/;"	e	enum:yytokentype
+LEXWORD_BORDERWIDTH	y.tab.h	304;"	d
+LEXWORD_BOTTOM	y.tab.c	/^     LEXWORD_BOTTOM = 285,$/;"	e	enum:yytokentype	file:
+LEXWORD_BOTTOM	y.tab.c	2211;"	d	file:
+LEXWORD_BOTTOM	y.tab.h	/^     LEXWORD_BOTTOM = 285,$/;"	e	enum:yytokentype
+LEXWORD_BOTTOM	y.tab.h	307;"	d
+LEXWORD_BOTTOM_MARGIN	y.tab.c	/^     LEXWORD_BOTTOM_MARGIN = 283,$/;"	e	enum:yytokentype	file:
+LEXWORD_BOTTOM_MARGIN	y.tab.c	2209;"	d	file:
+LEXWORD_BOTTOM_MARGIN	y.tab.h	/^     LEXWORD_BOTTOM_MARGIN = 283,$/;"	e	enum:yytokentype
+LEXWORD_BOTTOM_MARGIN	y.tab.h	305;"	d
+LEXWORD_BOTTOM_TO_TOP	y.tab.c	/^     LEXWORD_BOTTOM_TO_TOP = 284,$/;"	e	enum:yytokentype	file:
+LEXWORD_BOTTOM_TO_TOP	y.tab.c	2210;"	d	file:
+LEXWORD_BOTTOM_TO_TOP	y.tab.h	/^     LEXWORD_BOTTOM_TO_TOP = 284,$/;"	e	enum:yytokentype
+LEXWORD_BOTTOM_TO_TOP	y.tab.h	306;"	d
+LEXWORD_BOX	y.tab.c	/^     LEXWORD_BOX = 286,$/;"	e	enum:yytokentype	file:
+LEXWORD_BOX	y.tab.c	2212;"	d	file:
+LEXWORD_BOX	y.tab.h	/^     LEXWORD_BOX = 286,$/;"	e	enum:yytokentype
+LEXWORD_BOX	y.tab.h	308;"	d
+LEXWORD_CENTER	y.tab.c	/^     LEXWORD_CENTER = 288,$/;"	e	enum:yytokentype	file:
+LEXWORD_CENTER	y.tab.c	2214;"	d	file:
+LEXWORD_CENTER	y.tab.h	/^     LEXWORD_CENTER = 288,$/;"	e	enum:yytokentype
+LEXWORD_CENTER	y.tab.h	310;"	d
+LEXWORD_CFISH	y.tab.c	/^     LEXWORD_CFISH = 289,$/;"	e	enum:yytokentype	file:
+LEXWORD_CFISH	y.tab.c	2215;"	d	file:
+LEXWORD_CFISH	y.tab.h	/^     LEXWORD_CFISH = 289,$/;"	e	enum:yytokentype
+LEXWORD_CFISH	y.tab.h	311;"	d
+LEXWORD_CLASS	y.tab.c	/^     LEXWORD_CLASS = 291,$/;"	e	enum:yytokentype	file:
+LEXWORD_CLASS	y.tab.c	2217;"	d	file:
+LEXWORD_CLASS	y.tab.h	/^     LEXWORD_CLASS = 291,$/;"	e	enum:yytokentype
+LEXWORD_CLASS	y.tab.h	313;"	d
+LEXWORD_CLASSNAME	y.tab.c	/^     LEXWORD_CLASSNAME = 290,$/;"	e	enum:yytokentype	file:
+LEXWORD_CLASSNAME	y.tab.c	2216;"	d	file:
+LEXWORD_CLASSNAME	y.tab.h	/^     LEXWORD_CLASSNAME = 290,$/;"	e	enum:yytokentype
+LEXWORD_CLASSNAME	y.tab.h	312;"	d
+LEXWORD_CLUSTER	y.tab.c	/^     LEXWORD_CLUSTER = 292,$/;"	e	enum:yytokentype	file:
+LEXWORD_CLUSTER	y.tab.c	2218;"	d	file:
+LEXWORD_CLUSTER	y.tab.h	/^     LEXWORD_CLUSTER = 292,$/;"	e	enum:yytokentype
+LEXWORD_CLUSTER	y.tab.h	314;"	d
+LEXWORD_CMAX	y.tab.c	/^     LEXWORD_CMAX = 294,$/;"	e	enum:yytokentype	file:
+LEXWORD_CMAX	y.tab.c	2220;"	d	file:
+LEXWORD_CMAX	y.tab.h	/^     LEXWORD_CMAX = 294,$/;"	e	enum:yytokentype
+LEXWORD_CMAX	y.tab.h	316;"	d
+LEXWORD_CMIN	y.tab.c	/^     LEXWORD_CMIN = 293,$/;"	e	enum:yytokentype	file:
+LEXWORD_CMIN	y.tab.c	2219;"	d	file:
+LEXWORD_CMIN	y.tab.h	/^     LEXWORD_CMIN = 293,$/;"	e	enum:yytokentype
+LEXWORD_CMIN	y.tab.h	315;"	d
+LEXWORD_COLOR	y.tab.c	/^     LEXWORD_COLOR = 296,$/;"	e	enum:yytokentype	file:
+LEXWORD_COLOR	y.tab.c	2222;"	d	file:
+LEXWORD_COLOR	y.tab.h	/^     LEXWORD_COLOR = 296,$/;"	e	enum:yytokentype
+LEXWORD_COLOR	y.tab.h	318;"	d
+LEXWORD_COLORENTRY	y.tab.c	/^     LEXWORD_COLORENTRY = 295,$/;"	e	enum:yytokentype	file:
+LEXWORD_COLORENTRY	y.tab.c	2221;"	d	file:
+LEXWORD_COLORENTRY	y.tab.h	/^     LEXWORD_COLORENTRY = 295,$/;"	e	enum:yytokentype
+LEXWORD_COLORENTRY	y.tab.h	317;"	d
+LEXWORD_CONSTRAINT	y.tab.c	/^     LEXWORD_CONSTRAINT = 298,$/;"	e	enum:yytokentype	file:
+LEXWORD_CONSTRAINT	y.tab.c	2224;"	d	file:
+LEXWORD_CONSTRAINT	y.tab.h	/^     LEXWORD_CONSTRAINT = 298,$/;"	e	enum:yytokentype
+LEXWORD_CONSTRAINT	y.tab.h	320;"	d
+LEXWORD_CONSTRAINTS	y.tab.c	/^     LEXWORD_CONSTRAINTS = 297,$/;"	e	enum:yytokentype	file:
+LEXWORD_CONSTRAINTS	y.tab.c	2223;"	d	file:
+LEXWORD_CONSTRAINTS	y.tab.h	/^     LEXWORD_CONSTRAINTS = 297,$/;"	e	enum:yytokentype
+LEXWORD_CONSTRAINTS	y.tab.h	319;"	d
+LEXWORD_CONTINUOUS	y.tab.c	/^     LEXWORD_CONTINUOUS = 299,$/;"	e	enum:yytokentype	file:
+LEXWORD_CONTINUOUS	y.tab.c	2225;"	d	file:
+LEXWORD_CONTINUOUS	y.tab.h	/^     LEXWORD_CONTINUOUS = 299,$/;"	e	enum:yytokentype
+LEXWORD_CONTINUOUS	y.tab.h	321;"	d
+LEXWORD_CROSSING_OPT	y.tab.c	/^     LEXWORD_CROSSING_OPT = 301,$/;"	e	enum:yytokentype	file:
+LEXWORD_CROSSING_OPT	y.tab.c	2227;"	d	file:
+LEXWORD_CROSSING_OPT	y.tab.h	/^     LEXWORD_CROSSING_OPT = 301,$/;"	e	enum:yytokentype
+LEXWORD_CROSSING_OPT	y.tab.h	323;"	d
+LEXWORD_CROSSING_P2	y.tab.c	/^     LEXWORD_CROSSING_P2 = 302,$/;"	e	enum:yytokentype	file:
+LEXWORD_CROSSING_P2	y.tab.c	2228;"	d	file:
+LEXWORD_CROSSING_P2	y.tab.h	/^     LEXWORD_CROSSING_P2 = 302,$/;"	e	enum:yytokentype
+LEXWORD_CROSSING_P2	y.tab.h	324;"	d
+LEXWORD_CROSSING_WEIGHT	y.tab.c	/^     LEXWORD_CROSSING_WEIGHT = 300,$/;"	e	enum:yytokentype	file:
+LEXWORD_CROSSING_WEIGHT	y.tab.c	2226;"	d	file:
+LEXWORD_CROSSING_WEIGHT	y.tab.h	/^     LEXWORD_CROSSING_WEIGHT = 300,$/;"	e	enum:yytokentype
+LEXWORD_CROSSING_WEIGHT	y.tab.h	322;"	d
+LEXWORD_CYAN	y.tab.c	/^     LEXWORD_CYAN = 303,$/;"	e	enum:yytokentype	file:
+LEXWORD_CYAN	y.tab.c	2229;"	d	file:
+LEXWORD_CYAN	y.tab.h	/^     LEXWORD_CYAN = 303,$/;"	e	enum:yytokentype
+LEXWORD_CYAN	y.tab.h	325;"	d
+LEXWORD_DARKBLUE	y.tab.c	/^     LEXWORD_DARKBLUE = 304,$/;"	e	enum:yytokentype	file:
+LEXWORD_DARKBLUE	y.tab.c	2230;"	d	file:
+LEXWORD_DARKBLUE	y.tab.h	/^     LEXWORD_DARKBLUE = 304,$/;"	e	enum:yytokentype
+LEXWORD_DARKBLUE	y.tab.h	326;"	d
+LEXWORD_DARKCYAN	y.tab.c	/^     LEXWORD_DARKCYAN = 305,$/;"	e	enum:yytokentype	file:
+LEXWORD_DARKCYAN	y.tab.c	2231;"	d	file:
+LEXWORD_DARKCYAN	y.tab.h	/^     LEXWORD_DARKCYAN = 305,$/;"	e	enum:yytokentype
+LEXWORD_DARKCYAN	y.tab.h	327;"	d
+LEXWORD_DARKGREEN	y.tab.c	/^     LEXWORD_DARKGREEN = 306,$/;"	e	enum:yytokentype	file:
+LEXWORD_DARKGREEN	y.tab.c	2232;"	d	file:
+LEXWORD_DARKGREEN	y.tab.h	/^     LEXWORD_DARKGREEN = 306,$/;"	e	enum:yytokentype
+LEXWORD_DARKGREEN	y.tab.h	328;"	d
+LEXWORD_DARKGREY	y.tab.c	/^     LEXWORD_DARKGREY = 307,$/;"	e	enum:yytokentype	file:
+LEXWORD_DARKGREY	y.tab.c	2233;"	d	file:
+LEXWORD_DARKGREY	y.tab.h	/^     LEXWORD_DARKGREY = 307,$/;"	e	enum:yytokentype
+LEXWORD_DARKGREY	y.tab.h	329;"	d
+LEXWORD_DARKMAGENTA	y.tab.c	/^     LEXWORD_DARKMAGENTA = 308,$/;"	e	enum:yytokentype	file:
+LEXWORD_DARKMAGENTA	y.tab.c	2234;"	d	file:
+LEXWORD_DARKMAGENTA	y.tab.h	/^     LEXWORD_DARKMAGENTA = 308,$/;"	e	enum:yytokentype
+LEXWORD_DARKMAGENTA	y.tab.h	330;"	d
+LEXWORD_DARKRED	y.tab.c	/^     LEXWORD_DARKRED = 309,$/;"	e	enum:yytokentype	file:
+LEXWORD_DARKRED	y.tab.c	2235;"	d	file:
+LEXWORD_DARKRED	y.tab.h	/^     LEXWORD_DARKRED = 309,$/;"	e	enum:yytokentype
+LEXWORD_DARKRED	y.tab.h	331;"	d
+LEXWORD_DARKYELLOW	y.tab.c	/^     LEXWORD_DARKYELLOW = 310,$/;"	e	enum:yytokentype	file:
+LEXWORD_DARKYELLOW	y.tab.c	2236;"	d	file:
+LEXWORD_DARKYELLOW	y.tab.h	/^     LEXWORD_DARKYELLOW = 310,$/;"	e	enum:yytokentype
+LEXWORD_DARKYELLOW	y.tab.h	332;"	d
+LEXWORD_DASHED	y.tab.c	/^     LEXWORD_DASHED = 311,$/;"	e	enum:yytokentype	file:
+LEXWORD_DASHED	y.tab.c	2237;"	d	file:
+LEXWORD_DASHED	y.tab.h	/^     LEXWORD_DASHED = 311,$/;"	e	enum:yytokentype
+LEXWORD_DASHED	y.tab.h	333;"	d
+LEXWORD_DFS	y.tab.c	/^     LEXWORD_DFS = 312,$/;"	e	enum:yytokentype	file:
+LEXWORD_DFS	y.tab.c	2238;"	d	file:
+LEXWORD_DFS	y.tab.h	/^     LEXWORD_DFS = 312,$/;"	e	enum:yytokentype
+LEXWORD_DFS	y.tab.h	334;"	d
+LEXWORD_DIMENSION	y.tab.c	/^     LEXWORD_DIMENSION = 313,$/;"	e	enum:yytokentype	file:
+LEXWORD_DIMENSION	y.tab.c	2239;"	d	file:
+LEXWORD_DIMENSION	y.tab.h	/^     LEXWORD_DIMENSION = 313,$/;"	e	enum:yytokentype
+LEXWORD_DIMENSION	y.tab.h	335;"	d
+LEXWORD_DIRTY_EDGE_LABELS	y.tab.c	/^     LEXWORD_DIRTY_EDGE_LABELS = 314,$/;"	e	enum:yytokentype	file:
+LEXWORD_DIRTY_EDGE_LABELS	y.tab.c	2240;"	d	file:
+LEXWORD_DIRTY_EDGE_LABELS	y.tab.h	/^     LEXWORD_DIRTY_EDGE_LABELS = 314,$/;"	e	enum:yytokentype
+LEXWORD_DIRTY_EDGE_LABELS	y.tab.h	336;"	d
+LEXWORD_DISPLAY_EDGE_LABELS	y.tab.c	/^     LEXWORD_DISPLAY_EDGE_LABELS = 315,$/;"	e	enum:yytokentype	file:
+LEXWORD_DISPLAY_EDGE_LABELS	y.tab.c	2241;"	d	file:
+LEXWORD_DISPLAY_EDGE_LABELS	y.tab.h	/^     LEXWORD_DISPLAY_EDGE_LABELS = 315,$/;"	e	enum:yytokentype
+LEXWORD_DISPLAY_EDGE_LABELS	y.tab.h	337;"	d
+LEXWORD_DOTTED	y.tab.c	/^     LEXWORD_DOTTED = 316,$/;"	e	enum:yytokentype	file:
+LEXWORD_DOTTED	y.tab.c	2242;"	d	file:
+LEXWORD_DOTTED	y.tab.h	/^     LEXWORD_DOTTED = 316,$/;"	e	enum:yytokentype
+LEXWORD_DOTTED	y.tab.h	338;"	d
+LEXWORD_EDGE1	y.tab.c	/^     LEXWORD_EDGE1 = 317,$/;"	e	enum:yytokentype	file:
+LEXWORD_EDGE1	y.tab.c	2243;"	d	file:
+LEXWORD_EDGE1	y.tab.h	/^     LEXWORD_EDGE1 = 317,$/;"	e	enum:yytokentype
+LEXWORD_EDGE1	y.tab.h	339;"	d
+LEXWORD_EDGE2	y.tab.c	/^     LEXWORD_EDGE2 = 318,$/;"	e	enum:yytokentype	file:
+LEXWORD_EDGE2	y.tab.c	2244;"	d	file:
+LEXWORD_EDGE2	y.tab.h	/^     LEXWORD_EDGE2 = 318,$/;"	e	enum:yytokentype
+LEXWORD_EDGE2	y.tab.h	340;"	d
+LEXWORD_EDGES	y.tab.c	/^     LEXWORD_EDGES = 319,$/;"	e	enum:yytokentype	file:
+LEXWORD_EDGES	y.tab.c	2245;"	d	file:
+LEXWORD_EDGES	y.tab.h	/^     LEXWORD_EDGES = 319,$/;"	e	enum:yytokentype
+LEXWORD_EDGES	y.tab.h	341;"	d
+LEXWORD_ELLIPSE	y.tab.c	/^     LEXWORD_ELLIPSE = 320,$/;"	e	enum:yytokentype	file:
+LEXWORD_ELLIPSE	y.tab.c	2246;"	d	file:
+LEXWORD_ELLIPSE	y.tab.h	/^     LEXWORD_ELLIPSE = 320,$/;"	e	enum:yytokentype
+LEXWORD_ELLIPSE	y.tab.h	342;"	d
+LEXWORD_EQUAL	y.tab.c	/^     LEXWORD_EQUAL = 324,$/;"	e	enum:yytokentype	file:
+LEXWORD_EQUAL	y.tab.c	2250;"	d	file:
+LEXWORD_EQUAL	y.tab.h	/^     LEXWORD_EQUAL = 324,$/;"	e	enum:yytokentype
+LEXWORD_EQUAL	y.tab.h	346;"	d
+LEXWORD_EQUAL_COLUMN	y.tab.c	/^     LEXWORD_EQUAL_COLUMN = 321,$/;"	e	enum:yytokentype	file:
+LEXWORD_EQUAL_COLUMN	y.tab.c	2247;"	d	file:
+LEXWORD_EQUAL_COLUMN	y.tab.h	/^     LEXWORD_EQUAL_COLUMN = 321,$/;"	e	enum:yytokentype
+LEXWORD_EQUAL_COLUMN	y.tab.h	343;"	d
+LEXWORD_EQUAL_POSITION	y.tab.c	/^     LEXWORD_EQUAL_POSITION = 322,$/;"	e	enum:yytokentype	file:
+LEXWORD_EQUAL_POSITION	y.tab.c	2248;"	d	file:
+LEXWORD_EQUAL_POSITION	y.tab.h	/^     LEXWORD_EQUAL_POSITION = 322,$/;"	e	enum:yytokentype
+LEXWORD_EQUAL_POSITION	y.tab.h	344;"	d
+LEXWORD_EQUAL_ROW	y.tab.c	/^     LEXWORD_EQUAL_ROW = 323,$/;"	e	enum:yytokentype	file:
+LEXWORD_EQUAL_ROW	y.tab.c	2249;"	d	file:
+LEXWORD_EQUAL_ROW	y.tab.h	/^     LEXWORD_EQUAL_ROW = 323,$/;"	e	enum:yytokentype
+LEXWORD_EQUAL_ROW	y.tab.h	345;"	d
+LEXWORD_EVERY	y.tab.c	/^     LEXWORD_EVERY = 325,$/;"	e	enum:yytokentype	file:
+LEXWORD_EVERY	y.tab.c	2251;"	d	file:
+LEXWORD_EVERY	y.tab.h	/^     LEXWORD_EVERY = 325,$/;"	e	enum:yytokentype
+LEXWORD_EVERY	y.tab.h	347;"	d
+LEXWORD_FCFISH	y.tab.c	/^     LEXWORD_FCFISH = 326,$/;"	e	enum:yytokentype	file:
+LEXWORD_FCFISH	y.tab.c	2252;"	d	file:
+LEXWORD_FCFISH	y.tab.h	/^     LEXWORD_FCFISH = 326,$/;"	e	enum:yytokentype
+LEXWORD_FCFISH	y.tab.h	348;"	d
+LEXWORD_FINETUNING	y.tab.c	/^     LEXWORD_FINETUNING = 330,$/;"	e	enum:yytokentype	file:
+LEXWORD_FINETUNING	y.tab.c	2256;"	d	file:
+LEXWORD_FINETUNING	y.tab.h	/^     LEXWORD_FINETUNING = 330,$/;"	e	enum:yytokentype
+LEXWORD_FINETUNING	y.tab.h	352;"	d
+LEXWORD_FIXED	y.tab.c	/^     LEXWORD_FIXED = 328,$/;"	e	enum:yytokentype	file:
+LEXWORD_FIXED	y.tab.c	2254;"	d	file:
+LEXWORD_FIXED	y.tab.h	/^     LEXWORD_FIXED = 328,$/;"	e	enum:yytokentype
+LEXWORD_FIXED	y.tab.h	350;"	d
+LEXWORD_FOLDEDGE	y.tab.c	/^     LEXWORD_FOLDEDGE = 331,$/;"	e	enum:yytokentype	file:
+LEXWORD_FOLDEDGE	y.tab.c	2257;"	d	file:
+LEXWORD_FOLDEDGE	y.tab.h	/^     LEXWORD_FOLDEDGE = 331,$/;"	e	enum:yytokentype
+LEXWORD_FOLDEDGE	y.tab.h	353;"	d
+LEXWORD_FOLDING	y.tab.c	/^     LEXWORD_FOLDING = 333,$/;"	e	enum:yytokentype	file:
+LEXWORD_FOLDING	y.tab.c	2259;"	d	file:
+LEXWORD_FOLDING	y.tab.h	/^     LEXWORD_FOLDING = 333,$/;"	e	enum:yytokentype
+LEXWORD_FOLDING	y.tab.h	355;"	d
+LEXWORD_FOLDNODE	y.tab.c	/^     LEXWORD_FOLDNODE = 332,$/;"	e	enum:yytokentype	file:
+LEXWORD_FOLDNODE	y.tab.c	2258;"	d	file:
+LEXWORD_FOLDNODE	y.tab.h	/^     LEXWORD_FOLDNODE = 332,$/;"	e	enum:yytokentype
+LEXWORD_FOLDNODE	y.tab.h	354;"	d
+LEXWORD_FONTNAME	y.tab.c	/^     LEXWORD_FONTNAME = 334,$/;"	e	enum:yytokentype	file:
+LEXWORD_FONTNAME	y.tab.c	2260;"	d	file:
+LEXWORD_FONTNAME	y.tab.h	/^     LEXWORD_FONTNAME = 334,$/;"	e	enum:yytokentype
+LEXWORD_FONTNAME	y.tab.h	356;"	d
+LEXWORD_FPFISH	y.tab.c	/^     LEXWORD_FPFISH = 327,$/;"	e	enum:yytokentype	file:
+LEXWORD_FPFISH	y.tab.c	2253;"	d	file:
+LEXWORD_FPFISH	y.tab.h	/^     LEXWORD_FPFISH = 327,$/;"	e	enum:yytokentype
+LEXWORD_FPFISH	y.tab.h	349;"	d
+LEXWORD_FREE	y.tab.c	/^     LEXWORD_FREE = 329,$/;"	e	enum:yytokentype	file:
+LEXWORD_FREE	y.tab.c	2255;"	d	file:
+LEXWORD_FREE	y.tab.h	/^     LEXWORD_FREE = 329,$/;"	e	enum:yytokentype
+LEXWORD_FREE	y.tab.h	351;"	d
+LEXWORD_GOLD	y.tab.c	/^     LEXWORD_GOLD = 335,$/;"	e	enum:yytokentype	file:
+LEXWORD_GOLD	y.tab.c	2261;"	d	file:
+LEXWORD_GOLD	y.tab.h	/^     LEXWORD_GOLD = 335,$/;"	e	enum:yytokentype
+LEXWORD_GOLD	y.tab.h	357;"	d
+LEXWORD_GRAPH	y.tab.c	/^     LEXWORD_GRAPH = 336,$/;"	e	enum:yytokentype	file:
+LEXWORD_GRAPH	y.tab.c	2262;"	d	file:
+LEXWORD_GRAPH	y.tab.h	/^     LEXWORD_GRAPH = 336,$/;"	e	enum:yytokentype
+LEXWORD_GRAPH	y.tab.h	358;"	d
+LEXWORD_GREATER	y.tab.c	/^     LEXWORD_GREATER = 337,$/;"	e	enum:yytokentype	file:
+LEXWORD_GREATER	y.tab.c	2263;"	d	file:
+LEXWORD_GREATER	y.tab.h	/^     LEXWORD_GREATER = 337,$/;"	e	enum:yytokentype
+LEXWORD_GREATER	y.tab.h	359;"	d
+LEXWORD_GREEN	y.tab.c	/^     LEXWORD_GREEN = 338,$/;"	e	enum:yytokentype	file:
+LEXWORD_GREEN	y.tab.c	2264;"	d	file:
+LEXWORD_GREEN	y.tab.h	/^     LEXWORD_GREEN = 338,$/;"	e	enum:yytokentype
+LEXWORD_GREEN	y.tab.h	360;"	d
+LEXWORD_GREY	y.tab.c	/^     LEXWORD_GREY = 339,$/;"	e	enum:yytokentype	file:
+LEXWORD_GREY	y.tab.c	2265;"	d	file:
+LEXWORD_GREY	y.tab.h	/^     LEXWORD_GREY = 339,$/;"	e	enum:yytokentype
+LEXWORD_GREY	y.tab.h	361;"	d
+LEXWORD_HEIGHT	y.tab.c	/^     LEXWORD_HEIGHT = 340,$/;"	e	enum:yytokentype	file:
+LEXWORD_HEIGHT	y.tab.c	2266;"	d	file:
+LEXWORD_HEIGHT	y.tab.h	/^     LEXWORD_HEIGHT = 340,$/;"	e	enum:yytokentype
+LEXWORD_HEIGHT	y.tab.h	362;"	d
+LEXWORD_HIDDEN	y.tab.c	/^     LEXWORD_HIDDEN = 344,$/;"	e	enum:yytokentype	file:
+LEXWORD_HIDDEN	y.tab.c	2270;"	d	file:
+LEXWORD_HIDDEN	y.tab.h	/^     LEXWORD_HIDDEN = 344,$/;"	e	enum:yytokentype
+LEXWORD_HIDDEN	y.tab.h	366;"	d
+LEXWORD_HIDESINGLES	y.tab.c	/^     LEXWORD_HIDESINGLES = 341,$/;"	e	enum:yytokentype	file:
+LEXWORD_HIDESINGLES	y.tab.c	2267;"	d	file:
+LEXWORD_HIDESINGLES	y.tab.h	/^     LEXWORD_HIDESINGLES = 341,$/;"	e	enum:yytokentype
+LEXWORD_HIDESINGLES	y.tab.h	363;"	d
+LEXWORD_HIGH	y.tab.c	/^     LEXWORD_HIGH = 343,$/;"	e	enum:yytokentype	file:
+LEXWORD_HIGH	y.tab.c	2269;"	d	file:
+LEXWORD_HIGH	y.tab.h	/^     LEXWORD_HIGH = 343,$/;"	e	enum:yytokentype
+LEXWORD_HIGH	y.tab.h	365;"	d
+LEXWORD_HIGH_MARGIN	y.tab.c	/^     LEXWORD_HIGH_MARGIN = 342,$/;"	e	enum:yytokentype	file:
+LEXWORD_HIGH_MARGIN	y.tab.c	2268;"	d	file:
+LEXWORD_HIGH_MARGIN	y.tab.h	/^     LEXWORD_HIGH_MARGIN = 342,$/;"	e	enum:yytokentype
+LEXWORD_HIGH_MARGIN	y.tab.h	364;"	d
+LEXWORD_HORDER	y.tab.c	/^     LEXWORD_HORDER = 345,$/;"	e	enum:yytokentype	file:
+LEXWORD_HORDER	y.tab.c	2271;"	d	file:
+LEXWORD_HORDER	y.tab.h	/^     LEXWORD_HORDER = 345,$/;"	e	enum:yytokentype
+LEXWORD_HORDER	y.tab.h	367;"	d
+LEXWORD_ICONFILE	y.tab.c	/^     LEXWORD_ICONFILE = 346,$/;"	e	enum:yytokentype	file:
+LEXWORD_ICONFILE	y.tab.c	2272;"	d	file:
+LEXWORD_ICONFILE	y.tab.h	/^     LEXWORD_ICONFILE = 346,$/;"	e	enum:yytokentype
+LEXWORD_ICONFILE	y.tab.h	368;"	d
+LEXWORD_ICONHEIGHT	y.tab.c	/^     LEXWORD_ICONHEIGHT = 347,$/;"	e	enum:yytokentype	file:
+LEXWORD_ICONHEIGHT	y.tab.c	2273;"	d	file:
+LEXWORD_ICONHEIGHT	y.tab.h	/^     LEXWORD_ICONHEIGHT = 347,$/;"	e	enum:yytokentype
+LEXWORD_ICONHEIGHT	y.tab.h	369;"	d
+LEXWORD_ICONSTYLE	y.tab.c	/^     LEXWORD_ICONSTYLE = 348,$/;"	e	enum:yytokentype	file:
+LEXWORD_ICONSTYLE	y.tab.c	2274;"	d	file:
+LEXWORD_ICONSTYLE	y.tab.h	/^     LEXWORD_ICONSTYLE = 348,$/;"	e	enum:yytokentype
+LEXWORD_ICONSTYLE	y.tab.h	370;"	d
+LEXWORD_ICONWIDTH	y.tab.c	/^     LEXWORD_ICONWIDTH = 349,$/;"	e	enum:yytokentype	file:
+LEXWORD_ICONWIDTH	y.tab.c	2275;"	d	file:
+LEXWORD_ICONWIDTH	y.tab.h	/^     LEXWORD_ICONWIDTH = 349,$/;"	e	enum:yytokentype
+LEXWORD_ICONWIDTH	y.tab.h	371;"	d
+LEXWORD_INCLUDE	y.tab.c	/^     LEXWORD_INCLUDE = 350,$/;"	e	enum:yytokentype	file:
+LEXWORD_INCLUDE	y.tab.c	2276;"	d	file:
+LEXWORD_INCLUDE	y.tab.h	/^     LEXWORD_INCLUDE = 350,$/;"	e	enum:yytokentype
+LEXWORD_INCLUDE	y.tab.h	372;"	d
+LEXWORD_INFO1	y.tab.c	/^     LEXWORD_INFO1 = 352,$/;"	e	enum:yytokentype	file:
+LEXWORD_INFO1	y.tab.c	2278;"	d	file:
+LEXWORD_INFO1	y.tab.h	/^     LEXWORD_INFO1 = 352,$/;"	e	enum:yytokentype
+LEXWORD_INFO1	y.tab.h	374;"	d
+LEXWORD_INFO2	y.tab.c	/^     LEXWORD_INFO2 = 353,$/;"	e	enum:yytokentype	file:
+LEXWORD_INFO2	y.tab.c	2279;"	d	file:
+LEXWORD_INFO2	y.tab.h	/^     LEXWORD_INFO2 = 353,$/;"	e	enum:yytokentype
+LEXWORD_INFO2	y.tab.h	375;"	d
+LEXWORD_INFO3	y.tab.c	/^     LEXWORD_INFO3 = 354,$/;"	e	enum:yytokentype	file:
+LEXWORD_INFO3	y.tab.c	2280;"	d	file:
+LEXWORD_INFO3	y.tab.h	/^     LEXWORD_INFO3 = 354,$/;"	e	enum:yytokentype
+LEXWORD_INFO3	y.tab.h	376;"	d
+LEXWORD_INFONAME	y.tab.c	/^     LEXWORD_INFONAME = 351,$/;"	e	enum:yytokentype	file:
+LEXWORD_INFONAME	y.tab.c	2277;"	d	file:
+LEXWORD_INFONAME	y.tab.h	/^     LEXWORD_INFONAME = 351,$/;"	e	enum:yytokentype
+LEXWORD_INFONAME	y.tab.h	373;"	d
+LEXWORD_INPUTFUNCTION	y.tab.c	/^     LEXWORD_INPUTFUNCTION = 355,$/;"	e	enum:yytokentype	file:
+LEXWORD_INPUTFUNCTION	y.tab.c	2281;"	d	file:
+LEXWORD_INPUTFUNCTION	y.tab.h	/^     LEXWORD_INPUTFUNCTION = 355,$/;"	e	enum:yytokentype
+LEXWORD_INPUTFUNCTION	y.tab.h	377;"	d
+LEXWORD_INTERVAL	y.tab.c	/^     LEXWORD_INTERVAL = 356,$/;"	e	enum:yytokentype	file:
+LEXWORD_INTERVAL	y.tab.c	2282;"	d	file:
+LEXWORD_INTERVAL	y.tab.h	/^     LEXWORD_INTERVAL = 356,$/;"	e	enum:yytokentype
+LEXWORD_INTERVAL	y.tab.h	378;"	d
+LEXWORD_INVISIBLE	y.tab.c	/^     LEXWORD_INVISIBLE = 357,$/;"	e	enum:yytokentype	file:
+LEXWORD_INVISIBLE	y.tab.c	2283;"	d	file:
+LEXWORD_INVISIBLE	y.tab.h	/^     LEXWORD_INVISIBLE = 357,$/;"	e	enum:yytokentype
+LEXWORD_INVISIBLE	y.tab.h	379;"	d
+LEXWORD_IN_FRONT	y.tab.c	/^     LEXWORD_IN_FRONT = 358,$/;"	e	enum:yytokentype	file:
+LEXWORD_IN_FRONT	y.tab.c	2284;"	d	file:
+LEXWORD_IN_FRONT	y.tab.h	/^     LEXWORD_IN_FRONT = 358,$/;"	e	enum:yytokentype
+LEXWORD_IN_FRONT	y.tab.h	380;"	d
+LEXWORD_ISI	y.tab.c	/^     LEXWORD_ISI = 359,$/;"	e	enum:yytokentype	file:
+LEXWORD_ISI	y.tab.c	2285;"	d	file:
+LEXWORD_ISI	y.tab.h	/^     LEXWORD_ISI = 359,$/;"	e	enum:yytokentype
+LEXWORD_ISI	y.tab.h	381;"	d
+LEXWORD_KHAKI	y.tab.c	/^     LEXWORD_KHAKI = 360,$/;"	e	enum:yytokentype	file:
+LEXWORD_KHAKI	y.tab.c	2286;"	d	file:
+LEXWORD_KHAKI	y.tab.h	/^     LEXWORD_KHAKI = 360,$/;"	e	enum:yytokentype
+LEXWORD_KHAKI	y.tab.h	382;"	d
+LEXWORD_LABEL	y.tab.c	/^     LEXWORD_LABEL = 362,$/;"	e	enum:yytokentype	file:
+LEXWORD_LABEL	y.tab.c	2288;"	d	file:
+LEXWORD_LABEL	y.tab.h	/^     LEXWORD_LABEL = 362,$/;"	e	enum:yytokentype
+LEXWORD_LABEL	y.tab.h	384;"	d
+LEXWORD_LATE_LABELS	y.tab.c	/^     LEXWORD_LATE_LABELS = 363,$/;"	e	enum:yytokentype	file:
+LEXWORD_LATE_LABELS	y.tab.c	2289;"	d	file:
+LEXWORD_LATE_LABELS	y.tab.h	/^     LEXWORD_LATE_LABELS = 363,$/;"	e	enum:yytokentype
+LEXWORD_LATE_LABELS	y.tab.h	385;"	d
+LEXWORD_LAYOUTALGORITHM	y.tab.c	/^     LEXWORD_LAYOUTALGORITHM = 364,$/;"	e	enum:yytokentype	file:
+LEXWORD_LAYOUTALGORITHM	y.tab.c	2290;"	d	file:
+LEXWORD_LAYOUTALGORITHM	y.tab.h	/^     LEXWORD_LAYOUTALGORITHM = 364,$/;"	e	enum:yytokentype
+LEXWORD_LAYOUTALGORITHM	y.tab.h	386;"	d
+LEXWORD_LAYOUTDOWNFACTOR	y.tab.c	/^     LEXWORD_LAYOUTDOWNFACTOR = 367,$/;"	e	enum:yytokentype	file:
+LEXWORD_LAYOUTDOWNFACTOR	y.tab.c	2293;"	d	file:
+LEXWORD_LAYOUTDOWNFACTOR	y.tab.h	/^     LEXWORD_LAYOUTDOWNFACTOR = 367,$/;"	e	enum:yytokentype
+LEXWORD_LAYOUTDOWNFACTOR	y.tab.h	389;"	d
+LEXWORD_LAYOUTFREQUENCY	y.tab.c	/^     LEXWORD_LAYOUTFREQUENCY = 365,$/;"	e	enum:yytokentype	file:
+LEXWORD_LAYOUTFREQUENCY	y.tab.c	2291;"	d	file:
+LEXWORD_LAYOUTFREQUENCY	y.tab.h	/^     LEXWORD_LAYOUTFREQUENCY = 365,$/;"	e	enum:yytokentype
+LEXWORD_LAYOUTFREQUENCY	y.tab.h	387;"	d
+LEXWORD_LAYOUTNEARFACTOR	y.tab.c	/^     LEXWORD_LAYOUTNEARFACTOR = 369,$/;"	e	enum:yytokentype	file:
+LEXWORD_LAYOUTNEARFACTOR	y.tab.c	2295;"	d	file:
+LEXWORD_LAYOUTNEARFACTOR	y.tab.h	/^     LEXWORD_LAYOUTNEARFACTOR = 369,$/;"	e	enum:yytokentype
+LEXWORD_LAYOUTNEARFACTOR	y.tab.h	391;"	d
+LEXWORD_LAYOUTPARAMETER	y.tab.c	/^     LEXWORD_LAYOUTPARAMETER = 366,$/;"	e	enum:yytokentype	file:
+LEXWORD_LAYOUTPARAMETER	y.tab.c	2292;"	d	file:
+LEXWORD_LAYOUTPARAMETER	y.tab.h	/^     LEXWORD_LAYOUTPARAMETER = 366,$/;"	e	enum:yytokentype
+LEXWORD_LAYOUTPARAMETER	y.tab.h	388;"	d
+LEXWORD_LAYOUTSPLINEFACTOR	y.tab.c	/^     LEXWORD_LAYOUTSPLINEFACTOR = 370,$/;"	e	enum:yytokentype	file:
+LEXWORD_LAYOUTSPLINEFACTOR	y.tab.c	2296;"	d	file:
+LEXWORD_LAYOUTSPLINEFACTOR	y.tab.h	/^     LEXWORD_LAYOUTSPLINEFACTOR = 370,$/;"	e	enum:yytokentype
+LEXWORD_LAYOUTSPLINEFACTOR	y.tab.h	392;"	d
+LEXWORD_LAYOUTUPFACTOR	y.tab.c	/^     LEXWORD_LAYOUTUPFACTOR = 368,$/;"	e	enum:yytokentype	file:
+LEXWORD_LAYOUTUPFACTOR	y.tab.c	2294;"	d	file:
+LEXWORD_LAYOUTUPFACTOR	y.tab.h	/^     LEXWORD_LAYOUTUPFACTOR = 368,$/;"	e	enum:yytokentype
+LEXWORD_LAYOUTUPFACTOR	y.tab.h	390;"	d
+LEXWORD_LEFT	y.tab.c	/^     LEXWORD_LEFT = 375,$/;"	e	enum:yytokentype	file:
+LEXWORD_LEFT	y.tab.c	2301;"	d	file:
+LEXWORD_LEFT	y.tab.h	/^     LEXWORD_LEFT = 375,$/;"	e	enum:yytokentype
+LEXWORD_LEFT	y.tab.h	397;"	d
+LEXWORD_LEFT_JUSTIFY	y.tab.c	/^     LEXWORD_LEFT_JUSTIFY = 371,$/;"	e	enum:yytokentype	file:
+LEXWORD_LEFT_JUSTIFY	y.tab.c	2297;"	d	file:
+LEXWORD_LEFT_JUSTIFY	y.tab.h	/^     LEXWORD_LEFT_JUSTIFY = 371,$/;"	e	enum:yytokentype
+LEXWORD_LEFT_JUSTIFY	y.tab.h	393;"	d
+LEXWORD_LEFT_MARGIN	y.tab.c	/^     LEXWORD_LEFT_MARGIN = 372,$/;"	e	enum:yytokentype	file:
+LEXWORD_LEFT_MARGIN	y.tab.c	2298;"	d	file:
+LEXWORD_LEFT_MARGIN	y.tab.h	/^     LEXWORD_LEFT_MARGIN = 372,$/;"	e	enum:yytokentype
+LEXWORD_LEFT_MARGIN	y.tab.h	394;"	d
+LEXWORD_LEFT_NEIGHBOR	y.tab.c	/^     LEXWORD_LEFT_NEIGHBOR = 373,$/;"	e	enum:yytokentype	file:
+LEXWORD_LEFT_NEIGHBOR	y.tab.c	2299;"	d	file:
+LEXWORD_LEFT_NEIGHBOR	y.tab.h	/^     LEXWORD_LEFT_NEIGHBOR = 373,$/;"	e	enum:yytokentype
+LEXWORD_LEFT_NEIGHBOR	y.tab.h	395;"	d
+LEXWORD_LEFT_TO_RIGHT	y.tab.c	/^     LEXWORD_LEFT_TO_RIGHT = 374,$/;"	e	enum:yytokentype	file:
+LEXWORD_LEFT_TO_RIGHT	y.tab.c	2300;"	d	file:
+LEXWORD_LEFT_TO_RIGHT	y.tab.h	/^     LEXWORD_LEFT_TO_RIGHT = 374,$/;"	e	enum:yytokentype
+LEXWORD_LEFT_TO_RIGHT	y.tab.h	396;"	d
+LEXWORD_LEVEL	y.tab.c	/^     LEXWORD_LEVEL = 376,$/;"	e	enum:yytokentype	file:
+LEXWORD_LEVEL	y.tab.c	2302;"	d	file:
+LEXWORD_LEVEL	y.tab.h	/^     LEXWORD_LEVEL = 376,$/;"	e	enum:yytokentype
+LEXWORD_LEVEL	y.tab.h	398;"	d
+LEXWORD_LIGHTBLUE	y.tab.c	/^     LEXWORD_LIGHTBLUE = 378,$/;"	e	enum:yytokentype	file:
+LEXWORD_LIGHTBLUE	y.tab.c	2304;"	d	file:
+LEXWORD_LIGHTBLUE	y.tab.h	/^     LEXWORD_LIGHTBLUE = 378,$/;"	e	enum:yytokentype
+LEXWORD_LIGHTBLUE	y.tab.h	400;"	d
+LEXWORD_LIGHTCYAN	y.tab.c	/^     LEXWORD_LIGHTCYAN = 379,$/;"	e	enum:yytokentype	file:
+LEXWORD_LIGHTCYAN	y.tab.c	2305;"	d	file:
+LEXWORD_LIGHTCYAN	y.tab.h	/^     LEXWORD_LIGHTCYAN = 379,$/;"	e	enum:yytokentype
+LEXWORD_LIGHTCYAN	y.tab.h	401;"	d
+LEXWORD_LIGHTGREEN	y.tab.c	/^     LEXWORD_LIGHTGREEN = 380,$/;"	e	enum:yytokentype	file:
+LEXWORD_LIGHTGREEN	y.tab.c	2306;"	d	file:
+LEXWORD_LIGHTGREEN	y.tab.h	/^     LEXWORD_LIGHTGREEN = 380,$/;"	e	enum:yytokentype
+LEXWORD_LIGHTGREEN	y.tab.h	402;"	d
+LEXWORD_LIGHTGREY	y.tab.c	/^     LEXWORD_LIGHTGREY = 381,$/;"	e	enum:yytokentype	file:
+LEXWORD_LIGHTGREY	y.tab.c	2307;"	d	file:
+LEXWORD_LIGHTGREY	y.tab.h	/^     LEXWORD_LIGHTGREY = 381,$/;"	e	enum:yytokentype
+LEXWORD_LIGHTGREY	y.tab.h	403;"	d
+LEXWORD_LIGHTMAGENTA	y.tab.c	/^     LEXWORD_LIGHTMAGENTA = 382,$/;"	e	enum:yytokentype	file:
+LEXWORD_LIGHTMAGENTA	y.tab.c	2308;"	d	file:
+LEXWORD_LIGHTMAGENTA	y.tab.h	/^     LEXWORD_LIGHTMAGENTA = 382,$/;"	e	enum:yytokentype
+LEXWORD_LIGHTMAGENTA	y.tab.h	404;"	d
+LEXWORD_LIGHTRED	y.tab.c	/^     LEXWORD_LIGHTRED = 383,$/;"	e	enum:yytokentype	file:
+LEXWORD_LIGHTRED	y.tab.c	2309;"	d	file:
+LEXWORD_LIGHTRED	y.tab.h	/^     LEXWORD_LIGHTRED = 383,$/;"	e	enum:yytokentype
+LEXWORD_LIGHTRED	y.tab.h	405;"	d
+LEXWORD_LIGHTYELLOW	y.tab.c	/^     LEXWORD_LIGHTYELLOW = 384,$/;"	e	enum:yytokentype	file:
+LEXWORD_LIGHTYELLOW	y.tab.c	2310;"	d	file:
+LEXWORD_LIGHTYELLOW	y.tab.h	/^     LEXWORD_LIGHTYELLOW = 384,$/;"	e	enum:yytokentype
+LEXWORD_LIGHTYELLOW	y.tab.h	406;"	d
+LEXWORD_LILAC	y.tab.c	/^     LEXWORD_LILAC = 385,$/;"	e	enum:yytokentype	file:
+LEXWORD_LILAC	y.tab.c	2311;"	d	file:
+LEXWORD_LILAC	y.tab.h	/^     LEXWORD_LILAC = 385,$/;"	e	enum:yytokentype
+LEXWORD_LILAC	y.tab.h	407;"	d
+LEXWORD_LIMIT	y.tab.c	/^     LEXWORD_LIMIT = 386,$/;"	e	enum:yytokentype	file:
+LEXWORD_LIMIT	y.tab.c	2312;"	d	file:
+LEXWORD_LIMIT	y.tab.h	/^     LEXWORD_LIMIT = 386,$/;"	e	enum:yytokentype
+LEXWORD_LIMIT	y.tab.h	408;"	d
+LEXWORD_LINE	y.tab.c	/^     LEXWORD_LINE = 387,$/;"	e	enum:yytokentype	file:
+LEXWORD_LINE	y.tab.c	2313;"	d	file:
+LEXWORD_LINE	y.tab.h	/^     LEXWORD_LINE = 387,$/;"	e	enum:yytokentype
+LEXWORD_LINE	y.tab.h	409;"	d
+LEXWORD_LINESTYLE	y.tab.c	/^     LEXWORD_LINESTYLE = 388,$/;"	e	enum:yytokentype	file:
+LEXWORD_LINESTYLE	y.tab.c	2314;"	d	file:
+LEXWORD_LINESTYLE	y.tab.h	/^     LEXWORD_LINESTYLE = 388,$/;"	e	enum:yytokentype
+LEXWORD_LINESTYLE	y.tab.h	410;"	d
+LEXWORD_LOC	y.tab.c	/^     LEXWORD_LOC = 389,$/;"	e	enum:yytokentype	file:
+LEXWORD_LOC	y.tab.c	2315;"	d	file:
+LEXWORD_LOC	y.tab.h	/^     LEXWORD_LOC = 389,$/;"	e	enum:yytokentype
+LEXWORD_LOC	y.tab.h	411;"	d
+LEXWORD_LOW	y.tab.c	/^     LEXWORD_LOW = 392,$/;"	e	enum:yytokentype	file:
+LEXWORD_LOW	y.tab.c	2318;"	d	file:
+LEXWORD_LOW	y.tab.h	/^     LEXWORD_LOW = 392,$/;"	e	enum:yytokentype
+LEXWORD_LOW	y.tab.h	414;"	d
+LEXWORD_LOWER_NEIGHBOR	y.tab.c	/^     LEXWORD_LOWER_NEIGHBOR = 390,$/;"	e	enum:yytokentype	file:
+LEXWORD_LOWER_NEIGHBOR	y.tab.c	2316;"	d	file:
+LEXWORD_LOWER_NEIGHBOR	y.tab.h	/^     LEXWORD_LOWER_NEIGHBOR = 390,$/;"	e	enum:yytokentype
+LEXWORD_LOWER_NEIGHBOR	y.tab.h	412;"	d
+LEXWORD_LOW_MARGIN	y.tab.c	/^     LEXWORD_LOW_MARGIN = 391,$/;"	e	enum:yytokentype	file:
+LEXWORD_LOW_MARGIN	y.tab.c	2317;"	d	file:
+LEXWORD_LOW_MARGIN	y.tab.h	/^     LEXWORD_LOW_MARGIN = 391,$/;"	e	enum:yytokentype
+LEXWORD_LOW_MARGIN	y.tab.h	413;"	d
+LEXWORD_MAGENTA	y.tab.c	/^     LEXWORD_MAGENTA = 393,$/;"	e	enum:yytokentype	file:
+LEXWORD_MAGENTA	y.tab.c	2319;"	d	file:
+LEXWORD_MAGENTA	y.tab.h	/^     LEXWORD_MAGENTA = 393,$/;"	e	enum:yytokentype
+LEXWORD_MAGENTA	y.tab.h	415;"	d
+LEXWORD_MANHATTEN	y.tab.c	/^     LEXWORD_MANHATTEN = 394,$/;"	e	enum:yytokentype	file:
+LEXWORD_MANHATTEN	y.tab.c	2320;"	d	file:
+LEXWORD_MANHATTEN	y.tab.h	/^     LEXWORD_MANHATTEN = 394,$/;"	e	enum:yytokentype
+LEXWORD_MANHATTEN	y.tab.h	416;"	d
+LEXWORD_MANUAL	y.tab.c	/^     LEXWORD_MANUAL = 395,$/;"	e	enum:yytokentype	file:
+LEXWORD_MANUAL	y.tab.c	2321;"	d	file:
+LEXWORD_MANUAL	y.tab.h	/^     LEXWORD_MANUAL = 395,$/;"	e	enum:yytokentype
+LEXWORD_MANUAL	y.tab.h	417;"	d
+LEXWORD_MAXDEGREE	y.tab.c	/^     LEXWORD_MAXDEGREE = 398,$/;"	e	enum:yytokentype	file:
+LEXWORD_MAXDEGREE	y.tab.c	2324;"	d	file:
+LEXWORD_MAXDEGREE	y.tab.h	/^     LEXWORD_MAXDEGREE = 398,$/;"	e	enum:yytokentype
+LEXWORD_MAXDEGREE	y.tab.h	420;"	d
+LEXWORD_MAXDEPTH	y.tab.c	/^     LEXWORD_MAXDEPTH = 397,$/;"	e	enum:yytokentype	file:
+LEXWORD_MAXDEPTH	y.tab.c	2323;"	d	file:
+LEXWORD_MAXDEPTH	y.tab.h	/^     LEXWORD_MAXDEPTH = 397,$/;"	e	enum:yytokentype
+LEXWORD_MAXDEPTH	y.tab.h	419;"	d
+LEXWORD_MAXDEPTHSLOW	y.tab.c	/^     LEXWORD_MAXDEPTHSLOW = 396,$/;"	e	enum:yytokentype	file:
+LEXWORD_MAXDEPTHSLOW	y.tab.c	2322;"	d	file:
+LEXWORD_MAXDEPTHSLOW	y.tab.h	/^     LEXWORD_MAXDEPTHSLOW = 396,$/;"	e	enum:yytokentype
+LEXWORD_MAXDEPTHSLOW	y.tab.h	418;"	d
+LEXWORD_MAXINDEGREE	y.tab.c	/^     LEXWORD_MAXINDEGREE = 399,$/;"	e	enum:yytokentype	file:
+LEXWORD_MAXINDEGREE	y.tab.c	2325;"	d	file:
+LEXWORD_MAXINDEGREE	y.tab.h	/^     LEXWORD_MAXINDEGREE = 399,$/;"	e	enum:yytokentype
+LEXWORD_MAXINDEGREE	y.tab.h	421;"	d
+LEXWORD_MAXOUTDEGREE	y.tab.c	/^     LEXWORD_MAXOUTDEGREE = 400,$/;"	e	enum:yytokentype	file:
+LEXWORD_MAXOUTDEGREE	y.tab.c	2326;"	d	file:
+LEXWORD_MAXOUTDEGREE	y.tab.h	/^     LEXWORD_MAXOUTDEGREE = 400,$/;"	e	enum:yytokentype
+LEXWORD_MAXOUTDEGREE	y.tab.h	422;"	d
+LEXWORD_MEDIAN	y.tab.c	/^     LEXWORD_MEDIAN = 401,$/;"	e	enum:yytokentype	file:
+LEXWORD_MEDIAN	y.tab.c	2327;"	d	file:
+LEXWORD_MEDIAN	y.tab.h	/^     LEXWORD_MEDIAN = 401,$/;"	e	enum:yytokentype
+LEXWORD_MEDIAN	y.tab.h	423;"	d
+LEXWORD_MEDIANBARY	y.tab.c	/^     LEXWORD_MEDIANBARY = 402,$/;"	e	enum:yytokentype	file:
+LEXWORD_MEDIANBARY	y.tab.c	2328;"	d	file:
+LEXWORD_MEDIANBARY	y.tab.h	/^     LEXWORD_MEDIANBARY = 402,$/;"	e	enum:yytokentype
+LEXWORD_MEDIANBARY	y.tab.h	424;"	d
+LEXWORD_MINBACK	y.tab.c	/^     LEXWORD_MINBACK = 408,$/;"	e	enum:yytokentype	file:
+LEXWORD_MINBACK	y.tab.c	2334;"	d	file:
+LEXWORD_MINBACK	y.tab.h	/^     LEXWORD_MINBACK = 408,$/;"	e	enum:yytokentype
+LEXWORD_MINBACK	y.tab.h	430;"	d
+LEXWORD_MINDEGREE	y.tab.c	/^     LEXWORD_MINDEGREE = 405,$/;"	e	enum:yytokentype	file:
+LEXWORD_MINDEGREE	y.tab.c	2331;"	d	file:
+LEXWORD_MINDEGREE	y.tab.h	/^     LEXWORD_MINDEGREE = 405,$/;"	e	enum:yytokentype
+LEXWORD_MINDEGREE	y.tab.h	427;"	d
+LEXWORD_MINDEPTH	y.tab.c	/^     LEXWORD_MINDEPTH = 404,$/;"	e	enum:yytokentype	file:
+LEXWORD_MINDEPTH	y.tab.c	2330;"	d	file:
+LEXWORD_MINDEPTH	y.tab.h	/^     LEXWORD_MINDEPTH = 404,$/;"	e	enum:yytokentype
+LEXWORD_MINDEPTH	y.tab.h	426;"	d
+LEXWORD_MINDEPTHSLOW	y.tab.c	/^     LEXWORD_MINDEPTHSLOW = 403,$/;"	e	enum:yytokentype	file:
+LEXWORD_MINDEPTHSLOW	y.tab.c	2329;"	d	file:
+LEXWORD_MINDEPTHSLOW	y.tab.h	/^     LEXWORD_MINDEPTHSLOW = 403,$/;"	e	enum:yytokentype
+LEXWORD_MINDEPTHSLOW	y.tab.h	425;"	d
+LEXWORD_MININDEGREE	y.tab.c	/^     LEXWORD_MININDEGREE = 406,$/;"	e	enum:yytokentype	file:
+LEXWORD_MININDEGREE	y.tab.c	2332;"	d	file:
+LEXWORD_MININDEGREE	y.tab.h	/^     LEXWORD_MININDEGREE = 406,$/;"	e	enum:yytokentype
+LEXWORD_MININDEGREE	y.tab.h	428;"	d
+LEXWORD_MINOUTDEGREE	y.tab.c	/^     LEXWORD_MINOUTDEGREE = 407,$/;"	e	enum:yytokentype	file:
+LEXWORD_MINOUTDEGREE	y.tab.c	2333;"	d	file:
+LEXWORD_MINOUTDEGREE	y.tab.h	/^     LEXWORD_MINOUTDEGREE = 407,$/;"	e	enum:yytokentype
+LEXWORD_MINOUTDEGREE	y.tab.h	429;"	d
+LEXWORD_NAME	y.tab.c	/^     LEXWORD_NAME = 409,$/;"	e	enum:yytokentype	file:
+LEXWORD_NAME	y.tab.c	2335;"	d	file:
+LEXWORD_NAME	y.tab.h	/^     LEXWORD_NAME = 409,$/;"	e	enum:yytokentype
+LEXWORD_NAME	y.tab.h	431;"	d
+LEXWORD_NEAREDGE	y.tab.c	/^     LEXWORD_NEAREDGE = 410,$/;"	e	enum:yytokentype	file:
+LEXWORD_NEAREDGE	y.tab.c	2336;"	d	file:
+LEXWORD_NEAREDGE	y.tab.h	/^     LEXWORD_NEAREDGE = 410,$/;"	e	enum:yytokentype
+LEXWORD_NEAREDGE	y.tab.h	432;"	d
+LEXWORD_NEAREDGES	y.tab.c	/^     LEXWORD_NEAREDGES = 412,$/;"	e	enum:yytokentype	file:
+LEXWORD_NEAREDGES	y.tab.c	2338;"	d	file:
+LEXWORD_NEAREDGES	y.tab.h	/^     LEXWORD_NEAREDGES = 412,$/;"	e	enum:yytokentype
+LEXWORD_NEAREDGES	y.tab.h	434;"	d
+LEXWORD_NEIGHBORS	y.tab.c	/^     LEXWORD_NEIGHBORS = 411,$/;"	e	enum:yytokentype	file:
+LEXWORD_NEIGHBORS	y.tab.c	2337;"	d	file:
+LEXWORD_NEIGHBORS	y.tab.h	/^     LEXWORD_NEIGHBORS = 411,$/;"	e	enum:yytokentype
+LEXWORD_NEIGHBORS	y.tab.h	433;"	d
+LEXWORD_NO	y.tab.c	/^     LEXWORD_NO = 419,$/;"	e	enum:yytokentype	file:
+LEXWORD_NO	y.tab.c	2345;"	d	file:
+LEXWORD_NO	y.tab.h	/^     LEXWORD_NO = 419,$/;"	e	enum:yytokentype
+LEXWORD_NO	y.tab.h	441;"	d
+LEXWORD_NODE1	y.tab.c	/^     LEXWORD_NODE1 = 414,$/;"	e	enum:yytokentype	file:
+LEXWORD_NODE1	y.tab.c	2340;"	d	file:
+LEXWORD_NODE1	y.tab.h	/^     LEXWORD_NODE1 = 414,$/;"	e	enum:yytokentype
+LEXWORD_NODE1	y.tab.h	436;"	d
+LEXWORD_NODE2	y.tab.c	/^     LEXWORD_NODE2 = 415,$/;"	e	enum:yytokentype	file:
+LEXWORD_NODE2	y.tab.c	2341;"	d	file:
+LEXWORD_NODE2	y.tab.h	/^     LEXWORD_NODE2 = 415,$/;"	e	enum:yytokentype
+LEXWORD_NODE2	y.tab.h	437;"	d
+LEXWORD_NODES	y.tab.c	/^     LEXWORD_NODES = 416,$/;"	e	enum:yytokentype	file:
+LEXWORD_NODES	y.tab.c	2342;"	d	file:
+LEXWORD_NODES	y.tab.h	/^     LEXWORD_NODES = 416,$/;"	e	enum:yytokentype
+LEXWORD_NODES	y.tab.h	438;"	d
+LEXWORD_NODE_ALIGN	y.tab.c	/^     LEXWORD_NODE_ALIGN = 417,$/;"	e	enum:yytokentype	file:
+LEXWORD_NODE_ALIGN	y.tab.c	2343;"	d	file:
+LEXWORD_NODE_ALIGN	y.tab.h	/^     LEXWORD_NODE_ALIGN = 417,$/;"	e	enum:yytokentype
+LEXWORD_NODE_ALIGN	y.tab.h	439;"	d
+LEXWORD_NONE	y.tab.c	/^     LEXWORD_NONE = 418,$/;"	e	enum:yytokentype	file:
+LEXWORD_NONE	y.tab.c	2344;"	d	file:
+LEXWORD_NONE	y.tab.h	/^     LEXWORD_NONE = 418,$/;"	e	enum:yytokentype
+LEXWORD_NONE	y.tab.h	440;"	d
+LEXWORD_NONEAREDGES	y.tab.c	/^     LEXWORD_NONEAREDGES = 413,$/;"	e	enum:yytokentype	file:
+LEXWORD_NONEAREDGES	y.tab.c	2339;"	d	file:
+LEXWORD_NONEAREDGES	y.tab.h	/^     LEXWORD_NONEAREDGES = 413,$/;"	e	enum:yytokentype
+LEXWORD_NONEAREDGES	y.tab.h	435;"	d
+LEXWORD_ORANGE	y.tab.c	/^     LEXWORD_ORANGE = 420,$/;"	e	enum:yytokentype	file:
+LEXWORD_ORANGE	y.tab.c	2346;"	d	file:
+LEXWORD_ORANGE	y.tab.h	/^     LEXWORD_ORANGE = 420,$/;"	e	enum:yytokentype
+LEXWORD_ORANGE	y.tab.h	442;"	d
+LEXWORD_ORCHID	y.tab.c	/^     LEXWORD_ORCHID = 421,$/;"	e	enum:yytokentype	file:
+LEXWORD_ORCHID	y.tab.c	2347;"	d	file:
+LEXWORD_ORCHID	y.tab.h	/^     LEXWORD_ORCHID = 421,$/;"	e	enum:yytokentype
+LEXWORD_ORCHID	y.tab.h	443;"	d
+LEXWORD_ORIENTATION	y.tab.c	/^     LEXWORD_ORIENTATION = 422,$/;"	e	enum:yytokentype	file:
+LEXWORD_ORIENTATION	y.tab.c	2348;"	d	file:
+LEXWORD_ORIENTATION	y.tab.h	/^     LEXWORD_ORIENTATION = 422,$/;"	e	enum:yytokentype
+LEXWORD_ORIENTATION	y.tab.h	444;"	d
+LEXWORD_OUTPUTFUNCTION	y.tab.c	/^     LEXWORD_OUTPUTFUNCTION = 423,$/;"	e	enum:yytokentype	file:
+LEXWORD_OUTPUTFUNCTION	y.tab.c	2349;"	d	file:
+LEXWORD_OUTPUTFUNCTION	y.tab.h	/^     LEXWORD_OUTPUTFUNCTION = 423,$/;"	e	enum:yytokentype
+LEXWORD_OUTPUTFUNCTION	y.tab.h	445;"	d
+LEXWORD_PFISH	y.tab.c	/^     LEXWORD_PFISH = 424,$/;"	e	enum:yytokentype	file:
+LEXWORD_PFISH	y.tab.c	2350;"	d	file:
+LEXWORD_PFISH	y.tab.h	/^     LEXWORD_PFISH = 424,$/;"	e	enum:yytokentype
+LEXWORD_PFISH	y.tab.h	446;"	d
+LEXWORD_PINK	y.tab.c	/^     LEXWORD_PINK = 425,$/;"	e	enum:yytokentype	file:
+LEXWORD_PINK	y.tab.c	2351;"	d	file:
+LEXWORD_PINK	y.tab.h	/^     LEXWORD_PINK = 425,$/;"	e	enum:yytokentype
+LEXWORD_PINK	y.tab.h	447;"	d
+LEXWORD_PLANAR	y.tab.c	/^     LEXWORD_PLANAR = 426,$/;"	e	enum:yytokentype	file:
+LEXWORD_PLANAR	y.tab.c	2352;"	d	file:
+LEXWORD_PLANAR	y.tab.h	/^     LEXWORD_PLANAR = 426,$/;"	e	enum:yytokentype
+LEXWORD_PLANAR	y.tab.h	448;"	d
+LEXWORD_PMAX	y.tab.c	/^     LEXWORD_PMAX = 428,$/;"	e	enum:yytokentype	file:
+LEXWORD_PMAX	y.tab.c	2354;"	d	file:
+LEXWORD_PMAX	y.tab.h	/^     LEXWORD_PMAX = 428,$/;"	e	enum:yytokentype
+LEXWORD_PMAX	y.tab.h	450;"	d
+LEXWORD_PMIN	y.tab.c	/^     LEXWORD_PMIN = 427,$/;"	e	enum:yytokentype	file:
+LEXWORD_PMIN	y.tab.c	2353;"	d	file:
+LEXWORD_PMIN	y.tab.h	/^     LEXWORD_PMIN = 427,$/;"	e	enum:yytokentype
+LEXWORD_PMIN	y.tab.h	449;"	d
+LEXWORD_PORTSHARING	y.tab.c	/^     LEXWORD_PORTSHARING = 429,$/;"	e	enum:yytokentype	file:
+LEXWORD_PORTSHARING	y.tab.c	2355;"	d	file:
+LEXWORD_PORTSHARING	y.tab.h	/^     LEXWORD_PORTSHARING = 429,$/;"	e	enum:yytokentype
+LEXWORD_PORTSHARING	y.tab.h	451;"	d
+LEXWORD_PRIORITY	y.tab.c	/^     LEXWORD_PRIORITY = 431,$/;"	e	enum:yytokentype	file:
+LEXWORD_PRIORITY	y.tab.c	2357;"	d	file:
+LEXWORD_PRIORITY	y.tab.h	/^     LEXWORD_PRIORITY = 431,$/;"	e	enum:yytokentype
+LEXWORD_PRIORITY	y.tab.h	453;"	d
+LEXWORD_PRIORITYPHASE	y.tab.c	/^     LEXWORD_PRIORITYPHASE = 430,$/;"	e	enum:yytokentype	file:
+LEXWORD_PRIORITYPHASE	y.tab.c	2356;"	d	file:
+LEXWORD_PRIORITYPHASE	y.tab.h	/^     LEXWORD_PRIORITYPHASE = 430,$/;"	e	enum:yytokentype
+LEXWORD_PRIORITYPHASE	y.tab.h	452;"	d
+LEXWORD_PURPLE	y.tab.c	/^     LEXWORD_PURPLE = 432,$/;"	e	enum:yytokentype	file:
+LEXWORD_PURPLE	y.tab.c	2358;"	d	file:
+LEXWORD_PURPLE	y.tab.h	/^     LEXWORD_PURPLE = 432,$/;"	e	enum:yytokentype
+LEXWORD_PURPLE	y.tab.h	454;"	d
+LEXWORD_RANGE	y.tab.c	/^     LEXWORD_RANGE = 433,$/;"	e	enum:yytokentype	file:
+LEXWORD_RANGE	y.tab.c	2359;"	d	file:
+LEXWORD_RANGE	y.tab.h	/^     LEXWORD_RANGE = 433,$/;"	e	enum:yytokentype
+LEXWORD_RANGE	y.tab.h	455;"	d
+LEXWORD_RED	y.tab.c	/^     LEXWORD_RED = 434,$/;"	e	enum:yytokentype	file:
+LEXWORD_RED	y.tab.c	2360;"	d	file:
+LEXWORD_RED	y.tab.h	/^     LEXWORD_RED = 434,$/;"	e	enum:yytokentype
+LEXWORD_RED	y.tab.h	456;"	d
+LEXWORD_RHOMB	y.tab.c	/^     LEXWORD_RHOMB = 435,$/;"	e	enum:yytokentype	file:
+LEXWORD_RHOMB	y.tab.c	2361;"	d	file:
+LEXWORD_RHOMB	y.tab.h	/^     LEXWORD_RHOMB = 435,$/;"	e	enum:yytokentype
+LEXWORD_RHOMB	y.tab.h	457;"	d
+LEXWORD_RIGHT	y.tab.c	/^     LEXWORD_RIGHT = 440,$/;"	e	enum:yytokentype	file:
+LEXWORD_RIGHT	y.tab.c	2366;"	d	file:
+LEXWORD_RIGHT	y.tab.h	/^     LEXWORD_RIGHT = 440,$/;"	e	enum:yytokentype
+LEXWORD_RIGHT	y.tab.h	462;"	d
+LEXWORD_RIGHT_JUSTIFY	y.tab.c	/^     LEXWORD_RIGHT_JUSTIFY = 436,$/;"	e	enum:yytokentype	file:
+LEXWORD_RIGHT_JUSTIFY	y.tab.c	2362;"	d	file:
+LEXWORD_RIGHT_JUSTIFY	y.tab.h	/^     LEXWORD_RIGHT_JUSTIFY = 436,$/;"	e	enum:yytokentype
+LEXWORD_RIGHT_JUSTIFY	y.tab.h	458;"	d
+LEXWORD_RIGHT_MARGIN	y.tab.c	/^     LEXWORD_RIGHT_MARGIN = 437,$/;"	e	enum:yytokentype	file:
+LEXWORD_RIGHT_MARGIN	y.tab.c	2363;"	d	file:
+LEXWORD_RIGHT_MARGIN	y.tab.h	/^     LEXWORD_RIGHT_MARGIN = 437,$/;"	e	enum:yytokentype
+LEXWORD_RIGHT_MARGIN	y.tab.h	459;"	d
+LEXWORD_RIGHT_NEIGHBOR	y.tab.c	/^     LEXWORD_RIGHT_NEIGHBOR = 438,$/;"	e	enum:yytokentype	file:
+LEXWORD_RIGHT_NEIGHBOR	y.tab.c	2364;"	d	file:
+LEXWORD_RIGHT_NEIGHBOR	y.tab.h	/^     LEXWORD_RIGHT_NEIGHBOR = 438,$/;"	e	enum:yytokentype
+LEXWORD_RIGHT_NEIGHBOR	y.tab.h	460;"	d
+LEXWORD_RIGHT_TO_LEFT	y.tab.c	/^     LEXWORD_RIGHT_TO_LEFT = 439,$/;"	e	enum:yytokentype	file:
+LEXWORD_RIGHT_TO_LEFT	y.tab.c	2365;"	d	file:
+LEXWORD_RIGHT_TO_LEFT	y.tab.h	/^     LEXWORD_RIGHT_TO_LEFT = 439,$/;"	e	enum:yytokentype
+LEXWORD_RIGHT_TO_LEFT	y.tab.h	461;"	d
+LEXWORD_RMAX	y.tab.c	/^     LEXWORD_RMAX = 442,$/;"	e	enum:yytokentype	file:
+LEXWORD_RMAX	y.tab.c	2368;"	d	file:
+LEXWORD_RMAX	y.tab.h	/^     LEXWORD_RMAX = 442,$/;"	e	enum:yytokentype
+LEXWORD_RMAX	y.tab.h	464;"	d
+LEXWORD_RMIN	y.tab.c	/^     LEXWORD_RMIN = 441,$/;"	e	enum:yytokentype	file:
+LEXWORD_RMIN	y.tab.c	2367;"	d	file:
+LEXWORD_RMIN	y.tab.h	/^     LEXWORD_RMIN = 441,$/;"	e	enum:yytokentype
+LEXWORD_RMIN	y.tab.h	463;"	d
+LEXWORD_SCALING	y.tab.c	/^     LEXWORD_SCALING = 443,$/;"	e	enum:yytokentype	file:
+LEXWORD_SCALING	y.tab.c	2369;"	d	file:
+LEXWORD_SCALING	y.tab.h	/^     LEXWORD_SCALING = 443,$/;"	e	enum:yytokentype
+LEXWORD_SCALING	y.tab.h	465;"	d
+LEXWORD_SHAPE	y.tab.c	/^     LEXWORD_SHAPE = 444,$/;"	e	enum:yytokentype	file:
+LEXWORD_SHAPE	y.tab.c	2370;"	d	file:
+LEXWORD_SHAPE	y.tab.h	/^     LEXWORD_SHAPE = 444,$/;"	e	enum:yytokentype
+LEXWORD_SHAPE	y.tab.h	466;"	d
+LEXWORD_SHRINK	y.tab.c	/^     LEXWORD_SHRINK = 445,$/;"	e	enum:yytokentype	file:
+LEXWORD_SHRINK	y.tab.c	2371;"	d	file:
+LEXWORD_SHRINK	y.tab.h	/^     LEXWORD_SHRINK = 445,$/;"	e	enum:yytokentype
+LEXWORD_SHRINK	y.tab.h	467;"	d
+LEXWORD_SIZE	y.tab.c	/^     LEXWORD_SIZE = 448,$/;"	e	enum:yytokentype	file:
+LEXWORD_SIZE	y.tab.c	2374;"	d	file:
+LEXWORD_SIZE	y.tab.h	/^     LEXWORD_SIZE = 448,$/;"	e	enum:yytokentype
+LEXWORD_SIZE	y.tab.h	470;"	d
+LEXWORD_SMALLER	y.tab.c	/^     LEXWORD_SMALLER = 449,$/;"	e	enum:yytokentype	file:
+LEXWORD_SMALLER	y.tab.c	2375;"	d	file:
+LEXWORD_SMALLER	y.tab.h	/^     LEXWORD_SMALLER = 449,$/;"	e	enum:yytokentype
+LEXWORD_SMALLER	y.tab.h	471;"	d
+LEXWORD_SMANHATTEN	y.tab.c	/^     LEXWORD_SMANHATTEN = 447,$/;"	e	enum:yytokentype	file:
+LEXWORD_SMANHATTEN	y.tab.c	2373;"	d	file:
+LEXWORD_SMANHATTEN	y.tab.h	/^     LEXWORD_SMANHATTEN = 447,$/;"	e	enum:yytokentype
+LEXWORD_SMANHATTEN	y.tab.h	469;"	d
+LEXWORD_SMAX	y.tab.c	/^     LEXWORD_SMAX = 446,$/;"	e	enum:yytokentype	file:
+LEXWORD_SMAX	y.tab.c	2372;"	d	file:
+LEXWORD_SMAX	y.tab.h	/^     LEXWORD_SMAX = 446,$/;"	e	enum:yytokentype
+LEXWORD_SMAX	y.tab.h	468;"	d
+LEXWORD_SOLID	y.tab.c	/^     LEXWORD_SOLID = 450,$/;"	e	enum:yytokentype	file:
+LEXWORD_SOLID	y.tab.c	2376;"	d	file:
+LEXWORD_SOLID	y.tab.h	/^     LEXWORD_SOLID = 450,$/;"	e	enum:yytokentype
+LEXWORD_SOLID	y.tab.h	472;"	d
+LEXWORD_SOURCENAME	y.tab.c	/^     LEXWORD_SOURCENAME = 451,$/;"	e	enum:yytokentype	file:
+LEXWORD_SOURCENAME	y.tab.c	2377;"	d	file:
+LEXWORD_SOURCENAME	y.tab.h	/^     LEXWORD_SOURCENAME = 451,$/;"	e	enum:yytokentype
+LEXWORD_SOURCENAME	y.tab.h	473;"	d
+LEXWORD_SPLINES	y.tab.c	/^     LEXWORD_SPLINES = 452,$/;"	e	enum:yytokentype	file:
+LEXWORD_SPLINES	y.tab.c	2378;"	d	file:
+LEXWORD_SPLINES	y.tab.h	/^     LEXWORD_SPLINES = 452,$/;"	e	enum:yytokentype
+LEXWORD_SPLINES	y.tab.h	474;"	d
+LEXWORD_SPREADLEVEL	y.tab.c	/^     LEXWORD_SPREADLEVEL = 453,$/;"	e	enum:yytokentype	file:
+LEXWORD_SPREADLEVEL	y.tab.c	2379;"	d	file:
+LEXWORD_SPREADLEVEL	y.tab.h	/^     LEXWORD_SPREADLEVEL = 453,$/;"	e	enum:yytokentype
+LEXWORD_SPREADLEVEL	y.tab.h	475;"	d
+LEXWORD_STATUS	y.tab.c	/^     LEXWORD_STATUS = 454,$/;"	e	enum:yytokentype	file:
+LEXWORD_STATUS	y.tab.c	2380;"	d	file:
+LEXWORD_STATUS	y.tab.h	/^     LEXWORD_STATUS = 454,$/;"	e	enum:yytokentype
+LEXWORD_STATUS	y.tab.h	476;"	d
+LEXWORD_STRAIGHTPHASE	y.tab.c	/^     LEXWORD_STRAIGHTPHASE = 456,$/;"	e	enum:yytokentype	file:
+LEXWORD_STRAIGHTPHASE	y.tab.c	2382;"	d	file:
+LEXWORD_STRAIGHTPHASE	y.tab.h	/^     LEXWORD_STRAIGHTPHASE = 456,$/;"	e	enum:yytokentype
+LEXWORD_STRAIGHTPHASE	y.tab.h	478;"	d
+LEXWORD_STRETCH	y.tab.c	/^     LEXWORD_STRETCH = 455,$/;"	e	enum:yytokentype	file:
+LEXWORD_STRETCH	y.tab.c	2381;"	d	file:
+LEXWORD_STRETCH	y.tab.h	/^     LEXWORD_STRETCH = 455,$/;"	e	enum:yytokentype
+LEXWORD_STRETCH	y.tab.h	477;"	d
+LEXWORD_TARGETNAME	y.tab.c	/^     LEXWORD_TARGETNAME = 457,$/;"	e	enum:yytokentype	file:
+LEXWORD_TARGETNAME	y.tab.c	2383;"	d	file:
+LEXWORD_TARGETNAME	y.tab.h	/^     LEXWORD_TARGETNAME = 457,$/;"	e	enum:yytokentype
+LEXWORD_TARGETNAME	y.tab.h	479;"	d
+LEXWORD_TEXTCOLOR	y.tab.c	/^     LEXWORD_TEXTCOLOR = 361,$/;"	e	enum:yytokentype	file:
+LEXWORD_TEXTCOLOR	y.tab.c	2287;"	d	file:
+LEXWORD_TEXTCOLOR	y.tab.h	/^     LEXWORD_TEXTCOLOR = 361,$/;"	e	enum:yytokentype
+LEXWORD_TEXTCOLOR	y.tab.h	383;"	d
+LEXWORD_TEXTMODE	y.tab.c	/^     LEXWORD_TEXTMODE = 458,$/;"	e	enum:yytokentype	file:
+LEXWORD_TEXTMODE	y.tab.c	2384;"	d	file:
+LEXWORD_TEXTMODE	y.tab.h	/^     LEXWORD_TEXTMODE = 458,$/;"	e	enum:yytokentype
+LEXWORD_TEXTMODE	y.tab.h	480;"	d
+LEXWORD_THICKNESS	y.tab.c	/^     LEXWORD_THICKNESS = 459,$/;"	e	enum:yytokentype	file:
+LEXWORD_THICKNESS	y.tab.c	2385;"	d	file:
+LEXWORD_THICKNESS	y.tab.h	/^     LEXWORD_THICKNESS = 459,$/;"	e	enum:yytokentype
+LEXWORD_THICKNESS	y.tab.h	481;"	d
+LEXWORD_TITLE	y.tab.c	/^     LEXWORD_TITLE = 460,$/;"	e	enum:yytokentype	file:
+LEXWORD_TITLE	y.tab.c	2386;"	d	file:
+LEXWORD_TITLE	y.tab.h	/^     LEXWORD_TITLE = 460,$/;"	e	enum:yytokentype
+LEXWORD_TITLE	y.tab.h	482;"	d
+LEXWORD_TOP	y.tab.c	/^     LEXWORD_TOP = 464,$/;"	e	enum:yytokentype	file:
+LEXWORD_TOP	y.tab.c	2390;"	d	file:
+LEXWORD_TOP	y.tab.h	/^     LEXWORD_TOP = 464,$/;"	e	enum:yytokentype
+LEXWORD_TOP	y.tab.h	486;"	d
+LEXWORD_TOPSORT	y.tab.c	/^     LEXWORD_TOPSORT = 461,$/;"	e	enum:yytokentype	file:
+LEXWORD_TOPSORT	y.tab.c	2387;"	d	file:
+LEXWORD_TOPSORT	y.tab.h	/^     LEXWORD_TOPSORT = 461,$/;"	e	enum:yytokentype
+LEXWORD_TOPSORT	y.tab.h	483;"	d
+LEXWORD_TOP_MARGIN	y.tab.c	/^     LEXWORD_TOP_MARGIN = 462,$/;"	e	enum:yytokentype	file:
+LEXWORD_TOP_MARGIN	y.tab.c	2388;"	d	file:
+LEXWORD_TOP_MARGIN	y.tab.h	/^     LEXWORD_TOP_MARGIN = 462,$/;"	e	enum:yytokentype
+LEXWORD_TOP_MARGIN	y.tab.h	484;"	d
+LEXWORD_TOP_TO_BOTTOM	y.tab.c	/^     LEXWORD_TOP_TO_BOTTOM = 463,$/;"	e	enum:yytokentype	file:
+LEXWORD_TOP_TO_BOTTOM	y.tab.c	2389;"	d	file:
+LEXWORD_TOP_TO_BOTTOM	y.tab.h	/^     LEXWORD_TOP_TO_BOTTOM = 463,$/;"	e	enum:yytokentype
+LEXWORD_TOP_TO_BOTTOM	y.tab.h	485;"	d
+LEXWORD_TREE	y.tab.c	/^     LEXWORD_TREE = 465,$/;"	e	enum:yytokentype	file:
+LEXWORD_TREE	y.tab.c	2391;"	d	file:
+LEXWORD_TREE	y.tab.h	/^     LEXWORD_TREE = 465,$/;"	e	enum:yytokentype
+LEXWORD_TREE	y.tab.h	487;"	d
+LEXWORD_TREEFACTOR	y.tab.c	/^     LEXWORD_TREEFACTOR = 466,$/;"	e	enum:yytokentype	file:
+LEXWORD_TREEFACTOR	y.tab.c	2392;"	d	file:
+LEXWORD_TREEFACTOR	y.tab.h	/^     LEXWORD_TREEFACTOR = 466,$/;"	e	enum:yytokentype
+LEXWORD_TREEFACTOR	y.tab.h	488;"	d
+LEXWORD_TRIANGLE	y.tab.c	/^     LEXWORD_TRIANGLE = 467,$/;"	e	enum:yytokentype	file:
+LEXWORD_TRIANGLE	y.tab.c	2393;"	d	file:
+LEXWORD_TRIANGLE	y.tab.h	/^     LEXWORD_TRIANGLE = 467,$/;"	e	enum:yytokentype
+LEXWORD_TRIANGLE	y.tab.h	489;"	d
+LEXWORD_TURQUOISE	y.tab.c	/^     LEXWORD_TURQUOISE = 468,$/;"	e	enum:yytokentype	file:
+LEXWORD_TURQUOISE	y.tab.c	2394;"	d	file:
+LEXWORD_TURQUOISE	y.tab.h	/^     LEXWORD_TURQUOISE = 468,$/;"	e	enum:yytokentype
+LEXWORD_TURQUOISE	y.tab.h	490;"	d
+LEXWORD_TYPENAME	y.tab.c	/^     LEXWORD_TYPENAME = 469,$/;"	e	enum:yytokentype	file:
+LEXWORD_TYPENAME	y.tab.c	2395;"	d	file:
+LEXWORD_TYPENAME	y.tab.h	/^     LEXWORD_TYPENAME = 469,$/;"	e	enum:yytokentype
+LEXWORD_TYPENAME	y.tab.h	491;"	d
+LEXWORD_UPPER_NEIGHBOR	y.tab.c	/^     LEXWORD_UPPER_NEIGHBOR = 470,$/;"	e	enum:yytokentype	file:
+LEXWORD_UPPER_NEIGHBOR	y.tab.c	2396;"	d	file:
+LEXWORD_UPPER_NEIGHBOR	y.tab.h	/^     LEXWORD_UPPER_NEIGHBOR = 470,$/;"	e	enum:yytokentype
+LEXWORD_UPPER_NEIGHBOR	y.tab.h	492;"	d
+LEXWORD_VIEW	y.tab.c	/^     LEXWORD_VIEW = 471,$/;"	e	enum:yytokentype	file:
+LEXWORD_VIEW	y.tab.c	2397;"	d	file:
+LEXWORD_VIEW	y.tab.h	/^     LEXWORD_VIEW = 471,$/;"	e	enum:yytokentype
+LEXWORD_VIEW	y.tab.h	493;"	d
+LEXWORD_VORDER	y.tab.c	/^     LEXWORD_VORDER = 377,$/;"	e	enum:yytokentype	file:
+LEXWORD_VORDER	y.tab.c	2303;"	d	file:
+LEXWORD_VORDER	y.tab.h	/^     LEXWORD_VORDER = 377,$/;"	e	enum:yytokentype
+LEXWORD_VORDER	y.tab.h	399;"	d
+LEXWORD_WHITE	y.tab.c	/^     LEXWORD_WHITE = 472,$/;"	e	enum:yytokentype	file:
+LEXWORD_WHITE	y.tab.c	2398;"	d	file:
+LEXWORD_WHITE	y.tab.h	/^     LEXWORD_WHITE = 472,$/;"	e	enum:yytokentype
+LEXWORD_WHITE	y.tab.h	494;"	d
+LEXWORD_WIDTH	y.tab.c	/^     LEXWORD_WIDTH = 473,$/;"	e	enum:yytokentype	file:
+LEXWORD_WIDTH	y.tab.c	2399;"	d	file:
+LEXWORD_WIDTH	y.tab.h	/^     LEXWORD_WIDTH = 473,$/;"	e	enum:yytokentype
+LEXWORD_WIDTH	y.tab.h	495;"	d
+LEXWORD_XBASE	y.tab.c	/^     LEXWORD_XBASE = 474,$/;"	e	enum:yytokentype	file:
+LEXWORD_XBASE	y.tab.c	2400;"	d	file:
+LEXWORD_XBASE	y.tab.h	/^     LEXWORD_XBASE = 474,$/;"	e	enum:yytokentype
+LEXWORD_XBASE	y.tab.h	496;"	d
+LEXWORD_XLRASTER	y.tab.c	/^     LEXWORD_XLRASTER = 477,$/;"	e	enum:yytokentype	file:
+LEXWORD_XLRASTER	y.tab.c	2403;"	d	file:
+LEXWORD_XLRASTER	y.tab.h	/^     LEXWORD_XLRASTER = 477,$/;"	e	enum:yytokentype
+LEXWORD_XLRASTER	y.tab.h	499;"	d
+LEXWORD_XLSPACE	y.tab.c	/^     LEXWORD_XLSPACE = 480,$/;"	e	enum:yytokentype	file:
+LEXWORD_XLSPACE	y.tab.c	2406;"	d	file:
+LEXWORD_XLSPACE	y.tab.h	/^     LEXWORD_XLSPACE = 480,$/;"	e	enum:yytokentype
+LEXWORD_XLSPACE	y.tab.h	502;"	d
+LEXWORD_XMAX	y.tab.c	/^     LEXWORD_XMAX = 475,$/;"	e	enum:yytokentype	file:
+LEXWORD_XMAX	y.tab.c	2401;"	d	file:
+LEXWORD_XMAX	y.tab.h	/^     LEXWORD_XMAX = 475,$/;"	e	enum:yytokentype
+LEXWORD_XMAX	y.tab.h	497;"	d
+LEXWORD_XRASTER	y.tab.c	/^     LEXWORD_XRASTER = 476,$/;"	e	enum:yytokentype	file:
+LEXWORD_XRASTER	y.tab.c	2402;"	d	file:
+LEXWORD_XRASTER	y.tab.h	/^     LEXWORD_XRASTER = 476,$/;"	e	enum:yytokentype
+LEXWORD_XRASTER	y.tab.h	498;"	d
+LEXWORD_XSCROLLBAR	y.tab.c	/^     LEXWORD_XSCROLLBAR = 478,$/;"	e	enum:yytokentype	file:
+LEXWORD_XSCROLLBAR	y.tab.c	2404;"	d	file:
+LEXWORD_XSCROLLBAR	y.tab.h	/^     LEXWORD_XSCROLLBAR = 478,$/;"	e	enum:yytokentype
+LEXWORD_XSCROLLBAR	y.tab.h	500;"	d
+LEXWORD_XSPACE	y.tab.c	/^     LEXWORD_XSPACE = 479,$/;"	e	enum:yytokentype	file:
+LEXWORD_XSPACE	y.tab.c	2405;"	d	file:
+LEXWORD_XSPACE	y.tab.h	/^     LEXWORD_XSPACE = 479,$/;"	e	enum:yytokentype
+LEXWORD_XSPACE	y.tab.h	501;"	d
+LEXWORD_YBASE	y.tab.c	/^     LEXWORD_YBASE = 481,$/;"	e	enum:yytokentype	file:
+LEXWORD_YBASE	y.tab.c	2407;"	d	file:
+LEXWORD_YBASE	y.tab.h	/^     LEXWORD_YBASE = 481,$/;"	e	enum:yytokentype
+LEXWORD_YBASE	y.tab.h	503;"	d
+LEXWORD_YELLOW	y.tab.c	/^     LEXWORD_YELLOW = 483,$/;"	e	enum:yytokentype	file:
+LEXWORD_YELLOW	y.tab.c	2409;"	d	file:
+LEXWORD_YELLOW	y.tab.h	/^     LEXWORD_YELLOW = 483,$/;"	e	enum:yytokentype
+LEXWORD_YELLOW	y.tab.h	505;"	d
+LEXWORD_YELLOWGREEN	y.tab.c	/^     LEXWORD_YELLOWGREEN = 482,$/;"	e	enum:yytokentype	file:
+LEXWORD_YELLOWGREEN	y.tab.c	2408;"	d	file:
+LEXWORD_YELLOWGREEN	y.tab.h	/^     LEXWORD_YELLOWGREEN = 482,$/;"	e	enum:yytokentype
+LEXWORD_YELLOWGREEN	y.tab.h	504;"	d
+LEXWORD_YES	y.tab.c	/^     LEXWORD_YES = 484,$/;"	e	enum:yytokentype	file:
+LEXWORD_YES	y.tab.c	2410;"	d	file:
+LEXWORD_YES	y.tab.h	/^     LEXWORD_YES = 484,$/;"	e	enum:yytokentype
+LEXWORD_YES	y.tab.h	506;"	d
+LEXWORD_YMAX	y.tab.c	/^     LEXWORD_YMAX = 485,$/;"	e	enum:yytokentype	file:
+LEXWORD_YMAX	y.tab.c	2411;"	d	file:
+LEXWORD_YMAX	y.tab.h	/^     LEXWORD_YMAX = 485,$/;"	e	enum:yytokentype
+LEXWORD_YMAX	y.tab.h	507;"	d
+LEXWORD_YRASTER	y.tab.c	/^     LEXWORD_YRASTER = 486,$/;"	e	enum:yytokentype	file:
+LEXWORD_YRASTER	y.tab.c	2412;"	d	file:
+LEXWORD_YRASTER	y.tab.h	/^     LEXWORD_YRASTER = 486,$/;"	e	enum:yytokentype
+LEXWORD_YRASTER	y.tab.h	508;"	d
+LEXWORD_YSCROLLBAR	y.tab.c	/^     LEXWORD_YSCROLLBAR = 487,$/;"	e	enum:yytokentype	file:
+LEXWORD_YSCROLLBAR	y.tab.c	2413;"	d	file:
+LEXWORD_YSCROLLBAR	y.tab.h	/^     LEXWORD_YSCROLLBAR = 487,$/;"	e	enum:yytokentype
+LEXWORD_YSCROLLBAR	y.tab.h	509;"	d
+LEXWORD_YSPACE	y.tab.c	/^     LEXWORD_YSPACE = 488,$/;"	e	enum:yytokentype	file:
+LEXWORD_YSPACE	y.tab.c	2414;"	d	file:
+LEXWORD_YSPACE	y.tab.h	/^     LEXWORD_YSPACE = 488,$/;"	e	enum:yytokentype
+LEXWORD_YSPACE	y.tab.h	510;"	d
+LEX_CHAR	y.tab.c	/^     LEX_CHAR = 491,$/;"	e	enum:yytokentype	file:
+LEX_CHAR	y.tab.c	2417;"	d	file:
+LEX_CHAR	y.tab.h	/^     LEX_CHAR = 491,$/;"	e	enum:yytokentype
+LEX_CHAR	y.tab.h	513;"	d
+LEX_FLOAT	y.tab.c	/^     LEX_FLOAT = 490,$/;"	e	enum:yytokentype	file:
+LEX_FLOAT	y.tab.c	2416;"	d	file:
+LEX_FLOAT	y.tab.h	/^     LEX_FLOAT = 490,$/;"	e	enum:yytokentype
+LEX_FLOAT	y.tab.h	512;"	d
+LEX_INT	y.tab.c	/^     LEX_INT = 489,$/;"	e	enum:yytokentype	file:
+LEX_INT	y.tab.c	2415;"	d	file:
+LEX_INT	y.tab.h	/^     LEX_INT = 489,$/;"	e	enum:yytokentype
+LEX_INT	y.tab.h	511;"	d
+LEX_STRING	y.tab.c	/^     LEX_STRING = 492$/;"	e	enum:yytokentype	file:
+LEX_STRING	y.tab.c	2418;"	d	file:
+LEX_STRING	y.tab.h	/^     LEX_STRING = 492$/;"	e	enum:yytokentype
+LEX_STRING	y.tab.h	514;"	d
+LIGHTBLUE	alloc.h	91;"	d
+LIGHTCYAN	alloc.h	96;"	d
+LIGHTGREEN	alloc.h	93;"	d
+LIGHTGREY	alloc.h	90;"	d
+LIGHTMAGENTA	alloc.h	95;"	d
+LIGHTRED	alloc.h	92;"	d
+LIGHTYELLOW	alloc.h	94;"	d
+LILAC	alloc.h	97;"	d
+MAGENTA	alloc.h	79;"	d
+MAIN_H	main.h	118;"	d
+MAXCLASS	options.h	171;"	d
+MAXINT	globals.h	253;"	d
+MAXINT	globals.h	255;"	d
+MAXLONG	globals.h	269;"	d
+MAXLONG	globals.h	271;"	d
+MEMBLOCKSIZE	globals.h	176;"	d
+MININT	globals.h	261;"	d
+MININT	globals.h	263;"	d
+MINLONG	globals.h	277;"	d
+MINLONG	globals.h	279;"	d
+NANCHORNODE	alloc.h	458;"	d
+NBARY	alloc.h	459;"	d
+NBCOLOR	alloc.h	440;"	d
+NBEFORE	alloc.h	451;"	d
+NBORDERW	alloc.h	432;"	d
+NCOLOR	alloc.h	438;"	d
+NCONEDG	alloc.h	482;"	d
+NCONEDG2	alloc.h	484;"	d
+NCONNECT	alloc.h	478;"	d
+NCONTAR	alloc.h	481;"	d
+NCONTAR2	alloc.h	483;"	d
+NDEBUG	globals.h	343;"	d
+NDEBUG	globals.h	346;"	d
+NDFS	alloc.h	464;"	d
+NFOLDING	alloc.h	437;"	d
+NHEIGHT	alloc.h	429;"	d
+NHIGHPRIO	alloc.h	465;"	d
+NHORDER	alloc.h	444;"	d
+NINDEG	alloc.h	466;"	d
+NINFO1	alloc.h	424;"	d
+NINFO2	alloc.h	425;"	d
+NINFO3	alloc.h	426;"	d
+NINLIST	alloc.h	452;"	d
+NINTERN	alloc.h	479;"	d
+NINVISIBLE	alloc.h	453;"	d
+NLABEL	alloc.h	423;"	d
+NLEVEL	alloc.h	443;"	d
+NLOWPT	alloc.h	460;"	d
+NMARK	alloc.h	456;"	d
+NNEXT	alloc.h	450;"	d
+NO	alloc.h	122;"	d
+NOINPUTFOCUS	globals.h	200;"	d
+NOPENSCC	alloc.h	461;"	d
+NOREVERT	alloc.h	490;"	d
+NOUTDEG	alloc.h	467;"	d
+NO_ORI	alloc.h	159;"	d
+NO_STDINCLUDES	globals.h	114;"	d
+NPOS	alloc.h	455;"	d
+NPRED	alloc.h	470;"	d
+NPREDL	alloc.h	474;"	d
+NPREDR	alloc.h	475;"	d
+NREFNUM	alloc.h	421;"	d
+NREGION	alloc.h	448;"	d
+NREGREPL	alloc.h	447;"	d
+NREGROOT	alloc.h	449;"	d
+NREVERT	alloc.h	457;"	d
+NROOT	alloc.h	446;"	d
+NSGRAPH	alloc.h	445;"	d
+NSHAPE	alloc.h	431;"	d
+NSHRINK	alloc.h	441;"	d
+NSOURTIEFE	alloc.h	688;"	d
+NSTATE	alloc.h	430;"	d
+NSTRETCH	alloc.h	442;"	d
+NSUCC	alloc.h	471;"	d
+NSUCCL	alloc.h	476;"	d
+NSUCCR	alloc.h	477;"	d
+NSVPRED	alloc.h	472;"	d
+NSVSUCC	alloc.h	473;"	d
+NSX	alloc.h	433;"	d
+NSY	alloc.h	434;"	d
+NTARTIEFE	alloc.h	689;"	d
+NTCOLOR	alloc.h	439;"	d
+NTEXTMODE	alloc.h	427;"	d
+NTIEFE	alloc.h	454;"	d
+NTITLE	alloc.h	422;"	d
+NTMPADJ	alloc.h	469;"	d
+NULL	globals.h	293;"	d
+NULL	y.tab.c	321;"	d	file:
+NVPTR	alloc.h	468;"	d
+NWEIGHTP	alloc.h	463;"	d
+NWEIGHTS	alloc.h	462;"	d
+NWIDTH	alloc.h	428;"	d
+NX	alloc.h	435;"	d
+NY	alloc.h	436;"	d
+OPTIONS_H	options.h	58;"	d
+ORANGE	alloc.h	104;"	d
+ORCHID	alloc.h	105;"	d
+ORI_EAST	alloc.h	166;"	d
+ORI_NORTH	alloc.h	160;"	d
+ORI_NORTHEAST	alloc.h	161;"	d
+ORI_NORTHWEST	alloc.h	162;"	d
+ORI_SOUTH	alloc.h	163;"	d
+ORI_SOUTHEAST	alloc.h	164;"	d
+ORI_SOUTHWEST	alloc.h	165;"	d
+ORI_WEST	alloc.h	167;"	d
+OWN_QUICKSORT	globals.h	137;"	d
+PARSEBLOCKSIZE	grammar.h	54;"	d
+PARSEBLOCKSIZE	lex.yy.c	1946;"	d	file:
+PARSEBLOCKSIZE	y.tab.c	311;"	d	file:
+PARSEBLOCKSIZE	y.tab.c	352;"	d	file:
+PARSEBLOCKSIZE	y.tab.c	7934;"	d	file:
+PARSEGENSTD	grammar.h	42;"	d
+PARSEGENSTD	grammar.h	43;"	d
+PARSEGENSTD	lex.yy.c	1963;"	d	file:
+PARSEGENSTD	lex.yy.c	1964;"	d	file:
+PARSEGENSTD	y.tab.c	340;"	d	file:
+PARSEGENSTD	y.tab.c	341;"	d	file:
+PINK	alloc.h	103;"	d
+PRINTF	globals.h	366;"	d
+PURPLE	alloc.h	101;"	d
+ParseFree	y.tab.c	/^void ParseFree(void)$/;"	f
+ParseMalloc	lex.yy.c	/^static char * ParseMalloc(int x)$/;"	f	file:
+ParseMalloc	y.tab.c	/^char * ParseMalloc(int x)$/;"	f
+RED	alloc.h	76;"	d
+REJECT	lex.yy.c	1748;"	d	file:
+RETURN	lex.yy.c	2082;"	d	file:
+RETURN	lex.yy.c	2086;"	d	file:
+REVERT	y.tab.c	325;"	d	file:
+RHOMB	alloc.h	153;"	d
+RIGHT	alloc.h	129;"	d
+RIGHT_TO_LEFT	alloc.h	111;"	d
+RUSAGE_CHILDREN	timing.h	102;"	d
+RUSAGE_SELF	timing.h	99;"	d
+Revert	y.tab.c	/^yysyntaxtree Revert(yysyntaxtree list)$/;"	f
+RootWinMaxDepth	options.c	/^int 	RootWinMaxDepth;    \/* Depth of the frame buffer         *\/$/;"	v
+SCANPARSE_H	grammar.h	12;"	d
+SKIPYYTEXT	lex.yy.c	2050;"	d	file:
+SOLID	alloc.h	133;"	d
+SOURCE	alloc.h	681;"	d
+SPRINTF	globals.h	368;"	d
+STDHASH	grammar.h	732;"	d
+STDHASH	lex.yy.c	1970;"	d	file:
+STDPARSER	grammar.h	38;"	d
+STDPARSER	y.tab.c	336;"	d	file:
+STEPS_H	steps.h	66;"	d
+STRINGBLOCKSIZE	grammar.h	756;"	d
+STRINGBLOCKSIZE	lex.yy.c	1994;"	d	file:
+STRINGBLOCKSIZE	lex.yy.c	6184;"	d	file:
+SUNVIEW	globals.h	309;"	d
+SYERR	main.h	135;"	d
+ScreenHeight	options.c	/^int   	ScreenHeight;$/;"	v
+ScreenWidth	options.c	/^int	ScreenWidth;	    \/* Size of the screen                *\/$/;"	v
+StringHeapFree	lex.yy.c	/^void StringHeapFree(void)$/;"	f
+StringHeapMalloc	lex.yy.c	/^char *StringHeapMalloc(int x)$/;"	f
+Syntax_Tree	y.tab.c	/^yysyntaxtree  Syntax_Tree;$/;"	v
+TACTX	alloc.h	727;"	d
+TANZ	alloc.h	723;"	d
+TARGET	alloc.h	682;"	d
+TCROSS	alloc.h	726;"	d
+TIMELIM_H	timelim.h	57;"	d
+TIMING_H	timing.h	79;"	d
+TOP_TO_BOTTOM	alloc.h	109;"	d
+TPRED	alloc.h	724;"	d
+TREE_LAYOUT	options.h	93;"	d
+TREFN	alloc.h	728;"	d
+TRESNEEDED	alloc.h	729;"	d
+TRIANGLE	alloc.h	155;"	d
+TSUCC	alloc.h	725;"	d
+TURQUOISE	alloc.h	98;"	d
+T_Co_above	grammar.h	243;"	d
+T_Co_above	y.tab.c	549;"	d	file:
+T_Co_anchor	grammar.h	266;"	d
+T_Co_anchor	y.tab.c	572;"	d	file:
+T_Co_anchorpoints	grammar.h	294;"	d
+T_Co_anchorpoints	y.tab.c	600;"	d	file:
+T_Co_aquamarine	grammar.h	371;"	d
+T_Co_aquamarine	y.tab.c	677;"	d	file:
+T_Co_around	grammar.h	281;"	d
+T_Co_around	y.tab.c	587;"	d	file:
+T_Co_arrow_mode	grammar.h	397;"	d
+T_Co_arrow_mode	y.tab.c	703;"	d	file:
+T_Co_arrowcolor	grammar.h	273;"	d
+T_Co_arrowcolor	y.tab.c	579;"	d	file:
+T_Co_arrowheight	grammar.h	274;"	d
+T_Co_arrowheight	y.tab.c	580;"	d	file:
+T_Co_arrowsize	grammar.h	271;"	d
+T_Co_arrowsize	y.tab.c	577;"	d	file:
+T_Co_arrowstyle	grammar.h	269;"	d
+T_Co_arrowstyle	y.tab.c	575;"	d	file:
+T_Co_arrowwidth	grammar.h	275;"	d
+T_Co_arrowwidth	y.tab.c	581;"	d	file:
+T_Co_back_edge	grammar.h	456;"	d
+T_Co_back_edge	y.tab.c	762;"	d	file:
+T_Co_barrowcolor	grammar.h	272;"	d
+T_Co_barrowcolor	y.tab.c	578;"	d	file:
+T_Co_barrowsize	grammar.h	270;"	d
+T_Co_barrowsize	y.tab.c	576;"	d	file:
+T_Co_barrowstyle	grammar.h	268;"	d
+T_Co_barrowstyle	y.tab.c	574;"	d	file:
+T_Co_bary	grammar.h	310;"	d
+T_Co_bary	y.tab.c	616;"	d	file:
+T_Co_barycenter	grammar.h	332;"	d
+T_Co_barycenter	y.tab.c	638;"	d	file:
+T_Co_barymedian	grammar.h	308;"	d
+T_Co_barymedian	y.tab.c	614;"	d	file:
+T_Co_behind	grammar.h	238;"	d
+T_Co_behind	y.tab.c	544;"	d	file:
+T_Co_below	grammar.h	242;"	d
+T_Co_below	y.tab.c	548;"	d	file:
+T_Co_bend_max	grammar.h	387;"	d
+T_Co_bend_max	y.tab.c	693;"	d	file:
+T_Co_bent_near_edge	grammar.h	457;"	d
+T_Co_bent_near_edge	y.tab.c	763;"	d	file:
+T_Co_black	grammar.h	370;"	d
+T_Co_black	y.tab.c	676;"	d	file:
+T_Co_blue	grammar.h	369;"	d
+T_Co_blue	y.tab.c	675;"	d	file:
+T_Co_bordercolor	grammar.h	296;"	d
+T_Co_bordercolor	y.tab.c	602;"	d	file:
+T_Co_borderwidth	grammar.h	444;"	d
+T_Co_borderwidth	y.tab.c	750;"	d	file:
+T_Co_bottom	grammar.h	283;"	d
+T_Co_bottom	y.tab.c	589;"	d	file:
+T_Co_bottom_margin	grammar.h	233;"	d
+T_Co_bottom_margin	y.tab.c	539;"	d	file:
+T_Co_bottom_to_top	grammar.h	335;"	d
+T_Co_bottom_to_top	y.tab.c	641;"	d	file:
+T_Co_box	grammar.h	287;"	d
+T_Co_box	y.tab.c	593;"	d	file:
+T_Co_center	grammar.h	290;"	d
+T_Co_center	y.tab.c	596;"	d	file:
+T_Co_cfish	grammar.h	306;"	d
+T_Co_cfish	y.tab.c	612;"	d	file:
+T_Co_char	grammar.h	221;"	d
+T_Co_char	y.tab.c	527;"	d	file:
+T_Co_class	grammar.h	277;"	d
+T_Co_class	y.tab.c	583;"	d	file:
+T_Co_classname	grammar.h	420;"	d
+T_Co_classname	y.tab.c	726;"	d	file:
+T_Co_cluster	grammar.h	245;"	d
+T_Co_cluster	y.tab.c	551;"	d	file:
+T_Co_colentry	grammar.h	418;"	d
+T_Co_colentry	y.tab.c	724;"	d	file:
+T_Co_colindex	grammar.h	339;"	d
+T_Co_colindex	y.tab.c	645;"	d	file:
+T_Co_color	grammar.h	449;"	d
+T_Co_color	y.tab.c	755;"	d	file:
+T_Co_colorborder	grammar.h	447;"	d
+T_Co_colorborder	y.tab.c	753;"	d	file:
+T_Co_constaints	grammar.h	329;"	d
+T_Co_constaints	y.tab.c	635;"	d	file:
+T_Co_constraint	grammar.h	455;"	d
+T_Co_constraint	y.tab.c	761;"	d	file:
+T_Co_constraint_attribute	grammar.h	298;"	d
+T_Co_constraint_attribute	y.tab.c	604;"	d	file:
+T_Co_continuous	grammar.h	265;"	d
+T_Co_continuous	y.tab.c	571;"	d	file:
+T_Co_cross_max	grammar.h	386;"	d
+T_Co_cross_max	y.tab.c	692;"	d	file:
+T_Co_cross_min	grammar.h	385;"	d
+T_Co_cross_min	y.tab.c	691;"	d	file:
+T_Co_crossing_opt	grammar.h	393;"	d
+T_Co_crossing_opt	y.tab.c	699;"	d	file:
+T_Co_crossing_phase2	grammar.h	394;"	d
+T_Co_crossing_phase2	y.tab.c	700;"	d	file:
+T_Co_crossing_weight	grammar.h	392;"	d
+T_Co_crossing_weight	y.tab.c	698;"	d	file:
+T_Co_cyan	grammar.h	368;"	d
+T_Co_cyan	y.tab.c	674;"	d	file:
+T_Co_darkblue	grammar.h	367;"	d
+T_Co_darkblue	y.tab.c	673;"	d	file:
+T_Co_darkcyan	grammar.h	366;"	d
+T_Co_darkcyan	y.tab.c	672;"	d	file:
+T_Co_darkgreen	grammar.h	365;"	d
+T_Co_darkgreen	y.tab.c	671;"	d	file:
+T_Co_darkgrey	grammar.h	364;"	d
+T_Co_darkgrey	y.tab.c	670;"	d	file:
+T_Co_darkmagenta	grammar.h	363;"	d
+T_Co_darkmagenta	y.tab.c	669;"	d	file:
+T_Co_darkred	grammar.h	362;"	d
+T_Co_darkred	y.tab.c	668;"	d	file:
+T_Co_darkyellow	grammar.h	361;"	d
+T_Co_darkyellow	y.tab.c	667;"	d	file:
+T_Co_dashed	grammar.h	263;"	d
+T_Co_dashed	y.tab.c	569;"	d	file:
+T_Co_depthfirst	grammar.h	316;"	d
+T_Co_depthfirst	y.tab.c	622;"	d	file:
+T_Co_dimension	grammar.h	254;"	d
+T_Co_dimension	y.tab.c	560;"	d	file:
+T_Co_dirty_edge_label	grammar.h	409;"	d
+T_Co_dirty_edge_label	y.tab.c	715;"	d	file:
+T_Co_display_edge_label	grammar.h	410;"	d
+T_Co_display_edge_label	y.tab.c	716;"	d	file:
+T_Co_dotted	grammar.h	264;"	d
+T_Co_dotted	y.tab.c	570;"	d	file:
+T_Co_downfactor	grammar.h	415;"	d
+T_Co_downfactor	y.tab.c	721;"	d	file:
+T_Co_dummy	grammar.h	401;"	d
+T_Co_dummy	y.tab.c	707;"	d	file:
+T_Co_edge	grammar.h	459;"	d
+T_Co_edge	y.tab.c	765;"	d	file:
+T_Co_edge_attribute	grammar.h	299;"	d
+T_Co_edge_attribute	y.tab.c	605;"	d	file:
+T_Co_edge_defaults	grammar.h	464;"	d
+T_Co_edge_defaults	y.tab.c	770;"	d	file:
+T_Co_ellipse	grammar.h	285;"	d
+T_Co_ellipse	y.tab.c	591;"	d	file:
+T_Co_equal	grammar.h	252;"	d
+T_Co_equal	y.tab.c	558;"	d	file:
+T_Co_equal_column	grammar.h	235;"	d
+T_Co_equal_column	y.tab.c	541;"	d	file:
+T_Co_equal_position	grammar.h	237;"	d
+T_Co_equal_position	y.tab.c	543;"	d	file:
+T_Co_equal_row	grammar.h	236;"	d
+T_Co_equal_row	y.tab.c	542;"	d	file:
+T_Co_every	grammar.h	315;"	d
+T_Co_every	y.tab.c	621;"	d	file:
+T_Co_fcfish	grammar.h	305;"	d
+T_Co_fcfish	y.tab.c	611;"	d	file:
+T_Co_finetuning	grammar.h	408;"	d
+T_Co_finetuning	y.tab.c	714;"	d	file:
+T_Co_fixed	grammar.h	302;"	d
+T_Co_fixed	y.tab.c	608;"	d	file:
+T_Co_float	grammar.h	222;"	d
+T_Co_float	y.tab.c	528;"	d	file:
+T_Co_foldedge_defaults	grammar.h	462;"	d
+T_Co_foldedge_defaults	y.tab.c	768;"	d	file:
+T_Co_folding	grammar.h	440;"	d
+T_Co_folding	y.tab.c	746;"	d	file:
+T_Co_foldnode_defaults	grammar.h	463;"	d
+T_Co_foldnode_defaults	y.tab.c	769;"	d	file:
+T_Co_fontname	grammar.h	297;"	d
+T_Co_fontname	y.tab.c	603;"	d	file:
+T_Co_fpfish	grammar.h	303;"	d
+T_Co_fpfish	y.tab.c	609;"	d	file:
+T_Co_free	grammar.h	301;"	d
+T_Co_free	y.tab.c	607;"	d	file:
+T_Co_gold	grammar.h	360;"	d
+T_Co_gold	y.tab.c	666;"	d	file:
+T_Co_graph	grammar.h	461;"	d
+T_Co_graph	y.tab.c	767;"	d	file:
+T_Co_graph_attribute	grammar.h	466;"	d
+T_Co_graph_attribute	y.tab.c	772;"	d	file:
+T_Co_graph_entry	grammar.h	467;"	d
+T_Co_graph_entry	y.tab.c	773;"	d	file:
+T_Co_greater	grammar.h	250;"	d
+T_Co_greater	y.tab.c	556;"	d	file:
+T_Co_green	grammar.h	359;"	d
+T_Co_green	y.tab.c	665;"	d	file:
+T_Co_grey	grammar.h	313;"	d
+T_Co_grey	y.tab.c	619;"	d	file:
+T_Co_height	grammar.h	445;"	d
+T_Co_height	y.tab.c	751;"	d	file:
+T_Co_hidden	grammar.h	421;"	d
+T_Co_hidden	y.tab.c	727;"	d	file:
+T_Co_hidesingles	grammar.h	407;"	d
+T_Co_hidesingles	y.tab.c	713;"	d	file:
+T_Co_high	grammar.h	338;"	d
+T_Co_high	y.tab.c	644;"	d	file:
+T_Co_high_margin	grammar.h	247;"	d
+T_Co_high_margin	y.tab.c	553;"	d	file:
+T_Co_horizontal_order	grammar.h	433;"	d
+T_Co_horizontal_order	y.tab.c	739;"	d	file:
+T_Co_iconfile	grammar.h	295;"	d
+T_Co_iconfile	y.tab.c	601;"	d	file:
+T_Co_iconheight	grammar.h	292;"	d
+T_Co_iconheight	y.tab.c	598;"	d	file:
+T_Co_iconstyle	grammar.h	291;"	d
+T_Co_iconstyle	y.tab.c	597;"	d	file:
+T_Co_iconwidth	grammar.h	293;"	d
+T_Co_iconwidth	y.tab.c	599;"	d	file:
+T_Co_in_font	grammar.h	239;"	d
+T_Co_in_font	y.tab.c	545;"	d	file:
+T_Co_include	grammar.h	378;"	d
+T_Co_include	y.tab.c	684;"	d	file:
+T_Co_index	grammar.h	218;"	d
+T_Co_index	y.tab.c	524;"	d	file:
+T_Co_index_val	grammar.h	215;"	d
+T_Co_index_val	y.tab.c	521;"	d	file:
+T_Co_index_value	grammar.h	219;"	d
+T_Co_index_value	y.tab.c	525;"	d	file:
+T_Co_info1	grammar.h	452;"	d
+T_Co_info1	y.tab.c	758;"	d	file:
+T_Co_info2	grammar.h	451;"	d
+T_Co_info2	y.tab.c	757;"	d	file:
+T_Co_info3	grammar.h	450;"	d
+T_Co_info3	y.tab.c	756;"	d	file:
+T_Co_infoname	grammar.h	419;"	d
+T_Co_infoname	y.tab.c	725;"	d	file:
+T_Co_inputfunction	grammar.h	375;"	d
+T_Co_inputfunction	y.tab.c	681;"	d	file:
+T_Co_integer	grammar.h	223;"	d
+T_Co_integer	y.tab.c	529;"	d	file:
+T_Co_interval	grammar.h	256;"	d
+T_Co_interval	y.tab.c	562;"	d	file:
+T_Co_invisible	grammar.h	262;"	d
+T_Co_invisible	y.tab.c	568;"	d	file:
+T_Co_isi	grammar.h	331;"	d
+T_Co_isi	y.tab.c	637;"	d	file:
+T_Co_khaki	grammar.h	358;"	d
+T_Co_khaki	y.tab.c	664;"	d	file:
+T_Co_label	grammar.h	453;"	d
+T_Co_label	y.tab.c	759;"	d	file:
+T_Co_late_edge_label	grammar.h	411;"	d
+T_Co_late_edge_label	y.tab.c	717;"	d	file:
+T_Co_layoutalgorithm	grammar.h	417;"	d
+T_Co_layoutalgorithm	y.tab.c	723;"	d	file:
+T_Co_layoutfrequency	grammar.h	416;"	d
+T_Co_layoutfrequency	y.tab.c	722;"	d	file:
+T_Co_layoutparameter	grammar.h	377;"	d
+T_Co_layoutparameter	y.tab.c	683;"	d	file:
+T_Co_left	grammar.h	241;"	d
+T_Co_left	y.tab.c	547;"	d	file:
+T_Co_left_justify	grammar.h	289;"	d
+T_Co_left_justify	y.tab.c	595;"	d	file:
+T_Co_left_margin	grammar.h	232;"	d
+T_Co_left_margin	y.tab.c	538;"	d	file:
+T_Co_left_neighbor	grammar.h	228;"	d
+T_Co_left_neighbor	y.tab.c	534;"	d	file:
+T_Co_left_to_right	grammar.h	334;"	d
+T_Co_left_to_right	y.tab.c	640;"	d	file:
+T_Co_level	grammar.h	434;"	d
+T_Co_level	y.tab.c	740;"	d	file:
+T_Co_lightblue	grammar.h	357;"	d
+T_Co_lightblue	y.tab.c	663;"	d	file:
+T_Co_lightcyan	grammar.h	356;"	d
+T_Co_lightcyan	y.tab.c	662;"	d	file:
+T_Co_lightgreen	grammar.h	355;"	d
+T_Co_lightgreen	y.tab.c	661;"	d	file:
+T_Co_lightgrey	grammar.h	354;"	d
+T_Co_lightgrey	y.tab.c	660;"	d	file:
+T_Co_lightmagenta	grammar.h	353;"	d
+T_Co_lightmagenta	y.tab.c	659;"	d	file:
+T_Co_lightred	grammar.h	352;"	d
+T_Co_lightred	y.tab.c	658;"	d	file:
+T_Co_lightyellow	grammar.h	351;"	d
+T_Co_lightyellow	y.tab.c	657;"	d	file:
+T_Co_lilac	grammar.h	350;"	d
+T_Co_lilac	y.tab.c	656;"	d	file:
+T_Co_limit	grammar.h	244;"	d
+T_Co_limit	y.tab.c	550;"	d	file:
+T_Co_line	grammar.h	260;"	d
+T_Co_line	y.tab.c	566;"	d	file:
+T_Co_linestyle	grammar.h	267;"	d
+T_Co_linestyle	y.tab.c	573;"	d	file:
+T_Co_loc	grammar.h	441;"	d
+T_Co_loc	y.tab.c	747;"	d	file:
+T_Co_low	grammar.h	337;"	d
+T_Co_low	y.tab.c	643;"	d	file:
+T_Co_low_margin	grammar.h	248;"	d
+T_Co_low_margin	y.tab.c	554;"	d	file:
+T_Co_lower_neighbor	grammar.h	229;"	d
+T_Co_lower_neighbor	y.tab.c	535;"	d	file:
+T_Co_magenta	grammar.h	349;"	d
+T_Co_magenta	y.tab.c	655;"	d	file:
+T_Co_manhatten	grammar.h	404;"	d
+T_Co_manhatten	y.tab.c	710;"	d	file:
+T_Co_manual	grammar.h	314;"	d
+T_Co_manual	y.tab.c	620;"	d	file:
+T_Co_maxdegree	grammar.h	323;"	d
+T_Co_maxdegree	y.tab.c	629;"	d	file:
+T_Co_maxdepth	grammar.h	327;"	d
+T_Co_maxdepth	y.tab.c	633;"	d	file:
+T_Co_maxdepthslow	grammar.h	325;"	d
+T_Co_maxdepthslow	y.tab.c	631;"	d	file:
+T_Co_maxindegree	grammar.h	321;"	d
+T_Co_maxindegree	y.tab.c	627;"	d	file:
+T_Co_maxoutdegree	grammar.h	319;"	d
+T_Co_maxoutdegree	y.tab.c	625;"	d	file:
+T_Co_median	grammar.h	309;"	d
+T_Co_median	y.tab.c	615;"	d	file:
+T_Co_medianbary	grammar.h	307;"	d
+T_Co_medianbary	y.tab.c	613;"	d	file:
+T_Co_minbackwards	grammar.h	317;"	d
+T_Co_minbackwards	y.tab.c	623;"	d	file:
+T_Co_mindegree	grammar.h	322;"	d
+T_Co_mindegree	y.tab.c	628;"	d	file:
+T_Co_mindepth	grammar.h	326;"	d
+T_Co_mindepth	y.tab.c	632;"	d	file:
+T_Co_mindepthslow	grammar.h	324;"	d
+T_Co_mindepthslow	y.tab.c	630;"	d	file:
+T_Co_minindegree	grammar.h	320;"	d
+T_Co_minindegree	y.tab.c	626;"	d	file:
+T_Co_minoutdegree	grammar.h	318;"	d
+T_Co_minoutdegree	y.tab.c	624;"	d	file:
+T_Co_name	grammar.h	255;"	d
+T_Co_name	y.tab.c	561;"	d	file:
+T_Co_near_edge	grammar.h	458;"	d
+T_Co_near_edge	y.tab.c	764;"	d	file:
+T_Co_nearfactor	grammar.h	413;"	d
+T_Co_nearfactor	y.tab.c	719;"	d	file:
+T_Co_neighbors	grammar.h	249;"	d
+T_Co_neighbors	y.tab.c	555;"	d	file:
+T_Co_no	grammar.h	311;"	d
+T_Co_no	y.tab.c	617;"	d	file:
+T_Co_node	grammar.h	460;"	d
+T_Co_node	y.tab.c	766;"	d	file:
+T_Co_node_alignment	grammar.h	399;"	d
+T_Co_node_alignment	y.tab.c	705;"	d	file:
+T_Co_node_attribute	grammar.h	300;"	d
+T_Co_node_attribute	y.tab.c	606;"	d	file:
+T_Co_node_defaults	grammar.h	465;"	d
+T_Co_node_defaults	y.tab.c	771;"	d	file:
+T_Co_nodes	grammar.h	257;"	d
+T_Co_nodes	y.tab.c	563;"	d	file:
+T_Co_none	grammar.h	261;"	d
+T_Co_none	y.tab.c	567;"	d	file:
+T_Co_nonearedges	grammar.h	402;"	d
+T_Co_nonearedges	y.tab.c	708;"	d	file:
+T_Co_orange	grammar.h	348;"	d
+T_Co_orange	y.tab.c	654;"	d	file:
+T_Co_orchid	grammar.h	347;"	d
+T_Co_orchid	y.tab.c	653;"	d	file:
+T_Co_orientation	grammar.h	400;"	d
+T_Co_orientation	y.tab.c	706;"	d	file:
+T_Co_outputfunction	grammar.h	374;"	d
+T_Co_outputfunction	y.tab.c	680;"	d	file:
+T_Co_pendel_max	grammar.h	384;"	d
+T_Co_pendel_max	y.tab.c	690;"	d	file:
+T_Co_pendel_min	grammar.h	383;"	d
+T_Co_pendel_min	y.tab.c	689;"	d	file:
+T_Co_pfish	grammar.h	304;"	d
+T_Co_pfish	y.tab.c	610;"	d	file:
+T_Co_pink	grammar.h	346;"	d
+T_Co_pink	y.tab.c	652;"	d	file:
+T_Co_planar	grammar.h	330;"	d
+T_Co_planar	y.tab.c	636;"	d	file:
+T_Co_port_sharing	grammar.h	398;"	d
+T_Co_port_sharing	y.tab.c	704;"	d	file:
+T_Co_priophase	grammar.h	405;"	d
+T_Co_priophase	y.tab.c	711;"	d	file:
+T_Co_priority	grammar.h	276;"	d
+T_Co_priority	y.tab.c	582;"	d	file:
+T_Co_purple	grammar.h	345;"	d
+T_Co_purple	y.tab.c	651;"	d	file:
+T_Co_range	grammar.h	217;"	d
+T_Co_range	y.tab.c	523;"	d	file:
+T_Co_red	grammar.h	344;"	d
+T_Co_red	y.tab.c	650;"	d	file:
+T_Co_rhomb	grammar.h	286;"	d
+T_Co_rhomb	y.tab.c	592;"	d	file:
+T_Co_right	grammar.h	240;"	d
+T_Co_right	y.tab.c	546;"	d	file:
+T_Co_right_justify	grammar.h	288;"	d
+T_Co_right_justify	y.tab.c	594;"	d	file:
+T_Co_right_margin	grammar.h	231;"	d
+T_Co_right_margin	y.tab.c	537;"	d	file:
+T_Co_right_neighbor	grammar.h	227;"	d
+T_Co_right_neighbor	y.tab.c	533;"	d	file:
+T_Co_right_to_left	grammar.h	333;"	d
+T_Co_right_to_left	y.tab.c	639;"	d	file:
+T_Co_rubber_max	grammar.h	382;"	d
+T_Co_rubber_max	y.tab.c	688;"	d	file:
+T_Co_rubber_min	grammar.h	381;"	d
+T_Co_rubber_min	y.tab.c	687;"	d	file:
+T_Co_scaling	grammar.h	439;"	d
+T_Co_scaling	y.tab.c	745;"	d	file:
+T_Co_shape	grammar.h	435;"	d
+T_Co_shape	y.tab.c	741;"	d	file:
+T_Co_shrink	grammar.h	438;"	d
+T_Co_shrink	y.tab.c	744;"	d	file:
+T_Co_size	grammar.h	258;"	d
+T_Co_size	y.tab.c	564;"	d	file:
+T_Co_smaller	grammar.h	251;"	d
+T_Co_smaller	y.tab.c	557;"	d	file:
+T_Co_smanhatten	grammar.h	403;"	d
+T_Co_smanhatten	y.tab.c	709;"	d	file:
+T_Co_solid	grammar.h	259;"	d
+T_Co_solid	y.tab.c	565;"	d	file:
+T_Co_sourcename	grammar.h	280;"	d
+T_Co_sourcename	y.tab.c	586;"	d	file:
+T_Co_splinefactor	grammar.h	412;"	d
+T_Co_splinefactor	y.tab.c	718;"	d	file:
+T_Co_spreadlevel	grammar.h	396;"	d
+T_Co_spreadlevel	y.tab.c	702;"	d	file:
+T_Co_status	grammar.h	432;"	d
+T_Co_status	y.tab.c	738;"	d	file:
+T_Co_stern	grammar.h	216;"	d
+T_Co_stern	y.tab.c	522;"	d	file:
+T_Co_straight_max	grammar.h	380;"	d
+T_Co_straight_max	y.tab.c	686;"	d	file:
+T_Co_straightphase	grammar.h	406;"	d
+T_Co_straightphase	y.tab.c	712;"	d	file:
+T_Co_stretch	grammar.h	437;"	d
+T_Co_stretch	y.tab.c	743;"	d	file:
+T_Co_string	grammar.h	220;"	d
+T_Co_string	y.tab.c	526;"	d	file:
+T_Co_string_array	grammar.h	253;"	d
+T_Co_string_array	y.tab.c	559;"	d	file:
+T_Co_targetname	grammar.h	279;"	d
+T_Co_targetname	y.tab.c	585;"	d	file:
+T_Co_textcolor	grammar.h	448;"	d
+T_Co_textcolor	y.tab.c	754;"	d	file:
+T_Co_textmode	grammar.h	436;"	d
+T_Co_textmode	y.tab.c	742;"	d	file:
+T_Co_thickness	grammar.h	278;"	d
+T_Co_thickness	y.tab.c	584;"	d	file:
+T_Co_title	grammar.h	454;"	d
+T_Co_title	y.tab.c	760;"	d	file:
+T_Co_top	grammar.h	282;"	d
+T_Co_top	y.tab.c	588;"	d	file:
+T_Co_top_margin	grammar.h	234;"	d
+T_Co_top_margin	y.tab.c	540;"	d	file:
+T_Co_top_to_bottom	grammar.h	336;"	d
+T_Co_top_to_bottom	y.tab.c	642;"	d	file:
+T_Co_topsort	grammar.h	376;"	d
+T_Co_topsort	y.tab.c	682;"	d	file:
+T_Co_tree	grammar.h	328;"	d
+T_Co_tree	y.tab.c	634;"	d	file:
+T_Co_treefactor	grammar.h	395;"	d
+T_Co_treefactor	y.tab.c	701;"	d	file:
+T_Co_triangle	grammar.h	284;"	d
+T_Co_triangle	y.tab.c	590;"	d	file:
+T_Co_turquoise	grammar.h	343;"	d
+T_Co_turquoise	y.tab.c	649;"	d	file:
+T_Co_typename	grammar.h	379;"	d
+T_Co_typename	y.tab.c	685;"	d	file:
+T_Co_upfactor	grammar.h	414;"	d
+T_Co_upfactor	y.tab.c	720;"	d	file:
+T_Co_upper_neighbor	grammar.h	230;"	d
+T_Co_upper_neighbor	y.tab.c	536;"	d	file:
+T_Co_view_edges	grammar.h	390;"	d
+T_Co_view_edges	y.tab.c	696;"	d	file:
+T_Co_view_method	grammar.h	391;"	d
+T_Co_view_method	y.tab.c	697;"	d	file:
+T_Co_view_nodes	grammar.h	389;"	d
+T_Co_view_nodes	y.tab.c	695;"	d	file:
+T_Co_view_splines	grammar.h	388;"	d
+T_Co_view_splines	y.tab.c	694;"	d	file:
+T_Co_white	grammar.h	342;"	d
+T_Co_white	y.tab.c	648;"	d	file:
+T_Co_width	grammar.h	446;"	d
+T_Co_width	y.tab.c	752;"	d	file:
+T_Co_x	grammar.h	226;"	d
+T_Co_x	y.tab.c	532;"	d	file:
+T_Co_xbase	grammar.h	429;"	d
+T_Co_xbase	y.tab.c	735;"	d	file:
+T_Co_xdef	grammar.h	443;"	d
+T_Co_xdef	y.tab.c	749;"	d	file:
+T_Co_xlraster	grammar.h	423;"	d
+T_Co_xlraster	y.tab.c	729;"	d	file:
+T_Co_xlspace	grammar.h	426;"	d
+T_Co_xlspace	y.tab.c	732;"	d	file:
+T_Co_xmax	grammar.h	431;"	d
+T_Co_xmax	y.tab.c	737;"	d	file:
+T_Co_xrange	grammar.h	246;"	d
+T_Co_xrange	y.tab.c	552;"	d	file:
+T_Co_xraster	grammar.h	424;"	d
+T_Co_xraster	y.tab.c	730;"	d	file:
+T_Co_xscrollbar	grammar.h	373;"	d
+T_Co_xscrollbar	y.tab.c	679;"	d	file:
+T_Co_xspace	grammar.h	427;"	d
+T_Co_xspace	y.tab.c	733;"	d	file:
+T_Co_y	grammar.h	225;"	d
+T_Co_y	y.tab.c	531;"	d	file:
+T_Co_ybase	grammar.h	428;"	d
+T_Co_ybase	y.tab.c	734;"	d	file:
+T_Co_ydef	grammar.h	442;"	d
+T_Co_ydef	y.tab.c	748;"	d	file:
+T_Co_yellow	grammar.h	341;"	d
+T_Co_yellow	y.tab.c	647;"	d	file:
+T_Co_yellowgreen	grammar.h	340;"	d
+T_Co_yellowgreen	y.tab.c	646;"	d	file:
+T_Co_yes	grammar.h	312;"	d
+T_Co_yes	y.tab.c	618;"	d	file:
+T_Co_ymax	grammar.h	430;"	d
+T_Co_ymax	y.tab.c	736;"	d	file:
+T_Co_yraster	grammar.h	422;"	d
+T_Co_yraster	y.tab.c	728;"	d	file:
+T_Co_yscrollbar	grammar.h	372;"	d
+T_Co_yscrollbar	y.tab.c	678;"	d	file:
+T_Co_yspace	grammar.h	425;"	d
+T_Co_yspace	y.tab.c	731;"	d	file:
+T_Co_z	grammar.h	224;"	d
+T_Co_z	y.tab.c	530;"	d	file:
+T_above	grammar.h	499;"	d
+T_above	y.tab.c	1323;"	d	file:
+T_anchor	grammar.h	522;"	d
+T_anchor	y.tab.c	1346;"	d	file:
+T_anchorpoints	grammar.h	550;"	d
+T_anchorpoints	y.tab.c	1374;"	d	file:
+T_aquamarine	grammar.h	627;"	d
+T_aquamarine	y.tab.c	1451;"	d	file:
+T_around	grammar.h	537;"	d
+T_around	y.tab.c	1361;"	d	file:
+T_arrow_mode	grammar.h	653;"	d
+T_arrow_mode	y.tab.c	1477;"	d	file:
+T_arrowcolor	grammar.h	529;"	d
+T_arrowcolor	y.tab.c	1353;"	d	file:
+T_arrowheight	grammar.h	530;"	d
+T_arrowheight	y.tab.c	1354;"	d	file:
+T_arrowsize	grammar.h	527;"	d
+T_arrowsize	y.tab.c	1351;"	d	file:
+T_arrowstyle	grammar.h	525;"	d
+T_arrowstyle	y.tab.c	1349;"	d	file:
+T_arrowwidth	grammar.h	531;"	d
+T_arrowwidth	y.tab.c	1355;"	d	file:
+T_back_edge	grammar.h	712;"	d
+T_back_edge	y.tab.c	1536;"	d	file:
+T_barrowcolor	grammar.h	528;"	d
+T_barrowcolor	y.tab.c	1352;"	d	file:
+T_barrowsize	grammar.h	526;"	d
+T_barrowsize	y.tab.c	1350;"	d	file:
+T_barrowstyle	grammar.h	524;"	d
+T_barrowstyle	y.tab.c	1348;"	d	file:
+T_bary	grammar.h	566;"	d
+T_bary	y.tab.c	1390;"	d	file:
+T_barycenter	grammar.h	588;"	d
+T_barycenter	y.tab.c	1412;"	d	file:
+T_barymedian	grammar.h	564;"	d
+T_barymedian	y.tab.c	1388;"	d	file:
+T_behind	grammar.h	494;"	d
+T_behind	y.tab.c	1318;"	d	file:
+T_below	grammar.h	498;"	d
+T_below	y.tab.c	1322;"	d	file:
+T_bend_max	grammar.h	643;"	d
+T_bend_max	y.tab.c	1467;"	d	file:
+T_bent_near_edge	grammar.h	713;"	d
+T_bent_near_edge	y.tab.c	1537;"	d	file:
+T_black	grammar.h	626;"	d
+T_black	y.tab.c	1450;"	d	file:
+T_blue	grammar.h	625;"	d
+T_blue	y.tab.c	1449;"	d	file:
+T_bordercolor	grammar.h	552;"	d
+T_bordercolor	y.tab.c	1376;"	d	file:
+T_borderwidth	grammar.h	700;"	d
+T_borderwidth	y.tab.c	1524;"	d	file:
+T_bottom	grammar.h	539;"	d
+T_bottom	y.tab.c	1363;"	d	file:
+T_bottom_margin	grammar.h	489;"	d
+T_bottom_margin	y.tab.c	1313;"	d	file:
+T_bottom_to_top	grammar.h	591;"	d
+T_bottom_to_top	y.tab.c	1415;"	d	file:
+T_box	grammar.h	543;"	d
+T_box	y.tab.c	1367;"	d	file:
+T_center	grammar.h	546;"	d
+T_center	y.tab.c	1370;"	d	file:
+T_cfish	grammar.h	562;"	d
+T_cfish	y.tab.c	1386;"	d	file:
+T_char	grammar.h	477;"	d
+T_char	y.tab.c	1301;"	d	file:
+T_class	grammar.h	533;"	d
+T_class	y.tab.c	1357;"	d	file:
+T_classname	grammar.h	676;"	d
+T_classname	y.tab.c	1500;"	d	file:
+T_cluster	grammar.h	501;"	d
+T_cluster	y.tab.c	1325;"	d	file:
+T_colentry	grammar.h	674;"	d
+T_colentry	y.tab.c	1498;"	d	file:
+T_colindex	grammar.h	595;"	d
+T_colindex	y.tab.c	1419;"	d	file:
+T_color	grammar.h	705;"	d
+T_color	y.tab.c	1529;"	d	file:
+T_colorborder	grammar.h	703;"	d
+T_colorborder	y.tab.c	1527;"	d	file:
+T_constaints	grammar.h	585;"	d
+T_constaints	y.tab.c	1409;"	d	file:
+T_constraint	grammar.h	711;"	d
+T_constraint	y.tab.c	1535;"	d	file:
+T_constraint_attribute	grammar.h	554;"	d
+T_constraint_attribute	y.tab.c	1378;"	d	file:
+T_continuous	grammar.h	521;"	d
+T_continuous	y.tab.c	1345;"	d	file:
+T_cross_max	grammar.h	642;"	d
+T_cross_max	y.tab.c	1466;"	d	file:
+T_cross_min	grammar.h	641;"	d
+T_cross_min	y.tab.c	1465;"	d	file:
+T_crossing_opt	grammar.h	649;"	d
+T_crossing_opt	y.tab.c	1473;"	d	file:
+T_crossing_phase2	grammar.h	650;"	d
+T_crossing_phase2	y.tab.c	1474;"	d	file:
+T_crossing_weight	grammar.h	648;"	d
+T_crossing_weight	y.tab.c	1472;"	d	file:
+T_cyan	grammar.h	624;"	d
+T_cyan	y.tab.c	1448;"	d	file:
+T_darkblue	grammar.h	623;"	d
+T_darkblue	y.tab.c	1447;"	d	file:
+T_darkcyan	grammar.h	622;"	d
+T_darkcyan	y.tab.c	1446;"	d	file:
+T_darkgreen	grammar.h	621;"	d
+T_darkgreen	y.tab.c	1445;"	d	file:
+T_darkgrey	grammar.h	620;"	d
+T_darkgrey	y.tab.c	1444;"	d	file:
+T_darkmagenta	grammar.h	619;"	d
+T_darkmagenta	y.tab.c	1443;"	d	file:
+T_darkred	grammar.h	618;"	d
+T_darkred	y.tab.c	1442;"	d	file:
+T_darkyellow	grammar.h	617;"	d
+T_darkyellow	y.tab.c	1441;"	d	file:
+T_dashed	grammar.h	519;"	d
+T_dashed	y.tab.c	1343;"	d	file:
+T_depthfirst	grammar.h	572;"	d
+T_depthfirst	y.tab.c	1396;"	d	file:
+T_dimension	grammar.h	510;"	d
+T_dimension	y.tab.c	1334;"	d	file:
+T_dirty_edge_label	grammar.h	665;"	d
+T_dirty_edge_label	y.tab.c	1489;"	d	file:
+T_display_edge_label	grammar.h	666;"	d
+T_display_edge_label	y.tab.c	1490;"	d	file:
+T_dotted	grammar.h	520;"	d
+T_dotted	y.tab.c	1344;"	d	file:
+T_downfactor	grammar.h	671;"	d
+T_downfactor	y.tab.c	1495;"	d	file:
+T_dummy	grammar.h	657;"	d
+T_dummy	y.tab.c	1481;"	d	file:
+T_edge	grammar.h	715;"	d
+T_edge	y.tab.c	1539;"	d	file:
+T_edge_attribute	grammar.h	555;"	d
+T_edge_attribute	y.tab.c	1379;"	d	file:
+T_edge_defaults	grammar.h	720;"	d
+T_edge_defaults	y.tab.c	1544;"	d	file:
+T_ellipse	grammar.h	541;"	d
+T_ellipse	y.tab.c	1365;"	d	file:
+T_equal	grammar.h	508;"	d
+T_equal	y.tab.c	1332;"	d	file:
+T_equal_column	grammar.h	491;"	d
+T_equal_column	y.tab.c	1315;"	d	file:
+T_equal_position	grammar.h	493;"	d
+T_equal_position	y.tab.c	1317;"	d	file:
+T_equal_row	grammar.h	492;"	d
+T_equal_row	y.tab.c	1316;"	d	file:
+T_every	grammar.h	571;"	d
+T_every	y.tab.c	1395;"	d	file:
+T_fcfish	grammar.h	561;"	d
+T_fcfish	y.tab.c	1385;"	d	file:
+T_finetuning	grammar.h	664;"	d
+T_finetuning	y.tab.c	1488;"	d	file:
+T_fixed	grammar.h	558;"	d
+T_fixed	y.tab.c	1382;"	d	file:
+T_float	grammar.h	478;"	d
+T_float	y.tab.c	1302;"	d	file:
+T_foldedge_defaults	grammar.h	718;"	d
+T_foldedge_defaults	y.tab.c	1542;"	d	file:
+T_folding	grammar.h	696;"	d
+T_folding	y.tab.c	1520;"	d	file:
+T_foldnode_defaults	grammar.h	719;"	d
+T_foldnode_defaults	y.tab.c	1543;"	d	file:
+T_fontname	grammar.h	553;"	d
+T_fontname	y.tab.c	1377;"	d	file:
+T_fpfish	grammar.h	559;"	d
+T_fpfish	y.tab.c	1383;"	d	file:
+T_free	grammar.h	557;"	d
+T_free	y.tab.c	1381;"	d	file:
+T_gold	grammar.h	616;"	d
+T_gold	y.tab.c	1440;"	d	file:
+T_graph	grammar.h	717;"	d
+T_graph	y.tab.c	1541;"	d	file:
+T_graph_attribute	grammar.h	722;"	d
+T_graph_attribute	y.tab.c	1546;"	d	file:
+T_graph_entry	grammar.h	723;"	d
+T_graph_entry	y.tab.c	1547;"	d	file:
+T_greater	grammar.h	506;"	d
+T_greater	y.tab.c	1330;"	d	file:
+T_green	grammar.h	615;"	d
+T_green	y.tab.c	1439;"	d	file:
+T_grey	grammar.h	569;"	d
+T_grey	y.tab.c	1393;"	d	file:
+T_height	grammar.h	701;"	d
+T_height	y.tab.c	1525;"	d	file:
+T_hidden	grammar.h	677;"	d
+T_hidden	y.tab.c	1501;"	d	file:
+T_hidesingles	grammar.h	663;"	d
+T_hidesingles	y.tab.c	1487;"	d	file:
+T_high	grammar.h	594;"	d
+T_high	y.tab.c	1418;"	d	file:
+T_high_margin	grammar.h	503;"	d
+T_high_margin	y.tab.c	1327;"	d	file:
+T_horizontal_order	grammar.h	689;"	d
+T_horizontal_order	y.tab.c	1513;"	d	file:
+T_iconfile	grammar.h	551;"	d
+T_iconfile	y.tab.c	1375;"	d	file:
+T_iconheight	grammar.h	548;"	d
+T_iconheight	y.tab.c	1372;"	d	file:
+T_iconstyle	grammar.h	547;"	d
+T_iconstyle	y.tab.c	1371;"	d	file:
+T_iconwidth	grammar.h	549;"	d
+T_iconwidth	y.tab.c	1373;"	d	file:
+T_in_font	grammar.h	495;"	d
+T_in_font	y.tab.c	1319;"	d	file:
+T_include	grammar.h	634;"	d
+T_include	y.tab.c	1458;"	d	file:
+T_index	grammar.h	474;"	d
+T_index	y.tab.c	1298;"	d	file:
+T_index_val	grammar.h	471;"	d
+T_index_val	y.tab.c	1295;"	d	file:
+T_index_value	grammar.h	475;"	d
+T_index_value	y.tab.c	1299;"	d	file:
+T_info1	grammar.h	708;"	d
+T_info1	y.tab.c	1532;"	d	file:
+T_info2	grammar.h	707;"	d
+T_info2	y.tab.c	1531;"	d	file:
+T_info3	grammar.h	706;"	d
+T_info3	y.tab.c	1530;"	d	file:
+T_infoname	grammar.h	675;"	d
+T_infoname	y.tab.c	1499;"	d	file:
+T_inputfunction	grammar.h	631;"	d
+T_inputfunction	y.tab.c	1455;"	d	file:
+T_integer	grammar.h	479;"	d
+T_integer	y.tab.c	1303;"	d	file:
+T_interval	grammar.h	512;"	d
+T_interval	y.tab.c	1336;"	d	file:
+T_invisible	grammar.h	518;"	d
+T_invisible	y.tab.c	1342;"	d	file:
+T_isi	grammar.h	587;"	d
+T_isi	y.tab.c	1411;"	d	file:
+T_khaki	grammar.h	614;"	d
+T_khaki	y.tab.c	1438;"	d	file:
+T_label	grammar.h	709;"	d
+T_label	y.tab.c	1533;"	d	file:
+T_late_edge_label	grammar.h	667;"	d
+T_late_edge_label	y.tab.c	1491;"	d	file:
+T_layoutalgorithm	grammar.h	673;"	d
+T_layoutalgorithm	y.tab.c	1497;"	d	file:
+T_layoutfrequency	grammar.h	672;"	d
+T_layoutfrequency	y.tab.c	1496;"	d	file:
+T_layoutparameter	grammar.h	633;"	d
+T_layoutparameter	y.tab.c	1457;"	d	file:
+T_left	grammar.h	497;"	d
+T_left	y.tab.c	1321;"	d	file:
+T_left_justify	grammar.h	545;"	d
+T_left_justify	y.tab.c	1369;"	d	file:
+T_left_margin	grammar.h	488;"	d
+T_left_margin	y.tab.c	1312;"	d	file:
+T_left_neighbor	grammar.h	484;"	d
+T_left_neighbor	y.tab.c	1308;"	d	file:
+T_left_to_right	grammar.h	590;"	d
+T_left_to_right	y.tab.c	1414;"	d	file:
+T_level	grammar.h	690;"	d
+T_level	y.tab.c	1514;"	d	file:
+T_lightblue	grammar.h	613;"	d
+T_lightblue	y.tab.c	1437;"	d	file:
+T_lightcyan	grammar.h	612;"	d
+T_lightcyan	y.tab.c	1436;"	d	file:
+T_lightgreen	grammar.h	611;"	d
+T_lightgreen	y.tab.c	1435;"	d	file:
+T_lightgrey	grammar.h	610;"	d
+T_lightgrey	y.tab.c	1434;"	d	file:
+T_lightmagenta	grammar.h	609;"	d
+T_lightmagenta	y.tab.c	1433;"	d	file:
+T_lightred	grammar.h	608;"	d
+T_lightred	y.tab.c	1432;"	d	file:
+T_lightyellow	grammar.h	607;"	d
+T_lightyellow	y.tab.c	1431;"	d	file:
+T_lilac	grammar.h	606;"	d
+T_lilac	y.tab.c	1430;"	d	file:
+T_limit	grammar.h	500;"	d
+T_limit	y.tab.c	1324;"	d	file:
+T_line	grammar.h	516;"	d
+T_line	y.tab.c	1340;"	d	file:
+T_linestyle	grammar.h	523;"	d
+T_linestyle	y.tab.c	1347;"	d	file:
+T_loc	grammar.h	697;"	d
+T_loc	y.tab.c	1521;"	d	file:
+T_low	grammar.h	593;"	d
+T_low	y.tab.c	1417;"	d	file:
+T_low_margin	grammar.h	504;"	d
+T_low_margin	y.tab.c	1328;"	d	file:
+T_lower_neighbor	grammar.h	485;"	d
+T_lower_neighbor	y.tab.c	1309;"	d	file:
+T_magenta	grammar.h	605;"	d
+T_magenta	y.tab.c	1429;"	d	file:
+T_manhatten	grammar.h	660;"	d
+T_manhatten	y.tab.c	1484;"	d	file:
+T_manual	grammar.h	570;"	d
+T_manual	y.tab.c	1394;"	d	file:
+T_maxdegree	grammar.h	579;"	d
+T_maxdegree	y.tab.c	1403;"	d	file:
+T_maxdepth	grammar.h	583;"	d
+T_maxdepth	y.tab.c	1407;"	d	file:
+T_maxdepthslow	grammar.h	581;"	d
+T_maxdepthslow	y.tab.c	1405;"	d	file:
+T_maxindegree	grammar.h	577;"	d
+T_maxindegree	y.tab.c	1401;"	d	file:
+T_maxoutdegree	grammar.h	575;"	d
+T_maxoutdegree	y.tab.c	1399;"	d	file:
+T_median	grammar.h	565;"	d
+T_median	y.tab.c	1389;"	d	file:
+T_medianbary	grammar.h	563;"	d
+T_medianbary	y.tab.c	1387;"	d	file:
+T_minbackwards	grammar.h	573;"	d
+T_minbackwards	y.tab.c	1397;"	d	file:
+T_mindegree	grammar.h	578;"	d
+T_mindegree	y.tab.c	1402;"	d	file:
+T_mindepth	grammar.h	582;"	d
+T_mindepth	y.tab.c	1406;"	d	file:
+T_mindepthslow	grammar.h	580;"	d
+T_mindepthslow	y.tab.c	1404;"	d	file:
+T_minindegree	grammar.h	576;"	d
+T_minindegree	y.tab.c	1400;"	d	file:
+T_minoutdegree	grammar.h	574;"	d
+T_minoutdegree	y.tab.c	1398;"	d	file:
+T_name	grammar.h	511;"	d
+T_name	y.tab.c	1335;"	d	file:
+T_near_edge	grammar.h	714;"	d
+T_near_edge	y.tab.c	1538;"	d	file:
+T_nearfactor	grammar.h	669;"	d
+T_nearfactor	y.tab.c	1493;"	d	file:
+T_neighbors	grammar.h	505;"	d
+T_neighbors	y.tab.c	1329;"	d	file:
+T_no	grammar.h	567;"	d
+T_no	y.tab.c	1391;"	d	file:
+T_node	grammar.h	716;"	d
+T_node	y.tab.c	1540;"	d	file:
+T_node_alignment	grammar.h	655;"	d
+T_node_alignment	y.tab.c	1479;"	d	file:
+T_node_attribute	grammar.h	556;"	d
+T_node_attribute	y.tab.c	1380;"	d	file:
+T_node_defaults	grammar.h	721;"	d
+T_node_defaults	y.tab.c	1545;"	d	file:
+T_nodes	grammar.h	513;"	d
+T_nodes	y.tab.c	1337;"	d	file:
+T_none	grammar.h	517;"	d
+T_none	y.tab.c	1341;"	d	file:
+T_nonearedges	grammar.h	658;"	d
+T_nonearedges	y.tab.c	1482;"	d	file:
+T_orange	grammar.h	604;"	d
+T_orange	y.tab.c	1428;"	d	file:
+T_orchid	grammar.h	603;"	d
+T_orchid	y.tab.c	1427;"	d	file:
+T_orientation	grammar.h	656;"	d
+T_orientation	y.tab.c	1480;"	d	file:
+T_outputfunction	grammar.h	630;"	d
+T_outputfunction	y.tab.c	1454;"	d	file:
+T_pendel_max	grammar.h	640;"	d
+T_pendel_max	y.tab.c	1464;"	d	file:
+T_pendel_min	grammar.h	639;"	d
+T_pendel_min	y.tab.c	1463;"	d	file:
+T_pfish	grammar.h	560;"	d
+T_pfish	y.tab.c	1384;"	d	file:
+T_pink	grammar.h	602;"	d
+T_pink	y.tab.c	1426;"	d	file:
+T_planar	grammar.h	586;"	d
+T_planar	y.tab.c	1410;"	d	file:
+T_port_sharing	grammar.h	654;"	d
+T_port_sharing	y.tab.c	1478;"	d	file:
+T_priophase	grammar.h	661;"	d
+T_priophase	y.tab.c	1485;"	d	file:
+T_priority	grammar.h	532;"	d
+T_priority	y.tab.c	1356;"	d	file:
+T_purple	grammar.h	601;"	d
+T_purple	y.tab.c	1425;"	d	file:
+T_range	grammar.h	473;"	d
+T_range	y.tab.c	1297;"	d	file:
+T_red	grammar.h	600;"	d
+T_red	y.tab.c	1424;"	d	file:
+T_rhomb	grammar.h	542;"	d
+T_rhomb	y.tab.c	1366;"	d	file:
+T_right	grammar.h	496;"	d
+T_right	y.tab.c	1320;"	d	file:
+T_right_justify	grammar.h	544;"	d
+T_right_justify	y.tab.c	1368;"	d	file:
+T_right_margin	grammar.h	487;"	d
+T_right_margin	y.tab.c	1311;"	d	file:
+T_right_neighbor	grammar.h	483;"	d
+T_right_neighbor	y.tab.c	1307;"	d	file:
+T_right_to_left	grammar.h	589;"	d
+T_right_to_left	y.tab.c	1413;"	d	file:
+T_rubber_max	grammar.h	638;"	d
+T_rubber_max	y.tab.c	1462;"	d	file:
+T_rubber_min	grammar.h	637;"	d
+T_rubber_min	y.tab.c	1461;"	d	file:
+T_scaling	grammar.h	695;"	d
+T_scaling	y.tab.c	1519;"	d	file:
+T_shape	grammar.h	691;"	d
+T_shape	y.tab.c	1515;"	d	file:
+T_shrink	grammar.h	694;"	d
+T_shrink	y.tab.c	1518;"	d	file:
+T_size	grammar.h	514;"	d
+T_size	y.tab.c	1338;"	d	file:
+T_smaller	grammar.h	507;"	d
+T_smaller	y.tab.c	1331;"	d	file:
+T_smanhatten	grammar.h	659;"	d
+T_smanhatten	y.tab.c	1483;"	d	file:
+T_solid	grammar.h	515;"	d
+T_solid	y.tab.c	1339;"	d	file:
+T_sourcename	grammar.h	536;"	d
+T_sourcename	y.tab.c	1360;"	d	file:
+T_splinefactor	grammar.h	668;"	d
+T_splinefactor	y.tab.c	1492;"	d	file:
+T_spreadlevel	grammar.h	652;"	d
+T_spreadlevel	y.tab.c	1476;"	d	file:
+T_status	grammar.h	688;"	d
+T_status	y.tab.c	1512;"	d	file:
+T_stern	grammar.h	472;"	d
+T_stern	y.tab.c	1296;"	d	file:
+T_straight_max	grammar.h	636;"	d
+T_straight_max	y.tab.c	1460;"	d	file:
+T_straightphase	grammar.h	662;"	d
+T_straightphase	y.tab.c	1486;"	d	file:
+T_stretch	grammar.h	693;"	d
+T_stretch	y.tab.c	1517;"	d	file:
+T_string	grammar.h	476;"	d
+T_string	y.tab.c	1300;"	d	file:
+T_string_array	grammar.h	509;"	d
+T_string_array	y.tab.c	1333;"	d	file:
+T_targetname	grammar.h	535;"	d
+T_targetname	y.tab.c	1359;"	d	file:
+T_textcolor	grammar.h	704;"	d
+T_textcolor	y.tab.c	1528;"	d	file:
+T_textmode	grammar.h	692;"	d
+T_textmode	y.tab.c	1516;"	d	file:
+T_thickness	grammar.h	534;"	d
+T_thickness	y.tab.c	1358;"	d	file:
+T_title	grammar.h	710;"	d
+T_title	y.tab.c	1534;"	d	file:
+T_top	grammar.h	538;"	d
+T_top	y.tab.c	1362;"	d	file:
+T_top_margin	grammar.h	490;"	d
+T_top_margin	y.tab.c	1314;"	d	file:
+T_top_to_bottom	grammar.h	592;"	d
+T_top_to_bottom	y.tab.c	1416;"	d	file:
+T_topsort	grammar.h	632;"	d
+T_topsort	y.tab.c	1456;"	d	file:
+T_tree	grammar.h	584;"	d
+T_tree	y.tab.c	1408;"	d	file:
+T_treefactor	grammar.h	651;"	d
+T_treefactor	y.tab.c	1475;"	d	file:
+T_triangle	grammar.h	540;"	d
+T_triangle	y.tab.c	1364;"	d	file:
+T_turquoise	grammar.h	599;"	d
+T_turquoise	y.tab.c	1423;"	d	file:
+T_typename	grammar.h	635;"	d
+T_typename	y.tab.c	1459;"	d	file:
+T_upfactor	grammar.h	670;"	d
+T_upfactor	y.tab.c	1494;"	d	file:
+T_upper_neighbor	grammar.h	486;"	d
+T_upper_neighbor	y.tab.c	1310;"	d	file:
+T_view_edges	grammar.h	646;"	d
+T_view_edges	y.tab.c	1470;"	d	file:
+T_view_method	grammar.h	647;"	d
+T_view_method	y.tab.c	1471;"	d	file:
+T_view_nodes	grammar.h	645;"	d
+T_view_nodes	y.tab.c	1469;"	d	file:
+T_view_splines	grammar.h	644;"	d
+T_view_splines	y.tab.c	1468;"	d	file:
+T_white	grammar.h	598;"	d
+T_white	y.tab.c	1422;"	d	file:
+T_width	grammar.h	702;"	d
+T_width	y.tab.c	1526;"	d	file:
+T_x	grammar.h	482;"	d
+T_x	y.tab.c	1306;"	d	file:
+T_xbase	grammar.h	685;"	d
+T_xbase	y.tab.c	1509;"	d	file:
+T_xdef	grammar.h	699;"	d
+T_xdef	y.tab.c	1523;"	d	file:
+T_xlraster	grammar.h	679;"	d
+T_xlraster	y.tab.c	1503;"	d	file:
+T_xlspace	grammar.h	682;"	d
+T_xlspace	y.tab.c	1506;"	d	file:
+T_xmax	grammar.h	687;"	d
+T_xmax	y.tab.c	1511;"	d	file:
+T_xrange	grammar.h	502;"	d
+T_xrange	y.tab.c	1326;"	d	file:
+T_xraster	grammar.h	680;"	d
+T_xraster	y.tab.c	1504;"	d	file:
+T_xscrollbar	grammar.h	629;"	d
+T_xscrollbar	y.tab.c	1453;"	d	file:
+T_xspace	grammar.h	683;"	d
+T_xspace	y.tab.c	1507;"	d	file:
+T_y	grammar.h	481;"	d
+T_y	y.tab.c	1305;"	d	file:
+T_ybase	grammar.h	684;"	d
+T_ybase	y.tab.c	1508;"	d	file:
+T_ydef	grammar.h	698;"	d
+T_ydef	y.tab.c	1522;"	d	file:
+T_yellow	grammar.h	597;"	d
+T_yellow	y.tab.c	1421;"	d	file:
+T_yellowgreen	grammar.h	596;"	d
+T_yellowgreen	y.tab.c	1420;"	d	file:
+T_yes	grammar.h	568;"	d
+T_yes	y.tab.c	1392;"	d	file:
+T_ymax	grammar.h	686;"	d
+T_ymax	y.tab.c	1510;"	d	file:
+T_yraster	grammar.h	678;"	d
+T_yraster	y.tab.c	1502;"	d	file:
+T_yscrollbar	grammar.h	628;"	d
+T_yscrollbar	y.tab.c	1452;"	d	file:
+T_yspace	grammar.h	681;"	d
+T_yspace	y.tab.c	1505;"	d	file:
+T_z	grammar.h	480;"	d
+T_z	y.tab.c	1304;"	d	file:
+TreeTab	y.tab.c	/^static yysyntaxtree TreeTab[1024];$/;"	v	file:
+UINT16_MAX	lex.yy.c	105;"	d	file:
+UINT32_MAX	lex.yy.c	108;"	d	file:
+UINT8_MAX	lex.yy.c	102;"	d	file:
+UNVISIBLE	alloc.h	136;"	d
+USERFINIT	y.tab.c	8242;"	d	file:
+USR_SIGNAL	globals.h	123;"	d
+UnionByte	y.tab.c	/^union special *UnionByte(unsigned char x)$/;"	f
+UnionLnum	y.tab.c	/^union special *UnionLnum(long int x)$/;"	f
+UnionLrealnum	y.tab.c	/^union special *UnionLrealnum(double x)$/;"	f
+UnionNum	y.tab.c	/^union special *UnionNum(int x)$/;"	f
+UnionRealnum	y.tab.c	/^union special *UnionRealnum(float x)$/;"	f
+UnionSnum	y.tab.c	/^union special *UnionSnum(short int x)$/;"	f
+UnionString	y.tab.c	/^union special *UnionString(char *x)$/;"	f
+UnionUlnum	y.tab.c	/^union special *UnionUlnum(unsigned long int x)$/;"	f
+UnionUnum	y.tab.c	/^union special *UnionUnum(unsigned int x)$/;"	f
+UnionUsnum	y.tab.c	/^union special *UnionUsnum(unsigned short int x)$/;"	f
+VCG_DEFAULT_FONT	globals.h	184;"	d
+V_xmax	options.c	/^long	V_xmax;		    \/* that are visible                 *\/$/;"	v
+V_xmin	options.c	/^long 	V_xmin;		    \/* Minimal and maximal co-ordinates *\/$/;"	v
+V_xmin_initial	options.c	/^long 	V_xmin_initial = 0L;	    \/* and their initial values *\/$/;"	v
+V_ymax	options.c	/^long	V_ymax;$/;"	v
+V_ymin	options.c	/^long	V_ymin;$/;"	v
+V_ymin_initial	options.c	/^long 	V_ymin_initial = 0L;$/;"	v
+Vpointer	alloc.h	/^	struct 	dllist	*Vpointer; 	\/* this crossing pointer        *\/$/;"	m	struct:gnode	typeref:struct:gnode::dllist
+WHITE	alloc.h	81;"	d
+X11	globals.h	150;"	d
+X11	globals.h	313;"	d
+Xmybackingstore	options.c	/^char *Xmybackingstore = NULL;$/;"	v
+Xmyborderwidth	options.c	/^int  Xmyborderwidth   = 2;$/;"	v
+Xmydiplayname	options.c	/^char *Xmydiplayname   = NULL;$/;"	v
+Xmyfontname	options.c	/^static char *Xmyfontname = NULL;$/;"	v	file:
+Xmygeometry	options.c	/^char *Xmygeometry     = NULL;$/;"	v
+YACCGEN	lex.yy.c	1779;"	d	file:
+YACCGEN	y.tab.c	148;"	d	file:
+YELLOW	alloc.h	78;"	d
+YELLOWGREEN	alloc.h	102;"	d
+YES	alloc.h	123;"	d
+YYABORT	y.tab.c	3698;"	d	file:
+YYACCEPT	y.tab.c	3697;"	d	file:
+YYBACKUP	y.tab.c	3710;"	d	file:
+YYBISON	y.tab.c	46;"	d	file:
+YYBISON_VERSION	y.tab.c	49;"	d	file:
+YYCOPY	y.tab.c	2652;"	d	file:
+YYCOPY	y.tab.c	2655;"	d	file:
+YYDEBUG	y.tab.c	1923;"	d	file:
+YYDEBUG	y.tab.c	99;"	d	file:
+YYDPRINTF	y.tab.c	3790;"	d	file:
+YYDPRINTF	y.tab.c	3945;"	d	file:
+YYEMPTY	y.tab.c	3694;"	d	file:
+YYEOF	y.tab.c	3695;"	d	file:
+YYERRCODE	y.tab.c	3729;"	d	file:
+YYERROR	y.tab.c	3699;"	d	file:
+YYERROR_VERBOSE	y.tab.c	1928;"	d	file:
+YYERROR_VERBOSE	y.tab.c	1929;"	d	file:
+YYERROR_VERBOSE	y.tab.c	1931;"	d	file:
+YYFAIL	y.tab.c	3706;"	d	file:
+YYFINAL	y.tab.c	2685;"	d	file:
+YYFPRINTF	y.tab.c	3787;"	d	file:
+YYFREE	y.tab.c	2616;"	d	file:
+YYID	y.tab.c	/^YYID (int yyi)$/;"	f	file:
+YYID	y.tab.c	2540;"	d	file:
+YYINITDEPTH	y.tab.c	3954;"	d	file:
+YYLAST	y.tab.c	2687;"	d	file:
+YYLEX	y.tab.c	3777;"	d	file:
+YYLEX	y.tab.c	3779;"	d	file:
+YYLLOC_DEFAULT	y.tab.c	3738;"	d	file:
+YYLSP_NEEDED	y.tab.c	64;"	d	file:
+YYLTYPE	y.tab.c	/^typedef struct YYLTYPE$/;"	s	file:
+YYLTYPE	y.tab.c	/^} YYLTYPE;$/;"	t	typeref:struct:YYLTYPE	file:
+YYLTYPE	y.tab.c	137;"	d	file:
+YYLTYPE	y.tab.h	/^typedef struct YYLTYPE$/;"	s
+YYLTYPE	y.tab.h	/^} YYLTYPE;$/;"	t	typeref:struct:YYLTYPE
+YYLTYPE_IS_DECLARED	y.tab.c	2461;"	d	file:
+YYLTYPE_IS_DECLARED	y.tab.h	559;"	d
+YYLTYPE_IS_TRIVIAL	y.tab.c	2462;"	d	file:
+YYLTYPE_IS_TRIVIAL	y.tab.h	560;"	d
+YYMALLOC	y.tab.c	2609;"	d	file:
+YYMAXDEPTH	y.tab.c	3965;"	d	file:
+YYMAXUTOK	y.tab.c	2700;"	d	file:
+YYNNTS	y.tab.c	2692;"	d	file:
+YYNRULES	y.tab.c	2694;"	d	file:
+YYNSTATES	y.tab.c	2696;"	d	file:
+YYNTOKENS	y.tab.c	2690;"	d	file:
+YYPACT_NINF	y.tab.c	3226;"	d	file:
+YYPOPSTACK	y.tab.c	4320;"	d	file:
+YYPULL	y.tab.c	61;"	d	file:
+YYPURE	y.tab.c	55;"	d	file:
+YYPUSH	y.tab.c	58;"	d	file:
+YYRECOVERING	y.tab.c	3708;"	d	file:
+YYRHSLOC	y.tab.c	3736;"	d	file:
+YYSIZE_MAXIMUM	y.tab.c	2517;"	d	file:
+YYSIZE_T	y.tab.c	2505;"	d	file:
+YYSIZE_T	y.tab.c	2507;"	d	file:
+YYSIZE_T	y.tab.c	2511;"	d	file:
+YYSIZE_T	y.tab.c	2513;"	d	file:
+YYSKELETON_NAME	y.tab.c	52;"	d	file:
+YYSTACK_ALLOC	y.tab.c	2563;"	d	file:
+YYSTACK_ALLOC	y.tab.c	2567;"	d	file:
+YYSTACK_ALLOC	y.tab.c	2572;"	d	file:
+YYSTACK_ALLOC	y.tab.c	2595;"	d	file:
+YYSTACK_ALLOC_MAXIMUM	y.tab.c	2592;"	d	file:
+YYSTACK_ALLOC_MAXIMUM	y.tab.c	2598;"	d	file:
+YYSTACK_BYTES	y.tab.c	2644;"	d	file:
+YYSTACK_FREE	y.tab.c	2586;"	d	file:
+YYSTACK_FREE	y.tab.c	2596;"	d	file:
+YYSTACK_GAP_MAXIMUM	y.tab.c	2640;"	d	file:
+YYSTACK_RELOCATE	y.tab.c	2671;"	d	file:
+YYSTATE	lex.yy.c	175;"	d	file:
+YYSTYPE	y.tab.c	/^typedef union YYSTYPE$/;"	u	file:
+YYSTYPE	y.tab.c	/^} YYSTYPE;$/;"	t	typeref:union:YYSTYPE	file:
+YYSTYPE	y.tab.h	/^typedef union YYSTYPE$/;"	u
+YYSTYPE	y.tab.h	/^} YYSTYPE;$/;"	t	typeref:union:YYSTYPE
+YYSTYPE_IS_DECLARED	y.tab.c	2449;"	d	file:
+YYSTYPE_IS_DECLARED	y.tab.h	545;"	d
+YYSTYPE_IS_TRIVIAL	y.tab.c	2447;"	d	file:
+YYSTYPE_IS_TRIVIAL	y.tab.h	543;"	d
+YYTABLES_NAME	lex.yy.c	6106;"	d	file:
+YYTABLE_NINF	y.tab.c	3311;"	d	file:
+YYTERROR	y.tab.c	3728;"	d	file:
+YYTOKENTYPE	y.tab.c	1942;"	d	file:
+YYTOKENTYPE	y.tab.h	38;"	d
+YYTOKEN_TABLE	y.tab.c	1936;"	d	file:
+YYTRANSLATE	y.tab.c	2702;"	d	file:
+YYUNDEFTOK	y.tab.c	2699;"	d	file:
+YYUSE	y.tab.c	2533;"	d	file:
+YYUSE	y.tab.c	2535;"	d	file:
+YYVALGLOBAL	lex.yy.c	1916;"	d	file:
+YYVALGLOBAL	y.tab.c	150;"	d	file:
+YYVALGLOBAL	y.tab.c	281;"	d	file:
+YY_	y.tab.c	2523;"	d	file:
+YY_	y.tab.c	2527;"	d	file:
+YY_AT_BOL	lex.yy.c	412;"	d	file:
+YY_BREAK	lex.yy.c	2334;"	d	file:
+YY_BUFFER_EOF_PENDING	lex.yy.c	309;"	d	file:
+YY_BUFFER_NEW	lex.yy.c	297;"	d	file:
+YY_BUFFER_NORMAL	lex.yy.c	298;"	d	file:
+YY_BUFFER_STATE	lex.yy.c	/^typedef struct yy_buffer_state *YY_BUFFER_STATE;$/;"	t	typeref:struct:yy_buffer_state	file:
+YY_BUF_SIZE	lex.yy.c	192;"	d	file:
+YY_BUF_SIZE	lex.yy.c	194;"	d	file:
+YY_CHAR	lex.yy.c	/^typedef unsigned char YY_CHAR;$/;"	t	file:
+YY_CHAR	lex.yy.c	1905;"	d	file:
+YY_CHAR	y.tab.c	270;"	d	file:
+YY_CURRENT_BUFFER	lex.yy.c	334;"	d	file:
+YY_CURRENT_BUFFER_LVALUE	lex.yy.c	341;"	d	file:
+YY_DECL	lex.yy.c	2319;"	d	file:
+YY_DECL_IS_OURS	lex.yy.c	2314;"	d	file:
+YY_DO_BEFORE_ACTION	lex.yy.c	444;"	d	file:
+YY_END_OF_BUFFER	lex.yy.c	455;"	d	file:
+YY_END_OF_BUFFER_CHAR	lex.yy.c	183;"	d	file:
+YY_EXIT_FAILURE	lex.yy.c	5878;"	d	file:
+YY_EXTRA_TYPE	lex.yy.c	2122;"	d	file:
+YY_FATAL_ERROR	lex.yy.c	2291;"	d	file:
+YY_FLEX_MAJOR_VERSION	lex.yy.c	18;"	d	file:
+YY_FLEX_MINOR_VERSION	lex.yy.c	19;"	d	file:
+YY_FLEX_SUBMINOR_VERSION	lex.yy.c	20;"	d	file:
+YY_FLUSH_BUFFER	lex.yy.c	378;"	d	file:
+YY_INPUT	lex.yy.c	2055;"	d	file:
+YY_INPUT	lex.yy.c	2240;"	d	file:
+YY_INT_ALIGNED	lex.yy.c	4;"	d	file:
+YY_LESS_LINENO	lex.yy.c	221;"	d	file:
+YY_LOCATION_PRINT	y.tab.c	3764;"	d	file:
+YY_LOCATION_PRINT	y.tab.c	3769;"	d	file:
+YY_MALLOC_DECL	lex.yy.c	1912;"	d	file:
+YY_MALLOC_DECL	y.tab.c	277;"	d	file:
+YY_MORE_ADJ	lex.yy.c	1750;"	d	file:
+YY_NEVERNEEDED	y.tab.c	1905;"	d	file:
+YY_NEVERNEEDED	y.tab.c	1906;"	d	file:
+YY_NEW_FILE	lex.yy.c	181;"	d	file:
+YY_NULL	lex.yy.c	144;"	d	file:
+YY_NUM_RULES	lex.yy.c	454;"	d	file:
+YY_READ_BUF_SIZE	lex.yy.c	2218;"	d	file:
+YY_READ_BUF_SIZE	lex.yy.c	2220;"	d	file:
+YY_REDUCE_PRINT	y.tab.c	3935;"	d	file:
+YY_REDUCE_PRINT	y.tab.c	3948;"	d	file:
+YY_RESTORE_YY_MORE_OFFSET	lex.yy.c	1751;"	d	file:
+YY_RULE_SETUP	lex.yy.c	2338;"	d	file:
+YY_SC_TO_UI	lex.yy.c	154;"	d	file:
+YY_STACK_PRINT	y.tab.c	3896;"	d	file:
+YY_STACK_PRINT	y.tab.c	3947;"	d	file:
+YY_START	lex.yy.c	174;"	d	file:
+YY_START_STACK_INCR	lex.yy.c	2285;"	d	file:
+YY_STATE_BUF_SIZE	lex.yy.c	200;"	d	file:
+YY_STATE_EOF	lex.yy.c	178;"	d	file:
+YY_STRUCT_YY_BUFFER_STATE	lex.yy.c	245;"	d	file:
+YY_SYMBOL_PRINT	y.tab.c	3796;"	d	file:
+YY_SYMBOL_PRINT	y.tab.c	3946;"	d	file:
+YY_TYPEDEF_YY_BUFFER_STATE	lex.yy.c	203;"	d	file:
+YY_TYPEDEF_YY_SIZE_T	lex.yy.c	240;"	d	file:
+YY_USER_ACTION	lex.yy.c	2329;"	d	file:
+YY_USE_CONST	lex.yy.c	123;"	d	file:
+YY_USE_CONST	lex.yy.c	130;"	d	file:
+Y_TAB_H	grammar.h	138;"	d
+Y_TAB_H	y.tab.c	120;"	d	file:
+Y_TAB_H	y.tab.c	436;"	d	file:
+_PP	globals.h	287;"	d
+_PP	globals.h	289;"	d
+_STDLIB_H	y.tab.c	2577;"	d	file:
+_STDLIB_H	y.tab.c	2605;"	d	file:
+_VCG_IFACE_H_	vcg_iface.h	2;"	d
+__STDC_LIMIT_MACROS	lex.yy.c	64;"	d	file:
+__yy_bcopy	y.tab.c	97;"	d	file:
+act_alloc_edges	alloc.c	/^static long act_alloc_edges = 0;$/;"	v	file:
+act_alloc_nodes	alloc.c	/^static long act_alloc_nodes = 0;$/;"	v	file:
+act_alloc_size	alloc.c	/^static long act_alloc_size  = 0;$/;"	v	file:
+actx	alloc.h	/^	int	actx;		     \/* actual  x coord.in this layer *\/$/;"	m	struct:depth_entry
+adjedge	alloc.h	/^typedef struct adjedge$/;"	s
+alloc_block	lex.yy.c	/^static void alloc_block(void)$/;"	f	file:
+alloc_block	y.tab.c	/^static void alloc_block(void)$/;"	f	file:
+alloca	globals.h	403;"	d
+alloca	globals.h	408;"	d
+alloca	y.tab.c	2570;"	d	file:
+anchor	alloc.h	/^	int     anchor;$/;"	m	struct:gedge
+anchor	alloc.h	/^	signed char    anchor;$/;"	m	struct:gedge
+anchordummy	alloc.h	/^	char    anchordummy;	    \/* marker for anchor dummy nodes    *\/$/;"	m	struct:gnode
+anz	alloc.h	/^	int	anz;		     \/* Number of nodes of this layer *\/$/;"	m	struct:depth_entry
+array_value	grammar.y	/^array_value	: '{' index_value_list '}'$/;"	l
+arrowcolor1	alloc.h	/^	char	arrowcolor1;$/;"	m	struct:gedge
+arrowcolor2	alloc.h	/^	char	arrowcolor2;$/;"	m	struct:gedge
+arrowsize1	alloc.h	/^	char	arrowsize1;$/;"	m	struct:gedge
+arrowsize2	alloc.h	/^	char	arrowsize2;$/;"	m	struct:gedge
+arrowstyle1	alloc.h	/^	char 	arrowstyle1;	$/;"	m	struct:gedge
+arrowstyle2	alloc.h	/^	char 	arrowstyle2;	$/;"	m	struct:gedge
+assert	globals.h	353;"	d
+assert	globals.h	359;"	d
+attribute_value	grammar.y	/^attribute_value	: LEX_INT       	{$/;"	l
+back_edge_insert	alloc.c	/^void back_edge_insert(GEDGE e)$/;"	f
+back_edge_list	alloc.c	/^ADJEDGE back_edge_list = NULL;	    \/* list of back edges          *\/$/;"	v
+backedge	grammar.y	/^backedge	: LEXWORD_BACKEDGE '{' edge_attribute_list '}'$/;"	l
+bary	alloc.h	/^	float	bary;               \/* the weight of the bary centering *\/$/;"	m	struct:gnode
+bbxloc	alloc.h	/^	long	bbxloc;		   \/* Bend location on bottom *\/$/;"	m	struct:gedge
+bbyloc	alloc.h	/^	long	bbyloc;$/;"	m	struct:gedge
+before	alloc.h	/^	struct 	gedge	*before; 	 \/* predecessor in the edgelist *\/$/;"	m	struct:gedge	typeref:struct:gedge::gedge
+before	alloc.h	/^	struct 	gnode	*before;    \/* predecessor in the node\/graphlist *\/$/;"	m	struct:gnode	typeref:struct:gnode::gnode
+bent_near_edge_list	alloc.c	/^ADJEDGE bent_near_edge_list = NULL; \/* list of bent near edges     *\/$/;"	v
+bentnear_edge_insert	alloc.c	/^void bentnear_edge_insert(GEDGE e)$/;"	f
+bentnearedge	grammar.y	/^bentnearedge	: LEXWORD_BENTNEAREDGE '{' edge_attribute_list '}'$/;"	l
+bluemap	options.c	/^unsigned char bluemap[CMAPSIZE];$/;"	v
+bordercolor	alloc.h	/^	char	bordercolor;$/;"	m	struct:gnode
+borderwidth	alloc.h	/^	char	borderwidth;$/;"	m	struct:gnode
+btxloc	alloc.h	/^	long	btxloc;		   \/* Bend location on top of *\/$/;"	m	struct:gedge
+btyloc	alloc.h	/^	long	btyloc;		   \/* a node                  *\/$/;"	m	struct:gedge
+byte	grammar.h	/^        unsigned char      byte;$/;"	m	union:special
+byte	y.tab.c	/^	unsigned char      byte;$/;"	m	union:YYSTYPE	file:
+byte	y.tab.c	/^        unsigned char      byte;$/;"	m	union:special	file:
+byte	y.tab.h	/^	unsigned char      byte;$/;"	m	union:YYSTYPE
+check_graph_consistency	alloc.c	/^void check_graph_consistency(void)$/;"	f
+class_name_available	options.c	/^int 	class_name_available;$/;"	v
+class_names	options.c	/^char 	**class_names = NULL;$/;"	v
+cmap_changed	options.c	/^int 	 cmap_changed = 1;$/;"	v
+cmap_size	options.c	/^int 	 cmap_size    = BASECMAPSIZE;$/;"	v
+color	alloc.h	/^	char	color;$/;"	m	struct:gedge
+color	alloc.h	/^	char	color;$/;"	m	struct:gnode
+colored	options.c	/^int	colored= -1; 	    \/* Color screen (1) or BW screen (0) *\/$/;"	v
+connect	alloc.h	/^typedef struct connect$/;"	s
+connect_freelist	alloc.c	/^static CONNECT 	connect_freelist = NULL;   \/* list of free   connect cells *\/$/;"	v	file:
+connectalloc	alloc.c	/^CONNECT	connectalloc(GNODE node)$/;"	f
+connection	alloc.h	/^	struct	connect	*connection;	\/* horizontal connection to a   *\/$/;"	m	struct:gnode	typeref:struct:gnode::connect
+connectlist	alloc.c	/^static CONNECT 	connectlist      = NULL;   \/* list of alloc. connect cells *\/$/;"	v	file:
+const	globals.h	299;"	d
+const	globals.h	302;"	d
+const	grammar.h	197;"	d
+const	y.tab.c	495;"	d	file:
+constraint	grammar.y	/^constraint 	: LEXWORD_CONSTRAINT '{' constraint_attribute_list '}'	$/;"	l
+constraint_attribute	grammar.y	/^constraint_attribute  : LEXWORD_TITLE ':' str_const $/;"	l
+constraint_attribute_list	grammar.y	/^constraint_attribute_list: $/;"	l
+contents	grammar.h	/^        union  special     contents;$/;"	m	struct:stree_node	typeref:union:stree_node::special
+contents	y.tab.c	/^        union  special     contents;$/;"	m	struct:stree_node	typeref:union:stree_node::special	file:
+copy_edgeattributes	alloc.c	/^void copy_edgeattributes(GEDGE x, GEDGE y)$/;"	f
+copy_nodeattributes	alloc.c	/^void copy_nodeattributes(GNODE x, GNODE y)$/;"	f
+cross	alloc.h	/^	int 	cross;		     \/* number of crossings of layer  *\/$/;"	m	struct:depth_entry
+crossing_heuristics	options.c	/^int crossing_heuristics = 0;$/;"	v
+date_str	main.c	/^char date_str[48]     = "$Date: 1995\/02\/08 11:11:14 $";$/;"	v
+debugmessage	alloc.c	162;"	d	file:
+debugmessage	alloc.c	164;"	d	file:
+debugmessage	alloc.c	166;"	d	file:
+debugmessage	globals.h	324;"	d
+debugmessage	globals.h	326;"	d
+debugmessage	globals.h	331;"	d
+debugmessage	globals.h	332;"	d
+debugmessage	timelim.c	113;"	d	file:
+debugmessage	timelim.c	115;"	d	file:
+debugmessage	timelim.c	117;"	d	file:
+decode	lex.yy.c	/^static char **decode = NULL;$/;"	v	file:
+depth_entry	alloc.h	/^typedef struct depth_entry$/;"	s
+dfsnum	alloc.h	/^	long	dfsnum;			\/* the dfs entry number      *\/$/;"	m	struct:gnode
+dlinfo	alloc.h	/^	int		dlinfo;		\/* the node info	 *\/$/;"	m	struct:dllist
+dllist	alloc.h	/^typedef	struct dllist$/;"	s
+dllist_alloc	alloc.c	/^DLLIST 	dllist_alloc(GNODE node, DLLIST pred)$/;"	f
+dllist_free	alloc.c	/^void	dllist_free(DLLIST x)$/;"	f
+dllist_free_all	alloc.c	/^void	dllist_free_all(DLLIST x)$/;"	f
+dllist_freelist	alloc.c	/^static DLLIST	dllist_freelist  = NULL;     \/* list of free dllist nodes *\/$/;"	v	file:
+dlx	alloc.h	/^	int		dlx;		\/* the info coordinate   *\/$/;"	m	struct:dllist
+dummyanz	alloc.c	/^int dummyanz  = 0;             \/* Number of dummy nodes (not labels)  *\/ $/;"	v
+dummylist	alloc.c	/^GNODE dummylist    = NULL;     \/* List of other dummy nodes           *\/$/;"	v
+eclass	alloc.h	/^	char	eclass;$/;"	m	struct:gedge
+econs_freelist	alloc.c	/^static ADJEDGE econs_freelist = NULL;  \/* list of free cons cells      *\/$/;"	v	file:
+edge	alloc.h	/^	struct gedge	*edge;          \/* and its edge               *\/$/;"	m	struct:connect	typeref:struct:connect::gedge
+edge	grammar.y	/^edge            : LEXWORD_EDGE2 '{' edge_attribute_list '}'        $/;"	l
+edge2	alloc.h	/^	struct gedge	*edge2;         \/* and its edge               *\/$/;"	m	struct:connect	typeref:struct:connect::gedge
+edge_attribute	grammar.y	/^edge_attribute  : LEXWORD_SOURCENAME ':' str_const$/;"	l
+edge_attribute_list	grammar.y	/^edge_attribute_list: edge_attribute_list edge_attribute     $/;"	l
+edge_defaults	grammar.y	/^edge_defaults   : LEXWORD_EDGE1 edge_attribute  $/;"	l
+edge_freelist	alloc.c	/^static GEDGE edge_freelist = NULL;     \/* list of free GEDGE objects        *\/$/;"	v	file:
+edge_label_phase	options.c	/^int edge_label_phase = 0;$/;"	v
+edgealloc	alloc.c	/^GEDGE edgealloc(GEDGE refedge)$/;"	f
+edgeanz	alloc.c	/^int edgeanz = 0;      	       \/* Number of edges in edgelist         *\/$/;"	v
+edgedefaults	alloc.c	/^void edgedefaults(GEDGE edge)$/;"	f
+edgelist	alloc.c	/^GEDGE edgelist     = NULL;     \/* List of all real edges as specified *\/$/;"	v
+edgelist_alloc	alloc.c	/^static ADJEDGE  edgelist_alloc(void)$/;"	f	file:
+edgelistend	alloc.c	/^GEDGE edgelistend  = NULL;     \/* End of this list                    *\/$/;"	v
+end	alloc.h	/^	struct	gnode	*end;      \/* Target node             *\/ 	$/;"	m	struct:gedge	typeref:struct:gedge::gnode
+enum_arrow_mode	grammar.y	/^enum_arrow_mode	: LEXWORD_FIXED		{$/;"	l
+enum_arrowstyle	grammar.y	/^enum_arrowstyle	: LEXWORD_NONE 		{$/;"	l
+enum_color	grammar.y	/^enum_color	: LEXWORD_AQUAMARINE	{$/;"	l
+enum_cross_weight	grammar.y	/^enum_cross_weight : LEXWORD_BARY	{$/;"	l
+enum_dimension	grammar.y	/^enum_dimension	: 'x' 			{$/;"	l
+enum_iconstyle	grammar.y	/^enum_iconstyle	: LEXWORD_BOTTOM	{$/;"	l
+enum_layoutalgorithm	grammar.y	/^enum_layoutalgorithm: $/;"	l
+enum_layoutfrequency	grammar.y	/^enum_layoutfrequency: $/;"	l
+enum_linestyle	grammar.y	/^enum_linestyle	: LEXWORD_CONTINUOUS 	{$/;"	l
+enum_name	grammar.y	/^enum_name	: LEXWORD_EQUAL 	{$/;"	l
+enum_node_align	grammar.y	/^enum_node_align	: LEXWORD_BOTTOM	{$/;"	l
+enum_orientation	grammar.y	/^enum_orientation: LEXWORD_TOP_TO_BOTTOM	{$/;"	l
+enum_shape	grammar.y	/^enum_shape	: LEXWORD_BOX		{$/;"	l
+enum_status	grammar.y	/^enum_status 	: LEXWORD_BLACK 	{$/;"	l
+enum_textmode	grammar.y	/^enum_textmode	: LEXWORD_CENTER 	{$/;"	l
+enum_topsort	grammar.y	/^enum_topsort	: LEXWORD_HIGH		{$/;"	l
+enum_view	grammar.y	/^enum_view	: LEXWORD_CFISH         {$/;"	l
+enum_yes_no	grammar.y	/^enum_yes_no	: LEXWORD_YES 		{$/;"	l
+escape_transl	y.tab.c	/^void escape_transl(char *text)$/;"	f
+exbbox	options.c	/^int    exbbox    = 1;     \/* with Bounding Box *\/$/;"	v
+exbottomm	options.c	/^float  exbottomm = -1.0;  \/* Bottom Margin *\/$/;"	v
+excolor	options.c	/^int    excolor   = 3;     \/* B&W        *\/$/;"	v
+exfile	options.c	/^int    exfile    = 0;$/;"	v
+exfilename	options.c	/^char   exfilename[800];$/;"	v
+exheight	options.c	/^float  exheight  = -1.0;$/;"	v
+exit	lex.yy.c	1920;"	d	file:
+exit	y.tab.c	285;"	d	file:
+exleftm	options.c	/^float  exleftm   = -1.0;  \/* Left  Margin  *\/$/;"	v
+exloc	alloc.h	/^	long	exloc;             \/* and its co-ordinates    *\/$/;"	m	struct:gedge
+exori	options.c	/^int    exori     = 1;     \/* Portrait   *\/$/;"	v
+expaper	options.c	/^int    expaper   = 1;     \/* A4         *\/$/;"	v
+expapernum	options.c	/^int    expapernum= 1;$/;"	v
+exrightm	options.c	/^float  exrightm  = -1.0;  \/* Right  Margin *\/$/;"	v
+exscaling	options.c	/^float  exscaling = -1.0;   \/* Maxspect *\/$/;"	v
+extopm	options.c	/^float  extopm    = -1.0;  \/* Top    Margin *\/$/;"	v
+extype	options.c	/^int    extype    = 3;     \/* PostScript *\/$/;"	v
+exwidth	options.c	/^float  exwidth   = -1.0;$/;"	v
+exxdpi	options.c	/^int    exxdpi    = 72;$/;"	v
+exydpi	options.c	/^int    exydpi    = 72;$/;"	v
+eyloc	alloc.h	/^	long	eyloc;$/;"	m	struct:gedge
+f_is_writable	main.c	/^static int f_is_writable(char *fname)$/;"	f	file:
+fastflag	options.c	/^int fastflag = 0;$/;"	v
+fatal_error	lex.yy.c	/^static void fatal_error(char *message)$/;"	f	file:
+fatal_error	y.tab.c	/^static void fatal_error(char *message)$/;"	f	file:
+father	grammar.h	/^        struct stree_node *father;$/;"	m	struct:stree_node	typeref:struct:stree_node::stree_node
+father	y.tab.c	/^        struct stree_node *father;$/;"	m	struct:stree_node	typeref:struct:stree_node::stree_node	file:
+filename	options.c	/^char    filename[1024];     \/* Filename from the view of the parser *\/ $/;"	v
+fine_tune_layout	options.c	/^int fine_tune_layout = 1;$/;"	v
+first_column	grammar.h	/^        int  first_column;$/;"	m	struct:stree_node
+first_column	y.tab.c	/^		int first_column;$/;"	m	struct:yyltype	file:
+first_column	y.tab.c	/^        int  first_column;$/;"	m	struct:stree_node	file:
+first_column	y.tab.c	/^  int first_column;$/;"	m	struct:YYLTYPE	file:
+first_column	y.tab.h	/^  int first_column;$/;"	m	struct:YYLTYPE
+first_line	grammar.h	/^        int  first_line;$/;"	m	struct:stree_node
+first_line	y.tab.c	/^		int first_line;$/;"	m	struct:yyltype	file:
+first_line	y.tab.c	/^        int  first_line;$/;"	m	struct:stree_node	file:
+first_line	y.tab.c	/^  int first_line;$/;"	m	struct:YYLTYPE	file:
+first_line	y.tab.h	/^  int first_line;$/;"	m	struct:YYLTYPE
+flex_int16_t	lex.yy.c	/^typedef int16_t flex_int16_t;$/;"	t	file:
+flex_int16_t	lex.yy.c	/^typedef short int flex_int16_t;$/;"	t	file:
+flex_int32_t	lex.yy.c	/^typedef int flex_int32_t;$/;"	t	file:
+flex_int32_t	lex.yy.c	/^typedef int32_t flex_int32_t;$/;"	t	file:
+flex_int8_t	lex.yy.c	/^typedef int8_t flex_int8_t;$/;"	t	file:
+flex_int8_t	lex.yy.c	/^typedef signed char flex_int8_t;$/;"	t	file:
+flex_uint16_t	lex.yy.c	/^typedef uint16_t flex_uint16_t;$/;"	t	file:
+flex_uint16_t	lex.yy.c	/^typedef unsigned short int flex_uint16_t;$/;"	t	file:
+flex_uint32_t	lex.yy.c	/^typedef uint32_t flex_uint32_t;$/;"	t	file:
+flex_uint32_t	lex.yy.c	/^typedef unsigned int flex_uint32_t;$/;"	t	file:
+flex_uint8_t	lex.yy.c	/^typedef uint8_t flex_uint8_t;$/;"	t	file:
+flex_uint8_t	lex.yy.c	/^typedef unsigned char flex_uint8_t; $/;"	t	file:
+float_const	grammar.y	/^float_const	: LEX_FLOAT		{$/;"	l
+fnameOption	options.c	/^static int fnameOption(char *optstr, char *res)$/;"	f	file:
+fold_arrowc	options.c	/^int     fold_arrowc = -1;          \/* folded edge arrowcolor     *\/$/;"	v
+fold_arrows	options.c	/^int     fold_arrows = -1;          \/* folded edge arrowsize      *\/$/;"	v
+fold_arrsty	options.c	/^int     fold_arrsty = -1;          \/* folded edge arrowstyle     *\/$/;"	v
+fold_barrowc	options.c	/^int     fold_barrowc= -1;          \/* folded edge back arrowcolor*\/$/;"	v
+fold_barrows	options.c	/^int     fold_barrows= -1;          \/* folded edge back arrowsize *\/$/;"	v
+fold_barrsty	options.c	/^int     fold_barrsty= -1;          \/* folded edge back arrowstyle*\/$/;"	v
+fold_ecolor	options.c	/^int     fold_ecolor = -1;          \/* folded edge color          *\/$/;"	v
+fold_elabel	options.c	/^char    *fold_elabel= NULL;        \/* folded edge label          *\/$/;"	v
+fold_elcolor	options.c	/^int     fold_elcolor= -1;          \/* folded edge color          *\/$/;"	v
+fold_lstyle	options.c	/^int     fold_lstyle = -1;          \/* folded edge line style     *\/$/;"	v
+fold_thick	options.c	/^int     fold_thick  = 3;           \/* folded edge thickness      *\/$/;"	v
+foldedge_defaults	grammar.y	/^foldedge_defaults: LEXWORD_FOLDEDGE edge_attribute 	$/;"	l
+foldedgedefaults	alloc.c	/^void foldedgedefaults(GEDGE edge)$/;"	f
+folding	alloc.h	/^	char	folding;$/;"	m	struct:gnode
+foldnconslist	alloc.c	/^static GNLIST foldnconslist   = NULL; \/* list of all. fold cons cells *\/$/;"	v	file:
+foldnode_defaults	grammar.y	/^foldnode_defaults: LEXWORD_FOLDNODE node_attribute 	$/;"	l
+foldnodedefaults	alloc.c	/^void foldnodedefaults(GNODE node)$/;"	f
+foldnodelist_alloc	alloc.c	/^GNLIST  foldnodelist_alloc(void)$/;"	f
+free_all_lists	alloc.c	/^void	free_all_lists(void)$/;"	f
+free_connect	alloc.c	/^static void free_connect(void)$/;"	f	file:
+free_edgelists	alloc.c	/^static void free_edgelists(void)$/;"	f	file:
+free_foldnodelists	alloc.c	/^void free_foldnodelists(void)$/;"	f
+free_memory	alloc.c	/^void 	free_memory(void)$/;"	f
+free_node	alloc.c	/^void free_node(GNODE h)$/;"	f
+free_nodelists	alloc.c	/^static void free_nodelists(void)$/;"	f	file:
+free_regionnodelist	alloc.c	/^void free_regionnodelist(GNLIST	r)$/;"	f
+free_timelimit	timelim.c	/^void free_timelimit(void)$/;"	f
+free_tmpedges	alloc.c	/^static void free_tmpedges(void)$/;"	f	file:
+free_tmpnodes	alloc.c	/^void free_tmpnodes(void)$/;"	f
+freeunion	y.tab.c	/^static void freeunion(union special *x)$/;"	f	file:
+gblargc	options.c	/^int 	gblargc;            \/* the maximal index *\/$/;"	v
+gblargi	options.c	/^int 	gblargi = 1;        \/* the actual  index *\/$/;"	v
+gblargv	options.c	/^char	**gblargv;          \/* the option buffer *\/$/;"	v
+gedge	alloc.h	/^typedef struct gedge$/;"	s
+get_byte	grammar.h	108;"	d
+get_byte	y.tab.c	406;"	d	file:
+get_lnum	grammar.h	113;"	d
+get_lnum	y.tab.c	411;"	d	file:
+get_lrealnum	grammar.h	116;"	d
+get_lrealnum	y.tab.c	414;"	d	file:
+get_num	grammar.h	111;"	d
+get_num	y.tab.c	409;"	d	file:
+get_realnum	grammar.h	115;"	d
+get_realnum	y.tab.c	413;"	d	file:
+get_snum	grammar.h	109;"	d
+get_snum	y.tab.c	407;"	d	file:
+get_string	grammar.h	117;"	d
+get_string	y.tab.c	415;"	d	file:
+get_ulnum	grammar.h	114;"	d
+get_ulnum	y.tab.c	412;"	d	file:
+get_unum	grammar.h	112;"	d
+get_unum	y.tab.c	410;"	d	file:
+get_usnum	grammar.h	110;"	d
+get_usnum	y.tab.c	408;"	d	file:
+gettimeofday	timing.h	116;"	d
+getwd	globals.h	404;"	d
+gnlist	alloc.h	/^typedef struct gnlist$/;"	s
+gnode	alloc.h	/^typedef struct gnode$/;"	s
+grabinputfocus	options.c	/^int grabinputfocus;$/;"	v
+graph	grammar.y	/^graph		: LEXWORD_GRAPH '{' graph_entry_list '}'		$/;"	l
+graph_attribute	grammar.y	/^graph_attribute	: LEXWORD_TITLE ':' str_const	$/;"	l
+graph_entry	grammar.y	/^graph_entry	: graph_attribute	{$/;"	l
+graph_entry_list	grammar.y	/^graph_entry_list: graph_entry_list graph_entry			$/;"	l
+graphalloc	alloc.c	/^GNODE graphalloc(GNODE refnode)$/;"	f
+graphlist	alloc.c	/^GNODE graphlist    = NULL;     \/* List of all subgraphs as specified  *\/$/;"	v
+graphlistend	alloc.c	/^GNODE graphlistend = NULL;     \/* End of this list                    *\/$/;"	v
+greenmap	options.c	/^unsigned char greenmap[CMAPSIZE];$/;"	v
+gstoint	globals.h	401;"	d
+hash	lex.yy.c	/^static int hash(register char *string)$/;"	f	file:
+hash_node	lex.yy.c	/^typedef struct hash_node {$/;"	s	file:
+hash_size	grammar.h	770;"	d
+hash_size	lex.yy.c	1951;"	d	file:
+hash_size	lex.yy.c	2008;"	d	file:
+hash_size	lex.yy.c	6300;"	d	file:
+hash_size	y.tab.c	316;"	d	file:
+hashentry	lex.yy.c	/^} *hashentry;$/;"	t	typeref:struct:hash_node	file:
+hashtable	lex.yy.c	/^static hashentry *hashtable = NULL;$/;"	v	file:
+hashtable_size	grammar.h	773;"	d
+hashtable_size	lex.yy.c	2011;"	d	file:
+hashtable_size	lex.yy.c	6303;"	d	file:
+hashtop	lex.yy.c	/^static long hashtop = 1;$/;"	v	file:
+height	alloc.h	/^	int	height;$/;"	m	struct:gnode
+hide_single_nodes	options.c	/^int hide_single_nodes = 0;$/;"	v
+horder	alloc.h	/^	int	horder;$/;"	m	struct:gedge
+id_string	alloc.c	/^static char *id_string="$Id: alloc.c,v 3.9 1995\/02\/08 11:11:14 sander Exp $";$/;"	v	file:
+id_string	lex.yy.c	/^static char *id_string="$Id: grammar.pgs,v 3.17 1995\/02\/08 18:35:02 sander Exp $";$/;"	v	file:
+id_string	options.c	/^static char *id_string="$Id: options.c,v 1.3 1995\/02\/08 12:53:51 sander Exp $";$/;"	v	file:
+id_string	timelim.c	/^static char *id_string="$Id: timelim.c,v 1.6 1995\/02\/09 20:15:52 sander Exp $";$/;"	v	file:
+id_string	y.tab.c	/^static char *id_string="$Id: grammar.pgs,v 3.17 1995\/02\/08 18:35:02 sander Exp $";$/;"	v	file:
+in_nodelist	alloc.h	/^	char	in_nodelist;	    \/* flag, 1 if node is in nodelist *\/$/;"	m	struct:gnode
+increase_decode	lex.yy.c	/^static void increase_decode(void)$/;"	f	file:
+indegree	alloc.h	/^	int	indegree;		\/* number of incoming edges  *\/$/;"	m	struct:gnode
+index	grammar.y	/^index		: LEX_INT		{$/;"	l
+index_value	grammar.y	/^index_value	: attribute_value 	{$/;"	l
+index_value_list	grammar.y	/^index_value_list: index_value_list index_value$/;"	l
+info1	alloc.h	/^	char	*info1;$/;"	m	struct:gnode
+info2	alloc.h	/^	char	*info2;$/;"	m	struct:gnode
+info3	alloc.h	/^	char	*info3;$/;"	m	struct:gnode
+info_name_available	options.c	/^int 	info_name_available;$/;"	v
+info_names	options.c	/^char 	*info_names[3];$/;"	v
+inherit_foldedge_attributes	alloc.c	/^void inherit_foldedge_attributes(GEDGE fn, GEDGE y)$/;"	f
+inherit_foldnode_attributes	alloc.c	/^void inherit_foldnode_attributes(GNODE fn, GNODE y)$/;"	f
+init_hash	lex.yy.c	/^static void init_hash(void)$/;"	f	file:
+init_lex	lex.yy.c	/^void init_lex(void)$/;"	f
+init_timelimit	timelim.c	/^void init_timelimit(int x)$/;"	f
+intOption	options.c	/^static int intOption(char *optstr, int *res)$/;"	f	file:
+int_const	grammar.y	/^int_const	: LEX_INT		{$/;"	l
+internal_edgealloc	alloc.c	/^static GEDGE internal_edgealloc(void)$/;"	f	file:
+internal_next	alloc.h	/^	struct	gedge	*internal_next;  \/* for memory allocation       *\/$/;"	m	struct:gedge	typeref:struct:gedge::gedge
+internal_next	alloc.h	/^	struct 	gnode 	*internal_next; $/;"	m	struct:gnode	typeref:struct:gnode::gnode
+internal_next	alloc.h	/^	struct adjedge	*internal_next;$/;"	m	struct:adjedge	typeref:struct:adjedge::adjedge
+internal_next	alloc.h	/^	struct connect	*internal_next; \/* for memory allocation only *\/$/;"	m	struct:connect	typeref:struct:connect::connect
+internal_next	alloc.h	/^	struct gnlist	*internal_next;  \/* For memory management *\/$/;"	m	struct:gnlist	typeref:struct:gnlist::gnlist
+internal_nodealloc	alloc.c	/^static GNODE internal_nodealloc(void)$/;"	f	file:
+invis_nodes	alloc.c	/^GNODE invis_nodes  = NULL;     \/* List of all invisible nodes         *\/$/;"	v
+invisible	alloc.h	/^	char	invisible;	    \/* 1, if the edge is not visible *\/$/;"	m	struct:gedge
+invisible	alloc.h	/^	char	invisible;          \/* flag, 1 if node is invisible   *\/$/;"	m	struct:gnode
+kante	alloc.h	/^	struct gedge 	*kante;           \/* Edge *\/$/;"	m	struct:adjedge	typeref:struct:adjedge::gedge
+kantenart	alloc.h	/^	char	kantenart;	    \/* flag 'U', 'S' etc. see above  *\/$/;"	m	struct:gedge
+label	alloc.h	/^	char	*label;$/;"	m	struct:gedge
+label	alloc.h	/^	char	*label;$/;"	m	struct:gnode
+labelcolor	alloc.h	/^	char	labelcolor;$/;"	m	struct:gedge
+labellist	alloc.c	/^GNODE labellist    = NULL;     \/* List of dummy nodes that contain    *\/$/;"	v
+labellistend	alloc.c	/^GNODE labellistend = NULL;     \/* End of this list                    *\/$/;"	v
+labelnode	alloc.h	/^	struct	gnode	*labelnode; \/* Label node if the edge is replaced *\/ 	$/;"	m	struct:gedge	typeref:struct:gedge::gnode
+last_column	grammar.h	/^        int  last_column;$/;"	m	struct:stree_node
+last_column	y.tab.c	/^		int last_column;$/;"	m	struct:yyltype	file:
+last_column	y.tab.c	/^        int  last_column;$/;"	m	struct:stree_node	file:
+last_column	y.tab.c	/^  int last_column;$/;"	m	struct:YYLTYPE	file:
+last_column	y.tab.h	/^  int last_column;$/;"	m	struct:YYLTYPE
+last_line	grammar.h	/^        int  last_line;$/;"	m	struct:stree_node
+last_line	y.tab.c	/^		int last_line;$/;"	m	struct:yyltype	file:
+last_line	y.tab.c	/^        int  last_line;$/;"	m	struct:stree_node	file:
+last_line	y.tab.c	/^  int last_line;$/;"	m	struct:YYLTYPE	file:
+last_line	y.tab.h	/^  int last_line;$/;"	m	struct:YYLTYPE
+layout_downfactor	options.c	/^int layout_downfactor = 1;$/;"	v
+layout_flag	options.c	/^int layout_flag = 0;$/;"	v
+layout_nearfactor	options.c	/^int layout_nearfactor = 1;$/;"	v
+layout_upfactor	options.c	/^int layout_upfactor   = 1;$/;"	v
+level	alloc.h	/^	int	level;$/;"	m	struct:gnode
+line_directive	y.tab.c	/^void line_directive(char *text)$/;"	f
+line_nr	lex.yy.c	/^int line_nr;$/;"	v
+linestyle	alloc.h	/^	char	linestyle;$/;"	m	struct:gedge
+lnum	grammar.h	/^        long int           lnum;$/;"	m	union:special
+lnum	y.tab.c	/^	long int           lnum;$/;"	m	union:YYSTYPE	file:
+lnum	y.tab.c	/^        long int           lnum;$/;"	m	union:special	file:
+lnum	y.tab.h	/^	long int           lnum;$/;"	m	union:YYSTYPE
+locFlag	options.c	/^int     locFlag;$/;"	v
+local_unwind	options.c	/^int local_unwind = 1;$/;"	v
+long_atoi	y.tab.c	/^long 	long_atoi(char *c)$/;"	f
+lrealnum	grammar.h	/^        double             lrealnum;$/;"	m	union:special
+lrealnum	y.tab.c	/^	double             lrealnum;$/;"	m	union:YYSTYPE	file:
+lrealnum	y.tab.c	/^        double             lrealnum;$/;"	m	union:special	file:
+lrealnum	y.tab.h	/^	double             lrealnum;$/;"	m	union:YYSTYPE
+main	ext_main.cpp	/^int main(int argc , char *argv[])$/;"	f
+manhatten_edges	options.c	/^int manhatten_edges = 0;$/;"	v
+markiert	alloc.h	/^	char	markiert;           \/* marker for depth first search    *\/    $/;"	m	struct:gnode
+maxDepth	options.c	/^int 	maxDepth;           \/* Depth of the frame buffer         *\/$/;"	v
+max_baryiterations	options.c	/^int max_baryiterations = MAXINT;$/;"	v
+max_centershifts	options.c	/^int max_centershifts = 100;$/;"	v
+max_edgebendings	options.c	/^int max_edgebendings = 100;$/;"	v
+max_eprio	options.c	/^int max_eprio;$/;"	v
+max_mediumshifts	options.c	/^int max_mediumshifts = 100;$/;"	v
+max_nr_classes	options.c	/^int     max_nr_classes;$/;"	v
+max_straighttune	options.c	/^int max_straighttune = 100;$/;"	v
+message	lex.yy.c	/^static char message[256];$/;"	v	file:
+message	y.tab.c	/^static char message[1024];$/;"	v	file:
+min_baryiterations	options.c	/^int min_baryiterations = 0;$/;"	v
+min_centershifts	options.c	/^int min_centershifts = 0;$/;"	v
+min_mediumshifts	options.c	/^int min_mediumshifts = 0;$/;"	v
+multiple_files	options.c	/^int multiple_files = 0;$/;"	v
+my_itoa	y.tab.c	/^char  *my_itoa(int x)$/;"	f
+myalloc	alloc.c	/^char *myalloc(int x)$/;"	f
+myprivmessage	y.tab.c	/^static char myprivmessage[16000];  \/* Please DON'T reuse this *\/$/;"	v	file:
+ncons_freelist	alloc.c	/^static GNLIST ncons_freelist = NULL;  \/* list of free cons cells      *\/$/;"	v	file:
+near_edge_insert	alloc.c	/^void near_edge_insert(GEDGE e)$/;"	f
+near_edge_layout	options.c	/^int near_edge_layout = 1;$/;"	v
+near_edge_list	alloc.c	/^ADJEDGE near_edge_list = NULL;	    \/* list of default connections *\/$/;"	v
+nearedge	grammar.y	/^nearedge	: LEXWORD_NEAREDGE '{' edge_attribute_list '}'$/;"	l
+next	alloc.h	/^	struct	gedge	*next;		 \/* successor in the edgelist   *\/$/;"	m	struct:gedge	typeref:struct:gedge::gedge
+next	alloc.h	/^	struct 	gnode 	*next;	    \/* successor in the node\/graphlist   *\/ $/;"	m	struct:gnode	typeref:struct:gnode::gnode
+next	alloc.h	/^	struct adjedge	*next;$/;"	m	struct:adjedge	typeref:struct:adjedge::adjedge
+next	alloc.h	/^	struct gnlist 	*next;           \/* The remaining list    *\/$/;"	m	struct:gnlist	typeref:struct:gnlist::gnlist
+next	lex.yy.c	/^        struct hash_node *next;$/;"	m	struct:hash_node	typeref:struct:hash_node::hash_node	file:
+nextunion	y.tab.c	/^static union special *nextunion(void)$/;"	f	file:
+nhorder	alloc.h	/^	int	nhorder;$/;"	m	struct:gnode
+node	alloc.h	/^	struct	gnode	*node;		\/* the node              *\/$/;"	m	struct:dllist	typeref:struct:dllist::gnode
+node	alloc.h	/^	struct gnode 	*node;           \/* The node              *\/$/;"	m	struct:gnlist	typeref:struct:gnlist::gnode
+node	grammar.y	/^node		: LEXWORD_NODE2 '{' node_attribute_list '}'	$/;"	l
+node_attribute	grammar.y	/^node_attribute	: LEXWORD_TITLE ':' str_const	$/;"	l
+node_attribute_list	grammar.y	/^node_attribute_list: node_attribute_list node_attribute		$/;"	l
+node_defaults	grammar.y	/^node_defaults	: LEXWORD_NODE1 node_attribute 	$/;"	l
+node_freelist	alloc.c	/^static GNODE node_freelist = NULL;     \/* list of free GNODE objects *\/$/;"	v	file:
+node_refnum	alloc.c	/^static long node_refnum = 0L;	\/* reference counter for REFNUM	of nodes *\/$/;"	v	file:
+nodealloc	alloc.c	/^GNODE nodealloc(GNODE refnode)$/;"	f
+nodeanz	alloc.c	/^int nodeanz   = 0;    	       \/* Number of nodes in nodelist         *\/$/;"	v
+nodedefaults	alloc.c	/^void nodedefaults(GNODE node)$/;"	f
+nodelist	alloc.c	/^GNODE nodelist     = NULL;     \/* List of all real nodes as specified *\/$/;"	v
+nodelist_alloc	alloc.c	/^GNLIST  nodelist_alloc(GNODE v)$/;"	f
+nodelistend	alloc.c	/^GNODE nodelistend  = NULL;     \/* End of this list                    *\/$/;"	v
+nr_errors	y.tab.c	/^int nr_errors;$/;"	v
+nr_max_errors	options.c	/^int nr_max_errors = 16;$/;"	v
+nr_of_sons	grammar.h	97;"	d
+nr_of_sons	y.tab.c	395;"	d	file:
+num	grammar.h	/^        int                num;$/;"	m	union:special
+num	lex.yy.c	/^        long              num;$/;"	m	struct:hash_node	file:
+num	y.tab.c	/^	int                num;$/;"	m	union:YYSTYPE	file:
+num	y.tab.c	/^        int                num;$/;"	m	union:special	file:
+num	y.tab.h	/^	int                num;$/;"	m	union:YYSTYPE
+nwdumping_phase	options.c	/^int nwdumping_phase = 0;$/;"	v
+one_line_manhatten	options.c	/^int one_line_manhatten = 0;$/;"	v
+opt_error	options.c	/^static int opt_error;        \/* indicates errors during the option scan *\/$/;"	v	file:
+opt_from_stdin	options.c	/^static int opt_from_stdin;   \/* indicates that the input is stdin       *\/$/;"	v	file:
+opt_give_help	options.c	/^static int opt_give_help;    \/* indicates the the user needs full help  *\/$/;"	v	file:
+opt_give_version	options.c	/^static int opt_give_version; \/* indicates the version is needed         *\/$/;"	v	file:
+orientation	alloc.h	/^	char	orientation; 	   \/* updown, northwest, etc. *\/      $/;"	m	struct:gedge
+orientation2	alloc.h	/^	char	orientation2; 	   \/* dito, for double edges  *\/      $/;"	m	struct:gedge
+origbluemap	options.c	/^unsigned char origbluemap[BASECMAPSIZE] = {$/;"	v
+origgreenmap	options.c	/^unsigned char origgreenmap[BASECMAPSIZE] = {$/;"	v
+origredmap	options.c	/^unsigned char origredmap[BASECMAPSIZE] = {$/;"	v
+outdegree	alloc.h	/^	int	outdegree;		\/* number of outgoing edges  *\/$/;"	m	struct:gnode
+parse	y.tab.c	/^int parse(void)$/;"	f
+parse_part	main.c	/^static void parse_part( FILE *f)$/;"	f	file:
+parseheap	lex.yy.c	/^static char *parseheap = (char *)0;             \/* the heap *\/ $/;"	v	file:
+parseheap	y.tab.c	/^static yysyntaxtree parseheap = (yysyntaxtree)0;  \/* the heap *\/ $/;"	v	file:
+parseheapend	lex.yy.c	/^static char *parseheapend;                      \/* the end  *\/$/;"	v	file:
+parseheapend	y.tab.c	/^static yysyntaxtree parseheapend;                 \/* the end  *\/$/;"	v	file:
+parseheapsize	lex.yy.c	/^static int  parseheapsize = STRINGBLOCKSIZE; \/* the size of one block *\/$/;"	v	file:
+parseheapsize	y.tab.c	/^static int parseheapsize = PARSEBLOCKSIZE;     \/* the size of one block *\/$/;"	v	file:
+parseheapstart	lex.yy.c	/^static char *parseheapstart;                    \/* the base *\/$/;"	v	file:
+parseheapstart	y.tab.c	/^static yysyntaxtree parseheapstart;               \/* the base *\/$/;"	v	file:
+parseheaptop	lex.yy.c	/^static char *parseheaptop;                      \/* the top  *\/$/;"	v	file:
+parseheaptop	y.tab.c	/^static yysyntaxtree parseheaptop;                 \/* the top  *\/$/;"	v	file:
+parsemalloc	y.tab.c	/^static yysyntaxtree parsemalloc(int x)$/;"	f	file:
+parseskel_id_string	y.tab.c	/^static char *parseskel_id_string="$Id: parse.skel,v 1.5 1994\/01\/20 23:44:31 sander Exp sander $";$/;"	v	file:
+pos_nr	lex.yy.c	/^int pos_nr;$/;"	v
+position	alloc.h	/^	int	position;           \/* the position in the layer        *\/$/;"	m	struct:gnode
+pred	alloc.h	/^	struct	adjedge	*pred;	       	\/* adjacency list: predecessors *\/$/;"	m	struct:gnode	typeref:struct:gnode::adjedge
+pred	alloc.h	/^	struct	dllist	*pred;          \/* predecessor cons cell *\/$/;"	m	struct:dllist	typeref:struct:dllist::dllist
+prededgealloc	alloc.c	/^ADJEDGE prededgealloc(GNODE node, GEDGE edge)$/;"	f
+predleft	alloc.h	/^	struct	gedge	*predleft;     	\/* leftest predecessor          *\/$/;"	m	struct:gnode	typeref:struct:gnode::gedge
+predlist	alloc.h	/^	struct	gnlist	*predlist;   \/* nodes of this layer (forward) *\/ $/;"	m	struct:depth_entry	typeref:struct:depth_entry::gnlist
+predright	alloc.h	/^	struct	gedge	*predright;    	\/* rightest predecessor         *\/$/;"	m	struct:gnode	typeref:struct:gnode::gedge
+print_basic_help	options.c	/^void print_basic_help(void)$/;"	f
+print_help	options.c	/^void print_help(void)$/;"	f
+print_version_copyright	options.c	/^void print_version_copyright(void)$/;"	f
+prio_phase	options.c	/^int prio_phase = 0;$/;"	v
+priority	alloc.h	/^	int	priority;$/;"	m	struct:gedge
+range	grammar.y	/^range		: '[' int_const '-' int_const ']'	$/;"	l
+realnum	grammar.h	/^        float              realnum;$/;"	m	union:special
+realnum	y.tab.c	/^	float              realnum;$/;"	m	union:YYSTYPE	file:
+realnum	y.tab.c	/^        float              realnum;$/;"	m	union:special	file:
+realnum	y.tab.h	/^	float              realnum;$/;"	m	union:YYSTYPE
+redmap	options.c	/^unsigned char redmap[CMAPSIZE];$/;"	v
+refnode	alloc.h	/^	GNODE   refnode;	     \/* Reference node for part 3     *\/$/;"	m	struct:depth_entry
+refnum	alloc.h	/^	long 	refnum;$/;"	m	struct:gnode
+region	alloc.h	/^	struct	gnlist	*region;     \/* List of nodes in region *\/$/;"	m	struct:gnode	typeref:struct:gnode::gnlist
+regionrepl	alloc.h	/^	struct	gnode	*regionrepl; \/* Replacement node for    *\/$/;"	m	struct:gnode	typeref:struct:gnode::gnode
+regroot	alloc.h	/^	struct 	gnode  	*regroot;    \/* Root of region          *\/$/;"	m	struct:gnode	typeref:struct:gnode::gnode
+reinit_all_lists	alloc.c	/^void    reinit_all_lists(void)$/;"	f
+relayout	main.c	/^void relayout(void)$/;"	f
+resort_necessary	alloc.h	/^	char	resort_necessary;    \/* indicates if resorting by     *\/$/;"	m	struct:depth_entry
+revert	alloc.h	/^	char	revert;             \/* marker for reverted drawing      *\/    $/;"	m	struct:gnode
+revision_str	main.c	/^char revision_str[48] = "$Revision: 3.17 $";$/;"	v
+root	alloc.h	/^	struct	gnode	*root;       \/* Root of graph           *\/$/;"	m	struct:gnode	typeref:struct:gnode::gnode
+savepred	alloc.h	/^	struct	adjedge	*savepred;     	\/* adjacency list: predecessors *\/$/;"	m	struct:gnode	typeref:struct:gnode::adjedge
+savesucc	alloc.h	/^	struct	adjedge	*savesucc;     	\/* adjacency list: successors   *\/$/;"	m	struct:gnode	typeref:struct:gnode::adjedge
+scanskel_id_string	lex.yy.c	/^static char *scanskel_id_string="$Id: scan.skel,v 1.6 1994\/04\/13 10:23:44 sander Exp sander $";$/;"	v	file:
+search_xy_node	alloc.c	/^GNODE	search_xy_node(long x,long y)$/;"	f
+shape	alloc.h	/^	char 	shape;$/;"	m	struct:gnode
+short	y.tab.c	2473;"	d	file:
+short_banner	main.c	/^char short_banner[128];$/;"	v
+shrink	alloc.h	/^	int	shrink;$/;"	m	struct:gnode
+silent	options.c	/^int silent = 0;$/;"	v
+simpleOption	options.c	/^static int simpleOption(char *optstr)$/;"	f	file:
+skip_baryphase2	options.c	/^int skip_baryphase2 = 0; $/;"	v
+snum	grammar.h	/^        short int          snum;$/;"	m	union:special
+snum	y.tab.c	/^	short int          snum;$/;"	m	union:YYSTYPE	file:
+snum	y.tab.c	/^        short int          snum;$/;"	m	union:special	file:
+snum	y.tab.h	/^	short int          snum;$/;"	m	union:YYSTYPE
+son	grammar.h	128;"	d
+son	y.tab.c	426;"	d	file:
+son1	grammar.h	119;"	d
+son1	y.tab.c	417;"	d	file:
+son2	grammar.h	120;"	d
+son2	y.tab.c	418;"	d	file:
+son3	grammar.h	121;"	d
+son3	y.tab.c	419;"	d	file:
+son4	grammar.h	122;"	d
+son4	y.tab.c	420;"	d	file:
+son5	grammar.h	123;"	d
+son5	y.tab.c	421;"	d	file:
+son6	grammar.h	124;"	d
+son6	y.tab.c	422;"	d	file:
+son7	grammar.h	125;"	d
+son7	y.tab.c	423;"	d	file:
+son8	grammar.h	126;"	d
+son8	y.tab.c	424;"	d	file:
+son9	grammar.h	127;"	d
+son9	y.tab.c	425;"	d	file:
+special	grammar.h	/^union  special {$/;"	u
+special	y.tab.c	/^union  special {$/;"	u	file:
+st_malloc	y.tab.c	/^static yysyntaxtree st_malloc(int x)$/;"	f	file:
+start	alloc.h	/^	struct	gnode	*start;    \/* Source node             *\/$/;"	m	struct:gedge	typeref:struct:gedge::gnode
+start_sysmycsec	timing.h	/^static unsigned long start_sysmycsec;$/;"	v
+start_syssec	timing.h	/^static unsigned long start_syssec;$/;"	v
+start_time	timing.h	/^static void start_time(void)$/;"	f
+start_time	timing.h	82;"	d
+start_usermycsec	timing.h	/^static unsigned long start_usermycsec;$/;"	v
+start_usersec	timing.h	/^static unsigned long start_usersec;$/;"	v
+status	alloc.h	/^	char	status;$/;"	m	struct:gnode
+stdpc_id_string	y.tab.c	/^static char *stdpc_id_string="$Id: stdpc.skel,v 1.12 1994\/12\/05 13:54:37 sander Exp sander $";$/;"	v	file:
+stdtc_id_string	lex.yy.c	/^static char *stdtc_id_string="$Id: stdtc.skel,v 1.7 1994\/11\/25 17:23:13 sander Exp sander $";$/;"	v	file:
+stdunion	y.tab.c	/^static union special *stdunion = 0;$/;"	v	typeref:union:special	file:
+stop_sysmycsec	timing.h	/^static unsigned long stop_sysmycsec;$/;"	v
+stop_syssec	timing.h	/^static unsigned long stop_syssec;$/;"	v
+stop_time	timing.h	/^static void stop_time(char *x)$/;"	f
+stop_time	timing.h	83;"	d
+stop_usermycsec	timing.h	/^static unsigned long stop_usermycsec;$/;"	v
+stop_usersec	timing.h	/^static unsigned long stop_usersec;$/;"	v
+str_const	grammar.y	/^str_const	: LEX_STRING		{$/;"	l
+straight_phase	options.c	/^int straight_phase = 0;$/;"	v
+stree_node	grammar.h	/^struct stree_node {$/;"	s
+stree_node	y.tab.c	/^struct stree_node {$/;"	s	file:
+stretch	alloc.h	/^	int	stretch;$/;"	m	struct:gnode
+string	grammar.h	/^        char              *string;$/;"	m	union:special
+string	y.tab.c	/^	char              *string;$/;"	m	union:YYSTYPE	file:
+string	y.tab.c	/^        char              *string;$/;"	m	union:special	file:
+string	y.tab.h	/^	char              *string;$/;"	m	union:YYSTYPE
+stringOption	options.c	/^static int stringOption(char *optstr, char *strw)$/;"	f	file:
+string_array	grammar.y	/^string_array	: string_array str_const$/;"	l
+subgraph	alloc.h	/^	struct	gnlist	*subgraph;   \/* List of subgraphs       *\/$/;"	m	struct:gnode	typeref:struct:gnode::gnlist
+succ	alloc.h	/^	struct	adjedge	*succ;	       	\/* adjacency list: successors   *\/$/;"	m	struct:gnode	typeref:struct:gnode::adjedge
+succ	alloc.h	/^	struct	dllist	*succ;          \/* successor   cons cell *\/$/;"	m	struct:dllist	typeref:struct:dllist::dllist
+succedgealloc	alloc.c	/^ADJEDGE succedgealloc(GNODE node, GEDGE edge)$/;"	f
+succleft	alloc.h	/^	struct	gedge	*succleft;	\/* leftest successor		*\/$/;"	m	struct:gnode	typeref:struct:gnode::gedge
+succlist	alloc.h	/^	struct	gnlist	*succlist;   \/* nodes of this layer (backward)*\/$/;"	m	struct:depth_entry	typeref:struct:depth_entry::gnlist
+succright	alloc.h	/^	struct	gedge	*succright;	\/* rightest successor           *\/$/;"	m	struct:gnode	typeref:struct:gnode::gedge
+summarize_double_edges	options.c	/^int summarize_double_edges = 0;$/;"	v
+supress_edges	options.c	/^int supress_edges = 0;$/;"	v
+supress_nodes	options.c	/^int supress_nodes = 0;$/;"	v
+sxloc	alloc.h	/^	long	sxloc;             \/* and its co-ordinates    *\/$/;"	m	struct:gedge
+sxloc	alloc.h	/^	long	sxloc;$/;"	m	struct:gnode
+syloc	alloc.h	/^	long	syloc;$/;"	m	struct:gedge
+syloc	alloc.h	/^	long 	syloc;$/;"	m	struct:gnode
+syntaxerror	y.tab.c	/^void syntaxerror(int line, int pos, char *mesge)$/;"	f
+syntaxtree	grammar.h	/^typedef struct stree_node *syntaxtree;$/;"	t	typeref:struct:stree_node
+syntaxtree	lex.yy.c	/^typedef struct stree_node *syntaxtree;$/;"	t	typeref:struct:stree_node	file:
+syntaxtree	y.tab.c	/^typedef struct stree_node *syntaxtree;$/;"	t	typeref:struct:stree_node	file:
+table_size	lex.yy.c	/^long   table_size = 0L;$/;"	v
+tag	grammar.h	96;"	d
+tag	y.tab.c	394;"	d	file:
+tag_field	grammar.h	/^        int  tag_field;$/;"	m	struct:stree_node
+tag_field	y.tab.c	/^        int  tag_field;$/;"	m	struct:stree_node	file:
+target	alloc.h	/^	struct gnode	*target;        \/* First found target         *\/$/;"	m	struct:connect	typeref:struct:connect::gnode
+target2	alloc.h	/^	struct gnode	*target2;       \/* Second found target        *\/$/;"	m	struct:connect	typeref:struct:connect::gnode
+test_timelimit	timelim.c	/^int test_timelimit(int perc)$/;"	f
+text	y.tab.c	/^		char *text;$/;"	m	struct:yyltype	file:
+textcolor	alloc.h	/^	char	textcolor;$/;"	m	struct:gnode
+textmode	alloc.h	/^	char	textmode;$/;"	m	struct:gnode
+thickness	alloc.h	/^	char	thickness;$/;"	m	struct:gedge
+tiefe	alloc.h	/^	int	tiefe;		    \/* the number (deepth) of the layer *\/$/;"	m	struct:gnode
+timelimit	timelim.c	/^static unsigned long timelimit = 0L;	\/* the actual time limit in sec *\/$/;"	v	file:
+timestamp	y.tab.c	/^		int timestamp;$/;"	m	struct:yyltype	file:
+timeval	timelim.c	/^     struct timeval {$/;"	s	file:
+timezone	timelim.c	/^     struct timezone {$/;"	s	file:
+title	alloc.h	/^	char 	*title;$/;"	m	struct:gnode
+tmpadj	alloc.h	/^	struct	adjedge	*tmpadj;      	\/* temporary adjacency list     *\/$/;"	m	struct:gnode	typeref:struct:gnode::adjedge
+tmpeconslist	alloc.c	/^static ADJEDGE tmpeconslist   = NULL;  \/* list of allocated cons cells *\/$/;"	v	file:
+tmpedgealloc	alloc.c	/^GEDGE	tmpedgealloc($/;"	f
+tmpedgelist	alloc.c	/^GEDGE tmpedgelist   = NULL;     \/* list of allocated temporary edges *\/$/;"	v
+tmpnconslist	alloc.c	/^static GNLIST tmpnconslist   = NULL;  \/* list of allocated cons cells *\/$/;"	v	file:
+tmpnodealloc	alloc.c	/^GNODE	tmpnodealloc($/;"	f
+tmpnodelist	alloc.c	/^GNODE tmpnodelist   = NULL;     \/* list of allocated temoprary nodes *\/$/;"	v
+tmpnodelist_alloc	alloc.c	/^GNLIST  tmpnodelist_alloc(void)$/;"	f
+touch_file	options.c	/^int touch_file = 0;$/;"	v
+tpend	timing.h	/^struct timeval  tpend;$/;"	v	typeref:struct:timeval
+tpstart	timing.h	/^struct timeval  tpstart;$/;"	v	typeref:struct:timeval
+tpxend	timelim.c	/^static struct timeval  tpxend;  	\/* the stop time      *\/$/;"	v	typeref:struct:timeval	file:
+tpxstart	timelim.c	/^static struct timeval  tpxstart;	\/* the start time     *\/$/;"	v	typeref:struct:timeval	file:
+tree	y.tab.c	/^	yysyntaxtree       tree;$/;"	m	union:YYSTYPE	file:
+tree	y.tab.h	/^	yysyntaxtree       tree;$/;"	m	union:YYSTYPE
+tv_sec	timelim.c	/^          unsigned long tv_sec;$/;"	m	struct:timeval	file:
+tv_usec	timelim.c	/^          long          tv_usec;$/;"	m	struct:timeval	file:
+tz_dsttime	timelim.c	/^        int     tz_dsttime;$/;"	m	struct:timezone	file:
+tz_minuteswest	timelim.c	/^        int     tz_minuteswest;$/;"	m	struct:timezone	file:
+tzpend	timing.h	/^struct timezone tzpend;$/;"	v	typeref:struct:timezone
+tzpstart	timing.h	/^struct timezone tzpstart;$/;"	v	typeref:struct:timezone
+tzpxend	timelim.c	/^static struct timezone tzpxend;  	\/* and its time zone  *\/$/;"	v	typeref:struct:timezone	file:
+tzpxstart	timelim.c	/^static struct timezone tzpxstart;	\/* and its time zone  *\/$/;"	v	typeref:struct:timezone	file:
+ulnum	grammar.h	/^        unsigned long int  ulnum;$/;"	m	union:special
+ulnum	y.tab.c	/^	unsigned long int  ulnum;$/;"	m	union:YYSTYPE	file:
+ulnum	y.tab.c	/^        unsigned long int  ulnum;$/;"	m	union:special	file:
+ulnum	y.tab.h	/^	unsigned long int  ulnum;$/;"	m	union:YYSTYPE
+unitOption	options.c	/^static int unitOption(char *optstr, float *res)$/;"	f	file:
+unput	lex.yy.c	237;"	d	file:
+unum	grammar.h	/^        unsigned int       unum;$/;"	m	union:special
+unum	y.tab.c	/^	unsigned int       unum;$/;"	m	union:YYSTYPE	file:
+unum	y.tab.c	/^        unsigned int       unum;$/;"	m	union:special	file:
+unum	y.tab.h	/^	unsigned int       unum;$/;"	m	union:YYSTYPE
+user_field	grammar.h	/^	USERFTYPE user_field;$/;"	m	struct:stree_node
+user_field	grammar.h	105;"	d
+user_field	y.tab.c	/^	USERFTYPE user_field;$/;"	m	struct:stree_node	file:
+user_field	y.tab.c	403;"	d	file:
+usnum	grammar.h	/^        unsigned short int usnum;$/;"	m	union:special
+usnum	y.tab.c	/^	unsigned short int usnum;$/;"	m	union:YYSTYPE	file:
+usnum	y.tab.c	/^        unsigned short int usnum;$/;"	m	union:special	file:
+usnum	y.tab.h	/^	unsigned short int usnum;$/;"	m	union:YYSTYPE
+vcg_Parse	main.c	/^void vcg_Parse( FILE *input_file)$/;"	f
+version_str	main.c	/^char version_str[24]  = "V.1.3";$/;"	v
+warning	y.tab.c	/^void warning(int line, int pos, char *mesge)$/;"	f
+weightp	alloc.h	/^	long	weightp;		\/* node weight pred. (nwp)   *\/$/;"	m	struct:gnode
+weightp	alloc.h	/^	long	weightp;	  \/* edge weight pred. (ewp)   *\/$/;"	m	struct:gedge
+weights	alloc.h	/^	long	weights;		\/* node weight succ. (nws)   *\/$/;"	m	struct:gnode
+weights	alloc.h	/^	long	weights;          \/* edge weight succ. (ews)   *\/$/;"	m	struct:gedge
+width	alloc.h	/^	int	width;$/;"	m	struct:gnode
+wordOption	options.c	/^static int wordOption(char *optstr, char **res)$/;"	f	file:
+xfather	grammar.h	102;"	d
+xfather	y.tab.c	400;"	d	file:
+xfirst_column	grammar.h	99;"	d
+xfirst_column	y.tab.c	397;"	d	file:
+xfirst_line	grammar.h	98;"	d
+xfirst_line	y.tab.c	396;"	d	file:
+xlast_column	grammar.h	101;"	d
+xlast_column	y.tab.c	399;"	d	file:
+xlast_line	grammar.h	100;"	d
+xlast_line	y.tab.c	398;"	d	file:
+xloc	alloc.h	/^	long	xloc;$/;"	m	struct:gnode
+xson	grammar.h	/^        struct stree_node *xson[1];$/;"	m	struct:stree_node	typeref:struct:stree_node::stree_node
+xson	y.tab.c	/^        struct stree_node *xson[1];$/;"	m	struct:stree_node	typeref:struct:stree_node::stree_node	file:
+yloc	alloc.h	/^	long 	yloc;$/;"	m	struct:gnode
+yy_accept	lex.yy.c	/^static yyconst flex_int16_t yy_accept[2052] =$/;"	v	file:
+yy_at_bol	lex.yy.c	/^	int yy_at_bol;$/;"	m	struct:yy_buffer_state	file:
+yy_base	lex.yy.c	/^static yyconst flex_int16_t yy_base[2062] =$/;"	v	file:
+yy_bs_column	lex.yy.c	/^    int yy_bs_column; \/**< The column count. *\/$/;"	m	struct:yy_buffer_state	file:
+yy_bs_lineno	lex.yy.c	/^    int yy_bs_lineno; \/**< The line count. *\/$/;"	m	struct:yy_buffer_state	file:
+yy_buf_pos	lex.yy.c	/^	char *yy_buf_pos;		\/* current position in input buffer *\/$/;"	m	struct:yy_buffer_state	file:
+yy_buf_size	lex.yy.c	/^	yy_size_t yy_buf_size;$/;"	m	struct:yy_buffer_state	file:
+yy_buffer_stack	lex.yy.c	/^static YY_BUFFER_STATE * yy_buffer_stack = 0; \/**< Stack as an array. *\/$/;"	v	file:
+yy_buffer_stack_max	lex.yy.c	/^static size_t yy_buffer_stack_max = 0; \/**< capacity of stack. *\/$/;"	v	file:
+yy_buffer_stack_top	lex.yy.c	/^static size_t yy_buffer_stack_top = 0; \/**< index of top of stack. *\/$/;"	v	file:
+yy_buffer_state	lex.yy.c	/^struct yy_buffer_state$/;"	s	file:
+yy_buffer_status	lex.yy.c	/^	int yy_buffer_status;$/;"	m	struct:yy_buffer_state	file:
+yy_c_buf_p	lex.yy.c	/^static char *yy_c_buf_p = (char *) 0;$/;"	v	file:
+yy_ch_buf	lex.yy.c	/^	char *yy_ch_buf;		\/* input buffer *\/$/;"	m	struct:yy_buffer_state	file:
+yy_chk	lex.yy.c	/^static yyconst flex_int16_t yy_chk[2237] =$/;"	v	file:
+yy_create_buffer	lex.yy.c	/^    YY_BUFFER_STATE yy_create_buffer  (FILE * file, int  size )$/;"	f
+yy_def	lex.yy.c	/^static yyconst flex_int16_t yy_def[2062] =$/;"	v	file:
+yy_delete_buffer	lex.yy.c	/^    void yy_delete_buffer (YY_BUFFER_STATE  b )$/;"	f
+yy_did_buffer_switch_on_eof	lex.yy.c	/^static int yy_did_buffer_switch_on_eof;$/;"	v	file:
+yy_ec	lex.yy.c	/^static yyconst flex_int32_t yy_ec[256] =$/;"	v	file:
+yy_fatal_error	lex.yy.c	/^static void yy_fatal_error (yyconst char* msg )$/;"	f	file:
+yy_fill_buffer	lex.yy.c	/^	int yy_fill_buffer;$/;"	m	struct:yy_buffer_state	file:
+yy_flex_debug	lex.yy.c	/^int yy_flex_debug = 1;$/;"	v
+yy_flex_strlen	lex.yy.c	/^static int yy_flex_strlen (yyconst char * s )$/;"	f	file:
+yy_flex_strncpy	lex.yy.c	/^static void yy_flex_strncpy (char* s1, yyconst char * s2, int n )$/;"	f	file:
+yy_flush_buffer	lex.yy.c	/^    void yy_flush_buffer (YY_BUFFER_STATE  b )$/;"	f
+yy_get_next_buffer	lex.yy.c	/^static int yy_get_next_buffer (void)$/;"	f	file:
+yy_get_previous_state	lex.yy.c	/^    static yy_state_type yy_get_previous_state (void)$/;"	f	file:
+yy_hold_char	lex.yy.c	/^static char yy_hold_char;$/;"	v	file:
+yy_init	lex.yy.c	/^static int yy_init = 0;		\/* whether we need to initialize *\/$/;"	v	file:
+yy_init_buffer	lex.yy.c	/^    static void yy_init_buffer  (YY_BUFFER_STATE  b, FILE * file )$/;"	f	file:
+yy_init_globals	lex.yy.c	/^static int yy_init_globals (void)$/;"	f	file:
+yy_input_file	lex.yy.c	/^	FILE *yy_input_file;$/;"	m	struct:yy_buffer_state	file:
+yy_is_interactive	lex.yy.c	/^	int yy_is_interactive;$/;"	m	struct:yy_buffer_state	file:
+yy_is_our_buffer	lex.yy.c	/^	int yy_is_our_buffer;$/;"	m	struct:yy_buffer_state	file:
+yy_last_accepting_cpos	lex.yy.c	/^static char *yy_last_accepting_cpos;$/;"	v	file:
+yy_last_accepting_state	lex.yy.c	/^static yy_state_type yy_last_accepting_state;$/;"	v	file:
+yy_load_buffer_state	lex.yy.c	/^static void yy_load_buffer_state  (void)$/;"	f	file:
+yy_meta	lex.yy.c	/^static yyconst flex_int32_t yy_meta[51] =$/;"	v	file:
+yy_n_chars	lex.yy.c	/^	int yy_n_chars;$/;"	m	struct:yy_buffer_state	file:
+yy_n_chars	lex.yy.c	/^static int yy_n_chars;		\/* number of characters read into yy_ch_buf *\/$/;"	v	file:
+yy_new_buffer	lex.yy.c	390;"	d	file:
+yy_nxt	lex.yy.c	/^	flex_int32_t yy_nxt;$/;"	m	struct:yy_trans_info	file:
+yy_nxt	lex.yy.c	/^static yyconst flex_int16_t yy_nxt[2237] =$/;"	v	file:
+yy_reduce_print	y.tab.c	/^yy_reduce_print (YYSTYPE *yyvsp, YYLTYPE *yylsp, int yyrule)$/;"	f	file:
+yy_rule_linenum	lex.yy.c	/^static yyconst flex_int16_t yy_rule_linenum[355] =$/;"	v	file:
+yy_scan_buffer	lex.yy.c	/^YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )$/;"	f
+yy_scan_bytes	lex.yy.c	/^YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, int  _yybytes_len )$/;"	f
+yy_scan_string	lex.yy.c	/^YY_BUFFER_STATE yy_scan_string (yyconst char * yystr )$/;"	f
+yy_set_bol	lex.yy.c	402;"	d	file:
+yy_set_interactive	lex.yy.c	392;"	d	file:
+yy_size_t	lex.yy.c	/^typedef size_t yy_size_t;$/;"	t	file:
+yy_stack_print	y.tab.c	/^yy_stack_print (yytype_int16 *yybottom, yytype_int16 *yytop)$/;"	f	file:
+yy_start	lex.yy.c	/^static int yy_start = 0;	\/* start state number *\/$/;"	v	file:
+yy_state_type	lex.yy.c	/^typedef int yy_state_type;$/;"	t	file:
+yy_switch_to_buffer	lex.yy.c	/^    void yy_switch_to_buffer  (YY_BUFFER_STATE  new_buffer )$/;"	f
+yy_symbol_print	y.tab.c	/^yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp)$/;"	f	file:
+yy_symbol_value_print	y.tab.c	/^yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, YYLTYPE const * const yylocationp)$/;"	f	file:
+yy_trans_info	lex.yy.c	/^struct yy_trans_info$/;"	s	file:
+yy_try_NUL_trans	lex.yy.c	/^    static yy_state_type yy_try_NUL_trans  (yy_state_type yy_current_state )$/;"	f	file:
+yy_verify	lex.yy.c	/^	flex_int32_t yy_verify;$/;"	m	struct:yy_trans_info	file:
+yyalloc	lex.yy.c	/^void *yyalloc (yy_size_t  size )$/;"	f
+yyalloc	y.tab.c	/^union yyalloc$/;"	u	file:
+yychar	y.tab.c	/^int yychar;$/;"	v
+yycheck	y.tab.c	/^static const yytype_int16 yycheck[] =$/;"	v	file:
+yyclearin	y.tab.c	3693;"	d	file:
+yyconst	lex.yy.c	136;"	d	file:
+yyconst	lex.yy.c	138;"	d	file:
+yyconst_arity	y.tab.c	/^static const int yyconst_arity[] = {$/;"	v	file:
+yyconst_name	y.tab.c	/^static const char * const yyconst_name[] = {$/;"	v	file:
+yydebug	y.tab.c	/^int yydebug;$/;"	v
+yydefact	y.tab.c	/^static const yytype_uint16 yydefact[] =$/;"	v	file:
+yydefgoto	y.tab.c	/^static const yytype_int16 yydefgoto[] =$/;"	v	file:
+yydestruct	y.tab.c	/^yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, YYLTYPE *yylocationp)$/;"	f	file:
+yyensure_buffer_stack	lex.yy.c	/^static void yyensure_buffer_stack (void)$/;"	f	file:
+yyerrok	y.tab.c	3692;"	d	file:
+yyerror	lex.yy.c	1935;"	d	file:
+yyerror	y.tab.c	1874;"	d	file:
+yyerror	y.tab.c	300;"	d	file:
+yyfree	lex.yy.c	/^void yyfree (void * ptr )$/;"	f
+yyget_debug	lex.yy.c	/^int yyget_debug  (void)$/;"	f
+yyget_in	lex.yy.c	/^FILE *yyget_in  (void)$/;"	f
+yyget_leng	lex.yy.c	/^int yyget_leng  (void)$/;"	f
+yyget_lineno	lex.yy.c	/^int yyget_lineno  (void)$/;"	f
+yyget_out	lex.yy.c	/^FILE *yyget_out  (void)$/;"	f
+yyget_text	lex.yy.c	/^char *yyget_text  (void)$/;"	f
+yyin	lex.yy.c	/^FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;$/;"	v
+yyinput	lex.yy.c	/^    static int yyinput (void)$/;"	f	file:
+yyleng	lex.yy.c	/^int yyleng;$/;"	v
+yyless	lex.yy.c	224;"	d	file:
+yyless	lex.yy.c	5893;"	d	file:
+yyless	lex.yy.c	5894;"	d	file:
+yylex_destroy	lex.yy.c	/^int yylex_destroy  (void)$/;"	f
+yylineno	lex.yy.c	/^int yylineno = 1;$/;"	v
+yylloc	y.tab.c	/^YYLTYPE yylloc;$/;"	v
+yylocate	y.tab.c	1884;"	d	file:
+yylocate	y.tab.c	1897;"	d	file:
+yyls_alloc	y.tab.c	/^  YYLTYPE yyls_alloc;$/;"	m	union:yyalloc	file:
+yyltype	y.tab.c	/^	}  yyltype;$/;"	t	typeref:struct:yyltype	file:
+yyltype	y.tab.c	/^typedef struct yyltype {$/;"	s	file:
+yyltype	y.tab.c	2460;"	d	file:
+yyltype	y.tab.h	558;"	d
+yylval	y.tab.c	/^YYSTYPE yylval;$/;"	v
+yymore	lex.yy.c	1749;"	d	file:
+yynerrs	y.tab.c	/^int yynerrs;$/;"	v
+yyout	lex.yy.c	/^FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;$/;"	v
+yypact	y.tab.c	/^static const yytype_int16 yypact[] =$/;"	v	file:
+yyparse	y.tab.c	/^yyparse (void *YYPARSE_PARAM)$/;"	f
+yyparseinit	grammar.h	202;"	d
+yyparseinit	grammar.h	203;"	d
+yyparseinit	y.tab.c	500;"	d	file:
+yyparseinit	y.tab.c	501;"	d	file:
+yyparseinit	y.tab.c	7604;"	d	file:
+yypgoto	y.tab.c	/^static const yytype_int16 yypgoto[] =$/;"	v	file:
+yypop_buffer_state	lex.yy.c	/^void yypop_buffer_state (void)$/;"	f
+yyprhs	y.tab.c	/^static const yytype_uint16 yyprhs[] =$/;"	v	file:
+yypush_buffer_state	lex.yy.c	/^void yypush_buffer_state (YY_BUFFER_STATE new_buffer )$/;"	f
+yyr1	y.tab.c	/^static const yytype_uint16 yyr1[] =$/;"	v	file:
+yyr2	y.tab.c	/^static const yytype_uint8 yyr2[] =$/;"	v	file:
+yyrealloc	lex.yy.c	/^void *yyrealloc  (void * ptr, yy_size_t  size )$/;"	f
+yyrestart	lex.yy.c	/^    void yyrestart  (FILE * input_file )$/;"	f
+yyrhs	y.tab.c	/^static const yytype_int16 yyrhs[] =$/;"	v	file:
+yyrline	y.tab.c	/^static const yytype_uint16 yyrline[] =$/;"	v	file:
+yyset_debug	lex.yy.c	/^void yyset_debug (int  bdebug )$/;"	f
+yyset_in	lex.yy.c	/^void yyset_in (FILE *  in_str )$/;"	f
+yyset_lineno	lex.yy.c	/^void yyset_lineno (int  line_number )$/;"	f
+yyset_out	lex.yy.c	/^void yyset_out (FILE *  out_str )$/;"	f
+yyss_alloc	y.tab.c	/^  yytype_int16 yyss_alloc;$/;"	m	union:yyalloc	file:
+yystdloc	y.tab.c	/^static YYLTYPE *yystdloc(void) $/;"	f	file:
+yystdlocation	y.tab.c	/^static YYLTYPE yystdlocation;$/;"	v	file:
+yystos	y.tab.c	/^static const yytype_uint16 yystos[] =$/;"	v	file:
+yystpcpy	y.tab.c	/^yystpcpy (char *yydest, const char *yysrc)$/;"	f	file:
+yystpcpy	y.tab.c	3997;"	d	file:
+yystrlen	y.tab.c	/^yystrlen (const char *yystr)$/;"	f	file:
+yystrlen	y.tab.c	3974;"	d	file:
+yystype	y.tab.c	2448;"	d	file:
+yystype	y.tab.h	544;"	d
+yysyntax_error	y.tab.c	/^yysyntax_error (char *yyresult, int yystate, int yychar)$/;"	f	file:
+yysyntaxerror	lex.yy.c	1931;"	d	file:
+yysyntaxerror	lex.yy.c	2095;"	d	file:
+yysyntaxerror	y.tab.c	296;"	d	file:
+yysyntaxtree	grammar.h	24;"	d
+yysyntaxtree	grammar.h	31;"	d
+yysyntaxtree	grammar.h	32;"	d
+yysyntaxtree	grammar.h	92;"	d
+yysyntaxtree	grammar.h	93;"	d
+yysyntaxtree	lex.yy.c	1772;"	d	file:
+yysyntaxtree	lex.yy.c	1773;"	d	file:
+yysyntaxtree	y.tab.c	144;"	d	file:
+yysyntaxtree	y.tab.c	145;"	d	file:
+yysyntaxtree	y.tab.c	1902;"	d	file:
+yysyntaxtree	y.tab.c	390;"	d	file:
+yysyntaxtree	y.tab.c	391;"	d	file:
+yytable	y.tab.c	/^static const yytype_int16 yytable[] =$/;"	v	file:
+yyterminate	lex.yy.c	2280;"	d	file:
+yytext	lex.yy.c	/^char *yytext;$/;"	v
+yytext_ptr	lex.yy.c	430;"	d	file:
+yytname	y.tab.c	/^static const char *const yytname[] =$/;"	v	file:
+yytnamerr	y.tab.c	/^yytnamerr (char *yyres, const char *yystr)$/;"	f	file:
+yytokentype	y.tab.c	/^   enum yytokentype {$/;"	g	file:
+yytokentype	y.tab.h	/^   enum yytokentype {$/;"	g
+yytokname	y.tab.c	/^static const char * const yytokname[] = {$/;"	v	file:
+yytoknum	y.tab.c	/^static const yytype_uint16 yytoknum[] =$/;"	v	file:
+yytranslate	y.tab.c	/^static const yytype_uint8 yytranslate[] =$/;"	v	file:
+yytype_int16	y.tab.c	/^typedef YYTYPE_INT16 yytype_int16;$/;"	t	file:
+yytype_int16	y.tab.c	/^typedef short int yytype_int16;$/;"	t	file:
+yytype_int8	y.tab.c	/^typedef YYTYPE_INT8 yytype_int8;$/;"	t	file:
+yytype_int8	y.tab.c	/^typedef short int yytype_int8;$/;"	t	file:
+yytype_int8	y.tab.c	/^typedef signed char yytype_int8;$/;"	t	file:
+yytype_uint16	y.tab.c	/^typedef YYTYPE_UINT16 yytype_uint16;$/;"	t	file:
+yytype_uint16	y.tab.c	/^typedef unsigned short int yytype_uint16;$/;"	t	file:
+yytype_uint8	y.tab.c	/^typedef YYTYPE_UINT8 yytype_uint8;$/;"	t	file:
+yytype_uint8	y.tab.c	/^typedef unsigned char yytype_uint8;$/;"	t	file:
+yyunput	lex.yy.c	/^    static void yyunput (int c, register char * yy_bp )$/;"	f	file:
+yyvs_alloc	y.tab.c	/^  YYSTYPE yyvs_alloc;$/;"	m	union:yyalloc	file:
+yywrap	lex.yy.c	/^int yywrap() { return (1); }$/;"	f
