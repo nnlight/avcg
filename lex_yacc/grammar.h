@@ -14,14 +14,12 @@ extern int pos_nr;
 
 extern void init_lex(void);
 
-#ifndef yysyntaxtree
-#define yysyntaxtree char*
-#endif
-
 
 
 typedef struct stree_node *syntaxtree;
+#ifdef yysyntaxtree
 #undef yysyntaxtree
+#endif
 #define yysyntaxtree syntaxtree
 
 
@@ -79,9 +77,8 @@ struct stree_node {
 
 /* typedef struct stree_node *syntaxtree; */
 
-
-#undef yysyntaxtree
-#define yysyntaxtree syntaxtree 
+/* #undef yysyntaxtree */
+/* #define yysyntaxtree syntaxtree */
 
 
 #define tag(x)           ((x)->tag_field)
@@ -751,11 +748,7 @@ char *Decode();
 extern yysyntaxtree Syntax_Tree;
 extern int nr_errors;
 
-#ifdef ANSI_C
-int parse(void);
-#else
-int parse();
-#endif
+extern int parse(void);
 
 #endif  /* SCANPARSE_H */
 

@@ -521,7 +521,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 1983 "grammar.y"
+#line 1922 "grammar.y"
  
 	unsigned char      byte;
 	short int          snum;

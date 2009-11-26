@@ -1,5 +1,3 @@
-/* SCCS-info %W% %E% */
-
 /*--------------------------------------------------------------------*/
 /*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
@@ -17,9 +15,6 @@
 /*                                                                    */
 /*--------------------------------------------------------------------*/
 
-#ifndef lint
-static char *id_string="$Id: alloc.c,v 3.9 1995/02/08 11:11:14 sander Exp $";
-#endif
 
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
@@ -38,58 +33,6 @@ static char *id_string="$Id: alloc.c,v 3.9 1995/02/08 11:11:14 sander Exp $";
  *  You  should  have  received a copy of the GNU General Public License
  *  along  with  this  program;  if  not,  write  to  the  Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  The software is available per anonymous ftp at ftp.cs.uni-sb.de.
- *  Contact  sander@cs.uni-sb.de  for additional information.
- */
-
-
-/* 
- * $Log: alloc.c,v $
- * Revision 3.9  1995/02/08  11:11:14  sander
- * Distribution version 1.3.
- *
- * Revision 3.8  1994/12/23  18:12:45  sander
- * Manhatten layout added.
- * Option interface cleared.
- *
- * Revision 3.7  1994/08/03  13:58:44  sander
- * Horizontal order mechanism changed.
- * Attribute horizontal_order for edges added.
- *
- * Revision 3.6  1994/05/17  16:37:18  sander
- * attribute node_align added to allow nodes to be centered in the levels.
- *
- * Revision 3.5  1994/05/16  08:56:03  sander
- * shape attribute (boxes, rhombs, ellipses, triangles) added.
- *
- * Revision 3.4  1994/05/05  08:20:30  sander
- * dllist_free_all added for the local optimization of crossings.
- *
- * Revision 3.3  1994/04/27  16:05:19  sander
- * Some general changes for the PostScript driver.
- * Horizontal order added. Bug fixes of the folding phases:
- * Folding of nested graphs works now.
- *
- * Revision 3.2  1994/03/04  19:11:24  sander
- * Specification of levels per node added.
- * X11 geometry behaviour (option -geometry) changed such
- * that the window is now opened automatically.
- *
- * Revision 3.1  1994/03/01  10:59:55  sander
- * Copyright and Gnu Licence message added.
- * Problem with "nearedges: no" and "selfloops" solved.
- *
- * Revision 2.2  1994/01/21  19:33:46  sander
- * VCG Version tested on Silicon Graphics IRIX, IBM R6000 AIX and Sun 3/60.
- * Option handling improved. Option -grabinputfocus installed.
- * X11 Font selection scheme implemented. The user can now select a font
- * during installation.
- * Sun K&R C (a nonansi compiler) tested. Some portabitility problems solved.
- *
- * Revision 2.1  1993/12/08  21:20:09  sander
- * Reasonable fast and stable version
- *
  */
 
 
@@ -202,14 +145,9 @@ static long node_refnum = 0L;	/* reference counter for REFNUM	of nodes */
  *   parser. 
  */
 
-#ifdef ANSI_C
 char *myalloc(int x)
-#else
-char *myalloc(x)
-int 	x;
-#endif
 {
-	debugmessage("myalloc. Nr. of Bytes:",my_itoa(x));
+	debugmessage("myalloc. Nr. of Bytes:",itoa(x));
 #ifdef DEBUG
 	act_alloc_size += x;
 	PRINTF("Alloc Summary: %ld Bytes allocated\n",act_alloc_size);
@@ -223,11 +161,7 @@ int 	x;
  *   deallocate the complete memory.
  */
 
-#ifdef ANSI_C
 void 	free_memory(void)
-#else
-void 	free_memory()
-#endif
 {
 	debugmessage("free_memory","");
 #ifdef DEBUG
@@ -287,11 +221,7 @@ static GNODE node_freelist = NULL;     /* list of free GNODE objects */
  *  We also set some default values.
  */
 
-#ifdef ANSI_C
 static GNODE internal_nodealloc(void)
-#else
-static GNODE internal_nodealloc()
-#endif
 {
 	GNODE   h;
 
@@ -363,12 +293,7 @@ static GNODE internal_nodealloc()
  *  We inheret the attributes from the refnode.
  */
 
-#ifdef ANSI_C
 GNODE nodealloc(GNODE refnode)
-#else
-GNODE nodealloc(refnode)
-GNODE refnode;
-#endif
 {
 	GNODE h;
 
@@ -388,12 +313,7 @@ GNODE refnode;
  *  ----------------------------------------
  */
  
-#ifdef ANSI_C
 void nodedefaults(GNODE node)
-#else
-void nodedefaults(node)
-GNODE node;
-#endif
 {
 	debugmessage("nodedefaults","");
 
@@ -425,12 +345,7 @@ GNODE node;
  *  --------------------------------------------
  */
 
-#ifdef ANSI_C
 void foldnodedefaults(GNODE node)
-#else
-void foldnodedefaults(node)
-GNODE node;
-#endif
 {
 	debugmessage("foldnodedefaults","");
 
@@ -462,12 +377,7 @@ GNODE node;
  *  -----------------------------------------
  */
 
-#ifdef ANSI_C
 void inherit_foldnode_attributes(GNODE fn, GNODE y)
-#else
-void inherit_foldnode_attributes(fn, y)
-GNODE fn, y;
-#endif
 {
 	debugmessage("inherit_foldnode_attributes","");
 
@@ -499,12 +409,7 @@ GNODE fn, y;
  *  --------------------------------------------------
  */
 
-#ifdef ANSI_C
 void copy_nodeattributes(GNODE x, GNODE y)
-#else
-void copy_nodeattributes(x, y)
-GNODE x, y;
-#endif
 {
 	NTITLE(y)	= NTITLE(x);
 	NLABEL(y)	= NLABEL(x);
@@ -538,12 +443,7 @@ GNODE x, y;
  *  We inheret the attributes from the refnode.
  */
 
-#ifdef ANSI_C
 GNODE graphalloc(GNODE refnode)
-#else
-GNODE graphalloc(refnode)
-GNODE refnode;
-#endif
 {
 	GNODE   h;
 
@@ -569,7 +469,6 @@ GNODE refnode;
  *  These nodes are only needed for the layouting.
  */
 
-#ifdef ANSI_C
 GNODE	tmpnodealloc(
 	int     textm,
 	int	width,
@@ -582,12 +481,6 @@ GNODE	tmpnodealloc(
 	int     shrink,
 	int	stretch,
 	int	horder)
-#else
-GNODE	tmpnodealloc(textm,width,height,borderw,fold,color,textc,borderc,
-                 	    shrink,stretch,horder)
-int     textm,width,height,borderw,fold,color,textc,borderc;
-int     shrink,stretch,horder;
-#endif
 {
 	GNODE	h;
 
@@ -621,11 +514,7 @@ int     shrink,stretch,horder;
  *  --------------------------------------
  */
 
-#ifdef ANSI_C
 void free_tmpnodes(void)
-#else
-void free_tmpnodes()
-#endif
 {
 	GNODE	h;
 
@@ -654,12 +543,7 @@ void free_tmpnodes()
  *  it could be given free twice, which is wrong.
  */
 
-#ifdef ANSI_C
 void free_node(GNODE h)
-#else
-void free_node(h)
-GNODE h;
-#endif
 {
 	debugmessage("free_node","");
 	NINTERN(h) = node_freelist;
@@ -673,12 +557,7 @@ GNODE h;
  *  At this time point, all visible nodes are in the node list.
  */
 
-#ifdef ANSI_C
 GNODE	search_xy_node(long x,long y)
-#else
-GNODE	search_xy_node(x,y)
-long	x,y;
-#endif
 {
 	GNODE	v;
 	int	width, height;
@@ -706,11 +585,7 @@ long	x,y;
  *  Thus, for such subgraphs, we add auxiliary nodes.
  */
 
-#ifdef ANSI_C
 void check_graph_consistency(void)
-#else
-void check_graph_consistency()
-#endif
 {
 	GNODE v,w;
 
@@ -763,12 +638,7 @@ static GNLIST ncons_freelist = NULL;  /* list of free cons cells      */
  *  store them in the tmpnconslist.
  */
 
-#ifdef ANSI_C
 GNLIST  nodelist_alloc(GNODE v)
-#else
-GNLIST  nodelist_alloc(v)
-GNODE v;
-#endif
 {
 	GNLIST	h;
 
@@ -789,11 +659,7 @@ GNODE v;
  *  tmpnconslist, to give them free later.
  */
 
-#ifdef ANSI_C
 GNLIST  tmpnodelist_alloc(void)
-#else
-GNLIST  tmpnodelist_alloc()
-#endif
 {
 	GNLIST	h;
 
@@ -821,11 +687,7 @@ GNLIST  tmpnodelist_alloc()
  *  also temporary, because they are deallocated after folding.
  */
 
-#ifdef ANSI_C
 GNLIST  foldnodelist_alloc(void)
-#else
-GNLIST  foldnodelist_alloc()
-#endif
 {
 	GNLIST	h;
 
@@ -848,11 +710,7 @@ GNLIST  foldnodelist_alloc()
  *  --------------------------------------
  */
 
-#ifdef ANSI_C
 static void free_nodelists(void)
-#else
-static void free_nodelists()
-#endif
 {
 	GNLIST	h;
 
@@ -871,11 +729,7 @@ static void free_nodelists()
  *  ----------------------------------
  */
 
-#ifdef ANSI_C
 void free_foldnodelists(void)
-#else
-void free_foldnodelists()
-#endif
 {
 	GNLIST	h;
 
@@ -896,12 +750,7 @@ void free_foldnodelists()
  *  i.e. should not be temporary.
  */
 
-#ifdef ANSI_C
 void free_regionnodelist(GNLIST	r)
-#else
-void free_regionnodelist(r)
-GNLIST	r;
-#endif
 {
 	GNLIST	h;
 
@@ -952,11 +801,7 @@ static GEDGE edge_freelist = NULL;     /* list of free GEDGE objects        */
  *  We also set some default values.
  */
 
-#ifdef ANSI_C
 static GEDGE internal_edgealloc(void)
-#else
-static GEDGE internal_edgealloc()
-#endif
 {
 	GEDGE   h;
 
@@ -1006,12 +851,7 @@ static GEDGE internal_edgealloc()
  *  We inheret the attributes from the refedge.
  */
 
-#ifdef ANSI_C
 GEDGE edgealloc(GEDGE refedge)
-#else
-GEDGE edgealloc(refedge)
-GEDGE refedge;
-#endif
 {
 	GEDGE   h;
  
@@ -1031,12 +871,7 @@ GEDGE refedge;
  *  -----------------------------------------
  */
  
-#ifdef ANSI_C
 void edgedefaults(GEDGE edge)
-#else
-void edgedefaults(edge)
-GEDGE edge;
-#endif
 {
 	debugmessage("edgedefaults","");
 
@@ -1061,12 +896,7 @@ GEDGE edge;
  *  ---------------------------------------------
  */
 
-#ifdef ANSI_C
 void foldedgedefaults(GEDGE edge)
-#else
-void foldedgedefaults(edge)
-GEDGE edge;
-#endif
 {
 	debugmessage("foldedgedefaults","");
 
@@ -1091,12 +921,7 @@ GEDGE edge;
  *  -----------------------------------------
  */
 
-#ifdef ANSI_C
 void inherit_foldedge_attributes(GEDGE fn, GEDGE y)
-#else
-void inherit_foldedge_attributes(fn, y)
-GEDGE fn, y;
-#endif
 {
 	debugmessage("inherit_foldedge_attributes","");
 
@@ -1121,12 +946,7 @@ GEDGE fn, y;
  *  --------------------------------------------------
  */
 
-#ifdef ANSI_C
 void copy_edgeattributes(GEDGE x, GEDGE y)
-#else
-void copy_edgeattributes(x, y)
-GEDGE x, y;
-#endif
 {
 	ELABEL(y)	= ELABEL(x);
 	ELSTYLE(y)    	= ELSTYLE(x);
@@ -1152,7 +972,6 @@ GEDGE x, y;
  *  to labels.
  */
 
-#ifdef ANSI_C
 GEDGE	tmpedgealloc(
 	int	lstyle,
 	int	thick,
@@ -1167,12 +986,6 @@ GEDGE	tmpedgealloc(
 	int	arrowc,
 	int	barrowc,
 	int	horder)
-#else
-GEDGE	tmpedgealloc(lstyle,thick,xclass,prio,ecolor,elcol,arrows,
-		barrows,arrowsty,barrowsty,arrowc,barrowc,horder)
-int	lstyle,thick,xclass,prio,ecolor,elcol,arrows,
-	barrows,arrowsty,barrowsty,arrowc,barrowc,horder;
-#endif
 {
 	GEDGE	h;
 
@@ -1206,11 +1019,7 @@ int	lstyle,thick,xclass,prio,ecolor,elcol,arrows,
  *  --------------------------------------
  */
 
-#ifdef ANSI_C
 static void free_tmpedges(void)
-#else
-static void free_tmpedges()
-#endif
 {
 	GEDGE	h;
 
@@ -1262,12 +1071,7 @@ static ADJEDGE econs_freelist = NULL;  /* list of free cons cells      */
  *  we allocate a cell from the core memory.
  */
 
-#ifdef ANSI_C
 void near_edge_insert(GEDGE e)
-#else
-void near_edge_insert(e)
-GEDGE e;
-#endif
 {
 	ADJEDGE	h;
 
@@ -1289,12 +1093,7 @@ GEDGE e;
  *  we allocate a cell from the core memory.
  */
 
-#ifdef ANSI_C
 void bentnear_edge_insert(GEDGE e)
-#else
-void bentnear_edge_insert(e)
-GEDGE e;
-#endif
 {
 	ADJEDGE	h;
 
@@ -1317,12 +1116,7 @@ GEDGE e;
  *  we allocate a cell from the core memory.
  */
 
-#ifdef ANSI_C
 void back_edge_insert(GEDGE e)
-#else
-void back_edge_insert(e)
-GEDGE e;
-#endif
 {
 	ADJEDGE	h;
 
@@ -1345,11 +1139,7 @@ GEDGE e;
  *  we allocate a cell from the core memory.
  */
 
-#ifdef ANSI_C
 static ADJEDGE  edgelist_alloc(void)
-#else
-static ADJEDGE  edgelist_alloc()
-#endif
 {
 	ADJEDGE	h;
 
@@ -1369,13 +1159,7 @@ static ADJEDGE  edgelist_alloc()
  *  --------------------------------------------
  */
 
-#ifdef ANSI_C
 ADJEDGE prededgealloc(GNODE node, GEDGE edge)
-#else
-ADJEDGE prededgealloc(node,edge)
-GNODE	node;	
-GEDGE   edge;
-#endif
 {
 	ADJEDGE e;
         
@@ -1392,13 +1176,7 @@ GEDGE   edge;
  *  -----------------------------------------------
  */
 
-#ifdef ANSI_C
 ADJEDGE succedgealloc(GNODE node, GEDGE edge)
-#else
-ADJEDGE succedgealloc(node,edge)
-GNODE   node;        
-GEDGE   edge;
-#endif
 {
 	ADJEDGE e;   
         
@@ -1415,11 +1193,7 @@ GEDGE   edge;
  *  ----------------------------------------
  */
 
-#ifdef ANSI_C
 static void free_edgelists(void)
-#else
-static void free_edgelists()
-#endif
 {
 	ADJEDGE	h;
 

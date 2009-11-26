@@ -1,14 +1,10 @@
 %{
 
 
-
 /*--------------------------------------------------------------------*/
-/*            A bison parser specification made by parsegen           */
+/*            A bison parser specification                            */
 /*--------------------------------------------------------------------*/
 
-#ifndef lint
-static char *parseskel_id_string="$Id: parse.skel,v 1.5 1994/01/20 23:44:31 sander Exp sander $";
-#endif
 
 /*--------------------------------------------------------------------*/
 /* Prototypes and Externals					      */
@@ -29,7 +25,6 @@ int nr_errors;
 /*--------------------------------------------------------------------*/
 /* Tokens from scanner                                                */ 
 /*--------------------------------------------------------------------*/
-
 
 
 %}
@@ -280,11 +275,7 @@ int nr_errors;
 /*--------------------------------------------------------------------*/
 
 #define Y_TAB_H
-#ifdef __cplusplus
-#include <std.h>
-#else
 #include <string.h>
-#endif /* __cplusplus */
 
 #ifndef YYLTYPE
 typedef struct yyltype {
@@ -310,25 +301,6 @@ typedef struct stree_node *syntaxtree;
 
 #define YYVALGLOBAL
 
-
-/*
- *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium 
- *
- *  This program and documentation is free software; you can redistribute 
- *  it under the terms of the  GNU General Public License as published by
- *  the  Free Software Foundation;  either version 2  of the License,  or
- *  (at your option) any later version.
- *
- *  This  program  is  distributed  in  the hope that it will be useful,
- *  but  WITHOUT ANY WARRANTY;  without  even  the  implied  warranty of
- *  MERCHANTABILITY  or  FITNESS  FOR  A  PARTICULAR  PURPOSE.  See  the
- *  GNU General Public License for more details.
- *
- *  You  should  have  received a copy of the GNU General Public License
- *  along  with  this  program;  if  not,  write  to  the  Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- */
 
 
 #include <stdio.h>
@@ -360,8 +332,6 @@ extern void gs_exit            _PP((int x));
  
 void   line_directive _PP((char *text));
 void   escape_transl  _PP((char *text));
-char  *my_itoa        _PP((int x));
-long   long_atoi      _PP((char *c));
 void   syntaxerror    _PP((int line,int pos,char *mesge));
 void   warning        _PP((int line,int pos,char *mesge));
  
@@ -512,8 +482,6 @@ struct stree_node {
 /*------------*/ 
 
 
-#ifdef ANSI_C
-
 char * ParseMalloc(int x);
 void ParseFree(void);
 
@@ -537,35 +505,6 @@ syntaxtree Revert(syntaxtree list);
 const char *ConstructorName(int i);
 int   ConstructorArity(int i);
 
-#else
-char * ParseMalloc();
-void ParseFree();
-
-union special *UnionByte();                     
-union special *UnionSnum();                     
-union special *UnionUsnum();                     
-union special *UnionNum();                     
-union special *UnionUnum();                     
-union special *UnionLnum();                     
-union special *UnionUlnum();                     
-union special *UnionRealnum();                     
-union special *UnionLrealnum();                     
-union special *UnionString();                     
-
-syntaxtree BuildCont();
-yysyntaxtree BuildTree();
-
-syntaxtree Copy();
-syntaxtree Revert();
-
-char *ConstructorName();
-int   ConstructorArity();
-
-#ifndef const
-#define const
-#endif
-
-#endif /* ANSI_C */
  
 #undef  yyparseinit
 #define yyparseinit() /**/ 
@@ -3038,14 +2977,7 @@ int parse()
  *
  *  et cetera.
  */
- 
-
-#ifdef ANSI_C 
 void line_directive(char *text)
-#else
-void line_directive(text)
-char *text;
-#endif
 {
         char *c,*d;
 
@@ -3076,13 +3008,7 @@ char *text;
  *
  *  et cetera.
  */
- 
-#ifdef ANSI_C 
 void escape_transl(char *text)
-#else
-void escape_transl(text)
-char *text;
-#endif
 {
         char *c,*d;
 	int i;
@@ -3092,9 +3018,7 @@ char *text;
 		if (*c == '\\') {
 			c++;
 			switch (*c) {
-#ifdef ANSI_C
 			case 'a' : *d++ = '\a'; break;
-#endif
 			case 'b' : *d++ = '\b'; break;
 			case 'f' : *d++ = '\f'; break;
 			case 'n' : *d++ = '\n'; break;
@@ -3149,65 +3073,6 @@ char *text;
 }
 
 
-/*--------------------------------------------------------------*/
-/*   Type conversions                                           */
-/*--------------------------------------------------------------*/
-
-/*
- *  Translate integer into string.
- */
-
-static char myprivmessage[16000];  /* Please DON'T reuse this */
-
-#ifdef ANSI_C 
-char  *my_itoa(int x)
-#else
-char  *my_itoa(x)
-int x;
-#endif
-{
-	SPRINTF(myprivmessage,"%d",x);
-	return(myprivmessage);
-}
-
-/*
- *  Translate integer into string.
- *  This is a little bit overcomplex, but in this way, it is more compatible.
- */
-
-#ifdef ANSI_C 
-long 	long_atoi(char *c)
-#else
-long	long_atoi(c)
-char *c;
-#endif
-{
-	long res, sign;
-
-	res = 0;
-	if (!c) return(0L);
-	if (*c=='-')  { sign = -1L; c++; }
-	else sign = 1L;
-	while (*c) {
-		switch (*c) {
-		case '0': res = res * 10L;      break;
-		case '1': res = res * 10L + 1L; break;
-		case '2': res = res * 10L + 2L; break;
-		case '3': res = res * 10L + 3L; break;
-		case '4': res = res * 10L + 4L; break;
-		case '5': res = res * 10L + 5L; break;
-		case '6': res = res * 10L + 6L; break;
-		case '7': res = res * 10L + 7L; break;
-		case '8': res = res * 10L + 8L; break;
-		case '9': res = res * 10L + 9L; break;
-		default: return(sign * res);
-		}
-		c++;
-	}
-	return(sign * res);
-}
-
- 
 /*====================================================================*/
 /*   Errors and Warnings                                              */
 /*====================================================================*/
@@ -3220,14 +3085,9 @@ char *c;
 
 static void fatal_error _PP((char *));
 
-#ifdef ANSI_C 
+static char myprivmessage[16000];  /* Please DON'T reuse this */
+
 void syntaxerror(int line, int pos, char *mesge)
-#else
-void syntaxerror(line,pos,mesge)
-int line;
-int pos;
-char *mesge;
-#endif
 {
         strcpy(myprivmessage,mesge);
         if (islower(*myprivmessage))
@@ -3246,14 +3106,7 @@ char *mesge;
  *   errors.
  */
 
-#ifdef ANSI_C 
 void warning(int line, int pos, char *mesge)
-#else
-void warning(line,pos,mesge)
-int line;
-int pos;
-char *mesge;
-#endif
 {
         strcpy(myprivmessage,mesge);
         if (islower(*myprivmessage))
@@ -3276,29 +3129,16 @@ char *mesge;
 
 #ifdef PARSEGENSTD 
 
-#ifndef lint
-static char *stdpc_id_string="$Id: stdpc.skel,v 1.12 1994/12/05 13:54:37 sander Exp sander $";
-#endif
-
 
 #include <stdio.h>
 #include <malloc.h>
-#ifdef ANSI_C
 #include <stdarg.h>
-#else
-#include <varargs.h>
-#endif
 
 /*--------------------------------------------------------------------*/
 /* Fatal error: exit with message                                     */
 /*--------------------------------------------------------------------*/
 
-#ifdef ANSI_C
 static void fatal_error(char *message)
-#else
-static void fatal_error(message)
-char *message;
-#endif
 {
         (void)fprintf(stderr,"Fatal error: %s !\n",message);
         (void)fprintf(stderr,"Aborted !\n");
@@ -3331,11 +3171,7 @@ static yysyntaxtree parseheapend;                 /* the end  */
 static int parseheapsize = PARSEBLOCKSIZE;     /* the size of one block */
 
 
-#ifdef ANSI_C
 static void alloc_block(void)
-#else
-static void alloc_block()
-#endif
 {
         yysyntaxtree help, *help2;
 
@@ -3356,12 +3192,7 @@ static void alloc_block()
 
 /*  allocate x bytes */
 
-#ifdef ANSI_C
 static yysyntaxtree parsemalloc(int x)
-#else
-static yysyntaxtree parsemalloc(x)
-int x;
-#endif
 {
         yysyntaxtree help;
         int  y;
@@ -3390,12 +3221,7 @@ int x;
 
 /* allocate yysyntaxtree node with x sons */
 
-#ifdef ANSI_C
 static yysyntaxtree st_malloc(int x)
-#else
-static yysyntaxtree st_malloc(x)
-int x;
-#endif
 {
         yysyntaxtree help;
 

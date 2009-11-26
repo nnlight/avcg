@@ -1,5 +1,3 @@
-/* SCCS-info %W% %E% */
-
 /*--------------------------------------------------------------------*/
 /*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
@@ -16,10 +14,6 @@
 /*   status:       in work                                            */
 /*                                                                    */
 /*--------------------------------------------------------------------*/
-
-#ifndef lint
-static char *id_string="$Id: options.c,v 1.3 1995/02/08 12:53:51 sander Exp $";
-#endif
 
 
 /*
@@ -39,23 +33,6 @@ static char *id_string="$Id: options.c,v 1.3 1995/02/08 12:53:51 sander Exp $";
  *  You  should  have  received a copy of the GNU General Public License
  *  along  with  this  program;  if  not,  write  to  the  Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  The software is available per anonymous ftp at ftp.cs.uni-sb.de.
- *  Contact  sander@cs.uni-sb.de  for additional information.
- */
-
-
-/* 
- * $Log: options.c,v $
- * Revision 1.3  1995/02/08  12:53:51  sander
- * Negative integers allowed for integer options
- *
- * Revision 1.2  1995/02/08  11:11:14  sander
- * Distribution version 1.3.
- *
- * Revision 1.1  1994/12/23  18:12:45  sander
- * Initial revision
- *
  */
 
 
@@ -101,9 +78,9 @@ static int unitOption	_PP((char *optstr, float *res));
 /* The global copy of the option argument buffer 
  */
 
-int 	gblargi = 1;        /* the actual  index */
-int 	gblargc;            /* the maximal index */
-char	**gblargv;          /* the option buffer */
+static int 	gblargi = 1;        /* the actual  index */
+static int 	gblargc;            /* the maximal index */
+static char	**gblargv;          /* the option buffer */
 
 
 /* General flags regarding the option handling
@@ -1177,40 +1154,6 @@ char	*argv[];
 /*--------------------------------------------------------------------*/
 
 
-/* Print the version and copyright notice
- * --------------------------------------
- */
-
-
-#ifdef ANSI_C
-void print_version_copyright(void)
-#else
-void print_version_copyright()
-#endif
-{
-	if (!opt_give_version) return;
-	
-		PRINTF("VCG/XVCG (%s.libHLS) -- 1997 Shantanu Tarafdar\n", version_str);
-	PRINTF("-------------------------\n");
-	PRINTF("This is a patched version of VCG/XVCG (%s). \n", version_str);
-	PRINTF("Modified by Shantanu Tarafdar (shantanu@ece.neu.edu)\n");
-	PRINTF("The original version/copyright follows.\n\n");
-	PRINTF("VCG/XVCG - USAAR Visualization Tool %s\n",version_str);
-	PRINTF("-----------------------------------------\n");
-	PRINTF("%s %s\n",&(revision_str[1]),date_str);
-
-	PRINTF("Copyright (C) 1993-1995 I.Lemke/G.Sander & the Compare Consortium.\n");
-	PRINTF("This software is supported by the ESPRIT project 5399 Compare.\n");
-	PRINTF("We thank the Compare Consortium for the permission to distribute\n");
-	PRINTF("this software freely. VCG/XVCG comes with ABSOLUTELY NO WARRANTY.\n");
-	PRINTF("You are welcome to redistribute XVCG under certain conditions.\n");
-	PRINTF("See the file `COPYING' for details.\n");
-	PRINTF("Contact  sander@cs.uni-sb.de  for additional information.\n\n");
-
-	if (Dataname[0]) PRINTF("Input specification: %s\n\n", Dataname);
-}
-
-
 /* Print the basic help
  * --------------------
  */
@@ -1221,10 +1164,6 @@ void print_basic_help(void)
 void print_basic_help()
 #endif
 {
-	PRINTF("VCG/XVCG (%s.libHLS) --modified by S. Tarafdar (1997)\n", version_str);
-	PRINTF("USAAR Visualization Tool %s (C) 1993--1995 I.Lemke/G.Sander & Compare\n",
-		version_str);
-	PRINTF("%s %s\n",&(revision_str[1]),date_str);
 	PRINTF("Usage:   %s [options] [filename]\n",gblargv[0]);	
 	PRINTF("Enter %s -h  for help information.\n", gblargv[0]);
 	exit(0);
@@ -1235,19 +1174,9 @@ void print_basic_help()
  * -------------------
  */
 
-#ifdef ANSI_C
 void print_help(void)
-#else
-void print_help()
-#endif
 {
 	if (!opt_give_help) return;
-
-	PRINTF("VCG/XVCG (%s.libHLS) -- 1997 Shantanu Tarafdar\n", version_str);
-	PRINTF("USAAR Visualization Tool %s (C) 1993--1995 I.Lemke/G.Sander & Compare\n",
-		version_str);
-
-	PRINTF("%s %s\n\n",&(revision_str[1]),date_str);
 
 	PRINTF("Usage:   %s [options] [filename]\n\n",gblargv[0]);	
 	PRINTF("General options:\n");

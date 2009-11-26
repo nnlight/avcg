@@ -1,5 +1,3 @@
-/* SCCS-info %W% %E% */
-
 /*--------------------------------------------------------------------*/
 /*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
@@ -17,7 +15,6 @@
 /*                                                                    */
 /*--------------------------------------------------------------------*/
 
-/* $Id: globals.h.tpl,v 3.7 1994/11/23 14:50:47 sander Exp sander $ */
 
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
@@ -36,47 +33,10 @@
  *  You  should  have  received a copy of the GNU General Public License
  *  along  with  this  program;  if  not,  write  to  the  Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  The software is available per anonymous ftp at ftp.cs.uni-sb.de.
- *  Contact  sander@cs.uni-sb.de  for additional information.
  */
 
 
-/* $Log: globals.h.tpl,v $
-# Revision 3.7  1994/11/23  14:50:47  sander
-# #include <limits.h> added to get MAX_INT and MIN_INT.
-#
-# Revision 3.6  1994/08/08  16:01:47  sander
-# Attributes xraster, xlraster, yraster added.
-#
-# Revision 3.5  1994/08/02  15:36:12  sander
-# CHECKNODE option added to allow tracing of properties
-# of one single node. For debugging only.
-#
-# Revision 3.4  1994/06/07  14:09:59  sander
-# Splines implemented.
-# HP-UX, Linux, AIX, Sun-Os, IRIX compatibility tested.
-# The tool is now ready to be distributed.
-#
-# Revision 3.3  1994/05/16  08:56:03  sander
-# shape attribute (boxes, rhombs, ellipses, triangles) added.
-#
-# Revision 3.2  1994/03/02  11:48:54  sander
-# Layoutalgoritms mindepthslow, maxdepthslow, minindegree, ... mandegree
-# added.
-# Anchors and nearedges are not anymore allowed to be intermixed.
-# Escapes in strings are now allowed.
-#
-# Revision 3.1  1994/03/01  10:59:55  sander
-# Copyright and Gnu Licence message added.
-# Problem with "nearedges: no" and "selfloops" solved.
-#
-# Revision 1.2  1994/01/21  19:43:42  sander
-# New started with release 1.2 from the scratch.
-# Old and useless comments removed.
-#
- *
- */
+
 
 /*   This file contains the setup of the tool for the C compiler.
  *   It is included into every other C file.
@@ -105,13 +65,6 @@
 /* #undef  ANSI_C */
 #define ANSI_C
 
-/*   The Gnu CC sometimes does not have a standard library.
- *   In this case, the include files might be wrong.
- *   To get fewer messages on -Wall, define NO_STDINCLUDES
- *   with Gnu CC.
- */
-
-#undef NO_STDINCLUDES
 
 
 /*   User Signals available or not ?
@@ -143,11 +96,11 @@
  *   Do not define both !!!
  */
 
-/* #define SUNVIEW */
-/* #undef  X11     */
-/* #undef  SUNVIEW */
-/* #define X11     */
 #define X11
+
+#ifdef X11
+#define FAST_X11_DRAWING
+#endif
 
 
 /*   Required alignment for structs (power of 2). IALIGN is the appropriate
@@ -244,42 +197,6 @@
 
 /*---------------------------- End of Changes ------------------------*/
 
-/* Maximal and minimal positive integer */
-
-#include <limits.h>
-
-#ifndef MAXINT
-#ifdef INT_MAX
-#define MAXINT  INT_MAX
-#else
-#define MAXINT  32767
-#endif
-#endif
-
-#ifndef MININT
-#ifdef INT_MIN
-#define MININT  INT_MIN
-#else
-#define MININT  -32767
-#endif
-#endif
-
-#ifndef MAXLONG
-#ifdef LONG_MAX
-#define MAXLONG LONG_MAX
-#else
-#define MAXLONG 32767
-#endif
-#endif
-
-#ifndef MINLONG
-#ifdef LONG_MIN
-#define MINLONG LONG_MIN
-#else
-#define MINLONG -32767
-#endif
-#endif
-
 
 /* Prototype support */
 
@@ -289,34 +206,6 @@
 #define	_PP(x) ()
 #endif
 
-#ifndef NULL
-#define NULL	0
-#endif
-
-/* Aix CC and OSF does not understand const's */
-
-#ifdef OSF 
-#define const
-#endif
-#ifdef AIXCC
-#define const
-#endif
-
-/* Default Window system is X11 */
-
-#ifdef SUNVIEW
-#ifdef X11
-#undef SUNVIEW
-#endif
-#else
-#ifndef X11
-#define X11
-#endif
-#endif
-
-#ifdef X11
-#define FAST_X11_DRAWING
-#endif
 
 /* Debugging messages */
 
@@ -346,19 +235,7 @@
 #undef NDEBUG
 #endif
 
-#ifdef ASSERT_AVAIL
 #include <assert.h>
-#else
-# ifndef NDEBUG
-# define assert(ex)  {if (!(ex)) {\
-   FPRINTF(stderr,"Assertion failed: file \"%s\", line %d\n",\
-         __FILE__, __LINE__); \
-   FPRINTF(stderr,"This is a bug! Please contact sander@cs.uni-sb.de !\n");\
-   exit(1);}}
-# else
-# define assert(ex)
-# endif
-# endif
 
 
 /* To make lint happy */
@@ -370,43 +247,13 @@
 #define FFLUSH  (void)fflush
 #define FREE    (void)free
 
-/* To make ANSI C compiler with -Wall more happy */
 
-#ifdef ANSI_C
-#ifdef NO_STDINCLUDES
-int    fprintf(FILE *stream, const char *format, ...);
-int    printf(const char *format, ...);
-int    scanf(const char *format, ...);
-int    atoi(char *x);
-double atof(char *x);
-int    islower(int s);
-int    isupper(int s);
-int    tolower(int s);
-int    toupper(int s);
-void   bcopy(void *b1,void *b2,int length);
-int    fputs(const char *s, FILE *stream);
-size_t fwrite(const void *ptr, size_t s, size_t n, FILE *stream);
-int    fclose(FILE *stream);
-FILE  *fopen(const char *filename, const char *mode);
-void   system(char *string);
-int    fflush(FILE *stream);
-int    getppid(void);
-#ifdef X11
-char   *getwd(char pn[]);
-#endif
-int    fgetc(FILE *stream);
-#endif
-#endif
 
 #define gstoint(x) ((int)(x))
-#ifdef HPUX
-#define alloca(x) (malloc(x))
-#define getwd(h)  (getcwd(h,MAXPATHLEN-1))
-#endif
 
-#ifdef VMS
-#define alloca(x) (malloc(x))
-#endif
+#include <limits.h>
+#define MAXINT INT_MAX
+#define MININT  INT_MIN
 
 /*--------------------------------------------------------------------*/
 
