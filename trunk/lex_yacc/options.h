@@ -1,5 +1,3 @@
-/* SCCS-info %W% %E% */
-
 /*--------------------------------------------------------------------*/
 /*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
@@ -18,8 +16,6 @@
 /*--------------------------------------------------------------------*/
 
 
-/* $Id: options.h,v 1.2 1995/02/08 11:11:14 sander Exp $ */
-
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
  *                               the Compare Consortium 
@@ -37,20 +33,6 @@
  *  You  should  have  received a copy of the GNU General Public License
  *  along  with  this  program;  if  not,  write  to  the  Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  The software is available per anonymous ftp at ftp.cs.uni-sb.de.
- *  Contact  sander@cs.uni-sb.de  for additional information.
- */
-
-
-/* 
- * $Log: options.h,v $
- * Revision 1.2  1995/02/08  11:11:14  sander
- * Distribution version 1.3.
- *
- * Revision 1.1  1994/12/23  18:12:45  sander
- * Initial revision
- *
  */
 
 
@@ -59,19 +41,9 @@
 
 /*--------------------------------------------------------------------*/
 
-/* See options.c for explanation
- * -----------------------------
- */
-
-/*--------------------------------------------------------------------*/
-
 /* Global Variables
  * ----------------
  */
-
-extern int  gblargi;
-extern int  gblargc;
-extern char **gblargv;
 
 extern int grabinputfocus;
 
@@ -226,7 +198,6 @@ extern int locFlag;
  */
 
 int  scanOptions		_PP((int argc, char *argv[]));
-void print_version_copyright	_PP((void));
 void print_basic_help		_PP((void));
 void print_help			_PP((void));
 

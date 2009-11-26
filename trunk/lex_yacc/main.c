@@ -81,16 +81,6 @@ void	gs_exit(int x)
 static int   f_is_writable	_PP((char *fname));
 
 
-/* Global variables
- * ================
- */
-
-
-char short_banner[128];
-char version_str[24]  = "V.1.3";
-char date_str[48]     = "$Date: 1995/02/08 11:11:14 $";
-char revision_str[48] = "$Revision: 3.17 $";
-
 
 /*--------------------------------------------------------------------*/
 /*  Main routines 						      */
@@ -382,22 +372,12 @@ void relayout(void)
 
 void vcg_Parse( FILE *input_file)
 {
-	char testvar;
-	int i;
+	char testvar = -1;
 
-	testvar = -1;
 	if (testvar != -1) {
 		FPRINTF(stderr,"Warning: On this system, chars are unsigned.\n");
 		FPRINTF(stderr,"This may yield problems with the graph folding operation.\n");
 	}
-
-	for (i=0; i<48; i++) {
-		if (date_str[i]=='$')     date_str[i]=' ';	
-		if (revision_str[i]=='$') revision_str[i]=' ';	
-	}
-	
-	SPRINTF(short_banner,"USAAR Visualization Tool VCG/XVCG %s %s", 
-			version_str, revision_str);
 
 
 	G_xmax = G_ymax = -1;

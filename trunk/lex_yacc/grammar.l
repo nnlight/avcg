@@ -72,8 +72,6 @@ extern void gs_exit            _PP((int x));
  
 void   line_directive _PP((char *text));
 void   escape_transl  _PP((char *text));
-char  *my_itoa        _PP((int x));
-long   long_atoi      _PP((char *c));
 void   syntaxerror    _PP((int line,int pos,char *mesge));
 void   warning        _PP((int line,int pos,char *mesge));
  
@@ -930,7 +928,7 @@ extern YYLTYPE yylloc;
 		 line_nr++; pos_nr=1;    }
 
 {INT}			{
-		 yylval.lnum = long_atoi(yytext); 
+		 yylval.lnum = atol(yytext); 
 			  RETURN(LEX_INT); 
 			}
 {REAL}			{

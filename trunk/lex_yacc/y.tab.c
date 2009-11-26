@@ -72,14 +72,10 @@
 
 
 
-
 /*--------------------------------------------------------------------*/
-/*            A bison parser specification made by parsegen           */
+/*            A bison parser specification                            */
 /*--------------------------------------------------------------------*/
 
-#ifndef lint
-static char *parseskel_id_string="$Id: parse.skel,v 1.5 1994/01/20 23:44:31 sander Exp sander $";
-#endif
 
 /*--------------------------------------------------------------------*/
 /* Prototypes and Externals					      */
@@ -103,9 +99,8 @@ int nr_errors;
 
 
 
-
 /* Line 189 of yacc.c  */
-#line 274 "grammar.y"
+#line 269 "grammar.y"
 
 
 
@@ -115,11 +110,7 @@ int nr_errors;
 /*--------------------------------------------------------------------*/
 
 #define Y_TAB_H
-#ifdef __cplusplus
-#include <std.h>
-#else
 #include <string.h>
-#endif /* __cplusplus */
 
 #ifndef YYLTYPE
 typedef struct yyltype {
@@ -145,25 +136,6 @@ typedef struct stree_node *syntaxtree;
 
 #define YYVALGLOBAL
 
-
-/*
- *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium 
- *
- *  This program and documentation is free software; you can redistribute 
- *  it under the terms of the  GNU General Public License as published by
- *  the  Free Software Foundation;  either version 2  of the License,  or
- *  (at your option) any later version.
- *
- *  This  program  is  distributed  in  the hope that it will be useful,
- *  but  WITHOUT ANY WARRANTY;  without  even  the  implied  warranty of
- *  MERCHANTABILITY  or  FITNESS  FOR  A  PARTICULAR  PURPOSE.  See  the
- *  GNU General Public License for more details.
- *
- *  You  should  have  received a copy of the GNU General Public License
- *  along  with  this  program;  if  not,  write  to  the  Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- */
 
 
 #include <stdio.h>
@@ -195,8 +167,6 @@ extern void gs_exit            _PP((int x));
  
 void   line_directive _PP((char *text));
 void   escape_transl  _PP((char *text));
-char  *my_itoa        _PP((int x));
-long   long_atoi      _PP((char *c));
 void   syntaxerror    _PP((int line,int pos,char *mesge));
 void   warning        _PP((int line,int pos,char *mesge));
  
@@ -347,8 +317,6 @@ struct stree_node {
 /*------------*/ 
 
 
-#ifdef ANSI_C
-
 char * ParseMalloc(int x);
 void ParseFree(void);
 
@@ -372,35 +340,6 @@ syntaxtree Revert(syntaxtree list);
 const char *ConstructorName(int i);
 int   ConstructorArity(int i);
 
-#else
-char * ParseMalloc();
-void ParseFree();
-
-union special *UnionByte();                     
-union special *UnionSnum();                     
-union special *UnionUsnum();                     
-union special *UnionNum();                     
-union special *UnionUnum();                     
-union special *UnionLnum();                     
-union special *UnionUlnum();                     
-union special *UnionRealnum();                     
-union special *UnionLrealnum();                     
-union special *UnionString();                     
-
-syntaxtree BuildCont();
-yysyntaxtree BuildTree();
-
-syntaxtree Copy();
-syntaxtree Revert();
-
-char *ConstructorName();
-int   ConstructorArity();
-
-#ifndef const
-#define const
-#endif
-
-#endif /* ANSI_C */
  
 #undef  yyparseinit
 #define yyparseinit() /**/ 
@@ -1816,7 +1755,7 @@ static YYLTYPE *yystdloc(void)
 
 
 /* Line 189 of yacc.c  */
-#line 1820 "y.tab.c"
+#line 1759 "y.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -2325,7 +2264,7 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 1983 "grammar.y"
+#line 1922 "grammar.y"
  
 	unsigned char      byte;
 	short int          snum;
@@ -2342,7 +2281,7 @@ typedef union YYSTYPE
 
 
 /* Line 214 of yacc.c  */
-#line 2346 "y.tab.c"
+#line 2285 "y.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -2367,7 +2306,7 @@ typedef struct YYLTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 2371 "y.tab.c"
+#line 2310 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -2802,38 +2741,38 @@ static const yytype_int16 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,  2059,  2059,  2065,  2068,  2074,  2076,  2078,  2080,  2082,
-    2084,  2086,  2088,  2090,  2092,  2094,  2096,  2101,  2104,  2107,
-    2110,  2113,  2116,  2119,  2122,  2125,  2128,  2131,  2134,  2136,
-    2138,  2141,  2144,  2147,  2150,  2153,  2156,  2159,  2162,  2165,
-    2168,  2172,  2175,  2178,  2181,  2184,  2187,  2190,  2193,  2196,
-    2199,  2202,  2205,  2208,  2211,  2214,  2218,  2221,  2224,  2227,
-    2230,  2233,  2237,  2240,  2243,  2246,  2249,  2252,  2255,  2258,
-    2261,  2264,  2266,  2269,  2272,  2275,  2278,  2281,  2285,  2288,
-    2292,  2295,  2298,  2302,  2305,  2308,  2311,  2315,  2318,  2321,
-    2324,  2327,  2330,  2333,  2336,  2340,  2343,  2346,  2349,  2352,
-    2355,  2358,  2361,  2367,  2369,  2371,  2373,  2375,  2377,  2379,
-    2381,  2383,  2385,  2387,  2389,  2391,  2393,  2395,  2397,  2399,
-    2401,  2403,  2405,  2407,  2409,  2411,  2413,  2415,  2417,  2419,
-    2421,  2423,  2425,  2427,  2429,  2431,  2436,  2438,  2443,  2445,
-    2447,  2449,  2455,  2457,  2459,  2461,  2464,  2466,  2468,  2470,
-    2472,  2474,  2476,  2478,  2480,  2482,  2484,  2486,  2488,  2494,
-    2496,  2501,  2503,  2505,  2510,  2512,  2516,  2518,  2520,  2522,
-    2526,  2528,  2530,  2532,  2536,  2538,  2542,  2547,  2552,  2557,
-    2563,  2569,  2572,  2578,  2583,  2588,  2593,  2599,  2602,  2608,
-    2615,  2618,  2624,  2627,  2630,  2633,  2636,  2639,  2642,  2645,
-    2648,  2651,  2654,  2657,  2660,  2663,  2666,  2669,  2672,  2675,
-    2678,  2681,  2684,  2687,  2690,  2693,  2696,  2699,  2702,  2705,
-    2710,  2712,  2714,  2718,  2720,  2722,  2724,  2728,  2730,  2732,
-    2736,  2738,  2740,  2745,  2748,  2751,  2754,  2757,  2760,  2763,
-    2766,  2769,  2772,  2775,  2778,  2781,  2784,  2787,  2790,  2793,
-    2796,  2799,  2802,  2805,  2811,  2813,  2815,  2817,  2819,  2824,
-    2826,  2828,  2832,  2835,  2838,  2841,  2844,  2847,  2850,  2855,
-    2858,  2862,  2864,  2866,  2868,  2870,  2872,  2874,  2876,  2878,
-    2880,  2882,  2884,  2886,  2888,  2890,  2892,  2894,  2896,  2898,
-    2900,  2902,  2904,  2906,  2908,  2910,  2912,  2916,  2918,  2920,
-    2924,  2926,  2928,  2930,  2932,  2936,  2941,  2944,  2948,  2950,
-    2953,  2956,  2961,  2966,  2970,  2974,  2978
+       0,  1998,  1998,  2004,  2007,  2013,  2015,  2017,  2019,  2021,
+    2023,  2025,  2027,  2029,  2031,  2033,  2035,  2040,  2043,  2046,
+    2049,  2052,  2055,  2058,  2061,  2064,  2067,  2070,  2073,  2075,
+    2077,  2080,  2083,  2086,  2089,  2092,  2095,  2098,  2101,  2104,
+    2107,  2111,  2114,  2117,  2120,  2123,  2126,  2129,  2132,  2135,
+    2138,  2141,  2144,  2147,  2150,  2153,  2157,  2160,  2163,  2166,
+    2169,  2172,  2176,  2179,  2182,  2185,  2188,  2191,  2194,  2197,
+    2200,  2203,  2205,  2208,  2211,  2214,  2217,  2220,  2224,  2227,
+    2231,  2234,  2237,  2241,  2244,  2247,  2250,  2254,  2257,  2260,
+    2263,  2266,  2269,  2272,  2275,  2279,  2282,  2285,  2288,  2291,
+    2294,  2297,  2300,  2306,  2308,  2310,  2312,  2314,  2316,  2318,
+    2320,  2322,  2324,  2326,  2328,  2330,  2332,  2334,  2336,  2338,
+    2340,  2342,  2344,  2346,  2348,  2350,  2352,  2354,  2356,  2358,
+    2360,  2362,  2364,  2366,  2368,  2370,  2375,  2377,  2382,  2384,
+    2386,  2388,  2394,  2396,  2398,  2400,  2403,  2405,  2407,  2409,
+    2411,  2413,  2415,  2417,  2419,  2421,  2423,  2425,  2427,  2433,
+    2435,  2440,  2442,  2444,  2449,  2451,  2455,  2457,  2459,  2461,
+    2465,  2467,  2469,  2471,  2475,  2477,  2481,  2486,  2491,  2496,
+    2502,  2508,  2511,  2517,  2522,  2527,  2532,  2538,  2541,  2547,
+    2554,  2557,  2563,  2566,  2569,  2572,  2575,  2578,  2581,  2584,
+    2587,  2590,  2593,  2596,  2599,  2602,  2605,  2608,  2611,  2614,
+    2617,  2620,  2623,  2626,  2629,  2632,  2635,  2638,  2641,  2644,
+    2649,  2651,  2653,  2657,  2659,  2661,  2663,  2667,  2669,  2671,
+    2675,  2677,  2679,  2684,  2687,  2690,  2693,  2696,  2699,  2702,
+    2705,  2708,  2711,  2714,  2717,  2720,  2723,  2726,  2729,  2732,
+    2735,  2738,  2741,  2744,  2750,  2752,  2754,  2756,  2758,  2763,
+    2765,  2767,  2771,  2774,  2777,  2780,  2783,  2786,  2789,  2794,
+    2797,  2801,  2803,  2805,  2807,  2809,  2811,  2813,  2815,  2817,
+    2819,  2821,  2823,  2825,  2827,  2829,  2831,  2833,  2835,  2837,
+    2839,  2841,  2843,  2845,  2847,  2849,  2851,  2855,  2857,  2859,
+    2863,  2865,  2867,  2869,  2871,  2875,  2880,  2883,  2887,  2889,
+    2892,  2895,  2900,  2905,  2909,  2913,  2917
 };
 #endif
 
@@ -4435,7 +4374,7 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 2060 "grammar.y"
+#line 1999 "grammar.y"
     {
 		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); Syntax_Tree = (yyval.tree); }
     break;
@@ -4443,7 +4382,7 @@ yyreduce:
   case 3:
 
 /* Line 1455 of yacc.c  */
-#line 2066 "grammar.y"
+#line 2005 "grammar.y"
     {
 		 (yyval.tree) = T_graph_entry((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
     break;
@@ -4451,7 +4390,7 @@ yyreduce:
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 2069 "grammar.y"
+#line 2008 "grammar.y"
     {
 		 (yyval.tree) = T_graph_entry((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -4459,7 +4398,7 @@ yyreduce:
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 2074 "grammar.y"
+#line 2013 "grammar.y"
     {
 		 (yyval.tree) = T_graph_attribute((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -4467,7 +4406,7 @@ yyreduce:
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 2076 "grammar.y"
+#line 2015 "grammar.y"
     {
 		 (yyval.tree) = T_node_defaults((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));   }
     break;
@@ -4475,7 +4414,7 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 2078 "grammar.y"
+#line 2017 "grammar.y"
     {
 		 (yyval.tree) = T_edge_defaults((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));   }
     break;
@@ -4483,7 +4422,7 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 2080 "grammar.y"
+#line 2019 "grammar.y"
     {
 		 (yyval.tree) = T_foldnode_defaults((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));}
     break;
@@ -4491,7 +4430,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 2082 "grammar.y"
+#line 2021 "grammar.y"
     {
 		 (yyval.tree) = T_foldedge_defaults((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));}
     break;
@@ -4499,7 +4438,7 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 2084 "grammar.y"
+#line 2023 "grammar.y"
     {
 		 (yyval.tree) = T_graph((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));           }
     break;
@@ -4507,7 +4446,7 @@ yyreduce:
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 2086 "grammar.y"
+#line 2025 "grammar.y"
     {
 		 (yyval.tree) = T_node((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));            }
     break;
@@ -4515,7 +4454,7 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 2088 "grammar.y"
+#line 2027 "grammar.y"
     {
 		 (yyval.tree) = T_edge((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));            }
     break;
@@ -4523,7 +4462,7 @@ yyreduce:
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 2090 "grammar.y"
+#line 2029 "grammar.y"
     {
 		 (yyval.tree) = T_near_edge((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));       }
     break;
@@ -4531,7 +4470,7 @@ yyreduce:
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 2092 "grammar.y"
+#line 2031 "grammar.y"
     {
 		 (yyval.tree) = T_bent_near_edge((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));  }
     break;
@@ -4539,7 +4478,7 @@ yyreduce:
   case 15:
 
 /* Line 1455 of yacc.c  */
-#line 2094 "grammar.y"
+#line 2033 "grammar.y"
     {
 		 (yyval.tree) = T_back_edge((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));       }
     break;
@@ -4547,7 +4486,7 @@ yyreduce:
   case 16:
 
 /* Line 1455 of yacc.c  */
-#line 2096 "grammar.y"
+#line 2035 "grammar.y"
     {
 		 (yyval.tree) = T_constraint((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));      }
     break;
@@ -4555,7 +4494,7 @@ yyreduce:
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 2102 "grammar.y"
+#line 2041 "grammar.y"
     {
 		 (yyval.tree) = T_title((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
@@ -4563,7 +4502,7 @@ yyreduce:
   case 18:
 
 /* Line 1455 of yacc.c  */
-#line 2105 "grammar.y"
+#line 2044 "grammar.y"
     {
 		 (yyval.tree) = T_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
@@ -4571,7 +4510,7 @@ yyreduce:
   case 19:
 
 /* Line 1455 of yacc.c  */
-#line 2108 "grammar.y"
+#line 2047 "grammar.y"
     {
 		 (yyval.tree) = T_info1((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
@@ -4579,7 +4518,7 @@ yyreduce:
   case 20:
 
 /* Line 1455 of yacc.c  */
-#line 2111 "grammar.y"
+#line 2050 "grammar.y"
     {
 		 (yyval.tree) = T_info2((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
@@ -4587,7 +4526,7 @@ yyreduce:
   case 21:
 
 /* Line 1455 of yacc.c  */
-#line 2114 "grammar.y"
+#line 2053 "grammar.y"
     {
 		 (yyval.tree) = T_info3((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
@@ -4595,7 +4534,7 @@ yyreduce:
   case 22:
 
 /* Line 1455 of yacc.c  */
-#line 2117 "grammar.y"
+#line 2056 "grammar.y"
     {
 		 (yyval.tree) = T_color((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
@@ -4603,7 +4542,7 @@ yyreduce:
   case 23:
 
 /* Line 1455 of yacc.c  */
-#line 2120 "grammar.y"
+#line 2059 "grammar.y"
     {
 		 (yyval.tree) = T_textcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));          }
     break;
@@ -4611,7 +4550,7 @@ yyreduce:
   case 24:
 
 /* Line 1455 of yacc.c  */
-#line 2123 "grammar.y"
+#line 2062 "grammar.y"
     {
 		 (yyval.tree) = T_colorborder((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
@@ -4619,7 +4558,7 @@ yyreduce:
   case 25:
 
 /* Line 1455 of yacc.c  */
-#line 2126 "grammar.y"
+#line 2065 "grammar.y"
     {
 		 (yyval.tree) = T_width((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
@@ -4627,7 +4566,7 @@ yyreduce:
   case 26:
 
 /* Line 1455 of yacc.c  */
-#line 2129 "grammar.y"
+#line 2068 "grammar.y"
     {
 		 (yyval.tree) = T_height((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
@@ -4635,7 +4574,7 @@ yyreduce:
   case 27:
 
 /* Line 1455 of yacc.c  */
-#line 2132 "grammar.y"
+#line 2071 "grammar.y"
     {
 		 (yyval.tree) = T_borderwidth((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
@@ -4643,7 +4582,7 @@ yyreduce:
   case 28:
 
 /* Line 1455 of yacc.c  */
-#line 2134 "grammar.y"
+#line 2073 "grammar.y"
     {
 		 (yyval.tree) = T_xdef((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));               }
     break;
@@ -4651,7 +4590,7 @@ yyreduce:
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 2136 "grammar.y"
+#line 2075 "grammar.y"
     {
 		 (yyval.tree) = T_ydef((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));               }
     break;
@@ -4659,7 +4598,7 @@ yyreduce:
   case 30:
 
 /* Line 1455 of yacc.c  */
-#line 2139 "grammar.y"
+#line 2078 "grammar.y"
     {
 		 (yyval.tree) = T_loc((yyvsp[(5) - (9)].tree),(yyvsp[(8) - (9)].tree),yylocate((yylsp[(1) - (9)])));       }
     break;
@@ -4667,7 +4606,7 @@ yyreduce:
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 2142 "grammar.y"
+#line 2081 "grammar.y"
     {
 		 (yyval.tree) = T_folding((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
@@ -4675,7 +4614,7 @@ yyreduce:
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 2145 "grammar.y"
+#line 2084 "grammar.y"
     {
 		 (yyval.tree) = T_scaling((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
@@ -4683,7 +4622,7 @@ yyreduce:
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 2148 "grammar.y"
+#line 2087 "grammar.y"
     {
 		 (yyval.tree) = T_shrink((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
@@ -4691,7 +4630,7 @@ yyreduce:
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 2151 "grammar.y"
+#line 2090 "grammar.y"
     {
 		 (yyval.tree) = T_stretch((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
@@ -4699,7 +4638,7 @@ yyreduce:
   case 35:
 
 /* Line 1455 of yacc.c  */
-#line 2154 "grammar.y"
+#line 2093 "grammar.y"
     {
 		 (yyval.tree) = T_textmode((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
     break;
@@ -4707,7 +4646,7 @@ yyreduce:
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 2157 "grammar.y"
+#line 2096 "grammar.y"
     {
 		 (yyval.tree) = T_shape((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    	       }
     break;
@@ -4715,7 +4654,7 @@ yyreduce:
   case 37:
 
 /* Line 1455 of yacc.c  */
-#line 2160 "grammar.y"
+#line 2099 "grammar.y"
     {
 		 (yyval.tree) = T_level((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
@@ -4723,7 +4662,7 @@ yyreduce:
   case 38:
 
 /* Line 1455 of yacc.c  */
-#line 2163 "grammar.y"
+#line 2102 "grammar.y"
     {
 		 (yyval.tree) = T_level((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
@@ -4731,7 +4670,7 @@ yyreduce:
   case 39:
 
 /* Line 1455 of yacc.c  */
-#line 2166 "grammar.y"
+#line 2105 "grammar.y"
     {
 		 (yyval.tree) = T_horizontal_order((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   }
     break;
@@ -4739,7 +4678,7 @@ yyreduce:
   case 40:
 
 /* Line 1455 of yacc.c  */
-#line 2169 "grammar.y"
+#line 2108 "grammar.y"
     {
 		 (yyval.tree) = T_status((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
@@ -4747,7 +4686,7 @@ yyreduce:
   case 41:
 
 /* Line 1455 of yacc.c  */
-#line 2173 "grammar.y"
+#line 2112 "grammar.y"
     {
 		 (yyval.tree) = T_xmax((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));               }
     break;
@@ -4755,7 +4694,7 @@ yyreduce:
   case 42:
 
 /* Line 1455 of yacc.c  */
-#line 2176 "grammar.y"
+#line 2115 "grammar.y"
     {
 		 (yyval.tree) = T_ymax((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));               }
     break;
@@ -4763,7 +4702,7 @@ yyreduce:
   case 43:
 
 /* Line 1455 of yacc.c  */
-#line 2179 "grammar.y"
+#line 2118 "grammar.y"
     {
 		 (yyval.tree) = T_xbase((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
@@ -4771,7 +4710,7 @@ yyreduce:
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 2182 "grammar.y"
+#line 2121 "grammar.y"
     {
 		 (yyval.tree) = T_ybase((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
@@ -4779,7 +4718,7 @@ yyreduce:
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 2185 "grammar.y"
+#line 2124 "grammar.y"
     {
 		 (yyval.tree) = T_xspace((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
@@ -4787,7 +4726,7 @@ yyreduce:
   case 46:
 
 /* Line 1455 of yacc.c  */
-#line 2188 "grammar.y"
+#line 2127 "grammar.y"
     {
 		 (yyval.tree) = T_xlspace((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
@@ -4795,7 +4734,7 @@ yyreduce:
   case 47:
 
 /* Line 1455 of yacc.c  */
-#line 2191 "grammar.y"
+#line 2130 "grammar.y"
     {
 		 (yyval.tree) = T_yspace((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
@@ -4803,7 +4742,7 @@ yyreduce:
   case 48:
 
 /* Line 1455 of yacc.c  */
-#line 2194 "grammar.y"
+#line 2133 "grammar.y"
     {
 		 (yyval.tree) = T_xraster((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
@@ -4811,7 +4750,7 @@ yyreduce:
   case 49:
 
 /* Line 1455 of yacc.c  */
-#line 2197 "grammar.y"
+#line 2136 "grammar.y"
     {
 		 (yyval.tree) = T_xlraster((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
     break;
@@ -4819,7 +4758,7 @@ yyreduce:
   case 50:
 
 /* Line 1455 of yacc.c  */
-#line 2200 "grammar.y"
+#line 2139 "grammar.y"
     {
 		 (yyval.tree) = T_yraster((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
@@ -4827,7 +4766,7 @@ yyreduce:
   case 51:
 
 /* Line 1455 of yacc.c  */
-#line 2203 "grammar.y"
+#line 2142 "grammar.y"
     {
 		 (yyval.tree) = T_hidden((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); 	       }
     break;
@@ -4835,7 +4774,7 @@ yyreduce:
   case 52:
 
 /* Line 1455 of yacc.c  */
-#line 2206 "grammar.y"
+#line 2145 "grammar.y"
     {
 		 (yyval.tree) = T_hidden((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); 	       }
     break;
@@ -4843,7 +4782,7 @@ yyreduce:
   case 53:
 
 /* Line 1455 of yacc.c  */
-#line 2209 "grammar.y"
+#line 2148 "grammar.y"
     {
 		 (yyval.tree) = T_classname((yyvsp[(2) - (4)].tree),(yyvsp[(4) - (4)].tree),yylocate((yylsp[(1) - (4)])));       }
     break;
@@ -4851,7 +4790,7 @@ yyreduce:
   case 54:
 
 /* Line 1455 of yacc.c  */
-#line 2212 "grammar.y"
+#line 2151 "grammar.y"
     {
 		 (yyval.tree) = T_infoname((yyvsp[(2) - (4)].tree),(yyvsp[(4) - (4)].tree),yylocate((yylsp[(1) - (4)])));        }
     break;
@@ -4859,7 +4798,7 @@ yyreduce:
   case 55:
 
 /* Line 1455 of yacc.c  */
-#line 2215 "grammar.y"
+#line 2154 "grammar.y"
     {
 		 (yyval.tree) = T_colentry((yyvsp[(2) - (6)].tree),(yyvsp[(4) - (6)].tree),(yyvsp[(5) - (6)].tree),(yyvsp[(6) - (6)].tree),yylocate((yylsp[(1) - (6)])));   }
     break;
@@ -4867,7 +4806,7 @@ yyreduce:
   case 56:
 
 /* Line 1455 of yacc.c  */
-#line 2219 "grammar.y"
+#line 2158 "grammar.y"
     {
 		 (yyval.tree) = T_layoutalgorithm((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -4875,7 +4814,7 @@ yyreduce:
   case 57:
 
 /* Line 1455 of yacc.c  */
-#line 2222 "grammar.y"
+#line 2161 "grammar.y"
     {
 		 (yyval.tree) = T_layoutfrequency((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -4883,7 +4822,7 @@ yyreduce:
   case 58:
 
 /* Line 1455 of yacc.c  */
-#line 2225 "grammar.y"
+#line 2164 "grammar.y"
     {
 		 (yyval.tree) = T_downfactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
@@ -4891,7 +4830,7 @@ yyreduce:
   case 59:
 
 /* Line 1455 of yacc.c  */
-#line 2228 "grammar.y"
+#line 2167 "grammar.y"
     {
 		 (yyval.tree) = T_upfactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
     break;
@@ -4899,7 +4838,7 @@ yyreduce:
   case 60:
 
 /* Line 1455 of yacc.c  */
-#line 2231 "grammar.y"
+#line 2170 "grammar.y"
     {
 		 (yyval.tree) = T_nearfactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
@@ -4907,7 +4846,7 @@ yyreduce:
   case 61:
 
 /* Line 1455 of yacc.c  */
-#line 2234 "grammar.y"
+#line 2173 "grammar.y"
     {
 		 (yyval.tree) = T_splinefactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
@@ -4915,7 +4854,7 @@ yyreduce:
   case 62:
 
 /* Line 1455 of yacc.c  */
-#line 2238 "grammar.y"
+#line 2177 "grammar.y"
     {
 		 (yyval.tree) = T_late_edge_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -4923,7 +4862,7 @@ yyreduce:
   case 63:
 
 /* Line 1455 of yacc.c  */
-#line 2241 "grammar.y"
+#line 2180 "grammar.y"
     {
 		 (yyval.tree) = T_display_edge_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
@@ -4931,7 +4870,7 @@ yyreduce:
   case 64:
 
 /* Line 1455 of yacc.c  */
-#line 2244 "grammar.y"
+#line 2183 "grammar.y"
     {
 		 (yyval.tree) = T_dirty_edge_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   }
     break;
@@ -4939,7 +4878,7 @@ yyreduce:
   case 65:
 
 /* Line 1455 of yacc.c  */
-#line 2247 "grammar.y"
+#line 2186 "grammar.y"
     {
 		 (yyval.tree) = T_finetuning((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));	       }
     break;
@@ -4947,7 +4886,7 @@ yyreduce:
   case 66:
 
 /* Line 1455 of yacc.c  */
-#line 2250 "grammar.y"
+#line 2189 "grammar.y"
     {
 		 (yyval.tree) = T_hidesingles((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
@@ -4955,7 +4894,7 @@ yyreduce:
   case 67:
 
 /* Line 1455 of yacc.c  */
-#line 2253 "grammar.y"
+#line 2192 "grammar.y"
     {
 		 (yyval.tree) = T_straightphase((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));	       }
     break;
@@ -4963,7 +4902,7 @@ yyreduce:
   case 68:
 
 /* Line 1455 of yacc.c  */
-#line 2256 "grammar.y"
+#line 2195 "grammar.y"
     {
 		 (yyval.tree) = T_priophase((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));	       }
     break;
@@ -4971,7 +4910,7 @@ yyreduce:
   case 69:
 
 /* Line 1455 of yacc.c  */
-#line 2259 "grammar.y"
+#line 2198 "grammar.y"
     {
 		 (yyval.tree) = T_manhatten((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));	       }
     break;
@@ -4979,7 +4918,7 @@ yyreduce:
   case 70:
 
 /* Line 1455 of yacc.c  */
-#line 2262 "grammar.y"
+#line 2201 "grammar.y"
     {
 		 (yyval.tree) = T_smanhatten((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));	       }
     break;
@@ -4987,7 +4926,7 @@ yyreduce:
   case 71:
 
 /* Line 1455 of yacc.c  */
-#line 2264 "grammar.y"
+#line 2203 "grammar.y"
     {
 		 (yyval.tree) = T_nonearedges(yylocate((yylsp[(1) - (1)])));	       }
     break;
@@ -4995,7 +4934,7 @@ yyreduce:
   case 72:
 
 /* Line 1455 of yacc.c  */
-#line 2267 "grammar.y"
+#line 2206 "grammar.y"
     {
 		 (yyval.tree) = T_nonearedges(yylocate((yylsp[(1) - (3)])));	       }
     break;
@@ -5003,7 +4942,7 @@ yyreduce:
   case 73:
 
 /* Line 1455 of yacc.c  */
-#line 2270 "grammar.y"
+#line 2209 "grammar.y"
     {
 		 (yyval.tree) = T_dummy(yylocate((yylsp[(1) - (3)])));	     	       }
     break;
@@ -5011,7 +4950,7 @@ yyreduce:
   case 74:
 
 /* Line 1455 of yacc.c  */
-#line 2273 "grammar.y"
+#line 2212 "grammar.y"
     {
 		 (yyval.tree) = T_orientation((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
@@ -5019,7 +4958,7 @@ yyreduce:
   case 75:
 
 /* Line 1455 of yacc.c  */
-#line 2276 "grammar.y"
+#line 2215 "grammar.y"
     {
 		 (yyval.tree) = T_node_alignment((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
@@ -5027,7 +4966,7 @@ yyreduce:
   case 76:
 
 /* Line 1455 of yacc.c  */
-#line 2279 "grammar.y"
+#line 2218 "grammar.y"
     {
 		 (yyval.tree) = T_port_sharing((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
@@ -5035,7 +4974,7 @@ yyreduce:
   case 77:
 
 /* Line 1455 of yacc.c  */
-#line 2282 "grammar.y"
+#line 2221 "grammar.y"
     {
 		 (yyval.tree) = T_arrow_mode((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
@@ -5043,7 +4982,7 @@ yyreduce:
   case 78:
 
 /* Line 1455 of yacc.c  */
-#line 2286 "grammar.y"
+#line 2225 "grammar.y"
     {
 		 (yyval.tree) = T_spreadlevel((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
@@ -5051,7 +4990,7 @@ yyreduce:
   case 79:
 
 /* Line 1455 of yacc.c  */
-#line 2289 "grammar.y"
+#line 2228 "grammar.y"
     {
 		 (yyval.tree) = T_treefactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
@@ -5059,7 +4998,7 @@ yyreduce:
   case 80:
 
 /* Line 1455 of yacc.c  */
-#line 2293 "grammar.y"
+#line 2232 "grammar.y"
     {
 		 (yyval.tree) = T_crossing_phase2((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -5067,7 +5006,7 @@ yyreduce:
   case 81:
 
 /* Line 1455 of yacc.c  */
-#line 2296 "grammar.y"
+#line 2235 "grammar.y"
     {
 		 (yyval.tree) = T_crossing_opt((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
@@ -5075,7 +5014,7 @@ yyreduce:
   case 82:
 
 /* Line 1455 of yacc.c  */
-#line 2299 "grammar.y"
+#line 2238 "grammar.y"
     {
 		 (yyval.tree) = T_crossing_weight((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -5083,7 +5022,7 @@ yyreduce:
   case 83:
 
 /* Line 1455 of yacc.c  */
-#line 2303 "grammar.y"
+#line 2242 "grammar.y"
     {
 		 (yyval.tree) = T_view_method((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       	}
     break;
@@ -5091,7 +5030,7 @@ yyreduce:
   case 84:
 
 /* Line 1455 of yacc.c  */
-#line 2306 "grammar.y"
+#line 2245 "grammar.y"
     {
 		 (yyval.tree) = T_view_edges((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       	}
     break;
@@ -5099,7 +5038,7 @@ yyreduce:
   case 85:
 
 /* Line 1455 of yacc.c  */
-#line 2309 "grammar.y"
+#line 2248 "grammar.y"
     {
 		 (yyval.tree) = T_view_nodes((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       	}
     break;
@@ -5107,7 +5046,7 @@ yyreduce:
   case 86:
 
 /* Line 1455 of yacc.c  */
-#line 2312 "grammar.y"
+#line 2251 "grammar.y"
     {
 		 (yyval.tree) = T_view_splines((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  	}
     break;
@@ -5115,7 +5054,7 @@ yyreduce:
   case 87:
 
 /* Line 1455 of yacc.c  */
-#line 2316 "grammar.y"
+#line 2255 "grammar.y"
     {
 		 (yyval.tree) = T_bend_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   		}
     break;
@@ -5123,7 +5062,7 @@ yyreduce:
   case 88:
 
 /* Line 1455 of yacc.c  */
-#line 2319 "grammar.y"
+#line 2258 "grammar.y"
     {
 		 (yyval.tree) = T_cross_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  		}
     break;
@@ -5131,7 +5070,7 @@ yyreduce:
   case 89:
 
 /* Line 1455 of yacc.c  */
-#line 2322 "grammar.y"
+#line 2261 "grammar.y"
     {
 		 (yyval.tree) = T_cross_min((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  		}
     break;
@@ -5139,7 +5078,7 @@ yyreduce:
   case 90:
 
 /* Line 1455 of yacc.c  */
-#line 2325 "grammar.y"
+#line 2264 "grammar.y"
     {
 		 (yyval.tree) = T_pendel_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); 		}
     break;
@@ -5147,7 +5086,7 @@ yyreduce:
   case 91:
 
 /* Line 1455 of yacc.c  */
-#line 2328 "grammar.y"
+#line 2267 "grammar.y"
     {
 		 (yyval.tree) = T_pendel_min((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  	}
     break;
@@ -5155,7 +5094,7 @@ yyreduce:
   case 92:
 
 /* Line 1455 of yacc.c  */
-#line 2331 "grammar.y"
+#line 2270 "grammar.y"
     {
 		 (yyval.tree) = T_rubber_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); 		}
     break;
@@ -5163,7 +5102,7 @@ yyreduce:
   case 93:
 
 /* Line 1455 of yacc.c  */
-#line 2334 "grammar.y"
+#line 2273 "grammar.y"
     {
 		 (yyval.tree) = T_rubber_min((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  	}
     break;
@@ -5171,7 +5110,7 @@ yyreduce:
   case 94:
 
 /* Line 1455 of yacc.c  */
-#line 2337 "grammar.y"
+#line 2276 "grammar.y"
     {
 		 (yyval.tree) = T_straight_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); 	}
     break;
@@ -5179,7 +5118,7 @@ yyreduce:
   case 95:
 
 /* Line 1455 of yacc.c  */
-#line 2341 "grammar.y"
+#line 2280 "grammar.y"
     {
 		 (yyval.tree) = T_typename((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
     break;
@@ -5187,7 +5126,7 @@ yyreduce:
   case 96:
 
 /* Line 1455 of yacc.c  */
-#line 2344 "grammar.y"
+#line 2283 "grammar.y"
     {
 		 (yyval.tree) = T_include((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
@@ -5195,7 +5134,7 @@ yyreduce:
   case 97:
 
 /* Line 1455 of yacc.c  */
-#line 2347 "grammar.y"
+#line 2286 "grammar.y"
     {
 		 (yyval.tree) = T_layoutparameter((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -5203,7 +5142,7 @@ yyreduce:
   case 98:
 
 /* Line 1455 of yacc.c  */
-#line 2350 "grammar.y"
+#line 2289 "grammar.y"
     {
 		 (yyval.tree) = T_topsort((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
@@ -5211,7 +5150,7 @@ yyreduce:
   case 99:
 
 /* Line 1455 of yacc.c  */
-#line 2353 "grammar.y"
+#line 2292 "grammar.y"
     {
 		 (yyval.tree) = T_inputfunction((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
@@ -5219,7 +5158,7 @@ yyreduce:
   case 100:
 
 /* Line 1455 of yacc.c  */
-#line 2356 "grammar.y"
+#line 2295 "grammar.y"
     {
 		 (yyval.tree) = T_outputfunction((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
@@ -5227,7 +5166,7 @@ yyreduce:
   case 101:
 
 /* Line 1455 of yacc.c  */
-#line 2359 "grammar.y"
+#line 2298 "grammar.y"
     {
 		 (yyval.tree) = T_xscrollbar((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
@@ -5235,7 +5174,7 @@ yyreduce:
   case 102:
 
 /* Line 1455 of yacc.c  */
-#line 2362 "grammar.y"
+#line 2301 "grammar.y"
     {
 		 (yyval.tree) = T_yscrollbar((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
@@ -5243,7 +5182,7 @@ yyreduce:
   case 103:
 
 /* Line 1455 of yacc.c  */
-#line 2367 "grammar.y"
+#line 2306 "grammar.y"
     {
 		 (yyval.tree) = T_aquamarine(yylocate((yylsp[(1) - (1)])));   }
     break;
@@ -5251,7 +5190,7 @@ yyreduce:
   case 104:
 
 /* Line 1455 of yacc.c  */
-#line 2369 "grammar.y"
+#line 2308 "grammar.y"
     {
 		 (yyval.tree) = T_black(yylocate((yylsp[(1) - (1)])));        }
     break;
@@ -5259,7 +5198,7 @@ yyreduce:
   case 105:
 
 /* Line 1455 of yacc.c  */
-#line 2371 "grammar.y"
+#line 2310 "grammar.y"
     {
 		 (yyval.tree) = T_blue(yylocate((yylsp[(1) - (1)])));         }
     break;
@@ -5267,7 +5206,7 @@ yyreduce:
   case 106:
 
 /* Line 1455 of yacc.c  */
-#line 2373 "grammar.y"
+#line 2312 "grammar.y"
     {
 		 (yyval.tree) = T_cyan(yylocate((yylsp[(1) - (1)])));         }
     break;
@@ -5275,7 +5214,7 @@ yyreduce:
   case 107:
 
 /* Line 1455 of yacc.c  */
-#line 2375 "grammar.y"
+#line 2314 "grammar.y"
     {
 		 (yyval.tree) = T_darkblue(yylocate((yylsp[(1) - (1)])));     }
     break;
@@ -5283,7 +5222,7 @@ yyreduce:
   case 108:
 
 /* Line 1455 of yacc.c  */
-#line 2377 "grammar.y"
+#line 2316 "grammar.y"
     {
 		 (yyval.tree) = T_darkcyan(yylocate((yylsp[(1) - (1)])));     }
     break;
@@ -5291,7 +5230,7 @@ yyreduce:
   case 109:
 
 /* Line 1455 of yacc.c  */
-#line 2379 "grammar.y"
+#line 2318 "grammar.y"
     {
 		 (yyval.tree) = T_darkgreen(yylocate((yylsp[(1) - (1)])));    }
     break;
@@ -5299,7 +5238,7 @@ yyreduce:
   case 110:
 
 /* Line 1455 of yacc.c  */
-#line 2381 "grammar.y"
+#line 2320 "grammar.y"
     {
 		 (yyval.tree) = T_darkgrey(yylocate((yylsp[(1) - (1)])));     }
     break;
@@ -5307,7 +5246,7 @@ yyreduce:
   case 111:
 
 /* Line 1455 of yacc.c  */
-#line 2383 "grammar.y"
+#line 2322 "grammar.y"
     {
 		 (yyval.tree) = T_darkmagenta(yylocate((yylsp[(1) - (1)])));  }
     break;
@@ -5315,7 +5254,7 @@ yyreduce:
   case 112:
 
 /* Line 1455 of yacc.c  */
-#line 2385 "grammar.y"
+#line 2324 "grammar.y"
     {
 		 (yyval.tree) = T_darkred(yylocate((yylsp[(1) - (1)])));      }
     break;
@@ -5323,7 +5262,7 @@ yyreduce:
   case 113:
 
 /* Line 1455 of yacc.c  */
-#line 2387 "grammar.y"
+#line 2326 "grammar.y"
     {
 		 (yyval.tree) = T_darkyellow(yylocate((yylsp[(1) - (1)])));   }
     break;
@@ -5331,7 +5270,7 @@ yyreduce:
   case 114:
 
 /* Line 1455 of yacc.c  */
-#line 2389 "grammar.y"
+#line 2328 "grammar.y"
     {
 		 (yyval.tree) = T_gold(yylocate((yylsp[(1) - (1)])));         }
     break;
@@ -5339,7 +5278,7 @@ yyreduce:
   case 115:
 
 /* Line 1455 of yacc.c  */
-#line 2391 "grammar.y"
+#line 2330 "grammar.y"
     {
 		 (yyval.tree) = T_green(yylocate((yylsp[(1) - (1)])));        }
     break;
@@ -5347,7 +5286,7 @@ yyreduce:
   case 116:
 
 /* Line 1455 of yacc.c  */
-#line 2393 "grammar.y"
+#line 2332 "grammar.y"
     {
 		 (yyval.tree) = T_khaki(yylocate((yylsp[(1) - (1)])));        }
     break;
@@ -5355,7 +5294,7 @@ yyreduce:
   case 117:
 
 /* Line 1455 of yacc.c  */
-#line 2395 "grammar.y"
+#line 2334 "grammar.y"
     {
 		 (yyval.tree) = T_lightblue(yylocate((yylsp[(1) - (1)])));    }
     break;
@@ -5363,7 +5302,7 @@ yyreduce:
   case 118:
 
 /* Line 1455 of yacc.c  */
-#line 2397 "grammar.y"
+#line 2336 "grammar.y"
     {
 		 (yyval.tree) = T_lightcyan(yylocate((yylsp[(1) - (1)])));    }
     break;
@@ -5371,7 +5310,7 @@ yyreduce:
   case 119:
 
 /* Line 1455 of yacc.c  */
-#line 2399 "grammar.y"
+#line 2338 "grammar.y"
     {
 		 (yyval.tree) = T_lightgreen(yylocate((yylsp[(1) - (1)])));   }
     break;
@@ -5379,7 +5318,7 @@ yyreduce:
   case 120:
 
 /* Line 1455 of yacc.c  */
-#line 2401 "grammar.y"
+#line 2340 "grammar.y"
     {
 		 (yyval.tree) = T_lightgrey(yylocate((yylsp[(1) - (1)])));    }
     break;
@@ -5387,7 +5326,7 @@ yyreduce:
   case 121:
 
 /* Line 1455 of yacc.c  */
-#line 2403 "grammar.y"
+#line 2342 "grammar.y"
     {
 		 (yyval.tree) = T_lightmagenta(yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -5395,7 +5334,7 @@ yyreduce:
   case 122:
 
 /* Line 1455 of yacc.c  */
-#line 2405 "grammar.y"
+#line 2344 "grammar.y"
     {
 		 (yyval.tree) = T_lightred(yylocate((yylsp[(1) - (1)])));     }
     break;
@@ -5403,7 +5342,7 @@ yyreduce:
   case 123:
 
 /* Line 1455 of yacc.c  */
-#line 2407 "grammar.y"
+#line 2346 "grammar.y"
     {
 		 (yyval.tree) = T_lightyellow(yylocate((yylsp[(1) - (1)])));  }
     break;
@@ -5411,7 +5350,7 @@ yyreduce:
   case 124:
 
 /* Line 1455 of yacc.c  */
-#line 2409 "grammar.y"
+#line 2348 "grammar.y"
     {
 		 (yyval.tree) = T_lilac(yylocate((yylsp[(1) - (1)])));        }
     break;
@@ -5419,7 +5358,7 @@ yyreduce:
   case 125:
 
 /* Line 1455 of yacc.c  */
-#line 2411 "grammar.y"
+#line 2350 "grammar.y"
     {
 		 (yyval.tree) = T_magenta(yylocate((yylsp[(1) - (1)])));      }
     break;
@@ -5427,7 +5366,7 @@ yyreduce:
   case 126:
 
 /* Line 1455 of yacc.c  */
-#line 2413 "grammar.y"
+#line 2352 "grammar.y"
     {
 		 (yyval.tree) = T_orange(yylocate((yylsp[(1) - (1)])));       }
     break;
@@ -5435,7 +5374,7 @@ yyreduce:
   case 127:
 
 /* Line 1455 of yacc.c  */
-#line 2415 "grammar.y"
+#line 2354 "grammar.y"
     {
 		 (yyval.tree) = T_orchid(yylocate((yylsp[(1) - (1)])));       }
     break;
@@ -5443,7 +5382,7 @@ yyreduce:
   case 128:
 
 /* Line 1455 of yacc.c  */
-#line 2417 "grammar.y"
+#line 2356 "grammar.y"
     {
 		 (yyval.tree) = T_pink(yylocate((yylsp[(1) - (1)])));         }
     break;
@@ -5451,7 +5390,7 @@ yyreduce:
   case 129:
 
 /* Line 1455 of yacc.c  */
-#line 2419 "grammar.y"
+#line 2358 "grammar.y"
     {
 		 (yyval.tree) = T_purple(yylocate((yylsp[(1) - (1)])));       }
     break;
@@ -5459,7 +5398,7 @@ yyreduce:
   case 130:
 
 /* Line 1455 of yacc.c  */
-#line 2421 "grammar.y"
+#line 2360 "grammar.y"
     {
 		 (yyval.tree) = T_red(yylocate((yylsp[(1) - (1)])));          }
     break;
@@ -5467,7 +5406,7 @@ yyreduce:
   case 131:
 
 /* Line 1455 of yacc.c  */
-#line 2423 "grammar.y"
+#line 2362 "grammar.y"
     {
 		 (yyval.tree) = T_turquoise(yylocate((yylsp[(1) - (1)])));    }
     break;
@@ -5475,7 +5414,7 @@ yyreduce:
   case 132:
 
 /* Line 1455 of yacc.c  */
-#line 2425 "grammar.y"
+#line 2364 "grammar.y"
     {
 		 (yyval.tree) = T_white(yylocate((yylsp[(1) - (1)])));        }
     break;
@@ -5483,7 +5422,7 @@ yyreduce:
   case 133:
 
 /* Line 1455 of yacc.c  */
-#line 2427 "grammar.y"
+#line 2366 "grammar.y"
     {
 		 (yyval.tree) = T_yellow(yylocate((yylsp[(1) - (1)])));       }
     break;
@@ -5491,7 +5430,7 @@ yyreduce:
   case 134:
 
 /* Line 1455 of yacc.c  */
-#line 2429 "grammar.y"
+#line 2368 "grammar.y"
     {
 		 (yyval.tree) = T_yellowgreen(yylocate((yylsp[(1) - (1)])));  }
     break;
@@ -5499,7 +5438,7 @@ yyreduce:
   case 135:
 
 /* Line 1455 of yacc.c  */
-#line 2431 "grammar.y"
+#line 2370 "grammar.y"
     {
 		 (yyval.tree) = T_colindex((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));   }
     break;
@@ -5507,7 +5446,7 @@ yyreduce:
   case 136:
 
 /* Line 1455 of yacc.c  */
-#line 2436 "grammar.y"
+#line 2375 "grammar.y"
     {
 		 (yyval.tree) = T_high(yylocate((yylsp[(1) - (1)]))); 	       }
     break;
@@ -5515,7 +5454,7 @@ yyreduce:
   case 137:
 
 /* Line 1455 of yacc.c  */
-#line 2438 "grammar.y"
+#line 2377 "grammar.y"
     {
 		 (yyval.tree) = T_low(yylocate((yylsp[(1) - (1)])));          }
     break;
@@ -5523,7 +5462,7 @@ yyreduce:
   case 138:
 
 /* Line 1455 of yacc.c  */
-#line 2443 "grammar.y"
+#line 2382 "grammar.y"
     {
 		 (yyval.tree) = T_top_to_bottom(yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -5531,7 +5470,7 @@ yyreduce:
   case 139:
 
 /* Line 1455 of yacc.c  */
-#line 2445 "grammar.y"
+#line 2384 "grammar.y"
     {
 		 (yyval.tree) = T_bottom_to_top(yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -5539,7 +5478,7 @@ yyreduce:
   case 140:
 
 /* Line 1455 of yacc.c  */
-#line 2447 "grammar.y"
+#line 2386 "grammar.y"
     {
 		 (yyval.tree) = T_left_to_right(yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -5547,7 +5486,7 @@ yyreduce:
   case 141:
 
 /* Line 1455 of yacc.c  */
-#line 2449 "grammar.y"
+#line 2388 "grammar.y"
     {
 		 (yyval.tree) = T_right_to_left(yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -5555,7 +5494,7 @@ yyreduce:
   case 142:
 
 /* Line 1455 of yacc.c  */
-#line 2455 "grammar.y"
+#line 2394 "grammar.y"
     {
 		 (yyval.tree) = T_barycenter(yylocate((yylsp[(1) - (1)])));    }
     break;
@@ -5563,7 +5502,7 @@ yyreduce:
   case 143:
 
 /* Line 1455 of yacc.c  */
-#line 2457 "grammar.y"
+#line 2396 "grammar.y"
     {
 		 (yyval.tree) = T_isi(yylocate((yylsp[(1) - (1)])));           }
     break;
@@ -5571,7 +5510,7 @@ yyreduce:
   case 144:
 
 /* Line 1455 of yacc.c  */
-#line 2459 "grammar.y"
+#line 2398 "grammar.y"
     {
 		 (yyval.tree) = T_planar(yylocate((yylsp[(1) - (1)])));        }
     break;
@@ -5579,7 +5518,7 @@ yyreduce:
   case 145:
 
 /* Line 1455 of yacc.c  */
-#line 2461 "grammar.y"
+#line 2400 "grammar.y"
     {
 		 (yyval.tree) = T_constaints(yylocate((yylsp[(1) - (1)])));    }
     break;
@@ -5587,7 +5526,7 @@ yyreduce:
   case 146:
 
 /* Line 1455 of yacc.c  */
-#line 2464 "grammar.y"
+#line 2403 "grammar.y"
     {
 		 (yyval.tree) = T_tree(yylocate((yylsp[(1) - (1)])));          }
     break;
@@ -5595,7 +5534,7 @@ yyreduce:
   case 147:
 
 /* Line 1455 of yacc.c  */
-#line 2466 "grammar.y"
+#line 2405 "grammar.y"
     {
 		 (yyval.tree) = T_maxdepth(yylocate((yylsp[(1) - (1)])));      }
     break;
@@ -5603,7 +5542,7 @@ yyreduce:
   case 148:
 
 /* Line 1455 of yacc.c  */
-#line 2468 "grammar.y"
+#line 2407 "grammar.y"
     {
 		 (yyval.tree) = T_mindepth(yylocate((yylsp[(1) - (1)])));      }
     break;
@@ -5611,7 +5550,7 @@ yyreduce:
   case 149:
 
 /* Line 1455 of yacc.c  */
-#line 2470 "grammar.y"
+#line 2409 "grammar.y"
     {
 		 (yyval.tree) = T_maxdepthslow(yylocate((yylsp[(1) - (1)])));  }
     break;
@@ -5619,7 +5558,7 @@ yyreduce:
   case 150:
 
 /* Line 1455 of yacc.c  */
-#line 2472 "grammar.y"
+#line 2411 "grammar.y"
     {
 		 (yyval.tree) = T_mindepthslow(yylocate((yylsp[(1) - (1)])));  }
     break;
@@ -5627,7 +5566,7 @@ yyreduce:
   case 151:
 
 /* Line 1455 of yacc.c  */
-#line 2474 "grammar.y"
+#line 2413 "grammar.y"
     {
 		 (yyval.tree) = T_maxdegree(yylocate((yylsp[(1) - (1)])));     }
     break;
@@ -5635,7 +5574,7 @@ yyreduce:
   case 152:
 
 /* Line 1455 of yacc.c  */
-#line 2476 "grammar.y"
+#line 2415 "grammar.y"
     {
 		 (yyval.tree) = T_mindegree(yylocate((yylsp[(1) - (1)])));     }
     break;
@@ -5643,7 +5582,7 @@ yyreduce:
   case 153:
 
 /* Line 1455 of yacc.c  */
-#line 2478 "grammar.y"
+#line 2417 "grammar.y"
     {
 		 (yyval.tree) = T_maxindegree(yylocate((yylsp[(1) - (1)])));   }
     break;
@@ -5651,7 +5590,7 @@ yyreduce:
   case 154:
 
 /* Line 1455 of yacc.c  */
-#line 2480 "grammar.y"
+#line 2419 "grammar.y"
     {
 		 (yyval.tree) = T_minindegree(yylocate((yylsp[(1) - (1)])));   }
     break;
@@ -5659,7 +5598,7 @@ yyreduce:
   case 155:
 
 /* Line 1455 of yacc.c  */
-#line 2482 "grammar.y"
+#line 2421 "grammar.y"
     {
 		 (yyval.tree) = T_maxoutdegree(yylocate((yylsp[(1) - (1)])));  }
     break;
@@ -5667,7 +5606,7 @@ yyreduce:
   case 156:
 
 /* Line 1455 of yacc.c  */
-#line 2484 "grammar.y"
+#line 2423 "grammar.y"
     {
 		 (yyval.tree) = T_minoutdegree(yylocate((yylsp[(1) - (1)])));  }
     break;
@@ -5675,7 +5614,7 @@ yyreduce:
   case 157:
 
 /* Line 1455 of yacc.c  */
-#line 2486 "grammar.y"
+#line 2425 "grammar.y"
     {
 		 (yyval.tree) = T_minbackwards(yylocate((yylsp[(1) - (1)])));  }
     break;
@@ -5683,7 +5622,7 @@ yyreduce:
   case 158:
 
 /* Line 1455 of yacc.c  */
-#line 2488 "grammar.y"
+#line 2427 "grammar.y"
     {
 		 (yyval.tree) = T_depthfirst(yylocate((yylsp[(1) - (1)])));    }
     break;
@@ -5691,7 +5630,7 @@ yyreduce:
   case 159:
 
 /* Line 1455 of yacc.c  */
-#line 2494 "grammar.y"
+#line 2433 "grammar.y"
     {
 		 (yyval.tree) = T_every(yylocate((yylsp[(1) - (1)]))); 	}
     break;
@@ -5699,7 +5638,7 @@ yyreduce:
   case 160:
 
 /* Line 1455 of yacc.c  */
-#line 2496 "grammar.y"
+#line 2435 "grammar.y"
     {
 		 (yyval.tree) = T_manual(yylocate((yylsp[(1) - (1)]))); 	}
     break;
@@ -5707,7 +5646,7 @@ yyreduce:
   case 161:
 
 /* Line 1455 of yacc.c  */
-#line 2501 "grammar.y"
+#line 2440 "grammar.y"
     {
 		 (yyval.tree) = T_black(yylocate((yylsp[(1) - (1)]))); 	}
     break;
@@ -5715,7 +5654,7 @@ yyreduce:
   case 162:
 
 /* Line 1455 of yacc.c  */
-#line 2503 "grammar.y"
+#line 2442 "grammar.y"
     {
 		 (yyval.tree) = T_grey(yylocate((yylsp[(1) - (1)]))); 		}
     break;
@@ -5723,7 +5662,7 @@ yyreduce:
   case 163:
 
 /* Line 1455 of yacc.c  */
-#line 2505 "grammar.y"
+#line 2444 "grammar.y"
     {
 		 (yyval.tree) = T_white(yylocate((yylsp[(1) - (1)]))); 	}
     break;
@@ -5731,7 +5670,7 @@ yyreduce:
   case 164:
 
 /* Line 1455 of yacc.c  */
-#line 2510 "grammar.y"
+#line 2449 "grammar.y"
     {
 		 (yyval.tree) = T_yes(yylocate((yylsp[(1) - (1)]))); 		}
     break;
@@ -5739,7 +5678,7 @@ yyreduce:
   case 165:
 
 /* Line 1455 of yacc.c  */
-#line 2512 "grammar.y"
+#line 2451 "grammar.y"
     {
 		 (yyval.tree) = T_no(yylocate((yylsp[(1) - (1)]))); 		}
     break;
@@ -5747,7 +5686,7 @@ yyreduce:
   case 166:
 
 /* Line 1455 of yacc.c  */
-#line 2516 "grammar.y"
+#line 2455 "grammar.y"
     {
 		 (yyval.tree) = T_bary(yylocate((yylsp[(1) - (1)]))); 	       }
     break;
@@ -5755,7 +5694,7 @@ yyreduce:
   case 167:
 
 /* Line 1455 of yacc.c  */
-#line 2518 "grammar.y"
+#line 2457 "grammar.y"
     {
 		 (yyval.tree) = T_median(yylocate((yylsp[(1) - (1)])));       }
     break;
@@ -5763,7 +5702,7 @@ yyreduce:
   case 168:
 
 /* Line 1455 of yacc.c  */
-#line 2520 "grammar.y"
+#line 2459 "grammar.y"
     {
 		 (yyval.tree) = T_barymedian(yylocate((yylsp[(1) - (1)])));   }
     break;
@@ -5771,7 +5710,7 @@ yyreduce:
   case 169:
 
 /* Line 1455 of yacc.c  */
-#line 2522 "grammar.y"
+#line 2461 "grammar.y"
     {
 		 (yyval.tree) = T_medianbary(yylocate((yylsp[(1) - (1)])));   }
     break;
@@ -5779,7 +5718,7 @@ yyreduce:
   case 170:
 
 /* Line 1455 of yacc.c  */
-#line 2526 "grammar.y"
+#line 2465 "grammar.y"
     {
 		 (yyval.tree) = T_cfish(yylocate((yylsp[(1) - (1)]))); 	}
     break;
@@ -5787,7 +5726,7 @@ yyreduce:
   case 171:
 
 /* Line 1455 of yacc.c  */
-#line 2528 "grammar.y"
+#line 2467 "grammar.y"
     {
 		 (yyval.tree) = T_fcfish(yylocate((yylsp[(1) - (1)])));	}
     break;
@@ -5795,7 +5734,7 @@ yyreduce:
   case 172:
 
 /* Line 1455 of yacc.c  */
-#line 2530 "grammar.y"
+#line 2469 "grammar.y"
     {
 		 (yyval.tree) = T_pfish(yylocate((yylsp[(1) - (1)]))); 	}
     break;
@@ -5803,7 +5742,7 @@ yyreduce:
   case 173:
 
 /* Line 1455 of yacc.c  */
-#line 2532 "grammar.y"
+#line 2471 "grammar.y"
     {
 		 (yyval.tree) = T_fpfish(yylocate((yylsp[(1) - (1)])));	}
     break;
@@ -5811,7 +5750,7 @@ yyreduce:
   case 174:
 
 /* Line 1455 of yacc.c  */
-#line 2536 "grammar.y"
+#line 2475 "grammar.y"
     {
 		 (yyval.tree) = T_fixed(yylocate((yylsp[(1) - (1)])));         }
     break;
@@ -5819,7 +5758,7 @@ yyreduce:
   case 175:
 
 /* Line 1455 of yacc.c  */
-#line 2538 "grammar.y"
+#line 2477 "grammar.y"
     {
 		 (yyval.tree) = T_free(yylocate((yylsp[(1) - (1)])));          }
     break;
@@ -5827,7 +5766,7 @@ yyreduce:
   case 176:
 
 /* Line 1455 of yacc.c  */
-#line 2543 "grammar.y"
+#line 2482 "grammar.y"
     {
 		 (yyval.tree) = (yyvsp[(2) - (2)].tree);              }
     break;
@@ -5835,7 +5774,7 @@ yyreduce:
   case 177:
 
 /* Line 1455 of yacc.c  */
-#line 2548 "grammar.y"
+#line 2487 "grammar.y"
     {
 		 (yyval.tree) = (yyvsp[(2) - (2)].tree);              }
     break;
@@ -5843,7 +5782,7 @@ yyreduce:
   case 178:
 
 /* Line 1455 of yacc.c  */
-#line 2553 "grammar.y"
+#line 2492 "grammar.y"
     {
 		 (yyval.tree) = (yyvsp[(2) - (2)].tree);              }
     break;
@@ -5851,7 +5790,7 @@ yyreduce:
   case 179:
 
 /* Line 1455 of yacc.c  */
-#line 2558 "grammar.y"
+#line 2497 "grammar.y"
     {
 		 (yyval.tree) = (yyvsp[(2) - (2)].tree);              }
     break;
@@ -5859,7 +5798,7 @@ yyreduce:
   case 180:
 
 /* Line 1455 of yacc.c  */
-#line 2564 "grammar.y"
+#line 2503 "grammar.y"
     {
 		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
@@ -5867,7 +5806,7 @@ yyreduce:
   case 181:
 
 /* Line 1455 of yacc.c  */
-#line 2570 "grammar.y"
+#line 2509 "grammar.y"
     {
 		 (yyval.tree) = T_node_attribute((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
     break;
@@ -5875,7 +5814,7 @@ yyreduce:
   case 182:
 
 /* Line 1455 of yacc.c  */
-#line 2573 "grammar.y"
+#line 2512 "grammar.y"
     {
 		 (yyval.tree) = T_node_attribute((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -5883,7 +5822,7 @@ yyreduce:
   case 183:
 
 /* Line 1455 of yacc.c  */
-#line 2579 "grammar.y"
+#line 2518 "grammar.y"
     {
 		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
@@ -5891,7 +5830,7 @@ yyreduce:
   case 184:
 
 /* Line 1455 of yacc.c  */
-#line 2584 "grammar.y"
+#line 2523 "grammar.y"
     {
 		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
@@ -5899,7 +5838,7 @@ yyreduce:
   case 185:
 
 /* Line 1455 of yacc.c  */
-#line 2589 "grammar.y"
+#line 2528 "grammar.y"
     {
 		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
@@ -5907,7 +5846,7 @@ yyreduce:
   case 186:
 
 /* Line 1455 of yacc.c  */
-#line 2594 "grammar.y"
+#line 2533 "grammar.y"
     {
 		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
@@ -5915,7 +5854,7 @@ yyreduce:
   case 187:
 
 /* Line 1455 of yacc.c  */
-#line 2600 "grammar.y"
+#line 2539 "grammar.y"
     {
 		 (yyval.tree) = T_edge_attribute((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
     break;
@@ -5923,7 +5862,7 @@ yyreduce:
   case 188:
 
 /* Line 1455 of yacc.c  */
-#line 2603 "grammar.y"
+#line 2542 "grammar.y"
     {
 		 (yyval.tree) = T_edge_attribute((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -5931,7 +5870,7 @@ yyreduce:
   case 189:
 
 /* Line 1455 of yacc.c  */
-#line 2609 "grammar.y"
+#line 2548 "grammar.y"
     {
 		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
@@ -5939,7 +5878,7 @@ yyreduce:
   case 190:
 
 /* Line 1455 of yacc.c  */
-#line 2616 "grammar.y"
+#line 2555 "grammar.y"
     {
 		 (yyval.tree) = T_constraint_attribute((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
     break;
@@ -5947,7 +5886,7 @@ yyreduce:
   case 191:
 
 /* Line 1455 of yacc.c  */
-#line 2619 "grammar.y"
+#line 2558 "grammar.y"
     {
 		 (yyval.tree) = T_constraint_attribute((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -5955,7 +5894,7 @@ yyreduce:
   case 192:
 
 /* Line 1455 of yacc.c  */
-#line 2625 "grammar.y"
+#line 2564 "grammar.y"
     {
 		 (yyval.tree) = T_title((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
@@ -5963,7 +5902,7 @@ yyreduce:
   case 193:
 
 /* Line 1455 of yacc.c  */
-#line 2628 "grammar.y"
+#line 2567 "grammar.y"
     {
 		 (yyval.tree) = T_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
@@ -5971,7 +5910,7 @@ yyreduce:
   case 194:
 
 /* Line 1455 of yacc.c  */
-#line 2631 "grammar.y"
+#line 2570 "grammar.y"
     {
 		 (yyval.tree) = T_info1((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
@@ -5979,7 +5918,7 @@ yyreduce:
   case 195:
 
 /* Line 1455 of yacc.c  */
-#line 2634 "grammar.y"
+#line 2573 "grammar.y"
     {
 		 (yyval.tree) = T_info2((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
@@ -5987,7 +5926,7 @@ yyreduce:
   case 196:
 
 /* Line 1455 of yacc.c  */
-#line 2637 "grammar.y"
+#line 2576 "grammar.y"
     {
 		 (yyval.tree) = T_info3((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
@@ -5995,7 +5934,7 @@ yyreduce:
   case 197:
 
 /* Line 1455 of yacc.c  */
-#line 2640 "grammar.y"
+#line 2579 "grammar.y"
     {
 		 (yyval.tree) = T_fontname((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
@@ -6003,7 +5942,7 @@ yyreduce:
   case 198:
 
 /* Line 1455 of yacc.c  */
-#line 2643 "grammar.y"
+#line 2582 "grammar.y"
     {
 		 (yyval.tree) = T_color((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
@@ -6011,7 +5950,7 @@ yyreduce:
   case 199:
 
 /* Line 1455 of yacc.c  */
-#line 2646 "grammar.y"
+#line 2585 "grammar.y"
     {
 		 (yyval.tree) = T_textcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -6019,7 +5958,7 @@ yyreduce:
   case 200:
 
 /* Line 1455 of yacc.c  */
-#line 2649 "grammar.y"
+#line 2588 "grammar.y"
     {
 		 (yyval.tree) = T_bordercolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  }
     break;
@@ -6027,7 +5966,7 @@ yyreduce:
   case 201:
 
 /* Line 1455 of yacc.c  */
-#line 2652 "grammar.y"
+#line 2591 "grammar.y"
     {
 		 (yyval.tree) = T_iconfile((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
@@ -6035,7 +5974,7 @@ yyreduce:
   case 202:
 
 /* Line 1455 of yacc.c  */
-#line 2655 "grammar.y"
+#line 2594 "grammar.y"
     {
 		 (yyval.tree) = T_anchorpoints((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
@@ -6043,7 +5982,7 @@ yyreduce:
   case 203:
 
 /* Line 1455 of yacc.c  */
-#line 2658 "grammar.y"
+#line 2597 "grammar.y"
     {
 		 (yyval.tree) = T_typename((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
@@ -6051,7 +5990,7 @@ yyreduce:
   case 204:
 
 /* Line 1455 of yacc.c  */
-#line 2661 "grammar.y"
+#line 2600 "grammar.y"
     {
 		 (yyval.tree) = T_width((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
@@ -6059,7 +5998,7 @@ yyreduce:
   case 205:
 
 /* Line 1455 of yacc.c  */
-#line 2664 "grammar.y"
+#line 2603 "grammar.y"
     {
 		 (yyval.tree) = T_height((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
@@ -6067,7 +6006,7 @@ yyreduce:
   case 206:
 
 /* Line 1455 of yacc.c  */
-#line 2667 "grammar.y"
+#line 2606 "grammar.y"
     {
 		 (yyval.tree) = T_borderwidth((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  }
     break;
@@ -6075,7 +6014,7 @@ yyreduce:
   case 207:
 
 /* Line 1455 of yacc.c  */
-#line 2670 "grammar.y"
+#line 2609 "grammar.y"
     {
 		 (yyval.tree) = T_loc((yyvsp[(5) - (9)].tree),(yyvsp[(8) - (9)].tree),yylocate((yylsp[(1) - (9)])));       }
     break;
@@ -6083,7 +6022,7 @@ yyreduce:
   case 208:
 
 /* Line 1455 of yacc.c  */
-#line 2673 "grammar.y"
+#line 2612 "grammar.y"
     {
 		 (yyval.tree) = T_folding((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
@@ -6091,7 +6030,7 @@ yyreduce:
   case 209:
 
 /* Line 1455 of yacc.c  */
-#line 2676 "grammar.y"
+#line 2615 "grammar.y"
     {
 		 (yyval.tree) = T_scaling((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
@@ -6099,7 +6038,7 @@ yyreduce:
   case 210:
 
 /* Line 1455 of yacc.c  */
-#line 2679 "grammar.y"
+#line 2618 "grammar.y"
     {
 		 (yyval.tree) = T_shrink((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
@@ -6107,7 +6046,7 @@ yyreduce:
   case 211:
 
 /* Line 1455 of yacc.c  */
-#line 2682 "grammar.y"
+#line 2621 "grammar.y"
     {
 		 (yyval.tree) = T_stretch((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
@@ -6115,7 +6054,7 @@ yyreduce:
   case 212:
 
 /* Line 1455 of yacc.c  */
-#line 2685 "grammar.y"
+#line 2624 "grammar.y"
     {
 		 (yyval.tree) = T_iconwidth((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -6123,7 +6062,7 @@ yyreduce:
   case 213:
 
 /* Line 1455 of yacc.c  */
-#line 2688 "grammar.y"
+#line 2627 "grammar.y"
     {
 		 (yyval.tree) = T_iconheight((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   }
     break;
@@ -6131,7 +6070,7 @@ yyreduce:
   case 214:
 
 /* Line 1455 of yacc.c  */
-#line 2691 "grammar.y"
+#line 2630 "grammar.y"
     {
 		 (yyval.tree) = T_textmode((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
@@ -6139,7 +6078,7 @@ yyreduce:
   case 215:
 
 /* Line 1455 of yacc.c  */
-#line 2694 "grammar.y"
+#line 2633 "grammar.y"
     {
 		 (yyval.tree) = T_iconstyle((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -6147,7 +6086,7 @@ yyreduce:
   case 216:
 
 /* Line 1455 of yacc.c  */
-#line 2697 "grammar.y"
+#line 2636 "grammar.y"
     {
 		 (yyval.tree) = T_shape((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    	 }
     break;
@@ -6155,7 +6094,7 @@ yyreduce:
   case 217:
 
 /* Line 1455 of yacc.c  */
-#line 2700 "grammar.y"
+#line 2639 "grammar.y"
     {
 		 (yyval.tree) = T_level((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
@@ -6163,7 +6102,7 @@ yyreduce:
   case 218:
 
 /* Line 1455 of yacc.c  */
-#line 2703 "grammar.y"
+#line 2642 "grammar.y"
     {
 		 (yyval.tree) = T_level((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
@@ -6171,7 +6110,7 @@ yyreduce:
   case 219:
 
 /* Line 1455 of yacc.c  */
-#line 2706 "grammar.y"
+#line 2645 "grammar.y"
     {
 		 (yyval.tree) = T_horizontal_order((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
@@ -6179,7 +6118,7 @@ yyreduce:
   case 220:
 
 /* Line 1455 of yacc.c  */
-#line 2710 "grammar.y"
+#line 2649 "grammar.y"
     {
 		 (yyval.tree) = T_center(yylocate((yylsp[(1) - (1)])));        }
     break;
@@ -6187,7 +6126,7 @@ yyreduce:
   case 221:
 
 /* Line 1455 of yacc.c  */
-#line 2712 "grammar.y"
+#line 2651 "grammar.y"
     {
 		 (yyval.tree) = T_left_justify(yylocate((yylsp[(1) - (1)])));  }
     break;
@@ -6195,7 +6134,7 @@ yyreduce:
   case 222:
 
 /* Line 1455 of yacc.c  */
-#line 2714 "grammar.y"
+#line 2653 "grammar.y"
     {
 		 (yyval.tree) = T_right_justify(yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -6203,7 +6142,7 @@ yyreduce:
   case 223:
 
 /* Line 1455 of yacc.c  */
-#line 2718 "grammar.y"
+#line 2657 "grammar.y"
     {
 		 (yyval.tree) = T_box(yylocate((yylsp[(1) - (1)]))); 		}
     break;
@@ -6211,7 +6150,7 @@ yyreduce:
   case 224:
 
 /* Line 1455 of yacc.c  */
-#line 2720 "grammar.y"
+#line 2659 "grammar.y"
     {
 		 (yyval.tree) = T_rhomb(yylocate((yylsp[(1) - (1)])));		}
     break;
@@ -6219,7 +6158,7 @@ yyreduce:
   case 225:
 
 /* Line 1455 of yacc.c  */
-#line 2722 "grammar.y"
+#line 2661 "grammar.y"
     {
 		 (yyval.tree) = T_ellipse(yylocate((yylsp[(1) - (1)])));	}
     break;
@@ -6227,7 +6166,7 @@ yyreduce:
   case 226:
 
 /* Line 1455 of yacc.c  */
-#line 2724 "grammar.y"
+#line 2663 "grammar.y"
     {
 		 (yyval.tree) = T_triangle(yylocate((yylsp[(1) - (1)])));	}
     break;
@@ -6235,7 +6174,7 @@ yyreduce:
   case 227:
 
 /* Line 1455 of yacc.c  */
-#line 2728 "grammar.y"
+#line 2667 "grammar.y"
     {
 		 (yyval.tree) = T_bottom(yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -6243,7 +6182,7 @@ yyreduce:
   case 228:
 
 /* Line 1455 of yacc.c  */
-#line 2730 "grammar.y"
+#line 2669 "grammar.y"
     {
 		 (yyval.tree) = T_top(yylocate((yylsp[(1) - (1)])));    }
     break;
@@ -6251,7 +6190,7 @@ yyreduce:
   case 229:
 
 /* Line 1455 of yacc.c  */
-#line 2732 "grammar.y"
+#line 2671 "grammar.y"
     {
 		 (yyval.tree) = T_center(yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -6259,7 +6198,7 @@ yyreduce:
   case 230:
 
 /* Line 1455 of yacc.c  */
-#line 2736 "grammar.y"
+#line 2675 "grammar.y"
     {
 		 (yyval.tree) = T_bottom(yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -6267,7 +6206,7 @@ yyreduce:
   case 231:
 
 /* Line 1455 of yacc.c  */
-#line 2738 "grammar.y"
+#line 2677 "grammar.y"
     {
 		 (yyval.tree) = T_top(yylocate((yylsp[(1) - (1)])));    }
     break;
@@ -6275,7 +6214,7 @@ yyreduce:
   case 232:
 
 /* Line 1455 of yacc.c  */
-#line 2740 "grammar.y"
+#line 2679 "grammar.y"
     {
 		 (yyval.tree) = T_around(yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -6283,7 +6222,7 @@ yyreduce:
   case 233:
 
 /* Line 1455 of yacc.c  */
-#line 2746 "grammar.y"
+#line 2685 "grammar.y"
     {
 		 (yyval.tree) = T_sourcename((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -6291,7 +6230,7 @@ yyreduce:
   case 234:
 
 /* Line 1455 of yacc.c  */
-#line 2749 "grammar.y"
+#line 2688 "grammar.y"
     {
 		 (yyval.tree) = T_targetname((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -6299,7 +6238,7 @@ yyreduce:
   case 235:
 
 /* Line 1455 of yacc.c  */
-#line 2752 "grammar.y"
+#line 2691 "grammar.y"
     {
 		 (yyval.tree) = T_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
@@ -6307,7 +6246,7 @@ yyreduce:
   case 236:
 
 /* Line 1455 of yacc.c  */
-#line 2755 "grammar.y"
+#line 2694 "grammar.y"
     {
 		 (yyval.tree) = T_textcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));          }
     break;
@@ -6315,7 +6254,7 @@ yyreduce:
   case 237:
 
 /* Line 1455 of yacc.c  */
-#line 2758 "grammar.y"
+#line 2697 "grammar.y"
     {
 		 (yyval.tree) = T_fontname((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
@@ -6323,7 +6262,7 @@ yyreduce:
   case 238:
 
 /* Line 1455 of yacc.c  */
-#line 2761 "grammar.y"
+#line 2700 "grammar.y"
     {
 		 (yyval.tree) = T_color((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
@@ -6331,7 +6270,7 @@ yyreduce:
   case 239:
 
 /* Line 1455 of yacc.c  */
-#line 2764 "grammar.y"
+#line 2703 "grammar.y"
     {
 		 (yyval.tree) = T_typename((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
@@ -6339,7 +6278,7 @@ yyreduce:
   case 240:
 
 /* Line 1455 of yacc.c  */
-#line 2767 "grammar.y"
+#line 2706 "grammar.y"
     {
 		 (yyval.tree) = T_thickness((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
@@ -6347,7 +6286,7 @@ yyreduce:
   case 241:
 
 /* Line 1455 of yacc.c  */
-#line 2770 "grammar.y"
+#line 2709 "grammar.y"
     {
 		 (yyval.tree) = T_class((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
@@ -6355,7 +6294,7 @@ yyreduce:
   case 242:
 
 /* Line 1455 of yacc.c  */
-#line 2773 "grammar.y"
+#line 2712 "grammar.y"
     {
 		 (yyval.tree) = T_priority((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
@@ -6363,7 +6302,7 @@ yyreduce:
   case 243:
 
 /* Line 1455 of yacc.c  */
-#line 2776 "grammar.y"
+#line 2715 "grammar.y"
     {
 		 (yyval.tree) = T_arrowwidth((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -6371,7 +6310,7 @@ yyreduce:
   case 244:
 
 /* Line 1455 of yacc.c  */
-#line 2779 "grammar.y"
+#line 2718 "grammar.y"
     {
 		 (yyval.tree) = T_arrowheight((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   }
     break;
@@ -6379,7 +6318,7 @@ yyreduce:
   case 245:
 
 /* Line 1455 of yacc.c  */
-#line 2782 "grammar.y"
+#line 2721 "grammar.y"
     {
 		 (yyval.tree) = T_arrowcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -6387,7 +6326,7 @@ yyreduce:
   case 246:
 
 /* Line 1455 of yacc.c  */
-#line 2785 "grammar.y"
+#line 2724 "grammar.y"
     {
 		 (yyval.tree) = T_barrowcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -6395,7 +6334,7 @@ yyreduce:
   case 247:
 
 /* Line 1455 of yacc.c  */
-#line 2788 "grammar.y"
+#line 2727 "grammar.y"
     {
 		 (yyval.tree) = T_arrowsize((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
@@ -6403,7 +6342,7 @@ yyreduce:
   case 248:
 
 /* Line 1455 of yacc.c  */
-#line 2791 "grammar.y"
+#line 2730 "grammar.y"
     {
 		 (yyval.tree) = T_barrowsize((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
@@ -6411,7 +6350,7 @@ yyreduce:
   case 249:
 
 /* Line 1455 of yacc.c  */
-#line 2794 "grammar.y"
+#line 2733 "grammar.y"
     {
 		 (yyval.tree) = T_arrowstyle((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -6419,7 +6358,7 @@ yyreduce:
   case 250:
 
 /* Line 1455 of yacc.c  */
-#line 2797 "grammar.y"
+#line 2736 "grammar.y"
     {
 		 (yyval.tree) = T_barrowstyle((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -6427,7 +6366,7 @@ yyreduce:
   case 251:
 
 /* Line 1455 of yacc.c  */
-#line 2800 "grammar.y"
+#line 2739 "grammar.y"
     {
 		 (yyval.tree) = T_linestyle((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
@@ -6435,7 +6374,7 @@ yyreduce:
   case 252:
 
 /* Line 1455 of yacc.c  */
-#line 2803 "grammar.y"
+#line 2742 "grammar.y"
     {
 		 (yyval.tree) = T_anchor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
@@ -6443,7 +6382,7 @@ yyreduce:
   case 253:
 
 /* Line 1455 of yacc.c  */
-#line 2806 "grammar.y"
+#line 2745 "grammar.y"
     {
 		 (yyval.tree) = T_horizontal_order((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
@@ -6451,7 +6390,7 @@ yyreduce:
   case 254:
 
 /* Line 1455 of yacc.c  */
-#line 2811 "grammar.y"
+#line 2750 "grammar.y"
     {
 		 (yyval.tree) = T_continuous(yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -6459,7 +6398,7 @@ yyreduce:
   case 255:
 
 /* Line 1455 of yacc.c  */
-#line 2813 "grammar.y"
+#line 2752 "grammar.y"
     {
 		 (yyval.tree) = T_continuous(yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -6467,7 +6406,7 @@ yyreduce:
   case 256:
 
 /* Line 1455 of yacc.c  */
-#line 2815 "grammar.y"
+#line 2754 "grammar.y"
     {
 		 (yyval.tree) = T_dotted(yylocate((yylsp[(1) - (1)])));     }
     break;
@@ -6475,7 +6414,7 @@ yyreduce:
   case 257:
 
 /* Line 1455 of yacc.c  */
-#line 2817 "grammar.y"
+#line 2756 "grammar.y"
     {
 		 (yyval.tree) = T_dashed(yylocate((yylsp[(1) - (1)])));     }
     break;
@@ -6483,7 +6422,7 @@ yyreduce:
   case 258:
 
 /* Line 1455 of yacc.c  */
-#line 2819 "grammar.y"
+#line 2758 "grammar.y"
     {
 		 (yyval.tree) = T_invisible(yylocate((yylsp[(1) - (1)])));  }
     break;
@@ -6491,7 +6430,7 @@ yyreduce:
   case 259:
 
 /* Line 1455 of yacc.c  */
-#line 2824 "grammar.y"
+#line 2763 "grammar.y"
     {
 		 (yyval.tree) = T_none(yylocate((yylsp[(1) - (1)])));      }
     break;
@@ -6499,7 +6438,7 @@ yyreduce:
   case 260:
 
 /* Line 1455 of yacc.c  */
-#line 2826 "grammar.y"
+#line 2765 "grammar.y"
     {
 		 (yyval.tree) = T_line(yylocate((yylsp[(1) - (1)])));      }
     break;
@@ -6507,7 +6446,7 @@ yyreduce:
   case 261:
 
 /* Line 1455 of yacc.c  */
-#line 2828 "grammar.y"
+#line 2767 "grammar.y"
     {
 		 (yyval.tree) = T_solid(yylocate((yylsp[(1) - (1)])));     }
     break;
@@ -6515,7 +6454,7 @@ yyreduce:
   case 262:
 
 /* Line 1455 of yacc.c  */
-#line 2833 "grammar.y"
+#line 2772 "grammar.y"
     {
 		 (yyval.tree) = T_title((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
@@ -6523,7 +6462,7 @@ yyreduce:
   case 263:
 
 /* Line 1455 of yacc.c  */
-#line 2836 "grammar.y"
+#line 2775 "grammar.y"
     {
 		 (yyval.tree) = T_priority((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  }
     break;
@@ -6531,7 +6470,7 @@ yyreduce:
   case 264:
 
 /* Line 1455 of yacc.c  */
-#line 2839 "grammar.y"
+#line 2778 "grammar.y"
     {
 		 (yyval.tree) = T_size((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
@@ -6539,7 +6478,7 @@ yyreduce:
   case 265:
 
 /* Line 1455 of yacc.c  */
-#line 2842 "grammar.y"
+#line 2781 "grammar.y"
     {
 		 (yyval.tree) = T_nodes((yyvsp[(4) - (5)].tree),yylocate((yylsp[(1) - (5)])));     }
     break;
@@ -6547,7 +6486,7 @@ yyreduce:
   case 266:
 
 /* Line 1455 of yacc.c  */
-#line 2845 "grammar.y"
+#line 2784 "grammar.y"
     {
 		 (yyval.tree) = T_interval((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  }
     break;
@@ -6555,7 +6494,7 @@ yyreduce:
   case 267:
 
 /* Line 1455 of yacc.c  */
-#line 2848 "grammar.y"
+#line 2787 "grammar.y"
     {
 		 (yyval.tree) = T_name((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
@@ -6563,7 +6502,7 @@ yyreduce:
   case 268:
 
 /* Line 1455 of yacc.c  */
-#line 2851 "grammar.y"
+#line 2790 "grammar.y"
     {
 		 (yyval.tree) = T_dimension((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
@@ -6571,7 +6510,7 @@ yyreduce:
   case 269:
 
 /* Line 1455 of yacc.c  */
-#line 2856 "grammar.y"
+#line 2795 "grammar.y"
     {
 		 (yyval.tree) = T_string_array((yyvsp[(1) - (2)].tree),(yyvsp[(2) - (2)].tree),yylocate((yylsp[(1) - (2)])));    }
     break;
@@ -6579,7 +6518,7 @@ yyreduce:
   case 270:
 
 /* Line 1455 of yacc.c  */
-#line 2858 "grammar.y"
+#line 2797 "grammar.y"
     {
 		 (yyval.tree) = T_string_array(NULL,(yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));  }
     break;
@@ -6587,7 +6526,7 @@ yyreduce:
   case 271:
 
 /* Line 1455 of yacc.c  */
-#line 2862 "grammar.y"
+#line 2801 "grammar.y"
     {
 		 (yyval.tree) = T_equal(yylocate((yylsp[(1) - (1)])));            }
     break;
@@ -6595,7 +6534,7 @@ yyreduce:
   case 272:
 
 /* Line 1455 of yacc.c  */
-#line 2864 "grammar.y"
+#line 2803 "grammar.y"
     {
 		 (yyval.tree) = T_smaller(yylocate((yylsp[(1) - (1)])));          }
     break;
@@ -6603,7 +6542,7 @@ yyreduce:
   case 273:
 
 /* Line 1455 of yacc.c  */
-#line 2866 "grammar.y"
+#line 2805 "grammar.y"
     {
 		 (yyval.tree) = T_greater(yylocate((yylsp[(1) - (1)])));          }
     break;
@@ -6611,7 +6550,7 @@ yyreduce:
   case 274:
 
 /* Line 1455 of yacc.c  */
-#line 2868 "grammar.y"
+#line 2807 "grammar.y"
     {
 		 (yyval.tree) = T_neighbors(yylocate((yylsp[(1) - (1)])));        }
     break;
@@ -6619,7 +6558,7 @@ yyreduce:
   case 275:
 
 /* Line 1455 of yacc.c  */
-#line 2870 "grammar.y"
+#line 2809 "grammar.y"
     {
 		 (yyval.tree) = T_low_margin(yylocate((yylsp[(1) - (1)])));       }
     break;
@@ -6627,7 +6566,7 @@ yyreduce:
   case 276:
 
 /* Line 1455 of yacc.c  */
-#line 2872 "grammar.y"
+#line 2811 "grammar.y"
     {
 		 (yyval.tree) = T_high_margin(yylocate((yylsp[(1) - (1)])));      }
     break;
@@ -6635,7 +6574,7 @@ yyreduce:
   case 277:
 
 /* Line 1455 of yacc.c  */
-#line 2874 "grammar.y"
+#line 2813 "grammar.y"
     {
 		 (yyval.tree) = T_xrange(yylocate((yylsp[(1) - (1)])));           }
     break;
@@ -6643,7 +6582,7 @@ yyreduce:
   case 278:
 
 /* Line 1455 of yacc.c  */
-#line 2876 "grammar.y"
+#line 2815 "grammar.y"
     {
 		 (yyval.tree) = T_cluster(yylocate((yylsp[(1) - (1)])));          }
     break;
@@ -6651,7 +6590,7 @@ yyreduce:
   case 279:
 
 /* Line 1455 of yacc.c  */
-#line 2878 "grammar.y"
+#line 2817 "grammar.y"
     {
 		 (yyval.tree) = T_limit(yylocate((yylsp[(1) - (1)])));            }
     break;
@@ -6659,7 +6598,7 @@ yyreduce:
   case 280:
 
 /* Line 1455 of yacc.c  */
-#line 2880 "grammar.y"
+#line 2819 "grammar.y"
     {
 		 (yyval.tree) = T_above(yylocate((yylsp[(1) - (1)])));            }
     break;
@@ -6667,7 +6606,7 @@ yyreduce:
   case 281:
 
 /* Line 1455 of yacc.c  */
-#line 2882 "grammar.y"
+#line 2821 "grammar.y"
     {
 		 (yyval.tree) = T_below(yylocate((yylsp[(1) - (1)])));            }
     break;
@@ -6675,7 +6614,7 @@ yyreduce:
   case 282:
 
 /* Line 1455 of yacc.c  */
-#line 2884 "grammar.y"
+#line 2823 "grammar.y"
     {
 		 (yyval.tree) = T_left(yylocate((yylsp[(1) - (1)])));             }
     break;
@@ -6683,7 +6622,7 @@ yyreduce:
   case 283:
 
 /* Line 1455 of yacc.c  */
-#line 2886 "grammar.y"
+#line 2825 "grammar.y"
     {
 		 (yyval.tree) = T_right(yylocate((yylsp[(1) - (1)])));            }
     break;
@@ -6691,7 +6630,7 @@ yyreduce:
   case 284:
 
 /* Line 1455 of yacc.c  */
-#line 2888 "grammar.y"
+#line 2827 "grammar.y"
     {
 		 (yyval.tree) = T_in_font(yylocate((yylsp[(1) - (1)])));          }
     break;
@@ -6699,7 +6638,7 @@ yyreduce:
   case 285:
 
 /* Line 1455 of yacc.c  */
-#line 2890 "grammar.y"
+#line 2829 "grammar.y"
     {
 		 (yyval.tree) = T_behind(yylocate((yylsp[(1) - (1)])));           }
     break;
@@ -6707,7 +6646,7 @@ yyreduce:
   case 286:
 
 /* Line 1455 of yacc.c  */
-#line 2892 "grammar.y"
+#line 2831 "grammar.y"
     {
 		 (yyval.tree) = T_equal_position(yylocate((yylsp[(1) - (1)])));   }
     break;
@@ -6715,7 +6654,7 @@ yyreduce:
   case 287:
 
 /* Line 1455 of yacc.c  */
-#line 2894 "grammar.y"
+#line 2833 "grammar.y"
     {
 		 (yyval.tree) = T_equal_row(yylocate((yylsp[(1) - (1)])));        }
     break;
@@ -6723,7 +6662,7 @@ yyreduce:
   case 288:
 
 /* Line 1455 of yacc.c  */
-#line 2896 "grammar.y"
+#line 2835 "grammar.y"
     {
 		 (yyval.tree) = T_equal_column(yylocate((yylsp[(1) - (1)])));     }
     break;
@@ -6731,7 +6670,7 @@ yyreduce:
   case 289:
 
 /* Line 1455 of yacc.c  */
-#line 2898 "grammar.y"
+#line 2837 "grammar.y"
     {
 		 (yyval.tree) = T_top_margin(yylocate((yylsp[(1) - (1)])));       }
     break;
@@ -6739,7 +6678,7 @@ yyreduce:
   case 290:
 
 /* Line 1455 of yacc.c  */
-#line 2900 "grammar.y"
+#line 2839 "grammar.y"
     {
 		 (yyval.tree) = T_bottom_margin(yylocate((yylsp[(1) - (1)])));    }
     break;
@@ -6747,7 +6686,7 @@ yyreduce:
   case 291:
 
 /* Line 1455 of yacc.c  */
-#line 2902 "grammar.y"
+#line 2841 "grammar.y"
     {
 		 (yyval.tree) = T_left_margin(yylocate((yylsp[(1) - (1)])));      }
     break;
@@ -6755,7 +6694,7 @@ yyreduce:
   case 292:
 
 /* Line 1455 of yacc.c  */
-#line 2904 "grammar.y"
+#line 2843 "grammar.y"
     {
 		 (yyval.tree) = T_right_margin(yylocate((yylsp[(1) - (1)])));     }
     break;
@@ -6763,7 +6702,7 @@ yyreduce:
   case 293:
 
 /* Line 1455 of yacc.c  */
-#line 2906 "grammar.y"
+#line 2845 "grammar.y"
     {
 		 (yyval.tree) = T_upper_neighbor(yylocate((yylsp[(1) - (1)])));   }
     break;
@@ -6771,7 +6710,7 @@ yyreduce:
   case 294:
 
 /* Line 1455 of yacc.c  */
-#line 2908 "grammar.y"
+#line 2847 "grammar.y"
     {
 		 (yyval.tree) = T_lower_neighbor(yylocate((yylsp[(1) - (1)])));   }
     break;
@@ -6779,7 +6718,7 @@ yyreduce:
   case 295:
 
 /* Line 1455 of yacc.c  */
-#line 2910 "grammar.y"
+#line 2849 "grammar.y"
     {
 		 (yyval.tree) = T_left_neighbor(yylocate((yylsp[(1) - (1)])));    }
     break;
@@ -6787,7 +6726,7 @@ yyreduce:
   case 296:
 
 /* Line 1455 of yacc.c  */
-#line 2912 "grammar.y"
+#line 2851 "grammar.y"
     {
 		 (yyval.tree) = T_right_neighbor(yylocate((yylsp[(1) - (1)])));   }
     break;
@@ -6795,7 +6734,7 @@ yyreduce:
   case 297:
 
 /* Line 1455 of yacc.c  */
-#line 2916 "grammar.y"
+#line 2855 "grammar.y"
     {
 		 (yyval.tree) = T_x(yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -6803,7 +6742,7 @@ yyreduce:
   case 298:
 
 /* Line 1455 of yacc.c  */
-#line 2918 "grammar.y"
+#line 2857 "grammar.y"
     {
 		 (yyval.tree) = T_y(yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -6811,7 +6750,7 @@ yyreduce:
   case 299:
 
 /* Line 1455 of yacc.c  */
-#line 2920 "grammar.y"
+#line 2859 "grammar.y"
     {
 		 (yyval.tree) = T_z(yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -6819,7 +6758,7 @@ yyreduce:
   case 300:
 
 /* Line 1455 of yacc.c  */
-#line 2924 "grammar.y"
+#line 2863 "grammar.y"
     {
 		 (yyval.tree) = T_integer((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -6827,7 +6766,7 @@ yyreduce:
   case 301:
 
 /* Line 1455 of yacc.c  */
-#line 2926 "grammar.y"
+#line 2865 "grammar.y"
     {
 		 (yyval.tree) = T_float((yyvsp[(1) - (1)].lrealnum),yylocate((yylsp[(1) - (1)])));   }
     break;
@@ -6835,7 +6774,7 @@ yyreduce:
   case 302:
 
 /* Line 1455 of yacc.c  */
-#line 2928 "grammar.y"
+#line 2867 "grammar.y"
     {
 		 (yyval.tree) = T_char((yyvsp[(1) - (1)].byte),yylocate((yylsp[(1) - (1)])));    }
     break;
@@ -6843,7 +6782,7 @@ yyreduce:
   case 303:
 
 /* Line 1455 of yacc.c  */
-#line 2930 "grammar.y"
+#line 2869 "grammar.y"
     {
 		 (yyval.tree) = T_string((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)])));  }
     break;
@@ -6851,7 +6790,7 @@ yyreduce:
   case 304:
 
 /* Line 1455 of yacc.c  */
-#line 2932 "grammar.y"
+#line 2871 "grammar.y"
     {
 		 (yyval.tree) = (yyvsp[(1) - (1)].tree); }
     break;
@@ -6859,7 +6798,7 @@ yyreduce:
   case 305:
 
 /* Line 1455 of yacc.c  */
-#line 2937 "grammar.y"
+#line 2876 "grammar.y"
     {
 		 (yyval.tree) = REVERT((yyvsp[(2) - (3)].tree)); }
     break;
@@ -6867,7 +6806,7 @@ yyreduce:
   case 306:
 
 /* Line 1455 of yacc.c  */
-#line 2942 "grammar.y"
+#line 2881 "grammar.y"
     {
 		 (yyval.tree) = T_index_value((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
     break;
@@ -6875,7 +6814,7 @@ yyreduce:
   case 307:
 
 /* Line 1455 of yacc.c  */
-#line 2944 "grammar.y"
+#line 2883 "grammar.y"
     {
 		 (yyval.tree) = T_index_value((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
     break;
@@ -6883,7 +6822,7 @@ yyreduce:
   case 308:
 
 /* Line 1455 of yacc.c  */
-#line 2948 "grammar.y"
+#line 2887 "grammar.y"
     {
 		 (yyval.tree) = (yyvsp[(1) - (1)].tree);           }
     break;
@@ -6891,7 +6830,7 @@ yyreduce:
   case 309:
 
 /* Line 1455 of yacc.c  */
-#line 2951 "grammar.y"
+#line 2890 "grammar.y"
     {
 		 (yyval.tree) = T_index((yyvsp[(1) - (3)].tree),(yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
@@ -6899,7 +6838,7 @@ yyreduce:
   case 310:
 
 /* Line 1455 of yacc.c  */
-#line 2954 "grammar.y"
+#line 2893 "grammar.y"
     {
 		 (yyval.tree) = T_range((yyvsp[(1) - (3)].tree),(yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
@@ -6907,7 +6846,7 @@ yyreduce:
   case 311:
 
 /* Line 1455 of yacc.c  */
-#line 2957 "grammar.y"
+#line 2896 "grammar.y"
     {
 		 (yyval.tree) = T_stern((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
@@ -6915,7 +6854,7 @@ yyreduce:
   case 312:
 
 /* Line 1455 of yacc.c  */
-#line 2962 "grammar.y"
+#line 2901 "grammar.y"
     {
 		 (yyval.tree) = T_range((yyvsp[(2) - (5)].tree),(yyvsp[(4) - (5)].tree),yylocate((yylsp[(1) - (5)]))); }
     break;
@@ -6923,7 +6862,7 @@ yyreduce:
   case 313:
 
 /* Line 1455 of yacc.c  */
-#line 2966 "grammar.y"
+#line 2905 "grammar.y"
     {
 		 (yyval.tree) = T_index_val((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)])));    }
     break;
@@ -6931,7 +6870,7 @@ yyreduce:
   case 314:
 
 /* Line 1455 of yacc.c  */
-#line 2970 "grammar.y"
+#line 2909 "grammar.y"
     {
 		 (yyval.tree) = T_integer((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)])));  }
     break;
@@ -6939,7 +6878,7 @@ yyreduce:
   case 315:
 
 /* Line 1455 of yacc.c  */
-#line 2974 "grammar.y"
+#line 2913 "grammar.y"
     {
 		 (yyval.tree) = T_float((yyvsp[(1) - (1)].lrealnum),yylocate((yylsp[(1) - (1)])));    }
     break;
@@ -6947,7 +6886,7 @@ yyreduce:
   case 316:
 
 /* Line 1455 of yacc.c  */
-#line 2978 "grammar.y"
+#line 2917 "grammar.y"
     {
 		 (yyval.tree) = T_string((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)])));   }
     break;
@@ -6955,7 +6894,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 6959 "y.tab.c"
+#line 6898 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -7174,7 +7113,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 2984 "grammar.y"
+#line 2923 "grammar.y"
 
 
 
@@ -7232,14 +7171,7 @@ int parse()
  *
  *  et cetera.
  */
- 
-
-#ifdef ANSI_C 
 void line_directive(char *text)
-#else
-void line_directive(text)
-char *text;
-#endif
 {
         char *c,*d;
 
@@ -7270,13 +7202,7 @@ char *text;
  *
  *  et cetera.
  */
- 
-#ifdef ANSI_C 
 void escape_transl(char *text)
-#else
-void escape_transl(text)
-char *text;
-#endif
 {
         char *c,*d;
 	int i;
@@ -7286,9 +7212,7 @@ char *text;
 		if (*c == '\\') {
 			c++;
 			switch (*c) {
-#ifdef ANSI_C
 			case 'a' : *d++ = '\a'; break;
-#endif
 			case 'b' : *d++ = '\b'; break;
 			case 'f' : *d++ = '\f'; break;
 			case 'n' : *d++ = '\n'; break;
@@ -7343,65 +7267,6 @@ char *text;
 }
 
 
-/*--------------------------------------------------------------*/
-/*   Type conversions                                           */
-/*--------------------------------------------------------------*/
-
-/*
- *  Translate integer into string.
- */
-
-static char myprivmessage[16000];  /* Please DON'T reuse this */
-
-#ifdef ANSI_C 
-char  *my_itoa(int x)
-#else
-char  *my_itoa(x)
-int x;
-#endif
-{
-	SPRINTF(myprivmessage,"%d",x);
-	return(myprivmessage);
-}
-
-/*
- *  Translate integer into string.
- *  This is a little bit overcomplex, but in this way, it is more compatible.
- */
-
-#ifdef ANSI_C 
-long 	long_atoi(char *c)
-#else
-long	long_atoi(c)
-char *c;
-#endif
-{
-	long res, sign;
-
-	res = 0;
-	if (!c) return(0L);
-	if (*c=='-')  { sign = -1L; c++; }
-	else sign = 1L;
-	while (*c) {
-		switch (*c) {
-		case '0': res = res * 10L;      break;
-		case '1': res = res * 10L + 1L; break;
-		case '2': res = res * 10L + 2L; break;
-		case '3': res = res * 10L + 3L; break;
-		case '4': res = res * 10L + 4L; break;
-		case '5': res = res * 10L + 5L; break;
-		case '6': res = res * 10L + 6L; break;
-		case '7': res = res * 10L + 7L; break;
-		case '8': res = res * 10L + 8L; break;
-		case '9': res = res * 10L + 9L; break;
-		default: return(sign * res);
-		}
-		c++;
-	}
-	return(sign * res);
-}
-
- 
 /*====================================================================*/
 /*   Errors and Warnings                                              */
 /*====================================================================*/
@@ -7414,14 +7279,9 @@ char *c;
 
 static void fatal_error _PP((char *));
 
-#ifdef ANSI_C 
+static char myprivmessage[16000];  /* Please DON'T reuse this */
+
 void syntaxerror(int line, int pos, char *mesge)
-#else
-void syntaxerror(line,pos,mesge)
-int line;
-int pos;
-char *mesge;
-#endif
 {
         strcpy(myprivmessage,mesge);
         if (islower(*myprivmessage))
@@ -7440,14 +7300,7 @@ char *mesge;
  *   errors.
  */
 
-#ifdef ANSI_C 
 void warning(int line, int pos, char *mesge)
-#else
-void warning(line,pos,mesge)
-int line;
-int pos;
-char *mesge;
-#endif
 {
         strcpy(myprivmessage,mesge);
         if (islower(*myprivmessage))
@@ -7470,29 +7323,16 @@ char *mesge;
 
 #ifdef PARSEGENSTD 
 
-#ifndef lint
-static char *stdpc_id_string="$Id: stdpc.skel,v 1.12 1994/12/05 13:54:37 sander Exp sander $";
-#endif
-
 
 #include <stdio.h>
 #include <malloc.h>
-#ifdef ANSI_C
 #include <stdarg.h>
-#else
-#include <varargs.h>
-#endif
 
 /*--------------------------------------------------------------------*/
 /* Fatal error: exit with message                                     */
 /*--------------------------------------------------------------------*/
 
-#ifdef ANSI_C
 static void fatal_error(char *message)
-#else
-static void fatal_error(message)
-char *message;
-#endif
 {
         (void)fprintf(stderr,"Fatal error: %s !\n",message);
         (void)fprintf(stderr,"Aborted !\n");
@@ -7525,11 +7365,7 @@ static yysyntaxtree parseheapend;                 /* the end  */
 static int parseheapsize = PARSEBLOCKSIZE;     /* the size of one block */
 
 
-#ifdef ANSI_C
 static void alloc_block(void)
-#else
-static void alloc_block()
-#endif
 {
         yysyntaxtree help, *help2;
 
@@ -7550,12 +7386,7 @@ static void alloc_block()
 
 /*  allocate x bytes */
 
-#ifdef ANSI_C
 static yysyntaxtree parsemalloc(int x)
-#else
-static yysyntaxtree parsemalloc(x)
-int x;
-#endif
 {
         yysyntaxtree help;
         int  y;
@@ -7584,12 +7415,7 @@ int x;
 
 /* allocate yysyntaxtree node with x sons */
 
-#ifdef ANSI_C
 static yysyntaxtree st_malloc(int x)
-#else
-static yysyntaxtree st_malloc(x)
-int x;
-#endif
 {
         yysyntaxtree help;
 

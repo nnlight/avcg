@@ -1701,45 +1701,45 @@ int yy_flex_debug = 1;
 
 static yyconst flex_int16_t yy_rule_linenum[355] =
     {   0,
-      255,  257,  259,  261,  263,  265,  267,  269,  271,  273,
-      275,  277,  279,  281,  283,  285,  287,  289,  291,  293,
-      295,  297,  299,  301,  303,  305,  307,  309,  311,  313,
-      315,  317,  319,  321,  323,  325,  327,  329,  331,  333,
-      335,  337,  339,  341,  343,  345,  347,  349,  351,  353,
-      355,  357,  359,  361,  363,  365,  367,  369,  371,  373,
-      375,  377,  379,  381,  383,  385,  387,  389,  391,  393,
-      395,  397,  399,  401,  403,  405,  407,  409,  411,  413,
-      415,  417,  419,  421,  423,  425,  427,  429,  431,  433,
-      435,  437,  439,  441,  443,  445,  447,  449,  451,  453,
+      253,  255,  257,  259,  261,  263,  265,  267,  269,  271,
+      273,  275,  277,  279,  281,  283,  285,  287,  289,  291,
+      293,  295,  297,  299,  301,  303,  305,  307,  309,  311,
+      313,  315,  317,  319,  321,  323,  325,  327,  329,  331,
+      333,  335,  337,  339,  341,  343,  345,  347,  349,  351,
+      353,  355,  357,  359,  361,  363,  365,  367,  369,  371,
+      373,  375,  377,  379,  381,  383,  385,  387,  389,  391,
+      393,  395,  397,  399,  401,  403,  405,  407,  409,  411,
+      413,  415,  417,  419,  421,  423,  425,  427,  429,  431,
+      433,  435,  437,  439,  441,  443,  445,  447,  449,  451,
 
-      455,  457,  459,  461,  463,  465,  467,  469,  471,  473,
-      475,  477,  479,  481,  483,  485,  487,  489,  491,  493,
-      495,  497,  499,  501,  503,  505,  507,  509,  511,  513,
-      515,  517,  519,  521,  523,  525,  527,  529,  531,  533,
-      535,  537,  539,  541,  543,  545,  547,  549,  551,  553,
-      555,  557,  559,  561,  563,  565,  567,  569,  571,  573,
-      575,  577,  579,  581,  583,  585,  587,  589,  591,  593,
-      595,  597,  599,  601,  603,  605,  607,  609,  611,  613,
-      615,  617,  619,  621,  623,  625,  627,  629,  631,  633,
-      635,  637,  639,  641,  643,  645,  647,  649,  651,  653,
+      453,  455,  457,  459,  461,  463,  465,  467,  469,  471,
+      473,  475,  477,  479,  481,  483,  485,  487,  489,  491,
+      493,  495,  497,  499,  501,  503,  505,  507,  509,  511,
+      513,  515,  517,  519,  521,  523,  525,  527,  529,  531,
+      533,  535,  537,  539,  541,  543,  545,  547,  549,  551,
+      553,  555,  557,  559,  561,  563,  565,  567,  569,  571,
+      573,  575,  577,  579,  581,  583,  585,  587,  589,  591,
+      593,  595,  597,  599,  601,  603,  605,  607,  609,  611,
+      613,  615,  617,  619,  621,  623,  625,  627,  629,  631,
+      633,  635,  637,  639,  641,  643,  645,  647,  649,  651,
 
-      655,  657,  659,  661,  663,  665,  667,  669,  671,  673,
-      675,  677,  679,  681,  683,  685,  687,  689,  691,  693,
-      695,  697,  699,  701,  703,  705,  707,  709,  711,  713,
-      715,  717,  719,  721,  723,  725,  727,  729,  731,  733,
-      735,  737,  739,  741,  743,  745,  747,  749,  751,  753,
-      755,  757,  759,  761,  763,  765,  767,  769,  771,  773,
-      775,  777,  779,  781,  783,  785,  787,  789,  791,  793,
-      795,  797,  799,  801,  803,  805,  807,  809,  811,  813,
-      815,  817,  819,  821,  823,  825,  827,  829,  831,  833,
-      835,  837,  839,  841,  843,  845,  847,  849,  851,  853,
+      653,  655,  657,  659,  661,  663,  665,  667,  669,  671,
+      673,  675,  677,  679,  681,  683,  685,  687,  689,  691,
+      693,  695,  697,  699,  701,  703,  705,  707,  709,  711,
+      713,  715,  717,  719,  721,  723,  725,  727,  729,  731,
+      733,  735,  737,  739,  741,  743,  745,  747,  749,  751,
+      753,  755,  757,  759,  761,  763,  765,  767,  769,  771,
+      773,  775,  777,  779,  781,  783,  785,  787,  789,  791,
+      793,  795,  797,  799,  801,  803,  805,  807,  809,  811,
+      813,  815,  817,  819,  821,  823,  825,  827,  829,  831,
+      833,  835,  837,  839,  841,  843,  845,  847,  849,  851,
 
-      855,  857,  859,  861,  863,  865,  867,  869,  871,  873,
-      875,  877,  879,  881,  883,  885,  887,  889,  891,  893,
-      895,  897,  899,  901,  903,  905,  907,  909,  911,  913,
-      915,  918,  920,  922,  925,  927,  929,  932,  936,  940,
-      944,  951,  953,  956,  958,  960,  962,  964,  966,  968,
-      970,  972,  974,  979
+      853,  855,  857,  859,  861,  863,  865,  867,  869,  871,
+      873,  875,  877,  879,  881,  883,  885,  887,  889,  891,
+      893,  895,  897,  899,  901,  903,  905,  907,  909,  911,
+      913,  916,  918,  920,  923,  925,  927,  930,  934,  938,
+      942,  949,  951,  954,  956,  958,  960,  962,  964,  966,
+      968,  970,  972,  977
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -1825,8 +1825,6 @@ extern void gs_exit            _PP((int x));
  
 void   line_directive _PP((char *text));
 void   escape_transl  _PP((char *text));
-char  *my_itoa        _PP((int x));
-long   long_atoi      _PP((char *c));
 void   syntaxerror    _PP((int line,int pos,char *mesge));
 void   warning        _PP((int line,int pos,char *mesge));
  
@@ -1948,7 +1946,7 @@ result = (c == EOF) ? YY_NULL : 1; \
 /*--------------------------------------------------------------------*/
 
 
-#line 218 "grammar.l"
+#line 216 "grammar.l"
 
 
 #ifndef yywrap
@@ -1981,7 +1979,7 @@ extern YYLTYPE yylloc;
 /*--------------------------------------------------------------------*/
 
 
-#line 1985 "lex.yy.c"
+#line 1983 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -2228,11 +2226,11 @@ YY_DECL
 	register int yy_act;
     
 /* %% [7.0] user's declarations go here */
-#line 252 "grammar.l"
+#line 250 "grammar.l"
 
 
 
-#line 2236 "lex.yy.c"
+#line 2234 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -2348,2041 +2346,2041 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 255 "grammar.l"
+#line 253 "grammar.l"
 {
 		 RETURN(LEXWORD_ABOVE);               }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 257 "grammar.l"
+#line 255 "grammar.l"
 {
 		 RETURN(LEXWORD_ANCHORPOINTS);        }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 259 "grammar.l"
+#line 257 "grammar.l"
 {
 		 RETURN(LEXWORD_ANCHORPOINTS);        }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 261 "grammar.l"
+#line 259 "grammar.l"
 {
 		 RETURN(LEXWORD_ANCHOR);              }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 263 "grammar.l"
+#line 261 "grammar.l"
 {
 		 RETURN(LEXWORD_AQUAMARINE);          }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 265 "grammar.l"
+#line 263 "grammar.l"
 {
 		 RETURN(LEXWORD_AROUND);              }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 267 "grammar.l"
+#line 265 "grammar.l"
 {
 		 RETURN(LEXWORD_ARROWMODE);           }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 269 "grammar.l"
+#line 267 "grammar.l"
 {
 		 RETURN(LEXWORD_ARROWMODE);           }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 271 "grammar.l"
+#line 269 "grammar.l"
 {
 		 RETURN(LEXWORD_ARROWHEIGHT);         }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 273 "grammar.l"
+#line 271 "grammar.l"
 {
 		 RETURN(LEXWORD_ARROWHEIGHT);         }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 275 "grammar.l"
+#line 273 "grammar.l"
 {
 		 RETURN(LEXWORD_ARROWWIDTH);          }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 277 "grammar.l"
+#line 275 "grammar.l"
 {
 		 RETURN(LEXWORD_ARROWWIDTH);          }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 279 "grammar.l"
+#line 277 "grammar.l"
 {
 		 RETURN(LEXWORD_ARROWCOLOR);          }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 281 "grammar.l"
+#line 279 "grammar.l"
 {
 		 RETURN(LEXWORD_ARROWCOLOR);          }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 283 "grammar.l"
+#line 281 "grammar.l"
 {
 		 RETURN(LEXWORD_ARROWSTYLE);          }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 285 "grammar.l"
+#line 283 "grammar.l"
 {
 		 RETURN(LEXWORD_ARROWSTYLE);          }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 287 "grammar.l"
+#line 285 "grammar.l"
 {
 		 RETURN(LEXWORD_ARROWSIZE);           }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 289 "grammar.l"
+#line 287 "grammar.l"
 {
 		 RETURN(LEXWORD_ARROWSIZE);           }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 291 "grammar.l"
+#line 289 "grammar.l"
 {
 		 RETURN(LEXWORD_BARROWCOLOR);         }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 293 "grammar.l"
+#line 291 "grammar.l"
 {
 		 RETURN(LEXWORD_BARROWCOLOR);         }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 295 "grammar.l"
+#line 293 "grammar.l"
 {
 		 RETURN(LEXWORD_BARROWCOLOR);         }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 297 "grammar.l"
+#line 295 "grammar.l"
 {
 		 RETURN(LEXWORD_BARROWSTYLE);         }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 299 "grammar.l"
+#line 297 "grammar.l"
 {
 		 RETURN(LEXWORD_BARROWSTYLE);         }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 301 "grammar.l"
+#line 299 "grammar.l"
 {
 		 RETURN(LEXWORD_BARROWSTYLE);         }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 303 "grammar.l"
+#line 301 "grammar.l"
 {
 		 RETURN(LEXWORD_BARROWSIZE);          }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 305 "grammar.l"
+#line 303 "grammar.l"
 {
 		 RETURN(LEXWORD_BARROWSIZE);          }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 307 "grammar.l"
+#line 305 "grammar.l"
 {
 		 RETURN(LEXWORD_BARROWSIZE);          }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 309 "grammar.l"
+#line 307 "grammar.l"
 {
 		 RETURN(LEXWORD_BACKEDGE);            }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 311 "grammar.l"
+#line 309 "grammar.l"
 {
 		 RETURN(LEXWORD_BACKEDGE);            }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 313 "grammar.l"
+#line 311 "grammar.l"
 {
 		 RETURN(LEXWORD_BARYCENTER);          }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 315 "grammar.l"
+#line 313 "grammar.l"
 {
 		 RETURN(LEXWORD_BARYCENTER);          }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 317 "grammar.l"
+#line 315 "grammar.l"
 {
 		 RETURN(LEXWORD_BARY);                }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 319 "grammar.l"
+#line 317 "grammar.l"
 {
 		 RETURN(LEXWORD_BARYMEDIAN);          } 
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 321 "grammar.l"
+#line 319 "grammar.l"
 {
 		 RETURN(LEXWORD_BEHIND);              }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 323 "grammar.l"
+#line 321 "grammar.l"
 {
 		 RETURN(LEXWORD_BELOW);               }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 325 "grammar.l"
+#line 323 "grammar.l"
 {
 		 RETURN(LEXWORD_BLACK);               }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 327 "grammar.l"
+#line 325 "grammar.l"
 {
 		 RETURN(LEXWORD_BLUE);                }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 329 "grammar.l"
+#line 327 "grammar.l"
 {
 		 RETURN(LEXWORD_BMAX);                }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 331 "grammar.l"
+#line 329 "grammar.l"
 {
 		 RETURN(LEXWORD_BORDERCOLOR);         }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 333 "grammar.l"
+#line 331 "grammar.l"
 {
 		 RETURN(LEXWORD_BORDERCOLOR);         }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 335 "grammar.l"
+#line 333 "grammar.l"
 {
 		 RETURN(LEXWORD_BORDERWIDTH);         }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 337 "grammar.l"
+#line 335 "grammar.l"
 {
 		 RETURN(LEXWORD_BORDERWIDTH);         }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 339 "grammar.l"
+#line 337 "grammar.l"
 {
 		 RETURN(LEXWORD_BOTTOM_MARGIN);       }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 341 "grammar.l"
+#line 339 "grammar.l"
 {
 		 RETURN(LEXWORD_BOTTOM_MARGIN);       }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 343 "grammar.l"
+#line 341 "grammar.l"
 {
 		 RETURN(LEXWORD_BOTTOM_TO_TOP);       }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 345 "grammar.l"
+#line 343 "grammar.l"
 {
 		 RETURN(LEXWORD_BOTTOM_TO_TOP);       }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 347 "grammar.l"
+#line 345 "grammar.l"
 {
 		 RETURN(LEXWORD_BOTTOM);              }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 349 "grammar.l"
+#line 347 "grammar.l"
 {
 		 RETURN(LEXWORD_BOX);                 }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 351 "grammar.l"
+#line 349 "grammar.l"
 {
 		 RETURN(LEXWORD_BENTNEAREDGE);        }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 353 "grammar.l"
+#line 351 "grammar.l"
 {
 		 RETURN(LEXWORD_BENTNEAREDGE);        }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 355 "grammar.l"
+#line 353 "grammar.l"
 {
 		 RETURN(LEXWORD_BENTNEAREDGE);        }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 357 "grammar.l"
+#line 355 "grammar.l"
 {
 		 RETURN(LEXWORD_CENTER);              }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 359 "grammar.l"
+#line 357 "grammar.l"
 {
 		 RETURN(LEXWORD_CFISH);               }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 361 "grammar.l"
+#line 359 "grammar.l"
 {
 		 RETURN(LEXWORD_CLASSNAME);           }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 363 "grammar.l"
+#line 361 "grammar.l"
 {
 		 RETURN(LEXWORD_CLASSNAME);           }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 365 "grammar.l"
+#line 363 "grammar.l"
 {
 		 RETURN(LEXWORD_CLASS);               }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 367 "grammar.l"
+#line 365 "grammar.l"
 {
 		 RETURN(LEXWORD_CLUSTER);             }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 369 "grammar.l"
+#line 367 "grammar.l"
 {
 		 RETURN(LEXWORD_CMIN);                }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 371 "grammar.l"
+#line 369 "grammar.l"
 {
 		 RETURN(LEXWORD_CMAX);                }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 373 "grammar.l"
+#line 371 "grammar.l"
 {
 		 RETURN(LEXWORD_COLORENTRY);          }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 375 "grammar.l"
+#line 373 "grammar.l"
 {
 		 RETURN(LEXWORD_COLORENTRY);          }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 377 "grammar.l"
+#line 375 "grammar.l"
 {
 		 RETURN(LEXWORD_COLOR);               }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 379 "grammar.l"
+#line 377 "grammar.l"
 {
 		 RETURN(LEXWORD_CONSTRAINTS);         }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 381 "grammar.l"
+#line 379 "grammar.l"
 {
 		 RETURN(LEXWORD_CONSTRAINT);          }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 383 "grammar.l"
+#line 381 "grammar.l"
 {
 		 RETURN(LEXWORD_CONTINUOUS);          }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 385 "grammar.l"
+#line 383 "grammar.l"
 {
 		 RETURN(LEXWORD_CROSSING_WEIGHT);     }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 387 "grammar.l"
+#line 385 "grammar.l"
 {
 		 RETURN(LEXWORD_CROSSING_WEIGHT);     }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 389 "grammar.l"
+#line 387 "grammar.l"
 {
 		 RETURN(LEXWORD_CROSSING_OPT);        }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 391 "grammar.l"
+#line 389 "grammar.l"
 {
 		 RETURN(LEXWORD_CROSSING_OPT);        }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 393 "grammar.l"
+#line 391 "grammar.l"
 {
 		 RETURN(LEXWORD_CROSSING_P2);         }
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 395 "grammar.l"
+#line 393 "grammar.l"
 {
 		 RETURN(LEXWORD_CROSSING_P2);         }
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 397 "grammar.l"
+#line 395 "grammar.l"
 {
 		 RETURN(LEXWORD_CYAN);                }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 399 "grammar.l"
+#line 397 "grammar.l"
 {
 		 RETURN(LEXWORD_DARKBLUE);            }
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 401 "grammar.l"
+#line 399 "grammar.l"
 {
 		 RETURN(LEXWORD_DARKCYAN);            }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 403 "grammar.l"
+#line 401 "grammar.l"
 {
 		 RETURN(LEXWORD_DARKGREEN);           }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 405 "grammar.l"
+#line 403 "grammar.l"
 {
 		 RETURN(LEXWORD_DARKGREY);            }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 407 "grammar.l"
+#line 405 "grammar.l"
 {
 		 RETURN(LEXWORD_DARKGREY);            }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 409 "grammar.l"
+#line 407 "grammar.l"
 {
 		 RETURN(LEXWORD_DARKMAGENTA);         }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 411 "grammar.l"
+#line 409 "grammar.l"
 {
 		 RETURN(LEXWORD_DARKRED);             }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 413 "grammar.l"
+#line 411 "grammar.l"
 {
 		 RETURN(LEXWORD_DARKYELLOW);          }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 415 "grammar.l"
+#line 413 "grammar.l"
 {
 		 RETURN(LEXWORD_DASHED);              } 
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 417 "grammar.l"
+#line 415 "grammar.l"
 {
 		 RETURN(LEXWORD_DFS);   	       } 
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 419 "grammar.l"
+#line 417 "grammar.l"
 {
 		 RETURN(LEXWORD_DFS);   	       } 
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 421 "grammar.l"
+#line 419 "grammar.l"
 {
 		 RETURN(LEXWORD_DFS);   	       } 
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 423 "grammar.l"
+#line 421 "grammar.l"
 {
 		 RETURN(LEXWORD_DIMENSION);           }
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 425 "grammar.l"
+#line 423 "grammar.l"
 {
 		 RETURN(LEXWORD_DIRTY_EDGE_LABELS);   }
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 427 "grammar.l"
+#line 425 "grammar.l"
 {
 		 RETURN(LEXWORD_DIRTY_EDGE_LABELS);   }
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 429 "grammar.l"
+#line 427 "grammar.l"
 {
 		 RETURN(LEXWORD_DISPLAY_EDGE_LABELS); }
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 431 "grammar.l"
+#line 429 "grammar.l"
 {
 		 RETURN(LEXWORD_DISPLAY_EDGE_LABELS); }
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 433 "grammar.l"
+#line 431 "grammar.l"
 {
 		 RETURN(LEXWORD_DOTTED);              }
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 435 "grammar.l"
+#line 433 "grammar.l"
 {
 		 RETURN(LEXWORD_EDGE1);               }
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 437 "grammar.l"
+#line 435 "grammar.l"
 {
 		 RETURN(LEXWORD_EDGE2);               }
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 439 "grammar.l"
+#line 437 "grammar.l"
 {
 		 RETURN(LEXWORD_EDGES);               }
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 441 "grammar.l"
+#line 439 "grammar.l"
 {
 		 RETURN(LEXWORD_ELLIPSE);             }
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 443 "grammar.l"
+#line 441 "grammar.l"
 {
 		 RETURN(LEXWORD_EQUAL_COLUMN);        }
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 445 "grammar.l"
+#line 443 "grammar.l"
 {
 		 RETURN(LEXWORD_EQUAL_COLUMN);        }
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
-#line 447 "grammar.l"
+#line 445 "grammar.l"
 {
 		 RETURN(LEXWORD_EQUAL_POSITION);      }
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 449 "grammar.l"
+#line 447 "grammar.l"
 {
 		 RETURN(LEXWORD_EQUAL_POSITION);      }
 	YY_BREAK
 case 99:
 YY_RULE_SETUP
-#line 451 "grammar.l"
+#line 449 "grammar.l"
 {
 		 RETURN(LEXWORD_EQUAL_ROW);           }
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 453 "grammar.l"
+#line 451 "grammar.l"
 {
 		 RETURN(LEXWORD_EQUAL_ROW);           }
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 455 "grammar.l"
+#line 453 "grammar.l"
 {
 		 RETURN(LEXWORD_EQUAL);               }
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 457 "grammar.l"
+#line 455 "grammar.l"
 {
 		 RETURN(LEXWORD_EVERY);               }
 	YY_BREAK
 case 103:
 YY_RULE_SETUP
-#line 459 "grammar.l"
+#line 457 "grammar.l"
 {
 		 RETURN(LEXWORD_FCFISH);              }
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
-#line 461 "grammar.l"
+#line 459 "grammar.l"
 {
 		 RETURN(LEXWORD_FPFISH);              }
 	YY_BREAK
 case 105:
 YY_RULE_SETUP
-#line 463 "grammar.l"
+#line 461 "grammar.l"
 {
 		 RETURN(LEXWORD_FIXED);               }
 	YY_BREAK
 case 106:
 YY_RULE_SETUP
-#line 465 "grammar.l"
+#line 463 "grammar.l"
 {
 		 RETURN(LEXWORD_FREE);                }
 	YY_BREAK
 case 107:
 YY_RULE_SETUP
-#line 467 "grammar.l"
+#line 465 "grammar.l"
 {
 		 RETURN(LEXWORD_FINETUNING);          }
 	YY_BREAK
 case 108:
 YY_RULE_SETUP
-#line 469 "grammar.l"
+#line 467 "grammar.l"
 {
 		 RETURN(LEXWORD_FINETUNING);          }
 	YY_BREAK
 case 109:
 YY_RULE_SETUP
-#line 471 "grammar.l"
+#line 469 "grammar.l"
 {
 		 RETURN(LEXWORD_FOLDEDGE);            }
 	YY_BREAK
 case 110:
 YY_RULE_SETUP
-#line 473 "grammar.l"
+#line 471 "grammar.l"
 {
 		 RETURN(LEXWORD_FOLDEDGE);            }
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 475 "grammar.l"
+#line 473 "grammar.l"
 {
 		 RETURN(LEXWORD_FOLDNODE);            }
 	YY_BREAK
 case 112:
 YY_RULE_SETUP
-#line 477 "grammar.l"
+#line 475 "grammar.l"
 {
 		 RETURN(LEXWORD_FOLDNODE);            }
 	YY_BREAK
 case 113:
 YY_RULE_SETUP
-#line 479 "grammar.l"
+#line 477 "grammar.l"
 {
 		 RETURN(LEXWORD_FOLDING);             }
 	YY_BREAK
 case 114:
 YY_RULE_SETUP
-#line 481 "grammar.l"
+#line 479 "grammar.l"
 {
 		 RETURN(LEXWORD_FONTNAME);            }
 	YY_BREAK
 case 115:
 YY_RULE_SETUP
-#line 483 "grammar.l"
+#line 481 "grammar.l"
 {
 		 RETURN(LEXWORD_FONTNAME);            }
 	YY_BREAK
 case 116:
 YY_RULE_SETUP
-#line 485 "grammar.l"
+#line 483 "grammar.l"
 {
 		 RETURN(LEXWORD_GOLD);                }
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
-#line 487 "grammar.l"
+#line 485 "grammar.l"
 {
 		 RETURN(LEXWORD_GRAPH);               }
 	YY_BREAK
 case 118:
 YY_RULE_SETUP
-#line 489 "grammar.l"
+#line 487 "grammar.l"
 {
 		 RETURN(LEXWORD_GREATER);             }
 	YY_BREAK
 case 119:
 YY_RULE_SETUP
-#line 491 "grammar.l"
+#line 489 "grammar.l"
 {
 		 RETURN(LEXWORD_GREEN);               }
 	YY_BREAK
 case 120:
 YY_RULE_SETUP
-#line 493 "grammar.l"
+#line 491 "grammar.l"
 {
 		 RETURN(LEXWORD_GREY);                }
 	YY_BREAK
 case 121:
 YY_RULE_SETUP
-#line 495 "grammar.l"
+#line 493 "grammar.l"
 {
 		 RETURN(LEXWORD_GREY);                }
 	YY_BREAK
 case 122:
 YY_RULE_SETUP
-#line 497 "grammar.l"
+#line 495 "grammar.l"
 {
 		 RETURN(LEXWORD_HEIGHT);              }
 	YY_BREAK
 case 123:
 YY_RULE_SETUP
-#line 499 "grammar.l"
+#line 497 "grammar.l"
 {
 		 RETURN(LEXWORD_HIDESINGLES);         }
 	YY_BREAK
 case 124:
 YY_RULE_SETUP
-#line 501 "grammar.l"
+#line 499 "grammar.l"
 {
 		 RETURN(LEXWORD_HIDESINGLES);         }
 	YY_BREAK
 case 125:
 YY_RULE_SETUP
-#line 503 "grammar.l"
+#line 501 "grammar.l"
 {
 		 RETURN(LEXWORD_HIGH_MARGIN);         }
 	YY_BREAK
 case 126:
 YY_RULE_SETUP
-#line 505 "grammar.l"
+#line 503 "grammar.l"
 {
 		 RETURN(LEXWORD_HIGH_MARGIN);         }
 	YY_BREAK
 case 127:
 YY_RULE_SETUP
-#line 507 "grammar.l"
+#line 505 "grammar.l"
 {
 		 RETURN(LEXWORD_HIGH);		       }
 	YY_BREAK
 case 128:
 YY_RULE_SETUP
-#line 509 "grammar.l"
+#line 507 "grammar.l"
 {
 		 RETURN(LEXWORD_HIDDEN);              }
 	YY_BREAK
 case 129:
 YY_RULE_SETUP
-#line 511 "grammar.l"
+#line 509 "grammar.l"
 {
 		 RETURN(LEXWORD_HORDER);              }
 	YY_BREAK
 case 130:
 YY_RULE_SETUP
-#line 513 "grammar.l"
+#line 511 "grammar.l"
 {
 		 RETURN(LEXWORD_HORDER);              }
 	YY_BREAK
 case 131:
 YY_RULE_SETUP
-#line 515 "grammar.l"
+#line 513 "grammar.l"
 {
 		 RETURN(LEXWORD_ICONFILE);            }
 	YY_BREAK
 case 132:
 YY_RULE_SETUP
-#line 517 "grammar.l"
+#line 515 "grammar.l"
 {
 		 RETURN(LEXWORD_ICONFILE);            }
 	YY_BREAK
 case 133:
 YY_RULE_SETUP
-#line 519 "grammar.l"
+#line 517 "grammar.l"
 {
 		 RETURN(LEXWORD_ICONHEIGHT);          }
 	YY_BREAK
 case 134:
 YY_RULE_SETUP
-#line 521 "grammar.l"
+#line 519 "grammar.l"
 {
 		 RETURN(LEXWORD_ICONHEIGHT);          }
 	YY_BREAK
 case 135:
 YY_RULE_SETUP
-#line 523 "grammar.l"
+#line 521 "grammar.l"
 {
 		 RETURN(LEXWORD_ICONSTYLE);           }
 	YY_BREAK
 case 136:
 YY_RULE_SETUP
-#line 525 "grammar.l"
+#line 523 "grammar.l"
 {
 		 RETURN(LEXWORD_ICONSTYLE);           }
 	YY_BREAK
 case 137:
 YY_RULE_SETUP
-#line 527 "grammar.l"
+#line 525 "grammar.l"
 {
 		 RETURN(LEXWORD_ICONWIDTH);           }
 	YY_BREAK
 case 138:
 YY_RULE_SETUP
-#line 529 "grammar.l"
+#line 527 "grammar.l"
 {
 		 RETURN(LEXWORD_ICONWIDTH);           }
 	YY_BREAK
 case 139:
 YY_RULE_SETUP
-#line 531 "grammar.l"
+#line 529 "grammar.l"
 {
 		 RETURN(LEXWORD_HIDESINGLES);         }
 	YY_BREAK
 case 140:
 YY_RULE_SETUP
-#line 533 "grammar.l"
+#line 531 "grammar.l"
 {
 		 RETURN(LEXWORD_HIDESINGLES);         }
 	YY_BREAK
 case 141:
 YY_RULE_SETUP
-#line 535 "grammar.l"
+#line 533 "grammar.l"
 {
 		 RETURN(LEXWORD_INCLUDE);             }
 	YY_BREAK
 case 142:
 YY_RULE_SETUP
-#line 537 "grammar.l"
+#line 535 "grammar.l"
 {
 		 RETURN(LEXWORD_INFONAME);            }
 	YY_BREAK
 case 143:
 YY_RULE_SETUP
-#line 539 "grammar.l"
+#line 537 "grammar.l"
 {
 		 RETURN(LEXWORD_INFO1);               }
 	YY_BREAK
 case 144:
 YY_RULE_SETUP
-#line 541 "grammar.l"
+#line 539 "grammar.l"
 {
 		 RETURN(LEXWORD_INFO2);               }
 	YY_BREAK
 case 145:
 YY_RULE_SETUP
-#line 543 "grammar.l"
+#line 541 "grammar.l"
 {
 		 RETURN(LEXWORD_INFO3);               }
 	YY_BREAK
 case 146:
 YY_RULE_SETUP
-#line 545 "grammar.l"
+#line 543 "grammar.l"
 {
 		 RETURN(LEXWORD_INPUTFUNCTION);       }
 	YY_BREAK
 case 147:
 YY_RULE_SETUP
-#line 547 "grammar.l"
+#line 545 "grammar.l"
 {
 		 RETURN(LEXWORD_INPUTFUNCTION);       }
 	YY_BREAK
 case 148:
 YY_RULE_SETUP
-#line 549 "grammar.l"
+#line 547 "grammar.l"
 {
 		 RETURN(LEXWORD_INTERVAL);            }
 	YY_BREAK
 case 149:
 YY_RULE_SETUP
-#line 551 "grammar.l"
+#line 549 "grammar.l"
 {
 		 RETURN(LEXWORD_INVISIBLE);           }
 	YY_BREAK
 case 150:
 YY_RULE_SETUP
-#line 553 "grammar.l"
+#line 551 "grammar.l"
 {
 		 RETURN(LEXWORD_IN_FRONT);            }
 	YY_BREAK
 case 151:
 YY_RULE_SETUP
-#line 555 "grammar.l"
+#line 553 "grammar.l"
 {
 		 RETURN(LEXWORD_ISI);                 }
 	YY_BREAK
 case 152:
 YY_RULE_SETUP
-#line 557 "grammar.l"
+#line 555 "grammar.l"
 {
 		 RETURN(LEXWORD_KHAKI);               }
 	YY_BREAK
 case 153:
 YY_RULE_SETUP
-#line 559 "grammar.l"
+#line 557 "grammar.l"
 {
 		 RETURN(LEXWORD_TEXTCOLOR);           }
 	YY_BREAK
 case 154:
 YY_RULE_SETUP
-#line 561 "grammar.l"
+#line 559 "grammar.l"
 {
 		 RETURN(LEXWORD_TEXTCOLOR);           }
 	YY_BREAK
 case 155:
 YY_RULE_SETUP
-#line 563 "grammar.l"
+#line 561 "grammar.l"
 {
 		 RETURN(LEXWORD_LABEL);               }
 	YY_BREAK
 case 156:
 YY_RULE_SETUP
-#line 565 "grammar.l"
+#line 563 "grammar.l"
 {
 		 RETURN(LEXWORD_LATE_LABELS);         }
 	YY_BREAK
 case 157:
 YY_RULE_SETUP
-#line 567 "grammar.l"
+#line 565 "grammar.l"
 {
 		 RETURN(LEXWORD_LATE_LABELS);         }
 	YY_BREAK
 case 158:
 YY_RULE_SETUP
-#line 569 "grammar.l"
+#line 567 "grammar.l"
 {
 		 RETURN(LEXWORD_LAYOUTALGORITHM);     }
 	YY_BREAK
 case 159:
 YY_RULE_SETUP
-#line 571 "grammar.l"
+#line 569 "grammar.l"
 {
 		 RETURN(LEXWORD_LAYOUTALGORITHM);     }
 	YY_BREAK
 case 160:
 YY_RULE_SETUP
-#line 573 "grammar.l"
+#line 571 "grammar.l"
 {
 		 RETURN(LEXWORD_LAYOUTFREQUENCY);     }
 	YY_BREAK
 case 161:
 YY_RULE_SETUP
-#line 575 "grammar.l"
+#line 573 "grammar.l"
 {
 		 RETURN(LEXWORD_LAYOUTFREQUENCY);     }
 	YY_BREAK
 case 162:
 YY_RULE_SETUP
-#line 577 "grammar.l"
+#line 575 "grammar.l"
 {
 		 RETURN(LEXWORD_LAYOUTPARAMETER);     }
 	YY_BREAK
 case 163:
 YY_RULE_SETUP
-#line 579 "grammar.l"
+#line 577 "grammar.l"
 {
 		 RETURN(LEXWORD_LAYOUTPARAMETER);     }
 	YY_BREAK
 case 164:
 YY_RULE_SETUP
-#line 581 "grammar.l"
+#line 579 "grammar.l"
 {
 		 RETURN(LEXWORD_LAYOUTDOWNFACTOR);    }
 	YY_BREAK
 case 165:
 YY_RULE_SETUP
-#line 583 "grammar.l"
+#line 581 "grammar.l"
 {
 		 RETURN(LEXWORD_LAYOUTDOWNFACTOR);    }
 	YY_BREAK
 case 166:
 YY_RULE_SETUP
-#line 585 "grammar.l"
+#line 583 "grammar.l"
 {
 		 RETURN(LEXWORD_LAYOUTUPFACTOR);      }
 	YY_BREAK
 case 167:
 YY_RULE_SETUP
-#line 587 "grammar.l"
+#line 585 "grammar.l"
 {
 		 RETURN(LEXWORD_LAYOUTUPFACTOR);      }
 	YY_BREAK
 case 168:
 YY_RULE_SETUP
-#line 589 "grammar.l"
+#line 587 "grammar.l"
 {
 		 RETURN(LEXWORD_LAYOUTNEARFACTOR);    }
 	YY_BREAK
 case 169:
 YY_RULE_SETUP
-#line 591 "grammar.l"
+#line 589 "grammar.l"
 {
 		 RETURN(LEXWORD_LAYOUTNEARFACTOR);    }
 	YY_BREAK
 case 170:
 YY_RULE_SETUP
-#line 593 "grammar.l"
+#line 591 "grammar.l"
 {
 		 RETURN(LEXWORD_LAYOUTSPLINEFACTOR);  }
 	YY_BREAK
 case 171:
 YY_RULE_SETUP
-#line 595 "grammar.l"
+#line 593 "grammar.l"
 {
 		 RETURN(LEXWORD_LAYOUTSPLINEFACTOR);  }
 	YY_BREAK
 case 172:
 YY_RULE_SETUP
-#line 597 "grammar.l"
+#line 595 "grammar.l"
 {
 		 RETURN(LEXWORD_LEFT_JUSTIFY);        } 
 	YY_BREAK
 case 173:
 YY_RULE_SETUP
-#line 599 "grammar.l"
+#line 597 "grammar.l"
 {
 		 RETURN(LEXWORD_LEFT_JUSTIFY);        } 
 	YY_BREAK
 case 174:
 YY_RULE_SETUP
-#line 601 "grammar.l"
+#line 599 "grammar.l"
 {
 		 RETURN(LEXWORD_LEFT_MARGIN);         } 
 	YY_BREAK
 case 175:
 YY_RULE_SETUP
-#line 603 "grammar.l"
+#line 601 "grammar.l"
 {
 		 RETURN(LEXWORD_LEFT_MARGIN);         } 
 	YY_BREAK
 case 176:
 YY_RULE_SETUP
-#line 605 "grammar.l"
+#line 603 "grammar.l"
 {
 		 RETURN(LEXWORD_LEFT_NEIGHBOR);       }
 	YY_BREAK
 case 177:
 YY_RULE_SETUP
-#line 607 "grammar.l"
+#line 605 "grammar.l"
 {
 		 RETURN(LEXWORD_LEFT_NEIGHBOR);       }
 	YY_BREAK
 case 178:
 YY_RULE_SETUP
-#line 609 "grammar.l"
+#line 607 "grammar.l"
 {
 		 RETURN(LEXWORD_LEFT_TO_RIGHT);       } 
 	YY_BREAK
 case 179:
 YY_RULE_SETUP
-#line 611 "grammar.l"
+#line 609 "grammar.l"
 {
 		 RETURN(LEXWORD_LEFT_TO_RIGHT);       } 
 	YY_BREAK
 case 180:
 YY_RULE_SETUP
-#line 613 "grammar.l"
+#line 611 "grammar.l"
 {
 		 RETURN(LEXWORD_LEFT);                }
 	YY_BREAK
 case 181:
 YY_RULE_SETUP
-#line 615 "grammar.l"
+#line 613 "grammar.l"
 {
 		 RETURN(LEXWORD_LEVEL);               }
 	YY_BREAK
 case 182:
 YY_RULE_SETUP
-#line 617 "grammar.l"
+#line 615 "grammar.l"
 {
 		 RETURN(LEXWORD_VORDER);              }
 	YY_BREAK
 case 183:
 YY_RULE_SETUP
-#line 619 "grammar.l"
+#line 617 "grammar.l"
 {
 		 RETURN(LEXWORD_VORDER);              }
 	YY_BREAK
 case 184:
 YY_RULE_SETUP
-#line 621 "grammar.l"
+#line 619 "grammar.l"
 {
 		 RETURN(LEXWORD_LIGHTBLUE);           }
 	YY_BREAK
 case 185:
 YY_RULE_SETUP
-#line 623 "grammar.l"
+#line 621 "grammar.l"
 {
 		 RETURN(LEXWORD_LIGHTCYAN);           }
 	YY_BREAK
 case 186:
 YY_RULE_SETUP
-#line 625 "grammar.l"
+#line 623 "grammar.l"
 {
 		 RETURN(LEXWORD_LIGHTGREEN);          }
 	YY_BREAK
 case 187:
 YY_RULE_SETUP
-#line 627 "grammar.l"
+#line 625 "grammar.l"
 {
 		 RETURN(LEXWORD_LIGHTGREY);           }
 	YY_BREAK
 case 188:
 YY_RULE_SETUP
-#line 629 "grammar.l"
+#line 627 "grammar.l"
 {
 		 RETURN(LEXWORD_LIGHTGREY);           }
 	YY_BREAK
 case 189:
 YY_RULE_SETUP
-#line 631 "grammar.l"
+#line 629 "grammar.l"
 {
 		 RETURN(LEXWORD_LIGHTMAGENTA);        }
 	YY_BREAK
 case 190:
 YY_RULE_SETUP
-#line 633 "grammar.l"
+#line 631 "grammar.l"
 {
 		 RETURN(LEXWORD_LIGHTRED);            }
 	YY_BREAK
 case 191:
 YY_RULE_SETUP
-#line 635 "grammar.l"
+#line 633 "grammar.l"
 {
 		 RETURN(LEXWORD_LIGHTYELLOW);         }
 	YY_BREAK
 case 192:
 YY_RULE_SETUP
-#line 637 "grammar.l"
+#line 635 "grammar.l"
 {
 		 RETURN(LEXWORD_LILAC);               }
 	YY_BREAK
 case 193:
 YY_RULE_SETUP
-#line 639 "grammar.l"
+#line 637 "grammar.l"
 {
 		 RETURN(LEXWORD_LIMIT);               } 
 	YY_BREAK
 case 194:
 YY_RULE_SETUP
-#line 641 "grammar.l"
+#line 639 "grammar.l"
 {
 		 RETURN(LEXWORD_LINE);                } 
 	YY_BREAK
 case 195:
 YY_RULE_SETUP
-#line 643 "grammar.l"
+#line 641 "grammar.l"
 {
 		 RETURN(LEXWORD_LINESTYLE);           } 
 	YY_BREAK
 case 196:
 YY_RULE_SETUP
-#line 645 "grammar.l"
+#line 643 "grammar.l"
 {
 		 RETURN(LEXWORD_LINESTYLE);           } 
 	YY_BREAK
 case 197:
 YY_RULE_SETUP
-#line 647 "grammar.l"
+#line 645 "grammar.l"
 {
 		 RETURN(LEXWORD_LOC);                 }
 	YY_BREAK
 case 198:
 YY_RULE_SETUP
-#line 649 "grammar.l"
+#line 647 "grammar.l"
 {
 		 RETURN(LEXWORD_LOWER_NEIGHBOR);      }
 	YY_BREAK
 case 199:
 YY_RULE_SETUP
-#line 651 "grammar.l"
+#line 649 "grammar.l"
 {
 		 RETURN(LEXWORD_LOWER_NEIGHBOR);      }
 	YY_BREAK
 case 200:
 YY_RULE_SETUP
-#line 653 "grammar.l"
+#line 651 "grammar.l"
 {
 		 RETURN(LEXWORD_LOW_MARGIN);          } 
 	YY_BREAK
 case 201:
 YY_RULE_SETUP
-#line 655 "grammar.l"
+#line 653 "grammar.l"
 {
 		 RETURN(LEXWORD_LOW_MARGIN);          } 
 	YY_BREAK
 case 202:
 YY_RULE_SETUP
-#line 657 "grammar.l"
+#line 655 "grammar.l"
 {
 		 RETURN(LEXWORD_LOW);                 } 
 	YY_BREAK
 case 203:
 YY_RULE_SETUP
-#line 659 "grammar.l"
+#line 657 "grammar.l"
 {
 		 RETURN(LEXWORD_MAGENTA);             }
 	YY_BREAK
 case 204:
 YY_RULE_SETUP
-#line 661 "grammar.l"
+#line 659 "grammar.l"
 {
 		 RETURN(LEXWORD_MANHATTEN);           } 
 	YY_BREAK
 case 205:
 YY_RULE_SETUP
-#line 663 "grammar.l"
+#line 661 "grammar.l"
 {
 		 RETURN(LEXWORD_MANHATTEN);           } 
 	YY_BREAK
 case 206:
 YY_RULE_SETUP
-#line 665 "grammar.l"
+#line 663 "grammar.l"
 {
 		 RETURN(LEXWORD_MANHATTEN);           } 
 	YY_BREAK
 case 207:
 YY_RULE_SETUP
-#line 667 "grammar.l"
+#line 665 "grammar.l"
 {
 		 RETURN(LEXWORD_MANHATTEN);           } 
 	YY_BREAK
 case 208:
 YY_RULE_SETUP
-#line 669 "grammar.l"
+#line 667 "grammar.l"
 {
 		 RETURN(LEXWORD_MANUAL);              } 
 	YY_BREAK
 case 209:
 YY_RULE_SETUP
-#line 671 "grammar.l"
+#line 669 "grammar.l"
 {
 		 RETURN(LEXWORD_MAXDEPTHSLOW);        } 
 	YY_BREAK
 case 210:
 YY_RULE_SETUP
-#line 673 "grammar.l"
+#line 671 "grammar.l"
 {
 		 RETURN(LEXWORD_MAXDEPTH);            } 
 	YY_BREAK
 case 211:
 YY_RULE_SETUP
-#line 675 "grammar.l"
+#line 673 "grammar.l"
 {
 		 RETURN(LEXWORD_MAXDEGREE);           } 
 	YY_BREAK
 case 212:
 YY_RULE_SETUP
-#line 677 "grammar.l"
+#line 675 "grammar.l"
 {
 		 RETURN(LEXWORD_MAXINDEGREE);         } 
 	YY_BREAK
 case 213:
 YY_RULE_SETUP
-#line 679 "grammar.l"
+#line 677 "grammar.l"
 {
 		 RETURN(LEXWORD_MAXOUTDEGREE);        } 
 	YY_BREAK
 case 214:
 YY_RULE_SETUP
-#line 681 "grammar.l"
+#line 679 "grammar.l"
 {
 		 RETURN(LEXWORD_MEDIAN);              } 
 	YY_BREAK
 case 215:
 YY_RULE_SETUP
-#line 683 "grammar.l"
+#line 681 "grammar.l"
 {
 		 RETURN(LEXWORD_MEDIANBARY);          } 
 	YY_BREAK
 case 216:
 YY_RULE_SETUP
-#line 685 "grammar.l"
+#line 683 "grammar.l"
 {
 		 RETURN(LEXWORD_MINDEPTHSLOW);        } 
 	YY_BREAK
 case 217:
 YY_RULE_SETUP
-#line 687 "grammar.l"
+#line 685 "grammar.l"
 {
 		 RETURN(LEXWORD_MINDEPTH);            } 
 	YY_BREAK
 case 218:
 YY_RULE_SETUP
-#line 689 "grammar.l"
+#line 687 "grammar.l"
 {
 		 RETURN(LEXWORD_MINDEGREE);           } 
 	YY_BREAK
 case 219:
 YY_RULE_SETUP
-#line 691 "grammar.l"
+#line 689 "grammar.l"
 {
 		 RETURN(LEXWORD_MININDEGREE);         } 
 	YY_BREAK
 case 220:
 YY_RULE_SETUP
-#line 693 "grammar.l"
+#line 691 "grammar.l"
 {
 		 RETURN(LEXWORD_MINOUTDEGREE);        } 
 	YY_BREAK
 case 221:
 YY_RULE_SETUP
-#line 695 "grammar.l"
+#line 693 "grammar.l"
 {
 		 RETURN(LEXWORD_MINBACK);             } 
 	YY_BREAK
 case 222:
 YY_RULE_SETUP
-#line 697 "grammar.l"
+#line 695 "grammar.l"
 {
 		 RETURN(LEXWORD_NAME);                } 
 	YY_BREAK
 case 223:
 YY_RULE_SETUP
-#line 699 "grammar.l"
+#line 697 "grammar.l"
 {
 		 RETURN(LEXWORD_NEAREDGE);            }
 	YY_BREAK
 case 224:
 YY_RULE_SETUP
-#line 701 "grammar.l"
+#line 699 "grammar.l"
 {
 		 RETURN(LEXWORD_NEAREDGE);            }
 	YY_BREAK
 case 225:
 YY_RULE_SETUP
-#line 703 "grammar.l"
+#line 701 "grammar.l"
 {
 		 RETURN(LEXWORD_NEIGHBORS);           } 
 	YY_BREAK
 case 226:
 YY_RULE_SETUP
-#line 705 "grammar.l"
+#line 703 "grammar.l"
 {
 		 RETURN(LEXWORD_NEAREDGES);           }
 	YY_BREAK
 case 227:
 YY_RULE_SETUP
-#line 707 "grammar.l"
+#line 705 "grammar.l"
 {
 		 RETURN(LEXWORD_NEAREDGES);           }
 	YY_BREAK
 case 228:
 YY_RULE_SETUP
-#line 709 "grammar.l"
+#line 707 "grammar.l"
 {
 		 RETURN(LEXWORD_NONEAREDGES);         }
 	YY_BREAK
 case 229:
 YY_RULE_SETUP
-#line 711 "grammar.l"
+#line 709 "grammar.l"
 {
 		 RETURN(LEXWORD_NONEAREDGES);         }
 	YY_BREAK
 case 230:
 YY_RULE_SETUP
-#line 713 "grammar.l"
+#line 711 "grammar.l"
 {
 		 RETURN(LEXWORD_NONEAREDGES);         }
 	YY_BREAK
 case 231:
 YY_RULE_SETUP
-#line 715 "grammar.l"
+#line 713 "grammar.l"
 {
 		 RETURN(LEXWORD_NODE1);               }
 	YY_BREAK
 case 232:
 YY_RULE_SETUP
-#line 717 "grammar.l"
+#line 715 "grammar.l"
 {
 		 RETURN(LEXWORD_NODE2);               }
 	YY_BREAK
 case 233:
 YY_RULE_SETUP
-#line 719 "grammar.l"
+#line 717 "grammar.l"
 {
 		 RETURN(LEXWORD_NODES);               }
 	YY_BREAK
 case 234:
 YY_RULE_SETUP
-#line 721 "grammar.l"
+#line 719 "grammar.l"
 {
 		 RETURN(LEXWORD_NODE_ALIGN);          }
 	YY_BREAK
 case 235:
 YY_RULE_SETUP
-#line 723 "grammar.l"
+#line 721 "grammar.l"
 {
 		 RETURN(LEXWORD_NODE_ALIGN);          }
 	YY_BREAK
 case 236:
 YY_RULE_SETUP
-#line 725 "grammar.l"
+#line 723 "grammar.l"
 {
 		 RETURN(LEXWORD_NONE);                }
 	YY_BREAK
 case 237:
 YY_RULE_SETUP
-#line 727 "grammar.l"
+#line 725 "grammar.l"
 {
 		 RETURN(LEXWORD_NO);                  }
 	YY_BREAK
 case 238:
 YY_RULE_SETUP
-#line 729 "grammar.l"
+#line 727 "grammar.l"
 {
 		 RETURN(LEXWORD_ORANGE);              }
 	YY_BREAK
 case 239:
 YY_RULE_SETUP
-#line 731 "grammar.l"
+#line 729 "grammar.l"
 {
 		 RETURN(LEXWORD_ORCHID);              }
 	YY_BREAK
 case 240:
 YY_RULE_SETUP
-#line 733 "grammar.l"
+#line 731 "grammar.l"
 {
 		 RETURN(LEXWORD_ORIENTATION);         } 
 	YY_BREAK
 case 241:
 YY_RULE_SETUP
-#line 735 "grammar.l"
+#line 733 "grammar.l"
 {
 		 RETURN(LEXWORD_OUTPUTFUNCTION);      }
 	YY_BREAK
 case 242:
 YY_RULE_SETUP
-#line 737 "grammar.l"
+#line 735 "grammar.l"
 {
 		 RETURN(LEXWORD_OUTPUTFUNCTION);      }
 	YY_BREAK
 case 243:
 YY_RULE_SETUP
-#line 739 "grammar.l"
+#line 737 "grammar.l"
 {
 		 RETURN(LEXWORD_PFISH);               }
 	YY_BREAK
 case 244:
 YY_RULE_SETUP
-#line 741 "grammar.l"
+#line 739 "grammar.l"
 {
 		 RETURN(LEXWORD_PINK);                }
 	YY_BREAK
 case 245:
 YY_RULE_SETUP
-#line 743 "grammar.l"
+#line 741 "grammar.l"
 {
 		 RETURN(LEXWORD_PLANAR);              }
 	YY_BREAK
 case 246:
 YY_RULE_SETUP
-#line 745 "grammar.l"
+#line 743 "grammar.l"
 {
 		 RETURN(LEXWORD_PMIN);                }
 	YY_BREAK
 case 247:
 YY_RULE_SETUP
-#line 747 "grammar.l"
+#line 745 "grammar.l"
 {
 		 RETURN(LEXWORD_PMAX);                }
 	YY_BREAK
 case 248:
 YY_RULE_SETUP
-#line 749 "grammar.l"
+#line 747 "grammar.l"
 {
 		 RETURN(LEXWORD_PORTSHARING);         } 
 	YY_BREAK
 case 249:
 YY_RULE_SETUP
-#line 751 "grammar.l"
+#line 749 "grammar.l"
 {
 		 RETURN(LEXWORD_PORTSHARING);         } 
 	YY_BREAK
 case 250:
 YY_RULE_SETUP
-#line 753 "grammar.l"
+#line 751 "grammar.l"
 {
 		 RETURN(LEXWORD_PRIORITYPHASE);       }
 	YY_BREAK
 case 251:
 YY_RULE_SETUP
-#line 755 "grammar.l"
+#line 753 "grammar.l"
 {
 		 RETURN(LEXWORD_PRIORITYPHASE);       }
 	YY_BREAK
 case 252:
 YY_RULE_SETUP
-#line 757 "grammar.l"
+#line 755 "grammar.l"
 {
 		 RETURN(LEXWORD_PRIORITY);            }
 	YY_BREAK
 case 253:
 YY_RULE_SETUP
-#line 759 "grammar.l"
+#line 757 "grammar.l"
 {
 		 RETURN(LEXWORD_PURPLE);              } 
 	YY_BREAK
 case 254:
 YY_RULE_SETUP
-#line 761 "grammar.l"
+#line 759 "grammar.l"
 {
 		 RETURN(LEXWORD_RANGE);               } 
 	YY_BREAK
 case 255:
 YY_RULE_SETUP
-#line 763 "grammar.l"
+#line 761 "grammar.l"
 {
 		 RETURN(LEXWORD_RED);                 }
 	YY_BREAK
 case 256:
 YY_RULE_SETUP
-#line 765 "grammar.l"
+#line 763 "grammar.l"
 {
 		 RETURN(LEXWORD_RHOMB);               }
 	YY_BREAK
 case 257:
 YY_RULE_SETUP
-#line 767 "grammar.l"
+#line 765 "grammar.l"
 {
 		 RETURN(LEXWORD_RIGHT_JUSTIFY);       }
 	YY_BREAK
 case 258:
 YY_RULE_SETUP
-#line 769 "grammar.l"
+#line 767 "grammar.l"
 {
 		 RETURN(LEXWORD_RIGHT_JUSTIFY);       }
 	YY_BREAK
 case 259:
 YY_RULE_SETUP
-#line 771 "grammar.l"
+#line 769 "grammar.l"
 {
 		 RETURN(LEXWORD_RIGHT_MARGIN);        }
 	YY_BREAK
 case 260:
 YY_RULE_SETUP
-#line 773 "grammar.l"
+#line 771 "grammar.l"
 {
 		 RETURN(LEXWORD_RIGHT_MARGIN);        }
 	YY_BREAK
 case 261:
 YY_RULE_SETUP
-#line 775 "grammar.l"
+#line 773 "grammar.l"
 {
 		 RETURN(LEXWORD_RIGHT_NEIGHBOR);      }
 	YY_BREAK
 case 262:
 YY_RULE_SETUP
-#line 777 "grammar.l"
+#line 775 "grammar.l"
 {
 		 RETURN(LEXWORD_RIGHT_NEIGHBOR);      }
 	YY_BREAK
 case 263:
 YY_RULE_SETUP
-#line 779 "grammar.l"
+#line 777 "grammar.l"
 {
 		 RETURN(LEXWORD_RIGHT_TO_LEFT);       }
 	YY_BREAK
 case 264:
 YY_RULE_SETUP
-#line 781 "grammar.l"
+#line 779 "grammar.l"
 {
 		 RETURN(LEXWORD_RIGHT_TO_LEFT);       }
 	YY_BREAK
 case 265:
 YY_RULE_SETUP
-#line 783 "grammar.l"
+#line 781 "grammar.l"
 {
 		 RETURN(LEXWORD_RIGHT);               }
 	YY_BREAK
 case 266:
 YY_RULE_SETUP
-#line 785 "grammar.l"
+#line 783 "grammar.l"
 {
 		 RETURN(LEXWORD_RMIN);                }
 	YY_BREAK
 case 267:
 YY_RULE_SETUP
-#line 787 "grammar.l"
+#line 785 "grammar.l"
 {
 		 RETURN(LEXWORD_RMAX);                }
 	YY_BREAK
 case 268:
 YY_RULE_SETUP
-#line 789 "grammar.l"
+#line 787 "grammar.l"
 {
 		 RETURN(LEXWORD_SCALING);             }
 	YY_BREAK
 case 269:
 YY_RULE_SETUP
-#line 791 "grammar.l"
+#line 789 "grammar.l"
 {
 		 RETURN(LEXWORD_SHAPE);               }
 	YY_BREAK
 case 270:
 YY_RULE_SETUP
-#line 793 "grammar.l"
+#line 791 "grammar.l"
 {
 		 RETURN(LEXWORD_SHRINK);              }
 	YY_BREAK
 case 271:
 YY_RULE_SETUP
-#line 795 "grammar.l"
+#line 793 "grammar.l"
 {
 		 RETURN(LEXWORD_SMAX);                }
 	YY_BREAK
 case 272:
 YY_RULE_SETUP
-#line 797 "grammar.l"
+#line 795 "grammar.l"
 {
 		 RETURN(LEXWORD_SMANHATTEN);          } 
 	YY_BREAK
 case 273:
 YY_RULE_SETUP
-#line 799 "grammar.l"
+#line 797 "grammar.l"
 {
 		 RETURN(LEXWORD_SMANHATTEN);          } 
 	YY_BREAK
 case 274:
 YY_RULE_SETUP
-#line 801 "grammar.l"
+#line 799 "grammar.l"
 {
 		 RETURN(LEXWORD_SMANHATTEN);          } 
 	YY_BREAK
 case 275:
 YY_RULE_SETUP
-#line 803 "grammar.l"
+#line 801 "grammar.l"
 {
 		 RETURN(LEXWORD_SMANHATTEN);          } 
 	YY_BREAK
 case 276:
 YY_RULE_SETUP
-#line 805 "grammar.l"
+#line 803 "grammar.l"
 {
 		 RETURN(LEXWORD_SIZE);                }
 	YY_BREAK
 case 277:
 YY_RULE_SETUP
-#line 807 "grammar.l"
+#line 805 "grammar.l"
 {
 		 RETURN(LEXWORD_SMALLER);             }
 	YY_BREAK
 case 278:
 YY_RULE_SETUP
-#line 809 "grammar.l"
+#line 807 "grammar.l"
 {
 		 RETURN(LEXWORD_SOLID);               }
 	YY_BREAK
 case 279:
 YY_RULE_SETUP
-#line 811 "grammar.l"
+#line 809 "grammar.l"
 {
 		 RETURN(LEXWORD_SOURCENAME);          }
 	YY_BREAK
 case 280:
 YY_RULE_SETUP
-#line 813 "grammar.l"
+#line 811 "grammar.l"
 {
 		 RETURN(LEXWORD_SOURCENAME);          }
 	YY_BREAK
 case 281:
 YY_RULE_SETUP
-#line 815 "grammar.l"
+#line 813 "grammar.l"
 {
 		 RETURN(LEXWORD_SPLINES);             }
 	YY_BREAK
 case 282:
 YY_RULE_SETUP
-#line 817 "grammar.l"
+#line 815 "grammar.l"
 {
 		 RETURN(LEXWORD_LAYOUTSPLINEFACTOR);  }
 	YY_BREAK
 case 283:
 YY_RULE_SETUP
-#line 819 "grammar.l"
+#line 817 "grammar.l"
 {
 		 RETURN(LEXWORD_LAYOUTSPLINEFACTOR);  }
 	YY_BREAK
 case 284:
 YY_RULE_SETUP
-#line 821 "grammar.l"
+#line 819 "grammar.l"
 {
 		 RETURN(LEXWORD_SPREADLEVEL);         }
 	YY_BREAK
 case 285:
 YY_RULE_SETUP
-#line 823 "grammar.l"
+#line 821 "grammar.l"
 {
 		 RETURN(LEXWORD_SPREADLEVEL);         }
 	YY_BREAK
 case 286:
 YY_RULE_SETUP
-#line 825 "grammar.l"
+#line 823 "grammar.l"
 {
 		 RETURN(LEXWORD_STATUS);              }
 	YY_BREAK
 case 287:
 YY_RULE_SETUP
-#line 827 "grammar.l"
+#line 825 "grammar.l"
 {
 		 RETURN(LEXWORD_STRETCH);             }
 	YY_BREAK
 case 288:
 YY_RULE_SETUP
-#line 829 "grammar.l"
+#line 827 "grammar.l"
 {
 		 RETURN(LEXWORD_STRAIGHTPHASE);       }
 	YY_BREAK
 case 289:
 YY_RULE_SETUP
-#line 831 "grammar.l"
+#line 829 "grammar.l"
 {
 		 RETURN(LEXWORD_STRAIGHTPHASE);       }
 	YY_BREAK
 case 290:
 YY_RULE_SETUP
-#line 833 "grammar.l"
+#line 831 "grammar.l"
 {
 		 RETURN(LEXWORD_TARGETNAME);          }
 	YY_BREAK
 case 291:
 YY_RULE_SETUP
-#line 835 "grammar.l"
+#line 833 "grammar.l"
 {
 		 RETURN(LEXWORD_TARGETNAME);          }
 	YY_BREAK
 case 292:
 YY_RULE_SETUP
-#line 837 "grammar.l"
+#line 835 "grammar.l"
 {
 		 RETURN(LEXWORD_TEXTCOLOR);           }
 	YY_BREAK
 case 293:
 YY_RULE_SETUP
-#line 839 "grammar.l"
+#line 837 "grammar.l"
 {
 		 RETURN(LEXWORD_TEXTCOLOR);           }
 	YY_BREAK
 case 294:
 YY_RULE_SETUP
-#line 841 "grammar.l"
+#line 839 "grammar.l"
 {
 		 RETURN(LEXWORD_TEXTMODE);            }
 	YY_BREAK
 case 295:
 YY_RULE_SETUP
-#line 843 "grammar.l"
+#line 841 "grammar.l"
 {
 		 RETURN(LEXWORD_TEXTMODE);            }
 	YY_BREAK
 case 296:
 YY_RULE_SETUP
-#line 845 "grammar.l"
+#line 843 "grammar.l"
 {
 		 RETURN(LEXWORD_THICKNESS);           }
 	YY_BREAK
 case 297:
 YY_RULE_SETUP
-#line 847 "grammar.l"
+#line 845 "grammar.l"
 {
 		 RETURN(LEXWORD_TITLE);               } 
 	YY_BREAK
 case 298:
 YY_RULE_SETUP
-#line 849 "grammar.l"
+#line 847 "grammar.l"
 {
 		 RETURN(LEXWORD_TOPSORT);             }
 	YY_BREAK
 case 299:
 YY_RULE_SETUP
-#line 851 "grammar.l"
+#line 849 "grammar.l"
 {
 		 RETURN(LEXWORD_TOPSORT);             }
 	YY_BREAK
 case 300:
 YY_RULE_SETUP
-#line 853 "grammar.l"
+#line 851 "grammar.l"
 {
 		 RETURN(LEXWORD_TOP_MARGIN);          }
 	YY_BREAK
 case 301:
 YY_RULE_SETUP
-#line 855 "grammar.l"
+#line 853 "grammar.l"
 {
 		 RETURN(LEXWORD_TOP_MARGIN);          }
 	YY_BREAK
 case 302:
 YY_RULE_SETUP
-#line 857 "grammar.l"
+#line 855 "grammar.l"
 {
 		 RETURN(LEXWORD_TOP_TO_BOTTOM);       }
 	YY_BREAK
 case 303:
 YY_RULE_SETUP
-#line 859 "grammar.l"
+#line 857 "grammar.l"
 {
 		 RETURN(LEXWORD_TOP_TO_BOTTOM);       }
 	YY_BREAK
 case 304:
 YY_RULE_SETUP
-#line 861 "grammar.l"
+#line 859 "grammar.l"
 {
 		 RETURN(LEXWORD_TOP);                 } 
 	YY_BREAK
 case 305:
 YY_RULE_SETUP
-#line 863 "grammar.l"
+#line 861 "grammar.l"
 {
 		 RETURN(LEXWORD_TREE);                }
 	YY_BREAK
 case 306:
 YY_RULE_SETUP
-#line 865 "grammar.l"
+#line 863 "grammar.l"
 {
 		 RETURN(LEXWORD_TREEFACTOR);          }
 	YY_BREAK
 case 307:
 YY_RULE_SETUP
-#line 867 "grammar.l"
+#line 865 "grammar.l"
 {
 		 RETURN(LEXWORD_TREEFACTOR);          }
 	YY_BREAK
 case 308:
 YY_RULE_SETUP
-#line 869 "grammar.l"
+#line 867 "grammar.l"
 {
 		 RETURN(LEXWORD_TRIANGLE);            }
 	YY_BREAK
 case 309:
 YY_RULE_SETUP
-#line 871 "grammar.l"
+#line 869 "grammar.l"
 {
 		 RETURN(LEXWORD_TURQUOISE);           }
 	YY_BREAK
 case 310:
 YY_RULE_SETUP
-#line 873 "grammar.l"
+#line 871 "grammar.l"
 {
 		 RETURN(LEXWORD_TYPENAME);            }
 	YY_BREAK
 case 311:
 YY_RULE_SETUP
-#line 875 "grammar.l"
+#line 873 "grammar.l"
 {
 		 RETURN(LEXWORD_TYPENAME);            }
 	YY_BREAK
 case 312:
 YY_RULE_SETUP
-#line 877 "grammar.l"
+#line 875 "grammar.l"
 {
 		 RETURN(LEXWORD_UPPER_NEIGHBOR);      }
 	YY_BREAK
 case 313:
 YY_RULE_SETUP
-#line 879 "grammar.l"
+#line 877 "grammar.l"
 {
 		 RETURN(LEXWORD_UPPER_NEIGHBOR);      }
 	YY_BREAK
 case 314:
 YY_RULE_SETUP
-#line 881 "grammar.l"
+#line 879 "grammar.l"
 {
 		 RETURN(LEXWORD_VIEW);                }
 	YY_BREAK
 case 315:
 YY_RULE_SETUP
-#line 883 "grammar.l"
+#line 881 "grammar.l"
 {
 		 RETURN(LEXWORD_WHITE);               }
 	YY_BREAK
 case 316:
 YY_RULE_SETUP
-#line 885 "grammar.l"
+#line 883 "grammar.l"
 {
 		 RETURN(LEXWORD_WIDTH);               }
 	YY_BREAK
 case 317:
 YY_RULE_SETUP
-#line 887 "grammar.l"
+#line 885 "grammar.l"
 {
 		 RETURN(LEXWORD_XBASE);               }
 	YY_BREAK
 case 318:
 YY_RULE_SETUP
-#line 889 "grammar.l"
+#line 887 "grammar.l"
 {
 		 RETURN(LEXWORD_XMAX);                }
 	YY_BREAK
 case 319:
 YY_RULE_SETUP
-#line 891 "grammar.l"
+#line 889 "grammar.l"
 {
 		 RETURN(LEXWORD_XRASTER);             }
 	YY_BREAK
 case 320:
 YY_RULE_SETUP
-#line 893 "grammar.l"
+#line 891 "grammar.l"
 {
 		 RETURN(LEXWORD_XLRASTER);            }
 	YY_BREAK
 case 321:
 YY_RULE_SETUP
-#line 895 "grammar.l"
+#line 893 "grammar.l"
 {
 		 RETURN(LEXWORD_XSCROLLBAR);          }
 	YY_BREAK
 case 322:
 YY_RULE_SETUP
-#line 897 "grammar.l"
+#line 895 "grammar.l"
 {
 		 RETURN(LEXWORD_XSPACE);              }
 	YY_BREAK
 case 323:
 YY_RULE_SETUP
-#line 899 "grammar.l"
+#line 897 "grammar.l"
 {
 		 RETURN(LEXWORD_XLSPACE);             }
 	YY_BREAK
 case 324:
 YY_RULE_SETUP
-#line 901 "grammar.l"
+#line 899 "grammar.l"
 {
 		 RETURN(LEXWORD_YBASE);               }
 	YY_BREAK
 case 325:
 YY_RULE_SETUP
-#line 903 "grammar.l"
+#line 901 "grammar.l"
 {
 		 RETURN(LEXWORD_YELLOWGREEN);         }
 	YY_BREAK
 case 326:
 YY_RULE_SETUP
-#line 905 "grammar.l"
+#line 903 "grammar.l"
 {
 		 RETURN(LEXWORD_YELLOW);              }
 	YY_BREAK
 case 327:
 YY_RULE_SETUP
-#line 907 "grammar.l"
+#line 905 "grammar.l"
 {
 		 RETURN(LEXWORD_YES);                 }
 	YY_BREAK
 case 328:
 YY_RULE_SETUP
-#line 909 "grammar.l"
+#line 907 "grammar.l"
 {
 		 RETURN(LEXWORD_YMAX);                }
 	YY_BREAK
 case 329:
 YY_RULE_SETUP
-#line 911 "grammar.l"
+#line 909 "grammar.l"
 {
 		 RETURN(LEXWORD_YRASTER);             }
 	YY_BREAK
 case 330:
 YY_RULE_SETUP
-#line 913 "grammar.l"
+#line 911 "grammar.l"
 {
 		 RETURN(LEXWORD_YSCROLLBAR);          }
 	YY_BREAK
 case 331:
 YY_RULE_SETUP
-#line 915 "grammar.l"
+#line 913 "grammar.l"
 {
 		 RETURN(LEXWORD_YSPACE);              }
 	YY_BREAK
 case 332:
 /* rule 332 can match eol */
 YY_RULE_SETUP
-#line 918 "grammar.l"
+#line 916 "grammar.l"
 {
 		 line_directive(yytext);       }
 	YY_BREAK
 case 333:
 /* rule 333 can match eol */
 YY_RULE_SETUP
-#line 920 "grammar.l"
+#line 918 "grammar.l"
 {
 		 line_directive(yytext);       }
 	YY_BREAK
 case 334:
 /* rule 334 can match eol */
 YY_RULE_SETUP
-#line 922 "grammar.l"
+#line 920 "grammar.l"
 {
 		 /* ignore pragma directive */ }
 	YY_BREAK
 case 335:
 YY_RULE_SETUP
-#line 925 "grammar.l"
+#line 923 "grammar.l"
 {
 		 pos_nr+=strlen(yytext); }
 	YY_BREAK
 case 336:
 YY_RULE_SETUP
-#line 927 "grammar.l"
+#line 925 "grammar.l"
 {
 		 pos_nr++;               }
 	YY_BREAK
 case 337:
 /* rule 337 can match eol */
 YY_RULE_SETUP
-#line 929 "grammar.l"
+#line 927 "grammar.l"
 {
 		 line_nr++; pos_nr=1;    }
 	YY_BREAK
 case 338:
 YY_RULE_SETUP
-#line 932 "grammar.l"
+#line 930 "grammar.l"
 {
-		 yylval.lnum = long_atoi(yytext); 
+		 yylval.lnum = atol(yytext); 
 			  RETURN(LEX_INT); 
 			}
 	YY_BREAK
 case 339:
 YY_RULE_SETUP
-#line 936 "grammar.l"
+#line 934 "grammar.l"
 {
 		 yylval.lrealnum = atof(yytext); 
 			  RETURN(LEX_FLOAT); 
@@ -4391,7 +4389,7 @@ YY_RULE_SETUP
 case 340:
 /* rule 340 can match eol */
 YY_RULE_SETUP
-#line 940 "grammar.l"
+#line 938 "grammar.l"
 {
 		 yylval.byte = yytext[1];
                		  RETURN(LEX_CHAR);
@@ -4400,7 +4398,7 @@ YY_RULE_SETUP
 case 341:
 /* rule 341 can match eol */
 YY_RULE_SETUP
-#line 944 "grammar.l"
+#line 942 "grammar.l"
 {
 		 yytext[strlen(yytext)-1] = '\0';
 			  escape_transl(&(yytext[1]));
@@ -4412,79 +4410,79 @@ YY_RULE_SETUP
 case 342:
 /* rule 342 can match eol */
 YY_RULE_SETUP
-#line 951 "grammar.l"
+#line 949 "grammar.l"
 {
 		 SKIPYYTEXT; }
 	YY_BREAK
 case 343:
 YY_RULE_SETUP
-#line 953 "grammar.l"
+#line 951 "grammar.l"
 {
 		 SKIPYYTEXT; }
 	YY_BREAK
 case 344:
 YY_RULE_SETUP
-#line 956 "grammar.l"
+#line 954 "grammar.l"
 {
 		 RETURN('{'); }
 	YY_BREAK
 case 345:
 YY_RULE_SETUP
-#line 958 "grammar.l"
+#line 956 "grammar.l"
 {
 		 RETURN('}'); }
 	YY_BREAK
 case 346:
 YY_RULE_SETUP
-#line 960 "grammar.l"
+#line 958 "grammar.l"
 {
 		 RETURN(':'); }
 	YY_BREAK
 case 347:
 YY_RULE_SETUP
-#line 962 "grammar.l"
+#line 960 "grammar.l"
 {
 		 RETURN('x'); }
 	YY_BREAK
 case 348:
 YY_RULE_SETUP
-#line 964 "grammar.l"
+#line 962 "grammar.l"
 {
 		 RETURN('y'); }
 	YY_BREAK
 case 349:
 YY_RULE_SETUP
-#line 966 "grammar.l"
+#line 964 "grammar.l"
 {
 		 RETURN('z'); }
 	YY_BREAK
 case 350:
 YY_RULE_SETUP
-#line 968 "grammar.l"
+#line 966 "grammar.l"
 {
 		 RETURN('*'); }
 	YY_BREAK
 case 351:
 YY_RULE_SETUP
-#line 970 "grammar.l"
+#line 968 "grammar.l"
 {
 		 RETURN('['); }
 	YY_BREAK
 case 352:
 YY_RULE_SETUP
-#line 972 "grammar.l"
+#line 970 "grammar.l"
 {
 		 RETURN(']'); }
 	YY_BREAK
 case 353:
 YY_RULE_SETUP
-#line 974 "grammar.l"
+#line 972 "grammar.l"
 {
 		 RETURN('-'); }
 	YY_BREAK
 case 354:
 YY_RULE_SETUP
-#line 979 "grammar.l"
+#line 977 "grammar.l"
 { 
 		 (void)sprintf(message,
 			"scanner reads unexpected %c",yytext[0]);
@@ -4493,10 +4491,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 355:
 YY_RULE_SETUP
-#line 985 "grammar.l"
+#line 983 "grammar.l"
 ECHO;
 	YY_BREAK
-#line 4500 "lex.yy.c"
+#line 4498 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -5631,7 +5629,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 985 "grammar.l"
+#line 983 "grammar.l"
 
 
 
