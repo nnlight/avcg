@@ -144,69 +144,8 @@ static void parse_part( FILE *f)
 	assert((Syntax_Tree!=NULL));
 
 	stop_time("parse_part");
-}
+} /* parse_part */
 
-
-/*--------------------------------------------------------------------*/
-
-
-/*  The main program
- *  ================
- */
-
-
-void vcg_Parse( FILE *input_file)
-{
-	char testvar;
-	int i;
-
-	testvar = -1;
-	if (testvar != -1) {
-		FPRINTF(stderr,"Warning: On this system, chars are unsigned.\n");
-		FPRINTF(stderr,"This may yield problems with the graph folding operation.\n");
-	}
-
-	for (i=0; i<48; i++) {
-		if (date_str[i]=='$')     date_str[i]=' ';	
-		if (revision_str[i]=='$') revision_str[i]=' ';	
-	}
-	
-	SPRINTF(short_banner,"USAAR Visualization Tool VCG/XVCG %s %s", 
-			version_str, revision_str);
-
-
-	G_xmax = G_ymax = -1;
-
-	if (fastflag) {
-		min_baryiterations = 0;
-		max_baryiterations = 2;
-		min_mediumshifts = 0;
-		max_mediumshifts = 2;
-		min_centershifts = 0;
-		max_centershifts = 2;
-		max_edgebendings = 2;
-		max_straighttune = 2;
-	}
-
-	if (!silent) { FPRINTF(stdout,"Wait "); FFLUSH(stdout); }
-	parse_part( input_file);
-/*TODO	visualize_part();*/
-
-	if (exfile) 
-	{
-		/* ... output to some devices, ps... */
-	}
-	else {  /* Display part calls the display device driver. This is a 
-		 * device dependent function !!!
-		 * The device driver is basically a loop that draws the graph and
-		 * reacts on interaction, until the FINISHING interaction is 
-		 * selected.
-		 */
-		/*display_part(); */
-	}
-
-	return;
-}
 
 
 /*--------------------------------------------------------------------*/
@@ -265,20 +204,111 @@ char *y;
 /*--------------------------------------------------------------------*/
 
 
+/*--------------------------------------------------------------------*/
+
+/*  Call of the visualizer 
+ *  ======================
+ */
+
+#ifdef X11
+static char geom_buffer[128];
+#endif
+
+static void	visualize_part(void)
+{
+	debugmessage("visualize_part","");
+
+	/* Init of the default values */
+
+        G_title         = myalloc(256);
+       	strncpy(G_title,Dataname,254);
+	G_title[255] = 0;
+        G_x             = -1L;
+        G_y             = -1L;
+
+	/* Check the output device */
+#if 0
+	if (!exfile) {
+        	setScreenSpecifics(); 	/* this sets G_width, G_height */
+	} else
+#endif
+	{
+		G_width = G_height = 700;
+	}
+	G_width_set  = 0;	/* because they are not set by */
+	G_height_set = 0;	/* the specification           */
+	if (!G_xymax_final) G_xmax = G_width+10;
+        if (!G_xymax_final) G_ymax = G_height+10;
+        G_xbase         = 5;
+        G_ybase         = 5;
+        G_dspace        = 0;
+        G_xspace        = 20;
+        G_yspace        = 70;
+        G_orientation   = TOP_TO_BOTTOM;
+        G_folding       = 0;
+        G_color         = WHITE;
+        G_displayel     = NO;
+        G_dirtyel       = NO;
+        G_shrink        = 1;
+        G_stretch       = 1;
+	G_yalign        = AL_CENTER;
+	G_portsharing   = YES;
+	G_arrowmode     = AMFIXED;
+	G_xraster	= 1;
+ 	G_yraster	= 1;
+ 	G_dxraster	= 1;
+
+	/* No edge class is hidden: initialize this */
+
+	clear_hide_class();
+
+	/* Check colors */
+	colored = 1;
+
+
+	/*  Analyze specification and allocate graph */
+
+	step0_main();
+	if (nr_errors!=0) Fatal_error("Wrong specification","");
+	check_graph_consistency();
+
+#ifdef X11
+	if (!Xmygeometry) {
+		if ((G_width_set)&&(G_height_set)) {
+			if ((G_x != -1L) && (G_y != -1L)) 
+				SPRINTF(geom_buffer,"%dx%d+%ld+%ld",
+					G_width,G_height,G_x,G_y);
+			else 	SPRINTF(geom_buffer,"%dx%d",G_width,G_height);
+			Xmygeometry   = geom_buffer;
+		}
+		else if ((G_x != -1) && (G_y != -1)) {
+				SPRINTF(geom_buffer,"+%ld+%ld",
+					G_x,G_y);
+			Xmygeometry   = geom_buffer;
+		}
+	}
+#endif
+
+	/* Set drawing area */
+
+	G_xymax_final = 1;
+        V_xmin = V_xmin_initial;
+        V_xmax = V_xmin + (long)G_xmax;
+        V_ymin = V_ymin_initial;
+        V_ymax = V_ymin + (long)(G_ymax + COFFSET);
+
+	relayout();
+} /* visualize_part */
 
 
 
-#ifdef use_unused
+
 /* Relayout the graph 
  * ------------------
  */
 
 
-#ifdef ANSI_C
 void relayout(void)
-#else
-void relayout()
-#endif
 {
 	debugmessage("relayout","");
         start_time();
@@ -335,6 +365,75 @@ void relayout()
 		prepare_nodes();
 	}
 	free_timelimit();
-}
-#endif
+} /* relayout */
+
 /*--------------------------------------------------------------------*/
+
+
+
+
+/*--------------------------------------------------------------------*/
+
+
+/*  The main program
+ *  ================
+ */
+
+
+void vcg_Parse( FILE *input_file)
+{
+	char testvar;
+	int i;
+
+	testvar = -1;
+	if (testvar != -1) {
+		FPRINTF(stderr,"Warning: On this system, chars are unsigned.\n");
+		FPRINTF(stderr,"This may yield problems with the graph folding operation.\n");
+	}
+
+	for (i=0; i<48; i++) {
+		if (date_str[i]=='$')     date_str[i]=' ';	
+		if (revision_str[i]=='$') revision_str[i]=' ';	
+	}
+	
+	SPRINTF(short_banner,"USAAR Visualization Tool VCG/XVCG %s %s", 
+			version_str, revision_str);
+
+
+	G_xmax = G_ymax = -1;
+
+	if (fastflag) {
+		min_baryiterations = 0;
+		max_baryiterations = 2;
+		min_mediumshifts = 0;
+		max_mediumshifts = 2;
+		min_centershifts = 0;
+		max_centershifts = 2;
+		max_edgebendings = 2;
+		max_straighttune = 2;
+	}
+
+	if (!silent) { FPRINTF(stdout,"Wait "); FFLUSH(stdout); }
+	parse_part( input_file);
+	visualize_part();
+
+	if (exfile) 
+	{
+		/* ... output to some devices, ps... */
+	}
+	else {  /* Display part calls the display device driver. This is a 
+		 * device dependent function !!!
+		 * The device driver is basically a loop that draws the graph and
+		 * reacts on interaction, until the FINISHING interaction is 
+		 * selected.
+		 */
+		/*display_part(); */
+	}
+
+	return;
+} /* vcg_Parse */
+
+
+
+
+
