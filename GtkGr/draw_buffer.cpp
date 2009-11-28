@@ -158,14 +158,14 @@ void DrawBuffer::MoveVisibleArea( gint delta,
 	if (is_need_new_pixmap)
 	{
 		GdkPixmap *new_pixmap = gdk_pixmap_new( m_da->window,
-												new_pixmap_dims[AXIS_X], new_pixmap_dims[AXIS_X],
+												new_pixmap_dims[AXIS_X], new_pixmap_dims[AXIS_Y],
 												-1);
 		/* Initialize the new pixmap to white */
 		gdk_draw_rectangle( new_pixmap,
 							m_da->style->white_gc,
 							TRUE,
 							0, 0,
-							new_pixmap_dims[AXIS_X], new_pixmap_dims[AXIS_X]);
+							new_pixmap_dims[AXIS_X], new_pixmap_dims[AXIS_Y]);
 		/* копируем содержимое старой */
 		gdk_draw_drawable( new_pixmap,
 						   m_da->style->fg_gc[GTK_WIDGET_STATE (m_da)],

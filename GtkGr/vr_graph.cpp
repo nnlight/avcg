@@ -3,7 +3,7 @@
 
 
 VRNode::VRNode( const char *title, int x, int y)
-	: title_( title_), label_()
+	: title_( title), label_()
 	, x_(x), y_(y)
 	, width_(0), height_(0)
 	, color_(WHITE), bcolor_(BLACK)
@@ -13,6 +13,21 @@ VRNode::VRNode( const char *title, int x, int y)
 }
 
 VRNode::~VRNode()
+{
+}
+
+VREdge::VREdge()
+	: label_()
+	, dots_(0)
+	, linestyle_(0)
+	, thickness_(2)
+	, color_(BLACK)
+	, arrowsize_(10)
+	, arrowstyle_(0)
+{
+}
+
+VREdge::~VREdge()
 {
 }
 

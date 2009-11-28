@@ -1,6 +1,6 @@
 CC=g++
-CFLAGS=-c -Wall `pkg-config --cflags gtk+-2.0`
-LDFLAGS=`pkg-config --libs gtk+-2.0`
+CFLAGS=-g -c -Wall `pkg-config --cflags gtk+-2.0`
+LDFLAGS=-g `pkg-config --libs gtk+-2.0`
 SOURCES=GtkGr.cpp draw_buffer.cpp vr_graph.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=avcg
@@ -15,6 +15,11 @@ $(EXECUTABLE): $(OBJECTS)
 
 
 
+#depend:
+#	gccmakedep -- $(CFLAGS) -- $(SOURCES)
+#	makedepend $(SOURCES)
+
 clean:
-	rm *.o *~ $(EXECUTABLE):
+	rm *.o *~ $(EXECUTABLE)
+
 

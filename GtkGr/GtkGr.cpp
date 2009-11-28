@@ -67,16 +67,16 @@ key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data)
 		break;
 
 	case GDK_Up:
-		db->MoveVisibleArea( -5, AXIS_Y);
+		db->MoveVisibleArea( -10, AXIS_Y);
 		break;
 	case GDK_Down:
-		db->MoveVisibleArea( 5, AXIS_Y);
+		db->MoveVisibleArea( 10, AXIS_Y);
 		break;
 	case GDK_Left:
-		db->MoveVisibleArea( -5, AXIS_X);
+		db->MoveVisibleArea( -10, AXIS_X);
 		break;
 	case GDK_Right:
-		db->MoveVisibleArea( 5, AXIS_X);
+		db->MoveVisibleArea( 10, AXIS_X);
 		break;
 
 	case GDK_p:

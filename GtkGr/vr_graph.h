@@ -67,6 +67,29 @@ private:
 	VRNode( const VRNode &a);
 };
 
+#define VREDGE_DOT_COUNT 4
+/**
+ * Дуга
+ */
+class VREdge
+{
+public:
+	string label_;
+	int dots_;
+	int x_[VREDGE_DOT_COUNT];
+	int y_[VREDGE_DOT_COUNT];
+	int linestyle_;
+	int thickness_;
+	Color_t color_;
+	int arrowsize_;
+	int arrowstyle_;
+public:
+	VREdge();
+	~VREdge();
+private:
+	VREdge( const VRNode &a);
+};
+
 /**
  * Visual Repersentation of Graph
  * Хранит граф с позициями узлов и т.п., т.е. описывает то, как должен выглядеть граф. 
