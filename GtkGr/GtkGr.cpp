@@ -95,7 +95,8 @@ key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data)
     {
       printf("An uppercase letter was pressed.\n");
     }*/
-	return TRUE;
+	//return TRUE;
+	return FALSE;
 } /* key_press_cb */
 
 
@@ -184,6 +185,86 @@ da_motion_notify_event_cb( GtkWidget      *da,
 
 
 
+/* Obligatory basic callback */
+static void print_hello( GtkWidget *w,
+                         gpointer   data )
+{
+  g_message ("Hello, World!\n");
+}
+
+/* This is the GtkItemFactoryEntry structure used to generate new menus.
+   Item 1: The menu path. The letter after the underscore indicates an
+           accelerator key once the menu is open.
+   Item 2: The accelerator key for the entry
+   Item 3: The callback function.
+   Item 4: The callback action.  This changes the parameters with
+           which the function is called.  The default is 0.
+   Item 5: The item type, used to define what kind of an item it is.
+           Here are the possible values:
+
+           NULL               -> "<Item>"
+           ""                 -> "<Item>"
+           "<Title>"          -> create a title item
+           "<Item>"           -> create a simple item
+           "<CheckItem>"      -> create a check item
+           "<ToggleItem>"     -> create a toggle item
+           "<RadioItem>"      -> create a radio item
+           <path>             -> path of a radio item to link against
+           "<Separator>"      -> create a separator
+           "<Branch>"         -> create an item to hold sub items (optional)
+           "<LastBranch>"     -> create a right justified branch 
+*/
+
+static GtkItemFactoryEntry menu_items[] = {
+  { "/_File",         NULL,         NULL, 0, "<Branch>" },
+  { "/File/_New",     "<control>N", (GtkItemFactoryCallback)print_hello, 0, NULL },
+  { "/File/_Open",    "<control>O", (GtkItemFactoryCallback)print_hello, 0, NULL },
+  { "/File/_Save",    "<control>S", (GtkItemFactoryCallback)print_hello, 0, NULL },
+  { "/File/Save _As", NULL,         NULL, 0, NULL },
+  { "/File/sep1",     NULL,         NULL, 0, "<Separator>" },
+  { "/File/Quit",     "<control>Q", gtk_main_quit, 0, NULL },
+  { "/_Options",      NULL,         NULL, 0, "<Branch>" },
+  { "/Options/Test",  NULL,         NULL, 0, NULL },
+  { "/Options/ToggleTest",  NULL,   NULL, 0, "<ToggleItem>" },
+  { "/Options/CheckTest",  NULL,         NULL, 0, "<CheckItem>" },
+  { "/_Help",         NULL,         NULL, 0, "<LastBranch>" },
+  { "/_Help/About",   NULL,         NULL, 0, NULL },
+};
+
+void get_main_menu( GtkWidget  *window,
+                    GtkWidget **menubar )
+{
+  GtkItemFactory *item_factory;
+  GtkAccelGroup *accel_group;
+  gint nmenu_items = sizeof (menu_items) / sizeof (menu_items[0]);
+
+  accel_group = gtk_accel_group_new ();
+
+  /* This function initializes the item factory.
+     Param 1: The type of menu - can be GTK_TYPE_MENU_BAR, GTK_TYPE_MENU,
+              or GTK_TYPE_OPTION_MENU.
+     Param 2: The path of the menu.
+     Param 3: A pointer to a gtk_accel_group.  The item factory sets up
+              the accelerator table while generating menus.
+  */
+
+  item_factory = gtk_item_factory_new (GTK_TYPE_MENU_BAR, "<main>", 
+                                       accel_group);
+
+  /* This function generates the menu items. Pass the item factory,
+     the number of items in the array, the array itself, and any
+     callback data for the the menu items. */
+  gtk_item_factory_create_items (item_factory, nmenu_items, menu_items, NULL);
+
+  /* Attach the new accelerator group to the window. */
+  gtk_window_add_accel_group (GTK_WINDOW (window), accel_group);
+
+  if (menubar)
+    /* Finally, return the actual menu bar created by the item factory. */ 
+    *menubar = gtk_item_factory_get_widget (item_factory, "<main>");
+}
+
+
 #ifdef WIN32
 int _tmain(int argc, _TCHAR* argv[])
 #else
@@ -199,6 +280,8 @@ int main(int argc, char *argv[])
 	
 	int iDummy=0;
 	GtkWidget *main_window;
+	GtkWidget *main_vbox;
+	GtkWidget *menubar;
 
 
 	// Иннициализация GTK;
@@ -207,19 +290,29 @@ int main(int argc, char *argv[])
 	// gtk_init(&argc,(char***)&argv) ;
 	// создаем главное окно
 	main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_window_set_position(GTK_WINDOW(main_window), GTK_WIN_POS_CENTER);
 	// выставляем величину окантовки внутренней области главного окна
-	gtk_container_set_border_width( GTK_CONTAINER(main_window), 5);
+	//gtk_container_set_border_width( GTK_CONTAINER(main_window), 5);
 	// сигнал ("delete_event") - принудительное закрытие главного окна
 	gtk_signal_connect( GTK_OBJECT(main_window),"delete_event", GTK_SIGNAL_FUNC(CloseCallback),NULL );
 	// сигнал ("destroy") - уничтожение главного окна
 	gtk_signal_connect( GTK_OBJECT(main_window),"destroy", GTK_SIGNAL_FUNC(gtk_main_quit), NULL);
 
+	gtk_window_set_title( GTK_WINDOW(main_window), "avcg tool");
+
+	main_vbox = gtk_vbox_new( FALSE, 1);
+	//gtk_container_border_width( GTK_CONTAINER (main_vbox), 1);
+	gtk_container_add( GTK_CONTAINER(main_window), main_vbox);
+
+	get_main_menu (main_window, &menubar);
+	gtk_box_pack_start (GTK_BOX (main_vbox), menubar, FALSE, TRUE, 0);
+	
 
 	GtkWidget *da = gtk_drawing_area_new();
 	/* set a minimum size */
 	gtk_widget_set_size_request( da, 600, 400);
 
-	gtk_container_add( GTK_CONTAINER(main_window), da);
+	gtk_container_add( GTK_CONTAINER(main_vbox), da);
 
 	std::auto_ptr<VRGraph> vr_graph( new VRGraph());
 	std::auto_ptr<DrawBuffer> draw_buffer( new DrawBuffer( da, vr_graph.get()));
