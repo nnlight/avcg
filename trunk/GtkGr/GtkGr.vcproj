@@ -191,6 +191,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ui.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\vr_graph.cpp"
 				>
 			</File>
@@ -206,6 +210,10 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ui.h"
 				>
 			</File>
 			<File
