@@ -1983,18 +1983,6 @@ extern YYLTYPE yylloc;
 
 #define INITIAL 0
 
-#ifndef YY_NO_UNISTD_H
-/* Special case for "unistd.h", since it is non-ANSI. We include it way
- * down here because we want the user's section 1 to have been scanned first.
- * The user has a chance to override it with an option.
- */
-/* %if-c-only */
-#include <unistd.h>
-/* %endif */
-/* %if-c++-only */
-/* %endif */
-#endif
-
 #ifndef YY_EXTRA_TYPE
 #define YY_EXTRA_TYPE void *
 #endif
@@ -2230,7 +2218,7 @@ YY_DECL
 
 
 
-#line 2234 "lex.yy.c"
+#line 2222 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -4494,7 +4482,7 @@ YY_RULE_SETUP
 #line 983 "grammar.l"
 ECHO;
 	YY_BREAK
-#line 4498 "lex.yy.c"
+#line 4486 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

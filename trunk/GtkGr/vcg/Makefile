@@ -6,7 +6,7 @@ all:
 
 
 lex:
-	flex -d grammar.l        # lex.yy.c
+	flex -d --nounistd grammar.l        # lex.yy.c
 
 yacc:
 	bison -ydvt grammar.y    # y.tab.c y.tab.c

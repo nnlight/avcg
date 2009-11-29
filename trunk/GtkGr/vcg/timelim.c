@@ -1,5 +1,3 @@
-/* SCCS-info %W% %E% */
-
 /*--------------------------------------------------------------------*/
 /*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
@@ -17,9 +15,6 @@
 /*                                                                    */
 /*--------------------------------------------------------------------*/
 
-#ifndef lint
-static char *id_string="$Id: timelim.c,v 1.6 1995/02/09 20:15:52 sander Exp $";
-#endif
 
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
@@ -38,23 +33,6 @@ static char *id_string="$Id: timelim.c,v 1.6 1995/02/09 20:15:52 sander Exp $";
  *  You  should  have  received a copy of the GNU General Public License
  *  along  with  this  program;  if  not,  write  to  the  Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  The software is available per anonymous ftp at ftp.cs.uni-sb.de.
- *  Contact  sander@cs.uni-sb.de  for additional information.
- */
-
-
-/* 
- * $Log: timelim.c,v $
- * Revision 1.6  1995/02/09  20:15:52  sander
- * Portability problem with HPUX.
- *
- * Revision 1.2  1995/02/08  11:11:14  sander
- * Distribution version 1.3.
- *
- * Revision 1.1  1994/12/23  18:12:45  sander
- * Initial revision
- *
  */
 
 
@@ -85,27 +63,7 @@ static char *id_string="$Id: timelim.c,v 1.6 1995/02/09 20:15:52 sander Exp $";
 #include <stdio.h>
 #include <stdlib.h>
 #include "globals.h"
-#ifndef HPUX
-#include <sys/time.h>
-#else
-#ifdef ANSI_C
-/* for definitions of timeval and timezone: THIS IS DUE TO A BUG IN THE
- * HP_UX SOURCES. IF THIS BUG DOES NOT EXIST IN NEWER VERSIONS OF THE
- * HP_UX INCLUDES, THIS MUST BE REMOVED. 
- */
-     struct timeval {
-          unsigned long tv_sec;
-          long          tv_usec;
-     };
-     struct timezone {
-        int     tz_minuteswest;
-        int     tz_dsttime;
-     };
-   extern int gettimeofday _PP((struct timeval *, struct timezone *));
-#else
-#include <sys/time.h>
-#endif
-#endif
+//#include <sys/time.h>
 #include "timelim.h"
 
 
@@ -117,18 +75,6 @@ static char *id_string="$Id: timelim.c,v 1.6 1995/02/09 20:15:52 sander Exp $";
 #define debugmessage(a,b) /**/
 #endif
 
-
-/* Local Variables
- * ---------------
- */
-
-static unsigned long timelimit = 0L;	/* the actual time limit in sec */
-
-static struct timeval  tpxstart;	/* the start time     */
-static struct timezone tzpxstart;	/* and its time zone  */
-
-static struct timeval  tpxend;  	/* the stop time      */
-static struct timezone tzpxend;  	/* and its time zone  */
 
 
 #ifdef NOTIMELIMIT
@@ -169,6 +115,17 @@ int perc;
 }
 
 #else
+/* Local Variables
+ * ---------------
+ */
+
+static unsigned long timelimit = 0L;	/* the actual time limit in sec */
+
+static struct timeval  tpxstart;	/* the start time     */
+static struct timezone tzpxstart;	/* and its time zone  */
+
+static struct timeval  tpxend;  	/* the stop time      */
+static struct timezone tzpxend;  	/* and its time zone  */
 
 /* Set the time limit to x seconds and start the clock
  * ---------------------------------------------------
