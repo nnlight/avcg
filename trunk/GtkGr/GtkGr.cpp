@@ -8,6 +8,7 @@
 #include "draw_buffer.h"
 #include "vr_graph.h"
 #include "ui.h"
+#include "vcg/vcg_iface.h"
 
 #ifdef WIN32
 #pragma comment(lib,"gthread-2.0.lib")
@@ -186,7 +187,7 @@ da_motion_notify_event_cb( GtkWidget      *da,
 
 
 
-#ifdef WIN32
+#ifdef WIN32____
 int _tmain(int argc, _TCHAR* argv[])
 #else
 int main(int argc, char *argv[])
@@ -197,6 +198,19 @@ int main(int argc, char *argv[])
 #endif
 	printf("sizeof(long)=%d\n",  sizeof(long));
 	
+	bool is_gdl_present = false;
+	if (argc > 1)
+	{
+		FILE *f = fopen( argv[1], "r");
+		if (!f)
+		{
+			printf("Cant open file: %s\n", argv[1]);
+			exit(-1);
+		}
+		vcg_Parse( f);
+		fclose(f);
+		is_gdl_present = true;
+	}
 	
 	
 	int iDummy=0;
@@ -206,9 +220,8 @@ int main(int argc, char *argv[])
 
 
 	// Иннициализация GTK;
-	gtk_init(&iDummy,NULL) ;
-	// assert( sizeof(_TCHAR) == sizeof(char) );
-	// gtk_init(&argc,(char***)&argv) ;
+	//gtk_init(&iDummy,NULL) ;
+	gtk_init(&argc,/*(char***)*/&argv) ;
 	// создаем главное окно
 	main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_position(GTK_WINDOW(main_window), GTK_WIN_POS_CENTER);
@@ -237,6 +250,10 @@ int main(int argc, char *argv[])
 	gtk_container_add( GTK_CONTAINER(main_vbox), da);
 
 	std::auto_ptr<VRGraph> vr_graph( new VRGraph());
+	if (is_gdl_present)
+	{
+		vr_graph->LoadGDL();
+	}
 	std::auto_ptr<DrawBuffer> draw_buffer( new DrawBuffer( da, vr_graph.get()));
 	DrawBuffer *db = draw_buffer.get();
 
@@ -262,5 +279,7 @@ int main(int argc, char *argv[])
 	gtk_widget_show_all( main_window);
 	gtk_main();
 	return 0;
-}
+} /* main */
+
+
 
