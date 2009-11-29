@@ -61,6 +61,18 @@ void VRGraph::AddNode( DrawBuffer *draw_buffer, int x, int y, const char *title,
 	nodes_.push_back(p);
 } /* VRGraph::AddNode */
 
+VRNode *VRGraph::AddSizedNode( int x, int y, int width, int height, const char *title, const char *label)
+{
+	VRNode *p = new VRNode( title, x, y);
+	if (label)
+		p->label_ = label;
+	p->width_ = width;
+	p->height_ = height;
+	
+	nodes_.push_back(p);
+	return p;
+} /* VRGraph::AddSizedNode */
+
 /**
  * Отрисовать заданную область в draw_buffer
  */
@@ -77,3 +89,21 @@ void VRGraph::Expose( DrawBuffer *draw_buffer, int x, int y, int width, int heig
 							   node->label_.c_str());
 	}
 } /* VRGraph::Expose */
+
+
+
+
+extern "C" {
+#include "vcg/alloc.h"
+}
+
+void VRGraph::LoadGDL()
+{
+	GNODE v;
+	for ( v = nodelist; v; v = NNEXT(v) )
+	{
+		if (NWIDTH(v) == 0)
+			continue;
+		AddSizedNode( NX(v), NY(v), NWIDTH(v), NHEIGHT(v), NTITLE(v), NLABEL(v));
+	}
+} /* VRGraph::LoadGDL */

@@ -179,7 +179,23 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\vcg\alloc.c"
+				>
+			</File>
+			<File
 				RelativePath=".\draw_buffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\drawlib.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\drawstr.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\folding.c"
 				>
 			</File>
 			<File
@@ -187,7 +203,51 @@
 				>
 			</File>
 			<File
+				RelativePath=".\vcg\lex.yy.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\main.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\options.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\prepare.c"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\step0.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\step1.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\step2.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\step3.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\step4.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\timelim.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\tree.c"
 				>
 			</File>
 			<File
@@ -198,6 +258,10 @@
 				RelativePath=".\vr_graph.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\vcg\y.tab.c"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -205,7 +269,47 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\vcg\alloc.h"
+				>
+			</File>
+			<File
 				RelativePath=".\draw_buffer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\drawchr.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\drawlib.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\drawstr.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\folding.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\globals.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\grammar.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\grprint.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\main.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\options.h"
 				>
 			</File>
 			<File
@@ -213,11 +317,31 @@
 				>
 			</File>
 			<File
+				RelativePath=".\vcg\steps.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\timelim.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\timing.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ui.h"
 				>
 			</File>
 			<File
+				RelativePath=".\vcg\vcg_iface.h"
+				>
+			</File>
+			<File
 				RelativePath=".\vr_graph.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\y.tab.h"
 				>
 			</File>
 		</Filter>

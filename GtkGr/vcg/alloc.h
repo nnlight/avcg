@@ -1,5 +1,3 @@
-/* SCCS-info %W% %E% */
- 
 /*--------------------------------------------------------------------*/
 /*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
@@ -35,14 +33,13 @@
  *  You  should  have  received a copy of the GNU General Public License
  *  along  with  this  program;  if  not,  write  to  the  Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  The software is available per anonymous ftp at ftp.cs.uni-sb.de.
- *  Contact  sander@cs.uni-sb.de  for additional information.
  */
 
 
 #ifndef ALLOC_H 
 #define ALLOC_H 
+
+#include "globals.h"
 
 /*--------------------------------------------------------------------*/
 

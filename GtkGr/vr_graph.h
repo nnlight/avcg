@@ -103,7 +103,11 @@ public:
 	~VRGraph();
 
 	void AddNode( DrawBuffer *draw_buffer, int x, int y, const char *title, const char *label);
+	VRNode *AddSizedNode( int x, int y, int width, int height, const char *title, const char *label);
 	void Expose( DrawBuffer *draw_buffer, int x, int y, int width, int height);
+
+	/* загрузка графа из vcg */
+	void LoadGDL();
 private:
 	typedef list<VRNode*> nodes_t;
 	list<VRNode*> nodes_;
