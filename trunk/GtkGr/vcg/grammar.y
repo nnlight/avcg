@@ -18,7 +18,7 @@ extern int pos_nr;
 
 int nr_errors;
 
-#define __yy_bcopy bcopy
+#define __yy_bcopy(src,dst,n) memmove(dst,src,n)
 
 #define YYDEBUG 1
  
