@@ -255,6 +255,8 @@
 #define MAXINT INT_MAX
 #define MININT  INT_MIN
 
+#define NOTIMELIMIT
+
 /*--------------------------------------------------------------------*/
 
 #endif /* GLOBALS_H */
