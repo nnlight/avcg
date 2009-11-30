@@ -199,6 +199,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\gr.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\GtkGr.cpp"
 				>
 			</File>
@@ -294,6 +298,10 @@
 			</File>
 			<File
 				RelativePath=".\vcg\globals.h"
+				>
+			</File>
+			<File
+				RelativePath=".\gr.h"
 				>
 			</File>
 			<File

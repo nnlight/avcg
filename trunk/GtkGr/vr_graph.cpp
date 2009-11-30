@@ -2,8 +2,9 @@
 
 
 
-VRNode::VRNode( const char *title, int x, int y)
-	: title_( title), label_()
+VRNode::VRNode( VRGraph *graph, const char *title, int x, int y)
+	: GrNode( graph)
+	, title_( title), label_()
 	, x_(x), y_(y)
 	, width_(0), height_(0)
 	, color_(WHITE), bcolor_(BLACK)
@@ -17,7 +18,8 @@ VRNode::~VRNode()
 }
 
 VREdge::VREdge()
-	: label_()
+	: GrEdge( NULL, NULL)
+    , label_()
 	, dots_(0)
 	, linestyle_(0)
 	, thickness_(2)
@@ -41,16 +43,12 @@ VRGraph::VRGraph()
 
 VRGraph::~VRGraph()
 {
-	nodes_t::iterator it;
-	for ( it = nodes_.begin(); it != nodes_.end(); ++it)
-	{
-		delete *it;
-	}
+
 }
 
 void VRGraph::AddNode( DrawBuffer *draw_buffer, int x, int y, const char *title, const char *label)
 {
-	VRNode *p = new VRNode( title, x, y);
+	VRNode *p = new VRNode( this, title, x, y);
 	if (label)
 		p->label_ = label;
 	int twidth, theight;
@@ -58,18 +56,16 @@ void VRGraph::AddNode( DrawBuffer *draw_buffer, int x, int y, const char *title,
 	p->width_ = twidth + 2*(p->borderw_ + NODE_LABEL_MARGIN);
 	p->height_ = theight + 2*(p->borderw_ + NODE_LABEL_MARGIN);
 	
-	nodes_.push_back(p);
 } /* VRGraph::AddNode */
 
 VRNode *VRGraph::AddSizedNode( int x, int y, int width, int height, const char *title, const char *label)
 {
-	VRNode *p = new VRNode( title, x, y);
+	VRNode *p = new VRNode( this, title, x, y);
 	if (label)
 		p->label_ = label;
 	p->width_ = width;
 	p->height_ = height;
 	
-	nodes_.push_back(p);
 	return p;
 } /* VRGraph::AddSizedNode */
 
@@ -78,10 +74,13 @@ VRNode *VRGraph::AddSizedNode( int x, int y, int width, int height, const char *
  */
 void VRGraph::Expose( DrawBuffer *draw_buffer, int x, int y, int width, int height)
 {
-	nodes_t::iterator it;
-	for ( it = nodes_.begin(); it != nodes_.end(); ++it)
+	GrNode *n;
+	for ( n = GrGetFirstNode();
+		  n; 
+		  n = n->GrGetNextNode() )
 	{
-		VRNode *node = *it;
+		VRNode *node = static_cast<VRNode*>(n);
+		assert( dynamic_cast<VRNode*>(n) );
 		draw_buffer->SetLineWidth( node->borderw_);
 		draw_buffer->DrawRectangle( node->x_, node->y_, node->width_, node->height_, false);
 		draw_buffer->DrawText( node->x_ + node->borderw_ + NODE_LABEL_MARGIN, 
