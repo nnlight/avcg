@@ -46,6 +46,24 @@ enum Color_t
 	CMAPSIZE     = 256
 };
 
+enum Linestyle_t
+{
+	LS_SOLID     = 0,
+	LS_DOTTED    = 1,
+	LS_DASHED    = 2,
+	LS_UNVISIBLE = 3
+};
+
+enum Arrowstyle_t
+{
+	AS_NONE     = 0,
+	AS_SOLID    = 1,
+	AS_LINE     = 2,
+	AS_NONESPEC = 3
+};
+
+
+
 class VRGraph;
 /**
  * Узел
@@ -80,13 +98,14 @@ public:
 	int dots_;
 	int x_[VREDGE_DOT_COUNT];
 	int y_[VREDGE_DOT_COUNT];
-	int linestyle_;
+	Linestyle_t linestyle_;
 	int thickness_;
 	Color_t color_;
 	int arrowsize_;
-	int arrowstyle_;
+	Arrowstyle_t arrowstyle_;
+	Color_t arrowcolor_;
 public:
-	VREdge();
+	VREdge( VRGraph *graph);
 	~VREdge();
 private:
 	VREdge( const VRNode &a);
@@ -110,6 +129,12 @@ public:
 
 	/* загрузка графа из vcg */
 	void LoadGDL();
+private:
+	typedef struct gedge *GEDGE;
+	void LoadVcgEdge( GEDGE e);
+
+	void DrawEdge( DrawBuffer *draw_buffer, VREdge *edge);
+
 };
 
 

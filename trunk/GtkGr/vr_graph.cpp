@@ -17,15 +17,16 @@ VRNode::~VRNode()
 {
 }
 
-VREdge::VREdge()
-	: GrEdge( NULL, NULL)
+VREdge::VREdge( VRGraph *graph)
+	: GrEdge( graph->GrGetDummyNode(), graph->GrGetDummyNode())
     , label_()
 	, dots_(0)
-	, linestyle_(0)
+	, linestyle_(LS_SOLID)
 	, thickness_(2)
 	, color_(BLACK)
 	, arrowsize_(10)
-	, arrowstyle_(0)
+	, arrowstyle_(AS_SOLID)
+	, arrowcolor_(BLACK)
 {
 }
 
@@ -74,8 +75,7 @@ VRNode *VRGraph::AddSizedNode( int x, int y, int width, int height, const char *
  */
 void VRGraph::Expose( DrawBuffer *draw_buffer, int x, int y, int width, int height)
 {
-	GrNode *n;
-	for ( n = GrGetFirstNode();
+	for ( GrNode *n = GrGetFirstNode();
 		  n; 
 		  n = n->GrGetNextNode() )
 	{
@@ -86,23 +86,148 @@ void VRGraph::Expose( DrawBuffer *draw_buffer, int x, int y, int width, int heig
 		draw_buffer->DrawText( node->x_ + node->borderw_ + NODE_LABEL_MARGIN, 
 							   node->y_ + node->borderw_ + NODE_LABEL_MARGIN,
 							   node->label_.c_str());
+		for ( GrEdge *e = n->GrGetFirstSucc();
+			  e;
+			  e = e->GrGetNextSucc() )
+		{
+			VREdge *edge = static_cast<VREdge*>(e);
+			assert( dynamic_cast<VREdge*>(e) );
+			DrawEdge( draw_buffer, edge);
+		}
+	}
+	for ( GrEdge *e = GrGetDummyNode()->GrGetFirstSucc();
+		  e;
+		  e = e->GrGetNextSucc() )
+	{
+		VREdge *edge = static_cast<VREdge*>(e);
+		assert( dynamic_cast<VREdge*>(e) );
+		DrawEdge( draw_buffer, edge);
 	}
 } /* VRGraph::Expose */
 
 
+void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
+{
+	draw_buffer->SetLineWidth( edge->thickness_);
+	for ( int i = 1; i < edge->dots_; i++ )
+	{
+		draw_buffer->DrawLine( edge->x_[i-1], edge->y_[i-1],
+							   edge->x_[i], edge->y_[i]);
+		if ( i == edge->dots_ - 1 )
+		{
+			/* рисуем стрелку */
+			/*TODO*/
+		}
+	}
+} /* VRGraph::DrawEdge */
 
 
 extern "C" {
 #include "vcg/alloc.h"
 }
 
+
+void VRGraph::LoadVcgEdge( GEDGE e)
+{
+	VREdge *edge = new VREdge( this);
+	edge->thickness_ = ETHICKNESS(e);
+	if (edge->thickness_ == 0)
+		edge->thickness_ = 1;
+	edge->color_ = (Color_t)ECOLOR(e);
+	edge->linestyle_ = (Linestyle_t)ELSTYLE(e);
+	edge->arrowstyle_ = (Arrowstyle_t)EARROWSTYLE(e);
+	edge->arrowcolor_ = (Color_t)EARROWCOL(e);
+
+	int x1 = ESTARTX(e);
+	int y1 = ESTARTY(e);
+	int x2 = EENDX(e);
+	int y2 = EENDY(e);
+	int x3 = ETBENDX(e); // top bend, у начала
+	int y3 = ETBENDY(e);
+	int x4 = EBBENDX(e); // bottom bend, у конца
+	int y4 = EBBENDY(e);
+
+	int i = edge->dots_;
+	edge->x_[i] = x1;
+	edge->y_[i] = y1;
+	edge->dots_++;
+
+	if ( !((y3==y1)&&(x3==x1)) ) 
+	{
+		i = edge->dots_;
+		edge->x_[i] = x3;
+		edge->y_[i] = y3;
+		edge->dots_++;
+	}
+	if ( !((y4==y2)&&(x4==x2)) ) 
+	{
+		i = edge->dots_;
+		edge->x_[i] = x4;
+		edge->y_[i] = y4;
+		edge->dots_++;
+	}
+
+	i = edge->dots_;
+	edge->x_[i] = x2;
+	edge->y_[i] = y2;
+	edge->dots_++;
+	assert( edge->dots_ < VREDGE_DOT_COUNT );
+	return;
+} /* VRGraph::LoadVcgEdge */
+
+
+
 void VRGraph::LoadGDL()
 {
+	/* узлы */
 	GNODE v;
 	for ( v = nodelist; v; v = NNEXT(v) )
 	{
 		if (NWIDTH(v) == 0)
 			continue;
 		AddSizedNode( NX(v), NY(v), NWIDTH(v), NHEIGHT(v), NTITLE(v), NLABEL(v));
+	}
+
+	/* дуги */
+/*  Draw all edges
+ *  ==============
+ *  We assume that edges have already a filled ESTARTX, ESTARTY, ETBENDX
+ *  ETBENDY, EBBENDX, EBBENDYm EENDX, EENDY, EORI, EORI2 (if EART='D'), 
+ *  ELSTYLE, ETHICKNESS, 
+ *  ECOLOR, EARROWSIZE and EART.
+ *  Note that these edges should not have ELABEL entries, because 
+ *  edge labels should be converted before into label nodes.
+ *
+ *  We traverse all nodes and draw all edges pointing to these nodes.
+ *  This seems to be faster than to inspect edgelist and tmpedgelist.
+ *  This allows to correct EARROWSIZE at dummy nodes and label nodes.
+ */
+
+#define backward_connection1(c) ((CEDGE(c))&& (EEND(CEDGE(c)) ==v))
+#define backward_connection2(c) ((CEDGE2(c))&&(EEND(CEDGE2(c))==v))
+
+	GEDGE	e;
+	ADJEDGE li;
+	CONNECT c;
+	
+	for ( v = nodelist; v; v = NNEXT(v) )
+	{
+		c = NCONNECT(v);
+		if (c) {
+			if (backward_connection1(c)) {
+				e = CEDGE(c);
+				LoadVcgEdge( e);
+			}
+			if (backward_connection2(c)) {
+				e = CEDGE2(c);
+				LoadVcgEdge( e);
+			}
+		}
+		li = NPRED(v);
+		for ( li = NPRED(v); li; li = ANEXT(li) )
+		{
+			e  = AKANTE(li);
+			LoadVcgEdge( e);
+		}
 	}
 } /* VRGraph::LoadGDL */

@@ -238,8 +238,14 @@ void DrawBuffer::SetLineWidth( int line_width)
 {
 	gdk_gc_set_line_attributes( m_GC, line_width, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
 }
-void DrawBuffer::DrawLine()
+void DrawBuffer::DrawLine( vrgint x, vrgint y, vrgint endx, vrgint endy)
 {
+	gint pm_x = m_VRGBase[AXIS_X] + x;
+	gint pm_y = m_VRGBase[AXIS_Y] + y;
+	gint pm_endx = m_VRGBase[AXIS_X] + endx;
+	gint pm_endy = m_VRGBase[AXIS_Y] + endy;
+
+	gdk_draw_line( m_Pixmap, m_GC, pm_x, pm_y, pm_endx, pm_endy);
 }
 void DrawBuffer::DrawRectangle( vrgint x, vrgint y, int width, int height, bool filled)
 {

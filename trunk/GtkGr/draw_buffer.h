@@ -59,7 +59,7 @@ public:
 	void GetTextPixelSize( const char *text, int *width_p, int *height_p);
 	/* vrg-функции */
 	void SetLineWidth( int line_width);
-	void DrawLine();
+	void DrawLine( vrgint x, vrgint y, vrgint endx, vrgint endy);
 	void DrawRectangle( vrgint x, vrgint y, vrgint width, vrgint height, bool filled);
 	void DrawText( vrgint x, vrgint y, const char *text);
 private:
