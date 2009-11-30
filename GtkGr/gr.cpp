@@ -21,7 +21,7 @@ GrNode::GrNode( GrGraph *graph)
 
 GrNode::~GrNode(void)
 {
-	/* при удалении узла удаляются все инцидентные дуги */
+	/* РїСЂРё СѓРґР°Р»РµРЅРёРё СѓР·Р»Р° СѓРґР°Р»СЏСЋС‚СЃСЏ РІСЃРµ РёРЅС†РёРґРµРЅС‚РЅС‹Рµ РґСѓРіРё */
 	GrEdge *edge;
 	GrEdge *next_edge;
 	for ( edge = this->GrGetFirstSucc();
@@ -38,16 +38,16 @@ GrNode::~GrNode(void)
 		next_edge = edge->GrGetNextPred();
 		graph_->DeleteEdge( edge);
 	}
-	/* и узел удаляется из списка узлов */
+	/* Рё СѓР·РµР» СѓРґР°Р»СЏРµС‚СЃСЏ РёР· СЃРїРёСЃРєР° СѓР·Р»РѕРІ */
 	graph_->ExcludeNodeFromList( this);
 }
 
 /**
- * Включить дугу в список инцидентных (в направлении dir) дуг узла 
+ * Р’РєР»СЋС‡РёС‚СЊ РґСѓРіСѓ РІ СЃРїРёСЃРѕРє РёРЅС†РёРґРµРЅС‚РЅС‹С… (РІ РЅР°РїСЂР°РІР»РµРЅРёРё dir) РґСѓРі СѓР·Р»Р° 
  */
 void GrNode::IncludeEdgeInList( GrEdge *edge, GrDir_t dir)
 {
-	/* добавляем в конец списка дуг (в направлении dir)*/
+	/* РґРѕР±Р°РІР»СЏРµРј РІ РєРѕРЅРµС† СЃРїРёСЃРєР° РґСѓРі (РІ РЅР°РїСЂР°РІР»РµРЅРёРё dir)*/
 	GrEdge *last = edges[dir][GR_LIST_DIR_RIGHT];
 	if (last)
 	{
@@ -57,7 +57,7 @@ void GrNode::IncludeEdgeInList( GrEdge *edge, GrDir_t dir)
 		edges[dir][GR_LIST_DIR_RIGHT] = edge;
 	} else
 	{
-		/* тогда и первый элемент списка должен быть нулевым, т.е. список пустой */
+		/* С‚РѕРіРґР° Рё РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ СЃРїРёСЃРєР° РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РЅСѓР»РµРІС‹Рј, С‚.Рµ. СЃРїРёСЃРѕРє РїСѓСЃС‚РѕР№ */
 		assert( edges[dir][GR_LIST_DIR_LEFT] == 0 );
 		edge->adjedge[dir][GR_LIST_DIR_LEFT] = NULL;
 		edge->adjedge[dir][GR_LIST_DIR_RIGHT] = NULL;
@@ -67,7 +67,7 @@ void GrNode::IncludeEdgeInList( GrEdge *edge, GrDir_t dir)
 }
 
 /**
- * Исключить дугу из списока инцидентных (в направлении dir) дуг узла 
+ * РСЃРєР»СЋС‡РёС‚СЊ РґСѓРіСѓ РёР· СЃРїРёСЃРѕРєР° РёРЅС†РёРґРµРЅС‚РЅС‹С… (РІ РЅР°РїСЂР°РІР»РµРЅРёРё dir) РґСѓРі СѓР·Р»Р° 
  */
 void GrNode::ExcludeEdgeFromList( GrEdge *edge, GrDir_t dir)
 {
@@ -134,7 +134,7 @@ GrGraph::GrGraph(void)
 
 GrGraph::~GrGraph(void)
 {
-	/* при удалении графа удаляются все узлы графа */
+	/* РїСЂРё СѓРґР°Р»РµРЅРёРё РіСЂР°С„Р° СѓРґР°Р»СЏСЋС‚СЃСЏ РІСЃРµ СѓР·Р»С‹ РіСЂР°С„Р° */
 	GrNode *node;
 	GrNode *next_node;
 	for ( node = this->GrGetFirstNode();
@@ -152,7 +152,7 @@ GrMarker_t GrGraph::AllocMarker()
 	{
 		if ( busy_markers[i] )
 			continue;
-		/* нашли не занятый маркер */
+		/* РЅР°С€Р»Рё РЅРµ Р·Р°РЅСЏС‚С‹Р№ РјР°СЂРєРµСЂ */
 		busy_markers[i] = true;
 		assert( markers_init_val[i] < GR_MARKER_VALUE_MAX );
 		GrMarkerValueType_t new_init_val = ++markers_init_val[i];
@@ -169,11 +169,11 @@ void GrGraph::FreeMarker( GrMarker_t marker)
 }
 
 /**
- * Включить узел в список узлов графа
+ * Р’РєР»СЋС‡РёС‚СЊ СѓР·РµР» РІ СЃРїРёСЃРѕРє СѓР·Р»РѕРІ РіСЂР°С„Р°
  */
 void GrGraph::IncludeNodeInList( GrNode *node)
 {
-	/* добавляем в конец списка узлов */
+	/* РґРѕР±Р°РІР»СЏРµРј РІ РєРѕРЅРµС† СЃРїРёСЃРєР° СѓР·Р»РѕРІ */
 	GrNode *last = nodes[GR_LIST_DIR_RIGHT];
 	if (last)
 	{
@@ -183,7 +183,7 @@ void GrGraph::IncludeNodeInList( GrNode *node)
 		nodes[GR_LIST_DIR_RIGHT] = node;
 	} else
 	{
-		/* тогда и первый элемент списка должен быть нулевым, т.е. список пустой */
+		/* С‚РѕРіРґР° Рё РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ СЃРїРёСЃРєР° РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РЅСѓР»РµРІС‹Рј, С‚.Рµ. СЃРїРёСЃРѕРє РїСѓСЃС‚РѕР№ */
 		assert( nodes[GR_LIST_DIR_LEFT] == 0 );
 		node->adjnode[GR_LIST_DIR_LEFT] = NULL;
 		node->adjnode[GR_LIST_DIR_RIGHT] = NULL;
@@ -193,7 +193,7 @@ void GrGraph::IncludeNodeInList( GrNode *node)
 }
 
 /**
- * Исключить узел из списка узлов графа
+ * РСЃРєР»СЋС‡РёС‚СЊ СѓР·РµР» РёР· СЃРїРёСЃРєР° СѓР·Р»РѕРІ РіСЂР°С„Р°
  */
 void GrGraph::ExcludeNodeFromList( GrNode *node)
 {
