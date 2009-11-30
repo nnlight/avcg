@@ -122,10 +122,6 @@ void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
 } /* VRGraph::DrawEdge */
 
 
-extern "C" {
-#include "vcg/alloc.h"
-}
-
 
 void VRGraph::LoadVcgEdge( GEDGE e)
 {

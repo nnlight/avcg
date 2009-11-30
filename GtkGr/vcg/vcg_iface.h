@@ -2,6 +2,8 @@
 #define _VCG_IFACE_H_
 
 #include <stdio.h>
+#include "vcg_defs.h"
+#include "gdl_defs.h"
 
 #ifdef __cplusplus
 extern "C" {
