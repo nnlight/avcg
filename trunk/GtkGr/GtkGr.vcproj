@@ -297,6 +297,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\vcg\gdl_defs.h"
+				>
+			</File>
+			<File
 				RelativePath=".\vcg\globals.h"
 				>
 			</File>
@@ -338,6 +342,10 @@
 			</File>
 			<File
 				RelativePath=".\ui.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\vcg_defs.h"
 				>
 			</File>
 			<File
