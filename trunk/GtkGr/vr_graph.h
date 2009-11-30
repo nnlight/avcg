@@ -4,63 +4,11 @@
 #include "stdafx.h"
 #include "draw_buffer.h"
 #include "gr.h"
+#include "vcg/vcg_iface.h"
 
 using namespace std;
 
-enum Color_t
-{
-	WHITE        = 0,
-	BLUE         = 1,
-	RED          = 2,
-	GREEN        = 3,
-	YELLOW       = 4,
-	MAGENTA      = 5,
-	CYAN         = 6,
-	DARKGREY     = 7,
-	DARKBLUE     = 8,
-	DARKRED      = 9,
-	DARKGREEN    = 10,
-	DARKYELLOW   = 11,
-	DARKMAGENTA  = 12,
-	DARKCYAN     = 13,
-	GOLD         = 14,
-	LIGHTGREY    = 15,
-	LIGHTBLUE    = 16,
-	LIGHTRED     = 17,
-	LIGHTGREEN   = 18,
-	LIGHTYELLOW  = 19,
-	LIGHTMAGENTA = 20,
-	LIGHTCYAN    = 21,
-	LILAC        = 22,
-	TURQUOISE    = 23,
-	AQUAMARINE   = 24,
-	KHAKI        = 25,
-	PURPLE       = 26,
-	YELLOWGREEN  = 27,
-	PINK         = 28,
-	ORANGE       = 29,
-	ORCHID       = 30,
-	BLACK        = 31,
-	/* number of colors */
-	BASECMAPSIZE = 32,
-	CMAPSIZE     = 256
-};
 
-enum Linestyle_t
-{
-	LS_SOLID     = 0,
-	LS_DOTTED    = 1,
-	LS_DASHED    = 2,
-	LS_UNVISIBLE = 3
-};
-
-enum Arrowstyle_t
-{
-	AS_NONE     = 0,
-	AS_SOLID    = 1,
-	AS_LINE     = 2,
-	AS_NONESPEC = 3
-};
 
 
 
@@ -130,7 +78,6 @@ public:
 	/* загрузка графа из vcg */
 	void LoadGDL();
 private:
-	typedef struct gedge *GEDGE;
 	void LoadVcgEdge( GEDGE e);
 
 	void DrawEdge( DrawBuffer *draw_buffer, VREdge *edge);

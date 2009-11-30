@@ -285,7 +285,7 @@ static void	visualize_part(void)
         V_xmin = V_xmin_initial;
         V_xmax = V_xmin + (long)G_xmax;
         V_ymin = V_ymin_initial;
-        V_ymax = V_ymin + (long)(G_ymax + COFFSET);
+        V_ymax = V_ymin + (long)G_ymax;
 
 	relayout();
 } /* visualize_part */
