@@ -8,7 +8,11 @@
 GrNode::GrNode( GrGraph *graph)
 	: graph_(graph)
 {
-	graph_->IncludeNodeInList( this);
+	/* ссылки на граф нет только у dummy_node_, который в список узлов не заносится */
+	if ( graph_ )
+	{
+		graph_->IncludeNodeInList( this);
+	}
 	edges[GR_DIR_UP][GR_LIST_DIR_LEFT] = NULL;
 	edges[GR_DIR_UP][GR_LIST_DIR_RIGHT] = NULL;
 	edges[GR_DIR_DOWN][GR_LIST_DIR_LEFT] = NULL;
@@ -29,17 +33,26 @@ GrNode::~GrNode(void)
 		  edge = next_edge )
 	{
 		next_edge = edge->GrGetNextSucc();
-		graph_->DeleteEdge( edge);
+		if (graph_)
+		{
+			graph_->DeleteEdge( edge);
+		}
 	}
 	for ( edge = this->GrGetFirstPred();
 		  edge;
 		  edge = next_edge )
 	{
 		next_edge = edge->GrGetNextPred();
-		graph_->DeleteEdge( edge);
+		if (graph_)
+		{
+			graph_->DeleteEdge( edge);
+		}
 	}
 	/* и узел удаляется из списка узлов */
-	graph_->ExcludeNodeFromList( this);
+	if ( graph_ )
+	{
+		graph_->ExcludeNodeFromList( this);
+	}
 }
 
 /**
@@ -122,6 +135,7 @@ void GrEdge::GrChangeNode( GrDir_t dir, GrNode *new_node)
 //////////////////////////// GrEdge ///////////////////////////////////
 
 GrGraph::GrGraph(void)
+	: dummy_node_(NULL)
 {
 	nodes[GR_LIST_DIR_LEFT] = NULL;
 	nodes[GR_LIST_DIR_RIGHT] = NULL;

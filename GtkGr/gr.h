@@ -1,6 +1,7 @@
 #ifndef _GR_H_
 #define _GR_H_
 
+#include <stdlib.h>
 #include <assert.h>
 
 /* направление (в топологии графа) */
@@ -60,6 +61,9 @@ public:
 	bool IsMarked( GrMarker_t mar) { return markers_val[GR_MARKER_IDX(mar)] == GR_MARKER_VAL(mar); };
 	void SetMarker( GrMarker_t mar) { markers_val[GR_MARKER_IDX(mar)] = GR_MARKER_VAL(mar); };
 	void ResetMarker( GrMarker_t mar) { markers_val[GR_MARKER_IDX(mar)] = 0; };
+
+	/* проверка, что это технический узел (только у технического узла нет ссылки на граф) */
+	bool IsDummy() { return graph_ == NULL; };
 
 private:
 	GrGraph *graph_;
@@ -134,10 +138,14 @@ public:
 	GrMarker_t AllocMarker();
 	void FreeMarker( GrMarker_t marker);
 
+	/* получение техничекого узла, если хочется создать дугу "в никуда" */
+	GrNode *GrGetDummyNode() { return &dummy_node_; };
+
 private:
 	GrNode *nodes[GR_LIST_DIR_LAST];  // первый-последний узел графа
 	bool busy_markers[GR_MARKERS_COUNT];
 	GrMarkerValueType_t markers_init_val[GR_MARKERS_COUNT];
+	GrNode dummy_node_;  // для привязки дуг "в никуда"
 private:
 	void IncludeNodeInList( GrNode *node);
 	void ExcludeNodeFromList( GrNode *node);
