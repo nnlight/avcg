@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "draw_buffer.h"
+#include "gr.h"
 
 using namespace std;
 
@@ -45,10 +46,11 @@ enum Color_t
 	CMAPSIZE     = 256
 };
 
+class VRGraph;
 /**
  * Узел
  */
-class VRNode
+class VRNode : public GrNode
 {
 public:
 	string title_;
@@ -61,7 +63,7 @@ public:
 	int stretch_;
 	int shrink_;
 public:
-	VRNode( const char *title, int x, int y);
+	VRNode( VRGraph *graph, const char *title, int x, int y);
 	~VRNode();
 private:
 	VRNode( const VRNode &a);
@@ -71,7 +73,7 @@ private:
 /**
  * Дуга
  */
-class VREdge
+class VREdge : public GrEdge
 {
 public:
 	string label_;
@@ -95,7 +97,7 @@ private:
  * Хранит граф с позициями узлов и т.п., т.е. описывает то, как должен выглядеть граф. 
  * Линейные размеры не привязаны к пикселям и тому, в каком масшабе сейчас он отображается.
  */
-class VRGraph
+class VRGraph : public GrGraph
 {
 public:
 	VRGraph();
@@ -108,9 +110,6 @@ public:
 
 	/* загрузка графа из vcg */
 	void LoadGDL();
-private:
-	typedef list<VRNode*> nodes_t;
-	list<VRNode*> nodes_;
 };
 
 

@@ -1,5 +1,3 @@
-
-
 /*--------------------------------------------------------------------*/
 /*								      */
 /*		VCG : Visualization of Compiler Graphs		      */
@@ -18,9 +16,6 @@
 /*								      */
 /*--------------------------------------------------------------------*/
 
-#ifndef lint
-static char *id_string="$Id: step3.c,v 3.12 1995/02/08 11:11:14 sander Exp $";
-#endif
 
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
@@ -39,66 +34,8 @@ static char *id_string="$Id: step3.c,v 3.12 1995/02/08 11:11:14 sander Exp $";
  *  You  should  have  received a copy of the GNU General Public License
  *  along  with  this  program;  if  not,  write  to  the  Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  The software is available per anonymous ftp at ftp.cs.uni-sb.de.
- *  Contact  sander@cs.uni-sb.de  for additional information.
  */
 
-
-/* 
- * $Log: step3.c,v $
- * Revision 3.12  1995/02/08  11:11:14  sander
- * Distribution version 1.3.
- *
- * Revision 3.11  1994/12/23  18:12:45  sander
- * Manhatten layout added.
- * Option interface cleared.
- *
- * Revision 3.10  1994/08/09  10:44:03  sander
- * macro touching for xraster corrected.
- *
- * Revision 3.9  1994/08/08  16:01:47  sander
- * Attributes xraster, xlraster, yraster added.
- *
- * Revision 3.8  1994/08/05  12:13:25  sander
- * Treelayout added. Attributes "treefactor" and "spreadlevel" added.
- * Scaling as abbreviation of "stretch/shrink" added.
- *
- * Revision 3.7  1994/08/02  15:36:12  sander
- * dumpmediumshifts corrected: regions can be combined if
- * their deflection pull them together.
- *
- * Revision 3.6  1994/06/07  14:09:59  sander
- * Splines implemented.
- * HP-UX, Linux, AIX, Sun-Os, IRIX compatibility tested.
- * The tool is now ready to be distributed.
- *
- * Revision 3.5  1994/05/16  08:56:03  sander
- * shape attribute (boxes, rhombs, ellipses, triangles) added.
- *
- * Revision 3.4  1994/05/05  08:20:30  sander
- * Bug with x_base and y_base solved.
- *
- * Revision 3.3  1994/04/27  16:05:19  sander
- * Some general changes for the PostScript driver.
- * Horizontal order added. Bug fixes of the folding phases:
- * Folding of nested graphs works now.
- *
- * Revision 3.2  1994/03/03  14:12:21  sander
- * Shift the unconnected parts together after the layout.
- *
- * Revision 3.1  1994/03/01  10:59:55  sander
- * Copyright and Gnu Licence message added.
- * Problem with "nearedges: no" and "selfloops" solved.
- *
- * Revision 2.3  1994/01/21  19:33:46  sander
- * VCG Version tested on Silicon Graphics IRIX, IBM R6000 AIX and Sun 3/60.
- * Option handling improved. Option -grabinputfocus installed.
- * X11 Font selection scheme implemented. The user can now select a font
- * during installation.
- * Sun K&R C (a nonansi compiler) tested. Some portabitility problems solved.
- *
- */ 
 
 
 /************************************************************************
@@ -2745,12 +2682,7 @@ int i;
  *  The return value is 1, if something has changed.
  */
 
-#ifdef ANSI_C
 static int	do_leftshifts(int i)
-#else
-static int	do_leftshifts(i)
-int i;
-#endif
 {
 	int   j;
 	int   diff;
@@ -2760,6 +2692,7 @@ int i;
 
 	assert((i>=0) && (i<=maxdepth+1));
 	lnode = NULL;
+	changed = 0;
 	for (j=0; j<TANZ(layer[i]); j++) {
 		if (levelweight[j]) diff = levelshift[j]/levelweight[j];
 		else diff = 0;
@@ -2792,7 +2725,7 @@ int i;
 		lnode = node;
 	}
 	return(changed);
-}
+} /* do_leftshifts */
 
 /*  Rightshifts of a layer
  *  ----------------------
@@ -2803,12 +2736,7 @@ int i;
  *  The return value is 1, if something has changed.
  */
 
-#ifdef ANSI_C
 static int	do_rightshifts(int i)
-#else
-static int	do_rightshifts(i)
-int i;
-#endif
 {
 	int   j;
 	int   diff;
@@ -2850,7 +2778,7 @@ int i;
 		rnode = node;
 	}
 	return(changed);
-}
+} /* do_rightshifts */
 
 
 
