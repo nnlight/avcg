@@ -62,8 +62,8 @@ public:
 	void SetMarker( GrMarker_t mar) { markers_val[GR_MARKER_IDX(mar)] = GR_MARKER_VAL(mar); };
 	void ResetMarker( GrMarker_t mar) { markers_val[GR_MARKER_IDX(mar)] = 0; };
 
-	/* проверка, что это технический узел (только у технического узла нет ссылки на граф) */
-	bool IsDummy() { return graph_ == NULL; };
+	/* проверка, что это технический узел */
+	bool IsDummy();
 
 private:
 	GrGraph *graph_;

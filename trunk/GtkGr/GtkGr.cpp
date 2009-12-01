@@ -274,9 +274,11 @@ int main(int argc, char *argv[])
 	// сигнал ("key_press_event")
 	gtk_signal_connect( GTK_OBJECT(main_window),"key_press_event", GTK_SIGNAL_FUNC(key_press_cb), db);
 
+printf("before gtk_widget_show_all(main_window)\n");
 
 	// отображение основного окна
 	gtk_widget_show_all( main_window);
+printf("after gtk_widget_show_all(main_window)\n");
 	gtk_main();
 	return 0;
 } /* main */

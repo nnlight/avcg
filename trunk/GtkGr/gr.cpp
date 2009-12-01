@@ -8,8 +8,8 @@
 GrNode::GrNode( GrGraph *graph)
 	: graph_(graph)
 {
-	/* ссылки на граф нет только у dummy_node_, который в список узлов не заносится */
-	if ( graph_ )
+	/* dummy_node_ в список узлов не заносится */
+	if ( this != &(graph_->dummy_node_) )
 	{
 		graph_->IncludeNodeInList( this);
 	}
@@ -33,28 +33,29 @@ GrNode::~GrNode(void)
 		  edge = next_edge )
 	{
 		next_edge = edge->GrGetNextSucc();
-		if (graph_)
-		{
-			graph_->DeleteEdge( edge);
-		}
+		graph_->DeleteEdge( edge);
 	}
 	for ( edge = this->GrGetFirstPred();
 		  edge;
 		  edge = next_edge )
 	{
 		next_edge = edge->GrGetNextPred();
-		if (graph_)
-		{
-			graph_->DeleteEdge( edge);
-		}
+		graph_->DeleteEdge( edge);
 	}
-	/* и узел удаляется из списка узлов */
-	if ( graph_ )
+	/* и узел удаляется из списка узлов (но не dummy_node_) */
+	if ( this != &(graph_->dummy_node_) )
 	{
 		graph_->ExcludeNodeFromList( this);
 	}
 }
 
+/**
+ * Проверка на то, что это технический узел
+ */
+bool GrNode::IsDummy()
+{
+	return (this == &(graph_->dummy_node_));
+}
 /**
  * Включить дугу в список инцидентных (в направлении dir) дуг узла 
  */
@@ -135,7 +136,7 @@ void GrEdge::GrChangeNode( GrDir_t dir, GrNode *new_node)
 //////////////////////////// GrEdge ///////////////////////////////////
 
 GrGraph::GrGraph(void)
-	: dummy_node_(NULL)
+	: dummy_node_(this)
 {
 	nodes[GR_LIST_DIR_LEFT] = NULL;
 	nodes[GR_LIST_DIR_RIGHT] = NULL;
