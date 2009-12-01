@@ -61,6 +61,7 @@ public:
 	void SetLineWidth( int line_width);
 	void DrawLine( vrgint x, vrgint y, vrgint endx, vrgint endy);
 	void DrawRectangle( vrgint x, vrgint y, vrgint width, vrgint height, bool filled);
+	void DrawTriangle( vrgint x1, vrgint y1, vrgint x2, vrgint y2, vrgint x3, vrgint y3, bool filled);
 	void DrawText( vrgint x, vrgint y, const char *text);
 private:
 	void InvalidateDa( const GdkRectangle *update_rect);

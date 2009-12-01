@@ -247,7 +247,7 @@ void DrawBuffer::DrawLine( vrgint x, vrgint y, vrgint endx, vrgint endy)
 
 	gdk_draw_line( m_Pixmap, m_GC, pm_x, pm_y, pm_endx, pm_endy);
 }
-void DrawBuffer::DrawRectangle( vrgint x, vrgint y, int width, int height, bool filled)
+void DrawBuffer::DrawRectangle( vrgint x, vrgint y, vrgint width, vrgint height, bool filled)
 {
 	gboolean pm_filled = filled ? TRUE : FALSE;
 	gint pm_x = m_VRGBase[AXIS_X] + x;
@@ -256,6 +256,20 @@ void DrawBuffer::DrawRectangle( vrgint x, vrgint y, int width, int height, bool 
 	gdk_draw_rectangle( m_Pixmap, m_GC, pm_filled, 
 						pm_x, pm_y, 
 						width, height);
+}
+void DrawBuffer::DrawTriangle( vrgint x1, vrgint y1, vrgint x2, vrgint y2, vrgint x3, vrgint y3, bool filled)
+{
+	gboolean pm_filled = filled ? TRUE : FALSE;
+	GdkPoint p[3];
+	p[0].x = m_VRGBase[AXIS_X] + x1;
+	p[0].y = m_VRGBase[AXIS_Y] + y1;
+	p[1].x = m_VRGBase[AXIS_X] + x2;
+	p[1].y = m_VRGBase[AXIS_Y] + y2;
+	p[2].x = m_VRGBase[AXIS_X] + x3;
+	p[2].y = m_VRGBase[AXIS_Y] + y3;
+
+	gdk_draw_polygon( m_Pixmap, m_GC, pm_filled, 
+					  p, 3);
 }
 void DrawBuffer::DrawText( vrgint x, vrgint y, const char *text)
 {
