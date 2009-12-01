@@ -1,4 +1,9 @@
 #include "vr_graph.h"
+#include <math.h>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846264338327
+#endif
 
 
 
@@ -115,8 +120,25 @@ void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
 							   edge->x_[i], edge->y_[i]);
 		if ( i == edge->dots_ - 1 )
 		{
-			/* рисуем стрелку */
-			/*TODO*/
+			/* рисуем стрелку, является равносторонним треугольником со стороной edge->arrowsize_ */
+			double d_x = edge->x_[i-1] - edge->x_[i];
+			double d_y = edge->y_[i-1] - edge->y_[i];
+			double len = sqrt(d_x*d_x + d_y*d_y);
+			/* поворачиваем на + 30 градусов и приводи длину */
+			double x2 = cos(M_PI/6) * d_x - sin(M_PI/6) * d_y;
+			double y2 = sin(M_PI/6) * d_x + cos(M_PI/6) * d_y;
+			int ix2 = x2 * edge->arrowsize_ / len + edge->x_[i];
+			int iy2 = y2 * edge->arrowsize_ / len + edge->y_[i];
+			/* поворачиваем на - 30 градусов и приводим длину */
+			double x3 = cos(-M_PI/6) * d_x - sin(-M_PI/6) * d_y;
+			double y3 = sin(-M_PI/6) * d_x + cos(-M_PI/6) * d_y;
+			int ix3 = x3 * edge->arrowsize_ / len + edge->x_[i];
+			int iy3 = y3 * edge->arrowsize_ / len + edge->y_[i];
+			/* рисуем */
+			draw_buffer->DrawTriangle( edge->x_[i], edge->y_[i],
+									   ix2, iy2,
+									   ix3, iy3,
+									   true);
 		}
 	}
 } /* VRGraph::DrawEdge */
