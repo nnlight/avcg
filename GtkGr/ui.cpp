@@ -1,21 +1,217 @@
 #include "ui.h"
+#include <gdk/gdkkeysyms.h>
+#include "vr_graph.h"
 
 
-static void
-activate_action (GtkAction *action)
+/**
+ * Обработчик сигнала закрытия главного окна приложения
+ */
+static gboolean 
+ui_close_cb( GtkWindow *window, gpointer data)
 {
-  g_message ("Action \"%s\" activated", gtk_action_get_name (action));
-}
+	GtkWidget *dialog, *label;
+
+	dialog = gtk_dialog_new_with_buttons( "quit dialog", window,
+							GtkDialogFlags(GTK_DIALOG_MODAL | GTK_DIALOG_NO_SEPARATOR),
+							GTK_STOCK_YES, GTK_RESPONSE_YES,
+							GTK_STOCK_NO, GTK_RESPONSE_NO,
+							NULL);
+	gtk_container_set_border_width( GTK_CONTAINER(dialog), 10);
+	label = gtk_label_new ("\nDo you really want to quit?\n");
+	gtk_container_add( GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), label);
+	gtk_widget_show( label);
+	int response = gtk_dialog_run( GTK_DIALOG(dialog));
+	gtk_widget_destroy( dialog);
+	if ( response == GTK_RESPONSE_YES )
+	{
+		return FALSE; /* закрываемся*/
+	} else
+	{
+		return TRUE;  /* отбой */
+	}
+} /* ui_close_cb */
+
+static gint 
+ui_key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data)
+{
+	/*
+  if (event->length > 0)
+    printf("The key event's string is `%s'\n", event->string);
+
+  printf("The name of this keysym is `%s'\n", 
+         gdk_keyval_name(event->keyval));*/
+
+	UIController *uic = (UIController *)data;
+	DrawBuffer *db = uic->m_DrawBuffer.get();
+
+	switch (event->keyval)
+	{
+	case GDK_Home:
+		GdkCursor* cursor;
+		cursor = gdk_cursor_new(GDK_CLOCK);
+		gdk_window_set_cursor(widget->window, cursor);
+		gdk_cursor_destroy(cursor);
+		break;
+
+	case GDK_Up:
+		db->MoveVisibleArea( -15, AXIS_Y);
+		break;
+	case GDK_Down:
+		db->MoveVisibleArea( 15, AXIS_Y);
+		break;
+	case GDK_Left:
+		db->MoveVisibleArea( -15, AXIS_X);
+		break;
+	case GDK_Right:
+		db->MoveVisibleArea( 15, AXIS_X);
+		break;
+
+	case GDK_p:
+		db->PKey();
+		break;
+
+	default:
+		break;
+	}
+/*
+  if (gdk_keyval_is_lower(event->keyval))
+    {
+      printf("A non-uppercase key was pressed.\n");
+    }
+  else if (gdk_keyval_is_upper(event->keyval))
+    {
+      printf("An uppercase letter was pressed.\n");
+    }*/
+	//return TRUE;
+	return FALSE;
+} /* ui_key_press_cb */
+
+/////////////////////////////////// drawing_area callbacks //////////////////////////////////////////////
+static bool g_DaPrintEvents = true;
+
+static gboolean
+ui_da_configure_event_cb( GtkWidget         *da,
+                          GdkEventConfigure *event,
+                          gpointer           data)
+{
+	UIController *uic = (UIController *)data;
+	DrawBuffer *db = uic->m_DrawBuffer.get();
+	if (g_DaPrintEvents ) g_print("configure_event\n");
+	
+	db->ConfigureDa();
+
+	/* We've handled the configure event, no need for further processing. */
+	return TRUE;
+} /* ui_da_configure_event_cb */
+
+/* Redraw the screen from the pixmap */
+static gboolean
+ui_da_expose_event_cb( GtkWidget      *da,
+                       GdkEventExpose *event,
+                       gpointer        data)
+{
+	UIController *uic = (UIController *)data;
+	DrawBuffer *db = uic->m_DrawBuffer.get();
+  	if (g_DaPrintEvents ) g_print("expose_event\n");
+
+	db->ExposeDa( event->area.x, event->area.y,
+				  event->area.width, event->area.height);
+
+	return FALSE;   /* We've handled it, stop processing */
+} /* ui_da_expose_event_cb */
+
+static gboolean
+ui_da_button_press_event_cb( GtkWidget      *da,
+                             GdkEventButton *event,
+                             gpointer        data)
+{
+	UIController *uic = (UIController *)data;
+	DrawBuffer *db = uic->m_DrawBuffer.get();
+  	if (g_DaPrintEvents ) g_print("button_press_event\n");
+
+	if (event->button == 1)
+	{
+		db->ButtonPress( (int)event->x, (int)event->y);
+	} else if (event->button == 2)
+	{
+		db->ButtonPress2( (int)event->x, (int)event->y);
+	} else
+	{
+		printf("unhandled button press %d\n", event->button);
+	}
+  
+	return TRUE;    /* We've handled it, stop processing */
+} /* ui_da_button_press_event_cb */
+
+static gboolean
+ui_da_motion_notify_event_cb( GtkWidget      *da,
+                              GdkEventMotion *event,
+                              gpointer        data)
+{
+	UIController *uic = (UIController *)data;
+	DrawBuffer *db = uic->m_DrawBuffer.get();
+  	/*if (g_DaPrintEvents ) g_print("motion_notify_event\n");*/
+	int x, y;
+	GdkModifierType state;
+
+  /* This call is very important; it requests the next motion event.
+   * If you don't call gdk_window_get_pointer() you'll only get
+   * a single motion event. The reason is that we specified
+   * GDK_POINTER_MOTION_HINT_MASK to gtk_widget_set_events().
+   * If we hadn't specified that, we could just use event->x, event->y
+   * as the pointer location. But we'd also get deluged in events.
+   * By requesting the next event as we handle the current one,
+   * we avoid getting a huge number of events faster than we
+   * can cope.
+   */
+	gdk_window_get_pointer (event->window, &x, &y, &state);
+
+	if (state & GDK_BUTTON1_MASK)
+		db->ButtonPress( x, y);
+
+	return TRUE;  /* We've handled it, stop processing */
+} /* ui_da_motion_notify_event_cb */
+
+
+/////////////////////////////////// Menu //////////////////////////////////////////////
 
 static void
-activate_radio_action (GtkAction *action, GtkRadioAction *current)
+ui_activate_action( GtkAction *action, gpointer user_data)
+{
+	UIController *uic = (UIController *)user_data;
+	const gchar *action_name = gtk_action_get_name( action);
+
+	g_message( "Action \"%s\" activated", action_name);
+	if ( !strcmp( action_name, "Quit") )
+	{
+		/* выходим без диалогов всяких... :) */
+		gtk_main_quit();
+	}
+} /* ui_activate_action */
+
+static void
+activate_radio_action( GtkAction *action, /* Действие на котором издаётся сигнал */
+					   GtkRadioAction *current, /* Член группы actions который активирован */
+					   gpointer user_data)
 {
   g_message ("Radio action \"%s\" selected", 
 	     gtk_action_get_name (GTK_ACTION (current)));
 }
 
+static void
+ui_activate_radio_action_mode( GtkAction *action, /* Действие на котором издаётся сигнал */
+                               GtkRadioAction *current, /* Член группы actions который активирован */
+                               gpointer user_data)
+{
+	UIController *uic = (UIController *)user_data;
+	const gchar *name = gtk_action_get_name( GTK_ACTION( current));
+
+	g_message( "Radio action \"%s\" selected", name);
+} /* ui_activate_radio_action_mode */
+
 static GtkActionEntry entries[] = {
   { "FileMenu", NULL, "_File" },               /* name, stock id, label */
+  { "EditMenu", NULL, "_Edit" },
   { "PreferencesMenu", NULL, "_Preferences" }, /* name, stock id, label */
   { "ColorMenu", NULL, "_Color"  },            /* name, stock id, label */
   { "ShapeMenu", NULL, "_Shape" },             /* name, stock id, label */
@@ -23,43 +219,58 @@ static GtkActionEntry entries[] = {
   { "New", GTK_STOCK_NEW,                      /* name, stock id */
     "_New", "<control>N",                      /* label, accelerator */
     "Create a new file",                       /* tooltip */ 
-    G_CALLBACK (activate_action) },      
+    G_CALLBACK (ui_activate_action) },      
   { "Open", GTK_STOCK_OPEN,                    /* name, stock id */
     "_Open","<control>O",                      /* label, accelerator */     
     "Open a file",                             /* tooltip */
-    G_CALLBACK (activate_action) }, 
+    G_CALLBACK (ui_activate_action) }, 
   { "Save", GTK_STOCK_SAVE,                    /* name, stock id */
     "_Save","<control>S",                      /* label, accelerator */     
     "Save current file",                       /* tooltip */
-    G_CALLBACK (activate_action) },
+    G_CALLBACK (ui_activate_action) },
   { "SaveAs", GTK_STOCK_SAVE,                  /* name, stock id */
     "Save _As...", NULL,                       /* label, accelerator */     
     "Save to a file",                          /* tooltip */
-    G_CALLBACK (activate_action) },
+    G_CALLBACK (ui_activate_action) },
   { "Quit", GTK_STOCK_QUIT,                    /* name, stock id */
     "_Quit", "<control>Q",                     /* label, accelerator */     
     "Quit",                                    /* tooltip */
-    G_CALLBACK (activate_action) },
+    G_CALLBACK (ui_activate_action) },
   { "About", NULL,                             /* name, stock id */
     "_About", "<control>A",                    /* label, accelerator */     
     "About",                                   /* tooltip */  
-    G_CALLBACK (activate_action) },
+    G_CALLBACK (ui_activate_action) },
   { "Logo", "demo-gtk-logo",                   /* name, stock id */
      NULL, NULL,                               /* label, accelerator */     
     "GTK+",                                    /* tooltip */
-    G_CALLBACK (activate_action) },
+    G_CALLBACK (ui_activate_action) },
 };
-static guint n_entries = G_N_ELEMENTS (entries);
 
+enum Mode_t
+{
+  MODE_ADD_NODE,
+  MODE_ADD_EDGE,
+  MODE_VIEW
+};
+static GtkRadioActionEntry mode_entries[] = {
+  { "AddNode", NULL,                               /* name, stock id */
+    "Add_Node", NULL,                      /* label, accelerator */     
+    "", MODE_ADD_NODE },                      /* tooltip, value */
+  { "AddEdge", NULL,                             /* name, stock id */
+    "Add_Edge", NULL,                    /* label, accelerator */     
+    "", MODE_ADD_EDGE },                    /* tooltip, value */
+  { "View", NULL,                              /* name, stock id */
+    "_View", NULL,                     /* label, accelerator */     
+    "Режим просмотра", MODE_VIEW },                       /* tooltip, value */
+};
 
 static GtkToggleActionEntry toggle_entries[] = {
   { "Bold", GTK_STOCK_BOLD,                    /* name, stock id */
      "_Bold", "<control>B",                    /* label, accelerator */     
     "Bold",                                    /* tooltip */
-    G_CALLBACK (activate_action), 
+    G_CALLBACK (ui_activate_action), 
     TRUE },                                    /* is_active */
 };
-static guint n_toggle_entries = G_N_ELEMENTS (toggle_entries);
 
 enum {
   COLOR_RED,
@@ -78,7 +289,6 @@ static GtkRadioActionEntry color_entries[] = {
     "_Blue", "<control>B",                     /* label, accelerator */     
     "Sky", COLOR_BLUE },                       /* tooltip, value */
 };
-static guint n_color_entries = G_N_ELEMENTS (color_entries);
 
 enum {
   SHAPE_SQUARE,
@@ -97,7 +307,6 @@ static GtkRadioActionEntry shape_entries[] = {
     "_Oval", "<control>O",                     /* label, accelerator */     
     "Egg", SHAPE_OVAL },                       /* tooltip, value */  
 };
-static guint n_shape_entries = G_N_ELEMENTS (shape_entries);
 
 static const gchar *ui_info = 
 "<ui>"
@@ -110,11 +319,18 @@ static const gchar *ui_info =
 "      <separator/>"
 "      <menuitem action='Quit'/>"
 "    </menu>"
+"    <menu action='EditMenu'>"
+"      <separator/>"
+"      <menuitem action='AddNode'/>"
+"      <menuitem action='AddEdge'/>"
+"      <menuitem action='View'/>"
+"      <separator/>"
+"    </menu>"
 "    <menu action='PreferencesMenu'>"
 "      <menu action='ColorMenu'>"
-"	<menuitem action='Red'/>"
-"	<menuitem action='Green'/>"
-"	<menuitem action='Blue'/>"
+"        <menuitem action='Red'/>"
+"        <menuitem action='Green'/>"
+"        <menuitem action='Blue'/>"
 "      </menu>"
 "      <menu action='ShapeMenu'>"
 "        <menuitem action='Square'/>"
@@ -135,11 +351,13 @@ static const gchar *ui_info =
 "  </toolbar>"
 "</ui>";
 
+///////////////////////////////////////////////////////////////////////////////////
+
 
 /**
- * Конструктор
+ * Создание меню, возвращается menubar
  */
-UIController::UIController( GtkWidget *main_window)
+GtkWidget *UIController::ConstrMenubar( GtkWidget *main_window)
 {
 	GtkUIManager *ui;
 	GtkActionGroup *actions;
@@ -148,17 +366,22 @@ UIController::UIController( GtkWidget *main_window)
 
 	/* Actions */
 	actions = gtk_action_group_new ("Actions");
-	gtk_action_group_add_actions (actions, entries, n_entries, NULL);
+	gtk_action_group_add_actions( actions, entries, G_N_ELEMENTS(entries), this);
+	gtk_action_group_add_radio_actions( actions, 
+										mode_entries, G_N_ELEMENTS(mode_entries),
+										MODE_ADD_NODE,
+										G_CALLBACK(ui_activate_radio_action_mode), 
+										this); // user_data
 	gtk_action_group_add_toggle_actions (actions, 
-				   toggle_entries, n_toggle_entries, 
-				   NULL);
+				   toggle_entries, G_N_ELEMENTS(toggle_entries), 
+				   this);
 	gtk_action_group_add_radio_actions (actions, 
-				  color_entries, n_color_entries, 
+				  color_entries, G_N_ELEMENTS(color_entries), 
 				  COLOR_RED,
 				  G_CALLBACK (activate_radio_action), 
-				  NULL);
+				  NULL); // user_data
 	gtk_action_group_add_radio_actions (actions, 
-				  shape_entries, n_shape_entries, 
+				  shape_entries, G_N_ELEMENTS(shape_entries), 
 				  SHAPE_OVAL,
 				  G_CALLBACK (activate_radio_action), 
 				  NULL);
@@ -178,11 +401,76 @@ UIController::UIController( GtkWidget *main_window)
 		g_error_free (error);
 	}
 
-	m_Menubar = gtk_ui_manager_get_widget (ui, "/MenuBar");
-	//g_object_unref (ui);
+	m_UIManager = ui;
+	return gtk_ui_manager_get_widget (ui, "/MenuBar");
+} /* UIController::ConstrMenubar */
 
+/**
+ * Конструктор, здесь мы создаем весь GUI
+ */
+UIController::UIController( bool is_gdl_present)
+{
+	GtkWidget *main_window;
+	GtkWidget *main_vbox;
+	GtkWidget *menubar;
+
+	// создаем главное окно
+	main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_window_set_position(GTK_WINDOW(main_window), GTK_WIN_POS_CENTER);
+	// выставляем величину окантовки внутренней области главного окна
+	//gtk_container_set_border_width( GTK_CONTAINER(main_window), 5);
+	gtk_window_set_default_size( GTK_WINDOW(main_window), 600, 400);
+	// закрытие/уничтожение главного окна
+	gtk_signal_connect( GTK_OBJECT(main_window),"delete_event", GTK_SIGNAL_FUNC(ui_close_cb),NULL );
+	gtk_signal_connect( GTK_OBJECT(main_window),"destroy", GTK_SIGNAL_FUNC(gtk_main_quit), NULL);
+
+	gtk_window_set_title( GTK_WINDOW(main_window), "avcg tool");
+
+	main_vbox = gtk_vbox_new( FALSE, 1);
+	gtk_container_add( GTK_CONTAINER(main_window), main_vbox);
+
+	menubar = ConstrMenubar( main_window);
+	gtk_box_pack_start( GTK_BOX(main_vbox), menubar, FALSE, TRUE, 0);
+	
+
+	GtkWidget *da = gtk_drawing_area_new();
+	/* set a minimum size */
+	gtk_widget_set_size_request( da, 100, 100);
+
+	gtk_container_add( GTK_CONTAINER(main_vbox), da);
+
+	m_VRGraph.reset( new VRGraph());
+	if (is_gdl_present)
+	{
+		m_VRGraph->LoadGDL();
+	}
+	m_DrawBuffer.reset( new DrawBuffer( da, m_VRGraph.get()));
+
+	/* добавляем к da обработчики событий */
+	g_signal_connect( da, "expose-event", G_CALLBACK( ui_da_expose_event_cb), this);
+	g_signal_connect( da, "configure-event", G_CALLBACK( ui_da_configure_event_cb), this);
+	g_signal_connect( da, "motion-notify-event", G_CALLBACK( ui_da_motion_notify_event_cb), this);
+	g_signal_connect( da, "button-press-event",	G_CALLBACK( ui_da_button_press_event_cb), this);
+
+	/* Ask to receive events the drawing area doesn't normally
+	 * subscribe to */
+	gtk_widget_set_events( da, gtk_widget_get_events (da)
+								| GDK_LEAVE_NOTIFY_MASK
+								| GDK_BUTTON_PRESS_MASK
+								| GDK_POINTER_MOTION_MASK
+								| GDK_POINTER_MOTION_HINT_MASK);
+
+	// сигнал ("key_press_event")
+	gtk_signal_connect( GTK_OBJECT(main_window),"key_press_event", GTK_SIGNAL_FUNC(ui_key_press_cb), this);
+
+printf("before gtk_widget_show_all(main_window)\n");
+
+	// отображение основного окна
+	gtk_widget_show_all( main_window);
 } /* UIController::UIController */
 
 UIController::~UIController(void)
 {
+	g_object_unref( m_UIManager);
 } /* UIController::~UIController */
+
