@@ -31,7 +31,7 @@ ui_close_cb( GtkWindow *window, gpointer data)
 	}
 } /* ui_close_cb */
 
-static gint 
+gboolean 
 ui_key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data)
 {
 	/*
@@ -89,7 +89,7 @@ ui_key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data)
 /////////////////////////////////// drawing_area callbacks //////////////////////////////////////////////
 static bool g_DaPrintEvents = true;
 
-static gboolean
+gboolean
 ui_da_configure_event_cb( GtkWidget         *da,
                           GdkEventConfigure *event,
                           gpointer           data)
@@ -105,7 +105,7 @@ ui_da_configure_event_cb( GtkWidget         *da,
 } /* ui_da_configure_event_cb */
 
 /* Redraw the screen from the pixmap */
-static gboolean
+gboolean
 ui_da_expose_event_cb( GtkWidget      *da,
                        GdkEventExpose *event,
                        gpointer        data)
@@ -120,7 +120,7 @@ ui_da_expose_event_cb( GtkWidget      *da,
 	return FALSE;   /* We've handled it, stop processing */
 } /* ui_da_expose_event_cb */
 
-static gboolean
+gboolean
 ui_da_button_press_event_cb( GtkWidget      *da,
                              GdkEventButton *event,
                              gpointer        data)
@@ -143,7 +143,7 @@ ui_da_button_press_event_cb( GtkWidget      *da,
 	return TRUE;    /* We've handled it, stop processing */
 } /* ui_da_button_press_event_cb */
 
-static gboolean
+gboolean
 ui_da_motion_notify_event_cb( GtkWidget      *da,
                               GdkEventMotion *event,
                               gpointer        data)
@@ -198,15 +198,17 @@ activate_radio_action( GtkAction *action, /* Действие на которо�
 	     gtk_action_get_name (GTK_ACTION (current)));
 }
 
-static void
+void
 ui_activate_radio_action_mode( GtkAction *action, /* Действие на котором издаётся сигнал */
                                GtkRadioAction *current, /* Член группы actions который активирован */
-                               gpointer user_data)
+                               gpointer data)
 {
-	UIController *uic = (UIController *)user_data;
+	UIController *uic = (UIController *)data;
 	const gchar *name = gtk_action_get_name( GTK_ACTION( current));
 
-	g_message( "Radio action \"%s\" selected", name);
+	int old_mode = uic->m_CurrentMode;
+	uic->m_CurrentMode = (Mode_t)gtk_radio_action_get_current_value( current);
+	g_message( "Radio action \"%s\" (%d->%d) selected", name, old_mode, uic->m_CurrentMode);
 } /* ui_activate_radio_action_mode */
 
 static GtkActionEntry entries[] = {
@@ -246,12 +248,6 @@ static GtkActionEntry entries[] = {
     G_CALLBACK (ui_activate_action) },
 };
 
-enum Mode_t
-{
-  MODE_ADD_NODE,
-  MODE_ADD_EDGE,
-  MODE_VIEW
-};
 static GtkRadioActionEntry mode_entries[] = {
   { "AddNode", NULL,                               /* name, stock id */
     "Add_Node", NULL,                      /* label, accelerator */     
@@ -369,7 +365,7 @@ GtkWidget *UIController::ConstrMenubar( GtkWidget *main_window)
 	gtk_action_group_add_actions( actions, entries, G_N_ELEMENTS(entries), this);
 	gtk_action_group_add_radio_actions( actions, 
 										mode_entries, G_N_ELEMENTS(mode_entries),
-										MODE_ADD_NODE,
+										m_CurrentMode,
 										G_CALLBACK(ui_activate_radio_action_mode), 
 										this); // user_data
 	gtk_action_group_add_toggle_actions (actions, 
@@ -409,6 +405,7 @@ GtkWidget *UIController::ConstrMenubar( GtkWidget *main_window)
  * Конструктор, здесь мы создаем весь GUI
  */
 UIController::UIController( bool is_gdl_present)
+	: m_CurrentMode( MODE_VIEW)
 {
 	GtkWidget *main_window;
 	GtkWidget *main_vbox;
