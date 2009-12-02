@@ -72,10 +72,10 @@ void DrawBuffer::ConfigureDa()
                       drawing_area->allocation.height);
 } /* DrawBuffer::ConfigureDa */
 
-void DrawBuffer::ExposeDa( gint x, 
-						   gint y, 
-						   gint width, 
-						   gint height)
+void DrawBuffer::ExposeDa( daint x, 
+						   daint y, 
+						   daint width, 
+						   daint height)
 {
 	m_VRGraph->Expose( this, 0,0,0,0);
 	gdk_draw_drawable( m_da->window,
@@ -87,11 +87,44 @@ void DrawBuffer::ExposeDa( gint x,
                        width, height);
 } /* DrawBuffer::ExposeDa */
 
+void DrawBuffer::Da2Vrg( daint da_x, daint da_y, vrgint &vrg_x, vrgint &vrg_y)
+{
+	int pm_x, pm_y;
+	Da2Pm( da_x, da_y, pm_x, pm_y);
+	Pm2Vrg( pm_x, pm_y, vrg_x, vrg_y);
+} /* DrawBuffer::Da2Vrg */
+void DrawBuffer::Vrg2Da( vrgint vrg_x, vrgint vrg_y, daint &da_x, daint &da_y)
+{
+	int pm_x, pm_y;
+	Vrg2Pm( vrg_x, vrg_y, pm_x, pm_y);
+	Pm2Da( pm_x, pm_y, da_x, da_y);
+} /* DrawBuffer::Vrg2Da */
+void DrawBuffer::Pm2Vrg( int pm_x, int pm_y, vrgint &vrg_x, vrgint &vrg_y)
+{
+	vrg_x = pm_x - m_VRGBase[AXIS_X];
+	vrg_y = pm_y - m_VRGBase[AXIS_Y];
+} /* DrawBuffer::Pm2Vrg */
+void DrawBuffer::Vrg2Pm( vrgint vrg_x, vrgint vrg_y, int &pm_x, int &pm_y)
+{
+	pm_x = m_VRGBase[AXIS_X] + vrg_x;
+	pm_y = m_VRGBase[AXIS_Y] + vrg_y;
+} /* DrawBuffer::Vrg2Pm */
+void DrawBuffer::Pm2Da( int pm_x, int pm_y, daint &da_x, daint &da_y)
+{
+	da_x = pm_x - m_VisibleAreaBase[AXIS_X];
+	da_y = pm_y - m_VisibleAreaBase[AXIS_Y];
+} /* DrawBuffer::Pm2Da */
+void DrawBuffer::Da2Pm( daint da_x, daint da_y, int &pm_x, int &pm_y)
+{
+	pm_x = m_VisibleAreaBase[AXIS_X] + da_x;
+	pm_y = m_VisibleAreaBase[AXIS_Y] + da_y;
+} /* DrawBuffer::Da2Pm */
+
 /* Draw a rectangle on the screen */
 static void
 draw_brush (GtkWidget *widget, /* da */
-            gint    x,
-            gint    y,
+            gint    da_x,
+            gint    da_y,
             gint    pixmap_x,
             gint    pixmap_y,
 			GdkPixmap *pixmap)
@@ -110,27 +143,30 @@ draw_brush (GtkWidget *widget, /* da */
                       update_rect.x, update_rect.y,
                       update_rect.width, update_rect.height);
 
-  update_rect.x = (x - 3);
-  update_rect.y = (y - 3);
+  update_rect.x = (da_x - 3);
+  update_rect.y = (da_y - 3);
   /* Now invalidate the affected region of the drawing area. */
   gdk_window_invalidate_rect (widget->window,
                               &update_rect,
                               FALSE);
 }
 
-void DrawBuffer::ButtonPress( gint x, gint y)
+void DrawBuffer::ButtonPress( daint x, daint y)
 {
-	    draw_brush( m_da, x,y, m_VisibleAreaBase[AXIS_X] + x, m_VisibleAreaBase[AXIS_Y] + y, m_Pixmap);
+	int pm_x, pm_y;
+	Da2Pm( x,y, pm_x,pm_y);
+	draw_brush( m_da, x,y, pm_x,pm_y, m_Pixmap);
 }
 
-void DrawBuffer::ButtonPress2( gint x, gint y)
+void DrawBuffer::ButtonPress2( daint x, daint y)
 {
-		m_VRGraph->AddNode( this,
-							x + m_VisibleAreaBase[AXIS_X] - m_VRGBase[AXIS_X], 
-							y + m_VisibleAreaBase[AXIS_Y] - m_VRGBase[AXIS_Y], 
-							"title", " label\nnext line");
-		m_VRGraph->Expose( this, 0,0,0,0);
-		InvalidateDa( NULL);
+	vrgint vrg_x, vrg_y;
+	Da2Vrg( x,y, vrg_x,vrg_y);
+	m_VRGraph->AddNode( this, 
+						vrg_x, vrg_y, 
+						"title", " label\nnext line");
+	m_VRGraph->Expose( this, 0,0,0,0);
+	InvalidateDa( NULL);
 }
 
 void DrawBuffer::MoveVisibleArea( gint delta,
@@ -205,10 +241,10 @@ void DrawBuffer::PKey()
 
 
 
-void DrawBuffer::InvalidateDa( const GdkRectangle *update_rect)
+void DrawBuffer::InvalidateDa( const GdkRectangle *da_update_rect)
 {
 	GdkRectangle rect_var;
-	if ( !update_rect )
+	if ( !da_update_rect )
 	{
 		/* если подали NULL, то инвалидируем всю drawing_area */
 		assert( m_da->allocation.width == m_VisibleAreaDims[AXIS_X] );
@@ -218,12 +254,12 @@ void DrawBuffer::InvalidateDa( const GdkRectangle *update_rect)
 		rect_var.width = m_VisibleAreaDims[AXIS_X];
 		rect_var.height = m_VisibleAreaDims[AXIS_Y];
 
-		update_rect = &rect_var;
+		da_update_rect = &rect_var;
 	}
 	/* данный метод работает в терминах координат drawing_area */
 	/* (потом должно будет прийти expose_event)*/
 	gdk_window_invalidate_rect( m_da->window,
-								update_rect,
+								da_update_rect,
 								FALSE);
 } /* DrawBuffer::InvalidateDa */
 
@@ -240,18 +276,18 @@ void DrawBuffer::SetLineWidth( int line_width)
 }
 void DrawBuffer::DrawLine( vrgint x, vrgint y, vrgint endx, vrgint endy)
 {
-	gint pm_x = m_VRGBase[AXIS_X] + x;
-	gint pm_y = m_VRGBase[AXIS_Y] + y;
-	gint pm_endx = m_VRGBase[AXIS_X] + endx;
-	gint pm_endy = m_VRGBase[AXIS_Y] + endy;
+	int pm_x, pm_y;
+	int pm_endx, pm_endy;
+	Vrg2Pm( x,y, pm_x, pm_y);
+	Vrg2Pm( endx, endy, pm_endx, pm_endy);
 
 	gdk_draw_line( m_Pixmap, m_GC, pm_x, pm_y, pm_endx, pm_endy);
 }
 void DrawBuffer::DrawRectangle( vrgint x, vrgint y, vrgint width, vrgint height, bool filled)
 {
 	gboolean pm_filled = filled ? TRUE : FALSE;
-	gint pm_x = m_VRGBase[AXIS_X] + x;
-	gint pm_y = m_VRGBase[AXIS_Y] + y;
+	int pm_x, pm_y;
+	Vrg2Pm( x,y, pm_x, pm_y);
 
 	gdk_draw_rectangle( m_Pixmap, m_GC, pm_filled, 
 						pm_x, pm_y, 
@@ -260,21 +296,18 @@ void DrawBuffer::DrawRectangle( vrgint x, vrgint y, vrgint width, vrgint height,
 void DrawBuffer::DrawTriangle( vrgint x1, vrgint y1, vrgint x2, vrgint y2, vrgint x3, vrgint y3, bool filled)
 {
 	gboolean pm_filled = filled ? TRUE : FALSE;
-	GdkPoint p[3];
-	p[0].x = m_VRGBase[AXIS_X] + x1;
-	p[0].y = m_VRGBase[AXIS_Y] + y1;
-	p[1].x = m_VRGBase[AXIS_X] + x2;
-	p[1].y = m_VRGBase[AXIS_Y] + y2;
-	p[2].x = m_VRGBase[AXIS_X] + x3;
-	p[2].y = m_VRGBase[AXIS_Y] + y3;
+	GdkPoint pm_p[3];
+	Vrg2Pm( x1, y1, pm_p[0].x, pm_p[0].y);
+	Vrg2Pm( x2, y2, pm_p[1].x, pm_p[1].y);
+	Vrg2Pm( x3, y3, pm_p[2].x, pm_p[2].y);
 
 	gdk_draw_polygon( m_Pixmap, m_GC, pm_filled, 
-					  p, 3);
+					  pm_p, 3);
 }
 void DrawBuffer::DrawText( vrgint x, vrgint y, const char *text)
 {
-	gint pm_x = m_VRGBase[AXIS_X] + x;
-	gint pm_y = m_VRGBase[AXIS_Y] + y;
+	int pm_x, pm_y;
+	Vrg2Pm( x,y, pm_x, pm_y);
 	PangoLayout *layout;
 	layout = gtk_widget_create_pango_layout( m_da, text);
 	/*pango_layout_get_pixel_size (layout, &w, &h);*/
