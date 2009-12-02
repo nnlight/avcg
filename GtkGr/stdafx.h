@@ -17,6 +17,7 @@
 #include <string>
 #include <list>
 #include <assert.h>
+#include <string.h>
 
 
 
