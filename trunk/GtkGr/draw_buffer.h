@@ -37,20 +37,24 @@ private:
 	gint m_VisibleAreaDims[AXIS_LAST];
 	gint m_PixmapDims[AXIS_LAST];
 	
+	/* ссылка на VRGraph */
 	VRGraph *m_VRGraph;
 	gint m_VRGBase[AXIS_LAST]; /* позиция центра VRGraph'а (ноль vrg-координат) */
 	/* gc для vrg-функций */
 	GdkGC *m_GC;
+
 	typedef int vrgint; /* "маркер" того, что координаты в терминах VRGraph */
+	typedef int daint;  /* "маркер" того, что координаты в терминах m_da */
 public:
 	DrawBuffer( GtkWidget *drawing_area, VRGraph *vr_graph);
 	/* не предназначен для иcпользования в качестве базового класса */
 	~DrawBuffer();
 
+	/* da-функции */
 	void ConfigureDa();
-	void ExposeDa( gint x, gint y, gint width, gint height);
-	void ButtonPress( gint x, gint y);
-	void ButtonPress2( gint x, gint y);
+	void ExposeDa( daint x, daint y, daint width, daint height);
+	void ButtonPress( daint x, daint y);
+	void ButtonPress2( daint x, daint y);
 
 	void MoveVisibleArea( gint delta, Axis_t axis);
 
@@ -64,7 +68,20 @@ public:
 	void DrawTriangle( vrgint x1, vrgint y1, vrgint x2, vrgint y2, vrgint x3, vrgint y3, bool filled);
 	void DrawText( vrgint x, vrgint y, const char *text);
 private:
-	void InvalidateDa( const GdkRectangle *update_rect);
+	void InvalidateDa( const GdkRectangle *da_update_rect);
+
+	/**
+	 * Методы по преобразованию координат
+	 * Vrg - VRGraph
+	 * Da - drawing_area
+	 * Pm - Pixmap(т.е. DrawBuffer-координаты)
+	 */
+	void Da2Vrg( daint da_x, daint da_y, vrgint &vrg_x, vrgint &vrg_y);
+	void Vrg2Da( vrgint vrg_x, vrgint vrg_y, daint &da_x, daint &da_y);
+	void Pm2Vrg( int pm_x, int pm_y, vrgint &vrg_x, vrgint &vrg_y);
+	void Vrg2Pm( vrgint vrg_x, vrgint vrg_y, int &pm_x, int &pm_y);
+	void Pm2Da( int pm_x, int pm_y, daint &da_x, daint &da_y);
+	void Da2Pm( daint da_x, daint da_y, int &pm_x, int &pm_y);
 };
 
 
