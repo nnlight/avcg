@@ -118,7 +118,9 @@ void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
 	{
 		draw_buffer->DrawLine( edge->x_[i-1], edge->y_[i-1],
 							   edge->x_[i], edge->y_[i]);
-		if ( i == edge->dots_ - 1 )
+		if ( i == edge->dots_ - 1
+			 && edge->arrowstyle_ != AS_NONE
+			 && edge->arrowstyle_ != AS_NONESPEC )
 		{
 			/* рисуем стрелку, является равносторонним треугольником со стороной edge->arrowsize_ */
 			double d_x = edge->x_[i-1] - edge->x_[i];
@@ -135,10 +137,18 @@ void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
 			int ix3 = x3 * edge->arrowsize_ / len + edge->x_[i];
 			int iy3 = y3 * edge->arrowsize_ / len + edge->y_[i];
 			/* рисуем */
-			draw_buffer->DrawTriangle( edge->x_[i], edge->y_[i],
-									   ix2, iy2,
-									   ix3, iy3,
-									   true);
+			if ( edge->arrowstyle_ == AS_SOLID )
+			{
+				draw_buffer->DrawTriangle( edge->x_[i], edge->y_[i],
+										   ix2, iy2,
+										   ix3, iy3,
+										   true);
+			} else
+			{
+				assert( edge->arrowstyle_ == AS_LINE );
+				draw_buffer->DrawLine( edge->x_[i], edge->y_[i], ix2, iy2);
+				draw_buffer->DrawLine( edge->x_[i], edge->y_[i], ix3, iy3);
+			}
 		}
 	}
 } /* VRGraph::DrawEdge */
@@ -193,20 +203,8 @@ void VRGraph::LoadVcgEdge( GEDGE e)
 	return;
 } /* VRGraph::LoadVcgEdge */
 
-
-
-void VRGraph::LoadGDL()
+void VRGraph::LoadVcgPredEdgesForVcgNodeList( GNODE list)
 {
-	/* узлы */
-	GNODE v;
-	for ( v = nodelist; v; v = NNEXT(v) )
-	{
-		if (NWIDTH(v) == 0)
-			continue;
-		AddSizedNode( NX(v), NY(v), NWIDTH(v), NHEIGHT(v), NTITLE(v), NLABEL(v));
-	}
-
-	/* дуги */
 /*  Draw all edges
  *  ==============
  *  We assume that edges have already a filled ESTARTX, ESTARTY, ETBENDX
@@ -224,11 +222,12 @@ void VRGraph::LoadGDL()
 #define backward_connection1(c) ((CEDGE(c))&& (EEND(CEDGE(c)) ==v))
 #define backward_connection2(c) ((CEDGE2(c))&&(EEND(CEDGE2(c))==v))
 
+	GNODE	v;
 	GEDGE	e;
 	ADJEDGE li;
 	CONNECT c;
 	
-	for ( v = nodelist; v; v = NNEXT(v) )
+	for ( v = list; v; v = NNEXT(v) )
 	{
 		c = NCONNECT(v);
 		if (c) {
@@ -248,4 +247,22 @@ void VRGraph::LoadGDL()
 			LoadVcgEdge( e);
 		}
 	}
+}
+
+
+void VRGraph::LoadGDL()
+{
+	/* узлы */
+	GNODE v;
+	for ( v = nodelist; v; v = NNEXT(v) )
+	{
+		if (NWIDTH(v) == 0)
+			continue;
+		AddSizedNode( NX(v), NY(v), NWIDTH(v), NHEIGHT(v), NTITLE(v), NLABEL(v));
+	}
+
+	/* дуги */
+	LoadVcgPredEdgesForVcgNodeList( nodelist);
+	LoadVcgPredEdgesForVcgNodeList( labellist);
+	LoadVcgPredEdgesForVcgNodeList( dummylist);
 } /* VRGraph::LoadGDL */

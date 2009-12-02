@@ -79,6 +79,7 @@ public:
 	void LoadGDL();
 private:
 	void LoadVcgEdge( GEDGE e);
+	void LoadVcgPredEdgesForVcgNodeList( GNODE list);
 
 	void DrawEdge( DrawBuffer *draw_buffer, VREdge *edge);
 
