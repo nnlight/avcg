@@ -430,7 +430,7 @@ int	c;
 				actcolor = actcolor*10 + (*s-'0');
 			}
 			if (actcolor<0)          actcolor = c;
-			if (actcolor>=cmap_size) actcolor = c;
+			/* colormap if (actcolor>=cmap_size) actcolor = c;*/
 			if (!colored)	         actcolor = c;
 			break;
 		default: /* check visibility again, and draw */

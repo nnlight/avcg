@@ -12,7 +12,7 @@ VRNode::VRNode( VRGraph *graph, const char *title, int x, int y)
 	, title_( title), label_()
 	, x_(x), y_(y)
 	, width_(0), height_(0)
-	, color_(WHITE), bcolor_(BLACK)
+	, color_(WHITE), textcolor_(BLACK), bcolor_(BLACK)
 	, borderw_(2)
 	, stretch_ (1), shrink_(1)
 {
@@ -86,11 +86,7 @@ void VRGraph::Expose( DrawBuffer *draw_buffer, int x, int y, int width, int heig
 	{
 		VRNode *node = static_cast<VRNode*>(n);
 		assert( dynamic_cast<VRNode*>(n) );
-		draw_buffer->SetLineWidth( node->borderw_);
-		draw_buffer->DrawRectangle( node->x_, node->y_, node->width_, node->height_, false);
-		draw_buffer->DrawText( node->x_ + node->borderw_ + NODE_LABEL_MARGIN, 
-							   node->y_ + node->borderw_ + NODE_LABEL_MARGIN,
-							   node->label_.c_str());
+		DrawNode( draw_buffer, node);
 		for ( GrEdge *e = n->GrGetFirstSucc();
 			  e;
 			  e = e->GrGetNextSucc() )
@@ -110,10 +106,23 @@ void VRGraph::Expose( DrawBuffer *draw_buffer, int x, int y, int width, int heig
 	}
 } /* VRGraph::Expose */
 
+void VRGraph::DrawNode( DrawBuffer *draw_buffer, VRNode *node)
+{
+	draw_buffer->SetCurrentColor( node->color_);
+	draw_buffer->DrawRectangle( node->x_, node->y_, node->width_, node->height_, true);
+	draw_buffer->SetLineWidth( node->borderw_);
+	draw_buffer->SetCurrentColor( node->bcolor_);
+	draw_buffer->DrawRectangle( node->x_, node->y_, node->width_, node->height_, false);
+	draw_buffer->SetCurrentColor( node->textcolor_);
+	draw_buffer->DrawText( node->x_ + node->borderw_ + NODE_LABEL_MARGIN, 
+						   node->y_ + node->borderw_ + NODE_LABEL_MARGIN,
+						   node->label_.c_str());
+} /* VRGraph::DrawNode */
 
 void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
 {
 	draw_buffer->SetLineWidth( edge->thickness_);
+	draw_buffer->SetCurrentColor( edge->color_);
 	for ( int i = 1; i < edge->dots_; i++ )
 	{
 		draw_buffer->DrawLine( edge->x_[i-1], edge->y_[i-1],
@@ -122,6 +131,8 @@ void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
 			 && edge->arrowstyle_ != AS_NONE
 			 && edge->arrowstyle_ != AS_NONESPEC )
 		{
+			draw_buffer->SetLineWidth( 1);
+			draw_buffer->SetCurrentColor( edge->arrowcolor_);
 			/* рисуем стрелку, является равносторонним треугольником со стороной edge->arrowsize_ */
 			double d_x = edge->x_[i-1] - edge->x_[i];
 			double d_y = edge->y_[i-1] - edge->y_[i];
@@ -258,7 +269,11 @@ void VRGraph::LoadGDL()
 	{
 		if (NWIDTH(v) == 0)
 			continue;
-		AddSizedNode( NX(v), NY(v), NWIDTH(v), NHEIGHT(v), NTITLE(v), NLABEL(v));
+		VRNode *node = AddSizedNode( NX(v), NY(v), NWIDTH(v), NHEIGHT(v), NTITLE(v), NLABEL(v));
+		node->color_ = (Color_t)NCOLOR(v);
+		node->bcolor_ = (Color_t)NBCOLOR(v);
+		node->borderw_ = NBORDERW(v);
+		node->textcolor_ = (Color_t)NTCOLOR(v);
 	}
 
 	/* дуги */

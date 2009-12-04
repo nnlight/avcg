@@ -1,5 +1,3 @@
-/* SCCS-info %W% %E% */
-
 /*--------------------------------------------------------------------*/
 /*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
@@ -16,11 +14,6 @@
 /*   status:       in work                                            */
 /*                                                                    */
 /*--------------------------------------------------------------------*/
-
-
-#ifndef lint
-static char *id_string="$Id: step0.c,v 3.18 1995/02/08 11:11:14 sander Exp $";
-#endif
 
 
 /*
@@ -40,28 +33,9 @@ static char *id_string="$Id: step0.c,v 3.18 1995/02/08 11:11:14 sander Exp $";
  *  You  should  have  received a copy of the GNU General Public License
  *  along  with  this  program;  if  not,  write  to  the  Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  The software is available per anonymous ftp at ftp.cs.uni-sb.de.
- *  Contact  sander@cs.uni-sb.de  for additional information.
  */
 
 
-/*
- * $Log: step0.c,v $
- * Revision 3.18  1995/02/08  11:11:14  sander
- * Distribution version 1.3.
- *
- * Revision 3.17  1994/12/23  18:12:45  sander
- * Manhatten layout added.
- * Option interface cleared.
- *
- * Revision 3.16  1994/11/23  14:50:47  sander
- * Hash table of nodes changed. Dynamic adaption to the number of nodes.
- *
- * Revision 2.3  1994/01/10  09:22:52  sander
- * Distribution version 1.
- *
- */
 
 /************************************************************************
  * The situation here is the following:
@@ -211,12 +185,7 @@ static int fold_borderc_set;  /* ... border color is set     */
  *  =======================
  */
 
-
-#ifdef ANSI_C
-void	step0_main(void)
-#else
-void	step0_main()
-#endif
+void step0_main(void)
 {
 	int i;
 	struct gnode defaultnode;
@@ -233,7 +202,7 @@ void	step0_main()
 	assert((bent_near_edge_list==NULL));
 
 	/* Initialize the color map from the original color map */
-
+	/* colormap
 	cmap_changed = 1;
 	cmap_size = BASECMAPSIZE;
 	for (i=0; i<BASECMAPSIZE; i++) {
@@ -241,6 +210,7 @@ void	step0_main()
 		greenmap[i] = origgreenmap[i];
 		bluemap[i]  = origbluemap[i];
 	}
+	*/
 
 	/* Calculate the number of edge classes */
 
@@ -303,7 +273,7 @@ void	step0_main()
 	debug_init_checknode();
 
 	stop_time("step0_main without folding");
-}
+} /* step0_main */
 
 
 
@@ -317,12 +287,7 @@ void	step0_main()
 
 static int numnodes;    /* Number of necessary nodes */
 
-#ifdef ANSI_C
 static void estimate_num_nodes(yysyntaxtree x)
-#else
-static void estimate_num_nodes(x)
-yysyntaxtree x;
-#endif
 {
         register int j,len;
 
@@ -335,7 +300,7 @@ yysyntaxtree x;
         for (j=1; j<=len; j++) {
                 estimate_num_nodes(son(x,j));
         }
-}
+} /* estimate_num_nodes */
 
 
 /*--------------------------------------------------------------------*/
@@ -371,15 +336,7 @@ yysyntaxtree x;
 	}}
 
 
-
-#ifdef ANSI_C
 static void	node_analyse(yysyntaxtree node, GNODE root, GNODE defnode) 
-#else
-static void	node_analyse(node, root, defnode)
-yysyntaxtree node;	/* syntax tree node                   */
-GNODE	root;		/* graph summary node                 */
-GNODE   defnode;	/* default node attributes	      */
-#endif
 {
 	register yysyntaxtree	node1, node2;	/* auxiliary variables */
 	struct 	gnode defaultnode;
@@ -789,6 +746,7 @@ GNODE   defnode;	/* default node attributes	      */
 					if (idx>=CMAPSIZE-1) {
 						SYERR(node2,"Only 254 color entries allowed");
 					}
+					/* colormap
 					if (idx+2>cmap_size) cmap_size = idx+2;
 					redmap[  idx] = rd;
 					bluemap[ idx] = bl;
@@ -797,6 +755,7 @@ GNODE   defnode;	/* default node attributes	      */
 					bluemap[ cmap_size-1] = 0;
 					greenmap[cmap_size-1] = 0;
 					cmap_changed = 1;
+					*/
 				}
 				break;
                 	case T_Co_scaling:
@@ -948,7 +907,7 @@ GNODE   defnode;	/* default node attributes	      */
 		}
 		node = son2(node);
 	} /* while */	
-}
+} /* node_analyse */
 
 
 
@@ -965,15 +924,7 @@ GNODE   defnode;	/* default node attributes	      */
  *      all edges are collected into the edge list
  */
 
-
-
-#ifdef ANSI_C
 static void	edge_analyse(yysyntaxtree node, GEDGE	defedge)
-#else
-static void	edge_analyse(node, defedge)
-	yysyntaxtree node;	/* syntax tree node                   */
-	GEDGE 	defedge;	/* default edge attributes	      */
-#endif
 {
 	register yysyntaxtree	node1, node2;	/* auxiliary variables */
 	struct gedge defaultedge;
@@ -1117,7 +1068,7 @@ static void	edge_analyse(node, defedge)
 		}
 		node = son2(node);
 	} /* while */	
-}
+} /* edge_analyse */
 
 
 
@@ -1137,20 +1088,11 @@ static void	edge_analyse(node, defedge)
  *  attribute for the folding keepers.
  */          	
 
-
-#ifdef ANSI_C
 static void	graph_attributes( 
 			yysyntaxtree node,
 			GNODE v,
 			int rootshrink,
 			int rootstretch)
-#else
-static void	graph_attributes(node,v,rootshrink,rootstretch)
-yysyntaxtree	node;
-GNODE	v;
-int     rootshrink;	/* shrink factor of the root   */
-int 	rootstretch;	/* stretch factor of the root  */
-#endif
 {
 	register yysyntaxtree	node1, node2;
 	int borderc_set;
@@ -1270,7 +1212,7 @@ int 	rootstretch;	/* stretch factor of the root  */
 	/* subgraph summary nodes are never region foldstarters */
 
 	check_node(node,v);  /* check node and init into to hashtable */
-}
+} /* graph_attributes */
 
 
 /*--------------------------------------------------------------------*/
@@ -1284,20 +1226,11 @@ int 	rootstretch;	/* stretch factor of the root  */
  *  attribute for the folding keepers.
  */          	
 
-
-#ifdef ANSI_C
 static void	node_attributes(
 			yysyntaxtree node,
 			GNODE v,
 			int rootshrink,
 			int rootstretch)
-#else
-static void	node_attributes(node,v,rootshrink,rootstretch)
-yysyntaxtree	node;
-GNODE	v;
-int     rootshrink;	/* shrink factor of the root   */
-int 	rootstretch;	/* stretch factor of the root  */
-#endif
 {
 	register yysyntaxtree	node1, node2;
 	int borderc_set;
@@ -1334,7 +1267,7 @@ int 	rootstretch;	/* stretch factor of the root  */
 		add_foldstart(v);
 	}
 	check_node(node,v);  /* check node and init into to hashtable */
-}
+} /* node_attributes */
 
 
 
@@ -1344,21 +1277,12 @@ int 	rootstretch;	/* stretch factor of the root  */
  *  v is a node whose attributes are now filled.
  */          	
 
-#ifdef ANSI_C
 static void	one_node_attribute(
 			yysyntaxtree node2,
 			GNODE v,
 			int rootshrink,
 			int rootstretch,
 			int *borderc_set)
-#else
-static void	one_node_attribute(node2,v,rootshrink,rootstretch, borderc_set)
-yysyntaxtree	node2;
-GNODE	v;
-int     rootshrink;	/* shrink factor of the root   */
-int 	rootstretch;	/* stretch factor of the root  */
-int	*borderc_set;	/* flag if borderc was set     */
-#endif
 {
 	debugmessage("one_node_attribute","");
 	assert((node2));
@@ -1467,7 +1391,7 @@ int	*borderc_set;	/* flag if borderc was set     */
 			xfirst_line(node2),ConstructorName(tag(node2)));
 		FPRINTF(stderr,"currently not implemented !\n");
 	}
-}
+} /* one_node_attribute */
 
 
 
@@ -1482,14 +1406,7 @@ int	*borderc_set;	/* flag if borderc was set     */
  *  end nodes.
  */          	
 
-
-#ifdef ANSI_C
 static void	edge_attributes(yysyntaxtree node, GEDGE e)
-#else
-static void	edge_attributes(node,e)
-yysyntaxtree	node;
-GEDGE	e;
-#endif
 {
 	register yysyntaxtree	node1, node2;
 	int elcol_set, arrowc_set, barrowc_set;
@@ -1510,7 +1427,7 @@ GEDGE	e;
 	if ((ESTART(e)==NULL)||(EEND(e)==NULL)) 
 		SYERR(node,"Missing source or target of an edge");
 	if (EPRIO(e) > max_eprio) max_eprio = EPRIO(e);
-}
+} /* edge_attributes */
 
 
 
@@ -1520,21 +1437,12 @@ GEDGE	e;
  *  e is an edge whose attributes are now filled.
  */          	
 
-#ifdef ANSI_C
 static void	one_edge_attribute(
 			yysyntaxtree node2,
 			GEDGE e,
 			int *elcol_set,
 			int *arrowc_set,
 			int *barrowc_set)
-#else
-static void	one_edge_attribute(node2,e,elcol_set,arrowc_set, barrowc_set)
-yysyntaxtree	node2;
-GEDGE	e;
-int	*elcol_set;	/* flag if edge label color was set */
-int	*arrowc_set;	/* flag if arrow color was set      */
-int	*barrowc_set;	/* flag if back arrow color was set */
-#endif
 {
 	debugmessage("one_edge_attribute","");
 	assert((node2));
@@ -1625,7 +1533,7 @@ int	*barrowc_set;	/* flag if back arrow color was set */
 			xfirst_line(node2),ConstructorName(tag(node2)));
 		FPRINTF(stderr,"currently not implemented !\n");
 	}
-}
+} /* one_edge_attribute */
 
 
 /*--------------------------------------------------------------------*/
@@ -1636,13 +1544,7 @@ int	*barrowc_set;	/* flag if back arrow color was set */
  *  The return value is the analyzed color.
  */          	
 
-
-#ifdef ANSI_C
 static int get_color(yysyntaxtree node)
-#else
-static int get_color(node)
-yysyntaxtree node;
-#endif
 {
 	int res;
 
@@ -1714,14 +1616,16 @@ yysyntaxtree node;
 		return(ORCHID);
         case T_Co_colindex:
 		res = (int)get_lnum(son1(node));
+		/* colormap
 		if (res >= cmap_size) {
 			SYERR(node,"Illegal color index.\nColor entries must be declared first");
 		}
+		*/
 		return(res);
 	}
 	assert((0));  /* we should never come to this point */
 	return(BLACK);
-}
+} /* get_color */
 
 /*--------------------------------------------------------------------*/
 
@@ -1730,13 +1634,7 @@ yysyntaxtree node;
  *  return 1 for yes and 0 for no.
  */
 
-
-#ifdef ANSI_C
 static int get_yesno(yysyntaxtree node)
-#else
-static int get_yesno(node)
-yysyntaxtree node;
-#endif
 {
 	debugmessage("get_yesno","");
 
@@ -1746,7 +1644,7 @@ yysyntaxtree node;
 	default: assert((0));
 	}
 	return(0);
-}
+} /* get_yesno */
 
 
 /*--------------------------------------------------------------------*/
@@ -1757,13 +1655,7 @@ yysyntaxtree node;
  *   The maximal number that occurs is stored into max_nr_classes. 
  */
 
-
-#ifdef ANSI_C
 static void calc_nr_classes(yysyntaxtree node)
-#else
-static void calc_nr_classes(node)
-yysyntaxtree node;
-#endif
 {
 	yysyntaxtree node1, node2;
 	int h;
@@ -1826,7 +1718,7 @@ yysyntaxtree node;
 		}
 		node = son2(node);
 	} /* while */	
-}
+} /* calc_nr_classes */
 
 /*--------------------------------------------------------------------*/
 
@@ -1843,13 +1735,7 @@ static char buffer[1024];      /* Buffer to create error messages */
  *  Creates an error message, if the node is not avalable.
  */          	
 
-#ifdef ANSI_C
 static GNODE search_node(yysyntaxtree x,char *title)
-#else
-static GNODE search_node(x,title)
-yysyntaxtree x;
-char *title;
-#endif
 {
 	GNODE n;
 	debugmessage("search_node",(title?title:"(null)"));
@@ -1859,7 +1745,7 @@ char *title;
 		SYERR(x,buffer);
 	}
         return(n);
-}
+} /* search_node */
 
 
 /*  Visible Node Search
@@ -1868,12 +1754,7 @@ char *title;
  *  Return NULL, if the node is not avalable or invisible.
  */
 
-#ifdef ANSI_C
 GNODE   search_visible_node(char *title)
-#else
-GNODE   search_visible_node(title)
-char    *title;
-#endif
 {
 	GNODE   n;
 	if (!title) return(NULL);
@@ -1883,7 +1764,7 @@ char    *title;
 	/* note: at that time point are NINLIST and NINVISIBLE inverse */
 
 	return(n);
-}
+} /* search_visible_node */
 
 
 
@@ -1894,13 +1775,7 @@ char    *title;
  *  Furthermore: insert the node into the hash table.
  */          	
  
-#ifdef ANSI_C
 static void check_node(yysyntaxtree x, GNODE m)
-#else
-static void check_node(x,m)
-yysyntaxtree x;
-GNODE m;
-#endif
 {
 	char *title;
 	GNODE n;
@@ -1916,7 +1791,7 @@ GNODE m;
 		}
 	} 
 	insert_hashnode(m);
-}
+} /* check_node */
  
 
 /*--------------------------------------------------------------------*/
@@ -1947,11 +1822,7 @@ static GNODE *hashtable = 0;
  *  -------------------------------
  */ 
 
-#ifdef ANSI_C
 static void init_hashtable(void)
-#else
-static void init_hashtable()
-#endif
 {
 	int i;
 	if (!hashtable) {
@@ -1978,7 +1849,7 @@ static void init_hashtable()
 #endif
 	}
 	for (i=0; i<maxhashtable; i++) hashtable[i]=NULL;
-}
+} /* init_hashtable */
 
 
 /*  Hashvalue calculation.
@@ -1988,12 +1859,7 @@ static void init_hashtable()
  *  The hashvalue is between 0 and maxhashtable-1.
  */
 
-#ifdef ANSI_C
 static int hashval(char *s)
-#else
-static int hashval(s)
-char *s;
-#endif
 {
 	register int res;
 
@@ -2002,7 +1868,7 @@ char *s;
 	while (*s) { res = (10 * res + *s + 101) % maxhashtable; s++; }
 	if (res<0) res = -res;
 	return(res % maxhashtable);
-}
+} /* hashval */
 
 /*  Insert a node into the hash table.
  *  ----------------------------------
@@ -2012,13 +1878,7 @@ char *s;
  *  fetching all attributes.
  */
 
-
-#ifdef ANSI_C
 static void insert_hashnode(GNODE x)
-#else
-static void insert_hashnode(x)
-GNODE x;
-#endif
 {
 	char *title;
 	int val;
@@ -2041,12 +1901,7 @@ GNODE x;
  *  returns the first node that has the title, or NULL.
  */
 
-#ifdef ANSI_C
 GNODE lookup_hashnode(char *title)
-#else
-GNODE lookup_hashnode(title)
-char *title;
-#endif
 {
 	GNODE h;
 
@@ -2080,11 +1935,7 @@ int 	     act_hash_size;
  *  ---------------------
  */
 
-#ifdef ANSI_C
 void init_hash_cursor(void)
-#else
-void init_hash_cursor()
-#endif
 {
 	GNODE h;
 	int i;
@@ -2110,12 +1961,7 @@ void init_hash_cursor()
  *  ---------------
  */
 
-#ifdef ANSI_C
 void position_hash_cursor(int j)
-#else
-void position_hash_cursor(j)
-int j;
-#endif
 {
 	GNODE h;
 	int i;
@@ -2147,12 +1993,7 @@ int j;
  *  ------------------------------
  */
 
-#ifdef ANSI_C
 GNODE get_hash_cursor_succ(int i)
-#else
-GNODE get_hash_cursor_succ(i)
-int i;
-#endif
 {
 	GNODE h;
 	int j;

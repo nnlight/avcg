@@ -3,8 +3,8 @@
 
 #include "stdafx.h"
 #include <gtk/gtk.h>
-//#include <glib.h>
-//#include <glib-object.h>
+#include "vcg/gdl_defs.h"
+
 
 
 enum Axis_t
@@ -40,11 +40,18 @@ private:
 	/* ссылка на VRGraph */
 	VRGraph *m_VRGraph;
 	gint m_VRGBase[AXIS_LAST]; /* позиция центра VRGraph'а (ноль vrg-координат) */
-	/* gc для vrg-функций */
-	GdkGC *m_GC;
 
 	typedef int vrgint; /* "маркер" того, что координаты в терминах VRGraph */
 	typedef int daint;  /* "маркер" того, что координаты в терминах m_da */
+
+	/* gc для рисования */
+	GdkGC *m_GC;
+
+	int m_InitedColors;              /*!< кол-во заполненных в m_Colormap цветов (rgb имеет смысл)*/
+	GdkColor m_Colormap[CMAPSIZE];   /*!< таблица используемых цветов */
+	int m_AllocedColors;             /*!< кол-во выделенных цветов (pixel field имеет смысл)*/
+	Color_t m_BackgroundColor;       /*!< цвет фона */
+	Color_t m_CurrentColor;          /*!< текущий (foreground) цвет */
 public:
 	DrawBuffer( GtkWidget *drawing_area, VRGraph *vr_graph);
 	/* не предназначен для иcпользования в качестве базового класса */
@@ -62,6 +69,8 @@ public:
 	
 	void GetTextPixelSize( const char *text, int *width_p, int *height_p);
 	/* vrg-функции */
+	void SetBackgroundColor( Color_t c);
+	void SetCurrentColor( Color_t c);
 	void SetLineWidth( int line_width);
 	void DrawLine( vrgint x, vrgint y, vrgint endx, vrgint endy);
 	void DrawRectangle( vrgint x, vrgint y, vrgint width, vrgint height, bool filled);
@@ -82,6 +91,13 @@ private:
 	void Vrg2Pm( vrgint vrg_x, vrgint vrg_y, int &pm_x, int &pm_y);
 	void Pm2Da( int pm_x, int pm_y, daint &da_x, daint &da_y);
 	void Da2Pm( daint da_x, daint da_y, int &pm_x, int &pm_y);
+
+	/** инициализация m_Colormap */
+	void InitColormap();
+	/** выделение цветов из m_Colormap (заполняются pixel-поля) */
+	void AllocColormap();
+	/** заполнение Pixmap'а цветом фона */
+	void InitializePixmapToBackgroundColor( GdkPixmap *pixmap, int width, int height);
 };
 
 

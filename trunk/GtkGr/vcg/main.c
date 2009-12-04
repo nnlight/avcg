@@ -1,5 +1,3 @@
-/* SCCS-info %W% %E% */
-
 /*--------------------------------------------------------------------*/
 /*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
@@ -35,9 +33,6 @@
  *  You  should  have  received a copy of the GNU General Public License
  *  along  with  this  program;  if  not,  write  to  the  Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  The software is available per anonymous ftp at ftp.cs.uni-sb.de.
- *  Contact  sander@cs.uni-sb.de  for additional information.
  */
 
 
@@ -397,11 +392,8 @@ void vcg_Parse( FILE *input_file)
 	parse_part( input_file);
 	visualize_part();
 
-	if (exfile) 
-	{
-		/* ... output to some devices, ps... */
-	}
-	else {  /* Display part calls the display device driver. This is a 
+
+	{  /* Display part calls the display device driver. This is a 
 		 * device dependent function !!!
 		 * The device driver is basically a loop that draws the graph and
 		 * reacts on interaction, until the FINISHING interaction is 
