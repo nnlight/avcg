@@ -29,10 +29,16 @@ VREdge::VREdge( VRGraph *graph)
 	, linestyle_(LS_SOLID)
 	, thickness_(2)
 	, color_(BLACK)
-	, arrowsize_({10, 0})
+	/*, arrowsize_({10, 0})
 	, arrowstyle_({AS_SOLID, AS_NONE})
-	, arrowcolor_({BLACK, BLACK})
+	, arrowcolor_({BLACK, BLACK})*/
 {
+	arrowsize_[VRDIR_FORWARD] = 10;
+	arrowstyle_[VRDIR_FORWARD] = AS_SOLID;
+	arrowcolor_[VRDIR_FORWARD] = BLACK;
+	arrowsize_[VRDIR_FORWARD] = 0;
+	arrowstyle_[VRDIR_FORWARD] = AS_NONE;
+	arrowcolor_[VRDIR_FORWARD] = BLACK;
 }
 
 VREdge::~VREdge()
