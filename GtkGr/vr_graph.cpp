@@ -36,9 +36,9 @@ VREdge::VREdge( VRGraph *graph)
 	arrowsize_[VRDIR_FORWARD] = 10;
 	arrowstyle_[VRDIR_FORWARD] = AS_SOLID;
 	arrowcolor_[VRDIR_FORWARD] = BLACK;
-	arrowsize_[VRDIR_FORWARD] = 0;
-	arrowstyle_[VRDIR_FORWARD] = AS_NONE;
-	arrowcolor_[VRDIR_FORWARD] = BLACK;
+	arrowsize_[VRDIR_BACKWARD] = 0;
+	arrowstyle_[VRDIR_BACKWARD] = AS_NONE;
+	arrowcolor_[VRDIR_BACKWARD] = BLACK;
 }
 
 VREdge::~VREdge()
