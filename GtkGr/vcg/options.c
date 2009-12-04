@@ -313,67 +313,6 @@ int G_spline = 0;
 int G_flat_factor = 70;
 
 
-/*  Flag, indicates that after displaying, the specification file
- *  should be touched. For Animation only.
- */
-
-int touch_file = 0;
-
-
-
-/*  Interface for PostScript/Bitmap output without X11 interaction.
- *  The VCG tool acts as a kind of filter VCG -> PostScript.
- */
-
-int    exfile    = 0;
-char   exfilename[800];
-int    extype    = 3;     /* PostScript */
-int    expaper   = 1;     /* A4         */
-int    excolor   = 3;     /* B&W        */
-int    exori     = 1;     /* Portrait   */
-int    expapernum= 1;
-int    exxdpi    = 72;
-int    exydpi    = 72;
-float  exscaling = -1.0;   /* Maxspect */
-float  exwidth   = -1.0;
-float  exheight  = -1.0;
-float  exleftm   = -1.0;  /* Left  Margin  */
-float  exrightm  = -1.0;  /* Right  Margin */
-float  extopm    = -1.0;  /* Top    Margin */
-float  exbottomm = -1.0;  /* Bottom Margin */
-int    exbbox    = 1;     /* with Bounding Box */
-
-
-/*  Color maps
- *  ----------
- *  See alloc.h for color names
- */
-
-
-int 	 cmap_size    = BASECMAPSIZE;
-int 	 cmap_changed = 1;
-
-unsigned char origredmap[BASECMAPSIZE] = {
-	  255, 0, 255, 0, 255, 255, 0, 85, 0, 128, 0, 128, 128,
-	  0, 255, 170, 128, 255, 128, 255, 255, 128, 238, 64, 127,
-	  240, 160, 154, 255, 255, 218, 0 
-};
-
-unsigned char origgreenmap[BASECMAPSIZE] = {
-	  255, 0, 0, 255, 255, 0, 255, 85, 0, 0, 128, 128, 0,
-	  128, 215, 170, 128, 128, 255, 255, 128, 255, 130, 224,
-	  255, 230, 32, 205, 192, 165, 112, 0 
-};
-
-unsigned char origbluemap[BASECMAPSIZE] = {
-	  255, 255, 0, 0, 0, 255, 255, 85, 128, 0, 0, 0, 128,
-	  128, 0, 170, 255, 128, 128, 128, 255, 255, 238, 208, 212,
-	  140, 240, 50, 203, 0, 214, 0 
-};
-
-unsigned char redmap[CMAPSIZE];
-unsigned char greenmap[CMAPSIZE];
-unsigned char bluemap[CMAPSIZE];
 
 
 
@@ -933,8 +872,6 @@ char	*argv[];
 		else if (simpleOption("-help"))      opt_give_help = 1;
 		else if (simpleOption("-v"))         opt_give_version = 1;
 		else if (simpleOption("-version"))   opt_give_version = 1;
-		else if (   intOption("-a",         &touch_file));
-		else if (   intOption("-animation", &touch_file));
 		else if (   intOption("-b",         &max_edgebendings));
 		else if (   intOption("-bmax",      &max_edgebendings));
 		else if (   intOption("-bending",   &max_edgebendings));

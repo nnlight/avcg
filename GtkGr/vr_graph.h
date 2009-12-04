@@ -24,8 +24,9 @@ public:
 	int x_,y_;
 	int width_, height_;
 	Color_t color_;
-	Color_t bcolor_; // цвет границы
-	int borderw_;    // ширина границы
+	Color_t textcolor_; //!< цвет текста
+	Color_t bcolor_;    //!< цвет границы
+	int borderw_;       //!< ширина границы
 	int stretch_;
 	int shrink_;
 public:
@@ -81,6 +82,7 @@ private:
 	void LoadVcgEdge( GEDGE e);
 	void LoadVcgPredEdgesForVcgNodeList( GNODE list);
 
+	void DrawNode( DrawBuffer *draw_buffer, VRNode *node);
 	void DrawEdge( DrawBuffer *draw_buffer, VREdge *edge);
 
 };

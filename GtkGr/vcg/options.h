@@ -90,34 +90,6 @@ extern int layout_nearfactor;
 extern int G_spline;
 extern int G_flat_factor;
 
-extern int touch_file;
-
-extern int    exfile;
-extern char   exfilename[800];
-extern int    extype;
-extern int    expaper;
-extern int    excolor;
-extern int    exori;
-extern int    expapernum;
-extern int    exxdpi;
-extern int    exydpi;
-extern float  exscaling;
-extern float  exwidth;
-extern float  exheight;
-extern float  exleftm;
-extern float  exrightm;
-extern float  extopm;
-extern float  exbottomm;
-extern int    exbbox;
-
-extern int      cmap_size;
-extern int      cmap_changed;
-extern unsigned char origredmap[];
-extern unsigned char origgreenmap[];
-extern unsigned char origbluemap[];
-extern unsigned char redmap[];
-extern unsigned char greenmap[];
-extern unsigned char bluemap[];
 
 #ifdef VMS
 extern int   RootWinMaxDepth;
