@@ -127,6 +127,53 @@ void VRGraph::DrawNode( DrawBuffer *draw_buffer, VRNode *node)
 
 void VRGraph::DrawEdgeArrow( DrawBuffer *draw_buffer, VREdge *edge, VRDir_t dir)
 {
+	int nib_i, foot_i;
+	if ( dir == VRDIR_FORWARD )
+	{
+		nib_i = edge->dots_ - 1;
+		foot_i = nib_i - 1;
+		assert( foot_i >= 0);
+	} else
+	{
+		nib_i = 0;
+		foot_i = 1;
+		assert( 1 < edge->dots_);
+	}
+	if ( edge->arrowstyle_[dir] != AS_NONE
+		 && edge->arrowstyle_[dir] != AS_NONESPEC
+		 && edge->arrowsize_[dir] > edge->thickness_ )
+	{
+
+		draw_buffer->SetLineWidth( 1);
+		draw_buffer->SetCurrentColor( edge->arrowcolor_[dir]);
+		/* рисуем стрелку, является равносторонним треугольником со стороной edge->arrowsize_ */
+		double d_x = edge->x_[foot_i] - edge->x_[nib_i];
+		double d_y = edge->y_[foot_i] - edge->y_[nib_i];
+		double len = sqrt(d_x*d_x + d_y*d_y);
+		/* поворачиваем на + 30 градусов и приводи длину */
+		double x2 = cos(M_PI/6) * d_x - sin(M_PI/6) * d_y;
+		double y2 = sin(M_PI/6) * d_x + cos(M_PI/6) * d_y;
+		int ix2 = x2 * edge->arrowsize_[dir] / len + edge->x_[nib_i];
+		int iy2 = y2 * edge->arrowsize_[dir] / len + edge->y_[nib_i];
+		/* поворачиваем на - 30 градусов и приводим длину */
+		double x3 = cos(-M_PI/6) * d_x - sin(-M_PI/6) * d_y;
+		double y3 = sin(-M_PI/6) * d_x + cos(-M_PI/6) * d_y;
+		int ix3 = x3 * edge->arrowsize_[dir] / len + edge->x_[nib_i];
+		int iy3 = y3 * edge->arrowsize_[dir] / len + edge->y_[nib_i];
+		/* рисуем */
+		if ( edge->arrowstyle_[dir] == AS_SOLID )
+		{
+			draw_buffer->DrawTriangle( edge->x_[nib_i], edge->y_[nib_i],
+					ix2, iy2,
+					ix3, iy3,
+					true);
+		} else
+		{
+			assert( edge->arrowstyle_[dir] == AS_LINE );
+			draw_buffer->DrawLine( edge->x_[nib_i], edge->y_[nib_i], ix2, iy2);
+			draw_buffer->DrawLine( edge->x_[nib_i], edge->y_[nib_i], ix3, iy3);
+		}
+	}
 } /* VRGraph::DrawEdgeArrow */
 
 void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
@@ -137,41 +184,11 @@ void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
 	{
 		draw_buffer->DrawLine( edge->x_[i-1], edge->y_[i-1],
 							   edge->x_[i], edge->y_[i]);
-		if ( i == edge->dots_ - 1
-			 && edge->arrowstyle_[VRDIR_FORWARD] != AS_NONE
-			 && edge->arrowstyle_[VRDIR_FORWARD] != AS_NONESPEC
-			 && edge->arrowsize_[VRDIR_FORWARD] > edge->thickness_ )
-		{
-			draw_buffer->SetLineWidth( 1);
-			draw_buffer->SetCurrentColor( edge->arrowcolor_[VRDIR_FORWARD]);
-			/* рисуем стрелку, является равносторонним треугольником со стороной edge->arrowsize_ */
-			double d_x = edge->x_[i-1] - edge->x_[i];
-			double d_y = edge->y_[i-1] - edge->y_[i];
-			double len = sqrt(d_x*d_x + d_y*d_y);
-			/* поворачиваем на + 30 градусов и приводи длину */
-			double x2 = cos(M_PI/6) * d_x - sin(M_PI/6) * d_y;
-			double y2 = sin(M_PI/6) * d_x + cos(M_PI/6) * d_y;
-			int ix2 = x2 * edge->arrowsize_[VRDIR_FORWARD] / len + edge->x_[i];
-			int iy2 = y2 * edge->arrowsize_[VRDIR_FORWARD] / len + edge->y_[i];
-			/* поворачиваем на - 30 градусов и приводим длину */
-			double x3 = cos(-M_PI/6) * d_x - sin(-M_PI/6) * d_y;
-			double y3 = sin(-M_PI/6) * d_x + cos(-M_PI/6) * d_y;
-			int ix3 = x3 * edge->arrowsize_[VRDIR_FORWARD] / len + edge->x_[i];
-			int iy3 = y3 * edge->arrowsize_[VRDIR_FORWARD] / len + edge->y_[i];
-			/* рисуем */
-			if ( edge->arrowstyle_[VRDIR_FORWARD] == AS_SOLID )
-			{
-				draw_buffer->DrawTriangle( edge->x_[i], edge->y_[i],
-										   ix2, iy2,
-										   ix3, iy3,
-										   true);
-			} else
-			{
-				assert( edge->arrowstyle_[VRDIR_FORWARD] == AS_LINE );
-				draw_buffer->DrawLine( edge->x_[i], edge->y_[i], ix2, iy2);
-				draw_buffer->DrawLine( edge->x_[i], edge->y_[i], ix3, iy3);
-			}
-		}
+	}
+	if ( edge->dots_ >= 2 )
+	{
+		DrawEdgeArrow( draw_buffer, edge, VRDIR_FORWARD);
+		DrawEdgeArrow( draw_buffer, edge, VRDIR_BACKWARD);
 	}
 } /* VRGraph::DrawEdge */
 
@@ -188,6 +205,9 @@ void VRGraph::LoadVcgEdge( GEDGE e)
 	edge->arrowstyle_[VRDIR_FORWARD] = (Arrowstyle_t)EARROWSTYLE(e);
 	edge->arrowcolor_[VRDIR_FORWARD] = (Color_t)EARROWCOL(e);
 	edge->arrowsize_[VRDIR_FORWARD] = EARROWSIZE(e);
+	edge->arrowstyle_[VRDIR_BACKWARD] = (Arrowstyle_t)EARROWBSTYLE(e);
+	edge->arrowcolor_[VRDIR_BACKWARD] = (Color_t)EARROWBCOL(e);
+	edge->arrowsize_[VRDIR_BACKWARD] = EARROWBSIZE(e);
 
 	int x1 = ESTARTX(e);
 	int y1 = ESTARTY(e);
