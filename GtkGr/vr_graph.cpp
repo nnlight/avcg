@@ -212,7 +212,7 @@ void VRGraph::LoadVcgEdge( GEDGE e)
 	edge->x_[i] = x2;
 	edge->y_[i] = y2;
 	edge->dots_++;
-	assert( edge->dots_ < VREDGE_DOT_COUNT );
+	assert( edge->dots_ <= VREDGE_DOT_COUNT );
 	return;
 } /* VRGraph::LoadVcgEdge */
 
