@@ -121,7 +121,7 @@ void VRGraph::DrawNode( DrawBuffer *draw_buffer, VRNode *node)
 
 void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
 {
-	draw_buffer->SetLineWidth( edge->thickness_);
+	draw_buffer->SetLineWidth( edge->thickness_, edge->linestyle_);
 	draw_buffer->SetCurrentColor( edge->color_);
 	for ( int i = 1; i < edge->dots_; i++ )
 	{
@@ -129,7 +129,8 @@ void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
 							   edge->x_[i], edge->y_[i]);
 		if ( i == edge->dots_ - 1
 			 && edge->arrowstyle_ != AS_NONE
-			 && edge->arrowstyle_ != AS_NONESPEC )
+			 && edge->arrowstyle_ != AS_NONESPEC
+			 && edge->arrowsize_ > edge->thickness_ )
 		{
 			draw_buffer->SetLineWidth( 1);
 			draw_buffer->SetCurrentColor( edge->arrowcolor_);
@@ -176,6 +177,7 @@ void VRGraph::LoadVcgEdge( GEDGE e)
 	edge->linestyle_ = (Linestyle_t)ELSTYLE(e);
 	edge->arrowstyle_ = (Arrowstyle_t)EARROWSTYLE(e);
 	edge->arrowcolor_ = (Color_t)EARROWCOL(e);
+	edge->arrowsize_ = EARROWSIZE(e);
 
 	int x1 = ESTARTX(e);
 	int y1 = ESTARTY(e);

@@ -71,7 +71,7 @@ public:
 	/* vrg-функции */
 	void SetBackgroundColor( Color_t c);
 	void SetCurrentColor( Color_t c);
-	void SetLineWidth( int line_width);
+	void SetLineWidth( vrgint line_width, Linestyle_t lstyle = LS_SOLID);
 	void DrawLine( vrgint x, vrgint y, vrgint endx, vrgint endy);
 	void DrawRectangle( vrgint x, vrgint y, vrgint width, vrgint height, bool filled);
 	void DrawTriangle( vrgint x1, vrgint y1, vrgint x2, vrgint y2, vrgint x3, vrgint y3, bool filled);
