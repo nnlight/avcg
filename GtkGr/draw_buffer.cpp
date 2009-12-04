@@ -369,9 +369,17 @@ void DrawBuffer::SetCurrentColor( Color_t c)
 	m_CurrentColor = c;
 	gdk_gc_set_foreground( m_GC, &m_Colormap[c]);
 }
-void DrawBuffer::SetLineWidth( int line_width)
+void DrawBuffer::SetLineWidth( vrgint line_width, Linestyle_t lstyle)
 {
-	gdk_gc_set_line_attributes( m_GC, line_width, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
+	GdkLineStyle line_style;
+	switch (lstyle)
+	{
+	case LS_SOLID:  line_style = GDK_LINE_SOLID; break;
+	case LS_DOTTED: line_style = GDK_LINE_ON_OFF_DASH; break;
+	case LS_DASHED: line_style = GDK_LINE_DOUBLE_DASH; break;
+	default: assert( !"unknown linestyle" );
+	}
+	gdk_gc_set_line_attributes( m_GC, line_width, line_style, GDK_CAP_BUTT, GDK_JOIN_MITER);
 }
 void DrawBuffer::DrawLine( vrgint x, vrgint y, vrgint endx, vrgint endy)
 {
