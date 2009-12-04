@@ -10,8 +10,6 @@ using namespace std;
 
 
 
-
-
 class VRGraph;
 /**
  * Узел
@@ -36,6 +34,12 @@ private:
 	VRNode( const VRNode &a);
 };
 
+enum VRDir_t
+{
+	VRDIR_FORWARD,
+	VRDIR_BACKWARD,
+	VRDIR_LAST
+};
 #define VREDGE_DOT_COUNT 4
 /**
  * Дуга
@@ -50,9 +54,9 @@ public:
 	Linestyle_t linestyle_;
 	int thickness_;
 	Color_t color_;
-	int arrowsize_;
-	Arrowstyle_t arrowstyle_;
-	Color_t arrowcolor_;
+	int arrowsize_[VRDIR_LAST];
+	Arrowstyle_t arrowstyle_[VRDIR_LAST];
+	Color_t arrowcolor_[VRDIR_LAST];
 public:
 	VREdge( VRGraph *graph);
 	~VREdge();
@@ -83,6 +87,7 @@ private:
 	void LoadVcgPredEdgesForVcgNodeList( GNODE list);
 
 	void DrawNode( DrawBuffer *draw_buffer, VRNode *node);
+	void DrawEdgeArrow( DrawBuffer *draw_buffer, VREdge *edge, VRDir_t dir);
 	void DrawEdge( DrawBuffer *draw_buffer, VREdge *edge);
 
 };
