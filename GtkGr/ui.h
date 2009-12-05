@@ -26,6 +26,8 @@ private:
 	std::auto_ptr<DrawBuffer> m_DrawBuffer;
 	std::auto_ptr<VRGraph> m_VRGraph;
 	Mode_t m_CurrentMode;
+	GtkWidget *m_Toolbar;
+	GtkWidget *m_Statusbar;
 public:
 	UIController( bool is_gdl_present);
 	~UIController(void);
