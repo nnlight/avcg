@@ -406,6 +406,8 @@ GtkWidget *UIController::ConstrMenubar( GtkWidget *main_window)
  */
 UIController::UIController( bool is_gdl_present)
 	: m_CurrentMode( MODE_VIEW)
+	, m_Toolbar( NULL)
+	, m_Statusbar( NULL)
 {
 	GtkWidget *main_window;
 	GtkWidget *main_vbox;
