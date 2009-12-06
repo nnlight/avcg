@@ -462,7 +462,6 @@ void DrawBuffer::DrawText( vrgint x, vrgint y, const char *text)
 	PangoLayout *layout;
 	layout = gtk_widget_create_pango_layout( m_da, text);
 	/*pango_layout_get_pixel_size (layout, &w, &h);*/
-	P
 	gdk_draw_layout( m_Pixmap, m_GC, pm_x, pm_y, layout);
 	g_object_unref( layout);
 }
