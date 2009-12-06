@@ -84,7 +84,7 @@ VRNode *VRGraph::AddSizedNode( int x, int y, int width, int height, const char *
 /**
  * Отрисовать заданную область в draw_buffer
  */
-void VRGraph::Expose( DrawBuffer *draw_buffer, int x, int y, int width, int height)
+void VRGraph::Expose( DrawBuffer *draw_buffer)
 {
 	for ( GrNode *n = GrGetFirstNode();
 		  n; 

@@ -405,7 +405,8 @@ GtkWidget *UIController::ConstrMenubar( GtkWidget *main_window)
  * Конструктор, здесь мы создаем весь GUI
  */
 UIController::UIController( bool is_gdl_present)
-	: m_CurrentMode( MODE_VIEW)
+	: m_UIManager( NULL)
+	,m_CurrentMode( MODE_VIEW)
 	, m_Toolbar( NULL)
 	, m_Statusbar( NULL)
 {
