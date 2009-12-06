@@ -132,12 +132,24 @@ ui_da_button_press_event_cb( GtkWidget      *da,
 	DrawBuffer *db = uic->m_DrawBuffer.get();
   	if (g_DaPrintEvents ) g_print("button_press_event\n");
 
+	if ( event->type != GDK_BUTTON_PRESS )
+	{
+		/* двойные и тройные щелчки мы не обрабатываем */
+		return FALSE;
+	}
+	int x = (int)event->x;
+	int y = (int)event->y;
 	if (event->button == 1)
 	{
-		db->ButtonPress( (int)event->x, (int)event->y);
+		db->ButtonPress( x, y);
 	} else if (event->button == 2)
 	{
-		db->ButtonPress2( (int)event->x, (int)event->y);
+		db->ButtonPress2( x, y);
+	} else if (event->button == 3)
+	{
+		uic->m_PickUped = true;
+		uic->m_PickUpBase[AXIS_X] = x;
+		uic->m_PickUpBase[AXIS_Y] = y;
 	} else
 	{
 		printf("unhandled button press %d\n", event->button);
@@ -145,6 +157,27 @@ ui_da_button_press_event_cb( GtkWidget      *da,
   
 	return TRUE;    /* We've handled it, stop processing */
 } /* ui_da_button_press_event_cb */
+
+gboolean
+ui_da_button_release_event_cb( GtkWidget      *da,
+                             GdkEventButton *event,
+                             gpointer        data)
+{
+	UIController *uic = (UIController *)data;
+	DrawBuffer *db = uic->m_DrawBuffer.get();
+  	if (g_DaPrintEvents ) g_print("button_release_event\n");
+
+	int x = (int)event->x;
+	int y = (int)event->y;
+	if (event->button == 3)
+	{
+		assert( uic->m_PickUped == true );
+		uic->m_PickUped = false;
+		printf("x=%d  y=%d\n", x, y);
+	}
+  
+	return TRUE;    /* We've handled it, stop processing */
+} /* ui_da_button_release_event_cb */
 
 gboolean 
 ui_da_scroll_event_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
@@ -197,6 +230,16 @@ ui_da_motion_notify_event_cb( GtkWidget      *da,
 
 	if (state & GDK_BUTTON1_MASK)
 		db->ButtonPress( x, y);
+	
+	if (uic->m_PickUped)
+	{
+		int delta[AXIS_LAST];
+		delta[AXIS_X] = uic->m_PickUpBase[AXIS_X] - x;
+		delta[AXIS_Y] = uic->m_PickUpBase[AXIS_Y] - y;
+		uic->m_PickUpBase[AXIS_X] = x;
+		uic->m_PickUpBase[AXIS_Y] = y;
+		db->MoveVisibleArea2d( delta);
+	}
 
 	return TRUE;  /* We've handled it, stop processing */
 } /* ui_da_motion_notify_event_cb */
@@ -468,6 +511,7 @@ UIController::UIController( const char *filename)
 	, m_CurrentMode( MODE_VIEW)
 	, m_Toolbar( NULL)
 	, m_Statusbar( NULL)
+	, m_PickUped( false)
 {
 	GtkWidget *main_window;
 	GtkWidget *main_vbox;
@@ -512,6 +556,7 @@ UIController::UIController( const char *filename)
 	g_signal_connect( da, "configure-event", G_CALLBACK( ui_da_configure_event_cb), this);
 	g_signal_connect( da, "motion-notify-event", G_CALLBACK( ui_da_motion_notify_event_cb), this);
 	g_signal_connect( da, "button-press-event", G_CALLBACK( ui_da_button_press_event_cb), this);
+	g_signal_connect( da, "button-release-event", G_CALLBACK( ui_da_button_release_event_cb), this);
 	g_signal_connect( da, "scroll-event", G_CALLBACK( ui_da_scroll_event_cb), this);
 
 	/* Ask to receive events the drawing area doesn't normally
@@ -519,6 +564,7 @@ UIController::UIController( const char *filename)
 	gtk_widget_set_events( da, gtk_widget_get_events (da)
 								| GDK_LEAVE_NOTIFY_MASK
 								| GDK_BUTTON_PRESS_MASK
+								| GDK_BUTTON_RELEASE_MASK
 								//| GDK_SCROLL_MASK
 								| GDK_POINTER_MOTION_MASK
 								| GDK_POINTER_MOTION_HINT_MASK);
