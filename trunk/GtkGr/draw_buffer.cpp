@@ -72,6 +72,7 @@ DrawBuffer::DrawBuffer( GtkWidget *drawing_area, VRGraph *vr_graph)
 	: m_da( drawing_area)
 	, m_Pixmap( NULL)
 	, m_VRGraph( vr_graph)
+	, m_Scaling ( 1.)
 	, m_GC( NULL)
 	, m_InitedColors( 0)
 	, m_AllocedColors( 0)
@@ -197,13 +198,13 @@ void DrawBuffer::Vrg2Da( vrgint vrg_x, vrgint vrg_y, daint &da_x, daint &da_y)
 } /* DrawBuffer::Vrg2Da */
 void DrawBuffer::Pm2Vrg( int pm_x, int pm_y, vrgint &vrg_x, vrgint &vrg_y)
 {
-	vrg_x = pm_x - m_VRGBase[AXIS_X];
-	vrg_y = pm_y - m_VRGBase[AXIS_Y];
+	vrg_x = (pm_x - m_VRGBase[AXIS_X]) / m_Scaling;
+	vrg_y = (pm_y - m_VRGBase[AXIS_Y]) / m_Scaling;
 } /* DrawBuffer::Pm2Vrg */
 void DrawBuffer::Vrg2Pm( vrgint vrg_x, vrgint vrg_y, int &pm_x, int &pm_y)
 {
-	pm_x = m_VRGBase[AXIS_X] + vrg_x;
-	pm_y = m_VRGBase[AXIS_Y] + vrg_y;
+	pm_x = m_VRGBase[AXIS_X] + vrg_x * m_Scaling;
+	pm_y = m_VRGBase[AXIS_Y] + vrg_y * m_Scaling;
 } /* DrawBuffer::Vrg2Pm */
 void DrawBuffer::Pm2Da( int pm_x, int pm_y, daint &da_x, daint &da_y)
 {
@@ -309,10 +310,29 @@ void DrawBuffer::MoveVisibleArea( gint delta,
 
 	m_VisibleAreaBase[axis] += delta; /* сдвигаем visible area :) */
 	/* Now invalidate the affected region of the drawing area. */
-	/* инвалидируем всю drawing_area (должно будет потом expose_event прийти) */
+	/* инвалидируем всю drawing_area (потом должно будет прийти expose_event) */
 	InvalidateDa( NULL);
 	return;
 } /* DrawBuffer::MoveVisibleArea */
+
+void DrawBuffer::ChangeScaling( double scaling_factor, daint x, daint y)
+{
+	assert( m_da );
+
+	m_Scaling *= scaling_factor;
+
+	/* обновляем содержимое Pixmap'а (т.к. теперь там должна лежать изображения другой части графа) */  
+	InitializePixmapToBackgroundColor( m_Pixmap,
+									   m_PixmapDims[AXIS_X],
+									   m_PixmapDims[AXIS_Y]);
+	if ( m_VRGraph )
+	{
+		m_VRGraph->Expose( this);
+	}
+	/* инвалидируем всю drawing_area (потом должно будет прийти expose_event) */
+	InvalidateDa( NULL);
+	return;
+} /* DrawBuffer::ChangeScaling */
 
 
 void DrawBuffer::PKey()
@@ -366,15 +386,16 @@ void DrawBuffer::SetCurrentColor( Color_t c)
 }
 void DrawBuffer::SetLineWidth( vrgint line_width, Linestyle_t lstyle)
 {
-	GdkLineStyle line_style;
+	int pm_line_width = line_width * m_Scaling;
+	GdkLineStyle pm_lstyle;
 	switch (lstyle)
 	{
-	case LS_SOLID:  line_style = GDK_LINE_SOLID; break;
-	case LS_DOTTED: line_style = GDK_LINE_ON_OFF_DASH; break;
-	case LS_DASHED: line_style = GDK_LINE_DOUBLE_DASH; break;
+	case LS_SOLID:  pm_lstyle = GDK_LINE_SOLID; break;
+	case LS_DOTTED: pm_lstyle = GDK_LINE_ON_OFF_DASH; break;
+	case LS_DASHED: pm_lstyle = GDK_LINE_DOUBLE_DASH; break;
 	default: assert( !"unknown linestyle" );
 	}
-	gdk_gc_set_line_attributes( m_GC, line_width, line_style, GDK_CAP_BUTT, GDK_JOIN_MITER);
+	gdk_gc_set_line_attributes( m_GC, pm_line_width, pm_lstyle, GDK_CAP_BUTT, GDK_JOIN_MITER);
 }
 void DrawBuffer::DrawLine( vrgint x, vrgint y, vrgint endx, vrgint endy)
 {
@@ -390,10 +411,12 @@ void DrawBuffer::DrawRectangle( vrgint x, vrgint y, vrgint width, vrgint height,
 	gboolean pm_filled = filled ? TRUE : FALSE;
 	int pm_x, pm_y;
 	Vrg2Pm( x,y, pm_x, pm_y);
+	int pm_width = width * m_Scaling;
+	int pm_height = height * m_Scaling;
 
 	gdk_draw_rectangle( m_Pixmap, m_GC, pm_filled, 
 						pm_x, pm_y, 
-						width, height);
+						pm_width, pm_height);
 }
 void DrawBuffer::DrawTriangle( vrgint x1, vrgint y1, vrgint x2, vrgint y2, vrgint x3, vrgint y3, bool filled)
 {
