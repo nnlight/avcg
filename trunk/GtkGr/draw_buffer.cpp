@@ -285,17 +285,31 @@ void DrawBuffer::ButtonPress2( daint x, daint y)
 void DrawBuffer::MoveVisibleArea( gint delta,
 								  Axis_t axis)
 {
+	gint delt[AXIS_LAST];
+	delt[AXIS_X] = 0;
+	delt[AXIS_Y] = 0;
+	delt[axis] = delta;
+
+	MoveVisibleArea2d( delt);
+	return;
+} /* DrawBuffer::MoveVisibleArea */
+
+void DrawBuffer::MoveVisibleArea2d( gint delta[AXIS_LAST])
+{
 	bool is_need_redraw_pixmap = false;
 
 	/* если видимая область доходит до границы Pixmap'а, то мы перерисовываем Pixmap
 	   так, чтобы видимая область стала посередине Pixmap'а */
-	if ( m_VisibleAreaBase[axis] + delta < 0 )
+	for ( int axis = 0; axis < AXIS_LAST; axis++ )
 	{
-		is_need_redraw_pixmap = true;
-	}
-	if ( m_VisibleAreaBase[axis] + m_VisibleAreaDims[axis] + delta > m_PixmapDims[axis] )
-	{
-		is_need_redraw_pixmap = true;
+		if ( m_VisibleAreaBase[axis] + delta[axis] < 0 )
+		{
+			is_need_redraw_pixmap = true;
+		}
+		if ( m_VisibleAreaBase[axis] + m_VisibleAreaDims[axis] + delta[axis] > m_PixmapDims[axis] )
+		{
+			is_need_redraw_pixmap = true;
+		}
 	}
 	if (is_need_redraw_pixmap)
 	{
@@ -324,12 +338,14 @@ void DrawBuffer::MoveVisibleArea( gint delta,
 		}
 	}
 
-	m_VisibleAreaBase[axis] += delta; /* сдвигаем visible area :) */
+	/* сдвигаем visible area :) */
+	m_VisibleAreaBase[AXIS_X] += delta[AXIS_X];
+	m_VisibleAreaBase[AXIS_Y] += delta[AXIS_Y];
 	/* Now invalidate the affected region of the drawing area. */
 	/* инвалидируем всю drawing_area (потом должно будет прийти expose_event) */
 	InvalidateDa( NULL);
 	return;
-} /* DrawBuffer::MoveVisibleArea */
+} /* DrawBuffer::MoveVisibleArea2d */
 
 void DrawBuffer::ChangeScaling( double scaling_factor, daint x, daint y)
 {
