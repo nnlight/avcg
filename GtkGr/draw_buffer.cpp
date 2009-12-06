@@ -318,8 +318,32 @@ void DrawBuffer::MoveVisibleArea( gint delta,
 void DrawBuffer::ChangeScaling( double scaling_factor, daint x, daint y)
 {
 	assert( m_da );
+	
+	int pm_x, pm_y;
+	Da2Pm( x, y, pm_x, pm_y);
+
+	assert( m_VisibleAreaBase[AXIS_X] <= pm_x 
+			&& pm_x < m_VisibleAreaBase[AXIS_X] + m_VisibleAreaDims[AXIS_X] );
+	assert( m_VisibleAreaBase[AXIS_Y] <= pm_y
+			&& pm_y < m_VisibleAreaBase[AXIS_Y] + m_VisibleAreaDims[AXIS_Y] );
 
 	m_Scaling *= scaling_factor;
+	/*
+     * Еще подкручиваем VRGBase таким образом, чтобы с новым scaling 
+	 * под pm_x pm_y оказалось та же часть графа, что была со старым
+	 * (относительно (pm_x,pm_y) растягиваем VRGBase на scaling_factor)
+	 */
+	/* смещение VRGBase относительно pm_x, pm_y */
+	int vrgbase_shift[AXIS_LAST];
+	vrgbase_shift[AXIS_X] = m_VRGBase[AXIS_X] - pm_x;
+	vrgbase_shift[AXIS_Y] = m_VRGBase[AXIS_Y] - pm_y;
+
+	/* растягиваем */
+	vrgbase_shift[AXIS_X] *= scaling_factor;
+	vrgbase_shift[AXIS_Y] *= scaling_factor;
+
+	m_VRGBase[AXIS_X] = pm_x + vrgbase_shift[AXIS_X];
+	m_VRGBase[AXIS_Y] = pm_y + vrgbase_shift[AXIS_Y];
 
 	/* обновляем содержимое Pixmap'а (т.к. теперь там должна лежать изображения другой части графа) */  
 	InitializePixmapToBackgroundColor( m_Pixmap,
@@ -337,8 +361,10 @@ void DrawBuffer::ChangeScaling( double scaling_factor, daint x, daint y)
 
 void DrawBuffer::PKey()
 {
-	printf( "%d %d\n", m_VisibleAreaBase[AXIS_X], m_VisibleAreaBase[AXIS_Y]);
-	printf( "%d %d\n", m_PixmapDims[AXIS_X], m_PixmapDims[AXIS_Y]);
+	printf( "dims %d %d\n", m_PixmapDims[AXIS_X], m_PixmapDims[AXIS_Y]);
+	printf( "va_base %d %d\n", m_VisibleAreaBase[AXIS_X], m_VisibleAreaBase[AXIS_Y]);
+	printf( "vrg_base %d %d\n", m_VRGBase[AXIS_X], m_VRGBase[AXIS_Y]);
+	printf( "scaling %f\n", m_Scaling);
 } /* DrawBuffer::PKey */
 
 
@@ -436,6 +462,7 @@ void DrawBuffer::DrawText( vrgint x, vrgint y, const char *text)
 	PangoLayout *layout;
 	layout = gtk_widget_create_pango_layout( m_da, text);
 	/*pango_layout_get_pixel_size (layout, &w, &h);*/
+	P
 	gdk_draw_layout( m_Pixmap, m_GC, pm_x, pm_y, layout);
 	g_object_unref( layout);
 }
