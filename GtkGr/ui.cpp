@@ -2,6 +2,8 @@
 #include <gdk/gdkkeysyms.h>
 #include "vr_graph.h"
 
+#define SCALING_COEF 1.1
+#define MOVE_PIXELS 20
 
 /**
  * Обработчик сигнала закрытия главного окна приложения
@@ -54,16 +56,16 @@ ui_key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data)
 		break;
 
 	case GDK_Up:
-		db->MoveVisibleArea( -15, AXIS_Y);
+		db->MoveVisibleArea( -MOVE_PIXELS, AXIS_Y);
 		break;
 	case GDK_Down:
-		db->MoveVisibleArea( 15, AXIS_Y);
+		db->MoveVisibleArea( MOVE_PIXELS, AXIS_Y);
 		break;
 	case GDK_Left:
-		db->MoveVisibleArea( -15, AXIS_X);
+		db->MoveVisibleArea( -MOVE_PIXELS, AXIS_X);
 		break;
 	case GDK_Right:
-		db->MoveVisibleArea( 15, AXIS_X);
+		db->MoveVisibleArea( MOVE_PIXELS, AXIS_X);
 		break;
 
 	case GDK_p:
@@ -143,6 +145,32 @@ ui_da_button_press_event_cb( GtkWidget      *da,
 	return TRUE;    /* We've handled it, stop processing */
 } /* ui_da_button_press_event_cb */
 
+gboolean 
+ui_da_scroll_event_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
+{
+	UIController *uic = (UIController *)data;
+	DrawBuffer *db = uic->m_DrawBuffer.get();
+  	if (g_DaPrintEvents ) g_print("scroll_event\n");
+
+	if ( event->state & GDK_CONTROL_MASK )
+	{
+		/* при нажатом Cеrl'е увеличиваем/уменьшаем граф */
+		gint x = (int)event->x;
+		gint y = (int)event->y;
+		switch (event->direction)
+		{
+		case GDK_SCROLL_UP:
+			db->ChangeScaling( SCALING_COEF, x, y);
+			break;
+		case GDK_SCROLL_DOWN:
+			db->ChangeScaling( 1./SCALING_COEF, x, y);
+			break;
+		}
+	}
+
+	return TRUE;    /* We've handled it, stop processing */
+} /* ui_da_scroll_event_cb */
+
 gboolean
 ui_da_motion_notify_event_cb( GtkWidget      *da,
                               GdkEventMotion *event,
@@ -150,7 +178,7 @@ ui_da_motion_notify_event_cb( GtkWidget      *da,
 {
 	UIController *uic = (UIController *)data;
 	DrawBuffer *db = uic->m_DrawBuffer.get();
-  	/*if (g_DaPrintEvents ) g_print("motion_notify_event\n");*/
+  	//if (g_DaPrintEvents ) g_print("motion_notify_event\n");
 	int x, y;
 	GdkModifierType state;
 
@@ -450,13 +478,15 @@ UIController::UIController( bool is_gdl_present)
 	g_signal_connect( da, "expose-event", G_CALLBACK( ui_da_expose_event_cb), this);
 	g_signal_connect( da, "configure-event", G_CALLBACK( ui_da_configure_event_cb), this);
 	g_signal_connect( da, "motion-notify-event", G_CALLBACK( ui_da_motion_notify_event_cb), this);
-	g_signal_connect( da, "button-press-event",	G_CALLBACK( ui_da_button_press_event_cb), this);
+	g_signal_connect( da, "button-press-event", G_CALLBACK( ui_da_button_press_event_cb), this);
+	g_signal_connect( da, "scroll-event", G_CALLBACK( ui_da_scroll_event_cb), this);
 
 	/* Ask to receive events the drawing area doesn't normally
 	 * subscribe to */
 	gtk_widget_set_events( da, gtk_widget_get_events (da)
 								| GDK_LEAVE_NOTIFY_MASK
 								| GDK_BUTTON_PRESS_MASK
+								//| GDK_SCROLL_MASK
 								| GDK_POINTER_MOTION_MASK
 								| GDK_POINTER_MOTION_HINT_MASK);
 

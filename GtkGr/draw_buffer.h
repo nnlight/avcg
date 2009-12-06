@@ -36,6 +36,9 @@ private:
 	gint m_VisibleAreaBase[AXIS_LAST];
 	gint m_VisibleAreaDims[AXIS_LAST];
 	gint m_PixmapDims[AXIS_LAST];
+
+	/* текущий коэффициент увеличния */
+	double m_Scaling;
 	
 	/* ссылка на VRGraph */
 	VRGraph *m_VRGraph;
@@ -63,7 +66,11 @@ public:
 	void ButtonPress( daint x, daint y);
 	void ButtonPress2( daint x, daint y);
 
+	/* сдвинуть видимую область */
 	void MoveVisibleArea( gint delta, Axis_t axis);
+	/** изменить Scaling, координаты передаются для того, чтобы та точка графа,
+	   которая находится под ними, осталась бы на том же месте */
+	void ChangeScaling( double scaling_factor, daint x, daint y);
 
 	void PKey();
 	
