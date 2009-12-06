@@ -121,7 +121,7 @@ void DrawBuffer::InitializePixmapToBackgroundColor( GdkPixmap *pixmap, int width
 
 void DrawBuffer::ConfigureDa()
 {
-	GtkWidget *drawing_area = m_da;
+	assert( m_da );
 	if (m_Pixmap)
 	{
 		g_object_unref( m_Pixmap);
@@ -133,14 +133,16 @@ void DrawBuffer::ConfigureDa()
 		gdk_colormap_free_colors( gc_colormap, m_Colormap, m_AllocedColors);
 		m_AllocedColors = 0;
 		g_object_unref( m_GC);
-	}	
-	gint dims[AXIS_LAST];
-	dims[AXIS_X] = drawing_area->allocation.width;
-	dims[AXIS_Y] = drawing_area->allocation.height;
+	}
 
-	m_Pixmap = gdk_pixmap_new( drawing_area->window,			/* только для дефолтной глубины передаем */
-                               drawing_area->allocation.width,
-                               drawing_area->allocation.height,
+	gint dims[AXIS_LAST];
+	/* Pixmap будем держать примерно в 3 раза больше видимой области */
+	dims[AXIS_X] = m_da->allocation.width * 3;
+	dims[AXIS_Y] = m_da->allocation.height * 3;
+
+	m_Pixmap = gdk_pixmap_new( m_da->window,		/* только для дефолтной глубины передаем */
+                               dims[AXIS_X],
+                               dims[AXIS_Y],
                                -1);
 
 	m_GC = gdk_gc_new( /*m_da->window*/ m_Pixmap);
@@ -148,19 +150,23 @@ void DrawBuffer::ConfigureDa()
 	SetBackgroundColor( /*WHITE*/DARKYELLOW);
 	SetCurrentColor( BLACK);
 
-	m_VisibleAreaBase[AXIS_X] = 0;
-	m_VisibleAreaBase[AXIS_Y] = 0;
-	m_VisibleAreaDims[AXIS_X] = dims[AXIS_X];
-	m_VisibleAreaDims[AXIS_Y] = dims[AXIS_Y];
+	m_VisibleAreaBase[AXIS_X] = dims[AXIS_X] / 3;
+	m_VisibleAreaBase[AXIS_Y] = dims[AXIS_Y] / 3;
+	m_VisibleAreaDims[AXIS_X] = m_da->allocation.width;
+	m_VisibleAreaDims[AXIS_Y] = m_da->allocation.height;
 	m_PixmapDims[AXIS_X] = dims[AXIS_X];
 	m_PixmapDims[AXIS_Y] = dims[AXIS_Y];
 
-	m_VRGBase[AXIS_X] = 0;
-	m_VRGBase[AXIS_Y] = 0;
+	m_VRGBase[AXIS_X] = m_VisibleAreaBase[AXIS_X];
+	m_VRGBase[AXIS_Y] = m_VisibleAreaBase[AXIS_Y];
   
 	InitializePixmapToBackgroundColor( m_Pixmap,
-									   drawing_area->allocation.width,
-									   drawing_area->allocation.height);
+									   dims[AXIS_X],
+									   dims[AXIS_Y]);
+	if ( m_VRGraph )
+	{
+		m_VRGraph->Expose( this);
+	}
 } /* DrawBuffer::ConfigureDa */
 
 void DrawBuffer::ExposeDa( daint x, 
@@ -168,7 +174,6 @@ void DrawBuffer::ExposeDa( daint x,
 						   daint width, 
 						   daint height)
 {
-	m_VRGraph->Expose( this, 0,0,0,0);
 	gdk_draw_drawable( m_da->window,
                        m_da->style->fg_gc[GTK_WIDGET_STATE (m_da)],
 					   m_Pixmap,
@@ -240,7 +245,7 @@ draw_brush (GtkWidget *widget, /* da */
   gdk_window_invalidate_rect (widget->window,
                               &update_rect,
                               FALSE);
-}
+} /* draw_brush */
 
 void DrawBuffer::ButtonPress( daint x, daint y)
 {
@@ -256,62 +261,52 @@ void DrawBuffer::ButtonPress2( daint x, daint y)
 	m_VRGraph->AddNode( this, 
 						vrg_x, vrg_y, 
 						"title", " label\nnext line");
-	m_VRGraph->Expose( this, 0,0,0,0);
+	m_VRGraph->Expose( this);
 	InvalidateDa( NULL);
 }
 
 void DrawBuffer::MoveVisibleArea( gint delta,
 								  Axis_t axis)
 {
-	bool is_need_new_pixmap = false;
-	gint new_pixmap_dims[AXIS_LAST];
-	gint old_pixmap_pose[AXIS_LAST] = {0,0}; /* положение старой относительно новой */
-	new_pixmap_dims[AXIS_X] = m_PixmapDims[AXIS_X];
-	new_pixmap_dims[AXIS_Y] = m_PixmapDims[AXIS_Y];
+	bool is_need_redraw_pixmap = false;
 
+	/* если видимая область доходит до границы Pixmap'а, то мы перерисовываем Pixmap
+	   так, чтобы видимая область стала посередине Pixmap'а */
 	if ( m_VisibleAreaBase[axis] + delta < 0 )
 	{
-		is_need_new_pixmap = true;
-		new_pixmap_dims[axis] += -(m_VisibleAreaBase[axis] + delta);
-		old_pixmap_pose[axis] = -(m_VisibleAreaBase[axis] + delta);
+		is_need_redraw_pixmap = true;
 	}
 	if ( m_VisibleAreaBase[axis] + m_VisibleAreaDims[axis] + delta > m_PixmapDims[axis] )
 	{
-		is_need_new_pixmap = true;
-		new_pixmap_dims[axis] 
-			+= m_VisibleAreaBase[axis] + m_VisibleAreaDims[axis] + delta - m_PixmapDims[axis];
+		is_need_redraw_pixmap = true;
 	}
-
-	if (is_need_new_pixmap)
+	if (is_need_redraw_pixmap)
 	{
-		GdkPixmap *new_pixmap = gdk_pixmap_new( m_da->window,
-												new_pixmap_dims[AXIS_X], new_pixmap_dims[AXIS_Y],
-												-1);
-		InitializePixmapToBackgroundColor( new_pixmap,
-									       new_pixmap_dims[AXIS_X], new_pixmap_dims[AXIS_Y]);
-		/* копируем содержимое старой */
-		gdk_draw_drawable( new_pixmap,
-						   m_da->style->fg_gc[GTK_WIDGET_STATE (m_da)],
-					       m_Pixmap,
-						   /* src x,y */
-						   0, 0,
-						   /* dst x,y */
-                           old_pixmap_pose[AXIS_X], old_pixmap_pose[AXIS_Y],
-						   m_PixmapDims[AXIS_X], m_PixmapDims[AXIS_Y]);
-		/* подменяем */
+		/* смещение нового положения Pixmap относительно старых координат Pixmap */
+		int pixmap_shift[AXIS_LAST];
+		/* смещать будем так, чтобы VisibleArea оказалась посередине Pixmap'а */
+		pixmap_shift[AXIS_X] = m_VisibleAreaBase[AXIS_X] - m_PixmapDims[AXIS_X] / 3;
+		pixmap_shift[AXIS_Y] = m_VisibleAreaBase[AXIS_Y] - m_PixmapDims[AXIS_Y] / 3;
+
+		/* пересчитываем положение видимой области (размеры видимой области не меняются) */
+		m_VisibleAreaBase[AXIS_X] -= pixmap_shift[AXIS_X];
+		m_VisibleAreaBase[AXIS_Y] -= pixmap_shift[AXIS_Y];
+		assert( m_VisibleAreaBase[AXIS_X] == m_PixmapDims[AXIS_X] / 3 );
+		assert( m_VisibleAreaBase[AXIS_Y] == m_PixmapDims[AXIS_Y] / 3 );
+		/* пересчитываем положение центра VRGraph'а */
+		m_VRGBase[AXIS_X] -= pixmap_shift[AXIS_X];
+		m_VRGBase[AXIS_Y] -= pixmap_shift[AXIS_Y];
+
+		/* обновляем содержимое Pixmap'а (т.к. теперь там должна лежать изображения другой части графа) */  
+		InitializePixmapToBackgroundColor( m_Pixmap,
+										   m_PixmapDims[AXIS_X],
+										   m_PixmapDims[AXIS_Y]);
+		if ( m_VRGraph )
 		{
-			g_object_unref( m_Pixmap);
-			m_Pixmap = new_pixmap;
-			m_PixmapDims[AXIS_X] = new_pixmap_dims[AXIS_X];
-			m_PixmapDims[AXIS_Y] = new_pixmap_dims[AXIS_Y];
-			m_VisibleAreaBase[AXIS_X] += old_pixmap_pose[AXIS_X];
-			m_VisibleAreaBase[AXIS_Y] += old_pixmap_pose[AXIS_Y];
+			m_VRGraph->Expose( this);
 		}
-		m_VRGBase[AXIS_X] += old_pixmap_pose[AXIS_X];
-		m_VRGBase[AXIS_Y] += old_pixmap_pose[AXIS_Y];
 	}
 
-	/* в этой точке мы гарантируем, что в m_Pixmap хватит место чтобы сдвинуть VisibleArea */
 	m_VisibleAreaBase[axis] += delta; /* сдвигаем visible area :) */
 	/* Now invalidate the affected region of the drawing area. */
 	/* инвалидируем всю drawing_area (должно будет потом expose_event прийти) */

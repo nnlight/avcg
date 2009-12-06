@@ -22,16 +22,8 @@
 
 
 
-#ifdef WIN32____
-int _tmain(int argc, _TCHAR* argv[])
-#else
 int main(int argc, char *argv[])
-#endif
 {
-#ifdef WIN32
-	printf("Hello, its GtkGr! (sizeof(_TCHAR)=%d) (sizeof(gchar)=%d)\n",  sizeof(_TCHAR), sizeof(gchar));
-#endif
-	printf("sizeof(long)=%d\n",  sizeof(long));
 	
 	bool is_gdl_present = false;
 	if (argc > 1)
