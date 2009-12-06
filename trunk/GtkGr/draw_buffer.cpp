@@ -491,8 +491,14 @@ void DrawBuffer::DrawText( vrgint x, vrgint y, const char *text)
 {
 	int pm_x, pm_y;
 	Vrg2Pm( x,y, pm_x, pm_y);
+	/* 10 - это что-то типа размера текущего шрифта... */
+	gchar *str = g_strdup_printf( "<span size=\"%d\">%s</span>",
+								  (int)(PANGO_SCALE * 10 * m_Scaling),
+								  text);
 	PangoLayout *layout;
-	layout = gtk_widget_create_pango_layout( m_da, text);
+	layout = gtk_widget_create_pango_layout( m_da, 0);
+	pango_layout_set_markup( layout, str, -1);
+	g_free( str);
 	/*pango_layout_get_pixel_size (layout, &w, &h);*/
 	gdk_draw_layout( m_Pixmap, m_GC, pm_x, pm_y, layout);
 	g_object_unref( layout);
