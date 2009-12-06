@@ -56,9 +56,12 @@ private:
 	Color_t m_BackgroundColor;       /*!< цвет фона */
 	Color_t m_CurrentColor;          /*!< текущий (foreground) цвет */
 public:
-	DrawBuffer( GtkWidget *drawing_area, VRGraph *vr_graph);
+	DrawBuffer( GtkWidget *drawing_area);
 	/* не предназначен для иcпользования в качестве базового класса */
 	~DrawBuffer();
+
+	/* установка отображаемого графа*/
+	void SetVRGraphRef( VRGraph *vr_graph);
 
 	/* da-функции */
 	void ConfigureDa();

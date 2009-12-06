@@ -68,10 +68,10 @@ void DrawBuffer::AllocColormap()
 
 } /* DrawBuffer::AllocColormap */
 
-DrawBuffer::DrawBuffer( GtkWidget *drawing_area, VRGraph *vr_graph)
+DrawBuffer::DrawBuffer( GtkWidget *drawing_area)
 	: m_da( drawing_area)
 	, m_Pixmap( NULL)
-	, m_VRGraph( vr_graph)
+	, m_VRGraph( NULL)
 	, m_Scaling ( 1.)
 	, m_GC( NULL)
 	, m_InitedColors( 0)
@@ -119,6 +119,22 @@ void DrawBuffer::InitializePixmapToBackgroundColor( GdkPixmap *pixmap, int width
 	                    height);
 	gdk_gc_set_foreground( m_GC, &m_Colormap[m_CurrentColor]);
 } /* DrawBuffer::InitializePixmapToBackgroundColor */
+
+void DrawBuffer::SetVRGraphRef( VRGraph *vr_graph)
+{
+	m_VRGraph = vr_graph;
+	if (m_Pixmap)
+	{
+		InitializePixmapToBackgroundColor( m_Pixmap,
+										   m_PixmapDims[AXIS_X],
+										   m_PixmapDims[AXIS_Y]);
+		if ( m_VRGraph )
+		{
+			m_VRGraph->Expose( this);
+		}
+		InvalidateDa( NULL);
+	}
+} /* DrawBuffer::SetVRGraphRef */
 
 void DrawBuffer::ConfigureDa()
 {

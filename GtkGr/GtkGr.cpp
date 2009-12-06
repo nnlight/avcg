@@ -24,19 +24,18 @@
 
 int main(int argc, char *argv[])
 {
-	
-	bool is_gdl_present = false;
+	char *filename = NULL;
 	if (argc > 1)
 	{
-		FILE *f = fopen( argv[1], "r");
+		filename = argv[1];
+		FILE *f = fopen( filename, "r");
 		if (!f)
 		{
-			printf("Cant open file: %s\n", argv[1]);
+			printf("Cant open file: %s\n", filename);
 			exit(-1);
 		}
 		vcg_Parse( f);
 		fclose(f);
-		is_gdl_present = true;
 	}
 	
 	// Иннициализация GTK;
@@ -44,7 +43,7 @@ int main(int argc, char *argv[])
 	gtk_init(&argc,/*(char***)*/&argv) ;
 
 	// строим GUI
-	std::auto_ptr<UIController> uic( new UIController( is_gdl_present));
+	std::auto_ptr<UIController> uic( new UIController( filename));
 
 	// запускаем цикл обработки сообщений
 	uic->MainLoop();

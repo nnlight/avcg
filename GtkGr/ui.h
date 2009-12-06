@@ -22,18 +22,24 @@ enum Mode_t
 class UIController
 {
 private:
+	GtkWidget *m_MainWindow;
 	GtkUIManager *m_UIManager;
+	std::string m_CurrentFilename;
 	std::auto_ptr<DrawBuffer> m_DrawBuffer;
 	std::auto_ptr<VRGraph> m_VRGraph;
 	Mode_t m_CurrentMode;
 	GtkWidget *m_Toolbar;
 	GtkWidget *m_Statusbar;
 public:
-	UIController( bool is_gdl_present);
+	UIController( const char *filename = NULL);
 	~UIController(void);
 	
 	/* цикл обработки сообщений */
 	void MainLoop() { gtk_main(); };
+
+	/* загрузка GDL-файла */
+	void LoadGDL( const char *filename);
+
 
 private:
 	GtkWidget *ConstrMenubar( GtkWidget *main_window);
@@ -45,6 +51,7 @@ private:
 	friend gboolean ui_da_scroll_event_cb( GtkWidget *da, GdkEventScroll *event, gpointer data);
 	friend gboolean ui_da_motion_notify_event_cb( GtkWidget *da, GdkEventMotion *event, gpointer data);
 	friend void ui_activate_radio_action_mode( GtkAction *action, GtkRadioAction *current, gpointer data);
+	friend void ui_activate_action( GtkAction *action, gpointer data);
 };
 
 #endif /* _UI_H_ */

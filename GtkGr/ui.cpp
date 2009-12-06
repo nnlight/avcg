@@ -1,6 +1,7 @@
 #include "ui.h"
 #include <gdk/gdkkeysyms.h>
 #include "vr_graph.h"
+#include "vcg/vcg_iface.h"
 
 #define SCALING_COEF 1.1
 #define MOVE_PIXELS 20
@@ -203,10 +204,10 @@ ui_da_motion_notify_event_cb( GtkWidget      *da,
 
 /////////////////////////////////// Menu //////////////////////////////////////////////
 
-static void
-ui_activate_action( GtkAction *action, gpointer user_data)
+void
+ui_activate_action( GtkAction *action, gpointer data)
 {
-	UIController *uic = (UIController *)user_data;
+	UIController *uic = (UIController *)data;
 	const gchar *action_name = gtk_action_get_name( action);
 
 	g_message( "Action \"%s\" activated", action_name);
@@ -214,7 +215,31 @@ ui_activate_action( GtkAction *action, gpointer user_data)
 	{
 		/* выходим без диалогов всяких... :) */
 		gtk_main_quit();
+	} else if ( !strcmp( action_name, "Open") )
+	{
+		GtkWidget *dialog;
+		dialog = gtk_file_chooser_dialog_new( "Open File", 
+											GTK_WINDOW( uic->m_MainWindow),
+											GTK_FILE_CHOOSER_ACTION_OPEN,
+											GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+											GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+											NULL);
+		if (gtk_dialog_run( GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
+		{
+			char *filename;
+			filename = gtk_file_chooser_get_filename( GTK_FILE_CHOOSER(dialog));
+			uic->LoadGDL( filename);
+			g_free( filename);
+		}
+		gtk_widget_destroy (dialog);
+	} else if ( !strcmp( action_name, "Reload") )
+	{
+		if ( !uic->m_CurrentFilename.empty() )
+		{
+			uic->LoadGDL( uic->m_CurrentFilename.c_str());
+		}
 	}
+	return;
 } /* ui_activate_action */
 
 static void
@@ -253,6 +278,10 @@ static GtkActionEntry entries[] = {
   { "Open", GTK_STOCK_OPEN,                    /* name, stock id */
     "_Open","<control>O",                      /* label, accelerator */     
     "Open a file",                             /* tooltip */
+    G_CALLBACK (ui_activate_action) }, 
+  { "Reload", GTK_STOCK_REFRESH,                    /* name, stock id */
+    "_Reload","<control>R",                      /* label, accelerator */     
+    "Reload file",                             /* tooltip */
     G_CALLBACK (ui_activate_action) }, 
   { "Save", GTK_STOCK_SAVE,                    /* name, stock id */
     "_Save","<control>S",                      /* label, accelerator */     
@@ -338,6 +367,7 @@ static const gchar *ui_info =
 "    <menu action='FileMenu'>"
 "      <menuitem action='New'/>"
 "      <menuitem action='Open'/>"
+"      <menuitem action='Reload'/>"
 "      <menuitem action='Save'/>"
 "      <menuitem action='SaveAs'/>"
 "      <separator/>"
@@ -432,9 +462,10 @@ GtkWidget *UIController::ConstrMenubar( GtkWidget *main_window)
 /**
  * Конструктор, здесь мы создаем весь GUI
  */
-UIController::UIController( bool is_gdl_present)
-	: m_UIManager( NULL)
-	,m_CurrentMode( MODE_VIEW)
+UIController::UIController( const char *filename)
+	: m_MainWindow( NULL)
+	, m_UIManager( NULL)
+	, m_CurrentMode( MODE_VIEW)
 	, m_Toolbar( NULL)
 	, m_Statusbar( NULL)
 {
@@ -468,11 +499,13 @@ UIController::UIController( bool is_gdl_present)
 	gtk_container_add( GTK_CONTAINER(main_vbox), da);
 
 	m_VRGraph.reset( new VRGraph());
-	if (is_gdl_present)
+	if (filename)
 	{
 		m_VRGraph->LoadGDL();
+		m_CurrentFilename = filename;
 	}
-	m_DrawBuffer.reset( new DrawBuffer( da, m_VRGraph.get()));
+	m_DrawBuffer.reset( new DrawBuffer( da));
+	m_DrawBuffer->SetVRGraphRef( m_VRGraph.get());
 
 	/* добавляем к da обработчики событий */
 	g_signal_connect( da, "expose-event", G_CALLBACK( ui_da_expose_event_cb), this);
@@ -497,10 +530,37 @@ printf("before gtk_widget_show_all(main_window)\n");
 
 	// отображение основного окна
 	gtk_widget_show_all( main_window);
+
+	m_MainWindow = main_window;
+	return;
 } /* UIController::UIController */
 
 UIController::~UIController(void)
 {
 	g_object_unref( m_UIManager);
 } /* UIController::~UIController */
+
+void UIController::LoadGDL( const char *filename)
+{
+	assert( filename );
+	if ( !m_CurrentFilename.empty() )
+	{
+	}
+
+	FILE *f = fopen( filename, "r");
+	if (!f)
+	{
+		printf("Cant open file: %s\n", filename);
+		exit(-1);
+	}
+	vcg_Parse( f);
+	fclose(f);
+
+	/* удаляем старый граф (если есть)*/
+	m_VRGraph.reset( NULL);
+	m_VRGraph.reset( new VRGraph());
+	m_VRGraph->LoadGDL();
+	m_DrawBuffer->SetVRGraphRef( m_VRGraph.get());
+	m_CurrentFilename = filename;
+} /* UIController::LoadGDL */
 
