@@ -487,14 +487,33 @@ void DrawBuffer::DrawTriangle( vrgint x1, vrgint y1, vrgint x2, vrgint y2, vrgin
 	gdk_draw_polygon( m_Pixmap, m_GC, pm_filled, 
 					  pm_p, 3);
 }
+/* В заданной строке (rStrText) заменить все вхождения заданной подстроки
+(rcStrFind) на заданную строку (rcStrReplace). */
+static void 
+replace( string &rStrText, const string &rcStrFind, const string &rcStrReplace)
+{
+	const string::size_type
+	ncSizeFind = rcStrFind.length(),
+	ncSizeReplace = rcStrReplace.length();
+	string::size_type nPos = rStrText.find(rcStrFind);
+	while (nPos != string::npos)
+	{
+		rStrText.replace(nPos, ncSizeFind, rcStrReplace);
+		nPos = rStrText.find(rcStrFind, nPos + ncSizeReplace);
+	}
+}
 void DrawBuffer::DrawText( vrgint x, vrgint y, const char *text)
 {
 	int pm_x, pm_y;
 	Vrg2Pm( x,y, pm_x, pm_y);
+	std::string text2( text);
+	replace( text2, "&", "&amp;");
+	replace( text2, "<", "&lt;");
+	replace( text2, ">", "&gt;");
 	/* 10 - это что-то типа размера текущего шрифта... */
 	gchar *str = g_strdup_printf( "<span size=\"%d\">%s</span>",
 								  (int)(PANGO_SCALE * 10 * m_Scaling),
-								  text);
+								  text2.c_str());
 	PangoLayout *layout;
 	layout = gtk_widget_create_pango_layout( m_da, 0);
 	pango_layout_set_markup( layout, str, -1);
