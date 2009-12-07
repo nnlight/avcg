@@ -199,6 +199,8 @@ ui_da_scroll_event_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
 		case GDK_SCROLL_DOWN:
 			db->ChangeScaling( 1./SCALING_COEF, x, y);
 			break;
+		default:
+			break;
 		}
 	}
 
