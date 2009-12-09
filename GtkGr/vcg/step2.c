@@ -2724,7 +2724,7 @@ GNODE     *b;
 
 #define exchange(a,b) { t=a; a=b; b=t; }
 
-static int rand_num = 211;
+static unsigned int rand_num = 211;
 
 #ifdef ANSI_C
 static void 	myqsort(int l, int r)
@@ -2740,6 +2740,7 @@ int l, r;
 	k = r-l;
 	if (k>5) { /* randomized pivot element */
 		j = l + (rand_num % k); 
+		assert( l <=j && j<=r );
 		rand_num = (rand_num + 10891) % MAXINT;
 		exchange(sort_array[l],sort_array[j]); 
 	}
