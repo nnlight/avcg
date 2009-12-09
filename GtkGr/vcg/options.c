@@ -350,7 +350,6 @@ long 	V_ymin_initial = 0L;
  *  of the actal input file. 
  */
 
-char	Dataname[ 801];     /* Filename that is actual input        */
 char    filename[1024];     /* Filename from the view of the parser */ 
 
 
@@ -837,13 +836,7 @@ float *res;
  */
 
 #if 0
-#ifdef ANSI_C
 int scanOptions(int argc, char *argv[])
-#else
-int scanOptions(argc, argv)
-int 	argc;
-char	*argv[];
-#endif
 {
 	int help;
 
@@ -860,7 +853,6 @@ char	*argv[];
 	opt_give_help    = 0;
 	opt_give_version = 0;
 	opt_from_stdin   = 0;
-	Dataname[0] = 0;
 
 	while (gblargi<gblargc) {
 
@@ -1071,16 +1063,9 @@ char	*argv[];
 
 		else if (simpleOption("-"))        opt_from_stdin = 1;
 		else if (gblargv[gblargi][0]=='-') opt_error = 1;
-		else {  strncpy(Dataname, gblargv[gblargi], 800 );
-			gblargi++; 
-			Dataname[800] = 0;
-			if (opt_from_stdin) opt_error = 1;
-			else return(1);
-		}
 		if (opt_error) return(0);
 	}
 
-	if (opt_from_stdin) strcpy(Dataname,"-");
 	return(1);
 }
 #endif /* 0 */

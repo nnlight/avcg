@@ -1,5 +1,3 @@
-/* SCCS-info %W% %E% */
-
 /*--------------------------------------------------------------------*/
 /*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
@@ -16,10 +14,6 @@
 /*   status:       in work                                            */
 /*                                                                    */
 /*--------------------------------------------------------------------*/
-
-#ifndef lint
-static char *id_string="$Id: step1.c,v 3.11 1995/02/08 11:11:14 sander Exp $";
-#endif
 
 
 /*
@@ -39,74 +33,8 @@ static char *id_string="$Id: step1.c,v 3.11 1995/02/08 11:11:14 sander Exp $";
  *  You  should  have  received a copy of the GNU General Public License
  *  along  with  this  program;  if  not,  write  to  the  Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  The software is available per anonymous ftp at ftp.cs.uni-sb.de.
- *  Contact  sander@cs.uni-sb.de  for additional information.
  */
 
-
-/* 
- * $Log: step1.c,v $
- * Revision 3.11  1995/02/08  11:11:14  sander
- * Distribution version 1.3.
- *
- * Revision 3.10  1994/12/23  18:12:45  sander
- * Manhatten layout added.
- * Option interface cleared.
- *
- * Revision 3.9  1994/08/05  14:27:31  sander
- * Negative values of G_width, etc. corrected.
- *
- * Revision 3.8  1994/08/05  12:13:25  sander
- * Treelayout added. Attributes "treefactor" and "spreadlevel" added.
- * Scaling as abbreviation of "stretch/shrink" added.
- *
- * Revision 3.7  1994/08/03  13:58:44  sander
- * Horizontal order mechanism changed.
- * Attribute horizontal_order for edges added.
- *
- * Revision 3.6  1994/08/02  15:36:12  sander
- * On layout algorithm minbackward, fine tuning phase corrected.
- * Allow nodes to be pulled just before/after their successors/predecessors,
- * if no backward edges are produced by this.
- *
- * Revision 3.5  1994/05/16  08:56:03  sander
- * shape attribute (boxes, rhombs, ellipses, triangles) added.
- *
- * Revision 3.4  1994/05/05  08:20:30  sander
- * Algorithm late labels added: If labels are inserted
- * after partitioning, this may yield a better layout.
- *
- * Revision 3.3  1994/04/27  16:05:19  sander
- * Some general changes for the PostScript driver.
- * Horizontal order added. Bug fixes of the folding phases:
- * Folding of nested graphs works now.
- *
- * Revision 3.2  1994/03/04  19:11:24  sander
- * Specification of levels per node added.
- * X11 geometry behaviour (option -geometry) changed such
- * that the window is now opened automatically.
- *
- * Revision 3.1  1994/03/01  10:59:55  sander
- * Copyright and Gnu Licence message added.
- * Problem with "nearedges: no" and "selfloops" solved.
- *
- * Revision 2.5  1994/02/10  15:56:32  sander
- * Layoutalgorithm changed: We not only put the start nodes
- * in front of the node list, but additionally add the end
- * nodes (which have no successor) at the end of the node list.
- *
- * Revision 2.4  1994/01/21  19:33:46  sander
- * VCG Version tested on Silicon Graphics IRIX, IBM R6000 AIX and Sun 3/60.
- * Option handling improved. Option -grabinputfocus installed.
- * X11 Font selection scheme implemented. The user can now select a font
- * during installation.
- * Sun K&R C (a nonansi compiler) tested. Some portabitility problems solved.
- *
- * Revision 2.3  1994/01/03  15:29:06  sander
- * First complete X11 version.
- *
- */
 
 
 /************************************************************************
@@ -292,11 +220,7 @@ static int size_of_layer = 0;  /* Size of table of layers */
 /*  Building a proper hierarchy                                       */
 /*--------------------------------------------------------------------*/
 
-#ifdef ANSI_C
 void	step1_main(void)
-#else
-void	step1_main()
-#endif
 {
 	int i;
 
@@ -356,7 +280,7 @@ void	step1_main()
 		size_of_layer = maxdepth+2;
 #ifdef DEBUG
 		PRINTF("Maxdepth of this layout: %d \n",maxdepth);
-		PRINTF("Sizeof table `layer': %ld Bytes\n",
+		PRINTF("Sizeof table `layer': %d Bytes\n",
 			(maxdepth+2)*sizeof(struct depth_entry));
 #endif
 	}
@@ -405,7 +329,7 @@ void	step1_main()
 		complete_depth_lists();
 		stop_time("step1_main");
 	}
-}
+} /* step1_main */
 
 
 /*--------------------------------------------------------------------*/
@@ -440,12 +364,7 @@ static GNODE startnodesend;
  *  The startnodes are sorted according NREFNUMS.
  */ 
 
-#ifdef ANSI_C
 static void 	insert_startnode(GNODE node)
-#else
-static void 	insert_startnode(node)
-GNODE node;
-#endif
 {
 	GNODE h,*hp;
 
@@ -3565,11 +3484,7 @@ GEDGE   e;
          
 #ifdef DEBUG
 
-#ifdef ANSI_C
 void db_output_adjacencies(void)
-#else
-void db_output_adjacencies()
-#endif
 {
 	GNODE	node;
 	ADJEDGE	edge;
@@ -3577,60 +3492,60 @@ void db_output_adjacencies()
 	PRINTF("\n\nAdjacency lists: ");
 	node = nodelist;
 	while (node) {
-		PRINTF("\n%s(%d)%ld\n", NTITLE(node), NTIEFE(node),node);
+		PRINTF("\n%s(%d)%p\n", NTITLE(node), NTIEFE(node),node);
 		PRINTF("(in:%d,out:%d)\n", NINDEG(node), NOUTDEG(node));
 		PRINTF("Succs:");
 		edge = NSUCC(node);
 		while (edge) {
-			PRINTF("|%s(%ld) ", NTITLE(TARGET(edge)), TARGET(edge));
+			PRINTF("|%s(%p) ", NTITLE(TARGET(edge)), TARGET(edge));
 			edge = ANEXT(edge);
 		}
 		PRINTF("\nPreds:");
 		edge = NPRED(node);
 		while (edge) {
-			PRINTF("|%s(%ld) ", NTITLE(SOURCE(edge)), SOURCE(edge));
+			PRINTF("|%s(%p) ", NTITLE(SOURCE(edge)), SOURCE(edge));
             		edge = ANEXT(edge); 
         	}
 		node = NNEXT(node);
 	}
 	node = labellist;
 	while (node) {
-		PRINTF("\n%s(%d)%ld\n", NTITLE(node), NTIEFE(node),node);
+		PRINTF("\n%s(%d)%p\n", NTITLE(node), NTIEFE(node),node);
 		PRINTF("(in:%d,out:%d)\n", NINDEG(node), NOUTDEG(node));
 		PRINTF("Succs:");
 		edge = NSUCC(node);
 		while (edge) {
-			PRINTF("|%s(%ld) ", NTITLE(TARGET(edge)), TARGET(edge));
+			PRINTF("|%s(%p) ", NTITLE(TARGET(edge)), TARGET(edge));
 			edge = ANEXT(edge);
 		}
 		PRINTF("\nPreds:");
 		edge = NPRED(node);
 		while (edge) {
-			PRINTF("|%s(%ld) ", NTITLE(SOURCE(edge)), SOURCE(edge));
+			PRINTF("|%s(%p) ", NTITLE(SOURCE(edge)), SOURCE(edge));
             		edge = ANEXT(edge); 
         	}
 		node = NNEXT(node);
 	}
 	node = dummylist;
 	while (node) {
-		PRINTF("\n%s(%d)%ld\n", NTITLE(node), NTIEFE(node),node);
+		PRINTF("\n%s(%d)%p\n", NTITLE(node), NTIEFE(node),node);
 		PRINTF("(in:%d,out:%d)\n", NINDEG(node), NOUTDEG(node));
 		PRINTF("Succs:");
 		edge = NSUCC(node);
 		while (edge) {
-			PRINTF("|%s(%ld) ", NTITLE(TARGET(edge)), TARGET(edge));
+			PRINTF("|%s(%p) ", NTITLE(TARGET(edge)), TARGET(edge));
 			edge = ANEXT(edge);
 		}
 		PRINTF("\nPreds:");
 		edge = NPRED(node);
 		while (edge) {
-			PRINTF("|%s(%ld) ", NTITLE(SOURCE(edge)), SOURCE(edge));
+			PRINTF("|%s(%p) ", NTITLE(SOURCE(edge)), SOURCE(edge));
             		edge = ANEXT(edge); 
         	}
 		node = NNEXT(node);
 	}
 	PRINTF("\n");
-}
+} /* db_output_adjacencies */
 
 #endif
 
@@ -3643,25 +3558,19 @@ void db_output_adjacencies()
 
 #define gtitle(v)  (NTITLE(v)?NTITLE(v):"??")
 
-#ifdef ANSI_C
 void db_output_adjacency(GNODE node,int f)
-#else
-void db_output_adjacency(node,f)
-GNODE node;
-int f;
-#endif
 {
 	ADJEDGE	edge;
 
 	PRINTF("\n\nAdjacency lists: ");
-	PRINTF("\n%ld %s(%d)\n", node, gtitle(node), NTIEFE(node));
+	PRINTF("\n%p %s(%d)\n", node, gtitle(node), NTIEFE(node));
 	if (f!=1) {
 	PRINTF("Succs:");
 	edge = NSUCC(node);
 	while (edge) {
-		PRINTF("%ld %c:",edge,EKIND(edge));
-		PRINTF("(%ld)%s-", SOURCE(edge),gtitle(SOURCE(edge)));
-		PRINTF("(%ld)%s ", TARGET(edge),gtitle(TARGET(edge)));
+		PRINTF("%p %c:",edge,EKIND(edge));
+		PRINTF("(%p)%s-", SOURCE(edge),gtitle(SOURCE(edge)));
+		PRINTF("(%p)%s ", TARGET(edge),gtitle(TARGET(edge)));
 		edge = ANEXT(edge);
 	}
 	}
@@ -3669,15 +3578,15 @@ int f;
 	PRINTF("\nPreds:");
 	edge = NPRED(node);
 	while (edge) {
-		PRINTF("%ld %c:",edge,EKIND(edge));
-		PRINTF("(%ld)%s-", SOURCE(edge),gtitle(SOURCE(edge))); 
-		PRINTF("(%ld)%s ", TARGET(edge),gtitle(TARGET(edge)));
+		PRINTF("%p %c:",edge,EKIND(edge));
+		PRINTF("(%p)%s-", SOURCE(edge),gtitle(SOURCE(edge))); 
+		PRINTF("(%p)%s ", TARGET(edge),gtitle(TARGET(edge)));
             	edge = ANEXT(edge); 
         }
 	node = NNEXT(node);
 	PRINTF("End\n");
 	}
-}
+} /* db_output_adjacency */
 #endif
 
 
@@ -3689,11 +3598,7 @@ int f;
 
 #define mtitle(v)  (NTITLE(v)?NTITLE(v):"??")
 
-#ifdef ANSI_C
 static void    db_output_layer(void)
-#else
-static void    db_output_layer()
-#endif
 {
 	int     i;
 	GNLIST	li;
@@ -3704,12 +3609,12 @@ static void    db_output_layer()
 		li = TSUCC(layer[i]);
 		while (li) {
 			node = GNNODE(li);
-			PRINTF("\n%ld %s(%d)\n",node, mtitle(node),NTIEFE(node));
+			PRINTF("\n%p %s(%d)\n",node, mtitle(node),NTIEFE(node));
 			li = GNNEXT(li);
 		}
 		PRINTF("-----------------\n");
 	}
-}
+} /* db_output_layer */
 #endif
 
 
@@ -3718,12 +3623,7 @@ static void    db_output_layer()
 
 #ifdef DEBUG
 
-#ifdef ANSI_C
 static void    db_output_vcglayer(char *fn)
-#else
-static void    db_output_vcglayer(fn)
-char *fn;
-#endif
 {
 	int     i, j;
 	GNLIST	li;
@@ -3741,7 +3641,7 @@ char *fn;
 		j = 1;
 		while (li) {
 			node = GNNODE(li);
-			FPRINTF(f, "\nnode: { title: \"%ld\" ",node );
+			FPRINTF(f, "\nnode: { title: \"%p\" ",node );
 			if ((NTITLE(node)) && (NTITLE(node)[0]))
 				FPRINTF(f, "label: \"%s\" ", NTITLE(node) );
 			FPRINTF(f, "level: %d ", i);
@@ -3751,8 +3651,8 @@ char *fn;
 			edge = NSUCC(node);
 			while (edge) {
 				FPRINTF(f,"edge: { ");
-				FPRINTF(f,"sourcename: \"%ld\" ",SOURCE(edge));
-				FPRINTF(f,"targetname: \"%ld\" ",TARGET(edge));
+				FPRINTF(f,"sourcename: \"%p\" ",SOURCE(edge));
+				FPRINTF(f,"targetname: \"%p\" ",TARGET(edge));
 				FPRINTF(f,"}\n");
 				edge = ANEXT(edge);
 			}
@@ -3760,15 +3660,15 @@ char *fn;
 			if (c1) {
 				if ((CTARGET(c1)) && (CTARGET(c1)!=node)) { 
 					FPRINTF(f,"edge: { ");
-					FPRINTF(f,"sourcename: \"%ld\" ",node);
-					FPRINTF(f,"targetname: \"%ld\" ",
+					FPRINTF(f,"sourcename: \"%p\" ",node);
+					FPRINTF(f,"targetname: \"%p\" ",
 							CTARGET(c1));
 					FPRINTF(f, "linestyle: dashed }\n");
 				}
 				if ((CTARGET2(c1)) && (CTARGET2(c1)!=node)) { 
 					FPRINTF(f,"edge: { ");
-					FPRINTF(f,"sourcename: \"%ld\" ",node);
-					FPRINTF(f,"targetname: \"%ld\" ",
+					FPRINTF(f,"sourcename: \"%p\" ",node);
+					FPRINTF(f,"targetname: \"%p\" ",
 							CTARGET2(c1));
 					FPRINTF(f, "linestyle: dashed }\n");
 				}
@@ -3779,7 +3679,7 @@ char *fn;
 	}
 	FPRINTF(f, "}\n");
 	fclose(f);
-}
+} /* db_output_vcglayer */
 #endif
 
 /*--------------------------------------------------------------------*/

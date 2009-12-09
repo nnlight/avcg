@@ -179,14 +179,6 @@ static char message[256];
      if (*c == '\n') { pos_nr = 1; line_nr++; }  \
      else pos_nr++; c++; }}
 
-/* Manually added in grammar.l by Shantanu Tarafdar */
-#define YY_INPUT(buf,result,max_size) \
-{ \
-char c = getc(yyin); \
-/* fprintf(stderr, "yyinput(): 0x%02X -> %c\n", c, c); */ \
-buf[0] = c; \
-result = (c == EOF) ? YY_NULL : 1; \
-}
 
 /*--------------------------------------------------------------------*/
 /*   Character classes                                                */

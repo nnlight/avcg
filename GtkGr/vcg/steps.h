@@ -143,11 +143,6 @@ void 	db_output_adjacency	_PP((GNODE node, int f));
 
 /* from step2.c */
 void    step2_main              _PP((void));
-#ifdef DEBUG
-void    db_output_all_layers  	_PP((void));
-void    db_output_layer		_PP((int i));
-int 	db_check_proper     	_PP((GNODE v,int level));
-#endif
 
 /* from step3.c */
 void    step3_main              _PP((void));

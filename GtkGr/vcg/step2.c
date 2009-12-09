@@ -1,5 +1,3 @@
-/* SCCS-info %W% %E% */
-
 /*--------------------------------------------------------------------*/
 /*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
@@ -18,10 +16,6 @@
 /*--------------------------------------------------------------------*/
 
 
-#ifndef lint
-static char *id_string="$Id: step2.c,v 3.12 1995/02/08 11:11:14 sander Exp $";
-#endif
-
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
  *                               the Compare Consortium 
@@ -39,73 +33,9 @@ static char *id_string="$Id: step2.c,v 3.12 1995/02/08 11:11:14 sander Exp $";
  *  You  should  have  received a copy of the GNU General Public License
  *  along  with  this  program;  if  not,  write  to  the  Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  The software is available per anonymous ftp at ftp.cs.uni-sb.de.
- *  Contact  sander@cs.uni-sb.de  for additional information.
  */
 
 
-/* 
- * $Log: step2.c,v $
- * Revision 3.12  1995/02/08  11:11:14  sander
- * Distribution version 1.3.
- *
- * Revision 3.11  1994/12/23  18:12:45  sander
- * Manhatten layout added.
- * Option interface cleared.
- *
- * Revision 3.10  1994/11/23  14:50:47  sander
- * Option -nocopt added.
- * Crossing reduction can now completely be skipped.
- *
- * Revision 3.9  1994/08/09  14:50:09  sander
- * Small cosmetic change.
- *
- * Revision 3.8  1994/08/05  12:13:25  sander
- * Treelayout added. Attributes "treefactor" and "spreadlevel" added.
- * Scaling as abbreviation of "stretch/shrink" added.
- *
- * Revision 3.7  1994/08/03  13:58:44  sander
- * Horizontal order mechanism changed.
- * Attribute horizontal_order for edges added.
- *
- * Revision 3.6  1994/08/02  15:36:12  sander
- * Local crossing unwinding implemented.
- *
- * Revision 3.5  1994/06/07  14:09:59  sander
- * Splines implemented.
- * HP-UX, Linux, AIX, Sun-Os, IRIX compatibility tested.
- * The tool is now ready to be distributed.
- *
- * Revision 3.4  1994/05/05  08:20:30  sander
- * Local optimization of crossings added: We test the
- * pairwise exchanging of nodes.
- *
- * Revision 3.3  1994/04/27  16:05:19  sander
- * Some general changes for the PostScript driver.
- * Horizontal order added. Bug fixes of the folding phases:
- * Folding of nested graphs works now.
- *
- * Revision 3.2  1994/03/03  14:12:21  sander
- * median centering heuristics added to reduce crossings.
- *
- * Revision 3.1  1994/03/01  10:59:55  sander
- * Copyright and Gnu Licence message added.
- * Problem with "nearedges: no" and "selfloops" solved.
- *
- * Revision 2.4  1994/02/14  11:03:24  sander
- * Menu point `Node Information -> Statistics' added.
- * It is now possible to get a statistics of the visibility
- * of nodes and edges.
- *
- * Revision 2.3  1994/01/21  19:33:46  sander
- * VCG Version tested on Silicon Graphics IRIX, IBM R6000 AIX and Sun 3/60.
- * Option handling improved. Option -grabinputfocus installed.
- * X11 Font selection scheme implemented. The user can now select a font
- * during installation.
- * Sun K&R C (a nonansi compiler) tested. Some portabitility problems solved.
- *
- */
 
 /************************************************************************
  * The situation here is the following:
@@ -242,31 +172,15 @@ static char *id_string="$Id: step2.c,v 3.12 1995/02/08 11:11:14 sander Exp $";
  * Sometimes the quicksort `qsort' of the library is faster.
  */
 
-#ifndef ANSI_C
-#ifndef const
-#define const
-#endif
-#endif
-
 #ifdef OWN_QUICKSORT
 #define quicksort_sort_array(x) { if (x) myqsort(0,x-1); }
 #else
-#ifdef ANSI_C
 #define quicksort_sort_array(x) { if (x) qsort(sort_array,x, \
 	   sizeof(GNODE),(int (*) (const void *, const void *))compare_bary); }
-#else
-#define quicksort_sort_array(x) { if (x) qsort(sort_array,x, \
-	   sizeof(GNODE),compare_bary); }
-#endif
 #endif
 
-#ifdef ANSI_C
 #define quicksort_save_array(x) { if (x) qsort(save_array,x, \
 	   sizeof(GNODE),(int (*) (const void *, const void *))compare_pos); }
-#else
-#define quicksort_save_array(x) { if (x) qsort(save_array,x, \
-	   sizeof(GNODE),compare_pos); }
-#endif
 
 
 
@@ -340,6 +254,11 @@ static int 	compare_tarpos		  _PP((const GEDGE *a, const GEDGE *b));
 #ifdef OWN_QUICKSORT
 static void 	myqsort			  _PP((int l,int r));
 #endif
+#ifdef DEBUG
+void    db_output_all_layers  	_PP((void));
+void    db_output_layer		_PP((int i));
+int 	db_check_proper     	_PP((GNODE v,int level));
+#endif
 
 
 /* Global variables
@@ -392,11 +311,7 @@ static int nr_bary_iterations;
 /*  Reducing the number of crossings                                  */
 /*--------------------------------------------------------------------*/
 
-#ifdef ANSI_C
 void step2_main(void)
-#else
-void step2_main()
-#endif
 {
         int     i;
 	int 	old_nr_crossings;
@@ -427,7 +342,7 @@ void step2_main()
 				Fatal_error("memory exhausted","");
 		size_of_sortarray = max_nodes_per_layer+2;
 #ifdef DEBUG
-		PRINTF("Sizeof tables `sort_array',`save_array': %ld Bytes\n",
+		PRINTF("Sizeof tables `sort_array',`save_array': %d Bytes\n",
 			(max_nodes_per_layer+2)*sizeof(GNODE));
 #endif
 	}
@@ -444,7 +359,7 @@ void step2_main()
 			Fatal_error("memory exhausted","");
 		size_of_adjarray = i+2;
 #ifdef DEBUG
-		PRINTF("Sizeof table `adjarray[12]': %ld Bytes\n",
+		PRINTF("Sizeof table `adjarray[12]': %d Bytes\n",
 			(i+2)*sizeof(GNODE));
 #endif
 	}
@@ -553,7 +468,7 @@ void step2_main()
 	recreate_predlists();
 
 	stop_time("step2_main");
-}
+} /* step2_main */
 
 
 /*--------------------------------------------------------------------*/
@@ -574,12 +489,7 @@ void step2_main()
  *  Further TANZ(layer[i]) is calculated here.
  */
 
-
-#ifdef ANSI_C
 static void	create_tmp_layer(void)
-#else
-static void	create_tmp_layer()
-#endif
 {
 	int	i,j;
 	GNLIST	h1, h2;
@@ -593,7 +503,7 @@ static void	create_tmp_layer()
 		if (!tmp_layer) Fatal_error("memory exhausted","");
 		size_of_tlayer = maxdepth+2;
 #ifdef DEBUG
-		PRINTF("Sizeof table `tmp_layer': %ld Bytes\n",
+		PRINTF("Sizeof table `tmp_layer': %d Bytes\n",
 			(maxdepth+2)*sizeof(struct depth_entry));
 #endif
 	}
@@ -652,7 +562,7 @@ static void	create_tmp_layer()
 			h1 = GNNEXT(h1);
 		}
 	}
-}
+} /* create_tmp_layer */
 
 
 
@@ -669,12 +579,7 @@ static void	create_tmp_layer()
  *  planar embedded.
  */
 
-
-#ifdef ANSI_C
 static void tree_horizontal_order(void)
-#else
-static void tree_horizontal_order()
-#endif
 {
 	GNLIST li;
 	int    i, prio;
@@ -774,7 +679,7 @@ static void tree_horizontal_order()
 	/* layer = tmp_layer */
 	copy_layers(layer,tmp_layer); 
 
-}
+} /* tree_horizontal_order */
 
 
 /*--------------------------------------------------------------------*/
@@ -792,11 +697,7 @@ static void tree_horizontal_order()
 
 static int max_horder_num;
 
-#ifdef ANSI_C
 static void prepare_horizontal_order(void)
-#else
-static void prepare_horizontal_order()
-#endif
 {
 	GNLIST li;
 	int    i, reorder_necessary;
@@ -819,7 +720,7 @@ static void prepare_horizontal_order()
 		TRESNEEDED(tmp_layer[i]) = 
 		    TRESNEEDED(layer[i]) = reorder_necessary;
 	}
-}
+} /* prepare_horizontal_order */
 
 
 /*--------------------------------------------------------------------*/
@@ -842,12 +743,7 @@ static void prepare_horizontal_order()
  *  we start with a clean situation, the intermixing is very seldom.
  */
 
-
-#ifdef ANSI_C
 static void unmerge_connected_parts(void)
-#else
-static void unmerge_connected_parts()
-#endif
 {
 	GNLIST li;
 	int    i,j;
@@ -912,7 +808,7 @@ static void unmerge_connected_parts()
 
 	/* layer = tmp_layer */
 	copy_layers(layer,tmp_layer); 
-}
+} /* unmerge_connected_parts */
 
 
 
@@ -921,13 +817,7 @@ static void unmerge_connected_parts()
  * ------------------------------------
  */
 
-#ifdef ANSI_C
 static void mark_all_nodes(GNODE node,int i)
-#else
-static void mark_all_nodes(node, i)
-GNODE node;
-int i;
-#endif
 {
 	ADJEDGE e;
 
@@ -949,7 +839,7 @@ int i;
 		mark_all_nodes(SOURCE(e),i);
 		e = ANEXT(e);
 	}
-}
+} /* mark_all_nodes */
 
 
 
@@ -962,11 +852,7 @@ int i;
  *  The precondition is that the TCROSS-entries are already filled. 
  */
 
-#ifdef ANSI_C
 static int	graph_crossings(void)
-#else
-static int	graph_crossings()
-#endif
 {
 	int	i;
 	int	sumC;
@@ -977,7 +863,7 @@ static int	graph_crossings()
 	for (i=0; i<=maxdepth; i++) sumC += TCROSS(tmp_layer[i]);
 	assert((TCROSS(tmp_layer[maxdepth+1])==0));
 	return(sumC);
-}
+} /* graph_crossings */
 
 
 
@@ -987,11 +873,7 @@ static int	graph_crossings()
  *  tmp_layer. This is done in the following function.
  */
 
-#ifdef ANSI_C
 static void	calc_all_layers_crossings(void)
-#else
-static void	calc_all_layers_crossings()
-#endif
 {
 	int	i;
 
@@ -999,7 +881,7 @@ static void	calc_all_layers_crossings()
 	assert((tmp_layer));
 	for (i=0; i<=maxdepth; i++) 
 		TCROSS(tmp_layer[i])=layer_crossing(i);
-}
+} /* calc_all_layers_crossings */
 
 
 /*  Number of crossings of one layer
@@ -1036,12 +918,7 @@ static	DLLIST	upper_list_end = NULL;  /* and its end                   */
 static	int	nr_tcrossings;		/* actual number of crossings    */
 
 
-#ifdef ANSI_C
 static int 	layer_crossing(int level)
-#else
-static int 	layer_crossing(level)
-int level;
-#endif
 {
 	GNLIST  vl1,vl2;
 	ADJEDGE a;
@@ -1138,7 +1015,7 @@ int level;
 	assert((lower_list==NULL));
 	assert((upper_list==NULL));
 	return(nr_tcrossings);
-}
+} /* layer_crossing */
 
 
 /* Finish a node at the upper level
@@ -1171,13 +1048,7 @@ int level;
  * only.
  */
 
-
-#ifdef ANSI_C
 static void 	finish_upper(GNODE v)
-#else
-static void 	finish_upper(v)
-GNODE v;
-#endif
 {
 	ADJEDGE a;
 	DLLIST n,m;
@@ -1218,7 +1089,7 @@ GNODE v;
 		}
 		a = ANEXT(a);
 	}
-}
+} /* finish_upper */
 
 
 /* Finish a node at the lower level
@@ -1227,12 +1098,7 @@ GNODE v;
  * This is symmetrical to finish_upper.
  */
 
-#ifdef ANSI_C
 static void 	finish_lower(GNODE v)
-#else
-static void 	finish_lower(v)
-GNODE v;
-#endif
 {
 	ADJEDGE a;
 	DLLIST n,m;
@@ -1274,7 +1140,7 @@ GNODE v;
 		}
 		a = ANEXT(a);
 	}
-}
+} /* finish_lower */
 
 
 /*--------------------------------------------------------------------*/
@@ -1285,12 +1151,7 @@ GNODE v;
  *  --------------------------------------
  */
 
-#ifdef ANSI_C
 static void	append_to_upper(GNODE n)
-#else
-static void	append_to_upper(n)
-GNODE	n;
-#endif
 {
 	DLLIST	d;
 
@@ -1302,19 +1163,14 @@ GNODE	n;
 	if (upper_list_end)	DSUCC(upper_list_end) = d;
 	upper_list_end 	= d;
 	size_upper_list++;
-}
+} /* append_to_upper */
 
 
 /*  Insert node n at the end of lower_list
  *  --------------------------------------
  */
 
-#ifdef ANSI_C
 static void	append_to_lower(GNODE n)
-#else
-static void	append_to_lower(n)
-GNODE	n;
-#endif
 {
 	DLLIST	d;
 
@@ -1326,19 +1182,14 @@ GNODE	n;
 	if (lower_list_end)	DSUCC(lower_list_end) = d;
 	lower_list_end 	= d;
 	size_lower_list++;
-}
+} /* append_to_lower */
 
 
 /*  Delete node x from upper_list
  *  -----------------------------
  */
 
-#ifdef ANSI_C
 static void 	delete_upper(DLLIST x)
-#else
-static void 	delete_upper(x)
-DLLIST x;
-#endif
 {
 	assert((x));
 	assert((DNODE(x)));
@@ -1357,12 +1208,7 @@ DLLIST x;
  *  -----------------------------
  */
 
-#ifdef ANSI_C
 static void 	delete_lower(DLLIST x)
-#else
-static void 	delete_lower(x)
-DLLIST x;
-#endif
 {
 	assert((x));
 	assert((DNODE(x)));
@@ -1413,12 +1259,7 @@ DLLIST x;
  * In fact, we dont need to construct predD and succD really.
  */ 
 
-#ifdef ANSI_C
 static void prepare_local_optimization(int level)
-#else
-static void prepare_local_optimization(level)
-int level;
-#endif
 {
 	int i;
 	GNLIST  vl;
@@ -1449,13 +1290,7 @@ int level;
  *  if they are exchanged.
  */
 
-#ifdef ANSI_C
 static int exchange_nodes_necessary(GNODE C, GNODE D)
-#else
-static int exchange_nodes_necessary(C,D)
-GNODE C;
-GNODE D;
-#endif
 {
 	GNODE n;
 	DLLIST actlistC, h;
@@ -1517,7 +1352,7 @@ GNODE D;
 	dllist_free_all(actlistC);
 
 	return(Sum1>Sum2);
-}
+} /* exchange_nodes_necessary */
 
 
 
@@ -1526,13 +1361,7 @@ GNODE D;
  * return 1, if something has changed.
  */
 
-#ifdef ANSI_C
 static int level_crossing_optimization(int level,int nearedges)
-#else
-static int level_crossing_optimization(level, nearedges)
-int level;
-int nearedges;
-#endif
 {
 	int changed, possible;
 	GNLIST  vl1, vl2;
@@ -1568,7 +1397,7 @@ int nearedges;
 		vl2 = GNNEXT(vl2);
 	}
 	return(changed);
-}
+} /* level_crossing_optimization */
 
 
 

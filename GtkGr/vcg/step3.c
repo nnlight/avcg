@@ -312,11 +312,7 @@ void	step3_main()
 /*--------------------------------------------------------------------*/
 	
 
-#ifdef ANSI_C
 void alloc_levelshift(void)
-#else
-void alloc_levelshift()
-#endif
 {
 	debugmessage("alloc_levelshift","");
 
@@ -345,11 +341,11 @@ void alloc_levelshift()
 				Fatal_error("memory exhausted","");
 		size_of_levelsw = max_nodes_per_layer+2;
 #ifdef DEBUG
-		PRINTF("Sizeof tables `levelshift',`levelweight',`slayer_array': %ld Bytes\n",
+		PRINTF("Sizeof tables `levelshift',`levelweight',`slayer_array': %d Bytes\n",
 			(max_nodes_per_layer+2)*sizeof(int));
 #endif
 	}
-}
+} /* alloc_levelshift */
 
 
 /*--------------------------------------------------------------------*/
@@ -361,12 +357,7 @@ void alloc_levelshift()
  * the size of the label. 
  */
 
-
-#ifdef ANSI_C
 void calc_all_node_sizes(void)
-#else
-void calc_all_node_sizes()
-#endif
 {
 	GNODE v;
 	int   h,hh,hhh;
@@ -433,7 +424,7 @@ void calc_all_node_sizes()
 		}
 		v = NNEXT(v);
 	}
-}
+} /* calc_all_node_sizes */
 
 
 /*--------------------------------------------------------------------*/
@@ -462,12 +453,7 @@ void calc_all_node_sizes()
 #define dxlalign(a) ((((a))/G_dxraster)*G_dxraster)
 #define dylalign(a) ((((a))/G_dyraster)*G_dyraster)
 
-
-#ifdef ANSI_C
 static void init_xy_coordinates(void)
-#else
-static void init_xy_coordinates()
-#endif
 {
 	int	actxpos, actypos;
 	int	maxboxheight;
@@ -525,7 +511,7 @@ static void init_xy_coordinates()
 		actypos += (maxboxheight + G_yspace);
 		actypos = yralign(actypos);
 	}
-}
+} /* init_xy_coordinates */
 
 
 /*--------------------------------------------------------------------*/
@@ -543,12 +529,7 @@ static void init_xy_coordinates()
  *	K L M 
  */
 
-
-#ifdef ANSI_C
 static void center_layout(void)
-#else
-static void center_layout()
-#endif
 {
 	GNLIST	li;
 	int	i;
@@ -581,12 +562,7 @@ static void center_layout()
  *  system.
  */
 
-
-#ifdef ANSI_C
 static void shift_left_layout(void)
-#else
-static void shift_left_layout()
-#endif
 {
 	GNLIST li;
 	int	i;
@@ -618,7 +594,7 @@ static void shift_left_layout()
 		}
 	}
 	
-}
+} /* shift_left_layout */
 
 
 
@@ -643,11 +619,7 @@ static void shift_left_layout()
 
 static int graph_maxx;
 
-#ifdef ANSI_C
 static void shift_left_together_layout(void)
-#else
-static void shift_left_together_layout()
-#endif
 {
 	GNLIST li;
 	int	i;
@@ -710,7 +682,7 @@ static void shift_left_together_layout()
 #endif
 #endif
 	}
-}
+} /* shift_left_together_layout */
 
 
 /* Search and shift left a subgraph that is intermixed with another
@@ -726,12 +698,7 @@ static void shift_left_together_layout()
  *           F
  */
 
-#ifdef ANSI_C
 static void shift_intermixed_part(int t)
-#else
-static void shift_intermixed_part(t)
-int t;
-#endif
 {
 	int i, intermixed_part_found;
 	GNLIST li;
@@ -769,7 +736,7 @@ int t;
 			mark_and_calc_maxx(node);
 		}
 	}
-}
+} /* shift_intermixed_part */
 
 
 
@@ -778,13 +745,7 @@ int t;
  * this is done for all nodes reachable from node.
  */
 
-#ifdef ANSI_C
 static void shift_left_part(GNODE node, int i)
-#else
-static void shift_left_part(node, i)
-GNODE node;
-int i;
-#endif
 {
 	ADJEDGE e;
 
@@ -811,7 +772,7 @@ int i;
 		shift_left_part(SOURCE(e),i);
 		e = ANEXT(e);
 	}
-}
+} /* shift_left_part */
 
 
 /* Mark and update graph_maxx
@@ -819,12 +780,7 @@ int i;
  * this is done for all nodes reachable from node.
  */
 
-#ifdef ANSI_C
 static void mark_and_calc_maxx(GNODE node)
-#else
-static void mark_and_calc_maxx(node)
-GNODE node;
-#endif
 {
 	ADJEDGE e;
 
@@ -852,7 +808,7 @@ GNODE node;
 		mark_and_calc_maxx(SOURCE(e));
 		e = ANEXT(e);
 	}
-}
+} /* mark_and_calc_maxx */
 
 
 /*--------------------------------------------------------------------*/
@@ -871,11 +827,7 @@ GNODE node;
  *  move.
  */
 
-#ifdef ANSI_C
 static void shift_connect_together_layout(void)
-#else
-static void shift_connect_together_layout()
-#endif
 {
 	GNLIST li;
 	int	i;
@@ -912,19 +864,14 @@ static void shift_connect_together_layout()
 			li = GNNEXT(li);
 		}
 	}
-}
+} /* shift_connect_together_layout */
 
 
 /*  Calculate the correction of the nearedge going left to v
  *  --------------------------------------------------------
  */
  
-#ifdef ANSI_C
 static void correct_connect_part(GNODE v)
-#else
-static void correct_connect_part(v)
-GNODE v;
-#endif
 {
 	GNLIST  li;
 	int	i;
@@ -962,19 +909,14 @@ GNODE v;
 			}
 		}
 	}	
-}
+} /* correct_connect_part */
 
 
 /*  Traverse the graph and calculate the minimal distance per layer
  *  ---------------------------------------------------------------
  */
 
-#ifdef ANSI_C
 static void traverse_and_search_mindist(GNODE v)
-#else
-static void traverse_and_search_mindist(v)
-GNODE v;
-#endif
 {
 	int level, weight;
 	GNLIST  li;
@@ -1028,7 +970,7 @@ GNODE v;
 		traverse_and_search_mindist(SOURCE(e));
 		e = ANEXT(e);
 	}
-}
+} /* traverse_and_search_mindist */
 
 
 

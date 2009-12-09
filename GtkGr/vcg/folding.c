@@ -1,5 +1,3 @@
-/* SCCS-info %W% %E% */
-
 /*--------------------------------------------------------------------*/
 /*								      */
 /*		VCG : Visualization of Compiler Graphs		      */
@@ -18,10 +16,6 @@
 /*--------------------------------------------------------------------*/
 
 
-#ifndef lint
-static char *id_string="$Id: folding.c,v 3.11 1995/02/08 11:11:14 sander Exp $";
-#endif
-
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
  *                               the Compare Consortium 
@@ -39,70 +33,8 @@ static char *id_string="$Id: folding.c,v 3.11 1995/02/08 11:11:14 sander Exp $";
  *  You  should  have  received a copy of the GNU General Public License
  *  along  with  this  program;  if  not,  write  to  the  Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  The software is available per anonymous ftp at ftp.cs.uni-sb.de.
- *  Contact  sander@cs.uni-sb.de  for additional information.
  */
 
-
-/* $Log: folding.c,v $
- * Revision 3.11  1995/02/08  11:11:14  sander
- * Distribution version 1.3.
- *
- * Revision 3.10  1994/12/23  18:12:45  sander
- * Manhatten layout added.
- * Option interface cleared.
- *
- * Revision 3.9  1994/11/23  14:50:47  sander
- * Bug in folding operations corrected.
- *
- * Revision 3.8  1994/08/05  12:13:25  sander
- * Treelayout added. Attributes "treefactor" and "spreadlevel" added.
- * Scaling as abbreviation of "stretch/shrink" added.
- *
- * Revision 3.7  1994/08/03  13:58:44  sander
- * Horizontal order mechanism changed.
- * Attribute horizontal_order for edges added.
- *
- * Revision 3.6  1994/05/16  08:56:03  sander
- * shape attribute (boxes, rhombs, ellipses, triangles) added.
- *
- * Revision 3.5  1994/05/05  08:20:30  sander
- * Algorithm late labels added: If labels are inserted
- * after partitioning, this may yield a better layout.
- *
- * Revision 3.4  1994/04/27  16:05:19  sander
- * Some general changes for the PostScript driver.
- * Horizontal order added. Bug fixes of the folding phases:
- * Folding of nested graphs works now.
- *
- * Revision 3.3  1994/03/04  19:11:24  sander
- * Specification of levels per node added.
- * X11 geometry behaviour (option -geometry) changed such
- * that the window is now opened automatically.
- *
- * Revision 3.2  1994/03/02  11:48:54  sander
- * Layoutalgoritms mindepthslow, maxdepthslow, minindegree, ... mandegree
- * added.
- * Anchors and nearedges are not anymore allowed to be intermixed.
- * Escapes in strings are now allowed.
- *
- * Revision 3.1  1994/03/01  10:59:55  sander
- * Copyright and Gnu Licence message added.
- * Problem with "nearedges: no" and "selfloops" solved.
- *
- * Revision 2.4  1994/02/08  09:55:18  sander
- * Hide edge algorithm changed: now all edges of a node must be hidden,
- * not only the forward edges, to hide the node itself.
- *
- * Revision 2.3  1994/01/21  19:33:46  sander
- * VCG Version tested on Silicon Graphics IRIX, IBM R6000 AIX and Sun 3/60.
- * Option handling improved. Option -grabinputfocus installed.
- * X11 Font selection scheme implemented. The user can now select a font
- * during installation.
- * Sun K&R C (a nonansi compiler) tested. Some portabitility problems solved.
- *
- */
 
 
 /************************************************************************
@@ -1608,7 +1540,7 @@ static void sort_all_nodes()
                 if (!node_sort_array) Fatal_error("memory exhausted","");
                 noso_size = max+2;
 #ifdef DEBUG
-                PRINTF("Sizeof table `node_sort_array': %ld Bytes\n",
+                PRINTF("Sizeof table `node_sort_array': %d Bytes\n",
                         (max+2)*sizeof(GNODE));
 #endif
         }
@@ -2442,10 +2374,10 @@ GNODE wend;
 
 	v = w;
 	i = 0;
-	PRINTF("Addresses Startnode %ld Endnode %ld\n",w,wend);
+	PRINTF("Addresses Startnode %p Endnode %p\n",w,wend);
 	while (v) {
 		i++; if (i>DB_MAXNODES) break;
-		PRINTF("Address %ld:%s [%d]    (Address next: %ld)\n",
+		PRINTF("Address %p:%s [%d]    (Address next: %p)\n",
 			v,(NTITLE(v)?NTITLE(v):"(null)"),NINVISIBLE(v),
 			NNEXT(v));
 		v = NNEXT(v);

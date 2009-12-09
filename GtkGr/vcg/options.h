@@ -109,7 +109,6 @@ extern long V_ymin_initial;
 
 
 
-extern char Dataname[];
 extern char filename[];
 
 #define MAXCLASS  16
