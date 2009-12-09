@@ -404,7 +404,10 @@ void DrawBuffer::PKey()
 void DrawBuffer::InvalidateDa( const GdkRectangle *da_update_rect)
 {
 	GdkRectangle rect_var;
-	if ( !da_update_rect )
+	if ( da_update_rect )
+	{
+		rect_var = *da_update_rect;
+	} else
 	{
 		/* если подали NULL, то инвалидируем всю drawing_area */
 		assert( m_da->allocation.width == m_VisibleAreaDims[AXIS_X] );
@@ -413,13 +416,11 @@ void DrawBuffer::InvalidateDa( const GdkRectangle *da_update_rect)
 		rect_var.y = 0;
 		rect_var.width = m_VisibleAreaDims[AXIS_X];
 		rect_var.height = m_VisibleAreaDims[AXIS_Y];
-
-		da_update_rect = &rect_var;
 	}
 	/* данный метод работает в терминах координат drawing_area */
 	/* (потом должно будет прийти expose_event)*/
 	gdk_window_invalidate_rect( m_da->window,
-								da_update_rect,
+								&rect_var,
 								FALSE);
 } /* DrawBuffer::InvalidateDa */
 
