@@ -20,7 +20,12 @@ $(EXECUTABLE): $(OBJECTS)
 #	gccmakedep -- $(CFLAGS) -- $(SOURCES)
 #	makedepend $(SOURCES)
 
+.PHONY: clean
 clean:
 	rm *.o *~ $(EXECUTABLE)
+
+.PHONY: doc
+doc:
+	doxygen
 
 
