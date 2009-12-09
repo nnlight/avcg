@@ -6,10 +6,10 @@ all:
 
 
 lex:
-	flex -d --nounistd grammar.l        # lex.yy.c
+	flex -d --nounistd --noline grammar.l        # lex.yy.c
 
 yacc:
-	bison -ydvt grammar.y    # y.tab.c y.tab.c
+	bison -ydvt --no-lines grammar.y    # y.tab.c y.tab.c
 
 clean:
 	rm *.o a.out

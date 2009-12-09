@@ -36,6 +36,7 @@
  */
 
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -53,27 +54,11 @@
 
 /*--------------------------------------------------------------------*/
 
-/* Prototypes
- * ==========
- */
-
-/*  These functions are device dependent. Instead including all external
- *  device dependent h-files, we declare them here as external. This
- *  simplifies the selection of the device.
- *  Depending on the device, these functions are implemented in sunvdev.c 
- *  or X11dev.c.
- */
-
-extern void display_part	_PP((void));
-extern void setScreenSpecifics  _PP((void));
-extern void gs_exit             (int x);
 
 void	gs_exit(int x)
 {
 	exit(x);
 }
-
-static int   f_is_writable	_PP((char *fname));
 
 
 
@@ -135,49 +120,13 @@ static void parse_part( FILE *f)
 
 /*--------------------------------------------------------------------*/
 
-/* Check whether file is writable
- * ==============================
- * Returns 1 if yes. .
- */
-
-#ifdef ANSI_C
-static int f_is_writable(char *fname)
-#else
-static int f_is_writable(fname)
-char *fname;
-#endif
-{
-        FILE *f;
-        char *c;
-
-        f = NULL;
-        c = fname;
-        while (*c) c++;
-        if (c>fname) c--;
-        if (*c=='/')  return(0); 
-        if (( strcmp(fname,"-")==0 ) || (*fname==0))  return(0); 
-        f = fopen(fname,"r");
-        if (f != NULL) { fclose(f); return(0); }
-        return(1);
-}
-
-
-/*--------------------------------------------------------------------*/
-
 /*  Fatal Errors 
  *  ============
  *  Note: the parser uses internally the function fatal_error which is
  *  different.
  */
 
-
-#ifdef ANSI_C
 void Fatal_error(char *x,char *y)
-#else
-void Fatal_error(x,y)
-char *x;
-char *y;
-#endif
 {
       	FPRINTF(stderr,"Fatal error: %s %s !\n",x,y);
       	FPRINTF(stderr,"Aborted !\n");
@@ -206,7 +155,7 @@ static void	visualize_part(void)
 	/* Init of the default values */
 
         G_title         = myalloc(256);
-       	strncpy(G_title,Dataname,254);
+		strcpy( G_title, "G_title");
 	G_title[255] = 0;
         G_x             = -1L;
         G_y             = -1L;
@@ -292,7 +241,6 @@ static void	visualize_part(void)
  * ------------------
  */
 
-
 void relayout(void)
 {
 	debugmessage("relayout","");
@@ -363,7 +311,6 @@ void relayout(void)
 /*  The main program
  *  ================
  */
-
 
 void vcg_Parse( FILE *input_file)
 {

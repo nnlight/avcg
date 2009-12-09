@@ -67,8 +67,6 @@
 
 /* Copy the first part of user declarations.  */
 
-/* Line 189 of yacc.c  */
-#line 1 "grammar.y"
 
 
 
@@ -99,8 +97,6 @@ int nr_errors;
 
 
 
-/* Line 189 of yacc.c  */
-#line 269 "grammar.y"
 
 
 
@@ -1754,8 +1750,6 @@ static YYLTYPE *yystdloc(void)
 
 
 
-/* Line 189 of yacc.c  */
-#line 1759 "y.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -2263,8 +2257,6 @@ static YYLTYPE *yystdloc(void)
 typedef union YYSTYPE
 {
 
-/* Line 214 of yacc.c  */
-#line 1922 "grammar.y"
  
 	unsigned char      byte;
 	short int          snum;
@@ -2280,8 +2272,6 @@ typedef union YYSTYPE
 
 
 
-/* Line 214 of yacc.c  */
-#line 2285 "y.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -2305,8 +2295,6 @@ typedef struct YYLTYPE
 /* Copy the second part of user declarations.  */
 
 
-/* Line 264 of yacc.c  */
-#line 2310 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -4373,2528 +4361,1896 @@ yyreduce:
     {
         case 2:
 
-/* Line 1455 of yacc.c  */
-#line 1999 "grammar.y"
     {
 		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); Syntax_Tree = (yyval.tree); }
     break;
 
   case 3:
 
-/* Line 1455 of yacc.c  */
-#line 2005 "grammar.y"
     {
 		 (yyval.tree) = T_graph_entry((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
     break;
 
   case 4:
 
-/* Line 1455 of yacc.c  */
-#line 2008 "grammar.y"
     {
 		 (yyval.tree) = T_graph_entry((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 5:
 
-/* Line 1455 of yacc.c  */
-#line 2013 "grammar.y"
     {
 		 (yyval.tree) = T_graph_attribute((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 6:
 
-/* Line 1455 of yacc.c  */
-#line 2015 "grammar.y"
     {
 		 (yyval.tree) = T_node_defaults((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 7:
 
-/* Line 1455 of yacc.c  */
-#line 2017 "grammar.y"
     {
 		 (yyval.tree) = T_edge_defaults((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 8:
 
-/* Line 1455 of yacc.c  */
-#line 2019 "grammar.y"
     {
 		 (yyval.tree) = T_foldnode_defaults((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));}
     break;
 
   case 9:
 
-/* Line 1455 of yacc.c  */
-#line 2021 "grammar.y"
     {
 		 (yyval.tree) = T_foldedge_defaults((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));}
     break;
 
   case 10:
 
-/* Line 1455 of yacc.c  */
-#line 2023 "grammar.y"
     {
 		 (yyval.tree) = T_graph((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));           }
     break;
 
   case 11:
 
-/* Line 1455 of yacc.c  */
-#line 2025 "grammar.y"
     {
 		 (yyval.tree) = T_node((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));            }
     break;
 
   case 12:
 
-/* Line 1455 of yacc.c  */
-#line 2027 "grammar.y"
     {
 		 (yyval.tree) = T_edge((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));            }
     break;
 
   case 13:
 
-/* Line 1455 of yacc.c  */
-#line 2029 "grammar.y"
     {
 		 (yyval.tree) = T_near_edge((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 14:
 
-/* Line 1455 of yacc.c  */
-#line 2031 "grammar.y"
     {
 		 (yyval.tree) = T_bent_near_edge((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 15:
 
-/* Line 1455 of yacc.c  */
-#line 2033 "grammar.y"
     {
 		 (yyval.tree) = T_back_edge((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 16:
 
-/* Line 1455 of yacc.c  */
-#line 2035 "grammar.y"
     {
 		 (yyval.tree) = T_constraint((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 17:
 
-/* Line 1455 of yacc.c  */
-#line 2041 "grammar.y"
     {
 		 (yyval.tree) = T_title((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 18:
 
-/* Line 1455 of yacc.c  */
-#line 2044 "grammar.y"
     {
 		 (yyval.tree) = T_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 19:
 
-/* Line 1455 of yacc.c  */
-#line 2047 "grammar.y"
     {
 		 (yyval.tree) = T_info1((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 20:
 
-/* Line 1455 of yacc.c  */
-#line 2050 "grammar.y"
     {
 		 (yyval.tree) = T_info2((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 21:
 
-/* Line 1455 of yacc.c  */
-#line 2053 "grammar.y"
     {
 		 (yyval.tree) = T_info3((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 22:
 
-/* Line 1455 of yacc.c  */
-#line 2056 "grammar.y"
     {
 		 (yyval.tree) = T_color((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 23:
 
-/* Line 1455 of yacc.c  */
-#line 2059 "grammar.y"
     {
 		 (yyval.tree) = T_textcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));          }
     break;
 
   case 24:
 
-/* Line 1455 of yacc.c  */
-#line 2062 "grammar.y"
     {
 		 (yyval.tree) = T_colorborder((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 25:
 
-/* Line 1455 of yacc.c  */
-#line 2065 "grammar.y"
     {
 		 (yyval.tree) = T_width((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 26:
 
-/* Line 1455 of yacc.c  */
-#line 2068 "grammar.y"
     {
 		 (yyval.tree) = T_height((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
 
   case 27:
 
-/* Line 1455 of yacc.c  */
-#line 2071 "grammar.y"
     {
 		 (yyval.tree) = T_borderwidth((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 28:
 
-/* Line 1455 of yacc.c  */
-#line 2073 "grammar.y"
     {
 		 (yyval.tree) = T_xdef((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));               }
     break;
 
   case 29:
 
-/* Line 1455 of yacc.c  */
-#line 2075 "grammar.y"
     {
 		 (yyval.tree) = T_ydef((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));               }
     break;
 
   case 30:
 
-/* Line 1455 of yacc.c  */
-#line 2078 "grammar.y"
     {
 		 (yyval.tree) = T_loc((yyvsp[(5) - (9)].tree),(yyvsp[(8) - (9)].tree),yylocate((yylsp[(1) - (9)])));       }
     break;
 
   case 31:
 
-/* Line 1455 of yacc.c  */
-#line 2081 "grammar.y"
     {
 		 (yyval.tree) = T_folding((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 32:
 
-/* Line 1455 of yacc.c  */
-#line 2084 "grammar.y"
     {
 		 (yyval.tree) = T_scaling((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 33:
 
-/* Line 1455 of yacc.c  */
-#line 2087 "grammar.y"
     {
 		 (yyval.tree) = T_shrink((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
 
   case 34:
 
-/* Line 1455 of yacc.c  */
-#line 2090 "grammar.y"
     {
 		 (yyval.tree) = T_stretch((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 35:
 
-/* Line 1455 of yacc.c  */
-#line 2093 "grammar.y"
     {
 		 (yyval.tree) = T_textmode((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
     break;
 
   case 36:
 
-/* Line 1455 of yacc.c  */
-#line 2096 "grammar.y"
     {
 		 (yyval.tree) = T_shape((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    	       }
     break;
 
   case 37:
 
-/* Line 1455 of yacc.c  */
-#line 2099 "grammar.y"
     {
 		 (yyval.tree) = T_level((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 38:
 
-/* Line 1455 of yacc.c  */
-#line 2102 "grammar.y"
     {
 		 (yyval.tree) = T_level((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 39:
 
-/* Line 1455 of yacc.c  */
-#line 2105 "grammar.y"
     {
 		 (yyval.tree) = T_horizontal_order((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   }
     break;
 
   case 40:
 
-/* Line 1455 of yacc.c  */
-#line 2108 "grammar.y"
     {
 		 (yyval.tree) = T_status((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
 
   case 41:
 
-/* Line 1455 of yacc.c  */
-#line 2112 "grammar.y"
     {
 		 (yyval.tree) = T_xmax((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));               }
     break;
 
   case 42:
 
-/* Line 1455 of yacc.c  */
-#line 2115 "grammar.y"
     {
 		 (yyval.tree) = T_ymax((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));               }
     break;
 
   case 43:
 
-/* Line 1455 of yacc.c  */
-#line 2118 "grammar.y"
     {
 		 (yyval.tree) = T_xbase((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 44:
 
-/* Line 1455 of yacc.c  */
-#line 2121 "grammar.y"
     {
 		 (yyval.tree) = T_ybase((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 45:
 
-/* Line 1455 of yacc.c  */
-#line 2124 "grammar.y"
     {
 		 (yyval.tree) = T_xspace((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
 
   case 46:
 
-/* Line 1455 of yacc.c  */
-#line 2127 "grammar.y"
     {
 		 (yyval.tree) = T_xlspace((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 47:
 
-/* Line 1455 of yacc.c  */
-#line 2130 "grammar.y"
     {
 		 (yyval.tree) = T_yspace((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
 
   case 48:
 
-/* Line 1455 of yacc.c  */
-#line 2133 "grammar.y"
     {
 		 (yyval.tree) = T_xraster((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 49:
 
-/* Line 1455 of yacc.c  */
-#line 2136 "grammar.y"
     {
 		 (yyval.tree) = T_xlraster((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
     break;
 
   case 50:
 
-/* Line 1455 of yacc.c  */
-#line 2139 "grammar.y"
     {
 		 (yyval.tree) = T_yraster((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 51:
 
-/* Line 1455 of yacc.c  */
-#line 2142 "grammar.y"
     {
 		 (yyval.tree) = T_hidden((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); 	       }
     break;
 
   case 52:
 
-/* Line 1455 of yacc.c  */
-#line 2145 "grammar.y"
     {
 		 (yyval.tree) = T_hidden((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); 	       }
     break;
 
   case 53:
 
-/* Line 1455 of yacc.c  */
-#line 2148 "grammar.y"
     {
 		 (yyval.tree) = T_classname((yyvsp[(2) - (4)].tree),(yyvsp[(4) - (4)].tree),yylocate((yylsp[(1) - (4)])));       }
     break;
 
   case 54:
 
-/* Line 1455 of yacc.c  */
-#line 2151 "grammar.y"
     {
 		 (yyval.tree) = T_infoname((yyvsp[(2) - (4)].tree),(yyvsp[(4) - (4)].tree),yylocate((yylsp[(1) - (4)])));        }
     break;
 
   case 55:
 
-/* Line 1455 of yacc.c  */
-#line 2154 "grammar.y"
     {
 		 (yyval.tree) = T_colentry((yyvsp[(2) - (6)].tree),(yyvsp[(4) - (6)].tree),(yyvsp[(5) - (6)].tree),(yyvsp[(6) - (6)].tree),yylocate((yylsp[(1) - (6)])));   }
     break;
 
   case 56:
 
-/* Line 1455 of yacc.c  */
-#line 2158 "grammar.y"
     {
 		 (yyval.tree) = T_layoutalgorithm((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 57:
 
-/* Line 1455 of yacc.c  */
-#line 2161 "grammar.y"
     {
 		 (yyval.tree) = T_layoutfrequency((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 58:
 
-/* Line 1455 of yacc.c  */
-#line 2164 "grammar.y"
     {
 		 (yyval.tree) = T_downfactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 59:
 
-/* Line 1455 of yacc.c  */
-#line 2167 "grammar.y"
     {
 		 (yyval.tree) = T_upfactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
     break;
 
   case 60:
 
-/* Line 1455 of yacc.c  */
-#line 2170 "grammar.y"
     {
 		 (yyval.tree) = T_nearfactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 61:
 
-/* Line 1455 of yacc.c  */
-#line 2173 "grammar.y"
     {
 		 (yyval.tree) = T_splinefactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 62:
 
-/* Line 1455 of yacc.c  */
-#line 2177 "grammar.y"
     {
 		 (yyval.tree) = T_late_edge_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 63:
 
-/* Line 1455 of yacc.c  */
-#line 2180 "grammar.y"
     {
 		 (yyval.tree) = T_display_edge_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
 
   case 64:
 
-/* Line 1455 of yacc.c  */
-#line 2183 "grammar.y"
     {
 		 (yyval.tree) = T_dirty_edge_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   }
     break;
 
   case 65:
 
-/* Line 1455 of yacc.c  */
-#line 2186 "grammar.y"
     {
 		 (yyval.tree) = T_finetuning((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));	       }
     break;
 
   case 66:
 
-/* Line 1455 of yacc.c  */
-#line 2189 "grammar.y"
     {
 		 (yyval.tree) = T_hidesingles((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 67:
 
-/* Line 1455 of yacc.c  */
-#line 2192 "grammar.y"
     {
 		 (yyval.tree) = T_straightphase((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));	       }
     break;
 
   case 68:
 
-/* Line 1455 of yacc.c  */
-#line 2195 "grammar.y"
     {
 		 (yyval.tree) = T_priophase((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));	       }
     break;
 
   case 69:
 
-/* Line 1455 of yacc.c  */
-#line 2198 "grammar.y"
     {
 		 (yyval.tree) = T_manhatten((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));	       }
     break;
 
   case 70:
 
-/* Line 1455 of yacc.c  */
-#line 2201 "grammar.y"
     {
 		 (yyval.tree) = T_smanhatten((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));	       }
     break;
 
   case 71:
 
-/* Line 1455 of yacc.c  */
-#line 2203 "grammar.y"
     {
 		 (yyval.tree) = T_nonearedges(yylocate((yylsp[(1) - (1)])));	       }
     break;
 
   case 72:
 
-/* Line 1455 of yacc.c  */
-#line 2206 "grammar.y"
     {
 		 (yyval.tree) = T_nonearedges(yylocate((yylsp[(1) - (3)])));	       }
     break;
 
   case 73:
 
-/* Line 1455 of yacc.c  */
-#line 2209 "grammar.y"
     {
 		 (yyval.tree) = T_dummy(yylocate((yylsp[(1) - (3)])));	     	       }
     break;
 
   case 74:
 
-/* Line 1455 of yacc.c  */
-#line 2212 "grammar.y"
     {
 		 (yyval.tree) = T_orientation((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 75:
 
-/* Line 1455 of yacc.c  */
-#line 2215 "grammar.y"
     {
 		 (yyval.tree) = T_node_alignment((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
 
   case 76:
 
-/* Line 1455 of yacc.c  */
-#line 2218 "grammar.y"
     {
 		 (yyval.tree) = T_port_sharing((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 77:
 
-/* Line 1455 of yacc.c  */
-#line 2221 "grammar.y"
     {
 		 (yyval.tree) = T_arrow_mode((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 78:
 
-/* Line 1455 of yacc.c  */
-#line 2225 "grammar.y"
     {
 		 (yyval.tree) = T_spreadlevel((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 79:
 
-/* Line 1455 of yacc.c  */
-#line 2228 "grammar.y"
     {
 		 (yyval.tree) = T_treefactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 80:
 
-/* Line 1455 of yacc.c  */
-#line 2232 "grammar.y"
     {
 		 (yyval.tree) = T_crossing_phase2((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 81:
 
-/* Line 1455 of yacc.c  */
-#line 2235 "grammar.y"
     {
 		 (yyval.tree) = T_crossing_opt((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 82:
 
-/* Line 1455 of yacc.c  */
-#line 2238 "grammar.y"
     {
 		 (yyval.tree) = T_crossing_weight((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 83:
 
-/* Line 1455 of yacc.c  */
-#line 2242 "grammar.y"
     {
 		 (yyval.tree) = T_view_method((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       	}
     break;
 
   case 84:
 
-/* Line 1455 of yacc.c  */
-#line 2245 "grammar.y"
     {
 		 (yyval.tree) = T_view_edges((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       	}
     break;
 
   case 85:
 
-/* Line 1455 of yacc.c  */
-#line 2248 "grammar.y"
     {
 		 (yyval.tree) = T_view_nodes((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       	}
     break;
 
   case 86:
 
-/* Line 1455 of yacc.c  */
-#line 2251 "grammar.y"
     {
 		 (yyval.tree) = T_view_splines((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  	}
     break;
 
   case 87:
 
-/* Line 1455 of yacc.c  */
-#line 2255 "grammar.y"
     {
 		 (yyval.tree) = T_bend_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   		}
     break;
 
   case 88:
 
-/* Line 1455 of yacc.c  */
-#line 2258 "grammar.y"
     {
 		 (yyval.tree) = T_cross_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  		}
     break;
 
   case 89:
 
-/* Line 1455 of yacc.c  */
-#line 2261 "grammar.y"
     {
 		 (yyval.tree) = T_cross_min((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  		}
     break;
 
   case 90:
 
-/* Line 1455 of yacc.c  */
-#line 2264 "grammar.y"
     {
 		 (yyval.tree) = T_pendel_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); 		}
     break;
 
   case 91:
 
-/* Line 1455 of yacc.c  */
-#line 2267 "grammar.y"
     {
 		 (yyval.tree) = T_pendel_min((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  	}
     break;
 
   case 92:
 
-/* Line 1455 of yacc.c  */
-#line 2270 "grammar.y"
     {
 		 (yyval.tree) = T_rubber_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); 		}
     break;
 
   case 93:
 
-/* Line 1455 of yacc.c  */
-#line 2273 "grammar.y"
     {
 		 (yyval.tree) = T_rubber_min((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  	}
     break;
 
   case 94:
 
-/* Line 1455 of yacc.c  */
-#line 2276 "grammar.y"
     {
 		 (yyval.tree) = T_straight_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); 	}
     break;
 
   case 95:
 
-/* Line 1455 of yacc.c  */
-#line 2280 "grammar.y"
     {
 		 (yyval.tree) = T_typename((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
     break;
 
   case 96:
 
-/* Line 1455 of yacc.c  */
-#line 2283 "grammar.y"
     {
 		 (yyval.tree) = T_include((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 97:
 
-/* Line 1455 of yacc.c  */
-#line 2286 "grammar.y"
     {
 		 (yyval.tree) = T_layoutparameter((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 98:
 
-/* Line 1455 of yacc.c  */
-#line 2289 "grammar.y"
     {
 		 (yyval.tree) = T_topsort((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 99:
 
-/* Line 1455 of yacc.c  */
-#line 2292 "grammar.y"
     {
 		 (yyval.tree) = T_inputfunction((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 100:
 
-/* Line 1455 of yacc.c  */
-#line 2295 "grammar.y"
     {
 		 (yyval.tree) = T_outputfunction((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
 
   case 101:
 
-/* Line 1455 of yacc.c  */
-#line 2298 "grammar.y"
     {
 		 (yyval.tree) = T_xscrollbar((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 102:
 
-/* Line 1455 of yacc.c  */
-#line 2301 "grammar.y"
     {
 		 (yyval.tree) = T_yscrollbar((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 103:
 
-/* Line 1455 of yacc.c  */
-#line 2306 "grammar.y"
     {
 		 (yyval.tree) = T_aquamarine(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 104:
 
-/* Line 1455 of yacc.c  */
-#line 2308 "grammar.y"
     {
 		 (yyval.tree) = T_black(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 105:
 
-/* Line 1455 of yacc.c  */
-#line 2310 "grammar.y"
     {
 		 (yyval.tree) = T_blue(yylocate((yylsp[(1) - (1)])));         }
     break;
 
   case 106:
 
-/* Line 1455 of yacc.c  */
-#line 2312 "grammar.y"
     {
 		 (yyval.tree) = T_cyan(yylocate((yylsp[(1) - (1)])));         }
     break;
 
   case 107:
 
-/* Line 1455 of yacc.c  */
-#line 2314 "grammar.y"
     {
 		 (yyval.tree) = T_darkblue(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 108:
 
-/* Line 1455 of yacc.c  */
-#line 2316 "grammar.y"
     {
 		 (yyval.tree) = T_darkcyan(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 109:
 
-/* Line 1455 of yacc.c  */
-#line 2318 "grammar.y"
     {
 		 (yyval.tree) = T_darkgreen(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 110:
 
-/* Line 1455 of yacc.c  */
-#line 2320 "grammar.y"
     {
 		 (yyval.tree) = T_darkgrey(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 111:
 
-/* Line 1455 of yacc.c  */
-#line 2322 "grammar.y"
     {
 		 (yyval.tree) = T_darkmagenta(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 112:
 
-/* Line 1455 of yacc.c  */
-#line 2324 "grammar.y"
     {
 		 (yyval.tree) = T_darkred(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 113:
 
-/* Line 1455 of yacc.c  */
-#line 2326 "grammar.y"
     {
 		 (yyval.tree) = T_darkyellow(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 114:
 
-/* Line 1455 of yacc.c  */
-#line 2328 "grammar.y"
     {
 		 (yyval.tree) = T_gold(yylocate((yylsp[(1) - (1)])));         }
     break;
 
   case 115:
 
-/* Line 1455 of yacc.c  */
-#line 2330 "grammar.y"
     {
 		 (yyval.tree) = T_green(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 116:
 
-/* Line 1455 of yacc.c  */
-#line 2332 "grammar.y"
     {
 		 (yyval.tree) = T_khaki(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 117:
 
-/* Line 1455 of yacc.c  */
-#line 2334 "grammar.y"
     {
 		 (yyval.tree) = T_lightblue(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 118:
 
-/* Line 1455 of yacc.c  */
-#line 2336 "grammar.y"
     {
 		 (yyval.tree) = T_lightcyan(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 119:
 
-/* Line 1455 of yacc.c  */
-#line 2338 "grammar.y"
     {
 		 (yyval.tree) = T_lightgreen(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 120:
 
-/* Line 1455 of yacc.c  */
-#line 2340 "grammar.y"
     {
 		 (yyval.tree) = T_lightgrey(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 121:
 
-/* Line 1455 of yacc.c  */
-#line 2342 "grammar.y"
     {
 		 (yyval.tree) = T_lightmagenta(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 122:
 
-/* Line 1455 of yacc.c  */
-#line 2344 "grammar.y"
     {
 		 (yyval.tree) = T_lightred(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 123:
 
-/* Line 1455 of yacc.c  */
-#line 2346 "grammar.y"
     {
 		 (yyval.tree) = T_lightyellow(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 124:
 
-/* Line 1455 of yacc.c  */
-#line 2348 "grammar.y"
     {
 		 (yyval.tree) = T_lilac(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 125:
 
-/* Line 1455 of yacc.c  */
-#line 2350 "grammar.y"
     {
 		 (yyval.tree) = T_magenta(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 126:
 
-/* Line 1455 of yacc.c  */
-#line 2352 "grammar.y"
     {
 		 (yyval.tree) = T_orange(yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 127:
 
-/* Line 1455 of yacc.c  */
-#line 2354 "grammar.y"
     {
 		 (yyval.tree) = T_orchid(yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 128:
 
-/* Line 1455 of yacc.c  */
-#line 2356 "grammar.y"
     {
 		 (yyval.tree) = T_pink(yylocate((yylsp[(1) - (1)])));         }
     break;
 
   case 129:
 
-/* Line 1455 of yacc.c  */
-#line 2358 "grammar.y"
     {
 		 (yyval.tree) = T_purple(yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 130:
 
-/* Line 1455 of yacc.c  */
-#line 2360 "grammar.y"
     {
 		 (yyval.tree) = T_red(yylocate((yylsp[(1) - (1)])));          }
     break;
 
   case 131:
 
-/* Line 1455 of yacc.c  */
-#line 2362 "grammar.y"
     {
 		 (yyval.tree) = T_turquoise(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 132:
 
-/* Line 1455 of yacc.c  */
-#line 2364 "grammar.y"
     {
 		 (yyval.tree) = T_white(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 133:
 
-/* Line 1455 of yacc.c  */
-#line 2366 "grammar.y"
     {
 		 (yyval.tree) = T_yellow(yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 134:
 
-/* Line 1455 of yacc.c  */
-#line 2368 "grammar.y"
     {
 		 (yyval.tree) = T_yellowgreen(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 135:
 
-/* Line 1455 of yacc.c  */
-#line 2370 "grammar.y"
     {
 		 (yyval.tree) = T_colindex((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 136:
 
-/* Line 1455 of yacc.c  */
-#line 2375 "grammar.y"
     {
 		 (yyval.tree) = T_high(yylocate((yylsp[(1) - (1)]))); 	       }
     break;
 
   case 137:
 
-/* Line 1455 of yacc.c  */
-#line 2377 "grammar.y"
     {
 		 (yyval.tree) = T_low(yylocate((yylsp[(1) - (1)])));          }
     break;
 
   case 138:
 
-/* Line 1455 of yacc.c  */
-#line 2382 "grammar.y"
     {
 		 (yyval.tree) = T_top_to_bottom(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 139:
 
-/* Line 1455 of yacc.c  */
-#line 2384 "grammar.y"
     {
 		 (yyval.tree) = T_bottom_to_top(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 140:
 
-/* Line 1455 of yacc.c  */
-#line 2386 "grammar.y"
     {
 		 (yyval.tree) = T_left_to_right(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 141:
 
-/* Line 1455 of yacc.c  */
-#line 2388 "grammar.y"
     {
 		 (yyval.tree) = T_right_to_left(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 142:
 
-/* Line 1455 of yacc.c  */
-#line 2394 "grammar.y"
     {
 		 (yyval.tree) = T_barycenter(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 143:
 
-/* Line 1455 of yacc.c  */
-#line 2396 "grammar.y"
     {
 		 (yyval.tree) = T_isi(yylocate((yylsp[(1) - (1)])));           }
     break;
 
   case 144:
 
-/* Line 1455 of yacc.c  */
-#line 2398 "grammar.y"
     {
 		 (yyval.tree) = T_planar(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 145:
 
-/* Line 1455 of yacc.c  */
-#line 2400 "grammar.y"
     {
 		 (yyval.tree) = T_constaints(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 146:
 
-/* Line 1455 of yacc.c  */
-#line 2403 "grammar.y"
     {
 		 (yyval.tree) = T_tree(yylocate((yylsp[(1) - (1)])));          }
     break;
 
   case 147:
 
-/* Line 1455 of yacc.c  */
-#line 2405 "grammar.y"
     {
 		 (yyval.tree) = T_maxdepth(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 148:
 
-/* Line 1455 of yacc.c  */
-#line 2407 "grammar.y"
     {
 		 (yyval.tree) = T_mindepth(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 149:
 
-/* Line 1455 of yacc.c  */
-#line 2409 "grammar.y"
     {
 		 (yyval.tree) = T_maxdepthslow(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 150:
 
-/* Line 1455 of yacc.c  */
-#line 2411 "grammar.y"
     {
 		 (yyval.tree) = T_mindepthslow(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 151:
 
-/* Line 1455 of yacc.c  */
-#line 2413 "grammar.y"
     {
 		 (yyval.tree) = T_maxdegree(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 152:
 
-/* Line 1455 of yacc.c  */
-#line 2415 "grammar.y"
     {
 		 (yyval.tree) = T_mindegree(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 153:
 
-/* Line 1455 of yacc.c  */
-#line 2417 "grammar.y"
     {
 		 (yyval.tree) = T_maxindegree(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 154:
 
-/* Line 1455 of yacc.c  */
-#line 2419 "grammar.y"
     {
 		 (yyval.tree) = T_minindegree(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 155:
 
-/* Line 1455 of yacc.c  */
-#line 2421 "grammar.y"
     {
 		 (yyval.tree) = T_maxoutdegree(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 156:
 
-/* Line 1455 of yacc.c  */
-#line 2423 "grammar.y"
     {
 		 (yyval.tree) = T_minoutdegree(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 157:
 
-/* Line 1455 of yacc.c  */
-#line 2425 "grammar.y"
     {
 		 (yyval.tree) = T_minbackwards(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 158:
 
-/* Line 1455 of yacc.c  */
-#line 2427 "grammar.y"
     {
 		 (yyval.tree) = T_depthfirst(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 159:
 
-/* Line 1455 of yacc.c  */
-#line 2433 "grammar.y"
     {
 		 (yyval.tree) = T_every(yylocate((yylsp[(1) - (1)]))); 	}
     break;
 
   case 160:
 
-/* Line 1455 of yacc.c  */
-#line 2435 "grammar.y"
     {
 		 (yyval.tree) = T_manual(yylocate((yylsp[(1) - (1)]))); 	}
     break;
 
   case 161:
 
-/* Line 1455 of yacc.c  */
-#line 2440 "grammar.y"
     {
 		 (yyval.tree) = T_black(yylocate((yylsp[(1) - (1)]))); 	}
     break;
 
   case 162:
 
-/* Line 1455 of yacc.c  */
-#line 2442 "grammar.y"
     {
 		 (yyval.tree) = T_grey(yylocate((yylsp[(1) - (1)]))); 		}
     break;
 
   case 163:
 
-/* Line 1455 of yacc.c  */
-#line 2444 "grammar.y"
     {
 		 (yyval.tree) = T_white(yylocate((yylsp[(1) - (1)]))); 	}
     break;
 
   case 164:
 
-/* Line 1455 of yacc.c  */
-#line 2449 "grammar.y"
     {
 		 (yyval.tree) = T_yes(yylocate((yylsp[(1) - (1)]))); 		}
     break;
 
   case 165:
 
-/* Line 1455 of yacc.c  */
-#line 2451 "grammar.y"
     {
 		 (yyval.tree) = T_no(yylocate((yylsp[(1) - (1)]))); 		}
     break;
 
   case 166:
 
-/* Line 1455 of yacc.c  */
-#line 2455 "grammar.y"
     {
 		 (yyval.tree) = T_bary(yylocate((yylsp[(1) - (1)]))); 	       }
     break;
 
   case 167:
 
-/* Line 1455 of yacc.c  */
-#line 2457 "grammar.y"
     {
 		 (yyval.tree) = T_median(yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 168:
 
-/* Line 1455 of yacc.c  */
-#line 2459 "grammar.y"
     {
 		 (yyval.tree) = T_barymedian(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 169:
 
-/* Line 1455 of yacc.c  */
-#line 2461 "grammar.y"
     {
 		 (yyval.tree) = T_medianbary(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 170:
 
-/* Line 1455 of yacc.c  */
-#line 2465 "grammar.y"
     {
 		 (yyval.tree) = T_cfish(yylocate((yylsp[(1) - (1)]))); 	}
     break;
 
   case 171:
 
-/* Line 1455 of yacc.c  */
-#line 2467 "grammar.y"
     {
 		 (yyval.tree) = T_fcfish(yylocate((yylsp[(1) - (1)])));	}
     break;
 
   case 172:
 
-/* Line 1455 of yacc.c  */
-#line 2469 "grammar.y"
     {
 		 (yyval.tree) = T_pfish(yylocate((yylsp[(1) - (1)]))); 	}
     break;
 
   case 173:
 
-/* Line 1455 of yacc.c  */
-#line 2471 "grammar.y"
     {
 		 (yyval.tree) = T_fpfish(yylocate((yylsp[(1) - (1)])));	}
     break;
 
   case 174:
 
-/* Line 1455 of yacc.c  */
-#line 2475 "grammar.y"
     {
 		 (yyval.tree) = T_fixed(yylocate((yylsp[(1) - (1)])));         }
     break;
 
   case 175:
 
-/* Line 1455 of yacc.c  */
-#line 2477 "grammar.y"
     {
 		 (yyval.tree) = T_free(yylocate((yylsp[(1) - (1)])));          }
     break;
 
   case 176:
 
-/* Line 1455 of yacc.c  */
-#line 2482 "grammar.y"
     {
 		 (yyval.tree) = (yyvsp[(2) - (2)].tree);              }
     break;
 
   case 177:
 
-/* Line 1455 of yacc.c  */
-#line 2487 "grammar.y"
     {
 		 (yyval.tree) = (yyvsp[(2) - (2)].tree);              }
     break;
 
   case 178:
 
-/* Line 1455 of yacc.c  */
-#line 2492 "grammar.y"
     {
 		 (yyval.tree) = (yyvsp[(2) - (2)].tree);              }
     break;
 
   case 179:
 
-/* Line 1455 of yacc.c  */
-#line 2497 "grammar.y"
     {
 		 (yyval.tree) = (yyvsp[(2) - (2)].tree);              }
     break;
 
   case 180:
 
-/* Line 1455 of yacc.c  */
-#line 2503 "grammar.y"
     {
 		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
 
   case 181:
 
-/* Line 1455 of yacc.c  */
-#line 2509 "grammar.y"
     {
 		 (yyval.tree) = T_node_attribute((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
     break;
 
   case 182:
 
-/* Line 1455 of yacc.c  */
-#line 2512 "grammar.y"
     {
 		 (yyval.tree) = T_node_attribute((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 183:
 
-/* Line 1455 of yacc.c  */
-#line 2518 "grammar.y"
     {
 		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
 
   case 184:
 
-/* Line 1455 of yacc.c  */
-#line 2523 "grammar.y"
     {
 		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
 
   case 185:
 
-/* Line 1455 of yacc.c  */
-#line 2528 "grammar.y"
     {
 		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
 
   case 186:
 
-/* Line 1455 of yacc.c  */
-#line 2533 "grammar.y"
     {
 		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
 
   case 187:
 
-/* Line 1455 of yacc.c  */
-#line 2539 "grammar.y"
     {
 		 (yyval.tree) = T_edge_attribute((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
     break;
 
   case 188:
 
-/* Line 1455 of yacc.c  */
-#line 2542 "grammar.y"
     {
 		 (yyval.tree) = T_edge_attribute((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 189:
 
-/* Line 1455 of yacc.c  */
-#line 2548 "grammar.y"
     {
 		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
 
   case 190:
 
-/* Line 1455 of yacc.c  */
-#line 2555 "grammar.y"
     {
 		 (yyval.tree) = T_constraint_attribute((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
     break;
 
   case 191:
 
-/* Line 1455 of yacc.c  */
-#line 2558 "grammar.y"
     {
 		 (yyval.tree) = T_constraint_attribute((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 192:
 
-/* Line 1455 of yacc.c  */
-#line 2564 "grammar.y"
     {
 		 (yyval.tree) = T_title((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 193:
 
-/* Line 1455 of yacc.c  */
-#line 2567 "grammar.y"
     {
 		 (yyval.tree) = T_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 194:
 
-/* Line 1455 of yacc.c  */
-#line 2570 "grammar.y"
     {
 		 (yyval.tree) = T_info1((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 195:
 
-/* Line 1455 of yacc.c  */
-#line 2573 "grammar.y"
     {
 		 (yyval.tree) = T_info2((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 196:
 
-/* Line 1455 of yacc.c  */
-#line 2576 "grammar.y"
     {
 		 (yyval.tree) = T_info3((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 197:
 
-/* Line 1455 of yacc.c  */
-#line 2579 "grammar.y"
     {
 		 (yyval.tree) = T_fontname((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
 
   case 198:
 
-/* Line 1455 of yacc.c  */
-#line 2582 "grammar.y"
     {
 		 (yyval.tree) = T_color((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 199:
 
-/* Line 1455 of yacc.c  */
-#line 2585 "grammar.y"
     {
 		 (yyval.tree) = T_textcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 200:
 
-/* Line 1455 of yacc.c  */
-#line 2588 "grammar.y"
     {
 		 (yyval.tree) = T_bordercolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  }
     break;
 
   case 201:
 
-/* Line 1455 of yacc.c  */
-#line 2591 "grammar.y"
     {
 		 (yyval.tree) = T_iconfile((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
 
   case 202:
 
-/* Line 1455 of yacc.c  */
-#line 2594 "grammar.y"
     {
 		 (yyval.tree) = T_anchorpoints((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
 
   case 203:
 
-/* Line 1455 of yacc.c  */
-#line 2597 "grammar.y"
     {
 		 (yyval.tree) = T_typename((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
 
   case 204:
 
-/* Line 1455 of yacc.c  */
-#line 2600 "grammar.y"
     {
 		 (yyval.tree) = T_width((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 205:
 
-/* Line 1455 of yacc.c  */
-#line 2603 "grammar.y"
     {
 		 (yyval.tree) = T_height((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 206:
 
-/* Line 1455 of yacc.c  */
-#line 2606 "grammar.y"
     {
 		 (yyval.tree) = T_borderwidth((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  }
     break;
 
   case 207:
 
-/* Line 1455 of yacc.c  */
-#line 2609 "grammar.y"
     {
 		 (yyval.tree) = T_loc((yyvsp[(5) - (9)].tree),(yyvsp[(8) - (9)].tree),yylocate((yylsp[(1) - (9)])));       }
     break;
 
   case 208:
 
-/* Line 1455 of yacc.c  */
-#line 2612 "grammar.y"
     {
 		 (yyval.tree) = T_folding((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 209:
 
-/* Line 1455 of yacc.c  */
-#line 2615 "grammar.y"
     {
 		 (yyval.tree) = T_scaling((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 210:
 
-/* Line 1455 of yacc.c  */
-#line 2618 "grammar.y"
     {
 		 (yyval.tree) = T_shrink((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 211:
 
-/* Line 1455 of yacc.c  */
-#line 2621 "grammar.y"
     {
 		 (yyval.tree) = T_stretch((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 212:
 
-/* Line 1455 of yacc.c  */
-#line 2624 "grammar.y"
     {
 		 (yyval.tree) = T_iconwidth((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 213:
 
-/* Line 1455 of yacc.c  */
-#line 2627 "grammar.y"
     {
 		 (yyval.tree) = T_iconheight((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   }
     break;
 
   case 214:
 
-/* Line 1455 of yacc.c  */
-#line 2630 "grammar.y"
     {
 		 (yyval.tree) = T_textmode((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
 
   case 215:
 
-/* Line 1455 of yacc.c  */
-#line 2633 "grammar.y"
     {
 		 (yyval.tree) = T_iconstyle((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 216:
 
-/* Line 1455 of yacc.c  */
-#line 2636 "grammar.y"
     {
 		 (yyval.tree) = T_shape((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    	 }
     break;
 
   case 217:
 
-/* Line 1455 of yacc.c  */
-#line 2639 "grammar.y"
     {
 		 (yyval.tree) = T_level((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 218:
 
-/* Line 1455 of yacc.c  */
-#line 2642 "grammar.y"
     {
 		 (yyval.tree) = T_level((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 219:
 
-/* Line 1455 of yacc.c  */
-#line 2645 "grammar.y"
     {
 		 (yyval.tree) = T_horizontal_order((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
 
   case 220:
 
-/* Line 1455 of yacc.c  */
-#line 2649 "grammar.y"
     {
 		 (yyval.tree) = T_center(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 221:
 
-/* Line 1455 of yacc.c  */
-#line 2651 "grammar.y"
     {
 		 (yyval.tree) = T_left_justify(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 222:
 
-/* Line 1455 of yacc.c  */
-#line 2653 "grammar.y"
     {
 		 (yyval.tree) = T_right_justify(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 223:
 
-/* Line 1455 of yacc.c  */
-#line 2657 "grammar.y"
     {
 		 (yyval.tree) = T_box(yylocate((yylsp[(1) - (1)]))); 		}
     break;
 
   case 224:
 
-/* Line 1455 of yacc.c  */
-#line 2659 "grammar.y"
     {
 		 (yyval.tree) = T_rhomb(yylocate((yylsp[(1) - (1)])));		}
     break;
 
   case 225:
 
-/* Line 1455 of yacc.c  */
-#line 2661 "grammar.y"
     {
 		 (yyval.tree) = T_ellipse(yylocate((yylsp[(1) - (1)])));	}
     break;
 
   case 226:
 
-/* Line 1455 of yacc.c  */
-#line 2663 "grammar.y"
     {
 		 (yyval.tree) = T_triangle(yylocate((yylsp[(1) - (1)])));	}
     break;
 
   case 227:
 
-/* Line 1455 of yacc.c  */
-#line 2667 "grammar.y"
     {
 		 (yyval.tree) = T_bottom(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 228:
 
-/* Line 1455 of yacc.c  */
-#line 2669 "grammar.y"
     {
 		 (yyval.tree) = T_top(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 229:
 
-/* Line 1455 of yacc.c  */
-#line 2671 "grammar.y"
     {
 		 (yyval.tree) = T_center(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 230:
 
-/* Line 1455 of yacc.c  */
-#line 2675 "grammar.y"
     {
 		 (yyval.tree) = T_bottom(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 231:
 
-/* Line 1455 of yacc.c  */
-#line 2677 "grammar.y"
     {
 		 (yyval.tree) = T_top(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 232:
 
-/* Line 1455 of yacc.c  */
-#line 2679 "grammar.y"
     {
 		 (yyval.tree) = T_around(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 233:
 
-/* Line 1455 of yacc.c  */
-#line 2685 "grammar.y"
     {
 		 (yyval.tree) = T_sourcename((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 234:
 
-/* Line 1455 of yacc.c  */
-#line 2688 "grammar.y"
     {
 		 (yyval.tree) = T_targetname((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 235:
 
-/* Line 1455 of yacc.c  */
-#line 2691 "grammar.y"
     {
 		 (yyval.tree) = T_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 236:
 
-/* Line 1455 of yacc.c  */
-#line 2694 "grammar.y"
     {
 		 (yyval.tree) = T_textcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));          }
     break;
 
   case 237:
 
-/* Line 1455 of yacc.c  */
-#line 2697 "grammar.y"
     {
 		 (yyval.tree) = T_fontname((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 238:
 
-/* Line 1455 of yacc.c  */
-#line 2700 "grammar.y"
     {
 		 (yyval.tree) = T_color((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 239:
 
-/* Line 1455 of yacc.c  */
-#line 2703 "grammar.y"
     {
 		 (yyval.tree) = T_typename((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 240:
 
-/* Line 1455 of yacc.c  */
-#line 2706 "grammar.y"
     {
 		 (yyval.tree) = T_thickness((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
 
   case 241:
 
-/* Line 1455 of yacc.c  */
-#line 2709 "grammar.y"
     {
 		 (yyval.tree) = T_class((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 242:
 
-/* Line 1455 of yacc.c  */
-#line 2712 "grammar.y"
     {
 		 (yyval.tree) = T_priority((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 243:
 
-/* Line 1455 of yacc.c  */
-#line 2715 "grammar.y"
     {
 		 (yyval.tree) = T_arrowwidth((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 244:
 
-/* Line 1455 of yacc.c  */
-#line 2718 "grammar.y"
     {
 		 (yyval.tree) = T_arrowheight((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   }
     break;
 
   case 245:
 
-/* Line 1455 of yacc.c  */
-#line 2721 "grammar.y"
     {
 		 (yyval.tree) = T_arrowcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 246:
 
-/* Line 1455 of yacc.c  */
-#line 2724 "grammar.y"
     {
 		 (yyval.tree) = T_barrowcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 247:
 
-/* Line 1455 of yacc.c  */
-#line 2727 "grammar.y"
     {
 		 (yyval.tree) = T_arrowsize((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
 
   case 248:
 
-/* Line 1455 of yacc.c  */
-#line 2730 "grammar.y"
     {
 		 (yyval.tree) = T_barrowsize((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
 
   case 249:
 
-/* Line 1455 of yacc.c  */
-#line 2733 "grammar.y"
     {
 		 (yyval.tree) = T_arrowstyle((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 250:
 
-/* Line 1455 of yacc.c  */
-#line 2736 "grammar.y"
     {
 		 (yyval.tree) = T_barrowstyle((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 251:
 
-/* Line 1455 of yacc.c  */
-#line 2739 "grammar.y"
     {
 		 (yyval.tree) = T_linestyle((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
 
   case 252:
 
-/* Line 1455 of yacc.c  */
-#line 2742 "grammar.y"
     {
 		 (yyval.tree) = T_anchor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 253:
 
-/* Line 1455 of yacc.c  */
-#line 2745 "grammar.y"
     {
 		 (yyval.tree) = T_horizontal_order((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
 
   case 254:
 
-/* Line 1455 of yacc.c  */
-#line 2750 "grammar.y"
     {
 		 (yyval.tree) = T_continuous(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 255:
 
-/* Line 1455 of yacc.c  */
-#line 2752 "grammar.y"
     {
 		 (yyval.tree) = T_continuous(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 256:
 
-/* Line 1455 of yacc.c  */
-#line 2754 "grammar.y"
     {
 		 (yyval.tree) = T_dotted(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 257:
 
-/* Line 1455 of yacc.c  */
-#line 2756 "grammar.y"
     {
 		 (yyval.tree) = T_dashed(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 258:
 
-/* Line 1455 of yacc.c  */
-#line 2758 "grammar.y"
     {
 		 (yyval.tree) = T_invisible(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 259:
 
-/* Line 1455 of yacc.c  */
-#line 2763 "grammar.y"
     {
 		 (yyval.tree) = T_none(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 260:
 
-/* Line 1455 of yacc.c  */
-#line 2765 "grammar.y"
     {
 		 (yyval.tree) = T_line(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 261:
 
-/* Line 1455 of yacc.c  */
-#line 2767 "grammar.y"
     {
 		 (yyval.tree) = T_solid(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 262:
 
-/* Line 1455 of yacc.c  */
-#line 2772 "grammar.y"
     {
 		 (yyval.tree) = T_title((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
 
   case 263:
 
-/* Line 1455 of yacc.c  */
-#line 2775 "grammar.y"
     {
 		 (yyval.tree) = T_priority((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  }
     break;
 
   case 264:
 
-/* Line 1455 of yacc.c  */
-#line 2778 "grammar.y"
     {
 		 (yyval.tree) = T_size((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 265:
 
-/* Line 1455 of yacc.c  */
-#line 2781 "grammar.y"
     {
 		 (yyval.tree) = T_nodes((yyvsp[(4) - (5)].tree),yylocate((yylsp[(1) - (5)])));     }
     break;
 
   case 266:
 
-/* Line 1455 of yacc.c  */
-#line 2784 "grammar.y"
     {
 		 (yyval.tree) = T_interval((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  }
     break;
 
   case 267:
 
-/* Line 1455 of yacc.c  */
-#line 2787 "grammar.y"
     {
 		 (yyval.tree) = T_name((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 268:
 
-/* Line 1455 of yacc.c  */
-#line 2790 "grammar.y"
     {
 		 (yyval.tree) = T_dimension((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
 
   case 269:
 
-/* Line 1455 of yacc.c  */
-#line 2795 "grammar.y"
     {
 		 (yyval.tree) = T_string_array((yyvsp[(1) - (2)].tree),(yyvsp[(2) - (2)].tree),yylocate((yylsp[(1) - (2)])));    }
     break;
 
   case 270:
 
-/* Line 1455 of yacc.c  */
-#line 2797 "grammar.y"
     {
 		 (yyval.tree) = T_string_array(NULL,(yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 271:
 
-/* Line 1455 of yacc.c  */
-#line 2801 "grammar.y"
     {
 		 (yyval.tree) = T_equal(yylocate((yylsp[(1) - (1)])));            }
     break;
 
   case 272:
 
-/* Line 1455 of yacc.c  */
-#line 2803 "grammar.y"
     {
 		 (yyval.tree) = T_smaller(yylocate((yylsp[(1) - (1)])));          }
     break;
 
   case 273:
 
-/* Line 1455 of yacc.c  */
-#line 2805 "grammar.y"
     {
 		 (yyval.tree) = T_greater(yylocate((yylsp[(1) - (1)])));          }
     break;
 
   case 274:
 
-/* Line 1455 of yacc.c  */
-#line 2807 "grammar.y"
     {
 		 (yyval.tree) = T_neighbors(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 275:
 
-/* Line 1455 of yacc.c  */
-#line 2809 "grammar.y"
     {
 		 (yyval.tree) = T_low_margin(yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 276:
 
-/* Line 1455 of yacc.c  */
-#line 2811 "grammar.y"
     {
 		 (yyval.tree) = T_high_margin(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 277:
 
-/* Line 1455 of yacc.c  */
-#line 2813 "grammar.y"
     {
 		 (yyval.tree) = T_xrange(yylocate((yylsp[(1) - (1)])));           }
     break;
 
   case 278:
 
-/* Line 1455 of yacc.c  */
-#line 2815 "grammar.y"
     {
 		 (yyval.tree) = T_cluster(yylocate((yylsp[(1) - (1)])));          }
     break;
 
   case 279:
 
-/* Line 1455 of yacc.c  */
-#line 2817 "grammar.y"
     {
 		 (yyval.tree) = T_limit(yylocate((yylsp[(1) - (1)])));            }
     break;
 
   case 280:
 
-/* Line 1455 of yacc.c  */
-#line 2819 "grammar.y"
     {
 		 (yyval.tree) = T_above(yylocate((yylsp[(1) - (1)])));            }
     break;
 
   case 281:
 
-/* Line 1455 of yacc.c  */
-#line 2821 "grammar.y"
     {
 		 (yyval.tree) = T_below(yylocate((yylsp[(1) - (1)])));            }
     break;
 
   case 282:
 
-/* Line 1455 of yacc.c  */
-#line 2823 "grammar.y"
     {
 		 (yyval.tree) = T_left(yylocate((yylsp[(1) - (1)])));             }
     break;
 
   case 283:
 
-/* Line 1455 of yacc.c  */
-#line 2825 "grammar.y"
     {
 		 (yyval.tree) = T_right(yylocate((yylsp[(1) - (1)])));            }
     break;
 
   case 284:
 
-/* Line 1455 of yacc.c  */
-#line 2827 "grammar.y"
     {
 		 (yyval.tree) = T_in_font(yylocate((yylsp[(1) - (1)])));          }
     break;
 
   case 285:
 
-/* Line 1455 of yacc.c  */
-#line 2829 "grammar.y"
     {
 		 (yyval.tree) = T_behind(yylocate((yylsp[(1) - (1)])));           }
     break;
 
   case 286:
 
-/* Line 1455 of yacc.c  */
-#line 2831 "grammar.y"
     {
 		 (yyval.tree) = T_equal_position(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 287:
 
-/* Line 1455 of yacc.c  */
-#line 2833 "grammar.y"
     {
 		 (yyval.tree) = T_equal_row(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 288:
 
-/* Line 1455 of yacc.c  */
-#line 2835 "grammar.y"
     {
 		 (yyval.tree) = T_equal_column(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 289:
 
-/* Line 1455 of yacc.c  */
-#line 2837 "grammar.y"
     {
 		 (yyval.tree) = T_top_margin(yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 290:
 
-/* Line 1455 of yacc.c  */
-#line 2839 "grammar.y"
     {
 		 (yyval.tree) = T_bottom_margin(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 291:
 
-/* Line 1455 of yacc.c  */
-#line 2841 "grammar.y"
     {
 		 (yyval.tree) = T_left_margin(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 292:
 
-/* Line 1455 of yacc.c  */
-#line 2843 "grammar.y"
     {
 		 (yyval.tree) = T_right_margin(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 293:
 
-/* Line 1455 of yacc.c  */
-#line 2845 "grammar.y"
     {
 		 (yyval.tree) = T_upper_neighbor(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 294:
 
-/* Line 1455 of yacc.c  */
-#line 2847 "grammar.y"
     {
 		 (yyval.tree) = T_lower_neighbor(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 295:
 
-/* Line 1455 of yacc.c  */
-#line 2849 "grammar.y"
     {
 		 (yyval.tree) = T_left_neighbor(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 296:
 
-/* Line 1455 of yacc.c  */
-#line 2851 "grammar.y"
     {
 		 (yyval.tree) = T_right_neighbor(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 297:
 
-/* Line 1455 of yacc.c  */
-#line 2855 "grammar.y"
     {
 		 (yyval.tree) = T_x(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 298:
 
-/* Line 1455 of yacc.c  */
-#line 2857 "grammar.y"
     {
 		 (yyval.tree) = T_y(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 299:
 
-/* Line 1455 of yacc.c  */
-#line 2859 "grammar.y"
     {
 		 (yyval.tree) = T_z(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 300:
 
-/* Line 1455 of yacc.c  */
-#line 2863 "grammar.y"
     {
 		 (yyval.tree) = T_integer((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 301:
 
-/* Line 1455 of yacc.c  */
-#line 2865 "grammar.y"
     {
 		 (yyval.tree) = T_float((yyvsp[(1) - (1)].lrealnum),yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 302:
 
-/* Line 1455 of yacc.c  */
-#line 2867 "grammar.y"
     {
 		 (yyval.tree) = T_char((yyvsp[(1) - (1)].byte),yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 303:
 
-/* Line 1455 of yacc.c  */
-#line 2869 "grammar.y"
     {
 		 (yyval.tree) = T_string((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 304:
 
-/* Line 1455 of yacc.c  */
-#line 2871 "grammar.y"
     {
 		 (yyval.tree) = (yyvsp[(1) - (1)].tree); }
     break;
 
   case 305:
 
-/* Line 1455 of yacc.c  */
-#line 2876 "grammar.y"
     {
 		 (yyval.tree) = REVERT((yyvsp[(2) - (3)].tree)); }
     break;
 
   case 306:
 
-/* Line 1455 of yacc.c  */
-#line 2881 "grammar.y"
     {
 		 (yyval.tree) = T_index_value((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
     break;
 
   case 307:
 
-/* Line 1455 of yacc.c  */
-#line 2883 "grammar.y"
     {
 		 (yyval.tree) = T_index_value((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 308:
 
-/* Line 1455 of yacc.c  */
-#line 2887 "grammar.y"
     {
 		 (yyval.tree) = (yyvsp[(1) - (1)].tree);           }
     break;
 
   case 309:
 
-/* Line 1455 of yacc.c  */
-#line 2890 "grammar.y"
     {
 		 (yyval.tree) = T_index((yyvsp[(1) - (3)].tree),(yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
 
   case 310:
 
-/* Line 1455 of yacc.c  */
-#line 2893 "grammar.y"
     {
 		 (yyval.tree) = T_range((yyvsp[(1) - (3)].tree),(yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
 
   case 311:
 
-/* Line 1455 of yacc.c  */
-#line 2896 "grammar.y"
     {
 		 (yyval.tree) = T_stern((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 312:
 
-/* Line 1455 of yacc.c  */
-#line 2901 "grammar.y"
     {
 		 (yyval.tree) = T_range((yyvsp[(2) - (5)].tree),(yyvsp[(4) - (5)].tree),yylocate((yylsp[(1) - (5)]))); }
     break;
 
   case 313:
 
-/* Line 1455 of yacc.c  */
-#line 2905 "grammar.y"
     {
 		 (yyval.tree) = T_index_val((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 314:
 
-/* Line 1455 of yacc.c  */
-#line 2909 "grammar.y"
     {
 		 (yyval.tree) = T_integer((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 315:
 
-/* Line 1455 of yacc.c  */
-#line 2913 "grammar.y"
     {
 		 (yyval.tree) = T_float((yyvsp[(1) - (1)].lrealnum),yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 316:
 
-/* Line 1455 of yacc.c  */
-#line 2917 "grammar.y"
     {
 		 (yyval.tree) = T_string((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)])));   }
     break;
 
 
 
-/* Line 1455 of yacc.c  */
-#line 6898 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -7112,8 +6468,6 @@ yyreturn:
 
 
 
-/* Line 1675 of yacc.c  */
-#line 2923 "grammar.y"
 
 
 

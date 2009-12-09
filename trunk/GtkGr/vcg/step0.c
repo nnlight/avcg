@@ -1844,7 +1844,7 @@ static void init_hashtable(void)
 		}
 #ifdef DEBUG
 		PRINTF("Number of detected nodes: %d\n", numnodes);
-               	PRINTF("Sizeof tables `hashtable': %ld Bytes\n",
+		PRINTF("Sizeof tables `hashtable': %d Bytes\n",
                         (maxhashtable)*sizeof(GNODE));
 #endif
 	}

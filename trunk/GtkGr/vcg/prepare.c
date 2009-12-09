@@ -35,8 +35,6 @@
  *  along  with  this  program;  if  not,  write  to  the  Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
-
  
 
 
@@ -132,11 +130,7 @@ static int      size_of_adjarray = 0;
 /*  Preparation of nodes         			      */
 /*--------------------------------------------------------------------*/
 
-#ifdef ANSI_C
 void	prepare_nodes(void)
-#else
-void	prepare_nodes()
-#endif
 {
 	int i,h,hh, xp, na;
 	GNODE v,w;
@@ -221,7 +215,7 @@ void	prepare_nodes()
                 if (!adjarray2) Fatal_error("memory exhausted","");
                 size_of_adjarray = i+2;
 #ifdef DEBUG
-                PRINTF("Sizeof table `adjarray2': %ld Bytes\n",
+                PRINTF("Sizeof table `adjarray2': %d Bytes\n",
                         (i+2)*sizeof(GEDGE));
 #endif
         }
@@ -264,7 +258,7 @@ void	prepare_nodes()
 
 	stop_time("prepare_nodes");
 	debugmessage("end of prepare_nodes","");
-}
+} /* prepare_nodes */
 
 
 
@@ -272,12 +266,7 @@ void	prepare_nodes()
  * ----------------------------------
  */
 
-#ifdef ANSI_C
 static void calc_node_degree(GNODE v)
-#else
-static void calc_node_degree(v)
-GNODE v;
-#endif
 {
 	int k;
 	ADJEDGE a;
@@ -302,12 +291,7 @@ GNODE v;
  * the size of the label. 
  */
 
-#ifdef ANSI_C
 void calc_node_size(GNODE v)
-#else
-void calc_node_size(v)
-GNODE v;
-#endif
 {
 	debugmessage("calc_node_size","");
 
@@ -322,7 +306,7 @@ GNODE v;
 	}
 	if (NWIDTH(v)  == -1) NWIDTH(v)   = gs_boxw;
 	if (NHEIGHT(v) == -1) NHEIGHT(v)  = gs_boxh;
-}
+} /* calc_node_size */
 
 
 /* Calculate anchor point            
@@ -335,12 +319,7 @@ GNODE v;
  * edges with anchor right-on have gradient MAXINT.
  */
 
-#ifdef ANSI_C
 static void calc_node_anchor(GNODE v)
-#else
-static void calc_node_anchor(v)
-GNODE v;
-#endif
 {
 	ADJEDGE a,b;
 	int 	x1,y1,x2,y2;
@@ -379,19 +358,14 @@ GNODE v;
 		else delete_adjedge(AKANTE(a)); /* Edge is not drawable */
 		a = b;
 	}
-}
+} /* calc_node_anchor */
 
 /* Sort the adjacency lists of node v
  * ----------------------------------
  * This gives the layout the final touch.
  */
 
-#ifdef ANSI_C
 static void sort_adjacencies(GNODE v)
-#else
-static void sort_adjacencies(v)
-GNODE   v;
-#endif
 {
         int i;
         ADJEDGE a;
@@ -444,7 +418,7 @@ GNODE   v;
                 NSUCCL(v) = adjarray2[0];
                 NSUCCR(v) = adjarray2[i-1];
         }
-}
+} /* sort_adjacencies */
 
 
 /*  Compare functions for sort_adjedges
@@ -452,26 +426,14 @@ GNODE   v;
  *  returns 1 if EWEIGHT(*a) > EWEIGHT(*b), 0 if equal, -1 otherwise
  */
 
-#ifdef ANSI_C
 static int compare_ppos(const GEDGE *a, const GEDGE *b)
-#else
-static int compare_ppos(a,b)
-GEDGE   *a;
-GEDGE   *b;
-#endif
 {
         if (EWEIGHTP(*a) > EWEIGHTP(*b))        return(1);
         if (EWEIGHTP(*a) < EWEIGHTP(*b))        return(-1);
         return(0);
 }
  
-#ifdef ANSI_C
 static int compare_spos(const GEDGE *a,const GEDGE *b)
-#else
-static int compare_spos(a,b)
-GEDGE   *a;
-GEDGE   *b;
-#endif
 {
         if (EWEIGHTS(*a) > EWEIGHTS(*b))        return(1);
         if (EWEIGHTS(*a) < EWEIGHTS(*b))        return(-1);
