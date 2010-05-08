@@ -188,16 +188,19 @@ ui_da_scroll_event_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
 
 	if ( event->state & GDK_CONTROL_MASK )
 	{
-		/* при нажатом Cеrl'е увеличиваем/уменьшаем граф */
+		/* при нажатом Ctrl'е увеличиваем/уменьшаем граф */
 		gint x = (int)event->x;
 		gint y = (int)event->y;
+		double new_scaling;
 		switch (event->direction)
 		{
 		case GDK_SCROLL_UP:
-			db->ChangeScaling( SCALING_COEF, x, y);
+			new_scaling = db->ChangeScaling( SCALING_COEF, x, y);
+			uic->UpdateStatusbarScaling( new_scaling);
 			break;
 		case GDK_SCROLL_DOWN:
-			db->ChangeScaling( 1./SCALING_COEF, x, y);
+			new_scaling = db->ChangeScaling( 1./SCALING_COEF, x, y);
+			uic->UpdateStatusbarScaling( new_scaling);
 			break;
 		default:
 			break;
@@ -518,6 +521,7 @@ UIController::UIController( const char *filename)
 	GtkWidget *main_window;
 	GtkWidget *main_vbox;
 	GtkWidget *menubar;
+	GtkWidget *statusbar;
 
 	// создаем главное окно
 	main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -574,12 +578,20 @@ UIController::UIController( const char *filename)
 	// сигнал ("key_press_event")
 	gtk_signal_connect( GTK_OBJECT(main_window),"key_press_event", GTK_SIGNAL_FUNC(ui_key_press_cb), this);
 
+	// Statusbar
+	statusbar = gtk_statusbar_new ();
+	gtk_box_pack_end( GTK_BOX(main_vbox), statusbar, FALSE, TRUE, 0);
+
+
 printf("before gtk_widget_show_all(main_window)\n");
 
 	// отображение основного окна
 	gtk_widget_show_all( main_window);
 
 	m_MainWindow = main_window;
+	m_Statusbar = statusbar;
+
+	UpdateStatusbarScaling( 1.);
 	return;
 } /* UIController::UIController */
 
@@ -612,3 +624,18 @@ void UIController::LoadGDL( const char *filename)
 	m_CurrentFilename = filename;
 } /* UIController::LoadGDL */
 
+void UIController::UpdateStatusbarScaling( double scaling)
+{
+	gchar *msg;
+
+	/* clear any previous message, 
+	 * underflow is allowed 
+	 */
+	gtk_statusbar_pop( GTK_STATUSBAR( m_Statusbar), 0);
+
+	msg = g_strdup_printf( "Current Scaling: %f", scaling);
+	gtk_statusbar_push( GTK_STATUSBAR( m_Statusbar), 0, msg);
+
+	g_free (msg);
+	return;
+} /* UIController::UpdateStatusbarScaling */
