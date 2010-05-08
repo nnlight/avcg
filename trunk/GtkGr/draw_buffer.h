@@ -74,7 +74,7 @@ public:
 	void MoveVisibleArea2d( gint delta[AXIS_LAST]);
 	/** изменить Scaling, координаты передаются для того, чтобы та точка графа,
 	   которая находится под ними, осталась бы на том же месте */
-	void ChangeScaling( double scaling_factor, daint x, daint y);
+	double ChangeScaling( double scaling_factor, daint x, daint y);
 
 	void PKey();
 	

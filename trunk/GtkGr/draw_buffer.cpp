@@ -347,7 +347,7 @@ void DrawBuffer::MoveVisibleArea2d( gint delta[AXIS_LAST])
 	return;
 } /* DrawBuffer::MoveVisibleArea2d */
 
-void DrawBuffer::ChangeScaling( double scaling_factor, daint x, daint y)
+double DrawBuffer::ChangeScaling( double scaling_factor, daint x, daint y)
 {
 	assert( m_da );
 	
@@ -387,7 +387,7 @@ void DrawBuffer::ChangeScaling( double scaling_factor, daint x, daint y)
 	}
 	/* инвалидируем всю drawing_area (потом должно будет прийти expose_event) */
 	InvalidateDa( NULL);
-	return;
+	return (m_Scaling);
 } /* DrawBuffer::ChangeScaling */
 
 
