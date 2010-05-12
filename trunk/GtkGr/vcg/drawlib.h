@@ -1,5 +1,3 @@
-/* SCCS-info %W% %E% */
-
 /*--------------------------------------------------------------------*/
 /*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */ 
@@ -18,7 +16,6 @@
 /*                                                                    */
 /*--------------------------------------------------------------------*/
 
-/* $Id: drawlib.h,v 3.6 1995/02/08 11:11:14 sander Exp $ */
 
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
@@ -42,47 +39,6 @@
  *  Contact  sander@cs.uni-sb.de  for additional information.
  */
 
-
-/*
- * $Log: drawlib.h,v $
- * Revision 3.6  1995/02/08  11:11:14  sander
- * Distribution version 1.3.
- *
- * Revision 3.5  1994/12/23  18:12:45  sander
- * Manhatten layout added.
- * Option interface cleared.
- * infobox behaviour improved.
- * First version of fisheye (carthesian).
- * Options Noedge and nonode.
- * Titles in the node title box are now sorted.
- * Timelimit functionality improved.
- *
- * Revision 3.4  1994/06/07  14:09:59  sander
- * Splines implemented.
- * HP-UX, Linux, AIX, Sun-Os, IRIX compatibility tested.
- * The tool is now ready to be distributed.
- *
- * Revision 3.3  1994/05/16  08:56:03  sander
- * shape attribute (boxes, rhombs, ellipses, triangles) added.
- *
- * Revision 3.2  1994/05/05  12:03:00  sander
- * Follow edge action speedup by a special drawing routine.
- *
- * Revision 3.1  1994/03/01  10:59:55  sander
- * Copyright and Gnu Licence message added.
- * Problem with "nearedges: no" and "selfloops" solved.
- *
- * Revision 2.3  1994/01/21  19:33:46  sander
- * VCG Version tested on Silicon Graphics IRIX, IBM R6000 AIX and Sun 3/60.
- * Option handling improved. Option -grabinputfocus installed.
- * X11 Font selection scheme implemented. The user can now select a font
- * during installation.
- * Sun K&R C (a nonansi compiler) tested. Some portabitility problems solved.
- *
- * Revision 2.2  1994/01/03  15:29:06  sander
- * First complete X11 version.
- *
- */
 
 #ifndef DRAWLIB_H
 #define DRAWLIB_H
@@ -135,11 +91,9 @@ void	gs_solidarrow		_PP((GEDGE e));
 void	gs_dashedarrow		_PP((GEDGE e));
 void	gs_dottedarrow		_PP((GEDGE e));
 
-#ifndef INCLUDE_DRAW
 #ifdef X11
 void x11_followedge_arrow	_PP((GEDGE e));
 void x11_followedge_anchors	_PP((GEDGE e));
-#endif
 #endif
 
 

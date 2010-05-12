@@ -219,6 +219,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\preferences.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\vcg\prepare.c"
 				>
 			</File>
@@ -322,6 +326,10 @@
 			</File>
 			<File
 				RelativePath=".\vcg\options.h"
+				>
+			</File>
+			<File
+				RelativePath=".\preferences.h"
 				>
 			</File>
 			<File

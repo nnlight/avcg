@@ -47,6 +47,7 @@ void draw_fast_char(int color,int c,int xpos,int ypos)
 int set_fontbuffer(int stretch,int shrink)
 {
 	printf("!stub for set_fontbuffer called\n");
+	return 0;
 }
 void finish_fast_chars(void)
 {
@@ -94,9 +95,6 @@ void finish_fast_chars(void)
 #include "drawlib.h"
 #include "drawstr.h"
 
-#ifdef INCLUDE_DRAW
-#undef FAST_X11_DRAWING
-#endif
 
 /*  Prototypes
  *  ---------- 
@@ -106,10 +104,8 @@ void finish_fast_chars(void)
  * in sunvdv.c or X11dv.c.
  */
 
-#ifndef INCLUDE_DRAW
 extern void gs_line	 _PP((int x1,int y1,int x2,int y2,int c));
 extern void gs_rectangle _PP((long x,long y,int w,int h,int c));
-#endif
 
 /* For X11 only some speedup functions */
 
@@ -125,7 +121,6 @@ static void	mymoveto	_PP((int x,int y,int c));
 static void	myoutchar	_PP((int c, int col,int underline));
 
 
-#ifndef INCLUDE_DRAW
 #ifdef X11
 
 /* For X11, we can use font buffering to speed up */
@@ -133,7 +128,6 @@ static void	myoutchar	_PP((int c, int col,int underline));
 int     set_fontbuffer          _PP((int stretch, int shrink));
 void    draw_fast_char          _PP((int a,int c,int x,int y));
 void    finish_fast_chars       _PP((void));
-#endif
 #endif
 
 
@@ -278,22 +272,12 @@ int x,y,c;
  *   move myxpos one character size forward.
  */
 
-#ifndef INCLUDE_DRAW
 #ifdef X11
 static int fast_char_possible = 0;
 #endif
-#endif
 
-#ifdef ANSI_C
 static void myoutchar(int c, int col, int underline)
-#else
-static void myoutchar(c,col,underline)
-int	c;
-int	col;
-int 	underline;
-#endif
 {
-#ifndef INCLUDE_DRAW
 #ifdef X11
 	if (fast_char_possible && (mythick==1)) {
 		draw_fast_char(col,c,myxpos,myypos);
@@ -304,7 +288,6 @@ int 	underline;
 		myxpos += ((8*mystretch)/myshrink);
 		return;
 	}
-#endif
 #endif
 
 	if (c<128) myasciichar(c,   col);
@@ -360,10 +343,8 @@ int	c;
 	actcolor = c;
 	underline = 0;
 	mythick   = 1;
-#ifndef INCLUDE_DRAW
 #ifdef X11
 	fast_char_possible = set_fontbuffer(mystretch,myshrink);
-#endif
 #endif
 	while (*s) { 
 
@@ -446,10 +427,8 @@ int	c;
 
 	myxpos = mx + (xcnt *  8 * mystretch) / myshrink;
 	myypos = my + (ycnt * 16 * mystretch) / myshrink;
-#ifndef INCLUDE_DRAW
 #ifdef X11
 	if (fast_char_possible) finish_fast_chars();
-#endif
 #endif
 }
 
