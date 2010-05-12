@@ -2,9 +2,8 @@
 #include <gdk/gdkkeysyms.h>
 #include "vr_graph.h"
 #include "vcg/vcg_iface.h"
+#include "preferences.h"
 
-#define SCALING_COEF 1.1
-#define MOVE_PIXELS 20
 
 /**
  * Обработчик сигнала закрытия главного окна приложения
@@ -46,6 +45,8 @@ ui_key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data)
 
 	UIController *uic = (UIController *)data;
 	DrawBuffer *db = uic->m_DrawBuffer.get();
+
+	int MOVE_PIXELS = Preferences::GetMovePixels();
 
 	switch (event->keyval)
 	{
@@ -192,6 +193,7 @@ ui_da_scroll_event_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
 		gint x = (int)event->x;
 		gint y = (int)event->y;
 		double new_scaling;
+		double SCALING_COEF = Preferences::GetScalingCoef();
 		switch (event->direction)
 		{
 		case GDK_SCROLL_UP:

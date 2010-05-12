@@ -181,9 +181,6 @@ void x11_followedge_line(int fx,int fy,int tx,int ty,int t,int c)
 #include "drawstr.h"
 #include "drawlib.h"
 
-#ifdef INCLUDE_DRAW
-#undef FAST_X11_DRAWING
-#endif
 
 /*  Prototypes
  *  ---------- 
@@ -193,10 +190,9 @@ void x11_followedge_line(int fx,int fy,int tx,int ty,int t,int c)
  * in sunvdv.c or X11dv.c.
  */
 
-#ifndef INCLUDE_DRAW
 extern void gs_line	 _PP((int x1,int y1,int x2,int y2,int c));
 extern void gs_rectangle _PP((long x,long y,int w,int h,int c));
-#endif
+
 
 /* For X11 only some speedup functions */
 
@@ -274,10 +270,8 @@ static void check_border_points   _PP((GNODE v,int x1,int y1));
 static void check_spline_point    _PP((int kx,int ky,int x1,int y1));
 
 
-#ifndef INCLUDE_DRAW
 #ifdef X11
 void 	x11_followedge_line	_PP((int x1,int y1,int x3,int y3,int t,int c));
-#endif
 #endif
 
 
@@ -1086,14 +1080,9 @@ GNODE	v;
  *  to the inner box of the rhomb.
  */
 
-#ifdef ANSI_C
 void gs_rhomb(GNODE v)
-#else
-void gs_rhomb(v)
-GNODE	v;
-#endif
 {
-	int	t, i;
+	int	t;
 	int	border;
 	int	x,y,w,h;
 	int 	x1, x2, x3, x4, y1, y2, y3, y4;
@@ -1230,7 +1219,7 @@ GNODE	v;
 		if (colored) gs_rhombborder(x,y,w,h,t,NBCOLOR(v));
 		else         gs_rhombborder(x,y,w,h,t,BLACK);
 	}
-}
+} /* gs_rhomb */
 
 
 /*  Draw a reverted rhomb box for node v
@@ -1244,14 +1233,9 @@ GNODE	v;
  *  The color is reverted.
  */
 
-#ifdef ANSI_C
 void gs_revertrhomb(GNODE v)
-#else
-void gs_revertrhomb(v)
-GNODE	v;
-#endif
 {
-	int	t, i;
+	int	t;
 	int	border;
 	int	x,y,w,h;
 	int 	x1, x2, x3, x4, y1, y2, y3, y4;
@@ -1387,7 +1371,7 @@ GNODE	v;
 		if (colored) gs_rhombborder(x,y,w,h,t,NCOLOR(v));
 		else         gs_rhombborder(x,y,w,h,t,WHITE);
 	}
-}
+} /* gs_revertrhomb */
 
 
 /*  Draw a halfreverted rhomb box for node v
@@ -1401,14 +1385,9 @@ GNODE	v;
  *  The color is half reverted.
  */
 
-#ifdef ANSI_C
 void gs_halfrevertrhomb(GNODE v)
-#else
-void gs_halfrevertrhomb(v)
-GNODE	v;
-#endif
 {
-	int	t, i;
+	int	t;
 	int	border;
 	int	x,y,w,h;
 	int 	x1, x2, x3, x4, y1, y2, y3, y4;
@@ -1550,7 +1529,7 @@ GNODE	v;
 		if (colored) gs_rhombborder(x,y,w,h,t,NBCOLOR(v));
 		else         gs_rhombborder(x,y,w,h,t,BLACK);
 	}
-}
+} /* gs_halfrevertrhomb */
 
 
 /*  Draw a rhomb border 
@@ -1560,12 +1539,7 @@ GNODE	v;
  *  NO SCALING !!!
  */
 
-#ifdef ANSI_C
 static void	gs_rhombborder(int x,int y,int w,int h,int t,int c)
-#else
-static void	gs_rhombborder(x, y, w, h, t, c)
-int x, y, w, h, t, c;
-#endif
 {
 	gs_mysolidline(x,    y+h/2,x+w/2,y,    t,c);
 	gs_mysolidline(x,    y+h/2,x+w/2,y+h,  t,c);
@@ -1628,15 +1602,9 @@ GNODE	v;
  *  to the inner box of the triangle.
  */
 
-
-#ifdef ANSI_C
 void gs_triangle(GNODE v)
-#else
-void gs_triangle(v)
-GNODE	v;
-#endif
 {
-	int	t, i;
+	int	t;
 	int	border;
 	int	x,y,w,h;
 	int	xoffs,yoffs;
@@ -1810,7 +1778,7 @@ GNODE	v;
 		if (colored) gs_triborder(x,y,w,h,t,NBCOLOR(v));
 		else         gs_triborder(x,y,w,h,t,BLACK);
 	}
-}
+} /* gs_triangle */
 
 
 /*  Draw a reverted triangle for node v
@@ -1824,14 +1792,9 @@ GNODE	v;
  *  The color is reverted.
  */
 
-#ifdef ANSI_C
 void gs_reverttriangle(GNODE v)
-#else
-void gs_reverttriangle(v)
-GNODE	v;
-#endif
 {
-	int	t, i;
+	int	t;
 	int	border;
 	int	x,y,w,h;
 	int	xoffs,yoffs;
@@ -2005,7 +1968,7 @@ GNODE	v;
 		if (colored) gs_triborder(x,y,w,h,t,NCOLOR(v));
 		else         gs_triborder(x,y,w,h,t,WHITE);
 	}
-}
+} /* gs_reverttriangle */
 
 
 /*  Draw a halfreverted triangle for node v
@@ -2019,14 +1982,9 @@ GNODE	v;
  *  The color is half reverted.
  */
 
-#ifdef ANSI_C
 void gs_halfreverttriangle(GNODE v)
-#else
-void gs_halfreverttriangle(v)
-GNODE	v;
-#endif
 {
-	int	t, i, mcol;
+	int	t, mcol;
 	int	border;
 	int	x,y,w,h;
 	int	xoffs,yoffs;
@@ -2213,7 +2171,7 @@ GNODE	v;
 		if (colored) gs_triborder(x,y,w,h,t,NBCOLOR(v));
 		else         gs_triborder(x,y,w,h,t,BLACK);
 	}
-}
+} /* gs_halfreverttriangle */
 
 
 /*  Draw a triangle border 
@@ -2761,12 +2719,7 @@ int x, y, w, h, t, c;
  *  Note: here we could speedup for X11 here.
  */
 
-#ifdef ANSI_C
 static void	gs_filledellips(int x,int y,int w,int h,int c1,int c2)
-#else
-static void	gs_filledellips(x, y, w, h, c1, c2)
-int x, y, w, h, c1, c2;
-#endif
 {
 	int i,j;
 
@@ -2781,7 +2734,7 @@ int x, y, w, h, c1, c2;
 		gs_mysolidline(x+w/2-i, y+h/2+j, x+w/2-i, y+h/2-j, 1,c2);
 	}
 #endif
-}
+} /* gs_filledellips */
 
 
 /*--------------------------------------------------------------------*/
@@ -3003,7 +2956,6 @@ int flag;
  * do not use the normal line functions.
  */
 
-#ifndef INCLUDE_DRAW
 #ifdef X11
 
 #ifdef ANSI_C
@@ -3202,7 +3154,7 @@ GEDGE e;
 }
 
 #endif /* X11 */
-#endif /* not INCLUDE_DRAW */
+
 
 /*--------------------------------------------------------------------*/
 /*   Solid arrow drawing					      */
