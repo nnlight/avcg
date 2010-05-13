@@ -8,11 +8,6 @@
  
 #include "grammar.h"
 
-/*typedef struct stree_node *syntaxtree;
-#undef yysyntaxtree
-#define yysyntaxtree syntaxtree*/
-
-
 
 #define BISONGEN
 #undef  YACCGEN
@@ -87,10 +82,6 @@ void   warning        _PP((int line,int pos,char *mesge));
 
 
 
-char * ParseMalloc(int x);
-
-
-
 #include "grammar.h"
 extern yysyntaxtree Syntax_Tree;
 
@@ -103,7 +94,6 @@ extern yysyntaxtree Syntax_Tree;
 
 int line_nr;
 int pos_nr;
-extern int nr_errors;  /* from Scanner */
 
 /* Local Variables */
 /*-----------------*/
@@ -921,198 +911,4 @@ void init_lex(void)
 	yy_init = 0;
 }
 
-
-
-
-/*--------------------------------------------------------------------*/
-/*  Standard Hash Table Routines                                      */
-/*--------------------------------------------------------------------*/
- 
-#include <stdio.h>
-#include <string.h>
-#include <malloc.h>
-
-/* Global Variables */
-/*------------------*/
-
-static char **decode = NULL;
-long   table_size = 0L;
-
-/*--------------------------------------------------------------------*/
-/* Fatal error: exit with message                                     */
-/*--------------------------------------------------------------------*/
-
-static void fatal_error(char *message)
-{
-	(void)fprintf(stderr,"Fatal error: %s !\n",message);
-	(void)fprintf(stderr,"Aborted !\n");
-	exit(-1);
-}
-
-
-/*--------------------------------------------------------------------*/
-/* Memory allocation for single strings                               */
-/*--------------------------------------------------------------------*/
-
-#ifndef ALIGN
-#define ALIGN 8
-#define IALIGN (ALIGN-1)
-#endif
-
-#ifndef STRINGBLOCKSIZE 
-#define STRINGBLOCKSIZE 5000 
-#endif 
-
-/*--------------------------------------------------------------------*/
-/* Memory allocation for decode table and hash table                  */
-/*--------------------------------------------------------------------*/
-
-#define hash_size 22079
-#define hashtable_size 10000L
-
-/* We use a hash table with linked lists */
-
-typedef struct hash_node {
-        long              num;
-        struct hash_node *next;
-} *hashentry;
-
-
-/* The hash table */
-
-static hashentry *hashtable = NULL;
-static long hashtop = 1;
-
-static void init_hash(void)
-{
-	char *h;
-
-        if (!hashtable) {
-
-		/* no hash table present -> allocate table */
-
-                hashtable  = (hashentry *) 
-				calloc((size_t) (hash_size+1),
-                				 sizeof(hashentry));
-        	if (!hashtable) fatal_error("memory exhausted");
-	}
-
-        if (!decode) {
-
-		/* no decode table present -> allocate table */
-
-		hashtop = 1;
-		table_size = hashtable_size;
-                decode   = (char **) 
-				calloc((size_t) (table_size+1L),
-                   				sizeof(char *));
-	        if (!decode) fatal_error("memory exhausted");
-                h = ParseMalloc(strlen("$!+-#Start of Hash#+-!$")+1);
-                decode[0]    = strcpy(h,"$!+-#Start of Hash#+-!$");
-	}
-}
-
-
-static void increase_decode(void)
-{
-	char **help,**a,**b;
-	long   mysize, j;
-
-	mysize = table_size * 2L;
-	help = (char **) calloc((size_t) (mysize+1), sizeof(char *));
-	if (!help) fatal_error("memory exhausted");
- 
-	a = help;
-	b = decode;
-	for (j=0; j<table_size; j++) *a++ = *b++;
-	if (decode) (void)free((char *)decode);
-	
-	decode   = help; 
-	table_size = mysize;
-}
-
-void FreeHash(void)
-{
-	if (decode) (void)free((char *)decode);
-	decode   = (char **)0; 
-	if (hashtable) (void)free((char *)hashtable);
-        hashtable  = (hashentry *)0;
-}
-
-
-/*--------------------------------------------------------------------*/
-/* Hash table for identifers and strings                              */
-/*--------------------------------------------------------------------*/
-
-
-/* the hash function */
-
-static int hash(register char *string)
-{
-        register int   hashval = 0 ;
-        register char *s = string;
-
-        for(hashval=0; *s != '\0';)
-                hashval = (10*hashval - 48 + *s++) % hash_size;
-        hashval = ((hashval<0 ) ? -hashval : hashval);
-
-        return(hashval % hash_size);
-        /* Modulo calculation because of table range */
-}
-
-
-
-/*--------------------------------------------------------------------*/
-/* Hash table: visible from outside                                   */
-/*--------------------------------------------------------------------*/
-
-long HashInsert(register char *s)
-{
-        register  hashentry new_node;
-        register  int       hashval;
-        register  long      look;
-        char *h;
-
-        if (!hashtable) init_hash();
-
-        hashval  = hash(s);
-	new_node = hashtable[hashval];
-	look = -1L;
-        while (new_node != NULL) {
-                if ( strcmp(s,decode[new_node->num]) == 0L) {
-			look = new_node->num;
-			break;
-		}
-                new_node=new_node->next;
-        }
-
-        if (look == -1L) {
-                if (hashtop == table_size-1) increase_decode();
-                new_node = (hashentry)ParseMalloc(sizeof(struct hash_node));
-                look = hashtop++;
-                new_node->num  = look;
-                new_node->next = hashtable[hashval];
-
-                h = ParseMalloc(strlen(s)+1);
-                decode[look]    = strcpy(h,s);
-                hashtable[hashval] = new_node;
-        }
-        return(look);
-}
-
-long HashTableSize(void)
-{
-        if (!hashtable) init_hash();
-	return(hashtop);
-}
-
-char *Decode(long x)
-{
-        if (!hashtable) init_hash();
-	if (x<0)       return(decode[0]);
-	if (x<hashtop) return(decode[x]);
-	return(decode[0]);
-}
-
-/*--------------------------------------------------------------------*/
 

@@ -93,17 +93,6 @@
 #endif
 
 
-/*   Required alignment for structs (power of 2). IALIGN is the appropriate
- *   bit mask to generate the alignment. Because we use floats in structs,
- *   mostly an alignment of 8 is appropriate.
- */
-
-#ifndef ALIGN
-/* #define ALIGN  8 */
-#define ALIGN  8
-#define IALIGN (ALIGN-1)
-#endif
-
 
 /*   Memory block size for memory allocation in bytes. The allocation
  *   mechanism allocates blocks of this size, and dynamically increases
