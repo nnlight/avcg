@@ -203,6 +203,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\vcg\grammar.c"
+				>
+			</File>
+			<File
 				RelativePath=".\GtkGr.cpp"
 				>
 			</File>
