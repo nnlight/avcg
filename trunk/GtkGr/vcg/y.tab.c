@@ -123,9 +123,9 @@ typedef struct yyltype {
 
 
 
-typedef struct stree_node *syntaxtree;
+/*typedef struct stree_node *syntaxtree;
 #undef yysyntaxtree
-#define yysyntaxtree syntaxtree
+#define yysyntaxtree syntaxtree*/
 
 #define BISONGEN
 #undef  YACCGEN
@@ -156,11 +156,7 @@ extern YY_CHAR *yytext;
  
 #undef YYVALGLOBAL
  
-extern yysyntaxtree Syntax_Tree;
 
-#define exit(a) gs_exit(a)
-extern void gs_exit            _PP((int x));
- 
 void   line_directive _PP((char *text));
 void   escape_transl  _PP((char *text));
 void   syntaxerror    _PP((int line,int pos,char *mesge));
@@ -185,12 +181,6 @@ void   warning        _PP((int line,int pos,char *mesge));
 #define PARSEBLOCKSIZE (MEMBLOCKSIZE/sizeof(struct stree_node)+1)
 #endif
 
-/* Hash Table */
-
-#define hash_size 22079
- 
-
-
 #ifndef NULL
 #define NULL 0
 #endif
@@ -204,147 +194,8 @@ void   warning        _PP((int line,int pos,char *mesge));
 #endif
 
 
-
-#ifndef STDPARSER
-#define STDPARSER
-
-/* $Id: stdph.skel,v 1.8 1994/01/20 23:44:31 sander Exp sander $ */
-
-#undef  PARSEGENSTD
-#define PARSEGENSTD
-
-/*--------------------------------------------------------------------*/
-/*  Standard Tree Construction Interface   			      */
-/*--------------------------------------------------------------------*/
-
-#ifndef ALIGN
-#define ALIGN 8
-#define IALIGN (ALIGN-1)
-#endif
-#ifndef PARSEBLOCKSIZE
-#define PARSEBLOCKSIZE 10000
-#endif
-
-/*-------------------*/
-/* syntax tree nodes */
-/*-------------------*/
-
-union  special {
-        unsigned char      byte;
-        short int          snum;
-        unsigned short int usnum;
-        int                num;
-        unsigned int       unum;
-        long int           lnum;
-        unsigned long int  ulnum;
-        float              realnum;
-        double             lrealnum;
-        char              *string;
-};
-
-struct stree_node {
-        int  tag_field;
-        int  first_line;
-        int  first_column;
-        int  last_line;
-        int  last_column;
-#ifdef USERFTYPE
-	USERFTYPE user_field;
-#endif
-        struct stree_node *father;
-        union  special     contents;
-        struct stree_node *xson[1];
-};
-
-
-/* typedef struct stree_node *syntaxtree; */
-
-
-#undef yysyntaxtree
-#define yysyntaxtree syntaxtree 
-
-
-#define tag(x)           ((x)->tag_field)
-#define nr_of_sons(x)    (ConstructorArity((x)->tag_field))
-#define xfirst_line(x)    ((x)->first_line)
-#define xfirst_column(x)  ((x)->first_column)
-#define xlast_line(x)     ((x)->last_line)
-#define xlast_column(x)   ((x)->last_column)
-#define xfather(x)        ((x)->father)
-
-#ifdef USERFTYPE
-#define	user_field(x)     ((x)->user_field)
-#endif
-
-#define get_byte(x)      ((x)->contents.byte)
-#define get_snum(x)      ((x)->contents.snum)
-#define get_usnum(x)     ((x)->contents.usnum)
-#define get_num(x)       ((x)->contents.num)
-#define get_unum(x)      ((x)->contents.unum)
-#define get_lnum(x)      ((x)->contents.lnum)
-#define get_ulnum(x)     ((x)->contents.ulnum)
-#define get_realnum(x)   ((x)->contents.realnum)
-#define get_lrealnum(x)  ((x)->contents.lrealnum)
-#define get_string(x)    ((x)->contents.string)
-
-#define son1(x)    ((x)->xson[0])
-#define son2(x)    ((x)->xson[1])
-#define son3(x)    ((x)->xson[2])
-#define son4(x)    ((x)->xson[3])
-#define son5(x)    ((x)->xson[4])
-#define son6(x)    ((x)->xson[5])
-#define son7(x)    ((x)->xson[6])
-#define son8(x)    ((x)->xson[7])
-#define son9(x)    ((x)->xson[8])
-#define son(x,i)   ((x)->xson[i-1])
-
-#ifndef Y_TAB_H
-
-
-#include "y.tab.h"
-
-
-#define Y_TAB_H
-#endif /* Y_TAB_H */
-
-
-/*------------*/ 
-/* Prototypes */ 
-/*------------*/ 
-
-
-char * ParseMalloc(int x);
-void ParseFree(void);
-
-union special *UnionByte(unsigned char x);
-union special *UnionSnum(short int x);
-union special *UnionUsnum(unsigned short int x);
-union special *UnionNum(int x);
-union special *UnionUnum(unsigned int x);
-union special *UnionLnum(long int x);
-union special *UnionUlnum(unsigned long int x);
-union special *UnionRealnum(float x);
-union special *UnionLrealnum(double x);
-union special *UnionString(char *x);
-
-syntaxtree BuildCont(int mtag,union special *x,YYLTYPE *l);
-yysyntaxtree BuildTree(int mtag,int len,union special *x,YYLTYPE *l, ...);
-
-syntaxtree Copy(syntaxtree x);
-syntaxtree Revert(syntaxtree list);
-
-const char *ConstructorName(int i);
-int   ConstructorArity(int i);
-
- 
-#undef  yyparseinit
-#define yyparseinit() /**/ 
-
-#endif /* STDPARSER */
-
-/*-- end of standard tree construction interface ---------------------*/
-
-
+#include "grammar.h"
+extern yysyntaxtree Syntax_Tree;
 
 
 /*--------------------------------------------------------------------*/
@@ -1390,13 +1241,9 @@ static const int yyconst_arity[] = {
 
 /* from scanner */
 
-#ifdef ANSI_C
 void init_lex(void);
 int yylex(void);
-#else
-void init_lex();
-int yylex();
-#endif
+
 
 static char message[1024];
  
@@ -2729,38 +2576,38 @@ static const yytype_int16 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,  1998,  1998,  2004,  2007,  2013,  2015,  2017,  2019,  2021,
-    2023,  2025,  2027,  2029,  2031,  2033,  2035,  2040,  2043,  2046,
-    2049,  2052,  2055,  2058,  2061,  2064,  2067,  2070,  2073,  2075,
-    2077,  2080,  2083,  2086,  2089,  2092,  2095,  2098,  2101,  2104,
-    2107,  2111,  2114,  2117,  2120,  2123,  2126,  2129,  2132,  2135,
-    2138,  2141,  2144,  2147,  2150,  2153,  2157,  2160,  2163,  2166,
-    2169,  2172,  2176,  2179,  2182,  2185,  2188,  2191,  2194,  2197,
-    2200,  2203,  2205,  2208,  2211,  2214,  2217,  2220,  2224,  2227,
-    2231,  2234,  2237,  2241,  2244,  2247,  2250,  2254,  2257,  2260,
-    2263,  2266,  2269,  2272,  2275,  2279,  2282,  2285,  2288,  2291,
-    2294,  2297,  2300,  2306,  2308,  2310,  2312,  2314,  2316,  2318,
-    2320,  2322,  2324,  2326,  2328,  2330,  2332,  2334,  2336,  2338,
-    2340,  2342,  2344,  2346,  2348,  2350,  2352,  2354,  2356,  2358,
-    2360,  2362,  2364,  2366,  2368,  2370,  2375,  2377,  2382,  2384,
-    2386,  2388,  2394,  2396,  2398,  2400,  2403,  2405,  2407,  2409,
-    2411,  2413,  2415,  2417,  2419,  2421,  2423,  2425,  2427,  2433,
-    2435,  2440,  2442,  2444,  2449,  2451,  2455,  2457,  2459,  2461,
-    2465,  2467,  2469,  2471,  2475,  2477,  2481,  2486,  2491,  2496,
-    2502,  2508,  2511,  2517,  2522,  2527,  2532,  2538,  2541,  2547,
-    2554,  2557,  2563,  2566,  2569,  2572,  2575,  2578,  2581,  2584,
-    2587,  2590,  2593,  2596,  2599,  2602,  2605,  2608,  2611,  2614,
-    2617,  2620,  2623,  2626,  2629,  2632,  2635,  2638,  2641,  2644,
-    2649,  2651,  2653,  2657,  2659,  2661,  2663,  2667,  2669,  2671,
-    2675,  2677,  2679,  2684,  2687,  2690,  2693,  2696,  2699,  2702,
-    2705,  2708,  2711,  2714,  2717,  2720,  2723,  2726,  2729,  2732,
-    2735,  2738,  2741,  2744,  2750,  2752,  2754,  2756,  2758,  2763,
-    2765,  2767,  2771,  2774,  2777,  2780,  2783,  2786,  2789,  2794,
-    2797,  2801,  2803,  2805,  2807,  2809,  2811,  2813,  2815,  2817,
-    2819,  2821,  2823,  2825,  2827,  2829,  2831,  2833,  2835,  2837,
-    2839,  2841,  2843,  2845,  2847,  2849,  2851,  2855,  2857,  2859,
-    2863,  2865,  2867,  2869,  2871,  2875,  2880,  2883,  2887,  2889,
-    2892,  2895,  2900,  2905,  2909,  2913,  2917
+       0,  1845,  1845,  1851,  1854,  1860,  1862,  1864,  1866,  1868,
+    1870,  1872,  1874,  1876,  1878,  1880,  1882,  1887,  1890,  1893,
+    1896,  1899,  1902,  1905,  1908,  1911,  1914,  1917,  1920,  1922,
+    1924,  1927,  1930,  1933,  1936,  1939,  1942,  1945,  1948,  1951,
+    1954,  1958,  1961,  1964,  1967,  1970,  1973,  1976,  1979,  1982,
+    1985,  1988,  1991,  1994,  1997,  2000,  2004,  2007,  2010,  2013,
+    2016,  2019,  2023,  2026,  2029,  2032,  2035,  2038,  2041,  2044,
+    2047,  2050,  2052,  2055,  2058,  2061,  2064,  2067,  2071,  2074,
+    2078,  2081,  2084,  2088,  2091,  2094,  2097,  2101,  2104,  2107,
+    2110,  2113,  2116,  2119,  2122,  2126,  2129,  2132,  2135,  2138,
+    2141,  2144,  2147,  2153,  2155,  2157,  2159,  2161,  2163,  2165,
+    2167,  2169,  2171,  2173,  2175,  2177,  2179,  2181,  2183,  2185,
+    2187,  2189,  2191,  2193,  2195,  2197,  2199,  2201,  2203,  2205,
+    2207,  2209,  2211,  2213,  2215,  2217,  2222,  2224,  2229,  2231,
+    2233,  2235,  2241,  2243,  2245,  2247,  2250,  2252,  2254,  2256,
+    2258,  2260,  2262,  2264,  2266,  2268,  2270,  2272,  2274,  2280,
+    2282,  2287,  2289,  2291,  2296,  2298,  2302,  2304,  2306,  2308,
+    2312,  2314,  2316,  2318,  2322,  2324,  2328,  2333,  2338,  2343,
+    2349,  2355,  2358,  2364,  2369,  2374,  2379,  2385,  2388,  2394,
+    2401,  2404,  2410,  2413,  2416,  2419,  2422,  2425,  2428,  2431,
+    2434,  2437,  2440,  2443,  2446,  2449,  2452,  2455,  2458,  2461,
+    2464,  2467,  2470,  2473,  2476,  2479,  2482,  2485,  2488,  2491,
+    2496,  2498,  2500,  2504,  2506,  2508,  2510,  2514,  2516,  2518,
+    2522,  2524,  2526,  2531,  2534,  2537,  2540,  2543,  2546,  2549,
+    2552,  2555,  2558,  2561,  2564,  2567,  2570,  2573,  2576,  2579,
+    2582,  2585,  2588,  2591,  2597,  2599,  2601,  2603,  2605,  2610,
+    2612,  2614,  2618,  2621,  2624,  2627,  2630,  2633,  2636,  2641,
+    2644,  2648,  2650,  2652,  2654,  2656,  2658,  2660,  2662,  2664,
+    2666,  2668,  2670,  2672,  2674,  2676,  2678,  2680,  2682,  2684,
+    2686,  2688,  2690,  2692,  2694,  2696,  2698,  2702,  2704,  2706,
+    2710,  2712,  2714,  2716,  2718,  2722,  2727,  2730,  2734,  2736,
+    2739,  2742,  2747,  2752,  2756,  2760,  2764
 };
 #endif
 
@@ -6675,9 +6522,6 @@ void warning(int line, int pos, char *mesge)
 /*  Standard Tree Construction Routines                               */
 /*--------------------------------------------------------------------*/
 
-#ifdef PARSEGENSTD 
-
-
 #include <stdio.h>
 #include <malloc.h>
 #include <stdarg.h>
@@ -6701,11 +6545,6 @@ static void fatal_error(char *message)
 #define ALIGN 8
 #define IALIGN (ALIGN-1)
 #endif
-
-#ifndef PARSEBLOCKSIZE
-#define PARSEBLOCKSIZE 10000
-#endif
-
 
 /*   The following in invisible from outside:        
  *   The heap consists of a list of memory blocks of size parseheapsize.
@@ -6780,12 +6619,7 @@ static yysyntaxtree st_malloc(int x)
 
 /* global allocate x bytes */
 
-#ifdef ANSI_C
 char * ParseMalloc(int x)
-#else
-char * ParseMalloc(x)
-int x;
-#endif
 {
 	return((char *)parsemalloc(x));
 }
@@ -6794,11 +6628,7 @@ int x;
 
 static union special *stdunion = 0;
 
-#ifdef ANSI_C
 void ParseFree(void)
-#else
-void ParseFree()
-#endif
 {
         yysyntaxtree help, help2;
 
@@ -7003,14 +6833,7 @@ static yysyntaxtree TreeTab[1024];
 
 /* without sons */
 
-#ifdef ANSI_C
 syntaxtree BuildCont(int mtag,union special *x,YYLTYPE *l)
-#else
-syntaxtree BuildCont(mtag,x,l)
-int mtag;
-union special *x;
-YYLTYPE *l;
-#endif
 {
         yysyntaxtree help;
         help = st_malloc(1);
@@ -7034,12 +6857,7 @@ YYLTYPE *l;
 
 /* with sons */
 
-#ifdef ANSI_C
 yysyntaxtree BuildTree(int mtag,int len,union special *x,YYLTYPE *l, ...)
-#else
-yysyntaxtree BuildTree(va_alist)
-va_dcl
-#endif
 {
 	int i,j;
 	va_list pvar;
@@ -7097,12 +6915,7 @@ va_dcl
 
 /* copy syntax tree */
 
-#ifdef ANSI_C
 yysyntaxtree Copy(yysyntaxtree x)
-#else
-yysyntaxtree Copy(x)
-yysyntaxtree x;
-#endif
 {
 	register int j,len;
         yysyntaxtree help; 
@@ -7133,12 +6946,7 @@ yysyntaxtree x;
 
 /* revert list */
 
-#ifdef ANSI_C
 yysyntaxtree Revert(yysyntaxtree list)
-#else
-yysyntaxtree Revert(list)
-yysyntaxtree list;
-#endif
 {
         yysyntaxtree last, act, next; 
 
@@ -7159,12 +6967,7 @@ yysyntaxtree list;
 /* yield constructor name                                             */
 /*--------------------------------------------------------------------*/
 
-#ifdef ANSI_C
 const char *ConstructorName(int i)
-#else
-const char *ConstructorName(i)
-int i;
-#endif
 {
 	return(yyconst_name[i]);
 }
@@ -7173,18 +6976,10 @@ int i;
 /* yield constructor arity                                            */
 /*--------------------------------------------------------------------*/
 
-#ifdef ANSI_C
 int ConstructorArity(int i)
-#else
-int ConstructorArity(i)
-int i;
-#endif
 {
 	return(yyconst_arity[i]);
 }
-
-
-#endif /* PARSEGENSTD */
 
 /*--------------------------------------------------------------------*/
 
