@@ -1701,45 +1701,45 @@ int yy_flex_debug = 1;
 
 static yyconst flex_int16_t yy_rule_linenum[355] =
     {   0,
-      245,  247,  249,  251,  253,  255,  257,  259,  261,  263,
-      265,  267,  269,  271,  273,  275,  277,  279,  281,  283,
-      285,  287,  289,  291,  293,  295,  297,  299,  301,  303,
-      305,  307,  309,  311,  313,  315,  317,  319,  321,  323,
-      325,  327,  329,  331,  333,  335,  337,  339,  341,  343,
-      345,  347,  349,  351,  353,  355,  357,  359,  361,  363,
-      365,  367,  369,  371,  373,  375,  377,  379,  381,  383,
-      385,  387,  389,  391,  393,  395,  397,  399,  401,  403,
-      405,  407,  409,  411,  413,  415,  417,  419,  421,  423,
-      425,  427,  429,  431,  433,  435,  437,  439,  441,  443,
+      180,  182,  184,  186,  188,  190,  192,  194,  196,  198,
+      200,  202,  204,  206,  208,  210,  212,  214,  216,  218,
+      220,  222,  224,  226,  228,  230,  232,  234,  236,  238,
+      240,  242,  244,  246,  248,  250,  252,  254,  256,  258,
+      260,  262,  264,  266,  268,  270,  272,  274,  276,  278,
+      280,  282,  284,  286,  288,  290,  292,  294,  296,  298,
+      300,  302,  304,  306,  308,  310,  312,  314,  316,  318,
+      320,  322,  324,  326,  328,  330,  332,  334,  336,  338,
+      340,  342,  344,  346,  348,  350,  352,  354,  356,  358,
+      360,  362,  364,  366,  368,  370,  372,  374,  376,  378,
 
-      445,  447,  449,  451,  453,  455,  457,  459,  461,  463,
-      465,  467,  469,  471,  473,  475,  477,  479,  481,  483,
-      485,  487,  489,  491,  493,  495,  497,  499,  501,  503,
-      505,  507,  509,  511,  513,  515,  517,  519,  521,  523,
-      525,  527,  529,  531,  533,  535,  537,  539,  541,  543,
-      545,  547,  549,  551,  553,  555,  557,  559,  561,  563,
-      565,  567,  569,  571,  573,  575,  577,  579,  581,  583,
-      585,  587,  589,  591,  593,  595,  597,  599,  601,  603,
-      605,  607,  609,  611,  613,  615,  617,  619,  621,  623,
-      625,  627,  629,  631,  633,  635,  637,  639,  641,  643,
+      380,  382,  384,  386,  388,  390,  392,  394,  396,  398,
+      400,  402,  404,  406,  408,  410,  412,  414,  416,  418,
+      420,  422,  424,  426,  428,  430,  432,  434,  436,  438,
+      440,  442,  444,  446,  448,  450,  452,  454,  456,  458,
+      460,  462,  464,  466,  468,  470,  472,  474,  476,  478,
+      480,  482,  484,  486,  488,  490,  492,  494,  496,  498,
+      500,  502,  504,  506,  508,  510,  512,  514,  516,  518,
+      520,  522,  524,  526,  528,  530,  532,  534,  536,  538,
+      540,  542,  544,  546,  548,  550,  552,  554,  556,  558,
+      560,  562,  564,  566,  568,  570,  572,  574,  576,  578,
 
-      645,  647,  649,  651,  653,  655,  657,  659,  661,  663,
-      665,  667,  669,  671,  673,  675,  677,  679,  681,  683,
-      685,  687,  689,  691,  693,  695,  697,  699,  701,  703,
-      705,  707,  709,  711,  713,  715,  717,  719,  721,  723,
-      725,  727,  729,  731,  733,  735,  737,  739,  741,  743,
-      745,  747,  749,  751,  753,  755,  757,  759,  761,  763,
-      765,  767,  769,  771,  773,  775,  777,  779,  781,  783,
-      785,  787,  789,  791,  793,  795,  797,  799,  801,  803,
-      805,  807,  809,  811,  813,  815,  817,  819,  821,  823,
-      825,  827,  829,  831,  833,  835,  837,  839,  841,  843,
+      580,  582,  584,  586,  588,  590,  592,  594,  596,  598,
+      600,  602,  604,  606,  608,  610,  612,  614,  616,  618,
+      620,  622,  624,  626,  628,  630,  632,  634,  636,  638,
+      640,  642,  644,  646,  648,  650,  652,  654,  656,  658,
+      660,  662,  664,  666,  668,  670,  672,  674,  676,  678,
+      680,  682,  684,  686,  688,  690,  692,  694,  696,  698,
+      700,  702,  704,  706,  708,  710,  712,  714,  716,  718,
+      720,  722,  724,  726,  728,  730,  732,  734,  736,  738,
+      740,  742,  744,  746,  748,  750,  752,  754,  756,  758,
+      760,  762,  764,  766,  768,  770,  772,  774,  776,  778,
 
-      845,  847,  849,  851,  853,  855,  857,  859,  861,  863,
-      865,  867,  869,  871,  873,  875,  877,  879,  881,  883,
-      885,  887,  889,  891,  893,  895,  897,  899,  901,  903,
-      905,  908,  910,  912,  915,  917,  919,  922,  926,  930,
-      934,  941,  943,  946,  948,  950,  952,  954,  956,  958,
-      960,  962,  964,  969
+      780,  782,  784,  786,  788,  790,  792,  794,  796,  798,
+      800,  802,  804,  806,  808,  810,  812,  814,  816,  818,
+      820,  822,  824,  826,  828,  830,  832,  834,  836,  838,
+      840,  843,  845,  847,  850,  852,  854,  857,  861,  865,
+      869,  876,  878,  881,  883,  885,  887,  889,  891,  893,
+      895,  897,  899,  904
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -1755,9 +1755,11 @@ char *yytext;
 /*            A flex scanner specification made by parsegen           */
 /*--------------------------------------------------------------------*/
  
-typedef struct stree_node *syntaxtree;
+#include "grammar.h"
+
+/*typedef struct stree_node *syntaxtree;
 #undef yysyntaxtree
-#define yysyntaxtree syntaxtree
+#define yysyntaxtree syntaxtree*/
 
 #define BISONGEN
 #undef  YACCGEN
@@ -1809,11 +1811,6 @@ extern YY_CHAR *yytext;
  
 #undef YYVALGLOBAL
  
-extern yysyntaxtree Syntax_Tree;
-
-#define exit(a) gs_exit(a)
-extern void gs_exit            _PP((int x));
- 
 void   line_directive _PP((char *text));
 void   escape_transl  _PP((char *text));
 void   syntaxerror    _PP((int line,int pos,char *mesge));
@@ -1832,66 +1829,11 @@ void   warning        _PP((int line,int pos,char *mesge));
     }
 #endif
  
-/* Memory Management */
-
-#ifdef MEMBLOCKSIZE
-#define PARSEBLOCKSIZE (MEMBLOCKSIZE/sizeof(struct stree_node)+1)
-#endif
-
-/* Hash Table */
-
-#define hash_size 22079
- 
 char * ParseMalloc(int x);
-#undef PARSEGENSTD
-#define PARSEGENSTD
 
-#ifndef STDHASH
-#define STDHASH
+#include "grammar.h"
+extern yysyntaxtree Syntax_Tree;
 
-#undef  HASHGENSTD
-#define HASHGENSTD
-
-/*--------------------------------------------------------------------*/
-/*  Standard Hash Table Routines                                      */
-/*--------------------------------------------------------------------*/
-
-/* Global Variables */
-/*------------------*/
-
-extern long   table_size;
-
-#ifndef PARSEGENSTD
-
-#ifndef ALIGN
-#define ALIGN 8
-#define IALIGN (ALIGN-1)
-#endif
-#ifndef STRINGBLOCKSIZE
-#define STRINGBLOCKSIZE 5000
-#endif
-
-char *StringHeapMalloc(int x);
-void StringHeapFree(void);
-
-#endif /* PARSEGENSTD */
-
-#ifndef hash_size
-#define hash_size 211
-#endif
-#ifndef hashtable_size
-#define hashtable_size 10000L
-#endif
-
-void FreeHash(void);
-long HashInsert(register char *s);
-long HashTableSize(void);
-char *Decode(long x);
-
-#endif /* STDHASH */
-
-/*-- end of standard hash table interface ----------------------------*/
- 
 /*--------------------------------------------------------------------*/
 
 /* Global Variables */
@@ -5230,8 +5172,6 @@ void init_lex(void)
 /*  Standard Hash Table Routines                                      */
 /*--------------------------------------------------------------------*/
  
-#ifdef HASHGENSTD 
-
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
@@ -5265,100 +5205,13 @@ static void fatal_error(char *message)
 #ifndef STRINGBLOCKSIZE 
 #define STRINGBLOCKSIZE 5000 
 #endif 
- 
-#ifndef PARSEGENSTD
-
-/* If we include already the standard parser library, this is not
- * necessary
- */
-
-static char *parseheap = (char *)0;             /* the heap */ 
-static char *parseheapstart;                    /* the base */
-static char *parseheaptop;                      /* the top  */
-static char *parseheapend;                      /* the end  */
-static int  parseheapsize = STRINGBLOCKSIZE; /* the size of one block */
-
-static void alloc_block(void)
-{
-        char * help, *help2;
-
-	help =(char *)malloc(parseheapsize*sizeof(long));
-        if (!help) fatal_error("memory exhausted");
-	help2  = (char **)help;
-	*help2 = (char *)parseheap;
-	parseheap = help;
-	parseheapstart = parseheaptop =
-		(char *)((long)parseheap + (long)sizeof(char *));
-	parseheapend = parseheap;
-	parseheapend += (parseheapsize-2);
-        if ((long)parseheaptop&IALIGN) 
-		parseheaptop = (char *)
-			(((long)parseheaptop+(long)IALIGN)&(long)(~IALIGN));
-}
-
-/*  allocate x bytes */
-
-static char * ParseMalloc(int x)
-{
-        char * help;
-        int  y;
-
-	if (!parseheap) alloc_block();
-
-        y = x;
-        if (y&IALIGN) y = (y+IALIGN)&(~IALIGN);
-
-        help = parseheaptop;
-        parseheaptop = (char *)((long)parseheaptop+(long)y);
-
-        if (parseheaptop > parseheapend) {
-
-		/* heap too small -> allocate new heap block */
-
-		alloc_block();
-                help = parseheaptop;
-                parseheaptop = (char *)((long)parseheaptop+(long)y);
-        	if (parseheaptop > parseheapend) 
-			fatal_error("string node too large");
-        }
-        return (help);
-}
-
-/* Global: allocate x bytes */
-
-char *StringHeapMalloc(int x)
-{
-	return(ParseMalloc(x));
-}
-
-/* global deallocate the complete syntax tree heap */
-
-void StringHeapFree(void)
-{
-        char *help, help2;
-
-        help = parseheap;
-        while (help) {
-                help2 = *(char **)help;
-                (void)free(help);
-                help = help2;
-        }
-
-        parseheap = (char *)0;
-}
-
-#endif /* PARSEGENSTD */
 
 /*--------------------------------------------------------------------*/
 /* Memory allocation for decode table and hash table                  */
 /*--------------------------------------------------------------------*/
 
-#ifndef hash_size
-#define hash_size 211
-#endif
-#ifndef hashtable_size
+#define hash_size 22079
 #define hashtable_size 10000L
-#endif
 
 /* We use a hash table with linked lists */
 
@@ -5498,7 +5351,5 @@ char *Decode(long x)
 	return(decode[0]);
 }
 
-#endif /* HASHGENSTD */
-
 /*--------------------------------------------------------------------*/
- 
+

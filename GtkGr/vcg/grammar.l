@@ -6,11 +6,11 @@
 /*            A flex scanner specification made by parsegen           */
 /*--------------------------------------------------------------------*/
  
+#include "grammar.h"
 
-
-typedef struct stree_node *syntaxtree;
+/*typedef struct stree_node *syntaxtree;
 #undef yysyntaxtree
-#define yysyntaxtree syntaxtree
+#define yysyntaxtree syntaxtree*/
 
 
 
@@ -65,11 +65,7 @@ extern YY_CHAR *yytext;
  
 #undef YYVALGLOBAL
  
-extern yysyntaxtree Syntax_Tree;
 
-#define exit(a) gs_exit(a)
-extern void gs_exit            _PP((int x));
- 
 void   line_directive _PP((char *text));
 void   escape_transl  _PP((char *text));
 void   syntaxerror    _PP((int line,int pos,char *mesge));
@@ -88,76 +84,15 @@ void   warning        _PP((int line,int pos,char *mesge));
     }
 #endif
  
-/* Memory Management */
-
-#ifdef MEMBLOCKSIZE
-#define PARSEBLOCKSIZE (MEMBLOCKSIZE/sizeof(struct stree_node)+1)
-#endif
-
-/* Hash Table */
-
-#define hash_size 22079
- 
-
 
 
 
 char * ParseMalloc(int x);
-#undef PARSEGENSTD
-#define PARSEGENSTD
 
 
- 
-#ifndef STDHASH
-#define STDHASH
 
-
-#undef  HASHGENSTD
-#define HASHGENSTD
-
-
-/*--------------------------------------------------------------------*/
-/*  Standard Hash Table Routines                                      */
-/*--------------------------------------------------------------------*/
-
-/* Global Variables */
-/*------------------*/
-
-extern long   table_size;
-
-#ifndef PARSEGENSTD
-
-#ifndef ALIGN
-#define ALIGN 8
-#define IALIGN (ALIGN-1)
-#endif
-#ifndef STRINGBLOCKSIZE
-#define STRINGBLOCKSIZE 5000
-#endif
-
-char *StringHeapMalloc(int x);
-void StringHeapFree(void);
-
-#endif /* PARSEGENSTD */
-
-#ifndef hash_size
-#define hash_size 211
-#endif
-#ifndef hashtable_size
-#define hashtable_size 10000L
-#endif
-
-
-void FreeHash(void);
-long HashInsert(register char *s);
-long HashTableSize(void);
-char *Decode(long x);
-
-#endif /* STDHASH */
-
-/*-- end of standard hash table interface ----------------------------*/
- 
-
+#include "grammar.h"
+extern yysyntaxtree Syntax_Tree;
 
 
 
@@ -993,9 +928,6 @@ void init_lex(void)
 /*  Standard Hash Table Routines                                      */
 /*--------------------------------------------------------------------*/
  
-#ifdef HASHGENSTD 
-
-
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
@@ -1030,107 +962,13 @@ static void fatal_error(char *message)
 #ifndef STRINGBLOCKSIZE 
 #define STRINGBLOCKSIZE 5000 
 #endif 
- 
-
-#ifndef PARSEGENSTD
-
-/* If we include already the standard parser library, this is not
- * necessary
- */
-
-
-static char *parseheap = (char *)0;             /* the heap */ 
-static char *parseheapstart;                    /* the base */
-static char *parseheaptop;                      /* the top  */
-static char *parseheapend;                      /* the end  */
-static int  parseheapsize = STRINGBLOCKSIZE; /* the size of one block */
-
-
-static void alloc_block(void)
-{
-        char * help, *help2;
-
-	help =(char *)malloc(parseheapsize*sizeof(long));
-        if (!help) fatal_error("memory exhausted");
-	help2  = (char **)help;
-	*help2 = (char *)parseheap;
-	parseheap = help;
-	parseheapstart = parseheaptop =
-		(char *)((long)parseheap + (long)sizeof(char *));
-	parseheapend = parseheap;
-	parseheapend += (parseheapsize-2);
-        if ((long)parseheaptop&IALIGN) 
-		parseheaptop = (char *)
-			(((long)parseheaptop+(long)IALIGN)&(long)(~IALIGN));
-}
-
-
-/*  allocate x bytes */
-
-static char * ParseMalloc(int x)
-{
-        char * help;
-        int  y;
-
-	if (!parseheap) alloc_block();
-
-        y = x;
-        if (y&IALIGN) y = (y+IALIGN)&(~IALIGN);
-
-        help = parseheaptop;
-        parseheaptop = (char *)((long)parseheaptop+(long)y);
-
-        if (parseheaptop > parseheapend) {
-
-		/* heap too small -> allocate new heap block */
-
-		alloc_block();
-                help = parseheaptop;
-                parseheaptop = (char *)((long)parseheaptop+(long)y);
-        	if (parseheaptop > parseheapend) 
-			fatal_error("string node too large");
-        }
-        return (help);
-}
-
-
-/* Global: allocate x bytes */
-
-char *StringHeapMalloc(int x)
-{
-	return(ParseMalloc(x));
-}
-
-
-/* global deallocate the complete syntax tree heap */
-
-void StringHeapFree(void)
-{
-        char *help, help2;
-
-        help = parseheap;
-        while (help) {
-                help2 = *(char **)help;
-                (void)free(help);
-                help = help2;
-        }
-
-        parseheap = (char *)0;
-}
-
-#endif /* PARSEGENSTD */
-
 
 /*--------------------------------------------------------------------*/
 /* Memory allocation for decode table and hash table                  */
 /*--------------------------------------------------------------------*/
 
-#ifndef hash_size
-#define hash_size 211
-#endif
-#ifndef hashtable_size
+#define hash_size 22079
 #define hashtable_size 10000L
-#endif
 
 /* We use a hash table with linked lists */
 
@@ -1276,11 +1114,5 @@ char *Decode(long x)
 	return(decode[0]);
 }
 
-
-#endif /* HASHGENSTD */
-
 /*--------------------------------------------------------------------*/
- 
-
-
 

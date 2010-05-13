@@ -1,14 +1,11 @@
+#ifndef SCANPARSE_H
+#define SCANPARSE_H
 
-
- 
 /*--------------------------------------------------------------------*/
 /*  Scanner and Parser Interface 			              */
 /*--------------------------------------------------------------------*/
 
 
-#ifndef SCANPARSE_H
-#define SCANPARSE_H
- 
 extern int line_nr;
 extern int pos_nr;
 
@@ -18,18 +15,11 @@ extern void init_lex(void);
 
 typedef struct stree_node *syntaxtree;
 #ifdef yysyntaxtree
+#error ffhjddffdddfds
 #undef yysyntaxtree
 #endif
 #define yysyntaxtree syntaxtree
 
-
-
-#ifndef STDPARSER
-#define STDPARSER
-
-
-#undef  PARSEGENSTD
-#define PARSEGENSTD
 
 /*--------------------------------------------------------------------*/
 /*  Standard Tree Construction Interface   			      */
@@ -38,9 +28,6 @@ typedef struct stree_node *syntaxtree;
 #ifndef ALIGN
 #define ALIGN 8
 #define IALIGN (ALIGN-1)
-#endif
-#ifndef PARSEBLOCKSIZE
-#define PARSEBLOCKSIZE 10000
 #endif
 
 /*-------------------*/
@@ -156,8 +143,6 @@ int   ConstructorArity(int i);
  
 #undef  yyparseinit
 #define yyparseinit() /**/ 
-
-#endif /* STDPARSER */
 
 /*-- end of standard tree construction interface ---------------------*/
 
@@ -679,15 +664,6 @@ int   ConstructorArity(int i);
 
 
 
- 
-#ifndef STDHASH
-#define STDHASH
-
-/* $Id: stdth.skel,v 1.3 1994/01/07 19:35:32 sander Exp sander $ */
-
-#undef  HASHGENSTD
-#define HASHGENSTD
-
 
 /*--------------------------------------------------------------------*/
 /*  Standard Hash Table Routines                                      */
@@ -698,47 +674,11 @@ int   ConstructorArity(int i);
 
 extern long   table_size;
 
-#ifndef PARSEGENSTD
 
-#ifndef ALIGN
-#define ALIGN 8
-#define IALIGN (ALIGN-1)
-#endif
-#ifndef STRINGBLOCKSIZE
-#define STRINGBLOCKSIZE 5000
-#endif
-
-#ifdef ANSI_C
-char *StringHeapMalloc(int x);
-void StringHeapFree(void);
-else
-char *StringHeapMalloc();
-void StringHeapFree();
-#endif
-
-#endif /* PARSEGENSTD */
-
-#ifndef hash_size
-#define hash_size 211
-#endif
-#ifndef hashtable_size
-#define hashtable_size 10000L
-#endif
-
-
-#ifdef ANSI_C
 void FreeHash(void);
 long HashInsert(register char *s);
 long HashTableSize(void);
 char *Decode(long x);
-#else
-void FreeHash();
-long HashInsert();
-long HashTableSize();
-char *Decode();
-#endif /* ANSI_C */
-
-#endif /* STDHASH */
 
 /*-- end of standard hash table interface ----------------------------*/
  

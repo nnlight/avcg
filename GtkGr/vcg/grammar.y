@@ -292,9 +292,9 @@ typedef struct yyltype {
 
 
 
-typedef struct stree_node *syntaxtree;
+/*typedef struct stree_node *syntaxtree;
 #undef yysyntaxtree
-#define yysyntaxtree syntaxtree
+#define yysyntaxtree syntaxtree*/
 
 #define BISONGEN
 #undef  YACCGEN
@@ -325,11 +325,7 @@ extern YY_CHAR *yytext;
  
 #undef YYVALGLOBAL
  
-extern yysyntaxtree Syntax_Tree;
 
-#define exit(a) gs_exit(a)
-extern void gs_exit            _PP((int x));
- 
 void   line_directive _PP((char *text));
 void   escape_transl  _PP((char *text));
 void   syntaxerror    _PP((int line,int pos,char *mesge));
@@ -354,12 +350,6 @@ void   warning        _PP((int line,int pos,char *mesge));
 #define PARSEBLOCKSIZE (MEMBLOCKSIZE/sizeof(struct stree_node)+1)
 #endif
 
-/* Hash Table */
-
-#define hash_size 22079
- 
-
-
 #ifndef NULL
 #define NULL 0
 #endif
@@ -373,147 +363,8 @@ void   warning        _PP((int line,int pos,char *mesge));
 #endif
 
 
-
-#ifndef STDPARSER
-#define STDPARSER
-
-/* $Id: stdph.skel,v 1.8 1994/01/20 23:44:31 sander Exp sander $ */
-
-#undef  PARSEGENSTD
-#define PARSEGENSTD
-
-/*--------------------------------------------------------------------*/
-/*  Standard Tree Construction Interface   			      */
-/*--------------------------------------------------------------------*/
-
-#ifndef ALIGN
-#define ALIGN 8
-#define IALIGN (ALIGN-1)
-#endif
-#ifndef PARSEBLOCKSIZE
-#define PARSEBLOCKSIZE 10000
-#endif
-
-/*-------------------*/
-/* syntax tree nodes */
-/*-------------------*/
-
-union  special {
-        unsigned char      byte;
-        short int          snum;
-        unsigned short int usnum;
-        int                num;
-        unsigned int       unum;
-        long int           lnum;
-        unsigned long int  ulnum;
-        float              realnum;
-        double             lrealnum;
-        char              *string;
-};
-
-struct stree_node {
-        int  tag_field;
-        int  first_line;
-        int  first_column;
-        int  last_line;
-        int  last_column;
-#ifdef USERFTYPE
-	USERFTYPE user_field;
-#endif
-        struct stree_node *father;
-        union  special     contents;
-        struct stree_node *xson[1];
-};
-
-
-/* typedef struct stree_node *syntaxtree; */
-
-
-#undef yysyntaxtree
-#define yysyntaxtree syntaxtree 
-
-
-#define tag(x)           ((x)->tag_field)
-#define nr_of_sons(x)    (ConstructorArity((x)->tag_field))
-#define xfirst_line(x)    ((x)->first_line)
-#define xfirst_column(x)  ((x)->first_column)
-#define xlast_line(x)     ((x)->last_line)
-#define xlast_column(x)   ((x)->last_column)
-#define xfather(x)        ((x)->father)
-
-#ifdef USERFTYPE
-#define	user_field(x)     ((x)->user_field)
-#endif
-
-#define get_byte(x)      ((x)->contents.byte)
-#define get_snum(x)      ((x)->contents.snum)
-#define get_usnum(x)     ((x)->contents.usnum)
-#define get_num(x)       ((x)->contents.num)
-#define get_unum(x)      ((x)->contents.unum)
-#define get_lnum(x)      ((x)->contents.lnum)
-#define get_ulnum(x)     ((x)->contents.ulnum)
-#define get_realnum(x)   ((x)->contents.realnum)
-#define get_lrealnum(x)  ((x)->contents.lrealnum)
-#define get_string(x)    ((x)->contents.string)
-
-#define son1(x)    ((x)->xson[0])
-#define son2(x)    ((x)->xson[1])
-#define son3(x)    ((x)->xson[2])
-#define son4(x)    ((x)->xson[3])
-#define son5(x)    ((x)->xson[4])
-#define son6(x)    ((x)->xson[5])
-#define son7(x)    ((x)->xson[6])
-#define son8(x)    ((x)->xson[7])
-#define son9(x)    ((x)->xson[8])
-#define son(x,i)   ((x)->xson[i-1])
-
-#ifndef Y_TAB_H
-
-
-#include "y.tab.h"
-
-
-#define Y_TAB_H
-#endif /* Y_TAB_H */
-
-
-/*------------*/ 
-/* Prototypes */ 
-/*------------*/ 
-
-
-char * ParseMalloc(int x);
-void ParseFree(void);
-
-union special *UnionByte(unsigned char x);
-union special *UnionSnum(short int x);
-union special *UnionUsnum(unsigned short int x);
-union special *UnionNum(int x);
-union special *UnionUnum(unsigned int x);
-union special *UnionLnum(long int x);
-union special *UnionUlnum(unsigned long int x);
-union special *UnionRealnum(float x);
-union special *UnionLrealnum(double x);
-union special *UnionString(char *x);
-
-syntaxtree BuildCont(int mtag,union special *x,YYLTYPE *l);
-yysyntaxtree BuildTree(int mtag,int len,union special *x,YYLTYPE *l, ...);
-
-syntaxtree Copy(syntaxtree x);
-syntaxtree Revert(syntaxtree list);
-
-const char *ConstructorName(int i);
-int   ConstructorArity(int i);
-
- 
-#undef  yyparseinit
-#define yyparseinit() /**/ 
-
-#endif /* STDPARSER */
-
-/*-- end of standard tree construction interface ---------------------*/
-
-
+#include "grammar.h"
+extern yysyntaxtree Syntax_Tree;
 
 
 /*--------------------------------------------------------------------*/
@@ -1559,13 +1410,9 @@ static const int yyconst_arity[] = {
 
 /* from scanner */
 
-#ifdef ANSI_C
 void init_lex(void);
 int yylex(void);
-#else
-void init_lex();
-int yylex();
-#endif
+
 
 static char message[1024];
  
@@ -3127,9 +2974,6 @@ void warning(int line, int pos, char *mesge)
 /*  Standard Tree Construction Routines                               */
 /*--------------------------------------------------------------------*/
 
-#ifdef PARSEGENSTD 
-
-
 #include <stdio.h>
 #include <malloc.h>
 #include <stdarg.h>
@@ -3153,11 +2997,6 @@ static void fatal_error(char *message)
 #define ALIGN 8
 #define IALIGN (ALIGN-1)
 #endif
-
-#ifndef PARSEBLOCKSIZE
-#define PARSEBLOCKSIZE 10000
-#endif
-
 
 /*   The following in invisible from outside:        
  *   The heap consists of a list of memory blocks of size parseheapsize.
@@ -3232,12 +3071,7 @@ static yysyntaxtree st_malloc(int x)
 
 /* global allocate x bytes */
 
-#ifdef ANSI_C
 char * ParseMalloc(int x)
-#else
-char * ParseMalloc(x)
-int x;
-#endif
 {
 	return((char *)parsemalloc(x));
 }
@@ -3246,11 +3080,7 @@ int x;
 
 static union special *stdunion = 0;
 
-#ifdef ANSI_C
 void ParseFree(void)
-#else
-void ParseFree()
-#endif
 {
         yysyntaxtree help, help2;
 
@@ -3455,14 +3285,7 @@ static yysyntaxtree TreeTab[1024];
 
 /* without sons */
 
-#ifdef ANSI_C
 syntaxtree BuildCont(int mtag,union special *x,YYLTYPE *l)
-#else
-syntaxtree BuildCont(mtag,x,l)
-int mtag;
-union special *x;
-YYLTYPE *l;
-#endif
 {
         yysyntaxtree help;
         help = st_malloc(1);
@@ -3486,12 +3309,7 @@ YYLTYPE *l;
 
 /* with sons */
 
-#ifdef ANSI_C
 yysyntaxtree BuildTree(int mtag,int len,union special *x,YYLTYPE *l, ...)
-#else
-yysyntaxtree BuildTree(va_alist)
-va_dcl
-#endif
 {
 	int i,j;
 	va_list pvar;
@@ -3549,12 +3367,7 @@ va_dcl
 
 /* copy syntax tree */
 
-#ifdef ANSI_C
 yysyntaxtree Copy(yysyntaxtree x)
-#else
-yysyntaxtree Copy(x)
-yysyntaxtree x;
-#endif
 {
 	register int j,len;
         yysyntaxtree help; 
@@ -3585,12 +3398,7 @@ yysyntaxtree x;
 
 /* revert list */
 
-#ifdef ANSI_C
 yysyntaxtree Revert(yysyntaxtree list)
-#else
-yysyntaxtree Revert(list)
-yysyntaxtree list;
-#endif
 {
         yysyntaxtree last, act, next; 
 
@@ -3611,12 +3419,7 @@ yysyntaxtree list;
 /* yield constructor name                                             */
 /*--------------------------------------------------------------------*/
 
-#ifdef ANSI_C
 const char *ConstructorName(int i)
-#else
-const char *ConstructorName(i)
-int i;
-#endif
 {
 	return(yyconst_name[i]);
 }
@@ -3625,18 +3428,10 @@ int i;
 /* yield constructor arity                                            */
 /*--------------------------------------------------------------------*/
 
-#ifdef ANSI_C
 int ConstructorArity(int i)
-#else
-int ConstructorArity(i)
-int i;
-#endif
 {
 	return(yyconst_arity[i]);
 }
-
-
-#endif /* PARSEGENSTD */
 
 /*--------------------------------------------------------------------*/
 
