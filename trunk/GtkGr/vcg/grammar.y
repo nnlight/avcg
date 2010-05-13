@@ -2776,36 +2776,25 @@ str_const	: LEX_STRING		{
 /* Main entry point of parser */
 /*----------------------------*/
 
-#ifndef yyparseinit
-#define yyparseinit() /*NOTHING*/
-#endif
-
 yysyntaxtree  Syntax_Tree;
 
 /*   returns the number of detected errors and binds the syntaxtree
  *   to the variable syntaxtree.
  */
-
-#ifdef ANSI_C
 int parse(void)
-#else
-int parse()
-#endif
 {
 	nr_errors=0;
 	debugmessage("init_lex()\n", "");
-        init_lex();
+	init_lex();
 	line_nr = 1;
 	pos_nr = 0;
-	debugmessage("yyparseinit()\n", "");
-	yyparseinit();	
 	debugmessage("yyparse()\n", "");
-        yyparse();
+	yyparse();
 #ifdef YYVALGLOBAL
-        Syntax_Tree = yyval.tree;
+	Syntax_Tree = yyval.tree;
 #endif
-        return(nr_errors);
-}
+	return (nr_errors);
+} /* parse */
  
 
 
@@ -2930,8 +2919,6 @@ void escape_transl(char *text)
  *   errors.
  */
 
-static void fatal_error _PP((char *));
-
 static char myprivmessage[16000];  /* Please DON'T reuse this */
 
 void syntaxerror(int line, int pos, char *mesge)
@@ -2978,16 +2965,6 @@ void warning(int line, int pos, char *mesge)
 #include <malloc.h>
 #include <stdarg.h>
 
-/*--------------------------------------------------------------------*/
-/* Fatal error: exit with message                                     */
-/*--------------------------------------------------------------------*/
-
-static void fatal_error(char *message)
-{
-        (void)fprintf(stderr,"Fatal error: %s !\n",message);
-        (void)fprintf(stderr,"Aborted !\n");
-        exit(-1);
-}
 
 /*--------------------------------------------------------------------*/
 /* Memory allocation for syntax tree nodes                            */
@@ -3100,22 +3077,13 @@ void ParseFree(void)
 /*--------------------------------------------------------------------*/
 
 
-#ifdef ANSI_C
 static void freeunion(union special *x)
-#else
-static void freeunion(x)
-union special *x;
-#endif
 {
 	x->string = (char *)stdunion;
 	stdunion = x;	
 }
 
-#ifdef ANSI_C
 static union special *nextunion(void)
-#else
-static union special *nextunion()
-#endif
 {
 	union special *help;
 	if (!stdunion) {
@@ -3128,12 +3096,7 @@ static union special *nextunion()
 	return(help);
 }
 
-#ifdef ANSI_C
 union special *UnionByte(unsigned char x)
-#else
-union special *UnionByte(x)
-unsigned char x;
-#endif
 {
 	union special *help;
 
@@ -3142,12 +3105,7 @@ unsigned char x;
 	return(help);
 }
 
-#ifdef ANSI_C
 union special *UnionSnum(short int x)
-#else
-union special *UnionSnum(x)
-short int x;
-#endif
 {
 	union special *help;
 
@@ -3156,12 +3114,7 @@ short int x;
 	return(help);
 }
 
-#ifdef ANSI_C
 union special *UnionUsnum(unsigned short int x)
-#else
-union special *UnionUsnum(x)
-unsigned short int x;
-#endif
 {
 	union special *help;
 
@@ -3170,12 +3123,7 @@ unsigned short int x;
 	return(help);
 }
 
-#ifdef ANSI_C
 union special *UnionNum(int x)
-#else
-union special *UnionNum(x)
-int x;
-#endif
 {
 	union special *help;
 
@@ -3184,12 +3132,7 @@ int x;
 	return(help);     
 }
 
-#ifdef ANSI_C
 union special *UnionUnum(unsigned int x)
-#else
-union special *UnionUnum(x)
-unsigned int x;
-#endif
 {
 	union special *help;
 
@@ -3198,12 +3141,7 @@ unsigned int x;
 	return(help);     
 }
 
-#ifdef ANSI_C
 union special *UnionLnum(long int x)
-#else
-union special *UnionLnum(x)
-long int x;
-#endif
 {
 	union special *help;
 
@@ -3212,12 +3150,7 @@ long int x;
 	return(help);     
 }
 
-#ifdef ANSI_C
 union special *UnionUlnum(unsigned long int x)
-#else
-union special *UnionUlnum(x)
-unsigned long int x;
-#endif
 {
 	union special *help;
 
@@ -3226,12 +3159,7 @@ unsigned long int x;
 	return(help);     
 }
 
-#ifdef ANSI_C
 union special *UnionRealnum(float x)
-#else
-union special *UnionRealnum(x)
-float x;
-#endif
 {
 	union special *help;
 
@@ -3240,12 +3168,7 @@ float x;
 	return(help);     
 }
 
-#ifdef ANSI_C
 union special *UnionLrealnum(double x)
-#else
-union special *UnionLrealnum(x)
-double x;
-#endif
 {
 	union special *help;
 
@@ -3254,12 +3177,7 @@ double x;
 	return(help);     
 }
 
-#ifdef ANSI_C
 union special *UnionString(char *x)
-#else
-union special *UnionString(x)
-char *x;
-#endif
 {
 	union special *help;
 
@@ -3313,27 +3231,10 @@ yysyntaxtree BuildTree(int mtag,int len,union special *x,YYLTYPE *l, ...)
 {
 	int i,j;
 	va_list pvar;
-        yysyntaxtree help;
+	yysyntaxtree help;
 
-#ifndef ANSI_C
-	int mtag;
-	int len;
-	union special *x;
-	YYLTYPE *l;
-	va_start(pvar);
-#endif
-
-#ifdef ANSI_C
 	va_start(pvar,l);
-#endif
 
-#ifndef ANSI_C
-	mtag = va_arg(pvar, int);
-	len = va_arg(pvar, int);
-	x   = va_arg(pvar, union special *);
-	l   = va_arg(pvar, YYLTYPE *);
-#endif
- 
 	i = 0;
 	help = va_arg(pvar, yysyntaxtree);
 	while (i < len) {

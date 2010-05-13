@@ -2,12 +2,13 @@
 #define SCANPARSE_H
 
 /*--------------------------------------------------------------------*/
-/*  Scanner and Parser Interface 			              */
+/*  Scanner and Parser Interface                                      */
 /*--------------------------------------------------------------------*/
 
 
 extern int line_nr;
 extern int pos_nr;
+extern int nr_errors;  /* from Scanner */
 
 extern void init_lex(void);
 
@@ -20,15 +21,14 @@ typedef struct stree_node *syntaxtree;
 #endif
 #define yysyntaxtree syntaxtree
 
+extern yysyntaxtree Syntax_Tree;
+
+extern int parse(void);
+
 
 /*--------------------------------------------------------------------*/
-/*  Standard Tree Construction Interface   			      */
+/*  Standard Tree Construction Interface                              */
 /*--------------------------------------------------------------------*/
-
-#ifndef ALIGN
-#define ALIGN 8
-#define IALIGN (ALIGN-1)
-#endif
 
 /*-------------------*/
 /* syntax tree nodes */
@@ -102,11 +102,10 @@ struct stree_node {
 #define son9(x)    ((x)->xson[8])
 #define son(x,i)   ((x)->xson[i-1])
 
+
 #ifndef Y_TAB_H
 
-
 #include "y.tab.h"
-
 
 #define Y_TAB_H
 #endif /* Y_TAB_H */
@@ -141,9 +140,6 @@ const char *ConstructorName(int i);
 int   ConstructorArity(int i);
 
  
-#undef  yyparseinit
-#define yyparseinit() /**/ 
-
 /*-- end of standard tree construction interface ---------------------*/
 
 
@@ -665,30 +661,21 @@ int   ConstructorArity(int i);
 
 
 
-/*--------------------------------------------------------------------*/
-/*  Standard Hash Table Routines                                      */
-/*--------------------------------------------------------------------*/
 
-/* Global Variables */
-/*------------------*/
+void fatal_error(char *message);
 
+
+	
 extern long   table_size;
 
-
 void FreeHash(void);
-long HashInsert(register char *s);
+long HashInsert( char *s);
 long HashTableSize(void);
 char *Decode(long x);
 
-/*-- end of standard hash table interface ----------------------------*/
- 
 
 
 
-extern yysyntaxtree Syntax_Tree;
-extern int nr_errors;
-
-extern int parse(void);
 
 #endif  /* SCANPARSE_H */
 
