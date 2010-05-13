@@ -67,16 +67,6 @@
 
 
 
-/*   User Signals available or not ?
- *   Unix provides signals SIGUSR1 and SIGUSR2 (30, 31), which are used
- *   to control animations from external. If signal() or free signals are
- *   not available (e.g. on Non-Unix systems), then undefine USR_SIGNAL.
- */
-
-#define USR_SIGNAL
-/* #undef  USR_SIGNAL */
-
-
 /* Good quicksort available or not ?
  * If there exist a good randomized quicksort `qsort' in the library,
  * please use it. But if the quicksort in the library is slow, or not
@@ -129,29 +119,6 @@
 #define MEMBLOCKSIZE 1048576
 
 
-/*   The default font for X11. Not needed at the Sunview installation.
- *   Please insert an appropriate font of about 14 to 17 dot size.
- */
-
-#ifdef X11
-#define VCG_DEFAULT_FONT "-*-courier-*-*-*--14-*-*-*-*-*-*-*"
-#endif
-
-
-/*   Whether the input focus grab is actively or not.
- *   If NOINPUTFOCUS, the VCG tool does not grab actively the input
- *   focus. Depending on the window manager, this may cause that
- *   the keypresses are ignored afterwards, unless the mouse pointer
- *   is once moved out of the window and back into it.
- *   On the other side, some installations cause a fatal error or
- *   strange behaviour, if the VCG tool actively grabs the input
- *   focus.
- *   The conservative definement is #define NOINPUTFOCUS.
- */
-
-#ifdef X11
-#define NOINPUTFOCUS
-#endif
 
 
 /*   Debugging On or Off ?
@@ -180,13 +147,6 @@
 #define CHECK_ASSERTIONS
 
 
-
-/*
- *  If you prefer the system assert.h, then define ASSERT_AVAIL.
- */
-
-/* #define ASSERT_AVAIL   */
-#undef  ASSERT_AVAIL
 
 /*  Check and printout the timing of phases.
  *  If CHECK_TIMING is defined, time measurement is done at some
@@ -259,6 +219,9 @@
 #define NOTIMELIMIT
 
 /*--------------------------------------------------------------------*/
+#ifdef WIN32
+#pragma warning (disable: 4996)     // disable deprecated functions warning
+#endif
 
 #endif /* GLOBALS_H */
 
