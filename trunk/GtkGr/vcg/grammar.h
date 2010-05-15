@@ -14,6 +14,13 @@ extern void init_lex(void);
 
 
 
+void   line_directive (char *text);
+void   escape_transl  (char *text);
+void   syntaxerror    (int line, int pos, const char *fmt, ...);
+void   warning        (int line, int pos,char *mesge);
+
+
+
 typedef struct stree_node *syntaxtree;
 #ifdef yysyntaxtree
 #error ffhjddffdddfds

@@ -48,10 +48,6 @@
 /* from parser -------------------------------------------*/
 extern FILE     *yyin;
 
-void   line_directive _PP((char *text));
-void   syntaxerror    _PP((int line,int pos,char *mesge));
-void   warning        _PP((int line,int pos,char *mesge));
-
 #define SYERR(x,m) syntaxerror(xfirst_line(x),xfirst_column(x),m)
 
 /* from device --------------------------------------------*/

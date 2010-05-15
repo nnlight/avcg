@@ -79,14 +79,6 @@
 /* Prototypes and Externals					      */
 /*--------------------------------------------------------------------*/
 
-
-extern int line_nr;
-extern int pos_nr;
-
-/* Error messages */
-
-int nr_errors;
-
 #define __yy_bcopy(src,dst,n) memmove(dst,src,n)
 
 #define YYDEBUG 1
@@ -123,17 +115,6 @@ typedef struct yyltype {
 
 
 
-/*typedef struct stree_node *syntaxtree;
-#undef yysyntaxtree
-#define yysyntaxtree syntaxtree*/
-
-#define BISONGEN
-#undef  YACCGEN
-
-#define YYVALGLOBAL
-
-
-
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -154,24 +135,16 @@ extern YY_CHAR *yytext;
 #include <malloc.h>
 #endif
  
-#undef YYVALGLOBAL
+ 
  
 
-void   line_directive _PP((char *text));
-void   escape_transl  _PP((char *text));
-void   syntaxerror    _PP((int line,int pos,char *mesge));
-void   warning        _PP((int line,int pos,char *mesge));
- 
-#ifndef yysyntaxerror
-#define yysyntaxerror(l,p,m) syntaxerror(l,p,m)
-#endif
- 
 #ifndef yyerror
 #define yyerror(x) { \
-        SPRINTF(message,"unexpected %s \"%s\" (%s)", \
+        syntaxerror(line_nr,pos_nr, \
+                 "unexpected %s \"%s\" (%s)", \
                  ((yychar<0)?"(?)":yytokname[YYTRANSLATE(yychar)]),     \
-                 (strlen(yytext)<48?yytext:"(?)"),x); \
-        syntaxerror(line_nr,pos_nr,message);\
+                 (strlen(yytext)<48?yytext:"(?)"), \
+				 x); \
     }
 #endif
  
@@ -195,7 +168,6 @@ void   warning        _PP((int line,int pos,char *mesge));
 
 
 #include "grammar.h"
-extern yysyntaxtree Syntax_Tree;
 
 
 /*--------------------------------------------------------------------*/
@@ -1239,13 +1211,6 @@ static const int yyconst_arity[] = {
 
 
 
-/* from scanner */
-
-void init_lex(void);
-int yylex(void);
-
-
-static char message[1024];
  
 /* for error messages */
 
@@ -1552,37 +1517,8 @@ static const char * const yytokname[] = {
 };
 
 
-
-#ifndef yyerror
-#define yyerror(x) { \
-	(void)sprintf(message,"unexpected %s (%s)", \
-		 ((yychar<0)?"(?)":yytokname[YYTRANSLATE(yychar)]),x);  \
-	(void)printf("Line %d Pos %d: %s !\n",line_nr,pos_nr,message);\
-	nr_errors++;\
-    }
-#endif
-
-#ifdef BISONGEN
 #ifndef yylocate
 #define yylocate(x) (&(x))
-#endif
-#endif
-
-#ifdef YACCGEN
-static YYLTYPE yystdlocation;
-
-static YYLTYPE *yystdloc(void) 
-{   yystdlocation->first_line = yystdlocation->last_line = line_nr; 
-    yystdlocation->first_column = yystdlocation->last_column = pos_nr; 
-    return(&yystdlocation);
-}
-#ifndef yylocate
-#define yylocate(x) (yystdloc())
-#endif
-#endif /* YACCGEN */
-
-#ifndef yysyntaxtree
-#define yysyntaxtree char*
 #endif
 
 #define YY_NEVERNEEDED (@1)
@@ -2576,38 +2512,38 @@ static const yytype_int16 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,  1845,  1845,  1851,  1854,  1860,  1862,  1864,  1866,  1868,
-    1870,  1872,  1874,  1876,  1878,  1880,  1882,  1887,  1890,  1893,
-    1896,  1899,  1902,  1905,  1908,  1911,  1914,  1917,  1920,  1922,
-    1924,  1927,  1930,  1933,  1936,  1939,  1942,  1945,  1948,  1951,
-    1954,  1958,  1961,  1964,  1967,  1970,  1973,  1976,  1979,  1982,
-    1985,  1988,  1991,  1994,  1997,  2000,  2004,  2007,  2010,  2013,
-    2016,  2019,  2023,  2026,  2029,  2032,  2035,  2038,  2041,  2044,
-    2047,  2050,  2052,  2055,  2058,  2061,  2064,  2067,  2071,  2074,
-    2078,  2081,  2084,  2088,  2091,  2094,  2097,  2101,  2104,  2107,
-    2110,  2113,  2116,  2119,  2122,  2126,  2129,  2132,  2135,  2138,
-    2141,  2144,  2147,  2153,  2155,  2157,  2159,  2161,  2163,  2165,
-    2167,  2169,  2171,  2173,  2175,  2177,  2179,  2181,  2183,  2185,
-    2187,  2189,  2191,  2193,  2195,  2197,  2199,  2201,  2203,  2205,
-    2207,  2209,  2211,  2213,  2215,  2217,  2222,  2224,  2229,  2231,
-    2233,  2235,  2241,  2243,  2245,  2247,  2250,  2252,  2254,  2256,
-    2258,  2260,  2262,  2264,  2266,  2268,  2270,  2272,  2274,  2280,
-    2282,  2287,  2289,  2291,  2296,  2298,  2302,  2304,  2306,  2308,
-    2312,  2314,  2316,  2318,  2322,  2324,  2328,  2333,  2338,  2343,
-    2349,  2355,  2358,  2364,  2369,  2374,  2379,  2385,  2388,  2394,
-    2401,  2404,  2410,  2413,  2416,  2419,  2422,  2425,  2428,  2431,
-    2434,  2437,  2440,  2443,  2446,  2449,  2452,  2455,  2458,  2461,
-    2464,  2467,  2470,  2473,  2476,  2479,  2482,  2485,  2488,  2491,
-    2496,  2498,  2500,  2504,  2506,  2508,  2510,  2514,  2516,  2518,
-    2522,  2524,  2526,  2531,  2534,  2537,  2540,  2543,  2546,  2549,
-    2552,  2555,  2558,  2561,  2564,  2567,  2570,  2573,  2576,  2579,
-    2582,  2585,  2588,  2591,  2597,  2599,  2601,  2603,  2605,  2610,
-    2612,  2614,  2618,  2621,  2624,  2627,  2630,  2633,  2636,  2641,
-    2644,  2648,  2650,  2652,  2654,  2656,  2658,  2660,  2662,  2664,
-    2666,  2668,  2670,  2672,  2674,  2676,  2678,  2680,  2682,  2684,
-    2686,  2688,  2690,  2692,  2694,  2696,  2698,  2702,  2704,  2706,
-    2710,  2712,  2714,  2716,  2718,  2722,  2727,  2730,  2734,  2736,
-    2739,  2742,  2747,  2752,  2756,  2760,  2764
+       0,  1781,  1781,  1787,  1790,  1796,  1798,  1800,  1802,  1804,
+    1806,  1808,  1810,  1812,  1814,  1816,  1818,  1823,  1826,  1829,
+    1832,  1835,  1838,  1841,  1844,  1847,  1850,  1853,  1856,  1858,
+    1860,  1863,  1866,  1869,  1872,  1875,  1878,  1881,  1884,  1887,
+    1890,  1894,  1897,  1900,  1903,  1906,  1909,  1912,  1915,  1918,
+    1921,  1924,  1927,  1930,  1933,  1936,  1940,  1943,  1946,  1949,
+    1952,  1955,  1959,  1962,  1965,  1968,  1971,  1974,  1977,  1980,
+    1983,  1986,  1988,  1991,  1994,  1997,  2000,  2003,  2007,  2010,
+    2014,  2017,  2020,  2024,  2027,  2030,  2033,  2037,  2040,  2043,
+    2046,  2049,  2052,  2055,  2058,  2062,  2065,  2068,  2071,  2074,
+    2077,  2080,  2083,  2089,  2091,  2093,  2095,  2097,  2099,  2101,
+    2103,  2105,  2107,  2109,  2111,  2113,  2115,  2117,  2119,  2121,
+    2123,  2125,  2127,  2129,  2131,  2133,  2135,  2137,  2139,  2141,
+    2143,  2145,  2147,  2149,  2151,  2153,  2158,  2160,  2165,  2167,
+    2169,  2171,  2177,  2179,  2181,  2183,  2186,  2188,  2190,  2192,
+    2194,  2196,  2198,  2200,  2202,  2204,  2206,  2208,  2210,  2216,
+    2218,  2223,  2225,  2227,  2232,  2234,  2238,  2240,  2242,  2244,
+    2248,  2250,  2252,  2254,  2258,  2260,  2264,  2269,  2274,  2279,
+    2285,  2291,  2294,  2300,  2305,  2310,  2315,  2321,  2324,  2330,
+    2337,  2340,  2346,  2349,  2352,  2355,  2358,  2361,  2364,  2367,
+    2370,  2373,  2376,  2379,  2382,  2385,  2388,  2391,  2394,  2397,
+    2400,  2403,  2406,  2409,  2412,  2415,  2418,  2421,  2424,  2427,
+    2432,  2434,  2436,  2440,  2442,  2444,  2446,  2450,  2452,  2454,
+    2458,  2460,  2462,  2467,  2470,  2473,  2476,  2479,  2482,  2485,
+    2488,  2491,  2494,  2497,  2500,  2503,  2506,  2509,  2512,  2515,
+    2518,  2521,  2524,  2527,  2533,  2535,  2537,  2539,  2541,  2546,
+    2548,  2550,  2554,  2557,  2560,  2563,  2566,  2569,  2572,  2577,
+    2580,  2584,  2586,  2588,  2590,  2592,  2594,  2596,  2598,  2600,
+    2602,  2604,  2606,  2608,  2610,  2612,  2614,  2616,  2618,  2620,
+    2622,  2624,  2626,  2628,  2630,  2632,  2634,  2638,  2640,  2642,
+    2646,  2648,  2650,  2652,  2654,  2658,  2663,  2666,  2670,  2672,
+    2675,  2678,  2683,  2688,  2692,  2696,  2700
 };
 #endif
 
@@ -6455,52 +6391,6 @@ void escape_transl(char *text)
 	}
 	*d = 0;
 }
-
-
-/*====================================================================*/
-/*   Errors and Warnings                                              */
-/*====================================================================*/
-
-/*
- *   syntaxerror prints an error message with position of the
- *   error place in the specification, and increments the counter of
- *   errors.
- */
-
-static char myprivmessage[16000];  /* Please DON'T reuse this */
-
-void syntaxerror(int line, int pos, char *mesge)
-{
-        strcpy(myprivmessage,mesge);
-        if (islower(*myprivmessage))
-                *myprivmessage = toupper(*myprivmessage);
-        FPRINTF(stderr,"Syntax error (%s: l:%d p:%d): %s !\n",
-                filename,line,pos,myprivmessage);
-        nr_errors++;
-        if (nr_errors>nr_max_errors)
-                fatal_error("Too many syntax errors");
-}
-
-
-/*
- *   warning prints a warning with position of the problematic place
- *   in the specification, but does not increment the counter of
- *   errors.
- */
-
-void warning(int line, int pos, char *mesge)
-{
-        strcpy(myprivmessage,mesge);
-        if (islower(*myprivmessage))
-                *myprivmessage = toupper(*myprivmessage);
-        FPRINTF(stderr,"Warning (%s: l:%d p:%d): %s !\n",
-                filename,line,pos,myprivmessage);
-}
-
-
-/*--------------------------------------------------------------*/
-
-
 
 
 

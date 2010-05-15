@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
+#include <stdarg.h>
 #include "grammar.h"
+#include "options.h" /* for filename & nr_max_errors */
 
 
 
@@ -18,6 +20,52 @@ void fatal_error(char *message)
 	exit(-1);
 }
 
+
+/*====================================================================*/
+/*   Errors and Warnings                                              */
+/*====================================================================*/
+
+int nr_errors;
+
+/*
+ *   syntaxerror prints an error message with position of the
+ *   error place in the specification, and increments the counter of
+ *   errors.
+ */
+
+static char myprivmessage[16000];  /* Please DON'T reuse this */
+
+void syntaxerror(int line, int pos, const char *fmt, ...)
+{
+	va_list args;
+	va_start(args, fmt);
+	(void)fprintf(stderr,"Syntax error (%s: l:%d p:%d): ",filename,line,pos);
+	(void)vfprintf(stderr, fmt, args);
+	(void)fprintf(stderr," !\n");
+	va_end(args);
+	nr_errors++;
+	if (nr_errors>nr_max_errors)
+		fatal_error("Too many syntax errors");
+} /* syntaxerror */
+
+
+/*
+ *   warning prints a warning with position of the problematic place
+ *   in the specification, but does not increment the counter of
+ *   errors.
+ */
+
+void warning(int line, int pos, char *mesge)
+{
+        strcpy(myprivmessage,mesge);
+        if (islower(*myprivmessage))
+                *myprivmessage = toupper(*myprivmessage);
+        (void)fprintf(stderr,"Warning (%s: l:%d p:%d): %s !\n",
+                filename,line,pos,myprivmessage);
+}
+
+
+/*--------------------------------------------------------------*/
 
 
 

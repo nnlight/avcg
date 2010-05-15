@@ -9,9 +9,6 @@
 #include "grammar.h"
 
 
-#define BISONGEN
-#undef  YACCGEN
-
 #include <stdio.h>
 
 #include <string.h>
@@ -58,32 +55,12 @@ extern YY_CHAR *yytext;
 #include <malloc.h>
 #endif
  
-#undef YYVALGLOBAL
- 
 
-void   line_directive _PP((char *text));
-void   escape_transl  _PP((char *text));
-void   syntaxerror    _PP((int line,int pos,char *mesge));
-void   warning        _PP((int line,int pos,char *mesge));
- 
-#ifndef yysyntaxerror
-#define yysyntaxerror(l,p,m) syntaxerror(l,p,m)
-#endif
- 
-#ifndef yyerror
-#define yyerror(x) { \
-        SPRINTF(message,"unexpected %s \"%s\" (%s)", \
-                 ((yychar<0)?"(?)":yytokname[YYTRANSLATE(yychar)]),     \
-                 (strlen(yytext)<48?yytext:"(?)"),x); \
-        syntaxerror(line_nr,pos_nr,message);\
-    }
-#endif
  
 
 
 
 #include "grammar.h"
-extern yysyntaxtree Syntax_Tree;
 
 
 
@@ -95,10 +72,7 @@ extern yysyntaxtree Syntax_Tree;
 int line_nr;
 int pos_nr;
 
-/* Local Variables */
-/*-----------------*/
 
-static char message[256];
 
 #define SKIPYYTEXT { char *c; c = yytext; while (*c) { \
      if (*c == '\n') { pos_nr = 1; line_nr++; }  \
@@ -152,10 +126,6 @@ extern YYLTYPE yylloc;
 #endif
 #endif
 
-#ifndef yysyntaxerror 
-#define yysyntaxerror(l,p,m) {(void)printf("Line %d Pos %d: %s !\n",l,p,m);\
-	nr_errors++;}
-#endif
 
 /*--------------------------------------------------------------------*/
 /*   Token rules                                                      */
@@ -892,9 +862,7 @@ extern YYLTYPE yylloc;
 
 
 .              { 
-		 (void)sprintf(message,
-			"scanner reads unexpected %c",yytext[0]);
-		 yysyntaxerror(line_nr,pos_nr,message);
+		 syntaxerror(line_nr,pos_nr,"scanner reads unexpected %c",yytext[0]);
                  RETURN(' '); }
 
 %%
