@@ -96,11 +96,11 @@ static void parse_part( FILE *f)
 #endif
 	/* Turn yy_flex_debug on if you want to debug the scanner */
 	yy_flex_debug = 0;
-        errs = parse();
+	errs = parse();
 	debugmessage("finished_parsing", "");
 	
 
-        if (errs>0) Fatal_error("Syntax error","");
+	if (errs>0) Fatal_error("Syntax error","");
 	assert((Syntax_Tree!=NULL));
 
 	stop_time("parse_part");
