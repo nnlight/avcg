@@ -168,9 +168,9 @@ extern int locFlag;
  *  ----------
  */
 
-int  scanOptions		_PP((int argc, char *argv[]));
-void print_basic_help		_PP((void));
-void print_help			_PP((void));
+int  scanOptions		(int argc, char *argv[]);
+void print_basic_help	(void);
+void print_help			(void);
 
 
 /*--------------------------------------------------------------------*/

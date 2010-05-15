@@ -10,14 +10,6 @@
 /* Prototypes and Externals					      */
 /*--------------------------------------------------------------------*/
 
-
-extern int line_nr;
-extern int pos_nr;
-
-/* Error messages */
-
-int nr_errors;
-
 #define __yy_bcopy(src,dst,n) memmove(dst,src,n)
 
 #define YYDEBUG 1
@@ -292,17 +284,6 @@ typedef struct yyltype {
 
 
 
-/*typedef struct stree_node *syntaxtree;
-#undef yysyntaxtree
-#define yysyntaxtree syntaxtree*/
-
-#define BISONGEN
-#undef  YACCGEN
-
-#define YYVALGLOBAL
-
-
-
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -323,24 +304,16 @@ extern YY_CHAR *yytext;
 #include <malloc.h>
 #endif
  
-#undef YYVALGLOBAL
+ 
  
 
-void   line_directive _PP((char *text));
-void   escape_transl  _PP((char *text));
-void   syntaxerror    _PP((int line,int pos,char *mesge));
-void   warning        _PP((int line,int pos,char *mesge));
- 
-#ifndef yysyntaxerror
-#define yysyntaxerror(l,p,m) syntaxerror(l,p,m)
-#endif
- 
 #ifndef yyerror
 #define yyerror(x) { \
-        SPRINTF(message,"unexpected %s \"%s\" (%s)", \
+        syntaxerror(line_nr,pos_nr, \
+                 "unexpected %s \"%s\" (%s)", \
                  ((yychar<0)?"(?)":yytokname[YYTRANSLATE(yychar)]),     \
-                 (strlen(yytext)<48?yytext:"(?)"),x); \
-        syntaxerror(line_nr,pos_nr,message);\
+                 (strlen(yytext)<48?yytext:"(?)"), \
+				 x); \
     }
 #endif
  
@@ -364,7 +337,6 @@ void   warning        _PP((int line,int pos,char *mesge));
 
 
 #include "grammar.h"
-extern yysyntaxtree Syntax_Tree;
 
 
 /*--------------------------------------------------------------------*/
@@ -1408,13 +1380,6 @@ static const int yyconst_arity[] = {
 
 
 
-/* from scanner */
-
-void init_lex(void);
-int yylex(void);
-
-
-static char message[1024];
  
 /* for error messages */
 
@@ -1721,37 +1686,8 @@ static const char * const yytokname[] = {
 };
 
 
-
-#ifndef yyerror
-#define yyerror(x) { \
-	(void)sprintf(message,"unexpected %s (%s)", \
-		 ((yychar<0)?"(?)":yytokname[YYTRANSLATE(yychar)]),x);  \
-	(void)printf("Line %d Pos %d: %s !\n",line_nr,pos_nr,message);\
-	nr_errors++;\
-    }
-#endif
-
-#ifdef BISONGEN
 #ifndef yylocate
 #define yylocate(x) (&(x))
-#endif
-#endif
-
-#ifdef YACCGEN
-static YYLTYPE yystdlocation;
-
-static YYLTYPE *yystdloc(void) 
-{   yystdlocation->first_line = yystdlocation->last_line = line_nr; 
-    yystdlocation->first_column = yystdlocation->last_column = pos_nr; 
-    return(&yystdlocation);
-}
-#ifndef yylocate
-#define yylocate(x) (yystdloc())
-#endif
-#endif /* YACCGEN */
-
-#ifndef yysyntaxtree
-#define yysyntaxtree char*
 #endif
 
 #define YY_NEVERNEEDED (@1)
@@ -2907,52 +2843,6 @@ void escape_transl(char *text)
 	}
 	*d = 0;
 }
-
-
-/*====================================================================*/
-/*   Errors and Warnings                                              */
-/*====================================================================*/
-
-/*
- *   syntaxerror prints an error message with position of the
- *   error place in the specification, and increments the counter of
- *   errors.
- */
-
-static char myprivmessage[16000];  /* Please DON'T reuse this */
-
-void syntaxerror(int line, int pos, char *mesge)
-{
-        strcpy(myprivmessage,mesge);
-        if (islower(*myprivmessage))
-                *myprivmessage = toupper(*myprivmessage);
-        FPRINTF(stderr,"Syntax error (%s: l:%d p:%d): %s !\n",
-                filename,line,pos,myprivmessage);
-        nr_errors++;
-        if (nr_errors>nr_max_errors)
-                fatal_error("Too many syntax errors");
-}
-
-
-/*
- *   warning prints a warning with position of the problematic place
- *   in the specification, but does not increment the counter of
- *   errors.
- */
-
-void warning(int line, int pos, char *mesge)
-{
-        strcpy(myprivmessage,mesge);
-        if (islower(*myprivmessage))
-                *myprivmessage = toupper(*myprivmessage);
-        FPRINTF(stderr,"Warning (%s: l:%d p:%d): %s !\n",
-                filename,line,pos,myprivmessage);
-}
-
-
-/*--------------------------------------------------------------*/
-
-
 
 
 

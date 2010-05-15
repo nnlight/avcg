@@ -1081,11 +1081,7 @@ int scanOptions(int argc, char *argv[])
  * --------------------
  */
 
-#ifdef ANSI_C
 void print_basic_help(void)
-#else
-void print_basic_help()
-#endif
 {
 	PRINTF("Usage:   %s [options] [filename]\n",gblargv[0]);	
 	PRINTF("Enter %s -h  for help information.\n", gblargv[0]);
