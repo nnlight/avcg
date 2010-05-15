@@ -383,97 +383,98 @@ char *Decode(long x)
  *   The parseheap is the actual memory block.
  */ 
 
-static yysyntaxtree parseheap = (yysyntaxtree)0;  /* the heap */ 
-static yysyntaxtree parseheapstart;               /* the base */
-static yysyntaxtree parseheaptop;                 /* the top  */
-static yysyntaxtree parseheapend;                 /* the end  */
-static int parseheapsize = PARSEBLOCKSIZE;     /* the size of one block */
+static char *parseheap = NULL;             /* the heap */ 
+static char *parseheapstart;               /* the base */
+static char *parseheaptop;                 /* the top  */
+static char *parseheapend;                 /* the end  */
+static int parseheapsize = PARSEBLOCKSIZE; /* the size of one block */
 
 
 static void alloc_block(void)
 {
-        yysyntaxtree help, *help2;
+	char *new_block;
+	yysyntaxtree help, *help2;
 
-	help =(yysyntaxtree)malloc(parseheapsize*sizeof(struct stree_node));
-        if (!help) fatal_error("memory exhausted");
-	help2  = (yysyntaxtree *)help;
-	*help2 = (yysyntaxtree)parseheap;
-	parseheap = help;
-	parseheapstart = parseheaptop =
-		(yysyntaxtree)((long)parseheap + (long)sizeof(yysyntaxtree));
-	parseheapend = parseheap;
-	parseheapend += (parseheapsize-2);
-        if ((long)parseheaptop&IALIGN) 
-		parseheaptop = (yysyntaxtree)
-			(((long)parseheaptop+(long)IALIGN)&(long)(~IALIGN));
-}
+	new_block = (char *)malloc(parseheapsize*sizeof(struct stree_node));
+	if (!new_block) fatal_error("memory exhausted");
+	(*(char**)new_block) = parseheap; /* в начале блока хранится ссылка ны пркдвдущий блок */
+	parseheap = new_block;
+	parseheapstart = parseheaptop = (parseheap + sizeof(char *));
+	parseheapend = parseheap + (parseheapsize-2) * sizeof(struct stree_node);
+	/* выравнивание */
+	parseheaptop = (char *)((long)(parseheaptop+IALIGN)&(~IALIGN));
+	return;
+} /* alloc_block */
 
-
-/*  allocate x bytes */
-
-static yysyntaxtree parsemalloc(int x)
+/**
+ * allocate x bytes
+ */
+static void *parsemalloc(int x)
 {
-        yysyntaxtree help;
-        int  y;
+	char *help;
+	int  y = (x+IALIGN)&(~IALIGN);
 
 	if (!parseheap) alloc_block();
 
-        y = x;
-        if (y&IALIGN) y = (y+IALIGN)&(~IALIGN);
+	help = parseheaptop;
+	parseheaptop = parseheaptop + y;
 
-        help = parseheaptop;
-        parseheaptop = (yysyntaxtree)((long)parseheaptop+(long)y);
-
-        if (parseheaptop > parseheapend) {
-
+	if (parseheaptop > parseheapend)
+	{
 		/* heap too small -> allocate new heap block */
 
 		alloc_block();
-                help = parseheaptop;
-                parseheaptop = (yysyntaxtree)((long)parseheaptop+(long)y);
-        	if (parseheaptop > parseheapend) 
+		help = parseheaptop;
+		parseheaptop = parseheaptop + y;
+		if (parseheaptop > parseheapend) 
 			fatal_error("syntax tree node too large");
-        }
-        return (help);
-}
+	}
+	return (help);
+} /* parsemalloc */
 
 
-/* allocate yysyntaxtree node with x sons */
-
+/**
+ * allocate yysyntaxtree node with x sons
+ */
 static yysyntaxtree st_malloc(int x)
 {
-        yysyntaxtree help;
+	yysyntaxtree help;
 
-        help =parsemalloc(sizeof(struct stree_node)+x*sizeof(yysyntaxtree));
-        return (help);
+	help = parsemalloc(sizeof(struct stree_node)+x*sizeof(yysyntaxtree));
+	return (help);
 }
 
 
-/* global allocate x bytes */
-
+/**
+ * global allocate x bytes
+ */
 char * ParseMalloc(int x)
 {
-	return((char *)parsemalloc(x));
+	return ((char *)parsemalloc(x));
 }
-
-/* global deallocate the complete syntax tree heap */
 
 static union special *stdunion = 0;
 
+
+/**
+ * global deallocate the complete syntax tree heap
+ */
 void ParseFree(void)
 {
-        yysyntaxtree help, help2;
+	char *help, *next_help;
+
 
 	help = parseheap;
 	while (help) {
-		help2 = *(yysyntaxtree *)help;
-		(void)free((char *)help);
-		help = help2;
+		next_help = *(char **)help;
+		(void)free(help);
+		help = next_help;
 	}	
 
-	parseheap = (yysyntaxtree)0;
+	parseheap = NULL;
 	stdunion = 0;
-}
+	return;
+} /* ParseFree */
  
 /*--------------------------------------------------------------------*/
 /* Create unions for syntax tree nodes                                */
