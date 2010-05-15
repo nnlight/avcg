@@ -66,12 +66,6 @@ extern YY_CHAR *yytext;
 
 /*--------------------------------------------------------------------*/
 
-/* Global Variables */
-/*------------------*/
-
-int line_nr;
-int pos_nr;
-
 
 
 #define SKIPYYTEXT { char *c; c = yytext; while (*c) { \
