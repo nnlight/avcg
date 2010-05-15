@@ -79,7 +79,6 @@
 /* Prototypes and Externals					      */
 /*--------------------------------------------------------------------*/
 
-#define __yy_bcopy(src,dst,n) memmove(dst,src,n)
 
 #define YYDEBUG 1
  
@@ -148,11 +147,6 @@ extern YY_CHAR *yytext;
     }
 #endif
  
-/* Memory Management */
-
-#ifdef MEMBLOCKSIZE
-#define PARSEBLOCKSIZE (MEMBLOCKSIZE/sizeof(struct stree_node)+1)
-#endif
 
 #ifndef NULL
 #define NULL 0
@@ -2512,38 +2506,38 @@ static const yytype_int16 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,  1781,  1781,  1787,  1790,  1796,  1798,  1800,  1802,  1804,
-    1806,  1808,  1810,  1812,  1814,  1816,  1818,  1823,  1826,  1829,
-    1832,  1835,  1838,  1841,  1844,  1847,  1850,  1853,  1856,  1858,
-    1860,  1863,  1866,  1869,  1872,  1875,  1878,  1881,  1884,  1887,
-    1890,  1894,  1897,  1900,  1903,  1906,  1909,  1912,  1915,  1918,
-    1921,  1924,  1927,  1930,  1933,  1936,  1940,  1943,  1946,  1949,
-    1952,  1955,  1959,  1962,  1965,  1968,  1971,  1974,  1977,  1980,
-    1983,  1986,  1988,  1991,  1994,  1997,  2000,  2003,  2007,  2010,
-    2014,  2017,  2020,  2024,  2027,  2030,  2033,  2037,  2040,  2043,
-    2046,  2049,  2052,  2055,  2058,  2062,  2065,  2068,  2071,  2074,
-    2077,  2080,  2083,  2089,  2091,  2093,  2095,  2097,  2099,  2101,
-    2103,  2105,  2107,  2109,  2111,  2113,  2115,  2117,  2119,  2121,
-    2123,  2125,  2127,  2129,  2131,  2133,  2135,  2137,  2139,  2141,
-    2143,  2145,  2147,  2149,  2151,  2153,  2158,  2160,  2165,  2167,
-    2169,  2171,  2177,  2179,  2181,  2183,  2186,  2188,  2190,  2192,
-    2194,  2196,  2198,  2200,  2202,  2204,  2206,  2208,  2210,  2216,
-    2218,  2223,  2225,  2227,  2232,  2234,  2238,  2240,  2242,  2244,
-    2248,  2250,  2252,  2254,  2258,  2260,  2264,  2269,  2274,  2279,
-    2285,  2291,  2294,  2300,  2305,  2310,  2315,  2321,  2324,  2330,
-    2337,  2340,  2346,  2349,  2352,  2355,  2358,  2361,  2364,  2367,
-    2370,  2373,  2376,  2379,  2382,  2385,  2388,  2391,  2394,  2397,
-    2400,  2403,  2406,  2409,  2412,  2415,  2418,  2421,  2424,  2427,
-    2432,  2434,  2436,  2440,  2442,  2444,  2446,  2450,  2452,  2454,
-    2458,  2460,  2462,  2467,  2470,  2473,  2476,  2479,  2482,  2485,
-    2488,  2491,  2494,  2497,  2500,  2503,  2506,  2509,  2512,  2515,
-    2518,  2521,  2524,  2527,  2533,  2535,  2537,  2539,  2541,  2546,
-    2548,  2550,  2554,  2557,  2560,  2563,  2566,  2569,  2572,  2577,
-    2580,  2584,  2586,  2588,  2590,  2592,  2594,  2596,  2598,  2600,
-    2602,  2604,  2606,  2608,  2610,  2612,  2614,  2616,  2618,  2620,
-    2622,  2624,  2626,  2628,  2630,  2632,  2634,  2638,  2640,  2642,
-    2646,  2648,  2650,  2652,  2654,  2658,  2663,  2666,  2670,  2672,
-    2675,  2678,  2683,  2688,  2692,  2696,  2700
+       0,  1775,  1775,  1781,  1784,  1790,  1792,  1794,  1796,  1798,
+    1800,  1802,  1804,  1806,  1808,  1810,  1812,  1817,  1820,  1823,
+    1826,  1829,  1832,  1835,  1838,  1841,  1844,  1847,  1850,  1852,
+    1854,  1857,  1860,  1863,  1866,  1869,  1872,  1875,  1878,  1881,
+    1884,  1888,  1891,  1894,  1897,  1900,  1903,  1906,  1909,  1912,
+    1915,  1918,  1921,  1924,  1927,  1930,  1934,  1937,  1940,  1943,
+    1946,  1949,  1953,  1956,  1959,  1962,  1965,  1968,  1971,  1974,
+    1977,  1980,  1982,  1985,  1988,  1991,  1994,  1997,  2001,  2004,
+    2008,  2011,  2014,  2018,  2021,  2024,  2027,  2031,  2034,  2037,
+    2040,  2043,  2046,  2049,  2052,  2056,  2059,  2062,  2065,  2068,
+    2071,  2074,  2077,  2083,  2085,  2087,  2089,  2091,  2093,  2095,
+    2097,  2099,  2101,  2103,  2105,  2107,  2109,  2111,  2113,  2115,
+    2117,  2119,  2121,  2123,  2125,  2127,  2129,  2131,  2133,  2135,
+    2137,  2139,  2141,  2143,  2145,  2147,  2152,  2154,  2159,  2161,
+    2163,  2165,  2171,  2173,  2175,  2177,  2180,  2182,  2184,  2186,
+    2188,  2190,  2192,  2194,  2196,  2198,  2200,  2202,  2204,  2210,
+    2212,  2217,  2219,  2221,  2226,  2228,  2232,  2234,  2236,  2238,
+    2242,  2244,  2246,  2248,  2252,  2254,  2258,  2263,  2268,  2273,
+    2279,  2285,  2288,  2294,  2299,  2304,  2309,  2315,  2318,  2324,
+    2331,  2334,  2340,  2343,  2346,  2349,  2352,  2355,  2358,  2361,
+    2364,  2367,  2370,  2373,  2376,  2379,  2382,  2385,  2388,  2391,
+    2394,  2397,  2400,  2403,  2406,  2409,  2412,  2415,  2418,  2421,
+    2426,  2428,  2430,  2434,  2436,  2438,  2440,  2444,  2446,  2448,
+    2452,  2454,  2456,  2461,  2464,  2467,  2470,  2473,  2476,  2479,
+    2482,  2485,  2488,  2491,  2494,  2497,  2500,  2503,  2506,  2509,
+    2512,  2515,  2518,  2521,  2527,  2529,  2531,  2533,  2535,  2540,
+    2542,  2544,  2548,  2551,  2554,  2557,  2560,  2563,  2566,  2571,
+    2574,  2578,  2580,  2582,  2584,  2586,  2588,  2590,  2592,  2594,
+    2596,  2598,  2600,  2602,  2604,  2606,  2608,  2610,  2612,  2614,
+    2616,  2618,  2620,  2622,  2624,  2626,  2628,  2632,  2634,  2636,
+    2640,  2642,  2644,  2646,  2648,  2652,  2657,  2660,  2664,  2666,
+    2669,  2672,  2677,  2682,  2686,  2690,  2694
 };
 #endif
 
@@ -6282,478 +6276,6 @@ int parse(void)
  
 
 
-
-
-
-/*--------------------------------------------------------------*/
-/*   Line directives                                            */
-/*--------------------------------------------------------------*/
- 
-/*  Handle directive left by the C preprocessor, i.e.
- *
- *    # line 123 "foo.h"
- *    # line 125
- *    # 126 "foo.h" 2
- *
- *  et cetera.
- */
-void line_directive(char *text)
-{
-        char *c,*d;
-
-        c = d = text;
-        while ((*c) && (*c!='"')) c++;
-        while ((*d) && ((*d<'0') || (*d>'9'))) d++;
- 
-        if (d<c) { line_nr = atoi(d); pos_nr = 0; }
- 
-        if (*c) {
-                c++;
-                d = c;
-                while ((*d) && (*d!='"')) d++;
-                *d=0;
-                strcpy(filename, c);
-        }
-}
-
-
-/*--------------------------------------------------------------*/
-/*   Translate escape sequences in strings                      */
-/*--------------------------------------------------------------*/
- 
-/*  Translate escape sequences in strings. The result remains
- *  in text, because the result is shorter !
- *
- *   \\ -> \        \" -> "     \n -> CR    
- *
- *  et cetera.
- */
-void escape_transl(char *text)
-{
-        char *c,*d;
-	int i;
-
-        c = d = text;
-	while (*c) {
-		if (*c == '\\') {
-			c++;
-			switch (*c) {
-			case 'a' : *d++ = '\a'; break;
-			case 'b' : *d++ = '\b'; break;
-			case 'f' : *d++ = '\f'; break;
-			case 'n' : *d++ = '\n'; break;
-			case 'r' : *d++ = '\r'; break;
-			case 't' : *d++ = '\t'; break;
-			case 'v' : *d++ = '\v'; break;
-			case 'x' :
-				   c++;
-				   i = 0;
-				   while (  ((*c>='0')&&(*c<='9')) 
-					  ||((*c>='A')&&(*c<='F'))
-					  ||((*c>='a')&&(*c<='f')) ) {
-					if ((*c>='0')&&(*c<='9')) 
-						i = i*16 + (*c)-'0'; 
-					else if ((*c>='A')&&(*c<='F')) 
-						i = i*16 + (*c)-'A'+10; 
-					else if ((*c>='a')&&(*c<='f')) 
-						i = i*16 + (*c)-'a'+10; 
-					c++;
-				   }
-				   c--;
-				   *d++ = i;
-				   break;
-			case '0' :
-			case '1' :
-			case '2' :
-			case '3' :
-			case '4' :
-			case '5' :
-			case '6' :
-			case '7' :
-				  i = (*c) - '0';
-				  c++;
-				  if ((*c>='0') && (*c<='7')) {
-					i = i*8 +(*c)-'0';
-				  	c++;
-				  	if ((*c>='0') && (*c<='7')) {
-						i = i*8 +(*c)-'0';
-						c++;
-					}
-				  }
-				  c--;
-				  *d++ = i;
-				  break;
-			default : *d++ = *c; break;
-			}
-		}
-		else *d++ = *c;
-		c++;
-	}
-	*d = 0;
-}
-
-
-
-
-/*--------------------------------------------------------------------*/
-/*  Standard Tree Construction Routines                               */
-/*--------------------------------------------------------------------*/
-
-#include <stdio.h>
-#include <malloc.h>
-#include <stdarg.h>
-
-
-/*--------------------------------------------------------------------*/
-/* Memory allocation for syntax tree nodes                            */
-/*--------------------------------------------------------------------*/
-
-#ifndef ALIGN
-#define ALIGN 8
-#define IALIGN (ALIGN-1)
-#endif
-
-/*   The following in invisible from outside:        
- *   The heap consists of a list of memory blocks of size parseheapsize.
- *   The parseheap is the actual memory block.
- */ 
-
-static yysyntaxtree parseheap = (yysyntaxtree)0;  /* the heap */ 
-static yysyntaxtree parseheapstart;               /* the base */
-static yysyntaxtree parseheaptop;                 /* the top  */
-static yysyntaxtree parseheapend;                 /* the end  */
-static int parseheapsize = PARSEBLOCKSIZE;     /* the size of one block */
-
-
-static void alloc_block(void)
-{
-        yysyntaxtree help, *help2;
-
-	help =(yysyntaxtree)malloc(parseheapsize*sizeof(struct stree_node));
-        if (!help) fatal_error("memory exhausted");
-	help2  = (yysyntaxtree *)help;
-	*help2 = (yysyntaxtree)parseheap;
-	parseheap = help;
-	parseheapstart = parseheaptop =
-		(yysyntaxtree)((long)parseheap + (long)sizeof(yysyntaxtree));
-	parseheapend = parseheap;
-	parseheapend += (parseheapsize-2);
-        if ((long)parseheaptop&IALIGN) 
-		parseheaptop = (yysyntaxtree)
-			(((long)parseheaptop+(long)IALIGN)&(long)(~IALIGN));
-}
-
-
-/*  allocate x bytes */
-
-static yysyntaxtree parsemalloc(int x)
-{
-        yysyntaxtree help;
-        int  y;
-
-	if (!parseheap) alloc_block();
-
-        y = x;
-        if (y&IALIGN) y = (y+IALIGN)&(~IALIGN);
-
-        help = parseheaptop;
-        parseheaptop = (yysyntaxtree)((long)parseheaptop+(long)y);
-
-        if (parseheaptop > parseheapend) {
-
-		/* heap too small -> allocate new heap block */
-
-		alloc_block();
-                help = parseheaptop;
-                parseheaptop = (yysyntaxtree)((long)parseheaptop+(long)y);
-        	if (parseheaptop > parseheapend) 
-			fatal_error("syntax tree node too large");
-        }
-        return (help);
-}
-
-
-/* allocate yysyntaxtree node with x sons */
-
-static yysyntaxtree st_malloc(int x)
-{
-        yysyntaxtree help;
-
-        help =parsemalloc(sizeof(struct stree_node)+x*sizeof(yysyntaxtree));
-        return (help);
-}
-
-
-/* global allocate x bytes */
-
-char * ParseMalloc(int x)
-{
-	return((char *)parsemalloc(x));
-}
-
-/* global deallocate the complete syntax tree heap */
-
-static union special *stdunion = 0;
-
-void ParseFree(void)
-{
-        yysyntaxtree help, help2;
-
-	help = parseheap;
-	while (help) {
-		help2 = *(yysyntaxtree *)help;
-		(void)free((char *)help);
-		help = help2;
-	}	
-
-	parseheap = (yysyntaxtree)0;
-	stdunion = 0;
-}
- 
-/*--------------------------------------------------------------------*/
-/* Create unions for syntax tree nodes                                */
-/*--------------------------------------------------------------------*/
-
-
-static void freeunion(union special *x)
-{
-	x->string = (char *)stdunion;
-	stdunion = x;	
-}
-
-static union special *nextunion(void)
-{
-	union special *help;
-	if (!stdunion) {
-        	stdunion = (union special *)
-				parsemalloc(sizeof(union special));
-		stdunion->string = 0;
-	}
-	help = stdunion;
-	stdunion = (union special *)stdunion->string;
-	return(help);
-}
-
-union special *UnionByte(unsigned char x)
-{
-	union special *help;
-
-	help = nextunion();
-	help->byte = x;
-	return(help);
-}
-
-union special *UnionSnum(short int x)
-{
-	union special *help;
-
-	help = nextunion();
-	help->snum = x;
-	return(help);
-}
-
-union special *UnionUsnum(unsigned short int x)
-{
-	union special *help;
-
-	help = nextunion();
-	help->usnum = x;
-	return(help);
-}
-
-union special *UnionNum(int x)
-{
-	union special *help;
-
-	help = nextunion();
-	help->num = x;
-	return(help);     
-}
-
-union special *UnionUnum(unsigned int x)
-{
-	union special *help;
-
-	help = nextunion();
-	help->unum = x;
-	return(help);     
-}
-
-union special *UnionLnum(long int x)
-{
-	union special *help;
-
-	help = nextunion();
-	help->lnum = x;
-	return(help);     
-}
-
-union special *UnionUlnum(unsigned long int x)
-{
-	union special *help;
-
-	help = nextunion();
-	help->ulnum = x;
-	return(help);     
-}
-
-union special *UnionRealnum(float x)
-{
-	union special *help;
-
-	help = nextunion();
-	help->realnum = x;
-	return(help);     
-}
-
-union special *UnionLrealnum(double x)
-{
-	union special *help;
-
-	help = nextunion();
-	help->lrealnum = x;
-	return(help);     
-}
-
-union special *UnionString(char *x)
-{
-	union special *help;
-
-	help = nextunion();
-	help->string = x;
-	return(help);     
-}
-
-
-/*--------------------------------------------------------------------*/
-/* Build syntax tree nodes                                            */
-/*--------------------------------------------------------------------*/
-
-/* Table for varargs */
-
-static yysyntaxtree TreeTab[1024];
-
-#ifdef USERFTYPE
-#ifndef USERFINIT
-#define USERFINIT ((USERFTYPE)0)
-#endif
-#endif
-
-/* without sons */
-
-syntaxtree BuildCont(int mtag,union special *x,YYLTYPE *l)
-{
-        yysyntaxtree help;
-        help = st_malloc(1);
-
-	__yy_bcopy(x,&help->contents, sizeof(union special));
-	freeunion(x);
-	tag(help)          = mtag;
-	xfirst_line(help)   =l->first_line;
-	xfirst_column(help) =l->first_column;
-	xlast_line(help)    =l->last_line;
-	xlast_column(help)  =l->last_column;
-	xfather(help)       =(yysyntaxtree)0;
-#ifdef USERFTYPE
-	user_field(help)    =USERFINIT; 
-#endif
-
-	son1(help) = (yysyntaxtree)0; 
-
-        return(help);
-}
-
-/* with sons */
-
-yysyntaxtree BuildTree(int mtag,int len,union special *x,YYLTYPE *l, ...)
-{
-	int i,j;
-	va_list pvar;
-	yysyntaxtree help;
-
-	va_start(pvar,l);
-
-	i = 0;
-	help = va_arg(pvar, yysyntaxtree);
-	while (i < len) {
-		TreeTab[i++] = help;
-		help = va_arg(pvar, yysyntaxtree);
-	}
-	va_end(pvar);
-
-        help = st_malloc((i<1?1:i));
-
-	__yy_bcopy(x,&help->contents, sizeof(union special));
-	freeunion(x);
-	tag(help)          = mtag;
-	xfirst_line(help)   =l->first_line;
-	xfirst_column(help) =l->first_column;
-	xlast_line(help)    =l->last_line;
-	xlast_column(help)  =l->last_column;
-	xfather(help)       =(yysyntaxtree)0;
-#ifdef USERFTYPE
-	user_field(help)    =USERFINIT; 
-#endif
-
-	for (j=1; j<=i; j++) {
-		son(help,j) = TreeTab[j-1]; 
-		if (TreeTab[j-1]!=(yysyntaxtree)0)
-			xfather(TreeTab[j-1]) = help;
-	}
-        return(help);
-}
-
-
-/* copy syntax tree */
-
-yysyntaxtree Copy(yysyntaxtree x)
-{
-	register int j,len;
-        yysyntaxtree help; 
-
-	if (!x) return(x);
-	len = nr_of_sons(x);
-        help = st_malloc((len<1?1:len));
-
-	__yy_bcopy(&x->contents,&help->contents, sizeof(union special));
-	tag(help)          = tag(x);
-	xfirst_line(help)   = xfirst_line(x);
-	xfirst_column(help) = xfirst_column(x);
-	xlast_line(help)    = xlast_line(x);
-	xlast_column(help)  = xlast_column(x);
-	xfather(help)       = (yysyntaxtree)0;
-#ifdef USERFTYPE
-	user_field(help)    =user_field(x); 
-#endif
-	son1(help) = (yysyntaxtree)0; 
-
-	for (j=1; j<=len; j++) {
-		son(help,j) = Copy(son(x,j)); 
-		if (son(help,j))
-			xfather(son(help,j)) = help; 
-	}
-        return(help);
-}
-
-/* revert list */
-
-yysyntaxtree Revert(yysyntaxtree list)
-{
-        yysyntaxtree last, act, next; 
-
-	last = (yysyntaxtree)0;
-	act  = list;
-	while (act) {
-		next = son2(act);
-		son2(act) = last;
-		if (last) xfather(last)=act;
-		last = act;	
-		act = next;
-	}
-	if (last) xfather(last)=(yysyntaxtree)0;
-        return(last);
-}
-
 /*--------------------------------------------------------------------*/
 /* yield constructor name                                             */
 /*--------------------------------------------------------------------*/
@@ -6771,9 +6293,5 @@ int ConstructorArity(int i)
 {
 	return(yyconst_arity[i]);
 }
-
-/*--------------------------------------------------------------------*/
-
-
 
 

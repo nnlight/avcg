@@ -5,6 +5,7 @@
 #include <stdarg.h>
 #include "grammar.h"
 #include "options.h" /* for filename & nr_max_errors */
+#include "globals.h" /* for MEMBLOCKSIZE */
 
 
 
@@ -66,6 +67,121 @@ void warning(int line, int pos, char *mesge)
 
 
 /*--------------------------------------------------------------*/
+
+
+
+/*--------------------------------------------------------------*/
+/*   Line directives                                            */
+/*--------------------------------------------------------------*/
+
+int line_nr;
+int pos_nr;
+ 
+/*  Handle directive left by the C preprocessor, i.e.
+ *
+ *    # line 123 "foo.h"
+ *    # line 125
+ *    # 126 "foo.h" 2
+ *
+ *  et cetera.
+ */
+void line_directive(char *text)
+{
+        char *c,*d;
+
+        c = d = text;
+        while ((*c) && (*c!='"')) c++;
+        while ((*d) && ((*d<'0') || (*d>'9'))) d++;
+ 
+        if (d<c) { line_nr = atoi(d); pos_nr = 0; }
+ 
+        if (*c) {
+                c++;
+                d = c;
+                while ((*d) && (*d!='"')) d++;
+                *d=0;
+                strcpy(filename, c);
+        }
+} /* line_directive */
+
+
+/*--------------------------------------------------------------*/
+/*   Translate escape sequences in strings                      */
+/*--------------------------------------------------------------*/
+ 
+/*  Translate escape sequences in strings. The result remains
+ *  in text, because the result is shorter !
+ *
+ *   \\ -> \        \" -> "     \n -> CR    
+ *
+ *  et cetera.
+ */
+void escape_transl(char *text)
+{
+        char *c,*d;
+	int i;
+
+        c = d = text;
+	while (*c) {
+		if (*c == '\\') {
+			c++;
+			switch (*c) {
+			case 'a' : *d++ = '\a'; break;
+			case 'b' : *d++ = '\b'; break;
+			case 'f' : *d++ = '\f'; break;
+			case 'n' : *d++ = '\n'; break;
+			case 'r' : *d++ = '\r'; break;
+			case 't' : *d++ = '\t'; break;
+			case 'v' : *d++ = '\v'; break;
+			case 'x' :
+				   c++;
+				   i = 0;
+				   while (  ((*c>='0')&&(*c<='9')) 
+					  ||((*c>='A')&&(*c<='F'))
+					  ||((*c>='a')&&(*c<='f')) ) {
+					if ((*c>='0')&&(*c<='9')) 
+						i = i*16 + (*c)-'0'; 
+					else if ((*c>='A')&&(*c<='F')) 
+						i = i*16 + (*c)-'A'+10; 
+					else if ((*c>='a')&&(*c<='f')) 
+						i = i*16 + (*c)-'a'+10; 
+					c++;
+				   }
+				   c--;
+				   *d++ = i;
+				   break;
+			case '0' :
+			case '1' :
+			case '2' :
+			case '3' :
+			case '4' :
+			case '5' :
+			case '6' :
+			case '7' :
+				  i = (*c) - '0';
+				  c++;
+				  if ((*c>='0') && (*c<='7')) {
+					i = i*8 +(*c)-'0';
+				  	c++;
+				  	if ((*c>='0') && (*c<='7')) {
+						i = i*8 +(*c)-'0';
+						c++;
+					}
+				  }
+				  c--;
+				  *d++ = i;
+				  break;
+			default : *d++ = *c; break;
+			}
+		}
+		else *d++ = *c;
+		c++;
+	}
+	*d = 0;
+} /* escape_transl */
+
+/*--------------------------------------------------------------*/
+
 
 
 
@@ -240,4 +356,373 @@ char *Decode(long x)
 } /* Decode */
 
 /*--------------------------------------------------------------------*/
+
+
+
+
+/*--------------------------------------------------------------------*/
+/*  Standard Tree Construction Routines                               */
+/*--------------------------------------------------------------------*/
+
+/* Memory Management */
+
+#ifdef MEMBLOCKSIZE
+#define PARSEBLOCKSIZE (MEMBLOCKSIZE/sizeof(struct stree_node)+1)
+#endif
+/*--------------------------------------------------------------------*/
+/* Memory allocation for syntax tree nodes                            */
+/*--------------------------------------------------------------------*/
+
+#ifndef ALIGN
+#define ALIGN 8
+#define IALIGN (ALIGN-1)
+#endif
+
+/*   The following in invisible from outside:        
+ *   The heap consists of a list of memory blocks of size parseheapsize.
+ *   The parseheap is the actual memory block.
+ */ 
+
+static yysyntaxtree parseheap = (yysyntaxtree)0;  /* the heap */ 
+static yysyntaxtree parseheapstart;               /* the base */
+static yysyntaxtree parseheaptop;                 /* the top  */
+static yysyntaxtree parseheapend;                 /* the end  */
+static int parseheapsize = PARSEBLOCKSIZE;     /* the size of one block */
+
+
+static void alloc_block(void)
+{
+        yysyntaxtree help, *help2;
+
+	help =(yysyntaxtree)malloc(parseheapsize*sizeof(struct stree_node));
+        if (!help) fatal_error("memory exhausted");
+	help2  = (yysyntaxtree *)help;
+	*help2 = (yysyntaxtree)parseheap;
+	parseheap = help;
+	parseheapstart = parseheaptop =
+		(yysyntaxtree)((long)parseheap + (long)sizeof(yysyntaxtree));
+	parseheapend = parseheap;
+	parseheapend += (parseheapsize-2);
+        if ((long)parseheaptop&IALIGN) 
+		parseheaptop = (yysyntaxtree)
+			(((long)parseheaptop+(long)IALIGN)&(long)(~IALIGN));
+}
+
+
+/*  allocate x bytes */
+
+static yysyntaxtree parsemalloc(int x)
+{
+        yysyntaxtree help;
+        int  y;
+
+	if (!parseheap) alloc_block();
+
+        y = x;
+        if (y&IALIGN) y = (y+IALIGN)&(~IALIGN);
+
+        help = parseheaptop;
+        parseheaptop = (yysyntaxtree)((long)parseheaptop+(long)y);
+
+        if (parseheaptop > parseheapend) {
+
+		/* heap too small -> allocate new heap block */
+
+		alloc_block();
+                help = parseheaptop;
+                parseheaptop = (yysyntaxtree)((long)parseheaptop+(long)y);
+        	if (parseheaptop > parseheapend) 
+			fatal_error("syntax tree node too large");
+        }
+        return (help);
+}
+
+
+/* allocate yysyntaxtree node with x sons */
+
+static yysyntaxtree st_malloc(int x)
+{
+        yysyntaxtree help;
+
+        help =parsemalloc(sizeof(struct stree_node)+x*sizeof(yysyntaxtree));
+        return (help);
+}
+
+
+/* global allocate x bytes */
+
+char * ParseMalloc(int x)
+{
+	return((char *)parsemalloc(x));
+}
+
+/* global deallocate the complete syntax tree heap */
+
+static union special *stdunion = 0;
+
+void ParseFree(void)
+{
+        yysyntaxtree help, help2;
+
+	help = parseheap;
+	while (help) {
+		help2 = *(yysyntaxtree *)help;
+		(void)free((char *)help);
+		help = help2;
+	}	
+
+	parseheap = (yysyntaxtree)0;
+	stdunion = 0;
+}
+ 
+/*--------------------------------------------------------------------*/
+/* Create unions for syntax tree nodes                                */
+/*--------------------------------------------------------------------*/
+
+
+static void freeunion(union special *x)
+{
+	x->string = (char *)stdunion;
+	stdunion = x;	
+}
+
+static union special *nextunion(void)
+{
+	union special *help;
+	if (!stdunion) {
+        	stdunion = (union special *)
+				parsemalloc(sizeof(union special));
+		stdunion->string = 0;
+	}
+	help = stdunion;
+	stdunion = (union special *)stdunion->string;
+	return(help);
+}
+
+union special *UnionByte(unsigned char x)
+{
+	union special *help;
+
+	help = nextunion();
+	help->byte = x;
+	return(help);
+}
+
+union special *UnionSnum(short int x)
+{
+	union special *help;
+
+	help = nextunion();
+	help->snum = x;
+	return(help);
+}
+
+union special *UnionUsnum(unsigned short int x)
+{
+	union special *help;
+
+	help = nextunion();
+	help->usnum = x;
+	return(help);
+}
+
+union special *UnionNum(int x)
+{
+	union special *help;
+
+	help = nextunion();
+	help->num = x;
+	return(help);     
+}
+
+union special *UnionUnum(unsigned int x)
+{
+	union special *help;
+
+	help = nextunion();
+	help->unum = x;
+	return(help);     
+}
+
+union special *UnionLnum(long int x)
+{
+	union special *help;
+
+	help = nextunion();
+	help->lnum = x;
+	return(help);     
+}
+
+union special *UnionUlnum(unsigned long int x)
+{
+	union special *help;
+
+	help = nextunion();
+	help->ulnum = x;
+	return(help);     
+}
+
+union special *UnionRealnum(float x)
+{
+	union special *help;
+
+	help = nextunion();
+	help->realnum = x;
+	return(help);     
+}
+
+union special *UnionLrealnum(double x)
+{
+	union special *help;
+
+	help = nextunion();
+	help->lrealnum = x;
+	return(help);     
+}
+
+union special *UnionString(char *x)
+{
+	union special *help;
+
+	help = nextunion();
+	help->string = x;
+	return(help);     
+}
+
+
+/*--------------------------------------------------------------------*/
+/* Build syntax tree nodes                                            */
+/*--------------------------------------------------------------------*/
+
+/* Table for varargs */
+
+static yysyntaxtree TreeTab[1024];
+
+#ifdef USERFTYPE
+#ifndef USERFINIT
+#define USERFINIT ((USERFTYPE)0)
+#endif
+#endif
+
+/* without sons */
+
+syntaxtree BuildCont(int mtag,union special *x,YYLTYPE *l)
+{
+        yysyntaxtree help;
+        help = st_malloc(1);
+
+	/*__yy_bcopy(x,&help->contents, sizeof(union special));*/
+	help->contents = *x;
+	freeunion(x);
+	tag(help)          = mtag;
+	xfirst_line(help)   =l->first_line;
+	xfirst_column(help) =l->first_column;
+	xlast_line(help)    =l->last_line;
+	xlast_column(help)  =l->last_column;
+	xfather(help)       =(yysyntaxtree)0;
+#ifdef USERFTYPE
+	user_field(help)    =USERFINIT; 
+#endif
+
+	son1(help) = (yysyntaxtree)0; 
+
+        return(help);
+}
+
+/* with sons */
+
+yysyntaxtree BuildTree(int mtag,int len,union special *x,YYLTYPE *l, ...)
+{
+	int i,j;
+	va_list pvar;
+	yysyntaxtree help;
+
+	va_start(pvar,l);
+
+	i = 0;
+	help = va_arg(pvar, yysyntaxtree);
+	while (i < len) {
+		TreeTab[i++] = help;
+		help = va_arg(pvar, yysyntaxtree);
+	}
+	va_end(pvar);
+
+        help = st_malloc((i<1?1:i));
+
+	/*__yy_bcopy(x,&help->contents, sizeof(union special));*/
+	help->contents = *x;
+	freeunion(x);
+	tag(help)          = mtag;
+	xfirst_line(help)   =l->first_line;
+	xfirst_column(help) =l->first_column;
+	xlast_line(help)    =l->last_line;
+	xlast_column(help)  =l->last_column;
+	xfather(help)       =(yysyntaxtree)0;
+#ifdef USERFTYPE
+	user_field(help)    =USERFINIT; 
+#endif
+
+	for (j=1; j<=i; j++) {
+		son(help,j) = TreeTab[j-1]; 
+		if (TreeTab[j-1]!=(yysyntaxtree)0)
+			xfather(TreeTab[j-1]) = help;
+	}
+        return(help);
+}
+
+
+/* copy syntax tree */
+
+yysyntaxtree Copy(yysyntaxtree x)
+{
+	register int j,len;
+        yysyntaxtree help; 
+
+	if (!x) return(x);
+	len = nr_of_sons(x);
+        help = st_malloc((len<1?1:len));
+
+	/*__yy_bcopy(&x->contents,&help->contents, sizeof(union special));*/
+	help->contents = x->contents;
+	tag(help)          = tag(x);
+	xfirst_line(help)   = xfirst_line(x);
+	xfirst_column(help) = xfirst_column(x);
+	xlast_line(help)    = xlast_line(x);
+	xlast_column(help)  = xlast_column(x);
+	xfather(help)       = (yysyntaxtree)0;
+#ifdef USERFTYPE
+	user_field(help)    =user_field(x); 
+#endif
+	son1(help) = (yysyntaxtree)0; 
+
+	for (j=1; j<=len; j++) {
+		son(help,j) = Copy(son(x,j)); 
+		if (son(help,j))
+			xfather(son(help,j)) = help; 
+	}
+        return(help);
+}
+
+/* revert list */
+
+yysyntaxtree Revert(yysyntaxtree list)
+{
+        yysyntaxtree last, act, next; 
+
+	last = (yysyntaxtree)0;
+	act  = list;
+	while (act) {
+		next = son2(act);
+		son2(act) = last;
+		if (last) xfather(last)=act;
+		last = act;	
+		act = next;
+	}
+	if (last) xfather(last)=(yysyntaxtree)0;
+        return(last);
+}
+
+/*--------------------------------------------------------------------*/
+
+
 
