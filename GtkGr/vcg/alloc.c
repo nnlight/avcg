@@ -1385,58 +1385,47 @@ DLLIST x;
 /*  Deallocation of all temporary lists 
  *  ===================================
  */
-
-
-#ifdef ANSI_C
 void	free_all_lists(void)
-#else
-void	free_all_lists()
-#endif
 {
 	free_tmpnodes();
 	free_tmpedges();
-        free_nodelists();
+	free_nodelists();
 	free_edgelists();
 	free_connect();
-}
+} /* free_all_lists */
 
 
 /*  Reinitialization of all struct keeping lists 
  *  --------------------------------------------
  */
-
-#ifdef ANSI_C
 void    reinit_all_lists(void)
-#else
-void    reinit_all_lists()
-#endif
 {
-	ufoldstart  = NULL;
-        foldstart   = NULL;
-        foldstops   = NULL;
-        f_subgraphs = NULL;
-        uf_subgraphs= NULL;
-	invis_nodes	 = NULL;
-	labellist	 = NULL;
-	labellistend 	 = NULL;
+	ufoldstart   = NULL;
+	foldstart    = NULL;
+	foldstops    = NULL;
+	f_subgraphs  = NULL;
+	uf_subgraphs = NULL;
+	invis_nodes  = NULL;
+	labellist    = NULL;
+	labellistend = NULL;
 	dummylist	 = NULL;
 
-	nodeanz 	 = 0; 
-	dummyanz  	 = 0;
-	nodelist	 = NULL;
-	nodelistend	 = NULL;
+	nodeanz          = 0;
+	dummyanz         = 0;
+	nodelist         = NULL;
+	nodelistend      = NULL;
 	graphlist        = NULL;
 	graphlistend     = NULL;
-	tmpnodelist	 = NULL;
+	tmpnodelist      = NULL;
 	node_freelist    = NULL;
 
 	tmpnconslist     = NULL;
 	ncons_freelist   = NULL;
 
-	edgeanz 	 = 0;
-	edgelist     	 = NULL;
-	edgelistend  	 = NULL;
-	tmpedgelist   	 = NULL;
+	edgeanz          = 0;
+	edgelist         = NULL;
+	edgelistend      = NULL;
+	tmpedgelist      = NULL;
 	edge_freelist    = NULL;
 
 	near_edge_list      = NULL;
@@ -1445,10 +1434,10 @@ void    reinit_all_lists()
 	tmpeconslist        = NULL;
 	econs_freelist      = NULL;
 
-	connectlist	 = NULL;
+	connectlist      = NULL;
 	connect_freelist = NULL;
 
-	dllist_freelist	 = NULL;
-}
+	dllist_freelist  = NULL;
+} /* reinit_all_lists */
 
 

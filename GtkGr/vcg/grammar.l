@@ -8,12 +8,8 @@
  
 #include "grammar.h"
 
-
 #include <stdio.h>
-
 #include <string.h>
-
-#include "y.tab.h"
 
 
 /*
@@ -55,14 +51,6 @@ extern YY_CHAR *yytext;
 #include <malloc.h>
 #endif
  
-
- 
-
-
-
-#include "grammar.h"
-
-
 
 /*--------------------------------------------------------------------*/
 
@@ -870,7 +858,7 @@ extern YYLTYPE yylloc;
 
 void init_lex(void)
 {
-	yy_init = 0;
+	/*yy_init = 0;*/
 }
 
 
