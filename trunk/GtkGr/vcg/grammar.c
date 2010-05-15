@@ -34,8 +34,6 @@ int nr_errors;
  *   errors.
  */
 
-static char myprivmessage[16000];  /* Please DON'T reuse this */
-
 void syntaxerror(int line, int pos, const char *fmt, ...)
 {
 	va_list args;
@@ -58,11 +56,8 @@ void syntaxerror(int line, int pos, const char *fmt, ...)
 
 void warning(int line, int pos, char *mesge)
 {
-        strcpy(myprivmessage,mesge);
-        if (islower(*myprivmessage))
-                *myprivmessage = toupper(*myprivmessage);
         (void)fprintf(stderr,"Warning (%s: l:%d p:%d): %s !\n",
-                filename,line,pos,myprivmessage);
+                filename,line,pos,mesge);
 }
 
 
@@ -393,7 +388,6 @@ static int parseheapsize = PARSEBLOCKSIZE; /* the size of one block */
 static void alloc_block(void)
 {
 	char *new_block;
-	yysyntaxtree help, *help2;
 
 	new_block = (char *)malloc(parseheapsize*sizeof(struct stree_node));
 	if (!new_block) fatal_error("memory exhausted");

@@ -1,18 +1,35 @@
 CC=gcc
 CFLAGS=-g -c -Wall `pkg-config --cflags gtk+-2.0`
+VCG_CFLAGS=-g -c
 LDFLAGS=-g `pkg-config --libs gtk+-2.0` -lstdc++
-VCG_SOURCES=vcg/lex.yy.c vcg/y.tab.c vcg/main.c vcg/alloc.c vcg/timelim.c vcg/options.c vcg/folding.c vcg/step0.c vcg/step1.c vcg/step2.c vcg/step3.c vcg/step4.c vcg/tree.c vcg/prepare.c vcg/drawlib.c vcg/drawstr.c vcg/grammar.c 
-SOURCES=GtkGr.cpp stdafx.cpp draw_buffer.cpp vr_graph.cpp ui.cpp gr.cpp preferences.cpp $(VCG_SOURCES)
+VCG_SOURCES=$(wildcard vcg/*.c)
+#SOURCES=$(wildcard *.cpp) $(VCG_SOURCES)
+SOURCES=$(wildcard *.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
+VCG_OBJECTS=$(VCG_SOURCES:.c=.o)
 EXECUTABLE=avcg
 
 all: $(SOURCES) $(EXECUTABLE)
 	
-$(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+$(EXECUTABLE): $(OBJECTS) $(VCG_OBJECTS)
+	$(CC) $(LDFLAGS) $(OBJECTS) $(VCG_OBJECTS) -o $@
 
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@
+
+.c.o:
+	$(CC) $(VCG_CFLAGS) $< -o $@
+
+vcg.o:
+	$(CC) $(CFLAGS) $(VCG_SOURCES) -o $@
+
+
+#for testing makefile syntax:)
+.PHONY: tes
+tes:
+	@echo $(VCG_SOURCES)
+	@echo === 
+	@echo $(VCG_OBJECTS)
 
 
 
@@ -20,9 +37,10 @@ $(EXECUTABLE): $(OBJECTS)
 #	gccmakedep -- $(CFLAGS) -- $(SOURCES)
 #	makedepend $(SOURCES)
 
+
 .PHONY: clean
 clean:
-	rm *.o *~ $(EXECUTABLE)
+	rm *.o vcg/*.o $(EXECUTABLE)
 
 .PHONY: doc
 doc:
