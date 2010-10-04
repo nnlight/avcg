@@ -46,7 +46,7 @@ ui_key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data)
 	UIController *uic = (UIController *)data;
 	DrawBuffer *db = uic->m_DrawBuffer.get();
 
-	int MOVE_PIXELS = Preferences::GetMovePixels();
+	int MOVE_PIXELS = g_Preferences->GetMovePixels();
 
 	switch (event->keyval)
 	{
@@ -193,7 +193,7 @@ ui_da_scroll_event_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
 		gint x = (int)event->x;
 		gint y = (int)event->y;
 		double new_scaling;
-		double SCALING_COEF = Preferences::GetScalingCoef();
+		double SCALING_COEF = g_Preferences->GetScalingCoef();
 		switch (event->direction)
 		{
 		case GDK_SCROLL_UP:
@@ -288,6 +288,16 @@ ui_activate_action( GtkAction *action, gpointer data)
 		{
 			uic->LoadGDL( uic->m_CurrentFilename.c_str());
 		}
+	} else if ( !strcmp( action_name, "Preferences_LoadDefaults") )
+	{
+		delete g_Preferences;
+		g_Preferences = new Preferences();
+	} else if ( !strcmp( action_name, "Preferences_Load") )
+	{
+		g_Preferences->LoadFromFile();
+	} else if ( !strcmp( action_name, "Preferences_Save") )
+	{
+		g_Preferences->SaveToFile();
 	}
 	return;
 } /* ui_activate_action */
@@ -329,8 +339,8 @@ static GtkActionEntry entries[] = {
     "_Open","<control>O",                      /* label, accelerator */     
     "Open a file",                             /* tooltip */
     G_CALLBACK (ui_activate_action) }, 
-  { "Reload", GTK_STOCK_REFRESH,                    /* name, stock id */
-    "_Reload","<control>R",                      /* label, accelerator */     
+  { "Reload", GTK_STOCK_REFRESH,               /* name, stock id */
+    "_Reload","<control>R",                    /* label, accelerator */     
     "Reload file",                             /* tooltip */
     G_CALLBACK (ui_activate_action) }, 
   { "Save", GTK_STOCK_SAVE,                    /* name, stock id */
@@ -344,6 +354,18 @@ static GtkActionEntry entries[] = {
   { "Quit", GTK_STOCK_QUIT,                    /* name, stock id */
     "_Quit", "<control>Q",                     /* label, accelerator */     
     "Quit",                                    /* tooltip */
+    G_CALLBACK (ui_activate_action) },
+  { "Preferences_LoadDefaults", NULL,          /* name, stock id */
+    "LoadDefaults", NULL,                      /* label, accelerator */     
+    NULL,                                      /* tooltip */
+    G_CALLBACK (ui_activate_action) },
+  { "Preferences_Load", NULL,                  /* name, stock id */
+    "Load", NULL,                              /* label, accelerator */     
+    NULL,                                      /* tooltip */
+    G_CALLBACK (ui_activate_action) },
+  { "Preferences_Save", NULL,                  /* name, stock id */
+    "Save", NULL,                              /* label, accelerator */     
+    NULL,                                      /* tooltip */
     G_CALLBACK (ui_activate_action) },
   { "About", NULL,                             /* name, stock id */
     "_About", "<control>A",                    /* label, accelerator */     
@@ -431,6 +453,10 @@ static const gchar *ui_info =
 "      <separator/>"
 "    </menu>"
 "    <menu action='PreferencesMenu'>"
+"      <menuitem action='Preferences_LoadDefaults'/>"
+"      <menuitem action='Preferences_Load'/>"
+"      <menuitem action='Preferences_Save'/>"
+"      <separator/>"
 "      <menu action='ColorMenu'>"
 "        <menuitem action='Red'/>"
 "        <menuitem action='Green'/>"
@@ -555,6 +581,7 @@ UIController::UIController( const char *filename)
 	{
 		m_VRGraph->LoadGDL();
 		m_CurrentFilename = filename;
+		gtk_window_set_title( GTK_WINDOW(main_window), filename);
 	}
 	m_DrawBuffer.reset( new DrawBuffer( da));
 	m_DrawBuffer->SetVRGraphRef( m_VRGraph.get());
@@ -624,6 +651,7 @@ void UIController::LoadGDL( const char *filename)
 	m_VRGraph->LoadGDL();
 	m_DrawBuffer->SetVRGraphRef( m_VRGraph.get());
 	m_CurrentFilename = filename;
+	gtk_window_set_title( GTK_WINDOW(m_MainWindow), filename);
 } /* UIController::LoadGDL */
 
 void UIController::UpdateStatusbarScaling( double scaling)
