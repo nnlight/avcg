@@ -8,21 +8,21 @@
 class Preferences
 {
 private:
-	bool is_init; /*! для проверок, что опции инициализированы */
 	double m_ScalingCoef; /*! коэффициент рескалирования, > 1. */
 	int m_MovePixels; /*! на скольлко пикселей сдвигается видимая облась по стрелкам */
 
-private:
-	static Preferences & GetPreferences();
-	void InitDefaultValues();
 public:
 	Preferences(void);
 	~Preferences(void);
 
-	static double GetScalingCoef() { return GetPreferences().m_ScalingCoef; };
-	static int GetMovePixels() { return GetPreferences().m_MovePixels; };
+	double GetScalingCoef() { return m_ScalingCoef; };
+	int GetMovePixels() { return m_MovePixels; };
 
+	void LoadFromFile();
+	void SaveToFile();
 };
+
+extern Preferences *g_Preferences;
 
 
 #endif /* _PREFERENCES_H_ */

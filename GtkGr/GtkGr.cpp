@@ -6,6 +6,7 @@
 #include <gtk/gtk.h>
 #include "ui.h"
 #include "vcg/vcg_iface.h"
+#include "preferences.h"
 
 
 #ifdef WIN32
@@ -42,6 +43,9 @@ int main(int argc, char *argv[])
 	//gtk_init(&iDummy,NULL) ;
 	gtk_init(&argc,/*(char***)*/&argv) ;
 
+	// Загружаем настройки
+	g_Preferences = new Preferences();
+	g_Preferences->LoadFromFile();
 	// строим GUI
 	std::auto_ptr<UIController> uic( new UIController( filename));
 

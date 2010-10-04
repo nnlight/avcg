@@ -179,11 +179,147 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\vcg\alloc.c"
+				RelativePath=".\draw_buffer.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\draw_buffer.cpp"
+				RelativePath=".\gr.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\GtkGr.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\preferences.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\stdafx.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ui.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\vr_graph.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
+			<File
+				RelativePath=".\draw_buffer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\gr.h"
+				>
+			</File>
+			<File
+				RelativePath=".\preferences.h"
+				>
+			</File>
+			<File
+				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ui.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vr_graph.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			>
+		</Filter>
+		<Filter
+			Name="vcg_headers"
+			>
+			<File
+				RelativePath=".\vcg\alloc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\drawchr.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\drawlib.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\drawstr.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\folding.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\gdl_defs.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\globals.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\grammar.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\grprint.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\main.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\options.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\steps.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\timelim.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\timing.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\vcg_defs.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\vcg_iface.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vcg\y.tab.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="vcg_sources"
+			>
+			<File
+				RelativePath=".\vcg\alloc.c"
 				>
 			</File>
 			<File
@@ -199,15 +335,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\gr.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\vcg\grammar.c"
-				>
-			</File>
-			<File
-				RelativePath=".\GtkGr.cpp"
 				>
 			</File>
 			<File
@@ -223,15 +351,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\preferences.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\vcg\prepare.c"
-				>
-			</File>
-			<File
-				RelativePath=".\stdafx.cpp"
 				>
 			</File>
 			<File
@@ -263,121 +383,9 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ui.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\vr_graph.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\vcg\y.tab.c"
 				>
 			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
-			>
-			<File
-				RelativePath=".\vcg\alloc.h"
-				>
-			</File>
-			<File
-				RelativePath=".\draw_buffer.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\drawchr.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\drawlib.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\drawstr.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\folding.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\gdl_defs.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\globals.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gr.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\grammar.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\grprint.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\main.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\options.h"
-				>
-			</File>
-			<File
-				RelativePath=".\preferences.h"
-				>
-			</File>
-			<File
-				RelativePath=".\stdafx.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\steps.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\timelim.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\timing.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ui.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\vcg_defs.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\vcg_iface.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vr_graph.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\y.tab.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
-			>
 		</Filter>
 	</Files>
 	<Globals>
