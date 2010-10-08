@@ -298,6 +298,9 @@ ui_activate_action( GtkAction *action, gpointer data)
 	} else if ( !strcmp( action_name, "Preferences_Save") )
 	{
 		g_Preferences->SaveToFile();
+	} else if ( !strcmp( action_name, "About") )
+	{
+		uic->ShowAboutDialog();
 	}
 	return;
 } /* ui_activate_action */
@@ -671,3 +674,82 @@ void UIController::UpdateStatusbarScaling( double scaling)
 	g_free (msg);
 	return;
 } /* UIController::UpdateStatusbarScaling */
+void UIController::ShowAboutDialog()
+{
+#if 0
+		gtk_show_about_dialog( GTK_WINDOW( uic->m_MainWindow),
+			 "program-name", "GTK+ Code Demos",
+			 "version", /*PACKAGE_VERSION*/__FILE__,
+			 "copyright", "(C) 1997-2009 The GTK+ Team",
+			 "license", "GNU General Public License v2" /*license*/,
+			 "website", "http://www.gtk.org",
+			 "comments", "Program to demonstrate GTK+ functions.",
+			 "authors", "authors_value",
+			 "documenters", "documenters_v",
+			 "logo", "logo_v"/*transparent*/,
+			 "title", "About GTK+ Code Demos",
+			 NULL);*/
+#endif
+	GdkPixbuf *pixbuf, *transparent;
+	gchar *filename;
+
+	const gchar *authors[] = {
+		"John Smith* <nnlight@gmail.com>",
+		"and many more...",
+		NULL
+	};
+
+	const gchar *documentors[] = {
+		"John Smith* <nnlight@gmail.com>",
+		"and many more...",
+		NULL
+	};
+
+	const gchar *license =
+		"GNU General Public License v2.\n"
+		"\n"
+		"\n"
+		"This program is free software; you can redistribute it and/or\n"
+		"modify it under the terms of the GNU General Public License\n"
+		"as published by the Free Software Foundation; either version 2\n"
+		"of the License, or (at your option) any later version.\n"
+		"\n"
+		"This program is distributed in the hope that it will be useful,\n"
+		"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+		"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+		"GNU General Public License for more details\n"
+		"\n"
+		"You should have received a copy of the GNU General Public License\n"
+		"along with this program; if not, write to the Free Software\n"
+		"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.\n";
+
+	pixbuf = NULL;
+	transparent = NULL;
+	filename = NULL/*demo_find_file ("gtk-logo-rgb.gif", NULL)*/;
+  if (filename)
+    {
+      pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+      g_free (filename);
+      transparent = gdk_pixbuf_add_alpha (pixbuf, TRUE, 0xff, 0xff, 0xff);
+      g_object_unref (pixbuf);
+    }
+
+	gtk_about_dialog_set_email_hook (0/*activate_email*/, NULL, NULL);
+	gtk_about_dialog_set_url_hook (0/*activate_url*/, NULL, NULL);
+	gtk_show_about_dialog( GTK_WINDOW( m_MainWindow),
+			"program-name", "avcg tool",
+			"version", "v0.1 (Build: " __DATE__ ")",
+			"comments", "Just another realization of xvcg tool based on GTK library.",
+			"copyright", "(C) 2009-2010 ...",
+			"website", "http://code.google.com/p/avcg/",
+			"license", license,
+			"authors", authors,
+			"documenters", documentors,
+			/*"logo", transparent,*/
+			"title", "About avcg tool",
+			 NULL);
+
+	/*if (transparent)*/
+		g_object_unref( transparent);
+	return;
+} /* UIController::ShowAboutDialog */
