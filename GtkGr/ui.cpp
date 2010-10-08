@@ -749,7 +749,7 @@ void UIController::ShowAboutDialog()
 			"title", "About avcg tool",
 			 NULL);
 
-	/*if (transparent)*/
+	if (transparent)
 		g_object_unref( transparent);
 	return;
 } /* UIController::ShowAboutDialog */
