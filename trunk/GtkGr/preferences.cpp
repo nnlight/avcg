@@ -11,12 +11,40 @@ Preferences *g_Preferences = NULL;
 Preferences::Preferences(void)
 	: m_ScalingCoef(1.1)
 	, m_MovePixels(50)
+	, m_SizeX(600)
+	, m_SizeY(400)
 {
 } /* Preferences::Preferences */
 
 Preferences::~Preferences(void)
 {
 } /* Preferences::~Preferences */
+	
+int Preferences::GetKeyFileInteger( GKeyFile *key_file, const gchar *group_name, const gchar *key,
+									int default_val)
+{
+	GError *error = NULL;
+	int res = g_key_file_get_integer( key_file, group_name, key, &error);
+	if ( error != NULL )
+	{
+		g_error_free( error);
+		res = default_val;
+	}
+	return res;
+} /* Preferences::GetKeyFileInteger */
+
+double Preferences::GetKeyFileDouble( GKeyFile *key_file, const gchar *group_name, const gchar *key,
+									  double default_val)
+{
+	GError *error = NULL;
+	double res = g_key_file_get_double( key_file, group_name, key, &error);
+	if ( error != NULL )
+	{
+		g_error_free( error);
+		res = default_val;
+	}
+	return res;
+} /* Preferences::GetKeyFileDouble */
 
 void Preferences::LoadFromFile()
 {
@@ -38,25 +66,11 @@ void Preferences::LoadFromFile()
 	printf( "avcg.ini loaded from %s\n", full_path);
 	g_free( full_path);
 
-	error = NULL;
-	double scaling = g_key_file_get_double( key_file, "General", "ScalingCoef", &error);
-	if ( error != NULL )
-	{
-		g_error_free( error);
-	} else
-	{
-		m_ScalingCoef = scaling;
-	}
-	
-	error = NULL;
-	int move_pixels = g_key_file_get_integer( key_file, "General", "MovePixels", &error);
-	if ( error != NULL )
-	{
-		g_error_free( error);
-	} else
-	{
-		m_MovePixels = move_pixels;
-	}
+	m_ScalingCoef = GetKeyFileDouble( key_file, "General", "ScalingCoef", m_ScalingCoef);
+	m_MovePixels = GetKeyFileInteger( key_file, "General", "MovePixels", m_MovePixels);
+	m_SizeX = GetKeyFileInteger( key_file, "General", "SizeX", m_SizeX);
+	m_SizeY = GetKeyFileInteger( key_file, "General", "SizeY", m_SizeY);
+
 
 	g_key_file_free( key_file);
 } /* Preferences::LoadFromFile */
@@ -69,6 +83,8 @@ void Preferences::SaveToFile()
 
 	g_key_file_set_double( key_file, "General", "ScalingCoef", m_ScalingCoef);
 	g_key_file_set_integer( key_file, "General", "MovePixels", m_MovePixels);
+	g_key_file_set_integer( key_file, "General", "SizeX", m_SizeX);
+	g_key_file_set_integer( key_file, "General", "SizeY", m_SizeY);
 
 	gsize key_file_data_length = 0;
 	const gchar *key_file_data = g_key_file_to_data( key_file, &key_file_data_length, NULL);
