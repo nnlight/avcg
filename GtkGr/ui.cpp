@@ -556,7 +556,9 @@ UIController::UIController( const char *filename)
 	gtk_window_set_position(GTK_WINDOW(main_window), GTK_WIN_POS_CENTER);
 	// выставляем величину окантовки внутренней области главного окна
 	//gtk_container_set_border_width( GTK_CONTAINER(main_window), 5);
-	gtk_window_set_default_size( GTK_WINDOW(main_window), 600, 400);
+	gtk_window_set_default_size( GTK_WINDOW(main_window),
+							     g_Preferences->GetSizeX(),
+								 g_Preferences->GetSizeY());
 	// закрытие/уничтожение главного окна
 	gtk_signal_connect( GTK_OBJECT(main_window),"delete_event", GTK_SIGNAL_FUNC(ui_close_cb),NULL );
 	gtk_signal_connect( GTK_OBJECT(main_window),"destroy", GTK_SIGNAL_FUNC(gtk_main_quit), NULL);
