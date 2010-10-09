@@ -6,11 +6,10 @@
 #include "gr.h"
 #include "vcg/vcg_iface.h"
 
-using namespace std;
-
 
 
 class VRGraph;
+#define VRNODE_INFO_COUNT 3
 /**
  * Узел
  */
@@ -27,6 +26,7 @@ public:
 	int borderw_;       //!< ширина границы
 	int stretch_;
 	int shrink_;
+	string infos_[VRNODE_INFO_COUNT];
 public:
 	VRNode( VRGraph *graph, const char *title, int x, int y);
 	~VRNode();
@@ -71,6 +71,15 @@ private:
  */
 class VRGraph : public GrGraph
 {
+private:
+	struct VRIBox
+	{
+		int x_, y_;
+		int width_, height_;
+		VRNode *node_;
+		int info_num_;
+	};
+	std::list<VRIBox> ibox_list_;
 public:
 	VRGraph();
 	/* не предназначен для иcпользования в качестве базового класса */
@@ -79,6 +88,8 @@ public:
 	void AddNode( DrawBuffer *draw_buffer, int x, int y, const char *title, const char *label);
 	VRNode *AddSizedNode( int x, int y, int width, int height, const char *title, const char *label);
 	void Expose( DrawBuffer *draw_buffer);
+
+	void HandleInfoBoxPress( DrawBuffer *draw_buffer, int x, int y, int info_num);
 
 	/* загрузка графа из vcg */
 	void LoadGDL();
@@ -89,6 +100,7 @@ private:
 	void DrawNode( DrawBuffer *draw_buffer, VRNode *node);
 	void DrawEdgeArrow( DrawBuffer *draw_buffer, VREdge *edge, VRDir_t dir);
 	void DrawEdge( DrawBuffer *draw_buffer, VREdge *edge);
+	void DrawIBox( DrawBuffer *draw_buffer, VRIBox *ibox);
 
 };
 

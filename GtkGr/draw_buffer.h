@@ -68,6 +68,8 @@ public:
 	void ExposeDa( daint x, daint y, daint width, daint height);
 	void ButtonPress( daint x, daint y);
 	void ButtonPress2( daint x, daint y);
+	void ConvertDa2Vrg( daint da_x, daint da_y, vrgint &vrg_x, vrgint &vrg_y)
+	{ Da2Vrg( da_x, da_y, vrg_x, vrg_y); };
 
 	/* сдвинуть видимую область */
 	void MoveVisibleArea( gint delta, Axis_t axis);
@@ -78,7 +80,6 @@ public:
 
 	void PKey();
 	
-	void GetTextPixelSize( const char *text, int *width_p, int *height_p);
 	/* vrg-функции */
 	void SetBackgroundColor( Color_t c);
 	void SetCurrentColor( Color_t c);
@@ -86,7 +87,13 @@ public:
 	void DrawLine( vrgint x, vrgint y, vrgint endx, vrgint endy);
 	void DrawRectangle( vrgint x, vrgint y, vrgint width, vrgint height, bool filled);
 	void DrawTriangle( vrgint x1, vrgint y1, vrgint x2, vrgint y2, vrgint x3, vrgint y3, bool filled);
+	void GetTextPixelSize( const char *text, int *width_p, int *height_p);
 	void DrawText( vrgint x, vrgint y, const char *text);
+
+	void PublicInvalidateDa() { InvalidateDa( NULL); };
+	void PublicFillByBgColor() 
+	{ InitializePixmapToBackgroundColor( m_Pixmap, m_PixmapDims[AXIS_X], m_PixmapDims[AXIS_Y]); };
+
 private:
 	void InvalidateDa( const GdkRectangle *da_update_rect);
 

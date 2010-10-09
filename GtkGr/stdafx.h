@@ -20,6 +20,16 @@
 #include <string.h>
 
 
+//using namespace std;
+typedef std::string string;
+
+/**
+ * В заданной строке (rStrText) заменить все вхождения заданной подстроки
+ * (rcStrFind) на заданную строку (rcStrReplace).
+ */
+extern void
+replace( string &rStrText, const string &rcStrFind, const string &rcStrReplace);
+
 /** 
  * Фатальная ошибка, по которой приложение аварийно завершается.
  * Вызывается в случаях внутренних ошибок (вместо assert, если хочется, чтобы проверка

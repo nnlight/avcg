@@ -142,7 +142,18 @@ ui_da_button_press_event_cb( GtkWidget      *da,
 	int y = (int)event->y;
 	if (event->button == 1)
 	{
-		db->ButtonPress( x, y);
+		if ( uic->m_CurrentMode == MODE_VIEW_NODE_INFO1
+			|| uic->m_CurrentMode == MODE_VIEW_NODE_INFO2
+			|| uic->m_CurrentMode == MODE_VIEW_NODE_INFO3 )
+		{
+			int vrg_x, vrg_y;
+			db->ConvertDa2Vrg( x, y, vrg_x, vrg_y);
+			uic->m_VRGraph->HandleInfoBoxPress( db, vrg_x, vrg_y,
+				                                uic->m_CurrentMode - MODE_VIEW_NODE_INFO1 + 1);
+		} else
+		{
+			db->ButtonPress( x, y);
+		}
 	} else if (event->button == 2)
 	{
 		db->ButtonPress2( x, y);
@@ -390,6 +401,15 @@ static GtkRadioActionEntry mode_entries[] = {
   { "View", NULL,                              /* name, stock id */
     "_View", NULL,                     /* label, accelerator */     
     "Режим просмотра", MODE_VIEW },                       /* tooltip, value */
+  { "Mode_ViewNodeInfo1", NULL,                              /* name, stock id */
+    "ViewNodeInfo1", NULL,                     /* label, accelerator */     
+    "", MODE_VIEW_NODE_INFO1 },                       /* tooltip, value */
+  { "Mode_ViewNodeInfo2", NULL,                              /* name, stock id */
+    "ViewNodeInfo2", NULL,                     /* label, accelerator */     
+    "", MODE_VIEW_NODE_INFO2 },                       /* tooltip, value */
+  { "Mode_ViewNodeInfo3", NULL,                              /* name, stock id */
+    "ViewNodeInfo3", NULL,                     /* label, accelerator */     
+    "", MODE_VIEW_NODE_INFO3 },                       /* tooltip, value */
 };
 
 static GtkToggleActionEntry toggle_entries[] = {
@@ -453,6 +473,9 @@ static const gchar *ui_info =
 "      <menuitem action='AddNode'/>"
 "      <menuitem action='AddEdge'/>"
 "      <menuitem action='View'/>"
+"      <menuitem action='Mode_ViewNodeInfo1'/>"
+"      <menuitem action='Mode_ViewNodeInfo2'/>"
+"      <menuitem action='Mode_ViewNodeInfo3'/>"
 "      <separator/>"
 "    </menu>"
 "    <menu action='PreferencesMenu'>"
