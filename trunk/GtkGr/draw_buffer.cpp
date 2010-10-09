@@ -424,13 +424,6 @@ void DrawBuffer::InvalidateDa( const GdkRectangle *da_update_rect)
 								FALSE);
 } /* DrawBuffer::InvalidateDa */
 
-void DrawBuffer::GetTextPixelSize( const char *text, int *width_p, int *height_p)
-{
-	PangoLayout *layout;
-	layout = gtk_widget_create_pango_layout( m_da, text);
-	pango_layout_get_pixel_size( layout, width_p, height_p);
-	g_object_unref( layout);
-}
 void DrawBuffer::SetBackgroundColor( Color_t c)
 {
 	assert( c < m_AllocedColors );
@@ -488,20 +481,12 @@ void DrawBuffer::DrawTriangle( vrgint x1, vrgint y1, vrgint x2, vrgint y2, vrgin
 	gdk_draw_polygon( m_Pixmap, m_GC, pm_filled, 
 					  pm_p, 3);
 }
-/* В заданной строке (rStrText) заменить все вхождения заданной подстроки
-(rcStrFind) на заданную строку (rcStrReplace). */
-static void 
-replace( string &rStrText, const string &rcStrFind, const string &rcStrReplace)
+void DrawBuffer::GetTextPixelSize( const char *text, int *width_p, int *height_p)
 {
-	const string::size_type
-	ncSizeFind = rcStrFind.length(),
-	ncSizeReplace = rcStrReplace.length();
-	string::size_type nPos = rStrText.find(rcStrFind);
-	while (nPos != string::npos)
-	{
-		rStrText.replace(nPos, ncSizeFind, rcStrReplace);
-		nPos = rStrText.find(rcStrFind, nPos + ncSizeReplace);
-	}
+	PangoLayout *layout;
+	layout = gtk_widget_create_pango_layout( m_da, text);
+	pango_layout_get_pixel_size( layout, width_p, height_p);
+	g_object_unref( layout);
 }
 void DrawBuffer::DrawText( vrgint x, vrgint y, const char *text)
 {

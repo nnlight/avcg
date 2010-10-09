@@ -110,7 +110,62 @@ void VRGraph::Expose( DrawBuffer *draw_buffer)
 		assert( dynamic_cast<VREdge*>(e) );
 		DrawEdge( draw_buffer, edge);
 	}
+	for ( std::list<VRIBox>::iterator iter = ibox_list_.begin();
+		  iter != ibox_list_.end();
+		  ++iter )
+	{
+		DrawIBox( draw_buffer, &(*iter));
+	}
 } /* VRGraph::Expose */
+
+void VRGraph::HandleInfoBoxPress( DrawBuffer *draw_buffer, int x, int y, int info_num)
+{
+	for ( std::list<VRIBox>::reverse_iterator riter = ibox_list_.rbegin();
+		  riter != ibox_list_.rend();
+		  ++riter )
+	{
+		if ( riter->x_ <= x  && x < riter->x_ + riter->width_
+			 && riter->y_ <= y  && y < riter->y_ + riter->height_
+			 && riter->info_num_ == info_num)
+		{
+			void *r_addr = &(*riter);
+			void *addr = &(*--riter.base());
+			assert( r_addr == addr );
+			ibox_list_.erase( --riter.base());
+			draw_buffer->PublicFillByBgColor();
+			Expose( draw_buffer);
+			draw_buffer->PublicInvalidateDa();
+			return;
+		}
+	}
+	for ( GrNode *n = GrGetFirstNode();
+		  n; 
+		  n = n->GrGetNextNode() )
+	{
+		VRNode *node = static_cast<VRNode*>(n);
+		assert( dynamic_cast<VRNode*>(n) );
+		if ( node->x_ <= x  && x < node->x_ + node->width_
+			 && node->y_ <= y  && y < node->y_ + node->height_
+			 && !node->infos_[info_num-1].empty() )
+		{
+			VRIBox ibox;
+			int twidth, theight;
+			ibox.x_ = node->x_;
+			ibox.y_ = node->y_;
+			/* TODO: для инфобоксов наверно правила не такие как для узлов */
+			draw_buffer->GetTextPixelSize( node->infos_[info_num-1].c_str(), &twidth, &theight);
+			ibox.width_ = twidth + 2*(node->borderw_ + NODE_LABEL_MARGIN);
+			ibox.height_ = theight + 2*(node->borderw_ + NODE_LABEL_MARGIN);
+			ibox.node_ = node;
+			ibox.info_num_ = info_num;
+			ibox_list_.push_back( ibox);
+			Expose( draw_buffer);
+			draw_buffer->PublicInvalidateDa();
+			return;
+		}
+	}
+	return;
+} /* VRGraph::HandleInfoBoxPress */
 
 void VRGraph::DrawNode( DrawBuffer *draw_buffer, VRNode *node)
 {
@@ -191,6 +246,20 @@ void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
 		DrawEdgeArrow( draw_buffer, edge, VRDIR_BACKWARD);
 	}
 } /* VRGraph::DrawEdge */
+
+void VRGraph::DrawIBox( DrawBuffer *draw_buffer, VRIBox *ibox)
+{
+	VRNode *node = ibox->node_;
+	draw_buffer->SetCurrentColor( node->color_);
+	draw_buffer->DrawRectangle( ibox->x_, ibox->y_, ibox->width_, ibox->height_, true);
+	draw_buffer->SetLineWidth( node->borderw_);
+	draw_buffer->SetCurrentColor( node->bcolor_);
+	draw_buffer->DrawRectangle( ibox->x_, ibox->y_, ibox->width_, ibox->height_, false);
+	draw_buffer->SetCurrentColor( node->textcolor_);
+	draw_buffer->DrawText( ibox->x_ + node->borderw_ + NODE_LABEL_MARGIN, 
+						   ibox->y_ + node->borderw_ + NODE_LABEL_MARGIN,
+						   node->infos_[ibox->info_num_ - 1].c_str());
+} /* VRGraph::DrawIBox */
 
 
 
@@ -306,6 +375,9 @@ void VRGraph::LoadGDL()
 		node->bcolor_ = (Color_t)NBCOLOR(v);
 		node->borderw_ = NBORDERW(v);
 		node->textcolor_ = (Color_t)NTCOLOR(v);
+		node->infos_[0] = NINFO1(v);
+		node->infos_[1] = NINFO2(v);
+		node->infos_[2] = NINFO3(v);
 	}
 
 	/* дуги */
