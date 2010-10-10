@@ -1,6 +1,7 @@
 #include "preferences.h"
 #include "stdafx.h"
 #include <glib.h>
+#include "vcg/gdl_defs.h"
 
 /**
  * Глобальный экземпляр, в котором хранятся текущие значения опций 
@@ -13,6 +14,7 @@ Preferences::Preferences(void)
 	, m_MovePixels(50)
 	, m_SizeX(600)
 	, m_SizeY(400)
+	, m_DefaultBgColorNum( DARKYELLOW)
 {
 } /* Preferences::Preferences */
 
@@ -70,6 +72,7 @@ void Preferences::LoadFromFile()
 	m_MovePixels = GetKeyFileInteger( key_file, "General", "MovePixels", m_MovePixels);
 	m_SizeX = GetKeyFileInteger( key_file, "General", "SizeX", m_SizeX);
 	m_SizeY = GetKeyFileInteger( key_file, "General", "SizeY", m_SizeY);
+	m_DefaultBgColorNum = GetKeyFileInteger( key_file, "General", "DefaultBgColorNum", m_DefaultBgColorNum);
 
 
 	g_key_file_free( key_file);
@@ -85,6 +88,7 @@ void Preferences::SaveToFile()
 	g_key_file_set_integer( key_file, "General", "MovePixels", m_MovePixels);
 	g_key_file_set_integer( key_file, "General", "SizeX", m_SizeX);
 	g_key_file_set_integer( key_file, "General", "SizeY", m_SizeY);
+	g_key_file_set_integer( key_file, "General", "DefaultBgColorNum", m_DefaultBgColorNum);
 
 	gsize key_file_data_length = 0;
 	const gchar *key_file_data = g_key_file_to_data( key_file, &key_file_data_length, NULL);

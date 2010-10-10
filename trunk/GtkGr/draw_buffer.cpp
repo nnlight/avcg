@@ -1,5 +1,6 @@
 #include "draw_buffer.h"
 #include "vr_graph.h"
+#include "preferences.h"
 
 /**
  * Base Original Color maps
@@ -164,7 +165,7 @@ void DrawBuffer::ConfigureDa()
 
 	m_GC = gdk_gc_new( /*m_da->window*/ m_Pixmap);
 	AllocColormap();
-	SetBackgroundColor( /*WHITE*/DARKYELLOW);
+	SetBackgroundColor( /*WHITE*/(Color_t)g_Preferences->GetDefaultBgColorNum());
 	SetCurrentColor( BLACK);
 
 	m_VisibleAreaBase[AXIS_X] = dims[AXIS_X] / 3;

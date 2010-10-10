@@ -14,6 +14,7 @@ private:
 	int m_MovePixels; /*! на скольлко пикселей сдвигается видимая облась по стрелкам */
 	int m_SizeX; /*! ширина окна в пикселях */
 	int m_SizeY; /*! высота окна в пикселях */
+	int m_DefaultBgColorNum; /*! номер цаета фона по умолчанию */
 
 private:
 	int GetKeyFileInteger( GKeyFile *key_file, const gchar *group_name, const gchar *key,
@@ -29,6 +30,7 @@ public:
 	int GetMovePixels() { return m_MovePixels; };
 	int GetSizeX() { return m_SizeX; };
 	int GetSizeY() { return m_SizeY; };
+	int GetDefaultBgColorNum() { return m_DefaultBgColorNum; };
 
 	void LoadFromFile();
 	void SaveToFile();
