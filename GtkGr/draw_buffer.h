@@ -77,6 +77,7 @@ public:
 	/** изменить Scaling, координаты передаются для того, чтобы та точка графа,
 	   которая находится под ними, осталась бы на том же месте */
 	double ChangeScaling( double scaling_factor, daint x, daint y);
+	double GetScaling() { return m_Scaling; };
 
 	void PKey();
 	
