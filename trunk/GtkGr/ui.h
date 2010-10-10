@@ -48,7 +48,7 @@ public:
 
 private:
 	GtkWidget *ConstrMenubar( GtkWidget *main_window);
-	void UpdateStatusbarScaling( double scaling);
+	void UpdateStatusbar();
 	void ShowAboutDialog();
 private:
 	friend gboolean ui_key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data);

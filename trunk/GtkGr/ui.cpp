@@ -203,17 +203,16 @@ ui_da_scroll_event_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
 		/* при нажатом Ctrl'е увеличиваем/уменьшаем граф */
 		gint x = (int)event->x;
 		gint y = (int)event->y;
-		double new_scaling;
 		double SCALING_COEF = g_Preferences->GetScalingCoef();
 		switch (event->direction)
 		{
 		case GDK_SCROLL_UP:
-			new_scaling = db->ChangeScaling( SCALING_COEF, x, y);
-			uic->UpdateStatusbarScaling( new_scaling);
+			db->ChangeScaling( SCALING_COEF, x, y);
+			uic->UpdateStatusbar();
 			break;
 		case GDK_SCROLL_DOWN:
-			new_scaling = db->ChangeScaling( 1./SCALING_COEF, x, y);
-			uic->UpdateStatusbarScaling( new_scaling);
+			db->ChangeScaling( 1./SCALING_COEF, x, y);
+			uic->UpdateStatusbar();
 			break;
 		default:
 			break;
@@ -335,6 +334,7 @@ ui_activate_radio_action_mode( GtkAction *action, /* Действие на ко�
 
 	int old_mode = uic->m_CurrentMode;
 	uic->m_CurrentMode = (Mode_t)gtk_radio_action_get_current_value( current);
+	uic->UpdateStatusbar();
 	g_message( "Radio action \"%s\" (%d->%d) selected", name, old_mode, uic->m_CurrentMode);
 } /* ui_activate_radio_action_mode */
 
@@ -399,16 +399,16 @@ static GtkRadioActionEntry mode_entries[] = {
     "Add_Edge", NULL,                    /* label, accelerator */     
     "", MODE_ADD_EDGE },                    /* tooltip, value */
   { "View", NULL,                              /* name, stock id */
-    "_View", NULL,                     /* label, accelerator */     
+    "_View", "v",                     /* label, accelerator */     
     "Режим просмотра", MODE_VIEW },                       /* tooltip, value */
   { "Mode_ViewNodeInfo1", NULL,                              /* name, stock id */
-    "ViewNodeInfo1", NULL,                     /* label, accelerator */     
+    "ViewNodeInfo1", "i",                     /* label, accelerator */     
     "", MODE_VIEW_NODE_INFO1 },                       /* tooltip, value */
   { "Mode_ViewNodeInfo2", NULL,                              /* name, stock id */
-    "ViewNodeInfo2", NULL,                     /* label, accelerator */     
+    "ViewNodeInfo2", "j",                     /* label, accelerator */     
     "", MODE_VIEW_NODE_INFO2 },                       /* tooltip, value */
   { "Mode_ViewNodeInfo3", NULL,                              /* name, stock id */
-    "ViewNodeInfo3", NULL,                     /* label, accelerator */     
+    "ViewNodeInfo3", "<shift>i",                     /* label, accelerator */     
     "", MODE_VIEW_NODE_INFO3 },                       /* tooltip, value */
 };
 
@@ -648,7 +648,7 @@ printf("before gtk_widget_show_all(main_window)\n");
 	m_MainWindow = main_window;
 	m_Statusbar = statusbar;
 
-	UpdateStatusbarScaling( 1.);
+	UpdateStatusbar();
 	return;
 } /* UIController::UIController */
 
@@ -682,7 +682,7 @@ void UIController::LoadGDL( const char *filename)
 	gtk_window_set_title( GTK_WINDOW(m_MainWindow), filename);
 } /* UIController::LoadGDL */
 
-void UIController::UpdateStatusbarScaling( double scaling)
+void UIController::UpdateStatusbar()
 {
 	gchar *msg;
 
@@ -691,12 +691,15 @@ void UIController::UpdateStatusbarScaling( double scaling)
 	 */
 	gtk_statusbar_pop( GTK_STATUSBAR( m_Statusbar), 0);
 
-	msg = g_strdup_printf( "Current Scaling: %f", scaling);
+	msg = g_strdup_printf( "Current Scaling: %f  Mode: %d",
+							m_DrawBuffer->GetScaling(),
+							m_CurrentMode);
 	gtk_statusbar_push( GTK_STATUSBAR( m_Statusbar), 0, msg);
 
 	g_free (msg);
 	return;
-} /* UIController::UpdateStatusbarScaling */
+} /* UIController::UpdateStatusbar */
+
 void UIController::ShowAboutDialog()
 {
 #if 0
