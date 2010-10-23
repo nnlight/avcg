@@ -1,24 +1,31 @@
 CC=gcc
 CFLAGS=-g -c -Wall `pkg-config --cflags gtk+-2.0`
 VCG_CFLAGS=-g -c
+MW_CFLAGS=-g -c -Wall `pkg-config --cflags gtk+-2.0`
 LDFLAGS=-g `pkg-config --libs gtk+-2.0` -lstdc++
 VCG_SOURCES=$(wildcard vcg/*.c)
+MW_SOURCES=$(wildcard mw/*.c)
 #SOURCES=$(wildcard *.cpp) $(VCG_SOURCES)
 SOURCES=$(wildcard *.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
 VCG_OBJECTS=$(VCG_SOURCES:.c=.o)
+MW_OBJECTS=$(MW_SOURCES:.c=.o)
 EXECUTABLE=avcg
 
+.PHONY: all
 all: $(SOURCES) $(EXECUTABLE)
 	
-$(EXECUTABLE): $(OBJECTS) $(VCG_OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) $(VCG_OBJECTS) -o $@
+$(EXECUTABLE): $(OBJECTS) $(VCG_OBJECTS) $(MW_OBJECTS)
+	$(CC) $(LDFLAGS) $(OBJECTS) $(VCG_OBJECTS) $(MW_OBJECTS) -o $@
 
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@
 
-.c.o:
+vcg/%.o: vcg/%.c
 	$(CC) $(VCG_CFLAGS) $< -o $@
+
+mw/%.o: mw/%.c
+	$(CC) $(MW_CFLAGS) $< -o $@
 
 vcg.o:
 	$(CC) $(CFLAGS) $(VCG_SOURCES) -o $@
@@ -40,7 +47,7 @@ tes:
 
 .PHONY: clean
 clean:
-	rm *.o vcg/*.o $(EXECUTABLE)
+	rm *.o vcg/*.o mw/*.o $(EXECUTABLE)
 
 .PHONY: doc
 doc:
