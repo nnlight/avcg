@@ -387,6 +387,22 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="mw_headers"
+			>
+			<File
+				RelativePath=".\mw\duck.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="mw_sources"
+			>
+			<File
+				RelativePath=".\mw\duck.c"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>
