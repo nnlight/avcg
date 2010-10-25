@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="GtkGr"
-	ProjectGUID="{99530140-245B-4A16-9BC4-D0C545DE6AC7}"
-	RootNamespace="GtkGr"
+	Name="tes_mw"
+	ProjectGUID="{42C5597C-79D1-45B0-95AB-CFB6DCF760E2}"
+	RootNamespace="tes_mw"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -46,7 +46,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
-				WarningLevel="2"
+				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
 			/>
@@ -121,7 +121,7 @@
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
-				WarningLevel="2"
+				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
@@ -179,31 +179,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\draw_buffer.cpp"
+				RelativePath=".\mw\mw_duck.c"
 				>
 			</File>
 			<File
-				RelativePath=".\gr.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\GtkGr.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\preferences.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\stdafx.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ui.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\vr_graph.cpp"
+				RelativePath=".\tes_mw.cpp"
 				>
 			</File>
 		</Filter>
@@ -213,27 +193,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\draw_buffer.h"
-				>
-			</File>
-			<File
-				RelativePath=".\gr.h"
-				>
-			</File>
-			<File
-				RelativePath=".\preferences.h"
-				>
-			</File>
-			<File
-				RelativePath=".\stdafx.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ui.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vr_graph.h"
+				RelativePath=".\mw\mw_duck.h"
 				>
 			</File>
 		</Filter>
@@ -242,166 +202,6 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
-		</Filter>
-		<Filter
-			Name="vcg_headers"
-			>
-			<File
-				RelativePath=".\vcg\alloc.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\drawchr.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\drawlib.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\drawstr.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\folding.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\gdl_defs.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\globals.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\grammar.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\grprint.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\main.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\options.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\steps.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\timelim.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\timing.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\vcg_defs.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\vcg_iface.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\y.tab.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="vcg_sources"
-			>
-			<File
-				RelativePath=".\vcg\alloc.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\drawlib.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\drawstr.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\folding.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\grammar.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\lex.yy.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\main.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\options.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\prepare.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\step0.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\step1.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\step2.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\step3.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\step4.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\timelim.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\tree.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\y.tab.c"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="mw_headers"
-			>
-			<File
-				RelativePath=".\mw\mw_duck.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="mw_sources"
-			>
-			<File
-				RelativePath=".\mw\mw_duck.c"
-				>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>
