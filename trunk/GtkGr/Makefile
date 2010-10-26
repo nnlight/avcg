@@ -5,8 +5,9 @@ MW_CFLAGS=-g -c -Wall `pkg-config --cflags gtk+-2.0`
 LDFLAGS=-g `pkg-config --libs gtk+-2.0` -lstdc++
 VCG_SOURCES=$(wildcard vcg/*.c)
 MW_SOURCES=$(wildcard mw/*.c)
-#SOURCES=$(wildcard *.cpp) $(VCG_SOURCES)
-SOURCES=$(wildcard *.cpp)
+#SOURCES= draw_buffer.cpp  GtkGr.cpp stdafx.cpp  ui.cpp gr.cpp preferences.cpp vr_graph.cpp
+ALLCXX_SOURCES=$(wildcard *.cpp)
+SOURCES=$(ALLCXX_SOURCES:tes_mw.cpp=)
 OBJECTS=$(SOURCES:.cpp=.o)
 VCG_OBJECTS=$(VCG_SOURCES:.c=.o)
 MW_OBJECTS=$(MW_SOURCES:.c=.o)
@@ -34,6 +35,8 @@ vcg.o:
 #for testing makefile syntax:)
 .PHONY: tes
 tes:
+	@echo $(SOURCES)
+	@echo === 
 	@echo $(VCG_SOURCES)
 	@echo === 
 	@echo $(VCG_OBJECTS)
