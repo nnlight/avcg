@@ -23,6 +23,13 @@
 //using namespace std;
 typedef std::string string;
 
+
+#ifdef WIN32
+/* warning C4312: 'type cast' : conversion from 'volatile gsize' to 'gpointer' of greater size ... */
+#pragma warning ( disable : 4312)
+#endif /* WIN32 */
+
+
 /**
  * В заданной строке (rStrText) заменить все вхождения заданной подстроки
  * (rcStrFind) на заданную строку (rcStrReplace).
