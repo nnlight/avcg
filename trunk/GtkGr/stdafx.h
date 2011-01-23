@@ -18,6 +18,7 @@
 #include <list>
 #include <assert.h>
 #include <string.h>
+#include <math.h>
 
 
 //using namespace std;
@@ -28,6 +29,11 @@ typedef std::string string;
 /* warning C4312: 'type cast' : conversion from 'volatile gsize' to 'gpointer' of greater size ... */
 #pragma warning ( disable : 4312)
 #endif /* WIN32 */
+
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846264338327
+#endif
 
 
 /**
