@@ -482,6 +482,64 @@ void DrawBuffer::DrawTriangle( vrgint x1, vrgint y1, vrgint x2, vrgint y2, vrgin
 	gdk_draw_polygon( m_Pixmap, m_GC, pm_filled, 
 					  pm_p, 3);
 }
+void DrawBuffer::DrawPie( vrgint x, vrgint y, vrgint radius, bool filled, std::list<int> &colors)
+{
+	int pmx, pmy;
+	Vrg2Pm( x, y, pmx, pmy);
+	int pmradius = radius * m_Scaling;
+	int pieces = colors.size();
+
+	cairo_t *cr;
+	/* get a cairo_t */
+	cr = gdk_cairo_create( m_Pixmap/*m_da->window*/);
+
+	if ( filled )
+	{
+		cairo_arc( cr, pmx, pmy, pmradius, 0, 2 * M_PI);
+		cairo_set_source_rgb( cr, 0, 0, 0);
+		cairo_fill( cr);
+	} else
+	{
+		if ( pieces != 0 )
+		{
+			std::list<int>::iterator it;
+			int i;
+			double curr_angle;
+			double delta_angle = 2 * M_PI / pieces;
+			for ( it = colors.begin(), i = 0, curr_angle = 0.;
+				  i < pieces;
+				  ++it, ++i, curr_angle += delta_angle )
+			{
+				assert( it != colors.end() );
+				double red = (double)origredmap[*it] / 255.;
+				double green = (double)origgreenmap[*it] / 255.;
+				double blue = (double)origbluemap[*it] / 255.;
+
+				cairo_move_to( cr, pmx, pmy);
+				cairo_arc( cr, pmx, pmy, pmradius, curr_angle, curr_angle + delta_angle);
+				cairo_set_source_rgb( cr, red, green, blue);
+				cairo_fill( cr);
+			}
+		} else
+		{
+			cairo_arc( cr, pmx, pmy, pmradius, 0, 2 * M_PI);
+			cairo_set_source_rgb( cr, 1, 1, 1);
+			cairo_fill( cr);
+		}
+
+		cairo_arc( cr, pmx, pmy, pmradius, 0, 2 * M_PI);
+		cairo_set_source_rgb( cr, 0, 0, 0);
+		cairo_stroke( cr);
+	}
+
+	/*cairo_arc( cr, pmx, pmy, pmradius, 0, 2 * M_PI);
+	cairo_set_source_rgb( cr, 1, 1, 1);
+    cairo_fill_preserve( cr);
+	cairo_set_source_rgb( cr, 0, 0, 0);
+	cairo_stroke( cr);*/
+
+	cairo_destroy( cr);
+}
 void DrawBuffer::GetTextPixelSize( const char *text, int *width_p, int *height_p)
 {
 	PangoLayout *layout;

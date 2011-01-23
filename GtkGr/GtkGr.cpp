@@ -18,6 +18,7 @@
 #pragma comment(lib,"gdk_pixbuf-2.0.lib")
 #pragma comment(lib,"pango-1.0.lib")
 #pragma comment(lib,"pangowin32-1.0.lib")
+#pragma comment(lib,"cairo.lib")
 #endif
 
 
