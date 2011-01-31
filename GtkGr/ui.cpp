@@ -298,6 +298,29 @@ ui_activate_action( GtkAction *action, gpointer data)
 		{
 			uic->LoadGDL( uic->m_CurrentFilename.c_str());
 		}
+	} else if ( !strcmp( action_name, "FindNode") )
+	{
+		GtkWidget *dialog, *label;
+
+		dialog = gtk_dialog_new_with_buttons( "some(name) dialog", GTK_WINDOW(uic->m_MainWindow),
+								GtkDialogFlags(0),//GtkDialogFlags(/*GTK_DIALOG_MODAL|*/GTK_DIALOG_DESTROY_WITH_PARENT /*| GTK_DIALOG_NO_SEPARATOR*/),
+								GTK_STOCK_YES, GTK_RESPONSE_YES,
+								GTK_STOCK_NO, GTK_RESPONSE_NO,
+								NULL);
+		label = gtk_label_new( "Some text");
+		gtk_container_add( GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), label);
+		gtk_widget_show( label);
+		/*int response = gtk_dialog_run( GTK_DIALOG(dialog));
+		gtk_widget_destroy( dialog);
+		if ( response == GTK_RESPONSE_YES )
+		{
+			printf("YES\n");
+		} else
+		{
+			printf("~NO\n");
+
+		}*/
+		gtk_widget_show( dialog);
 	} else if ( !strcmp( action_name, "Preferences_LoadDefaults") )
 	{
 		delete g_Preferences;
@@ -341,6 +364,7 @@ ui_activate_radio_action_mode( GtkAction *action, /* Действие на ко�
 static GtkActionEntry entries[] = {
   { "FileMenu", NULL, "_File" },               /* name, stock id, label */
   { "EditMenu", NULL, "_Edit" },
+  { "ViewMenu", NULL, "_View" },
   { "PreferencesMenu", NULL, "_Preferences" }, /* name, stock id, label */
   { "ColorMenu", NULL, "_Color"  },            /* name, stock id, label */
   { "ShapeMenu", NULL, "_Shape" },             /* name, stock id, label */
@@ -368,6 +392,10 @@ static GtkActionEntry entries[] = {
   { "Quit", GTK_STOCK_QUIT,                    /* name, stock id */
     "_Quit", "<control>Q",                     /* label, accelerator */     
     "Quit",                                    /* tooltip */
+    G_CALLBACK (ui_activate_action) },
+  { "FindNode", NULL,                          /* name, stock id */
+    "Find Node...", "<control>F",              /* label, accelerator */     
+    NULL,                                      /* tooltip */
     G_CALLBACK (ui_activate_action) },
   { "Preferences_LoadDefaults", NULL,          /* name, stock id */
     "LoadDefaults", NULL,                      /* label, accelerator */     
@@ -477,6 +505,9 @@ static const gchar *ui_info =
 "      <menuitem action='Mode_ViewNodeInfo2'/>"
 "      <menuitem action='Mode_ViewNodeInfo3'/>"
 "      <separator/>"
+"    </menu>"
+"    <menu action='ViewMenu'>"
+"      <menuitem action='FindNode'/>"
 "    </menu>"
 "    <menu action='PreferencesMenu'>"
 "      <menuitem action='Preferences_LoadDefaults'/>"
