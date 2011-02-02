@@ -56,10 +56,10 @@ private:
 	friend gboolean ui_key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data);
 	friend gboolean ui_da_configure_event_cb( GtkWidget *da, GdkEventConfigure *event, gpointer data);
 	friend gboolean ui_da_expose_event_cb( GtkWidget *da, GdkEventExpose *event, gpointer data);
-	friend gboolean ui_da_mbutton_press_event_cb( GtkWidget *da, GdkEventButton *event, gpointer data);
-	friend gboolean ui_da_mbutton_release_event_cb( GtkWidget *da, GdkEventButton *event, gpointer data);
-	friend gboolean ui_da_mscroll_event_cb( GtkWidget *da, GdkEventScroll *event, gpointer data);
-	friend gboolean ui_da_mmotion_notify_event_cb( GtkWidget *da, GdkEventMotion *event, gpointer data);
+	friend gboolean ui_da_mouse_button_press_cb( GtkWidget *da, GdkEventButton *event, gpointer data);
+	friend gboolean ui_da_mouse_button_release_cb( GtkWidget *da, GdkEventButton *event, gpointer data);
+	friend gboolean ui_da_mouse_scroll_cb( GtkWidget *da, GdkEventScroll *event, gpointer data);
+	friend gboolean ui_da_mouse_motion_notify_cb( GtkWidget *da, GdkEventMotion *event, gpointer data);
 	friend void ui_activate_radio_action_mode( GtkAction *action, GtkRadioAction *current, gpointer data);
 	friend void ui_activate_action( GtkAction *action, gpointer data);
 private:

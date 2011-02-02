@@ -326,8 +326,8 @@ void DrawBuffer::MoveVisibleArea2d( gint delta[AXIS_LAST])
 		assert( m_VisibleAreaBase[AXIS_X] == m_PixmapDims[AXIS_X] / 3 );
 		assert( m_VisibleAreaBase[AXIS_Y] == m_PixmapDims[AXIS_Y] / 3 );
 		/* пересчитываем положение центра VRGraph'а */
-		m_VRGBase[AXIS_X] -= pixmap_shift[AXIS_X];
-		m_VRGBase[AXIS_Y] -= pixmap_shift[AXIS_Y];
+		m_VRGBase[AXIS_X] -= delta[AXIS_X] + pixmap_shift[AXIS_X];
+		m_VRGBase[AXIS_Y] -= delta[AXIS_Y] + pixmap_shift[AXIS_Y];
 
 		/* обновляем содержимое Pixmap'а (т.к. теперь там должна лежать изображения другой части графа) */  
 		InitializePixmapToBackgroundColor( m_Pixmap,
@@ -337,11 +337,12 @@ void DrawBuffer::MoveVisibleArea2d( gint delta[AXIS_LAST])
 		{
 			m_VRGraph->Expose( this);
 		}
+	} else
+	{
+		/* просто сдвигаем visible area :) */
+		m_VisibleAreaBase[AXIS_X] += delta[AXIS_X];
+		m_VisibleAreaBase[AXIS_Y] += delta[AXIS_Y];
 	}
-
-	/* сдвигаем visible area :) */
-	m_VisibleAreaBase[AXIS_X] += delta[AXIS_X];
-	m_VisibleAreaBase[AXIS_Y] += delta[AXIS_Y];
 	/* Now invalidate the affected region of the drawing area. */
 	/* инвалидируем всю drawing_area (потом должно будет прийти expose_event) */
 	InvalidateDa( NULL);
