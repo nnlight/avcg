@@ -348,6 +348,19 @@ void DrawBuffer::MoveVisibleArea2d( gint delta[AXIS_LAST])
 	return;
 } /* DrawBuffer::MoveVisibleArea2d */
 
+void DrawBuffer::CenterVisibleAreaByVrgCoords( vrgint vrg_x, vrgint vrg_y)
+{
+	daint da_x, da_y;
+	Vrg2Da( vrg_x, vrg_y, da_x, da_y);
+	daint da_center_x = m_VisibleAreaDims[AXIS_X] / 2;
+	daint da_center_y = m_VisibleAreaDims[AXIS_Y] / 2;
+	gint delta[AXIS_LAST];
+	delta[AXIS_X] = da_x - da_center_x;
+	delta[AXIS_Y] = da_y - da_center_y;
+	MoveVisibleArea2d( delta);
+	return;
+} /* DrawBuffer::CenterVisibleAreaByVrgCoords */
+
 double DrawBuffer::ChangeScaling( double scaling_factor, daint x, daint y)
 {
 	assert( m_da );

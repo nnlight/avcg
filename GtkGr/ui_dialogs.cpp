@@ -6,6 +6,132 @@
 
 // коментарий на русском...
 
+typedef struct
+{
+	const gchar *title;
+	const gchar *label;
+	gint   x;
+	gint   y;
+} FindNodeGLSNode;
+
+enum
+{
+	GLS_COLUMN_TITLE,
+	GLS_COLUMN_LABEL,
+	GLS_COLUMN_X,
+	GLS_COLUMN_Y,
+	GLS_COLUMNS_COUNT
+};
+
+static FindNodeGLSNode data1[] =
+{
+	{ "tit1", "lab1", 10, 10},
+	{ "tit2", "lab2", 20, 20}
+};
+
+static GtkTreeModel *
+create_model( VRGraph *vrg)
+{
+	gint i = 0;
+	GtkListStore *store;
+	GtkTreeIter iter;
+
+	/* create list store */
+	store = gtk_list_store_new( GLS_COLUMNS_COUNT,
+								G_TYPE_STRING,
+								G_TYPE_STRING,
+								G_TYPE_INT,
+								G_TYPE_INT);
+
+	/* add data to the list store */
+	for ( GrNode *n = vrg->GrGetFirstNode();
+		  n; 
+		  n = n->GrGetNextNode() )
+	{
+		VRNode *node = static_cast<VRNode*>(n);
+		assert( dynamic_cast<VRNode*>(n) );
+		gtk_list_store_append( store, &iter);
+		gtk_list_store_set(store, &iter,
+						GLS_COLUMN_TITLE, node->title_.c_str(),
+						GLS_COLUMN_LABEL, node->label_.c_str(),
+						GLS_COLUMN_X, node->x_,
+						GLS_COLUMN_Y, node->y_,
+						-1);
+	}
+	/*for (i = 0; i < G_N_ELEMENTS (data1); i++)
+	{
+		gtk_list_store_append( store, &iter);
+		gtk_list_store_set(store, &iter,
+						GLS_COLUMN_TITLE, data1[i].title,
+						GLS_COLUMN_LABEL, data1[i].label,
+						GLS_COLUMN_X, data1[i].x,
+						GLS_COLUMN_Y, data1[i].y,
+						-1);
+	}*/
+
+	return GTK_TREE_MODEL( store);
+}
+
+#if 0
+static void
+fixed_toggled_cb( GtkCellRendererToggle *cell,
+	       gchar                 *path_str,
+	       gpointer               data)
+{
+  GtkTreeModel *model = (GtkTreeModel *)data;
+  GtkTreeIter  iter;
+  GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
+  gboolean fixed;
+
+  /* get toggled iter */
+  gtk_tree_model_get_iter (model, &iter, path);
+  gtk_tree_model_get (model, &iter, COLUMN_FIXED, &fixed, -1);
+
+  /* do something with the value */
+  fixed ^= 1;
+
+  /* set new value */
+  gtk_list_store_set (GTK_LIST_STORE (model), &iter, COLUMN_FIXED, fixed, -1);
+
+  /* clean up */
+  gtk_tree_path_free (path);
+}
+#endif
+
+static void
+add_columns( GtkTreeView *treeview)
+{
+	GtkCellRenderer *renderer;
+	GtkTreeViewColumn *column;
+	GtkTreeModel *model = gtk_tree_view_get_model( treeview);
+
+	/* column for fixed toggles */
+	renderer = gtk_cell_renderer_text_new();
+	//g_signal_connect( renderer, "toggled",
+	//	G_CALLBACK (fixed_toggled_cb), model);
+
+	column = gtk_tree_view_column_new_with_attributes( "Title",
+									renderer,
+									"text", GLS_COLUMN_TITLE,
+									NULL);
+
+	/* set this column to a fixed sizing (of 50 pixels) */
+	gtk_tree_view_column_set_sizing( GTK_TREE_VIEW_COLUMN(column), GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width( GTK_TREE_VIEW_COLUMN(column), 50);
+	gtk_tree_view_append_column( treeview, column);
+
+	/* column for bug numbers */
+	renderer = gtk_cell_renderer_text_new();
+	column = gtk_tree_view_column_new_with_attributes( "Label",
+									renderer,
+									"text", GLS_COLUMN_LABEL,
+									NULL);
+	gtk_tree_view_column_set_sort_column_id( column, GLS_COLUMN_LABEL);
+	gtk_tree_view_append_column( treeview, column);
+}
+
+
+#if 0
 static GtkWidget *window = NULL;
 
 typedef struct
@@ -187,7 +313,7 @@ do_list_store (GtkWidget *do_widget)
       gtk_box_pack_start (GTK_BOX (vbox), sw, TRUE, TRUE, 0);
 
       /* create tree model */
-      model = create_model ();
+      model = create_model( NULL);
 
       /* create tree view */
       treeview = gtk_tree_view_new_with_model (model);
@@ -216,7 +342,28 @@ do_list_store (GtkWidget *do_widget)
 
   return window;
 }
+#endif
 
+void
+row_activated_cb( GtkTreeView       *tree_view,
+                  GtkTreePath       *path,
+                  GtkTreeViewColumn *column,
+                  gpointer           user_data)
+{
+	GtkTreeModel *model = gtk_tree_view_get_model( tree_view);
+	GtkTreeIter iter;
+	gboolean res;
+	gint x, y;
+	DrawBuffer *db = (DrawBuffer *)user_data;
+
+	res = gtk_tree_model_get_iter( model, &iter, path);
+	assert( res );
+	gtk_tree_model_get( model, &iter,
+						GLS_COLUMN_X, &x,
+						GLS_COLUMN_Y, &y,
+						-1);
+	db->CenterVisibleAreaByVrgCoords( x, y);
+}
 
 void UiShowFindNodeDialog( UIController *uic)
 {
@@ -258,12 +405,13 @@ void UiShowFindNodeDialog( UIController *uic)
 	gtk_box_pack_start( GTK_BOX(vbox), sw, TRUE, TRUE, 0);
 
 	/* create tree model */
-	model = create_model();
+	model = create_model( uic->m_VRGraph.get());
 
 	/* create tree view */
 	treeview = gtk_tree_view_new_with_model( model);
 	gtk_tree_view_set_rules_hint( GTK_TREE_VIEW(treeview), TRUE);
-	gtk_tree_view_set_search_column( GTK_TREE_VIEW(treeview), COLUMN_DESCRIPTION);
+	gtk_tree_view_set_search_column( GTK_TREE_VIEW(treeview), GLS_COLUMN_LABEL);
+	g_signal_connect( treeview, "row-activated", G_CALLBACK(row_activated_cb), uic->m_DrawBuffer.get());
 
 	gtk_container_add( GTK_CONTAINER(sw), treeview);
 
@@ -272,7 +420,7 @@ void UiShowFindNodeDialog( UIController *uic)
 
 	gtk_entry_completion_set_model( completion, model);
 	/* Use model column 0 as the text column */
-	gtk_entry_completion_set_text_column( completion, 2);
+	gtk_entry_completion_set_text_column( completion, GLS_COLUMN_LABEL);
 
 	g_object_unref( model);
 

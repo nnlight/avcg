@@ -198,7 +198,7 @@ ui_da_mscroll_event_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
 	DrawBuffer *db = uic->m_DrawBuffer.get();
   	if (g_DaPrintEvents ) g_print("scroll_event\n");
 
-	if ( event->state & GDK_CONTROL_MASK )
+	if ( 1/*event->state & GDK_CONTROL_MASK*/ )
 	{
 		/* при нажатом Ctrl'е увеличиваем/уменьшаем граф */
 		gint x = (int)event->x;
