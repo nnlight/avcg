@@ -375,14 +375,12 @@ void UiShowFindNodeDialog( UIController *uic)
 	GtkTreeModel *model;
 	GtkWidget *treeview;
 
-	dialog = gtk_dialog_new_with_buttons( "some(name) dialog", GTK_WINDOW(uic->m_MainWindow),
-						GtkDialogFlags(0),//GtkDialogFlags(/*GTK_DIALOG_MODAL|*/GTK_DIALOG_DESTROY_WITH_PARENT /*| GTK_DIALOG_NO_SEPARATOR*/),
-						GTK_STOCK_YES, GTK_RESPONSE_YES,
-						GTK_STOCK_NO, GTK_RESPONSE_NO,
+	dialog = gtk_dialog_new_with_buttons( "find node dialog", GTK_WINDOW(uic->m_MainWindow),
+						GtkDialogFlags(/*GTK_DIALOG_MODAL|*/GTK_DIALOG_DESTROY_WITH_PARENT),
+						GTK_STOCK_CLOSE, GTK_RESPONSE_NONE,
 						NULL);
-	//label = gtk_label_new( "Some text");
-	//gtk_container_add( GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), label);
-	//gtk_widget_show( label);
+	g_signal_connect( dialog, "response", G_CALLBACK(gtk_widget_destroy), NULL);
+	g_signal_connect( dialog, "destroy", G_CALLBACK(gtk_widget_destroyed), &dialog);
 	vbox = GTK_DIALOG(dialog)->vbox;
 
 	/* Create our entry */
@@ -394,7 +392,7 @@ void UiShowFindNodeDialog( UIController *uic)
 	gtk_entry_set_completion (GTK_ENTRY (entry), completion);
 	g_object_unref (completion);
 
-	label = gtk_label_new(" This is the bug list (note: not based on real data, it would be nice to have a nice ODBC interface to bugzilla or so, though).");
+	label = gtk_label_new( "Select node from the list bellow. Main window will ceterized by double click.");
 	gtk_box_pack_start( GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
 	sw = gtk_scrolled_window_new( NULL, NULL);

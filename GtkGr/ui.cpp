@@ -125,7 +125,7 @@ ui_da_expose_event_cb( GtkWidget      *da,
 } /* ui_da_expose_event_cb */
 
 gboolean
-ui_da_mbutton_press_event_cb( GtkWidget      *da,
+ui_da_mouse_button_press_cb( GtkWidget      *da,
                              GdkEventButton *event,
                              gpointer        data)
 {
@@ -168,10 +168,10 @@ ui_da_mbutton_press_event_cb( GtkWidget      *da,
 	}
   
 	return TRUE;    /* We've handled it, stop processing */
-} /* ui_da_mbutton_press_event_cb */
+} /* ui_da_mouse_button_press_cb */
 
 gboolean
-ui_da_mbutton_release_event_cb( GtkWidget      *da,
+ui_da_mouse_button_release_cb( GtkWidget      *da,
                              GdkEventButton *event,
                              gpointer        data)
 {
@@ -189,10 +189,10 @@ ui_da_mbutton_release_event_cb( GtkWidget      *da,
 	}
   
 	return TRUE;    /* We've handled it, stop processing */
-} /* ui_da_mbutton_release_event_cb */
+} /* ui_da_mouse_button_release_cb */
 
 gboolean 
-ui_da_mscroll_event_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
+ui_da_mouse_scroll_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
 {
 	UIController *uic = (UIController *)data;
 	DrawBuffer *db = uic->m_DrawBuffer.get();
@@ -220,10 +220,10 @@ ui_da_mscroll_event_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
 	}
 
 	return TRUE;    /* We've handled it, stop processing */
-} /* ui_da_mscroll_event_cb */
+} /* ui_da_mouse_scroll_cb */
 
 gboolean
-ui_da_mmotion_notify_event_cb( GtkWidget      *da,
+ui_da_mouse_motion_notify_cb( GtkWidget      *da,
                               GdkEventMotion *event,
                               gpointer        data)
 {
@@ -259,7 +259,7 @@ ui_da_mmotion_notify_event_cb( GtkWidget      *da,
 	}
 
 	return TRUE;  /* We've handled it, stop processing */
-} /* ui_da_mmotion_notify_event_cb */
+} /* ui_da_mouse_motion_notify_cb */
 
 
 /////////////////////////////////// Menu //////////////////////////////////////////////
@@ -628,10 +628,10 @@ UIController::UIController( const char *filename)
 	/* добавляем к da обработчики событий */
 	g_signal_connect( da, "expose-event", G_CALLBACK( ui_da_expose_event_cb), this);
 	g_signal_connect( da, "configure-event", G_CALLBACK( ui_da_configure_event_cb), this);
-	g_signal_connect( da, "motion-notify-event", G_CALLBACK( ui_da_mmotion_notify_event_cb), this);
-	g_signal_connect( da, "button-press-event", G_CALLBACK( ui_da_mbutton_press_event_cb), this);
-	g_signal_connect( da, "button-release-event", G_CALLBACK( ui_da_mbutton_release_event_cb), this);
-	g_signal_connect( da, "scroll-event", G_CALLBACK( ui_da_mscroll_event_cb), this);
+	g_signal_connect( da, "motion-notify-event", G_CALLBACK( ui_da_mouse_motion_notify_cb), this);
+	g_signal_connect( da, "button-press-event", G_CALLBACK( ui_da_mouse_button_press_cb), this);
+	g_signal_connect( da, "button-release-event", G_CALLBACK( ui_da_mouse_button_release_cb), this);
+	g_signal_connect( da, "scroll-event", G_CALLBACK( ui_da_mouse_scroll_cb), this);
 
 	/* Ask to receive events the drawing area doesn't normally
 	 * subscribe to */
