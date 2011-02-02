@@ -74,6 +74,7 @@ public:
 	/* сдвинуть видимую область */
 	void MoveVisibleArea( gint delta, Axis_t axis);
 	void MoveVisibleArea2d( gint delta[AXIS_LAST]);
+	void CenterVisibleAreaByVrgCoords( vrgint vrg_x, vrgint vrg_y);
 	/** изменить Scaling, координаты передаются для того, чтобы та точка графа,
 	   которая находится под ними, осталась бы на том же месте */
 	double ChangeScaling( double scaling_factor, daint x, daint y);
