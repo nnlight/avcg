@@ -23,11 +23,13 @@ typedef struct _MwDuckClass   MwDuckClass;
 
 struct _MwDuck
 {
-  GtkContainer GSEAL (container);
+  GtkContainer container;
+  /*GtkContainer GSEAL (container);*/
   /*GtkTable table;*/
   
   /*< public >*/
-  GdkWindow *GSEAL (bin_window);
+  GdkWindow *bin_window;
+  /*GdkWindow *GSEAL (bin_window);*/
 
   GtkWidget *buttons[3][3];
   /*< private >*/
