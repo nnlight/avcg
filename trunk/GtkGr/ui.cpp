@@ -74,6 +74,13 @@ ui_key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data)
 		db->PKey();
 		break;
 
+	case GDK_x:
+		gdk_set_show_events( TRUE);
+		break;
+	case GDK_z:
+		gdk_set_show_events( FALSE);
+		break;
+
 	default:
 		break;
 	}
@@ -116,7 +123,7 @@ ui_da_expose_event_cb( GtkWidget      *da,
 {
 	UIController *uic = (UIController *)data;
 	DrawBuffer *db = uic->m_DrawBuffer.get();
-  	if (g_DaPrintEvents ) g_print("expose_event\n");
+	if (g_DaPrintEvents ) g_print("expose_event (count=%d)\n", event->count);
 
 	db->ExposeDa( event->area.x, event->area.y,
 				  event->area.width, event->area.height);
@@ -196,7 +203,7 @@ ui_da_mouse_scroll_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
 {
 	UIController *uic = (UIController *)data;
 	DrawBuffer *db = uic->m_DrawBuffer.get();
-  	if (g_DaPrintEvents ) g_print("scroll_event\n");
+	if (g_DaPrintEvents ) g_print("scroll_event %d,%d,%d, %d\n", event->send_event, event->state, event->type,event->time);
 
 	if ( 1/*event->state & GDK_CONTROL_MASK*/ )
 	{
@@ -635,13 +642,14 @@ UIController::UIController( const char *filename)
 
 	/* Ask to receive events the drawing area doesn't normally
 	 * subscribe to */
-	gtk_widget_set_events( da, gtk_widget_get_events (da)
+	gtk_widget_set_events( da, gtk_widget_get_events( da)
 								| GDK_LEAVE_NOTIFY_MASK
 								| GDK_BUTTON_PRESS_MASK
 								| GDK_BUTTON_RELEASE_MASK
 								//| GDK_SCROLL_MASK
 								| GDK_POINTER_MOTION_MASK
-								| GDK_POINTER_MOTION_HINT_MASK);
+								| GDK_POINTER_MOTION_HINT_MASK
+							);
 
 	// сигнал ("key_press_event")
 	gtk_signal_connect( GTK_OBJECT(main_window),"key_press_event", GTK_SIGNAL_FUNC(ui_key_press_cb), this);
