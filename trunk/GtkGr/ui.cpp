@@ -98,7 +98,6 @@ ui_key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data)
 } /* ui_key_press_cb */
 
 /////////////////////////////////// drawing_area callbacks //////////////////////////////////////////////
-static bool g_DaPrintEvents = true;
 
 gboolean
 ui_da_configure_event_cb( GtkWidget         *da,
@@ -107,7 +106,7 @@ ui_da_configure_event_cb( GtkWidget         *da,
 {
 	UIController *uic = (UIController *)data;
 	DrawBuffer *db = uic->m_DrawBuffer.get();
-	if (g_DaPrintEvents ) g_print("configure_event\n");
+	if (g_Preferences->DebugGetPrintEvents()) g_print("configure_event\n");
 	
 	db->ConfigureDa();
 
@@ -123,7 +122,7 @@ ui_da_expose_event_cb( GtkWidget      *da,
 {
 	UIController *uic = (UIController *)data;
 	DrawBuffer *db = uic->m_DrawBuffer.get();
-	if (g_DaPrintEvents ) g_print("expose_event (count=%d)\n", event->count);
+	if (g_Preferences->DebugGetPrintEvents()) g_print("expose_event (count=%d)\n", event->count);
 
 	db->ExposeDa( event->area.x, event->area.y,
 				  event->area.width, event->area.height);
@@ -138,7 +137,7 @@ ui_da_mouse_button_press_cb( GtkWidget      *da,
 {
 	UIController *uic = (UIController *)data;
 	DrawBuffer *db = uic->m_DrawBuffer.get();
-  	if (g_DaPrintEvents ) g_print("button_press_event\n");
+  	if (g_Preferences->DebugGetPrintEvents()) g_print("button_press_event\n");
 
 	if ( event->type != GDK_BUTTON_PRESS )
 	{
@@ -184,7 +183,7 @@ ui_da_mouse_button_release_cb( GtkWidget      *da,
 {
 	UIController *uic = (UIController *)data;
 	DrawBuffer *db = uic->m_DrawBuffer.get();
-  	if (g_DaPrintEvents ) g_print("button_release_event\n");
+  	if (g_Preferences->DebugGetPrintEvents()) g_print("button_release_event\n");
 
 	int x = (int)event->x;
 	int y = (int)event->y;
@@ -192,7 +191,7 @@ ui_da_mouse_button_release_cb( GtkWidget      *da,
 	{
 		assert( uic->m_PickUped == true );
 		uic->m_PickUped = false;
-		printf("x=%d  y=%d\n", x, y);
+		if (g_Preferences->DebugGetPrintEvents()) printf("x=%d  y=%d\n", x, y);
 	}
   
 	return TRUE;    /* We've handled it, stop processing */
@@ -203,7 +202,8 @@ ui_da_mouse_scroll_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
 {
 	UIController *uic = (UIController *)data;
 	DrawBuffer *db = uic->m_DrawBuffer.get();
-	if (g_DaPrintEvents ) g_print("scroll_event %d,%d,%d, %d\n", event->send_event, event->state, event->type,event->time);
+	if (g_Preferences->DebugGetPrintEvents())
+		g_print("scroll_event %d,%d,%d, %d\n", event->send_event, event->state, event->type,event->time);
 
 	if ( 1/*event->state & GDK_CONTROL_MASK*/ )
 	{
@@ -236,7 +236,7 @@ ui_da_mouse_motion_notify_cb( GtkWidget      *da,
 {
 	UIController *uic = (UIController *)data;
 	DrawBuffer *db = uic->m_DrawBuffer.get();
-  	//if (g_DaPrintEvents ) g_print("motion_notify_event\n");
+  	//if (g_Preferences->DebugGetPrintEvents()) g_print("motion_notify_event\n");
 	int x, y;
 	GdkModifierType state;
 
@@ -277,7 +277,8 @@ ui_activate_action( GtkAction *action, gpointer data)
 	UIController *uic = (UIController *)data;
 	const gchar *action_name = gtk_action_get_name( action);
 
-	g_message( "Action \"%s\" activated", action_name);
+	if (g_Preferences->DebugGetPrintActions())
+		g_message( "Action \"%s\" activated", action_name);
 	if ( !strcmp( action_name, "Quit") )
 	{
 		/* выходим без диалогов всяких... :) */
@@ -330,8 +331,9 @@ activate_radio_action( GtkAction *action, /* Действие на которо�
 					   GtkRadioAction *current, /* Член группы actions который активирован */
 					   gpointer user_data)
 {
-  g_message ("Radio action \"%s\" selected", 
-	     gtk_action_get_name (GTK_ACTION (current)));
+  if (g_Preferences->DebugGetPrintActions())
+	  g_message( "Radio action \"%s\" selected", 
+				 gtk_action_get_name (GTK_ACTION (current)));
 }
 
 void
@@ -345,7 +347,8 @@ ui_activate_radio_action_mode( GtkAction *action, /* Действие на ко�
 	int old_mode = uic->m_CurrentMode;
 	uic->m_CurrentMode = (Mode_t)gtk_radio_action_get_current_value( current);
 	uic->UpdateStatusbar();
-	g_message( "Radio action \"%s\" (%d->%d) selected", name, old_mode, uic->m_CurrentMode);
+	if (g_Preferences->DebugGetPrintActions())
+		g_message( "Radio action \"%s\" (%d->%d) selected", name, old_mode, uic->m_CurrentMode);
 } /* ui_activate_radio_action_mode */
 
 static GtkActionEntry entries[] = {
@@ -659,7 +662,7 @@ UIController::UIController( const char *filename)
 	gtk_box_pack_end( GTK_BOX(main_vbox), statusbar, FALSE, TRUE, 0);
 
 
-printf("before gtk_widget_show_all(main_window)\n");
+//printf("before gtk_widget_show_all(main_window)\n");
 
 	// отображение основного окна
 	gtk_widget_show_all( main_window);
@@ -783,8 +786,8 @@ void UIController::ShowAboutDialog()
 	gtk_show_about_dialog( GTK_WINDOW( m_MainWindow),
 			"program-name", "avcg tool",
 			"version", "v0.1 (Build: " __DATE__ ")",
-			"comments", "Just another realization of xvcg tool based on GTK library.",
-			"copyright", "(C) 2009-2010 ...",
+			"comments", "Just another realization of xvcg tool based on GTK+ library.",
+			"copyright", "(C) 2009-2011 ...",
 			"website", "http://code.google.com/p/avcg/",
 			"license", license,
 			"authors", authors,
