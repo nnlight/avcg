@@ -15,6 +15,9 @@ Preferences::Preferences(void)
 	, m_SizeX(600)
 	, m_SizeY(400)
 	, m_DefaultBgColorNum( DARKYELLOW)
+	, m_PrintEvents( true)
+	, m_PrintActions( true)
+	, m_DelayedZooming( false)
 {
 } /* Preferences::Preferences */
 
@@ -48,6 +51,19 @@ double Preferences::GetKeyFileDouble( GKeyFile *key_file, const gchar *group_nam
 	return res;
 } /* Preferences::GetKeyFileDouble */
 
+bool Preferences::GetKeyFileBool( GKeyFile *key_file, const gchar *group_name, const gchar *key,
+								  bool default_val)
+{
+	GError *error = NULL;
+	bool res = (bool)g_key_file_get_boolean( key_file, group_name, key, &error);
+	if ( error != NULL )
+	{
+		g_error_free( error);
+		res = default_val;
+	}
+	return res;
+} /* Preferences::GetKeyFileDouble */
+
 void Preferences::LoadFromFile()
 {
 	GKeyFile *key_file = g_key_file_new();
@@ -73,9 +89,13 @@ void Preferences::LoadFromFile()
 	m_SizeX = GetKeyFileInteger( key_file, "General", "SizeX", m_SizeX);
 	m_SizeY = GetKeyFileInteger( key_file, "General", "SizeY", m_SizeY);
 	m_DefaultBgColorNum = GetKeyFileInteger( key_file, "General", "DefaultBgColorNum", m_DefaultBgColorNum);
+	m_PrintEvents = GetKeyFileBool( key_file, "Debug", "PrintEvents", m_PrintEvents);
+	m_PrintActions = GetKeyFileBool( key_file, "Debug", "PrintActions", m_PrintActions);
+	m_DelayedZooming = GetKeyFileBool( key_file, "Debug", "DelayedZooming", m_DelayedZooming);
 
 
 	g_key_file_free( key_file);
+	return;
 } /* Preferences::LoadFromFile */
 
 void Preferences::SaveToFile()
@@ -89,6 +109,9 @@ void Preferences::SaveToFile()
 	g_key_file_set_integer( key_file, "General", "SizeX", m_SizeX);
 	g_key_file_set_integer( key_file, "General", "SizeY", m_SizeY);
 	g_key_file_set_integer( key_file, "General", "DefaultBgColorNum", m_DefaultBgColorNum);
+	g_key_file_set_boolean( key_file, "Debug", "PrintEvents", (gboolean)m_PrintEvents);
+	g_key_file_set_boolean( key_file, "Debug", "PrintActions", (gboolean)m_PrintActions);
+	g_key_file_set_boolean( key_file, "Debug", "DelayedZooming", (gboolean)m_DelayedZooming);
 
 	gsize key_file_data_length = 0;
 	const gchar *key_file_data = g_key_file_to_data( key_file, &key_file_data_length, NULL);
@@ -98,5 +121,6 @@ void Preferences::SaveToFile()
 	g_free( full_path_filename);
 
 	g_key_file_free( key_file);
+	return;
 } /* Preferences::SaveToFile */
 
