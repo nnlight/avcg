@@ -208,21 +208,23 @@ ui_da_mouse_scroll_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
 	if ( 1/*event->state & GDK_CONTROL_MASK*/ )
 	{
 		/* при нажатом Ctrl'е увеличиваем/уменьшаем граф */
-		gint x = (int)event->x;
-		gint y = (int)event->y;
-		double SCALING_COEF = g_Preferences->GetScalingCoef();
+		uic->m_DelayedZoomBase[AXIS_X] = (int)event->x;
+		uic->m_DelayedZoomBase[AXIS_Y] = (int)event->y;
+		/* регистрировать событие надо только если оно уже не было заругистрировано */
+		bool is_need_delayed_event = (uic->m_DelayedZoomDelta == 0);
 		switch (event->direction)
 		{
-		case GDK_SCROLL_UP:
-			db->ChangeScaling( SCALING_COEF, x, y);
-			uic->UpdateStatusbar();
-			break;
-		case GDK_SCROLL_DOWN:
-			db->ChangeScaling( 1./SCALING_COEF, x, y);
-			uic->UpdateStatusbar();
-			break;
-		default:
-			break;
+			case GDK_SCROLL_UP:   uic->m_DelayedZoomDelta++; break;
+			case GDK_SCROLL_DOWN: uic->m_DelayedZoomDelta--; break;
+			default: break;
+		}
+		if ( g_Preferences->DebugGetDelayedZooming() )
+		{
+			if ( is_need_delayed_event )
+				g_idle_add_full( G_PRIORITY_HIGH_IDLE, &ui_da_delayed_zoom_cb, (gpointer)uic, NULL);
+		} else
+		{
+			ui_da_delayed_zoom_cb( uic);
 		}
 	}
 
@@ -267,6 +269,40 @@ ui_da_mouse_motion_notify_cb( GtkWidget      *da,
 
 	return TRUE;  /* We've handled it, stop processing */
 } /* ui_da_mouse_motion_notify_cb */
+
+gboolean
+ui_da_delayed_zoom_cb( gpointer data)
+{
+	UIController *uic = (UIController *)data;
+	DrawBuffer *db = uic->m_DrawBuffer.get();
+	if (g_Preferences->DebugGetPrintEvents())
+		g_print( "delayed_zoom\n");
+
+	if ( uic->m_DelayedZoomDelta == 0 )
+	{
+		return FALSE;
+	}
+
+	gint x = uic->m_DelayedZoomBase[AXIS_X];
+	gint y = uic->m_DelayedZoomBase[AXIS_Y];
+	double SCALING_COEF = g_Preferences->GetScalingCoef();
+	double scaling_coef = 1.;
+	int delta = uic->m_DelayedZoomDelta;
+	for ( ; delta > 0; delta-- )
+	{
+		scaling_coef *= SCALING_COEF;
+	}
+	for ( ; delta < 0; delta++ )
+	{
+		scaling_coef /= SCALING_COEF;
+	}
+	uic->m_DelayedZoomDelta = 0;
+
+	db->ChangeScaling( scaling_coef, x, y);
+	uic->UpdateStatusbar();
+
+	return FALSE; /* source func should be removed */
+} /* ui_da_delayed_zoom_cb */
 
 
 /////////////////////////////////// Menu //////////////////////////////////////////////
@@ -592,6 +628,7 @@ UIController::UIController( const char *filename)
 	, m_Toolbar( NULL)
 	, m_Statusbar( NULL)
 	, m_PickUped( false)
+	, m_DelayedZoomDelta( 0)
 {
 	GtkWidget *main_window;
 	GtkWidget *main_vbox;
