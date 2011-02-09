@@ -197,6 +197,40 @@ ui_da_mouse_button_release_cb( GtkWidget      *da,
 	return TRUE;    /* We've handled it, stop processing */
 } /* ui_da_mouse_button_release_cb */
 
+gboolean
+ui_da_delayed_zoom_cb( gpointer data)
+{
+	UIController *uic = (UIController *)data;
+	DrawBuffer *db = uic->m_DrawBuffer.get();
+	if (g_Preferences->DebugGetPrintEvents())
+		g_print( "delayed_zoom\n");
+
+	if ( uic->m_DelayedZoomDelta == 0 )
+	{
+		return FALSE;
+	}
+
+	gint x = uic->m_DelayedZoomBase[AXIS_X];
+	gint y = uic->m_DelayedZoomBase[AXIS_Y];
+	double SCALING_COEF = g_Preferences->GetScalingCoef();
+	double scaling_coef = 1.;
+	int delta = uic->m_DelayedZoomDelta;
+	for ( ; delta > 0; delta-- )
+	{
+		scaling_coef *= SCALING_COEF;
+	}
+	for ( ; delta < 0; delta++ )
+	{
+		scaling_coef /= SCALING_COEF;
+	}
+	uic->m_DelayedZoomDelta = 0;
+
+	db->ChangeScaling( scaling_coef, x, y);
+	uic->UpdateStatusbar();
+
+	return FALSE; /* source func should be removed */
+} /* ui_da_delayed_zoom_cb */
+
 gboolean 
 ui_da_mouse_scroll_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
 {
@@ -270,39 +304,6 @@ ui_da_mouse_motion_notify_cb( GtkWidget      *da,
 	return TRUE;  /* We've handled it, stop processing */
 } /* ui_da_mouse_motion_notify_cb */
 
-gboolean
-ui_da_delayed_zoom_cb( gpointer data)
-{
-	UIController *uic = (UIController *)data;
-	DrawBuffer *db = uic->m_DrawBuffer.get();
-	if (g_Preferences->DebugGetPrintEvents())
-		g_print( "delayed_zoom\n");
-
-	if ( uic->m_DelayedZoomDelta == 0 )
-	{
-		return FALSE;
-	}
-
-	gint x = uic->m_DelayedZoomBase[AXIS_X];
-	gint y = uic->m_DelayedZoomBase[AXIS_Y];
-	double SCALING_COEF = g_Preferences->GetScalingCoef();
-	double scaling_coef = 1.;
-	int delta = uic->m_DelayedZoomDelta;
-	for ( ; delta > 0; delta-- )
-	{
-		scaling_coef *= SCALING_COEF;
-	}
-	for ( ; delta < 0; delta++ )
-	{
-		scaling_coef /= SCALING_COEF;
-	}
-	uic->m_DelayedZoomDelta = 0;
-
-	db->ChangeScaling( scaling_coef, x, y);
-	uic->UpdateStatusbar();
-
-	return FALSE; /* source func should be removed */
-} /* ui_da_delayed_zoom_cb */
 
 
 /////////////////////////////////// Menu //////////////////////////////////////////////
