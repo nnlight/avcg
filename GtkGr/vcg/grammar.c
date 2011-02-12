@@ -391,12 +391,12 @@ static void alloc_block(void)
 
 	new_block = (char *)malloc(parseheapsize*sizeof(struct stree_node));
 	if (!new_block) fatal_error("memory exhausted");
-	(*(char**)new_block) = parseheap; /* в начале блока хранится ссылка ны пркдвдущий блок */
+	(*(char**)new_block) = parseheap; /* в начале блока хранится ссылка ны предыдущий блок */
 	parseheap = new_block;
 	parseheapstart = parseheaptop = (parseheap + sizeof(char *));
 	parseheapend = parseheap + (parseheapsize-2) * sizeof(struct stree_node);
 	/* выравнивание */
-	parseheaptop = (char *)((long)(parseheaptop+IALIGN)&(~IALIGN));
+	parseheaptop = (char *)((size_t)(parseheaptop+IALIGN)&(~IALIGN));
 	return;
 } /* alloc_block */
 

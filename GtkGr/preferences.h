@@ -1,6 +1,7 @@
 #ifndef _PREFERENCES_H_
 #define _PREFERENCES_H_
 
+#include "stdafx.h"
 #include <glib.h>
 
 

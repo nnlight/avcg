@@ -1,6 +1,4 @@
 #include "preferences.h"
-#include "stdafx.h"
-#include <glib.h>
 #include "vcg/gdl_defs.h"
 
 /**
