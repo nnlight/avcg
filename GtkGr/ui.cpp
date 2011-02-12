@@ -360,7 +360,7 @@ ui_activate_action( GtkAction *action, gpointer data)
 	} else if ( !strcmp( action_name, "FindNode") )
 	{
 		UiShowFindNodeDialog( uic);
-	} else if ( !strcmp( action_name, "Preferences_LoadDefaults") )
+	} else if ( !strcmp( action_name, "Preferences_SetDefaults") )
 	{
 		delete g_Preferences;
 		g_Preferences = new Preferences();
@@ -415,47 +415,47 @@ static GtkActionEntry entries[] = {
     "Create a new file",                       /* tooltip */ 
     G_CALLBACK (ui_activate_action) },      
   { "Open", GTK_STOCK_OPEN,                    /* name, stock id */
-    "_Open","<control>O",                      /* label, accelerator */     
+    "_Open...","<control>O",                   /* label, accelerator */
     "Open a file",                             /* tooltip */
     G_CALLBACK (ui_activate_action) }, 
   { "Reload", GTK_STOCK_REFRESH,               /* name, stock id */
-    "_Reload","<control>R",                    /* label, accelerator */     
+    "_Reload","<control>R",                    /* label, accelerator */
     "Reload file",                             /* tooltip */
     G_CALLBACK (ui_activate_action) }, 
   { "Save", GTK_STOCK_SAVE,                    /* name, stock id */
-    "_Save","<control>S",                      /* label, accelerator */     
+    "_Save","<control>S",                      /* label, accelerator */
     "Save current file",                       /* tooltip */
     G_CALLBACK (ui_activate_action) },
   { "SaveAs", GTK_STOCK_SAVE,                  /* name, stock id */
-    "Save _As...", NULL,                       /* label, accelerator */     
+    "Save _As...", NULL,                       /* label, accelerator */
     "Save to a file",                          /* tooltip */
     G_CALLBACK (ui_activate_action) },
   { "Quit", GTK_STOCK_QUIT,                    /* name, stock id */
-    "_Quit", "<control>Q",                     /* label, accelerator */     
+    "_Quit", "<control>Q",                     /* label, accelerator */
     "Quit",                                    /* tooltip */
     G_CALLBACK (ui_activate_action) },
-  { "FindNode", NULL,                          /* name, stock id */
-    "Find Node...", "<control>F",              /* label, accelerator */     
+  { "FindNode", GTK_STOCK_FIND,                /* name, stock id */
+    "Find Node...", "<control>F",              /* label, accelerator */
     NULL,                                      /* tooltip */
     G_CALLBACK (ui_activate_action) },
-  { "Preferences_LoadDefaults", NULL,          /* name, stock id */
-    "LoadDefaults", NULL,                      /* label, accelerator */     
+  { "Preferences_SetDefaults", NULL,           /* name, stock id */
+    "Set Defaults", NULL,                      /* label, accelerator */
     NULL,                                      /* tooltip */
     G_CALLBACK (ui_activate_action) },
   { "Preferences_Load", NULL,                  /* name, stock id */
-    "Load", NULL,                              /* label, accelerator */     
+    "Load", NULL,                              /* label, accelerator */
     NULL,                                      /* tooltip */
     G_CALLBACK (ui_activate_action) },
   { "Preferences_Save", NULL,                  /* name, stock id */
-    "Save", NULL,                              /* label, accelerator */     
+    "Save", NULL,                              /* label, accelerator */
     NULL,                                      /* tooltip */
     G_CALLBACK (ui_activate_action) },
-  { "About", NULL,                             /* name, stock id */
-    "_About", "<control>A",                    /* label, accelerator */     
-    "About",                                   /* tooltip */  
+  { "About", GTK_STOCK_ABOUT,                  /* name, stock id */
+    "_About...", "<control>A",                 /* label, accelerator */
+    "About",                                   /* tooltip */
     G_CALLBACK (ui_activate_action) },
   { "Logo", "demo-gtk-logo",                   /* name, stock id */
-     NULL, NULL,                               /* label, accelerator */     
+     NULL, NULL,                               /* label, accelerator */
     "GTK+",                                    /* tooltip */
     G_CALLBACK (ui_activate_action) },
 };
@@ -551,7 +551,7 @@ static const gchar *ui_info =
 "      <menuitem action='FindNode'/>"
 "    </menu>"
 "    <menu action='PreferencesMenu'>"
-"      <menuitem action='Preferences_LoadDefaults'/>"
+"      <menuitem action='Preferences_SetDefaults'/>"
 "      <menuitem action='Preferences_Load'/>"
 "      <menuitem action='Preferences_Save'/>"
 "      <separator/>"
