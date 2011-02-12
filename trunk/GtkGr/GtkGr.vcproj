@@ -207,6 +207,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ui_win32.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\vr_graph.cpp"
 				>
 			</File>

@@ -107,7 +107,18 @@ ui_da_configure_event_cb( GtkWidget         *da,
 	UIController *uic = (UIController *)data;
 	DrawBuffer *db = uic->m_DrawBuffer.get();
 	if (g_Preferences->DebugGetPrintEvents()) g_print("configure_event\n");
-	
+
+#ifdef WIN32
+	static GdkWindow *da_window = NULL;
+	if  (da_window == NULL)
+	{
+		da_window = da->window;
+		gdk_window_add_filter( uic->m_MainWindow->window, &ui_win32_main_window_filter, da->window);
+	}
+	assert( da_window == da->window );
+	//gdk_window_add_filter( da->window, da_filter_func, NULL/*data*/);
+#endif /* WIN32 */
+
 	db->ConfigureDa();
 
 	/* We've handled the configure event, no need for further processing. */
@@ -237,7 +248,10 @@ ui_da_mouse_scroll_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
 	UIController *uic = (UIController *)data;
 	DrawBuffer *db = uic->m_DrawBuffer.get();
 	if (g_Preferences->DebugGetPrintEvents())
-		g_print("scroll_event %d,%d,%d, %d\n", event->send_event, event->state, event->type,event->time);
+	{
+		g_print("scroll_event %d,state=%d,%d, %d\n", event->send_event, event->state, event->type,event->time);
+		//printf( "(%f %f) (%f %f) \n", event->x, event->y, event->x_root, event->y_root);
+	}
 
 	if ( 1/*event->state & GDK_CONTROL_MASK*/ )
 	{
@@ -687,7 +701,7 @@ UIController::UIController( const char *filename)
 								| GDK_LEAVE_NOTIFY_MASK
 								| GDK_BUTTON_PRESS_MASK
 								| GDK_BUTTON_RELEASE_MASK
-								//| GDK_SCROLL_MASK
+								| GDK_SCROLL_MASK
 								| GDK_POINTER_MOTION_MASK
 								| GDK_POINTER_MOTION_HINT_MASK
 							);
@@ -700,13 +714,13 @@ UIController::UIController( const char *filename)
 	gtk_box_pack_end( GTK_BOX(main_vbox), statusbar, FALSE, TRUE, 0);
 
 
-//printf("before gtk_widget_show_all(main_window)\n");
-
-	// отображение основного окна
-	gtk_widget_show_all( main_window);
 
 	m_MainWindow = main_window;
 	m_Statusbar = statusbar;
+
+//printf("before gtk_widget_show_all(main_window)\n");
+	// отображение основного окна
+	gtk_widget_show_all( main_window);
 
 	UpdateStatusbar();
 	return;

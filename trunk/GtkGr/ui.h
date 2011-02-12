@@ -8,6 +8,14 @@
 class UIController;
 void UiShowFindNodeDialog( UIController *uic);
 
+#ifdef WIN32
+/* workaround for win32 scroll-event's*/
+GdkFilterReturn
+ui_win32_main_window_filter( GdkXEvent *xevent,
+                             GdkEvent *unused_event,
+                             gpointer data);
+#endif /* WIN32 */
+
 /**
  * Режим, в одном из которых может находится в данный момент ui
  */
