@@ -193,7 +193,7 @@ ui_da_mouse_button_release_cb( GtkWidget      *da,
                              gpointer        data)
 {
 	UIController *uic = (UIController *)data;
-	DrawBuffer *db = uic->m_DrawBuffer.get();
+	//DrawBuffer *db = uic->m_DrawBuffer.get();
   	if (g_Preferences->DebugGetPrintEvents()) g_print("button_release_event\n");
 
 	int x = (int)event->x;
@@ -246,7 +246,7 @@ gboolean
 ui_da_mouse_scroll_cb( GtkWidget *da, GdkEventScroll *event, gpointer data)
 {
 	UIController *uic = (UIController *)data;
-	DrawBuffer *db = uic->m_DrawBuffer.get();
+	//DrawBuffer *db = uic->m_DrawBuffer.get();
 	if (g_Preferences->DebugGetPrintEvents())
 	{
 		g_print("scroll_event %d,state=%d,%d, %d\n", event->send_event, event->state, event->type,event->time);

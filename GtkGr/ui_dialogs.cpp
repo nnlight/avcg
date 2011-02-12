@@ -1,8 +1,6 @@
 #include "ui.h"
-#include <gdk/gdkkeysyms.h>
 #include "vr_graph.h"
 #include "vcg/vcg_iface.h"
-#include "preferences.h"
 
 // коментарий на русском...
 
@@ -23,16 +21,9 @@ enum
 	GLS_COLUMNS_COUNT
 };
 
-static FindNodeGLSNode data1[] =
-{
-	{ "tit1", "lab1", 10, 10},
-	{ "tit2", "lab2", 20, 20}
-};
-
 static GtkTreeModel *
 create_model( VRGraph *vrg)
 {
-	gint i = 0;
 	GtkListStore *store;
 	GtkTreeIter iter;
 
@@ -54,11 +45,11 @@ create_model( VRGraph *vrg)
 		gtk_list_store_set(store, &iter,
 						GLS_COLUMN_TITLE, node->title_.c_str(),
 						GLS_COLUMN_LABEL, node->label_.c_str(),
-						GLS_COLUMN_X, node->x_,
-						GLS_COLUMN_Y, node->y_,
+						GLS_COLUMN_X, node->x_ + node->width_ / 2,
+						GLS_COLUMN_Y, node->y_ + node->height_ / 2,
 						-1);
 	}
-	/*for (i = 0; i < G_N_ELEMENTS (data1); i++)
+	/*for (int i = 0; i < G_N_ELEMENTS (data1); i++)
 	{
 		gtk_list_store_append( store, &iter);
 		gtk_list_store_set(store, &iter,
@@ -103,7 +94,7 @@ add_columns( GtkTreeView *treeview)
 {
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn *column;
-	GtkTreeModel *model = gtk_tree_view_get_model( treeview);
+	//GtkTreeModel *model = gtk_tree_view_get_model( treeview);
 
 	/* column for fixed toggles */
 	renderer = gtk_cell_renderer_text_new();
