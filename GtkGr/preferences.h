@@ -20,8 +20,6 @@ private:
 	/* [Debug] */
 	bool m_PrintEvents;         /*! печатать ли приходящие события */
 	bool m_PrintActions;		/*! печать действий */
-	bool m_DelayedZooming;      /*! обрабатывать zoom не в основном обработчике сигналов
-								    (чтобы склеивать приходящие события) */
 
 private:
 	int GetKeyFileInteger( GKeyFile *key_file, const gchar *group_name, const gchar *key,
@@ -41,7 +39,6 @@ public:
 	int GetDefaultBgColorNum() { return m_DefaultBgColorNum; };
 	bool DebugGetPrintEvents() { return m_PrintEvents; };
 	bool DebugGetPrintActions() { return m_PrintActions; };
-	bool DebugGetDelayedZooming() { return m_DelayedZooming; };
 
 	void LoadFromFile();
 	void SaveToFile();

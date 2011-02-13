@@ -44,6 +44,9 @@ private:
 	VRGraph *m_VRGraph;
 	gint m_VRGBase[AXIS_LAST]; /* позиция центра VRGraph'а (ноль vrg-координат) */
 
+	/* признак того, что надо VRGraph перерисовывать (в expose_event'е) */
+	bool m_IsNeedRedrawPixmap;
+
 	typedef int vrgint; /* "маркер" того, что координаты в терминах VRGraph */
 	typedef int daint;  /* "маркер" того, что координаты в терминах m_da */
 
@@ -60,7 +63,7 @@ public:
 	/* не предназначен для иcпользования в качестве базового класса */
 	~DrawBuffer();
 
-	/* установка отображаемого графа*/
+	/* установка отображаемого графа */
 	void SetVRGraphRef( VRGraph *vr_graph);
 
 	/* da-функции */
@@ -119,6 +122,9 @@ private:
 	void AllocColormap();
 	/** заполнение Pixmap'а цветом фона */
 	void InitializePixmapToBackgroundColor( GdkPixmap *pixmap, int width, int height);
+	void CreatePixmap( int width, int height);
+	bool DeletePixmap();
+	void InspectVisibleArea( bool force_pixmap_repos = false);
 };
 
 

@@ -45,8 +45,6 @@ private:
 	GtkWidget *m_Statusbar;
 	bool m_PickUped; //!< признак того, что граф "схвачен" для перетаскивания
 	gint m_PickUpBase[AXIS_LAST];
-	int  m_DelayedZoomDelta; //!< итоговое кол-во zoom'ов
-	gint m_DelayedZoomBase[AXIS_LAST];
 public:
 	UIController( const char *filename = NULL);
 	~UIController(void);
@@ -68,7 +66,6 @@ private:
 	friend gboolean ui_da_expose_event_cb( GtkWidget *da, GdkEventExpose *event, gpointer data);
 	friend gboolean ui_da_mouse_button_press_cb( GtkWidget *da, GdkEventButton *event, gpointer data);
 	friend gboolean ui_da_mouse_button_release_cb( GtkWidget *da, GdkEventButton *event, gpointer data);
-	friend gboolean ui_da_delayed_zoom_cb( gpointer data);
 	friend gboolean ui_da_mouse_scroll_cb( GtkWidget *da, GdkEventScroll *event, gpointer data);
 	friend gboolean ui_da_mouse_motion_notify_cb( GtkWidget *da, GdkEventMotion *event, gpointer data);
 	friend void ui_activate_radio_action_mode( GtkAction *action, GtkRadioAction *current, gpointer data);
