@@ -8,14 +8,13 @@ Preferences *g_Preferences = NULL;
 
 
 Preferences::Preferences(void)
-	: m_ScalingCoef(1.1)
+	: m_ScalingCoef(1.15)
 	, m_MovePixels(50)
-	, m_SizeX(600)
-	, m_SizeY(400)
+	, m_SizeX(750)
+	, m_SizeY(530)
 	, m_DefaultBgColorNum( DARKYELLOW)
 	, m_PrintEvents( true)
 	, m_PrintActions( true)
-	, m_DelayedZooming( false)
 {
 } /* Preferences::Preferences */
 
@@ -89,7 +88,6 @@ void Preferences::LoadFromFile()
 	m_DefaultBgColorNum = GetKeyFileInteger( key_file, "General", "DefaultBgColorNum", m_DefaultBgColorNum);
 	m_PrintEvents = GetKeyFileBool( key_file, "Debug", "PrintEvents", m_PrintEvents);
 	m_PrintActions = GetKeyFileBool( key_file, "Debug", "PrintActions", m_PrintActions);
-	m_DelayedZooming = GetKeyFileBool( key_file, "Debug", "DelayedZooming", m_DelayedZooming);
 
 
 	g_key_file_free( key_file);
@@ -109,7 +107,6 @@ void Preferences::SaveToFile()
 	g_key_file_set_integer( key_file, "General", "DefaultBgColorNum", m_DefaultBgColorNum);
 	g_key_file_set_boolean( key_file, "Debug", "PrintEvents", (gboolean)m_PrintEvents);
 	g_key_file_set_boolean( key_file, "Debug", "PrintActions", (gboolean)m_PrintActions);
-	g_key_file_set_boolean( key_file, "Debug", "DelayedZooming", (gboolean)m_DelayedZooming);
 
 	gsize key_file_data_length = 0;
 	const gchar *key_file_data = g_key_file_to_data( key_file, &key_file_data_length, NULL);

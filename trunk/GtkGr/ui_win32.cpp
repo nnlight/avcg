@@ -114,8 +114,7 @@ ui_win32_main_window_filter( GdkXEvent *xevent,
 		return GDK_FILTER_CONTINUE;
 	}
 
-	//printf(" WM_MOUSEWHEEL %d %d %d %d\n", msg->lParam, msg->wParam, fwKeys, zDelta);
-	printf( "--(%d %d)  (%d %d) fwKeys=%d, time=%d {\n", xPos, yPos, x2, y2, fwKeys, msg->time);
+	//printf( "--WM_MOUSEWHEEL(%d %d)  (%d %d) fwKeys=%d, time=%d {\n", xPos, yPos, x2, y2, fwKeys, msg->time);
 
 	int da_x_root, da_y_root;
 	gdk_window_get_root_origin( da_window, &da_x_root, &da_y_root);
@@ -145,7 +144,7 @@ ui_win32_main_window_filter( GdkXEvent *xevent,
 		//gdk_event_put( ev);
 	}
 	//gdk_event_free( ev);
-	printf("}\n");
+	//printf("}\n");
 
 	return GDK_FILTER_REMOVE;
 } /* ui_win32_main_window_filter */

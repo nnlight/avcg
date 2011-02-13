@@ -46,34 +46,12 @@ void DrawBuffer::InitColormap()
 	m_InitedColors = BASECMAPSIZE;
 } /* DrawBuffer::InitColormap */
 
-void DrawBuffer::AllocColormap()
-{
-	assert( m_GC );
-	/* иначе надо освобождать уже выделенные цвета */
-	assert( m_AllocedColors == 0 );
-
-	GdkColormap *gc_colormap = gdk_gc_get_colormap( m_GC);
-	gboolean success[CMAPSIZE];
-	gint not_alloced = gdk_colormap_alloc_colors( gc_colormap,
-												  m_Colormap, m_InitedColors,
-												  false, // writable
-												  true, // best_match
-												  success); // *success
-	if (0 == not_alloced)
-	{
-		m_AllocedColors = m_InitedColors;
-	} else
-	{
-		InternalError();
-	}
-
-} /* DrawBuffer::AllocColormap */
-
 DrawBuffer::DrawBuffer( GtkWidget *drawing_area)
 	: m_da( drawing_area)
 	, m_Pixmap( NULL)
 	, m_Scaling ( 1.)
 	, m_VRGraph( NULL)
+	, m_IsNeedRedrawPixmap( false)
 	, m_GC( NULL)
 	, m_InitedColors( 0)
 	, m_AllocedColors( 0)
@@ -88,17 +66,8 @@ DrawBuffer::DrawBuffer( GtkWidget *drawing_area)
 DrawBuffer::~DrawBuffer()
 {
 	g_object_unref( m_da);
-	if (m_Pixmap)
-	{
-		g_object_unref( m_Pixmap);
-	}
-	if ( m_GC)
-	{
-		GdkColormap *gc_colormap = gdk_gc_get_colormap( m_GC);
-		gdk_colormap_free_colors( gc_colormap, m_Colormap, m_AllocedColors);
-		m_AllocedColors = 0;
-		g_object_unref( m_GC);
-	}
+	DeletePixmap();
+	return;
 } /* DrawBuffer::~DrawBuffer */
 
 void DrawBuffer::InitializePixmapToBackgroundColor( GdkPixmap *pixmap, int width, int height)
@@ -126,24 +95,58 @@ void DrawBuffer::SetVRGraphRef( VRGraph *vr_graph)
 	m_VRGraph = vr_graph;
 	if (m_Pixmap)
 	{
-		InitializePixmapToBackgroundColor( m_Pixmap,
-										   m_PixmapDims[AXIS_X],
-										   m_PixmapDims[AXIS_Y]);
-		if ( m_VRGraph )
-		{
-			m_VRGraph->Expose( this);
-		}
+		m_IsNeedRedrawPixmap = true;
 		InvalidateDa( NULL);
 	}
 } /* DrawBuffer::SetVRGraphRef */
 
-void DrawBuffer::ConfigureDa()
+void DrawBuffer::AllocColormap()
+{
+	assert( m_GC );
+	/* иначе надо освобождать уже выделенные цвета */
+	assert( m_AllocedColors == 0 );
+
+	GdkColormap *gc_colormap = gdk_gc_get_colormap( m_GC);
+	gboolean success[CMAPSIZE];
+	gint not_alloced = gdk_colormap_alloc_colors( gc_colormap,
+												  m_Colormap, m_InitedColors,
+												  false, // writable
+												  true, // best_match
+												  success); // *success
+	if (0 == not_alloced)
+	{
+		m_AllocedColors = m_InitedColors;
+	} else
+	{
+		InternalError();
+	}
+
+} /* DrawBuffer::AllocColormap */
+
+void DrawBuffer::CreatePixmap( int width, int height)
 {
 	assert( m_da );
+	assert( m_Pixmap == NULL );
+
+	m_Pixmap = gdk_pixmap_new( m_da->window,	/* передаем только для дефолтной глубины */
+                               width,
+                               height,
+                               -1);
+
+	m_GC = gdk_gc_new( /*m_da->window*/ m_Pixmap);
+	AllocColormap();
+	SetBackgroundColor( /*WHITE*/(Color_t)g_Preferences->GetDefaultBgColorNum());
+	SetCurrentColor( BLACK);
+} /* DrawBuffer::CreatePixmap */
+
+bool DrawBuffer::DeletePixmap()
+{
+	bool res = false;
 	if (m_Pixmap)
 	{
 		g_object_unref( m_Pixmap);
 		m_Pixmap = NULL;
+		res = true;
 	}
 	if ( m_GC)
 	{
@@ -151,40 +154,52 @@ void DrawBuffer::ConfigureDa()
 		gdk_colormap_free_colors( gc_colormap, m_Colormap, m_AllocedColors);
 		m_AllocedColors = 0;
 		g_object_unref( m_GC);
+		m_GC = NULL;
 	}
+	return (res);
+} /* DrawBuffer::DeletePixmap */
 
+void DrawBuffer::ConfigureDa()
+{
+	assert( m_da );
+	bool was_pixmap = DeletePixmap();
+
+	gint new_va_dims[AXIS_LAST];
 	gint dims[AXIS_LAST];
+
+	new_va_dims[AXIS_X] = m_da->allocation.width;
+	new_va_dims[AXIS_Y] = m_da->allocation.height;
+
 	/* Pixmap будем держать примерно в 3 раза больше видимой области */
-	dims[AXIS_X] = m_da->allocation.width * 3;
-	dims[AXIS_Y] = m_da->allocation.height * 3;
+	dims[AXIS_X] = new_va_dims[AXIS_X] * 3;
+	dims[AXIS_Y] = new_va_dims[AXIS_Y] * 3;
 
-	m_Pixmap = gdk_pixmap_new( m_da->window,		/* только для дефолтной глубины передаем */
-                               dims[AXIS_X],
-                               dims[AXIS_Y],
-                               -1);
+	CreatePixmap( dims[AXIS_X], dims[AXIS_Y]);
 
-	m_GC = gdk_gc_new( /*m_da->window*/ m_Pixmap);
-	AllocColormap();
-	SetBackgroundColor( /*WHITE*/(Color_t)g_Preferences->GetDefaultBgColorNum());
-	SetCurrentColor( BLACK);
-
-	m_VisibleAreaBase[AXIS_X] = dims[AXIS_X] / 3;
-	m_VisibleAreaBase[AXIS_Y] = dims[AXIS_Y] / 3;
-	m_VisibleAreaDims[AXIS_X] = m_da->allocation.width;
-	m_VisibleAreaDims[AXIS_Y] = m_da->allocation.height;
 	m_PixmapDims[AXIS_X] = dims[AXIS_X];
 	m_PixmapDims[AXIS_Y] = dims[AXIS_Y];
-
-	m_VRGBase[AXIS_X] = m_VisibleAreaBase[AXIS_X];
-	m_VRGBase[AXIS_Y] = m_VisibleAreaBase[AXIS_Y];
-  
-	InitializePixmapToBackgroundColor( m_Pixmap,
-									   dims[AXIS_X],
-									   dims[AXIS_Y]);
-	if ( m_VRGraph )
+	if (was_pixmap)
 	{
-		m_VRGraph->Expose( this);
+		/* если до этого Pixmap был, т.е. это resize окна, то расширяем (сужаем)
+		   видимую область, оставляя центр на месте */
+		m_VisibleAreaBase[AXIS_X] -= (new_va_dims[AXIS_X] - m_VisibleAreaDims[AXIS_X]) / 2;
+		m_VisibleAreaBase[AXIS_Y] -= (new_va_dims[AXIS_Y] - m_VisibleAreaDims[AXIS_Y]) / 2;
+		m_VisibleAreaDims[AXIS_X] = new_va_dims[AXIS_X];
+		m_VisibleAreaDims[AXIS_Y] = new_va_dims[AXIS_Y];
 	}
+	else
+	{
+		m_VisibleAreaBase[AXIS_X] = 0;
+		m_VisibleAreaBase[AXIS_Y] = 0;
+		m_VisibleAreaDims[AXIS_X] = new_va_dims[AXIS_X];
+		m_VisibleAreaDims[AXIS_Y] = new_va_dims[AXIS_Y];
+		/* начальное положение центра координат VRGraph'а - левый верхний угол da */
+		m_VRGBase[AXIS_X] = m_VisibleAreaBase[AXIS_X];
+		m_VRGBase[AXIS_Y] = m_VisibleAreaBase[AXIS_Y];
+	}
+	/* требуем обязательного перепозиционирования(и перерисовки) Pixmap'а */
+	InspectVisibleArea( true);
+	return;
 } /* DrawBuffer::ConfigureDa */
 
 void DrawBuffer::ExposeDa( daint x, 
@@ -192,13 +207,37 @@ void DrawBuffer::ExposeDa( daint x,
 						   daint width, 
 						   daint height)
 {
+	GTimer *timer = g_timer_new();
+	g_timer_start( timer);
+	if (m_IsNeedRedrawPixmap)
+	{
+		InitializePixmapToBackgroundColor( m_Pixmap,
+										   m_PixmapDims[AXIS_X],
+										   m_PixmapDims[AXIS_Y]);
+		if ( m_VRGraph )
+		{
+			m_VRGraph->Expose( this);
+		}
+		m_IsNeedRedrawPixmap = false;
+	}
+	double draw_time = g_timer_elapsed( timer, NULL);
+	g_timer_start( timer);
+	//if ( !gtk_events_pending() )
+	{
 	gdk_draw_drawable( m_da->window,
-                       m_da->style->fg_gc[GTK_WIDGET_STATE (m_da)],
+                       //m_da->style->fg_gc[GTK_WIDGET_STATE (m_da)],
+                       m_da->style->black_gc,
 					   m_Pixmap,
                        /* Only copy the area that was exposed. */
                        m_VisibleAreaBase[AXIS_X] + x, m_VisibleAreaBase[AXIS_Y] + y,
                        x, y,
                        width, height);
+	}
+	double copy_time = g_timer_elapsed( timer, NULL);
+	if (g_Preferences->DebugGetPrintEvents())
+	{
+		g_print(" times:draw=%f  copy=%f\n", draw_time, copy_time);
+	}
 } /* DrawBuffer::ExposeDa */
 
 void DrawBuffer::Da2Vrg( daint da_x, daint da_y, vrgint &vrg_x, vrgint &vrg_y)
@@ -297,52 +336,13 @@ void DrawBuffer::MoveVisibleArea( gint delta,
 
 void DrawBuffer::MoveVisibleArea2d( gint delta[AXIS_LAST])
 {
-	bool is_need_redraw_pixmap = false;
+	/* просто сдвигаем visible area */
+	m_VisibleAreaBase[AXIS_X] += delta[AXIS_X];
+	m_VisibleAreaBase[AXIS_Y] += delta[AXIS_Y];
 
-	/* если видимая область доходит до границы Pixmap'а, то мы перерисовываем Pixmap
-	   так, чтобы видимая область стала посередине Pixmap'а */
-	for ( int axis = 0; axis < AXIS_LAST; axis++ )
-	{
-		if ( m_VisibleAreaBase[axis] + delta[axis] < 0 )
-		{
-			is_need_redraw_pixmap = true;
-		}
-		if ( m_VisibleAreaBase[axis] + m_VisibleAreaDims[axis] + delta[axis] > m_PixmapDims[axis] )
-		{
-			is_need_redraw_pixmap = true;
-		}
-	}
-	if (is_need_redraw_pixmap)
-	{
-		/* смещение нового положения Pixmap относительно старых координат Pixmap */
-		int pixmap_shift[AXIS_LAST];
-		/* смещать будем так, чтобы VisibleArea оказалась посередине Pixmap'а */
-		pixmap_shift[AXIS_X] = m_VisibleAreaBase[AXIS_X] - m_PixmapDims[AXIS_X] / 3;
-		pixmap_shift[AXIS_Y] = m_VisibleAreaBase[AXIS_Y] - m_PixmapDims[AXIS_Y] / 3;
+	/* проверим, не вышла ли видимая область за границы области */
+	InspectVisibleArea();
 
-		/* пересчитываем положение видимой области (размеры видимой области не меняются) */
-		m_VisibleAreaBase[AXIS_X] -= pixmap_shift[AXIS_X];
-		m_VisibleAreaBase[AXIS_Y] -= pixmap_shift[AXIS_Y];
-		assert( m_VisibleAreaBase[AXIS_X] == m_PixmapDims[AXIS_X] / 3 );
-		assert( m_VisibleAreaBase[AXIS_Y] == m_PixmapDims[AXIS_Y] / 3 );
-		/* пересчитываем положение центра VRGraph'а */
-		m_VRGBase[AXIS_X] -= delta[AXIS_X] + pixmap_shift[AXIS_X];
-		m_VRGBase[AXIS_Y] -= delta[AXIS_Y] + pixmap_shift[AXIS_Y];
-
-		/* обновляем содержимое Pixmap'а (т.к. теперь там должна лежать изображения другой части графа) */  
-		InitializePixmapToBackgroundColor( m_Pixmap,
-										   m_PixmapDims[AXIS_X],
-										   m_PixmapDims[AXIS_Y]);
-		if ( m_VRGraph )
-		{
-			m_VRGraph->Expose( this);
-		}
-	} else
-	{
-		/* просто сдвигаем visible area :) */
-		m_VisibleAreaBase[AXIS_X] += delta[AXIS_X];
-		m_VisibleAreaBase[AXIS_Y] += delta[AXIS_Y];
-	}
 	/* Now invalidate the affected region of the drawing area. */
 	/* инвалидируем всю drawing_area (потом должно будет прийти expose_event) */
 	InvalidateDa( NULL);
@@ -392,18 +392,55 @@ double DrawBuffer::ChangeScaling( double scaling_factor, daint x, daint y)
 	m_VRGBase[AXIS_X] = pm_x + vrgbase_shift[AXIS_X];
 	m_VRGBase[AXIS_Y] = pm_y + vrgbase_shift[AXIS_Y];
 
-	/* обновляем содержимое Pixmap'а (т.к. теперь там должна лежать изображения другой части графа) */  
-	InitializePixmapToBackgroundColor( m_Pixmap,
-									   m_PixmapDims[AXIS_X],
-									   m_PixmapDims[AXIS_Y]);
-	if ( m_VRGraph )
-	{
-		m_VRGraph->Expose( this);
-	}
+	/* заказываем обновление содержимого Pixmap'а 
+	   (т.к. теперь там должно лежать изображение другой части графа) */
+	m_IsNeedRedrawPixmap = true;
+
 	/* инвалидируем всю drawing_area (потом должно будет прийти expose_event) */
 	InvalidateDa( NULL);
 	return (m_Scaling);
 } /* DrawBuffer::ChangeScaling */
+
+void DrawBuffer::InspectVisibleArea( bool force_pixmap_repos)
+{
+	bool is_need_repos_pixmap = force_pixmap_repos;
+
+	/* если видимая область выходит за границы Pixmap'а, то следует переместить Pixmap
+	   так, чтобы видимая область стала посередине Pixmap'а */
+	for ( int axis = 0; axis < AXIS_LAST; axis++ )
+	{
+		if ( m_VisibleAreaBase[axis] < 0 )
+		{
+			is_need_repos_pixmap = true;
+		}
+		if ( m_VisibleAreaBase[axis] + m_VisibleAreaDims[axis] > m_PixmapDims[axis] )
+		{
+			is_need_repos_pixmap = true;
+		}
+	}
+	if (is_need_repos_pixmap)
+	{
+		/* смещение нового положения Pixmap относительно старых координат Pixmap */
+		int pixmap_shift[AXIS_LAST];
+		/* смещать будем так, чтобы VisibleArea оказалась посередине Pixmap'а */
+		pixmap_shift[AXIS_X] = m_VisibleAreaBase[AXIS_X] -
+								(m_PixmapDims[AXIS_X] - m_VisibleAreaDims[AXIS_X]) / 2;
+		pixmap_shift[AXIS_Y] = m_VisibleAreaBase[AXIS_Y] -
+								(m_PixmapDims[AXIS_Y] - m_VisibleAreaDims[AXIS_Y]) / 2;
+
+		/* пересчитываем положение видимой области (размеры видимой области не меняются) */
+		m_VisibleAreaBase[AXIS_X] -= pixmap_shift[AXIS_X];
+		m_VisibleAreaBase[AXIS_Y] -= pixmap_shift[AXIS_Y];
+		/* пересчитываем положение центра VRGraph'а */
+		m_VRGBase[AXIS_X] -= pixmap_shift[AXIS_X];
+		m_VRGBase[AXIS_Y] -= pixmap_shift[AXIS_Y];
+
+		/* заказываем обновление содержимого Pixmap'а
+		   (т.к. теперь там должна лежать изображения другой части графа) */
+		m_IsNeedRedrawPixmap = true;
+	}
+	return;
+} /* DrawBuffer::InspectVisibleArea */
 
 
 void DrawBuffer::PKey()
