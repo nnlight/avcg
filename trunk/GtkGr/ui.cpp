@@ -633,7 +633,7 @@ UIController::UIController( const char *filename)
 	GtkWidget *da = gtk_drawing_area_new();
 	/* set a minimum size */
 	gtk_widget_set_size_request( da, 100, 100);
-	//gtk_widget_set_double_buffered( da, FALSE);
+	gtk_widget_set_double_buffered( da, FALSE);
 
 	gtk_container_add( GTK_CONTAINER(main_vbox), da);
 
@@ -798,7 +798,7 @@ void UIController::ShowAboutDialog()
 	gtk_show_about_dialog( GTK_WINDOW( m_MainWindow),
 			"program-name", "avcg tool",
 			"version", "v0.1 (Build: " __DATE__ ")",
-			"comments", "Just another realization of xvcg tool based on GTK+ library.",
+			"comments", "Another realization of xvcg tool based on GTK+ library.",
 			"copyright", "(C) 2009-2011 ...",
 			"website", "http://code.google.com/p/avcg/",
 			"license", license,
