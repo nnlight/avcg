@@ -122,7 +122,7 @@ void VRGraph::HandleInfoBoxPress( DrawBuffer *draw_buffer, int x, int y, int inf
 	{
 		if ( riter->x_ <= x  && x < riter->x_ + riter->width_
 			 && riter->y_ <= y  && y < riter->y_ + riter->height_
-			 && riter->info_num_ == info_num)
+			 /*&& riter->info_num_ == info_num*/)
 		{
 			void *r_addr = &(*riter);
 			void *addr = &(*--riter.base());
@@ -246,12 +246,12 @@ void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
 void VRGraph::DrawIBox( DrawBuffer *draw_buffer, VRIBox *ibox)
 {
 	VRNode *node = ibox->node_;
-	draw_buffer->SetCurrentColor( node->color_);
+	draw_buffer->SetCurrentColor( /*node->color_*/ WHITE);
 	draw_buffer->DrawRectangle( ibox->x_, ibox->y_, ibox->width_, ibox->height_, true);
 	draw_buffer->SetLineWidth( node->borderw_);
-	draw_buffer->SetCurrentColor( node->bcolor_);
+	draw_buffer->SetCurrentColor( /*node->bcolor_*/ BLACK);
 	draw_buffer->DrawRectangle( ibox->x_, ibox->y_, ibox->width_, ibox->height_, false);
-	draw_buffer->SetCurrentColor( node->textcolor_);
+	draw_buffer->SetCurrentColor( /*node->textcolor_*/ BLACK);
 	draw_buffer->DrawText( ibox->x_ + node->borderw_ + NODE_LABEL_MARGIN, 
 						   ibox->y_ + node->borderw_ + NODE_LABEL_MARGIN,
 						   node->infos_[ibox->info_num_ - 1].c_str());
