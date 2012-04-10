@@ -1,0 +1,1373 @@
+graph: {
+  title: "e2kt"
+  label: "e2kt"
+  orientation: lefttoright
+  layoutalgorithm: minbackward
+  xspace: 15
+  yspace: 30
+  color: white
+  node.color: yellow
+  node.textcolor: black
+  edge.arrowsize: 8
+  edge.thickness: 3
+  node: {
+    color: lightgrey
+    info2: "This is a BEG"
+    info1: "todo:
+IN: 
+OUT: 
+"
+    label: "0.BEG"
+    title: "0"
+  }
+  node: {
+    color: lightgrey
+    info2: "This is a END"
+    info1: "todo:
+IN: 
+OUT: 
+"
+    label: "1.END"
+    title: "1"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 lintel35 %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "2.lintel35"
+    title: "2"
+  }
+  node: {
+    color: lightgreen
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 lintel4 %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "3.lintel4"
+    title: "3"
+    borderwidth: 5
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 lintel4_e3m_rel %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "4.lintel4_e3m_rel"
+    title: "4"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 lintel4_e3m %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "5.lintel4_e3m"
+    title: "5"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 lintel4_e3mcc %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "6.lintel4_e3mcc"
+    title: "6"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 lintel4_cmp %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "7.lintel4_cmp"
+    title: "7"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 lintel_itp_rel %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "8.lintel_itp_rel"
+    title: "8"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 lintel_itp %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "9.lintel_itp"
+    title: "9"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 xe2k_opt %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "10.xe2k_opt"
+    title: "10"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 xe2k_optdf %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "11.xe2k_optdf"
+    title: "11"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 xe2k_optdf_e3mcc %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "12.xe2k_optdf_e3mcc"
+    title: "12"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 xe2k_le_optdf %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "13.xe2k_le_optdf"
+    title: "13"
+  }
+  node: {
+    color: lightred
+    info2: "всегда готов"
+    info1: "todo: <gmake %make_flags% rgnprof %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "14.rgnprof"
+    title: "14"
+  }
+  node: {
+    color: lightgreen
+    info2: "всегда готов"
+    info1: "todo: <gmake %make_flags% xtracer %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "15.xtracer"
+    title: "15"
+  }
+  node: {
+    color: lightgreen
+    info2: "всегда готов"
+    info1: "todo: <gmake %make_flags% smtc_extract %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "16.smtc_extract"
+    title: "16"
+  }
+  node: {
+    color: lightgreen
+    info2: "всегда готов"
+    info1: "todo: <gmake %make_flags% cb_extract %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "17.cb_extract"
+    title: "17"
+  }
+  node: {
+    color: lightgreen
+    info2: "всегда готов"
+    info1: "todo: <gmake %make_flags% bcd_extract %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "18.bcd_extract"
+    title: "18"
+  }
+  node: {
+    color: lightgreen
+    info2: "всегда готов"
+    info1: "todo: <gmake %make_flags% bcd_make %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "19.bcd_make"
+    title: "19"
+  }
+  node: {
+    color: lightgreen
+    info2: "всегда готов"
+    info1: "todo: <gmake %make_flags% bcd_decompose %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "20.bcd_decompose"
+    title: "20"
+  }
+  node: {
+    color: lightgreen
+    info2: "всегда готов"
+    info1: "todo: <gmake %make_flags% loptions %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "21.loptions"
+    title: "21"
+  }
+  node: {
+    color: lightgreen
+    info2: "всегда готов"
+    info1: "todo: <gmake %make_flags% -j4 libxe2k_opt %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "22.libxe2k_opt"
+    title: "22"
+  }
+  node: {
+    color: lightgreen
+    info2: "всегда готов"
+    info1: "todo: <gmake %make_flags% -j4 libxe2k_opt_e3mcc %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "23.libxe2k_opt_e3mcc"
+    title: "23"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 rtc0_dr %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "24.rtc0_dr"
+    title: "24"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 rtc0_prof %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "25.rtc0_prof"
+    title: "25"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 rtc_opt_rel %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "26.rtc_opt_rel"
+    title: "26"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 rtc_opt %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "27.rtc_opt"
+    title: "27"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 rtc_opt_rel_ob %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "28.rtc_opt_rel_ob"
+    title: "28"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от файла asm2eir_i T=1273059462"
+    info1: "todo: <gmake %make_flags% -j4 rtc_opt_e3mcc %todo_redirect%>
+IN: 
+OUT: 
+"
+    label: "29.rtc_opt_e3mcc"
+    title: "29"
+  }
+  node: {
+    color: lightgreen
+    info2: "всегда готов"
+    info1: "todo: <date > E2ktlogs/test_xe2k_opt_comm.log>
+IN: 
+OUT: 
+"
+    label: "30.test_xe2k_opt"
+    title: "30"
+    borderwidth: 5
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test xe2k_opt %day_test_flags% %todo_redirect% && date > E2ktlogs/test_xe2k_opt.log>
+IN: 
+OUT: 
+"
+    label: "31.test_xe2k_opt_main"
+    title: "31"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test xe2k_opt_pi %day_test_flags% %todo_redirect% && date > E2ktlogs/test_xe2k_opt_pi.log>
+IN: 
+OUT: 
+"
+    label: "32.test_xe2k_opt_pi"
+    title: "32"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test xe2k_opt_dyn %day_test_flags% %todo_redirect% && date > E2ktlogs/test_xe2k_opt_dyn.log>
+IN: 
+OUT: 
+"
+    label: "33.test_xe2k_opt_dyn"
+    title: "33"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test rtc0_dr_dyn %day_test_flags% %todo_redirect% && date > E2ktlogs/test_rtc0_dr_dyn.log>
+IN: 
+OUT: 
+"
+    label: "34.test_rtc0_dr_dyn"
+    title: "34"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test xe2k_le_optdf %day_test_flags% %todo_redirect% && date > E2ktlogs/test_xe2k_le_opt.log>
+IN: 
+OUT: 
+"
+    label: "35.test_xe2k_le_opt"
+    title: "35"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test xe2k_optdf_e3mcc %day_test_flags% %todo_redirect% && date > E2ktlogs/test_xe2k_opt_e3mcc.log>
+IN: 
+OUT: 
+"
+    label: "36.test_xe2k_opt_e3mcc"
+    title: "36"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test rtc_opt_rel -fast %day_test_flags% %todo_redirect% && date > E2ktlogs/test_rtc_opt_rel.log>
+IN: 
+OUT: 
+"
+    label: "37.test_rtc_opt_rel"
+    title: "37"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test rtc_opt -fast %day_test_flags% %todo_redirect% && date > E2ktlogs/test_rtc_opt.log>
+IN: 
+OUT: 
+"
+    label: "38.test_rtc_opt"
+    title: "38"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test rtc_optL3 %day_test_flags% %todo_redirect% && date > E2ktlogs/test_rtc_optL3.log>
+IN: 
+OUT: 
+"
+    label: "39.test_rtc_optL3"
+    title: "39"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test rtc_opt_rel_ob -fast %day_test_flags% %todo_redirect% && date > E2ktlogs/test_rtc_opt_rel_ob.log>
+IN: 
+OUT: 
+"
+    label: "40.test_rtc_opt_rel_ob"
+    title: "40"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test rtc_opt_e3mcc -fast %day_test_flags% %todo_redirect% && date > E2ktlogs/test_rtc_opt_e3mcc.log>
+IN: 
+OUT: 
+"
+    label: "41.test_rtc_opt_e3mcc"
+    title: "41"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test rtc_opt_e3mcc_cmp -fast %day_test_flags% %todo_redirect% && date > E2ktlogs/test_rtc_opt_e3mcc_cmp.log>
+IN: 
+OUT: 
+"
+    label: "42.test_rtc_opt_e3mcc_cmp"
+    title: "42"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test lintel_itp_rel_lx %day_test_flags% %todo_redirect% && date > E2ktlogs/test_lintel_itp_rel_lx.log>
+IN: 
+OUT: 
+"
+    label: "43.test_lintel_itp_rel_lx"
+    title: "43"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test lintel4_e3m_rel_lx %day_test_flags% %todo_redirect% && date > E2ktlogs/test_lintel4_e3m_rel_lx.log>
+IN: 
+OUT: 
+"
+    label: "44.test_lintel4_e3m_rel_lx"
+    title: "44"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test lintel4_e3m_lx %day_test_flags% %todo_redirect% && date > E2ktlogs/test_lintel4_e3m_lx.log>
+IN: 
+OUT: 
+"
+    label: "45.test_lintel4_e3m_lx"
+    title: "45"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test lintel4_e3m %day_test_flags% %todo_redirect% && date > E2ktlogs/test_lintel4_e3m.log>
+IN: 
+OUT: 
+"
+    label: "46.test_lintel4_e3m"
+    title: "46"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test lintel4_e3mcc %day_test_flags% %todo_redirect% && date > E2ktlogs/test_lintel4_e3mcc.log>
+IN: 
+OUT: 
+"
+    label: "47.test_lintel4_e3mcc"
+    title: "47"
+  }
+  node: {
+    color: lightgreen
+    info2: ""
+    info1: "todo: <./Day_Test lintel_itp %day_test_flags% %todo_redirect% && date > E2ktlogs/test_lintel_itp.log>
+IN: 
+OUT: 
+"
+    label: "48.test_lintel_itp"
+    title: "48"
+  }
+  node: {
+    color: lightred
+    info2: "по зависимости от узла lintel4 T=1273066102"
+    info1: "todo: <date > E2ktlogs/all_ok_i.log>
+IN: 
+OUT: 
+"
+    label: "51.all_ok"
+    title: "51"
+  }
+  edge: {
+    targetname: "1"
+    sourcename: "0"
+    color: darkblue
+    class: 1
+  }
+  edge: {
+    targetname: "2"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "3"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "4"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "5"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "6"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "7"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "8"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "9"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "10"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "11"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "12"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "13"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "14"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "15"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "16"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "17"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "18"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "19"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "20"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "21"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "22"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "23"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "24"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "25"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "26"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "27"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "28"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "29"
+    sourcename: "0"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "2"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "2"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "3"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "3"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "44"
+    sourcename: "4"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "44"
+    sourcename: "4"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "46"
+    sourcename: "5"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "45"
+    sourcename: "5"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "45"
+    sourcename: "5"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "46"
+    sourcename: "5"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "47"
+    sourcename: "6"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "47"
+    sourcename: "6"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "7"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "7"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "43"
+    sourcename: "8"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "43"
+    sourcename: "8"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "48"
+    sourcename: "9"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "48"
+    sourcename: "9"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "30"
+    sourcename: "10"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "31"
+    sourcename: "10"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "32"
+    sourcename: "10"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "33"
+    sourcename: "10"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "30"
+    sourcename: "11"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "31"
+    sourcename: "11"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "32"
+    sourcename: "11"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "36"
+    sourcename: "12"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "36"
+    sourcename: "12"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "30"
+    sourcename: "13"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "32"
+    sourcename: "13"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "35"
+    sourcename: "13"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "14"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "14"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "15"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "15"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "16"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "16"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "17"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "17"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "18"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "18"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "19"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "19"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "20"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "20"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "21"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "21"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "30"
+    sourcename: "22"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "31"
+    sourcename: "22"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "32"
+    sourcename: "22"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "33"
+    sourcename: "22"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "35"
+    sourcename: "22"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "36"
+    sourcename: "23"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "36"
+    sourcename: "23"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "30"
+    sourcename: "24"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "34"
+    sourcename: "24"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "31"
+    sourcename: "24"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "32"
+    sourcename: "24"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "34"
+    sourcename: "24"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "33"
+    sourcename: "25"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "33"
+    sourcename: "25"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "37"
+    sourcename: "26"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "37"
+    sourcename: "26"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "38"
+    sourcename: "27"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "39"
+    sourcename: "27"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "38"
+    sourcename: "27"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "39"
+    sourcename: "27"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "40"
+    sourcename: "28"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "40"
+    sourcename: "28"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "41"
+    sourcename: "29"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "42"
+    sourcename: "29"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "41"
+    sourcename: "29"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "42"
+    sourcename: "29"
+    color: red
+    class: 2
+  }
+  edge: {
+    targetname: "31"
+    sourcename: "30"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "32"
+    sourcename: "30"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "35"
+    sourcename: "30"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "33"
+    sourcename: "30"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "30"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "31"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "31"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "32"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "32"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "33"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "33"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "34"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "34"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "35"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "35"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "36"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "36"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "37"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "37"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "38"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "38"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "39"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "39"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "40"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "40"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "41"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "41"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "42"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "42"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "43"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "43"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "44"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "44"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "45"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "45"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "46"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "46"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "47"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "47"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "48"
+    color: black
+    class: 4
+  }
+  edge: {
+    targetname: "51"
+    sourcename: "48"
+    color: red
+    class: 3
+  }
+  edge: {
+    targetname: "1"
+    sourcename: "51"
+    color: black
+    class: 4
+  }
+}
