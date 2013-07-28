@@ -308,7 +308,7 @@ void DrawBuffer::ButtonPress( daint x, daint y)
 {
 	int pm_x, pm_y;
 	Da2Pm( x,y, pm_x,pm_y);
-	draw_brush( m_da, x,y, pm_x,pm_y, m_Pixmap);
+	//draw_brush( m_da, x,y, pm_x,pm_y, m_Pixmap);
 }
 
 void DrawBuffer::ButtonPress2( daint x, daint y)
