@@ -204,7 +204,7 @@ static char **decode = NULL;
 static long hashtop = 1;
 
 /* текущий размер хэш таблицы */
-long   table_size = 0L;
+static long   table_size = 0L;
 
 /**
  * Выделение памяти под нужды хэш таблицы
