@@ -93,7 +93,9 @@ PRAGMADIR       {WSPACE}#{WSPACE}"pragma".*\n
 int yywrap(void) { return (1); }
 #endif
 
-
+#ifdef RETURN
+#error "return_duplication!"
+#endif
 #ifndef RETURN
 #ifndef YYLTYPE
 #define RETURN(x) { 	pos_nr += strlen(yytext); \

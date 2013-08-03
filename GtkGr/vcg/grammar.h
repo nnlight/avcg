@@ -673,7 +673,6 @@ void fatal_error(char *message);
 
 
 	
-extern long   table_size;
 
 void FreeHash(void);
 long HashInsert( char *s);

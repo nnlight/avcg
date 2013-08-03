@@ -56,4 +56,8 @@ clean:
 doc:
 	doxygen
 
+.PHONY: tags
+tags:
+	ctags -f tags *h *cpp vcg/*[ch]
+
 
