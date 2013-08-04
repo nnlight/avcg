@@ -11,5 +11,6 @@ lex:
 yacc:
 	bison -ydvt --no-lines grammar.y    # y.tab.h y.tab.c y.output
 
+.PHONY: clean
 clean:
 	rm *.o a.out

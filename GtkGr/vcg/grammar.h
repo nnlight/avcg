@@ -20,12 +20,17 @@ void   syntaxerror    (int line, int pos, const char *fmt, ...);
 void   warning        (int line, int pos,char *mesge);
 
 
+void fatal_error(char *message);
+
+void FreeHash(void);
+long HashInsert( char *s);
+long HashTableSize(void);
+char *Decode(long x);
+
+
+
 
 typedef struct stree_node *syntaxtree;
-#ifdef yysyntaxtree
-#error ffhjddffdddfds
-#undef yysyntaxtree
-#endif
 #define yysyntaxtree syntaxtree
 
 extern yysyntaxtree Syntax_Tree;
@@ -67,13 +72,6 @@ struct stree_node {
         union  special     contents;
         struct stree_node *xson[1];
 };
-
-
-/* typedef struct stree_node *syntaxtree; */
-
-/* #undef yysyntaxtree */
-/* #define yysyntaxtree syntaxtree */
-
 
 #define tag(x)           ((x)->tag_field)
 #define nr_of_sons(x)    (ConstructorArity((x)->tag_field))
@@ -122,7 +120,6 @@ struct stree_node {
 /* Prototypes */ 
 /*------------*/ 
 
-
 char * ParseMalloc(int x);
 void ParseFree(void);
 
@@ -148,7 +145,6 @@ int   ConstructorArity(int i);
 
  
 /*-- end of standard tree construction interface ---------------------*/
-
 
 
 
@@ -667,17 +663,23 @@ int   ConstructorArity(int i);
 
 
 
+/*
+ * Scan Parse macros
+ */
+
+#define REVERT(x) Revert(x)
+#define COPY(x)   Copy(x)
 
 
-void fatal_error(char *message);
+#define SKIPYYTEXT { char *c; c = yytext; while (*c) { \
+                     if (*c == '\n') { pos_nr = 1; line_nr++; }  \
+                     else pos_nr++; \
+                     c++; }}
 
 
-	
+#define RETURN(x) { 	pos_nr += strlen(yytext); \
+			return(x); }
 
-void FreeHash(void);
-long HashInsert( char *s);
-long HashTableSize(void);
-char *Decode(long x);
 
 
 

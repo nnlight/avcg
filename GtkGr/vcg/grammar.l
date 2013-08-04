@@ -39,26 +39,11 @@
 #include "main.h"
 #include "options.h"
 
-#ifndef YY_CHAR
-#define YY_CHAR char
-extern YY_CHAR *yytext;
-#endif
-
-/* the following is added for flex 2.4.6 */
-
-#ifndef YY_MALLOC_DECL
-#define YY_MALLOC_DECL
-#include <malloc.h>
-#endif
  
 
 /*--------------------------------------------------------------------*/
 
 
-
-#define SKIPYYTEXT { char *c; c = yytext; while (*c) { \
-     if (*c == '\n') { pos_nr = 1; line_nr++; }  \
-     else pos_nr++; c++; }}
 
 
 /*--------------------------------------------------------------------*/
@@ -91,23 +76,6 @@ PRAGMADIR       {WSPACE}#{WSPACE}"pragma".*\n
 #ifndef yywrap
 /* Changed for flex 2.4.6 (static removed) */
 int yywrap(void) { return (1); }
-#endif
-
-#ifdef RETURN
-#error "return_duplication!"
-#endif
-#ifndef RETURN
-#ifndef YYLTYPE
-#define RETURN(x) { 	pos_nr += strlen(yytext); \
-			return(x); }
-#else
-extern YYLTYPE yylloc;
-#define RETURN(x) { 	pos_nr += strlen(yytext); \
-			yylloc.first_line = yylloc.last_line = line_nr; \
-			yylloc.first_column = pos_nr-strlen(yytext);    \
-			yylloc.last_column  = pos_nr;                   \
-			return(x); }
-#endif
 #endif
 
 

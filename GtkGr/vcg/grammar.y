@@ -265,24 +265,6 @@
 /* Includes                                                           */ 
 /*--------------------------------------------------------------------*/
 
-#define Y_TAB_H
-#include <string.h>
-
-#ifndef YYLTYPE
-typedef struct yyltype {
-		int timestamp;
-		int first_line;
-		int first_column;
-		int last_line;
-		int last_column;
-		char *text;
-	}  yyltype;
-
-#define YYLTYPE yyltype
-#endif
-
-
-
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -290,21 +272,14 @@ typedef struct yyltype {
 #include "globals.h"
 #include "main.h"
 #include "options.h"
+#include "grammar.h"
+
 
 #ifndef YY_CHAR
 #define YY_CHAR char
 extern YY_CHAR *yytext;
 #endif
 
-/* the following is added for flex 2.4.6 */
-
-#ifndef YY_MALLOC_DECL
-#define YY_MALLOC_DECL
-#include <malloc.h>
-#endif
- 
- 
- 
 
 #ifndef yyerror
 #define yyerror(x) { \
@@ -316,22 +291,6 @@ extern YY_CHAR *yytext;
     }
 #endif
  
-
-#ifndef NULL
-#define NULL 0
-#endif
-
-#ifndef REVERT
-#define REVERT(x) Revert(x)
-#endif
-
-#ifndef COPY
-#define COPY(x) Copy(x)
-#endif
-
-
-#include "grammar.h"
-
 
  
 /* for error messages */
@@ -650,7 +609,9 @@ static const char * const yytokname[] =
 /*-------------------------------------------------------------*/
 
 
-
+/*-------------------------------------------------------------*/
+/*                  YYSTYPE definition                         */
+/*-------------------------------------------------------------*/
 
 %}
 
@@ -1664,8 +1625,6 @@ str_const	: LEX_STRING		{
 /* Main entry point of parser */
 /*----------------------------*/
 
-yysyntaxtree  Syntax_Tree;
-
 /*   returns the number of detected errors and binds the syntaxtree
  *   to the variable syntaxtree.
  */
@@ -1678,9 +1637,7 @@ int parse(void)
 	pos_nr = 0;
 	debugmessage("yyparse()\n", "");
 	yyparse();
-#ifdef YYVALGLOBAL
-	Syntax_Tree = yyval.tree;
-#endif
+
 	return (nr_errors);
 } /* parse */
  
