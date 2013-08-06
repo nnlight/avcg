@@ -454,9 +454,6 @@ char * ParseMalloc(int x)
 	return ((char *)parsemalloc(x));
 }
 
-static union special *stdunion = 0;
-
-
 /**
  * global deallocate the complete syntax tree heap
  */
@@ -473,7 +470,6 @@ void ParseFree(void)
 	}	
 
 	parseheap = NULL;
-	stdunion = 0;
 	return;
 } /* ParseFree */
  
@@ -482,112 +478,38 @@ void ParseFree(void)
 /*--------------------------------------------------------------------*/
 
 
-static void freeunion(union special *x)
+union special UnionByte(unsigned char x)
 {
-	x->string = (char *)stdunion;
-	stdunion = x;	
-}
-
-static union special *nextunion(void)
-{
-	union special *help;
-	if (!stdunion) {
-        	stdunion = (union special *)
-				parsemalloc(sizeof(union special));
-		stdunion->string = 0;
-	}
-	help = stdunion;
-	stdunion = (union special *)stdunion->string;
+	union special help;
+	help.byte = x;
 	return(help);
 }
 
-union special *UnionByte(unsigned char x)
+union special UnionNum(int x)
 {
-	union special *help;
-
-	help = nextunion();
-	help->byte = x;
-	return(help);
-}
-
-union special *UnionSnum(short int x)
-{
-	union special *help;
-
-	help = nextunion();
-	help->snum = x;
-	return(help);
-}
-
-union special *UnionUsnum(unsigned short int x)
-{
-	union special *help;
-
-	help = nextunion();
-	help->usnum = x;
-	return(help);
-}
-
-union special *UnionNum(int x)
-{
-	union special *help;
-
-	help = nextunion();
-	help->num = x;
+	union special help;
+	help.num = x;
 	return(help);     
 }
 
-union special *UnionUnum(unsigned int x)
+union special UnionLnum(long int x)
 {
-	union special *help;
-
-	help = nextunion();
-	help->unum = x;
+	union special help;
+	help.lnum = x;
 	return(help);     
 }
 
-union special *UnionLnum(long int x)
+union special UnionLrealnum(double x)
 {
-	union special *help;
-
-	help = nextunion();
-	help->lnum = x;
+	union special help;
+	help.lrealnum = x;
 	return(help);     
 }
 
-union special *UnionUlnum(unsigned long int x)
+union special UnionString(char *x)
 {
-	union special *help;
-
-	help = nextunion();
-	help->ulnum = x;
-	return(help);     
-}
-
-union special *UnionRealnum(float x)
-{
-	union special *help;
-
-	help = nextunion();
-	help->realnum = x;
-	return(help);     
-}
-
-union special *UnionLrealnum(double x)
-{
-	union special *help;
-
-	help = nextunion();
-	help->lrealnum = x;
-	return(help);     
-}
-
-union special *UnionString(char *x)
-{
-	union special *help;
-
-	help = nextunion();
-	help->string = x;
+	union special help;
+	help.string = x;
 	return(help);     
 }
 
@@ -600,32 +522,20 @@ union special *UnionString(char *x)
 
 static yysyntaxtree TreeTab[1024];
 
-#ifdef USERFTYPE
-#ifndef USERFINIT
-#define USERFINIT ((USERFTYPE)0)
-#endif
-#endif
-
 /* without sons */
 
-syntaxtree BuildCont(int mtag,union special *x,YYLTYPE *l)
+syntaxtree BuildCont(int mtag,union special x,YYLTYPE *l)
 {
         yysyntaxtree help;
         help = st_malloc(1);
 
-	/*__yy_bcopy(x,&help->contents, sizeof(union special));*/
-	help->contents = *x;
-	freeunion(x);
+	help->contents = x;
 	tag(help)          = mtag;
 	xfirst_line(help)   =l->first_line;
 	xfirst_column(help) =l->first_column;
 	xlast_line(help)    =l->last_line;
 	xlast_column(help)  =l->last_column;
 	xfather(help)       =(yysyntaxtree)0;
-#ifdef USERFTYPE
-	user_field(help)    =USERFINIT; 
-#endif
-
 	son1(help) = (yysyntaxtree)0; 
 
         return(help);
@@ -633,7 +543,7 @@ syntaxtree BuildCont(int mtag,union special *x,YYLTYPE *l)
 
 /* with sons */
 
-yysyntaxtree BuildTree(int mtag,int len,union special *x,YYLTYPE *l, ...)
+yysyntaxtree BuildTree(int mtag,int len, YYLTYPE *l, ...)
 {
 	int i,j;
 	va_list pvar;
@@ -651,18 +561,13 @@ yysyntaxtree BuildTree(int mtag,int len,union special *x,YYLTYPE *l, ...)
 
         help = st_malloc((i<1?1:i));
 
-	/*__yy_bcopy(x,&help->contents, sizeof(union special));*/
-	help->contents = *x;
-	freeunion(x);
+	help->contents = UnionNum(0);
 	tag(help)          = mtag;
 	xfirst_line(help)   =l->first_line;
 	xfirst_column(help) =l->first_column;
 	xlast_line(help)    =l->last_line;
 	xlast_column(help)  =l->last_column;
 	xfather(help)       =(yysyntaxtree)0;
-#ifdef USERFTYPE
-	user_field(help)    =USERFINIT; 
-#endif
 
 	for (j=1; j<=i; j++) {
 		son(help,j) = TreeTab[j-1]; 
@@ -684,7 +589,6 @@ yysyntaxtree Copy(yysyntaxtree x)
 	len = nr_of_sons(x);
         help = st_malloc((len<1?1:len));
 
-	/*__yy_bcopy(&x->contents,&help->contents, sizeof(union special));*/
 	help->contents = x->contents;
 	tag(help)          = tag(x);
 	xfirst_line(help)   = xfirst_line(x);
@@ -692,9 +596,6 @@ yysyntaxtree Copy(yysyntaxtree x)
 	xlast_line(help)    = xlast_line(x);
 	xlast_column(help)  = xlast_column(x);
 	xfather(help)       = (yysyntaxtree)0;
-#ifdef USERFTYPE
-	user_field(help)    =user_field(x); 
-#endif
 	son1(help) = (yysyntaxtree)0; 
 
 	for (j=1; j<=len; j++) {
