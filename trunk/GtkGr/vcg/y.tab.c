@@ -114,317 +114,12 @@ extern YY_CHAR *yytext;
 #define yyerror(x) { \
         syntaxerror(line_nr,pos_nr, \
                  "unexpected %s \"%s\" (%s)", \
-                 ((yychar<0)?"(?)":yytokname[YYTRANSLATE(yychar)]),     \
+                 ((yychar<0)?"(?)":yytname[YYTRANSLATE(yychar)]),     \
                  (strlen(yytext)<48?yytext:"(?)"), \
 				 x); \
     }
 #endif
  
-
- 
-/* for error messages */
-
-static const char * const yytokname[] =
-{
-"<start/end of input>$"
-	,"error"
-	,"$illegal."
-	,"lexem ABOVE"
-	,"lexem ANCHORPOINTS"
-	,"lexem ANCHOR"
-	,"lexem AQUAMARINE"
-	,"lexem AROUND"
-	,"lexem ARROWMODE"
-	,"lexem ARROWHEIGHT"
-	,"lexem ARROWWIDTH"
-	,"lexem ARROWCOLOR"
-	,"lexem ARROWSTYLE"
-	,"lexem ARROWSIZE"
-	,"lexem BARROWCOLOR"
-	,"lexem BARROWSTYLE"
-	,"lexem BARROWSIZE"
-	,"lexem BACKEDGE"
-	,"lexem BARYCENTER"
-	,"lexem BARY"
-	,"lexem BARYMEDIAN"
-	,"lexem BEHIND"
-	,"lexem BELOW"
-	,"lexem BLACK"
-	,"lexem BLUE"
-	,"lexem BMAX"
-	,"lexem BORDERCOLOR"
-	,"lexem BORDERWIDTH"
-	,"lexem BOTTOM_MARGIN"
-	,"lexem BOTTOM_TO_TOP"
-	,"lexem BOTTOM"
-	,"lexem BOX"
-	,"lexem BENTNEAREDGE"
-	,"lexem CENTER"
-	,"lexem CFISH"
-	,"lexem CLASSNAME"
-	,"lexem CLASS"
-	,"lexem CLUSTER"
-	,"lexem CMIN"
-	,"lexem CMAX"
-	,"lexem COLORENTRY"
-	,"lexem COLOR"
-	,"lexem CONSTRAINTS"
-	,"lexem CONSTRAINT"
-	,"lexem CONTINUOUS"
-	,"lexem CROSSING_WEIGHT"
-	,"lexem CROSSING_OPT"
-	,"lexem CROSSING_P2"
-	,"lexem CYAN"
-	,"lexem DARKBLUE"
-	,"lexem DARKCYAN"
-	,"lexem DARKGREEN"
-	,"lexem DARKGREY"
-	,"lexem DARKMAGENTA"
-	,"lexem DARKRED"
-	,"lexem DARKYELLOW"
-	,"lexem DASHED"
-	,"lexem DFS"
-	,"lexem DIMENSION"
-	,"lexem DIRTY_EDGE_LABELS"
-	,"lexem DISPLAY_EDGE_LABELS"
-	,"lexem DOTTED"
-	,"lexem EDGE1"
-	,"lexem EDGE2"
-	,"lexem EDGES"
-	,"lexem ELLIPSE"
-	,"lexem EQUAL_COLUMN"
-	,"lexem EQUAL_POSITION"
-	,"lexem EQUAL_ROW"
-	,"lexem EQUAL"
-	,"lexem EVERY"
-	,"lexem FCFISH"
-	,"lexem FPFISH"
-	,"lexem FIXED"
-	,"lexem FREE"
-	,"lexem FINETUNING"
-	,"lexem FOLDEDGE"
-	,"lexem FOLDNODE"
-	,"lexem FOLDING"
-	,"lexem FONTNAME"
-	,"lexem GOLD"
-	,"lexem GRAPH"
-	,"lexem GREATER"
-	,"lexem GREEN"
-	,"lexem GREY"
-	,"lexem HEIGHT"
-	,"lexem HIDESINGLES"
-	,"lexem HIGH_MARGIN"
-	,"lexem HIGH"
-	,"lexem HIDDEN"
-	,"lexem HORDER"
-	,"lexem ICONFILE"
-	,"lexem ICONHEIGHT"
-	,"lexem ICONSTYLE"
-	,"lexem ICONWIDTH"
-	,"lexem INCLUDE"
-	,"lexem INFONAME"
-	,"lexem INFO1"
-	,"lexem INFO2"
-	,"lexem INFO3"
-	,"lexem INPUTFUNCTION"
-	,"lexem INTERVAL"
-	,"lexem INVISIBLE"
-	,"lexem IN_FRONT"
-	,"lexem ISI"
-	,"lexem KHAKI"
-	,"lexem TEXTCOLOR"
-	,"lexem LABEL"
-	,"lexem LATE_LABELS"
-	,"lexem LAYOUTALGORITHM"
-	,"lexem LAYOUTFREQUENCY"
-	,"lexem LAYOUTPARAMETER"
-	,"lexem LAYOUTDOWNFACTOR"
-	,"lexem LAYOUTUPFACTOR"
-	,"lexem LAYOUTNEARFACTOR"
-	,"lexem LAYOUTSPLINEFACTOR"
-	,"lexem LEFT_JUSTIFY"
-	,"lexem LEFT_MARGIN"
-	,"lexem LEFT_NEIGHBOR"
-	,"lexem LEFT_TO_RIGHT"
-	,"lexem LEFT"
-	,"lexem LEVEL"
-	,"lexem VORDER"
-	,"lexem LIGHTBLUE"
-	,"lexem LIGHTCYAN"
-	,"lexem LIGHTGREEN"
-	,"lexem LIGHTGREY"
-	,"lexem LIGHTMAGENTA"
-	,"lexem LIGHTRED"
-	,"lexem LIGHTYELLOW"
-	,"lexem LILAC"
-	,"lexem LIMIT"
-	,"lexem LINE"
-	,"lexem LINESTYLE"
-	,"lexem LOC"
-	,"lexem LOWER_NEIGHBOR"
-	,"lexem LOW_MARGIN"
-	,"lexem LOW"
-	,"lexem MAGENTA"
-	,"lexem MANHATTEN"
-	,"lexem MANUAL"
-	,"lexem MAXDEPTHSLOW"
-	,"lexem MAXDEPTH"
-	,"lexem MAXDEGREE"
-	,"lexem MAXINDEGREE"
-	,"lexem MAXOUTDEGREE"
-	,"lexem MEDIAN"
-	,"lexem MEDIANBARY"
-	,"lexem MINDEPTHSLOW"
-	,"lexem MINDEPTH"
-	,"lexem MINDEGREE"
-	,"lexem MININDEGREE"
-	,"lexem MINOUTDEGREE"
-	,"lexem MINBACK"
-	,"lexem NAME"
-	,"lexem NEAREDGE"
-	,"lexem NEIGHBORS"
-	,"lexem NEAREDGES"
-	,"lexem NONEAREDGES"
-	,"lexem NODE1"
-	,"lexem NODE2"
-	,"lexem NODES"
-	,"lexem NODE_ALIGN"
-	,"lexem NONE"
-	,"lexem NO"
-	,"lexem ORANGE"
-	,"lexem ORCHID"
-	,"lexem ORIENTATION"
-	,"lexem OUTPUTFUNCTION"
-	,"lexem PFISH"
-	,"lexem PINK"
-	,"lexem PLANAR"
-	,"lexem PMIN"
-	,"lexem PMAX"
-	,"lexem PORTSHARING"
-	,"lexem PRIORITYPHASE"
-	,"lexem PRIORITY"
-	,"lexem PURPLE"
-	,"lexem RANGE"
-	,"lexem RED"
-	,"lexem RHOMB"
-	,"lexem RIGHT_JUSTIFY"
-	,"lexem RIGHT_MARGIN"
-	,"lexem RIGHT_NEIGHBOR"
-	,"lexem RIGHT_TO_LEFT"
-	,"lexem RIGHT"
-	,"lexem RMIN"
-	,"lexem RMAX"
-	,"lexem SCALING"
-	,"lexem SHAPE"
-	,"lexem SHRINK"
-	,"lexem SMAX"
-	,"lexem SMANHATTEN"
-	,"lexem SIZE"
-	,"lexem SMALLER"
-	,"lexem SOLID"
-	,"lexem SOURCENAME"
-	,"lexem SPLINES"
-	,"lexem SPREADLEVEL"
-	,"lexem STATUS"
-	,"lexem STRETCH"
-	,"lexem STRAIGHTPHASE"
-	,"lexem TARGETNAME"
-	,"lexem TEXTMODE"
-	,"lexem THICKNESS"
-	,"lexem TITLE"
-	,"lexem TOPSORT"
-	,"lexem TOP_MARGIN"
-	,"lexem TOP_TO_BOTTOM"
-	,"lexem TOP"
-	,"lexem TREE"
-	,"lexem TREEFACTOR"
-	,"lexem TRIANGLE"
-	,"lexem TURQUOISE"
-	,"lexem TYPENAME"
-	,"lexem UPPER_NEIGHBOR"
-	,"lexem VIEW"
-	,"lexem WHITE"
-	,"lexem WIDTH"
-	,"lexem XBASE"
-	,"lexem XMAX"
-	,"lexem XRASTER"
-	,"lexem XLRASTER"
-	,"lexem XSCROLLBAR"
-	,"lexem XSPACE"
-	,"lexem XLSPACE"
-	,"lexem YBASE"
-	,"lexem YELLOWGREEN"
-	,"lexem YELLOW"
-	,"lexem YES"
-	,"lexem YMAX"
-	,"lexem YRASTER"
-	,"lexem YSCROLLBAR"
-	,"lexem YSPACE"
-	,"lexem INT"
-	,"lexem FLOAT"
-	,"lexem CHAR"
-	,"lexem STRING"
-	,"'{'"
-	,"'}'"
-	,"':'"
-	,"'x'"
-	,"'y'"
-	,"'z'"
-	,"'*'"
-	,"'['"
-	,"'-'"
-	,"']'"
-	,"graph"
-	,"graph_entry_list"
-	,"graph_entry"
-	,"graph_attribute"
-	,"enum_color"
-	,"enum_topsort"
-	,"enum_orientation"
-	,"enum_layoutalgorithm"
-	,"enum_layoutfrequency"
-	,"enum_status"
-	,"enum_yes_no"
-	,"enum_cross_weight"
-	,"enum_view"
-	,"enum_arrow_mode"
-	,"foldnode_defaults"
-	,"foldedge_defaults"
-	,"node_defaults"
-	,"edge_defaults"
-	,"node"
-	,"node_attribute_list"
-	,"edge"
-	,"nearedge"
-	,"bentnearedge"
-	,"backedge"
-	,"edge_attribute_list"
-	,"constraint"
-	,"constraint_attribute_list"
-	,"node_attribute"
-	,"enum_textmode"
-	,"enum_shape"
-	,"enum_node_align"
-	,"enum_iconstyle"
-	,"edge_attribute"
-	,"enum_linestyle"
-	,"enum_arrowstyle"
-	,"constraint_attribute"
-	,"string_array"
-	,"enum_name"
-	,"enum_dimension"
-	,"attribute_value"
-	,"array_value"
-	,"index_value_list"
-	,"index_value"
-	,"range"
-	,"index"
-	,"int_const"
-	,"float_const"
-	,"str_const"
-	,""
-};
-
 
 #ifndef yylocate
 #define yylocate(x) (&(x))
@@ -1427,38 +1122,38 @@ static const yytype_int16 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   694,   694,   700,   703,   709,   711,   713,   715,   717,
-     719,   721,   723,   725,   727,   729,   731,   736,   739,   742,
-     745,   748,   751,   754,   757,   760,   763,   766,   769,   771,
-     773,   776,   779,   782,   785,   788,   791,   794,   797,   800,
-     803,   807,   810,   813,   816,   819,   822,   825,   828,   831,
-     834,   837,   840,   843,   846,   849,   853,   856,   859,   862,
-     865,   868,   872,   875,   878,   881,   884,   887,   890,   893,
-     896,   899,   901,   904,   907,   910,   913,   916,   920,   923,
-     927,   930,   933,   937,   940,   943,   946,   950,   953,   956,
-     959,   962,   965,   968,   971,   975,   978,   981,   984,   987,
-     990,   993,   996,  1002,  1004,  1006,  1008,  1010,  1012,  1014,
-    1016,  1018,  1020,  1022,  1024,  1026,  1028,  1030,  1032,  1034,
-    1036,  1038,  1040,  1042,  1044,  1046,  1048,  1050,  1052,  1054,
-    1056,  1058,  1060,  1062,  1064,  1066,  1071,  1073,  1078,  1080,
-    1082,  1084,  1090,  1092,  1094,  1096,  1099,  1101,  1103,  1105,
-    1107,  1109,  1111,  1113,  1115,  1117,  1119,  1121,  1123,  1129,
-    1131,  1136,  1138,  1140,  1145,  1147,  1151,  1153,  1155,  1157,
-    1161,  1163,  1165,  1167,  1171,  1173,  1177,  1182,  1187,  1192,
-    1198,  1204,  1207,  1213,  1218,  1223,  1228,  1234,  1237,  1243,
-    1250,  1253,  1259,  1262,  1265,  1268,  1271,  1274,  1277,  1280,
-    1283,  1286,  1289,  1292,  1295,  1298,  1301,  1304,  1307,  1310,
-    1313,  1316,  1319,  1322,  1325,  1328,  1331,  1334,  1337,  1340,
-    1345,  1347,  1349,  1353,  1355,  1357,  1359,  1363,  1365,  1367,
-    1371,  1373,  1375,  1380,  1383,  1386,  1389,  1392,  1395,  1398,
-    1401,  1404,  1407,  1410,  1413,  1416,  1419,  1422,  1425,  1428,
-    1431,  1434,  1437,  1440,  1446,  1448,  1450,  1452,  1454,  1459,
-    1461,  1463,  1467,  1470,  1473,  1476,  1479,  1482,  1485,  1490,
-    1493,  1497,  1499,  1501,  1503,  1505,  1507,  1509,  1511,  1513,
-    1515,  1517,  1519,  1521,  1523,  1525,  1527,  1529,  1531,  1533,
-    1535,  1537,  1539,  1541,  1543,  1545,  1547,  1551,  1553,  1555,
-    1559,  1561,  1563,  1565,  1567,  1571,  1576,  1579,  1583,  1585,
-    1588,  1591,  1596,  1601,  1605,  1609,  1613
+       0,   389,   389,   395,   398,   404,   406,   408,   410,   412,
+     414,   416,   418,   420,   422,   424,   426,   431,   434,   437,
+     440,   443,   446,   449,   452,   455,   458,   461,   464,   466,
+     468,   471,   474,   477,   480,   483,   486,   489,   492,   495,
+     498,   502,   505,   508,   511,   514,   517,   520,   523,   526,
+     529,   532,   535,   538,   541,   544,   548,   551,   554,   557,
+     560,   563,   567,   570,   573,   576,   579,   582,   585,   588,
+     591,   594,   596,   599,   602,   605,   608,   611,   615,   618,
+     622,   625,   628,   632,   635,   638,   641,   645,   648,   651,
+     654,   657,   660,   663,   666,   670,   673,   676,   679,   682,
+     685,   688,   691,   697,   699,   701,   703,   705,   707,   709,
+     711,   713,   715,   717,   719,   721,   723,   725,   727,   729,
+     731,   733,   735,   737,   739,   741,   743,   745,   747,   749,
+     751,   753,   755,   757,   759,   761,   766,   768,   773,   775,
+     777,   779,   785,   787,   789,   791,   794,   796,   798,   800,
+     802,   804,   806,   808,   810,   812,   814,   816,   818,   824,
+     826,   831,   833,   835,   840,   842,   846,   848,   850,   852,
+     856,   858,   860,   862,   866,   868,   872,   877,   882,   887,
+     893,   899,   902,   908,   913,   918,   923,   929,   932,   938,
+     945,   948,   954,   957,   960,   963,   966,   969,   972,   975,
+     978,   981,   984,   987,   990,   993,   996,   999,  1002,  1005,
+    1008,  1011,  1014,  1017,  1020,  1023,  1026,  1029,  1032,  1035,
+    1040,  1042,  1044,  1048,  1050,  1052,  1054,  1058,  1060,  1062,
+    1066,  1068,  1070,  1075,  1078,  1081,  1084,  1087,  1090,  1093,
+    1096,  1099,  1102,  1105,  1108,  1111,  1114,  1117,  1120,  1123,
+    1126,  1129,  1132,  1135,  1141,  1143,  1145,  1147,  1149,  1154,
+    1156,  1158,  1162,  1165,  1168,  1171,  1174,  1177,  1180,  1185,
+    1188,  1192,  1194,  1196,  1198,  1200,  1202,  1204,  1206,  1208,
+    1210,  1212,  1214,  1216,  1218,  1220,  1222,  1224,  1226,  1228,
+    1230,  1232,  1234,  1236,  1238,  1240,  1242,  1246,  1248,  1250,
+    1254,  1256,  1258,  1260,  1262,  1266,  1271,  1274,  1278,  1280,
+    1283,  1286,  1291,  1296,  1300,  1304,  1308
 };
 #endif
 
