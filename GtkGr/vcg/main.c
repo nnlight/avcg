@@ -50,6 +50,7 @@
 #include "options.h"
 #include "grprint.h"
 #include "timing.h"
+#include "vcg_iface.h"
 
 
 /*--------------------------------------------------------------------*/
@@ -342,6 +343,11 @@ void vcg_Parse( FILE *input_file)
 	return;
 } /* vcg_Parse */
 
+
+Color_t vcg_GetBgColor()
+{
+	return G_color;
+} /* vcg_GetBgColor */
 
 
 
