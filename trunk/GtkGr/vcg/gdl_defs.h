@@ -6,7 +6,7 @@ extern "C" {
 #endif*/
 
 
-enum Color_t
+typedef enum Color_t
 {
 	WHITE        = 0,
 	BLUE         = 1,
@@ -43,7 +43,7 @@ enum Color_t
 	/* number of colors */
 	BASECMAPSIZE = 32,
 	CMAPSIZE     = 256
-};
+} Color_t;
 
 enum Linestyle_t
 {

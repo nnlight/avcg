@@ -13,6 +13,7 @@ extern "C" {
 
 void vcg_Parse( FILE *input_file);
 
+Color_t vcg_GetBgColor();
 
 
 
