@@ -45,6 +45,10 @@ typedef enum Color_t
 	CMAPSIZE     = 256
 } Color_t;
 
+extern const unsigned char gdl_OrigColormapRed[BASECMAPSIZE];
+extern const unsigned char gdl_OrigColormapGreen[BASECMAPSIZE];
+extern const unsigned char gdl_OrigColormapBlue[BASECMAPSIZE];
+
 enum Linestyle_t
 {
 	LS_SOLID     = 0,
