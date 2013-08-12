@@ -1,9 +1,9 @@
 #ifndef _GDL_DEFS_H_
 #define _GDL_DEFS_H_
 
-/*#ifdef __cplusplus
+#ifdef __cplusplus
 extern "C" {
-#endif*/
+#endif
 
 
 typedef enum Color_t
@@ -83,8 +83,8 @@ enum Arrowstyle_t
 
 
 
-/*#ifdef __cplusplus
+#ifdef __cplusplus
 }
-#endif*/
+#endif
 
 #endif /* _GDL_DEFS_H_ */
