@@ -2,25 +2,6 @@
 #include "vr_graph.h"
 #include "preferences.h"
 
-/**
- * Base Original Color maps
- */
-static const unsigned char origredmap[BASECMAPSIZE] = {
-	  255, 0, 255, 0, 255, 255, 0, 85, 0, 128, 0, 128, 128,
-	  0, 255, 170, 128, 255, 128, 255, 255, 128, 238, 64, 127,
-	  240, 160, 154, 255, 255, 218, 0 
-};
-static const unsigned char origgreenmap[BASECMAPSIZE] = {
-	  255, 0, 0, 255, 255, 0, 255, 85, 0, 0, 128, 128, 0,
-	  128, 215, 170, 128, 128, 255, 255, 128, 255, 130, 224,
-	  255, 230, 32, 205, 192, 165, 112, 0 
-};
-static const unsigned char origbluemap[BASECMAPSIZE] = {
-	  255, 255, 0, 0, 0, 255, 255, 85, 128, 0, 0, 0, 128,
-	  128, 0, 170, 255, 128, 128, 128, 255, 255, 238, 208, 212,
-	  140, 240, 50, 203, 0, 214, 0 
-};
-
 
 void DrawBuffer::InitColormap()
 {
@@ -31,9 +12,9 @@ void DrawBuffer::InitColormap()
 		 // вообще-то это поле заполняется и имеет смысл только после выделения
 		m_Colormap[i].pixel = 0;
 		
-		m_Colormap[i].red = origredmap[i] << 8;
-		m_Colormap[i].green = origgreenmap[i] << 8;
-		m_Colormap[i].blue = origbluemap[i] << 8;
+		m_Colormap[i].red = gdl_OrigColormapRed[i] << 8;
+		m_Colormap[i].green = gdl_OrigColormapGreen[i] << 8;
+		m_Colormap[i].blue = gdl_OrigColormapBlue[i] << 8;
 	}
 	/* остальные пока пробъем черным */
 	for (int i = BASECMAPSIZE; i < CMAPSIZE; i++)
@@ -562,9 +543,10 @@ void DrawBuffer::DrawPie( vrgint x, vrgint y, vrgint radius, bool filled, std::l
 				  ++it, ++i, curr_angle += delta_angle )
 			{
 				assert( it != colors.end() );
-				double red = (double)origredmap[*it] / 255.;
-				double green = (double)origgreenmap[*it] / 255.;
-				double blue = (double)origbluemap[*it] / 255.;
+				assert( sizeof(m_Colormap[0].red) == 2 );
+				double red = (double)m_Colormap[*it].red / 65535.;
+				double green = (double)m_Colormap[*it].green / 65535.;
+				double blue = (double)m_Colormap[*it].blue / 65535.;
 
 				cairo_move_to( cr, pmx, pmy);
 				cairo_arc( cr, pmx, pmy, pmradius, curr_angle, curr_angle + delta_angle);
