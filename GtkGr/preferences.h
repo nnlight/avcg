@@ -16,7 +16,6 @@ private:
 	int m_MovePixels; /*! на скольлко пикселей сдвигается видимая облась по стрелкам */
 	int m_SizeX; /*! ширина окна в пикселях */
 	int m_SizeY; /*! высота окна в пикселях */
-	int m_DefaultBgColorNum; /*! номер цвета фона по умолчанию */
 	/* [Debug] */
 	bool m_PrintEvents;         /*! печатать ли приходящие события */
 	bool m_PrintActions;		/*! печать действий */
@@ -36,7 +35,6 @@ public:
 	int GetMovePixels() { return m_MovePixels; };
 	int GetSizeX() { return m_SizeX; };
 	int GetSizeY() { return m_SizeY; };
-	int GetDefaultBgColorNum() { return m_DefaultBgColorNum; };
 	bool DebugGetPrintEvents() { return m_PrintEvents; };
 	bool DebugGetPrintActions() { return m_PrintActions; };
 
