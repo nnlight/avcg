@@ -12,7 +12,6 @@ Preferences::Preferences(void)
 	, m_MovePixels(60)
 	, m_SizeX(1100)
 	, m_SizeY(850)
-	, m_DefaultBgColorNum( DARKYELLOW)
 	, m_PrintEvents( false)
 	, m_PrintActions( false)
 {
@@ -85,7 +84,7 @@ void Preferences::LoadFromFile()
 	m_MovePixels = GetKeyFileInteger( key_file, "General", "MovePixels", m_MovePixels);
 	m_SizeX = GetKeyFileInteger( key_file, "General", "SizeX", m_SizeX);
 	m_SizeY = GetKeyFileInteger( key_file, "General", "SizeY", m_SizeY);
-	m_DefaultBgColorNum = GetKeyFileInteger( key_file, "General", "DefaultBgColorNum", m_DefaultBgColorNum);
+	//m_DefaultBgColorNum = GetKeyFileInteger( key_file, "General", "DefaultBgColorNum", m_DefaultBgColorNum);
 	m_PrintEvents = GetKeyFileBool( key_file, "Debug", "PrintEvents", m_PrintEvents);
 	m_PrintActions = GetKeyFileBool( key_file, "Debug", "PrintActions", m_PrintActions);
 
@@ -104,7 +103,7 @@ void Preferences::SaveToFile()
 	g_key_file_set_integer( key_file, "General", "MovePixels", m_MovePixels);
 	g_key_file_set_integer( key_file, "General", "SizeX", m_SizeX);
 	g_key_file_set_integer( key_file, "General", "SizeY", m_SizeY);
-	g_key_file_set_integer( key_file, "General", "DefaultBgColorNum", m_DefaultBgColorNum);
+	//g_key_file_set_integer( key_file, "General", "DefaultBgColorNum", m_DefaultBgColorNum);
 	g_key_file_set_boolean( key_file, "Debug", "PrintEvents", (gboolean)m_PrintEvents);
 	g_key_file_set_boolean( key_file, "Debug", "PrintActions", (gboolean)m_PrintActions);
 
