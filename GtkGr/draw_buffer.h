@@ -117,9 +117,11 @@ private:
 	void Da2Pm( daint da_x, daint da_y, int &pm_x, int &pm_y);
 
 	/** инициализация m_Colormap */
-	void InitColormap();
+	void InitColormapBaseColors();
 	/** выделение цветов из m_Colormap (заполняются pixel-поля) */
 	void AllocColormap();
+	/** освобождение цветов из m_Colormap */
+	void FreeColormap();
 	/** заполнение Pixmap'а цветом фона */
 	void InitializePixmapToBackgroundColor( GdkPixmap *pixmap, int width, int height);
 	void CreatePixmap( int width, int height);

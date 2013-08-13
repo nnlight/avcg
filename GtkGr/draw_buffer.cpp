@@ -3,7 +3,7 @@
 #include "preferences.h"
 
 
-void DrawBuffer::InitColormap()
+void DrawBuffer::InitColormapBaseColors()
 {
 	/* иначе надо освобождать уже выделенные цвета */
 	assert( m_AllocedColors == 0 );
@@ -25,7 +25,7 @@ void DrawBuffer::InitColormap()
 		m_Colormap[i].blue = 0;
 	}
 	m_InitedColors = BASECMAPSIZE;
-} /* DrawBuffer::InitColormap */
+} /* DrawBuffer::InitColormapBaseColors */
 
 DrawBuffer::DrawBuffer( GtkWidget *drawing_area)
 	: m_da( drawing_area)
@@ -41,7 +41,7 @@ DrawBuffer::DrawBuffer( GtkWidget *drawing_area)
 {
 	/* захватим drawing area, на всякий случай... */
 	g_object_ref( m_da);
-	InitColormap();
+	InitColormapBaseColors();
 } /* DrawBuffer::DrawBuffer */
 
 DrawBuffer::~DrawBuffer()
@@ -79,6 +79,17 @@ void DrawBuffer::SetVRGraphRef( VRGraph *vr_graph)
 		m_IsNeedRedrawPixmap = true;
 		InvalidateDa( NULL);
 	}
+
+	if (m_GC)
+	{
+		FreeColormap();
+	}
+	vr_graph->SetupDrawBufferSetting( this);
+	if (m_GC)
+	{
+		AllocColormap();
+	}
+
 } /* DrawBuffer::SetVRGraphRef */
 
 void DrawBuffer::AllocColormap()
@@ -104,6 +115,17 @@ void DrawBuffer::AllocColormap()
 
 } /* DrawBuffer::AllocColormap */
 
+void DrawBuffer::FreeColormap()
+{
+	assert( m_GC );
+	assert( m_AllocedColors > 0 );
+
+	GdkColormap *gc_colormap = gdk_gc_get_colormap( m_GC);
+	gdk_colormap_free_colors( gc_colormap, m_Colormap, m_AllocedColors);
+	m_AllocedColors = 0;
+
+} /* DrawBuffer::FreeColormap */
+
 void DrawBuffer::CreatePixmap( int width, int height)
 {
 	assert( m_da );
@@ -116,8 +138,8 @@ void DrawBuffer::CreatePixmap( int width, int height)
 
 	m_GC = gdk_gc_new( /*m_da->window*/ m_Pixmap);
 	AllocColormap();
-	SetBackgroundColor( /*WHITE*/(Color_t)g_Preferences->GetDefaultBgColorNum());
-	SetCurrentColor( BLACK);
+	SetBackgroundColor( m_BackgroundColor);
+	SetCurrentColor( m_CurrentColor);
 } /* DrawBuffer::CreatePixmap */
 
 bool DrawBuffer::DeletePixmap()
@@ -129,11 +151,9 @@ bool DrawBuffer::DeletePixmap()
 		m_Pixmap = NULL;
 		res = true;
 	}
-	if ( m_GC)
+	if (m_GC)
 	{
-		GdkColormap *gc_colormap = gdk_gc_get_colormap( m_GC);
-		gdk_colormap_free_colors( gc_colormap, m_Colormap, m_AllocedColors);
-		m_AllocedColors = 0;
+		FreeColormap();
 		g_object_unref( m_GC);
 		m_GC = NULL;
 	}
@@ -459,15 +479,23 @@ void DrawBuffer::InvalidateDa( const GdkRectangle *da_update_rect)
 
 void DrawBuffer::SetBackgroundColor( Color_t c)
 {
-	assert( c < m_AllocedColors );
+	assert( c < m_InitedColors );
 	m_BackgroundColor = c;
-	gdk_gc_set_background( m_GC, &m_Colormap[c]);
+	if ( m_GC && m_AllocedColors )
+	{
+		assert( c < m_AllocedColors );
+		gdk_gc_set_background( m_GC, &m_Colormap[c]);
+	}
 }
 void DrawBuffer::SetCurrentColor( Color_t c)
 {
-	assert( c < m_AllocedColors );
+	assert( c < m_InitedColors );
 	m_CurrentColor = c;
-	gdk_gc_set_foreground( m_GC, &m_Colormap[c]);
+	if ( m_GC && m_AllocedColors )
+	{
+		assert( c < m_AllocedColors );
+		gdk_gc_set_foreground( m_GC, &m_Colormap[c]);
+	}
 }
 void DrawBuffer::SetLineWidth( vrgint line_width, Linestyle_t lstyle)
 {

@@ -43,7 +43,6 @@ VREdge::~VREdge()
 
 
 /////////////////////////////////////////////////////////////
-#define NODE_LABEL_MARGIN 3
 
 VRGraph::VRGraph()
 {
@@ -381,3 +380,9 @@ void VRGraph::LoadGDL()
 	LoadVcgPredEdgesForVcgNodeList( labellist);
 	LoadVcgPredEdgesForVcgNodeList( dummylist);
 } /* VRGraph::LoadGDL */
+
+void VRGraph::SetupDrawBufferSetting( DrawBuffer *draw_buffer)
+{
+	draw_buffer->SetBackgroundColor( vcg_GetBgColor());
+} /* VRGraph::SetupDrawBufferSetting */
+

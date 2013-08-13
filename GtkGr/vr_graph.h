@@ -10,6 +10,9 @@
 
 class VRGraph;
 #define VRNODE_INFO_COUNT 3
+#define NODE_LABEL_MARGIN 3
+#define VREDGE_DOT_COUNT 4
+
 /**
  * Узел
  */
@@ -40,7 +43,6 @@ enum VRDir_t
 	VRDIR_BACKWARD,
 	VRDIR_LAST
 };
-#define VREDGE_DOT_COUNT 4
 /**
  * Дуга
  */
@@ -93,6 +95,8 @@ public:
 
 	/* загрузка графа из vcg */
 	void LoadGDL();
+	/* настройка DrawBuffer по установке цвета фона, доп. цветов, начальный скейлинг и положение видимой области и т.п. */
+	void SetupDrawBufferSetting( DrawBuffer *draw_buffer);
 private:
 	void LoadVcgEdge( GEDGE e);
 	void LoadVcgPredEdgesForVcgNodeList( GNODE list);
