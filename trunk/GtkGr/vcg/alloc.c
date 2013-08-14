@@ -1235,12 +1235,7 @@ static CONNECT 	connect_freelist = NULL;   /* list of free   connect cells */
  *  GNODE node.
  */
 
-#ifdef ANSI_C
 CONNECT	connectalloc(GNODE node)
-#else
-CONNECT	connectalloc(node)
-GNODE	node;
-#endif
 {
 	CONNECT	h;
 
@@ -1265,11 +1260,7 @@ GNODE	node;
  *  ----------------------------------------
  */
 
-#ifdef ANSI_C
 static void free_connect(void)
-#else
-static void free_connect()
-#endif
 {
 	CONNECT	h;
 		
@@ -1311,14 +1302,7 @@ static DLLIST	dllist_freelist  = NULL;     /* list of free dllist nodes */
  *  list. pred is the predecessor.
  */
 
-
-#ifdef ANSI_C
 DLLIST 	dllist_alloc(GNODE node, DLLIST pred)
-#else
-DLLIST 	dllist_alloc(node,pred)
-GNODE  node;
-DLLIST pred;
-#endif
 {
 	DLLIST	h;
 
@@ -1342,12 +1326,7 @@ DLLIST pred;
  *  Thus we don't need any additional memory management.
  */
 
-#ifdef ANSI_C
 void	dllist_free(DLLIST x)
-#else
-void	dllist_free(x)
-DLLIST x;
-#endif
 {
 	debugmessage("dllist_free","");
        	DSUCC(x) = dllist_freelist;
@@ -1359,12 +1338,7 @@ DLLIST x;
  *  -----------------------------------
  */
 
-#ifdef ANSI_C
 void	dllist_free_all(DLLIST x)
-#else
-void	dllist_free_all(x)
-DLLIST x;
-#endif
 {
 	DLLIST h;
 

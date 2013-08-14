@@ -108,6 +108,11 @@
 #include "timing.h"
 
 
+/* судя по названию, когда-то получались размеры экрана */
+static int ScreenWidth = 0;
+static int ScreenHeight = 0;
+
+
 /*  Defines
  *  -------
  *  Faster access to the syntax tree.
@@ -2037,11 +2042,7 @@ GNODE get_hash_cursor_succ(int i)
 GNODE debug_checknode = NULL;
 
 
-#ifdef ANSI_C
 static void debug_init_checknode(void)
-#else
-static void debug_init_checknode()
-#endif
 {
 	GNODE h;
 

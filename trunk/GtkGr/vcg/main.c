@@ -135,10 +135,6 @@ void Fatal_error(char *x,char *y)
  *  ======================
  */
 
-#ifdef X11
-static char geom_buffer[128];
-#endif
-
 static void	visualize_part(void)
 {
 	debugmessage("visualize_part","");
@@ -187,9 +183,6 @@ static void	visualize_part(void)
 
 	clear_hide_class();
 
-	/* Check colors */
-	colored = 1;
-
 
 	/*  Analyze specification and allocate graph */
 
@@ -197,22 +190,6 @@ static void	visualize_part(void)
 	if (nr_errors!=0) Fatal_error("Wrong specification","");
 	check_graph_consistency();
 
-#ifdef X11
-	if (!Xmygeometry) {
-		if ((G_width_set)&&(G_height_set)) {
-			if ((G_x != -1L) && (G_y != -1L)) 
-				SPRINTF(geom_buffer,"%dx%d+%ld+%ld",
-					G_width,G_height,G_x,G_y);
-			else 	SPRINTF(geom_buffer,"%dx%d",G_width,G_height);
-			Xmygeometry   = geom_buffer;
-		}
-		else if ((G_x != -1) && (G_y != -1)) {
-				SPRINTF(geom_buffer,"+%ld+%ld",
-					G_x,G_y);
-			Xmygeometry   = geom_buffer;
-		}
-	}
-#endif
 
 	/* Set drawing area */
 

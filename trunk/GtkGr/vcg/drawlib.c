@@ -54,6 +54,9 @@
 
 int fisheye_view = 0;
 
+
+static int colored = 1;
+
 #include <stdio.h>
 void 	gs_rectangle(long x,long y,int w,int h,int c)
 {

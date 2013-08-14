@@ -412,7 +412,7 @@ int	c;
 			}
 			if (actcolor<0)          actcolor = c;
 			/* colormap if (actcolor>=cmap_size) actcolor = c;*/
-			if (!colored)	         actcolor = c;
+			/*if (!colored)	         actcolor = c;*/
 			break;
 		default: /* check visibility again, and draw */
 			if (   (myypos >=V_ymin) && (myxpos >=V_xmin) 
