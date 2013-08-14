@@ -16,7 +16,7 @@ void DrawBuffer::InitColormapBaseColors()
 		m_Colormap[i].green = gdl_OrigColormapGreen[i] << 8;
 		m_Colormap[i].blue = gdl_OrigColormapBlue[i] << 8;
 	}
-	/* остальные пока пробъем черным */
+	/* остальные пробъем черным на всякий случай */
 	for (int i = BASECMAPSIZE; i < CMAPSIZE; i++)
 	{
 		m_Colormap[i].pixel = 0;
@@ -84,6 +84,7 @@ void DrawBuffer::SetVRGraphRef( VRGraph *vr_graph)
 	{
 		FreeColormap();
 	}
+	InitColormapBaseColors();
 	vr_graph->SetupDrawBufferSetting( this);
 	if (m_GC)
 	{
@@ -476,6 +477,24 @@ void DrawBuffer::InvalidateDa( const GdkRectangle *da_update_rect)
 								&rect_var,
 								FALSE);
 } /* DrawBuffer::InvalidateDa */
+
+void DrawBuffer::InitColormapFixedColor( Color_t c, unsigned char red, unsigned char green, unsigned char blue)
+{
+	/* иначе надо освобождать уже выделенные цвета */
+	assert( m_AllocedColors == 0 );
+
+	assert( c < CMAPSIZE );
+	if ( c >= m_InitedColors )
+	{
+		m_InitedColors = c + 1;
+	}
+	// вообще-то это поле заполняется и имеет смысл только после выделения
+	m_Colormap[c].pixel = 0;
+
+	m_Colormap[c].red   = red << 8;
+	m_Colormap[c].green = green << 8;
+	m_Colormap[c].blue  = blue << 8;
+}
 
 void DrawBuffer::SetBackgroundColor( Color_t c)
 {
