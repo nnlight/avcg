@@ -207,15 +207,18 @@ void step0_main(void)
 	assert((bent_near_edge_list==NULL));
 
 	/* Initialize the color map from the original color map */
-	/* colormap
-	cmap_changed = 1;
-	cmap_size = BASECMAPSIZE;
+
+	G_cmap_size = BASECMAPSIZE;
 	for (i=0; i<BASECMAPSIZE; i++) {
-		redmap[i]   = origredmap[i];
-		greenmap[i] = origgreenmap[i];
-		bluemap[i]  = origbluemap[i];
+		G_redmap[i]   = gdl_OrigColormapRed[i];
+		G_greenmap[i] = gdl_OrigColormapGreen[i];
+		G_bluemap[i]  = gdl_OrigColormapBlue[i];
 	}
-	*/
+	for (i=BASECMAPSIZE; i<CMAPSIZE; i++) {
+		G_redmap[i]   = 0;
+		G_greenmap[i] = 0;
+		G_bluemap[i]  = 0;
+	}
 
 	/* Calculate the number of edge classes */
 
@@ -751,16 +754,13 @@ static void	node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
 					if (idx>=CMAPSIZE-1) {
 						SYERR(node2,"Only 254 color entries allowed");
 					}
-					/* colormap
-					if (idx+2>cmap_size) cmap_size = idx+2;
-					redmap[  idx] = rd;
-					bluemap[ idx] = bl;
-					greenmap[idx] = gr;
-					redmap[  cmap_size-1] = 0;
-					bluemap[ cmap_size-1] = 0;
-					greenmap[cmap_size-1] = 0;
-					cmap_changed = 1;
-					*/
+					if (idx < BASECMAPSIZE) {
+						SYERR(node2,"Use 32+ indexies for user defined colorentry");
+					}
+					if (idx+1 > G_cmap_size) G_cmap_size = idx+1;
+					G_redmap[  idx] = rd;
+					G_bluemap[ idx] = bl;
+					G_greenmap[idx] = gr;
 				}
 				break;
                 	case T_Co_scaling:
@@ -1621,11 +1621,9 @@ static int get_color(yysyntaxtree node)
 		return(ORCHID);
         case T_Co_colindex:
 		res = (int)get_lnum(son1(node));
-		/* colormap
-		if (res >= cmap_size) {
+		if (res >= G_cmap_size) {
 			SYERR(node,"Illegal color index.\nColor entries must be declared first");
 		}
-		*/
 		return(res);
 	}
 	assert((0));  /* we should never come to this point */

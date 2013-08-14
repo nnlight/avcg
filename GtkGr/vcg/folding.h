@@ -1,5 +1,3 @@
-/* SCCS-info %W% %E% */
-
 /*--------------------------------------------------------------------*/
 /*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
@@ -17,8 +15,6 @@
 /*                                                                    */
 /*--------------------------------------------------------------------*/
 
-
-/* $Id: folding.h,v 3.3 1995/02/08 11:11:14 sander Exp $ */
 
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
@@ -42,29 +38,6 @@
  *  Contact  sander@cs.uni-sb.de  for additional information.
  */
 
-
-/* $Log: folding.h,v $
- * Revision 3.3  1995/02/08  11:11:14  sander
- * Distribution version 1.3.
- *
- * Revision 3.2  1994/05/05  08:20:30  sander
- * Algorithm late labels added.
- *
- * Revision 3.1  1994/03/01  10:59:55  sander
- * Copyright and Gnu Licence message added.
- * Problem with "nearedges: no" and "selfloops" solved.
- *
- * Revision 2.2  1994/01/21  19:33:46  sander
- * VCG Version tested on Silicon Graphics IRIX, IBM R6000 AIX and Sun 3/60.
- * Option handling improved. Option -grabinputfocus installed.
- * X11 Font selection scheme implemented. The user can now select a font
- * during installation.
- * Sun K&R C (a nonansi compiler) tested. Some portabitility problems solved.
- *
- * Revision 2.1  1993/12/08  21:21:34  sander
- * Reasonable fast and stable version
- *
- */
 
 #ifndef FOLDING_H
 #define FOLDING_H

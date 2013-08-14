@@ -345,6 +345,11 @@ int 	G_xraster;		/* x-raster for real nodes            */
 int 	G_yraster;		/* y-raster for real nodes	      */
 int 	G_dxraster;		/* x-raster for dummy nodes	      */
 
+int G_cmap_size;		/* colormap size */
+/* colormap */
+unsigned char G_redmap[CMAPSIZE];
+unsigned char G_greenmap[CMAPSIZE];
+unsigned char G_bluemap[CMAPSIZE];
 
 
 /* Default values of folded edges. This initialization indicates that
