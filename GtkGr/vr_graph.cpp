@@ -383,12 +383,13 @@ void VRGraph::LoadGDL()
 
 void VRGraph::SetupDrawBufferSetting( DrawBuffer *draw_buffer)
 {
+	if (vcg_GetCmapSize())
+	{
+		/* если LoadGDL() еще не вызывали, то в vcg colormap еще не инициализирована,
+		 * в этом случае будем пользоваться только базовыми цветами */
+		draw_buffer->InitColormap( vcg_GetCmapSize(), vcg_GetCmapRed(), vcg_GetCmapGreen(), vcg_GetCmapBlue());
+	}
 	draw_buffer->SetBackgroundColor( vcg_GetBgColor());
 
-	/* в gdl есть возможность переопределять стандартные цвета, поэтому прописываем с нуля */
-	for ( int i = 0; i < G_cmap_size; i++ )
-	{
-		draw_buffer->InitColormapFixedColor( (Color_t)i, G_redmap[i], G_greenmap[i], G_bluemap[i]);
-	}
 } /* VRGraph::SetupDrawBufferSetting */
 

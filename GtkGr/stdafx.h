@@ -17,6 +17,8 @@
 //using namespace std;
 typedef std::string string;
 
+typedef unsigned char byte;
+
 
 #ifdef WIN32
 /* warning C4312: 'type cast' : conversion from 'volatile gsize' to 'gpointer' of greater size ... */
