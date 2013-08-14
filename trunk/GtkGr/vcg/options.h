@@ -39,6 +39,8 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
+#include "gdl_defs.h"
+
 /*--------------------------------------------------------------------*/
 
 /* Global Variables
@@ -120,6 +122,11 @@ extern int G_dspace;
 extern int G_xraster;
 extern int G_yraster;
 extern int G_dxraster;
+
+extern int G_cmap_size;
+extern unsigned char G_redmap[CMAPSIZE];
+extern unsigned char G_greenmap[CMAPSIZE];
+extern unsigned char G_bluemap[CMAPSIZE];
 
 
 extern char    *fold_elabel;
