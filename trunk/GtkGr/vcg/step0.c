@@ -754,9 +754,9 @@ static void	node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
 					if (idx>=CMAPSIZE-1) {
 						SYERR(node2,"Only 254 color entries allowed");
 					}
-					if (idx < BASECMAPSIZE) {
+					/*if (idx < BASECMAPSIZE) {
 						SYERR(node2,"Use 32+ indexies for user defined colorentry");
-					}
+					}*/
 					if (idx+1 > G_cmap_size) G_cmap_size = idx+1;
 					G_redmap[  idx] = rd;
 					G_bluemap[ idx] = bl;

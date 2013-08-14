@@ -44,6 +44,7 @@ colorentry 32 : 205 198 115             /* khaki      = new 32     */
 colorentry 33 : 210 218 255             /* AliceBlue  = new 33     */
 colorentry 34 : 205  92  92             /* indian red = new 34     */
 /* colorentry 35: black */
+colorentry 35 : 0 0 0
 
 color: 11 
 
