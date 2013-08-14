@@ -5,26 +5,7 @@
 
 void DrawBuffer::InitColormapBaseColors()
 {
-	/* иначе надо освобождать уже выделенные цвета */
-	assert( m_AllocedColors == 0 );
-	for (int i=0; i < BASECMAPSIZE; i++)
-	{
-		 // вообще-то это поле заполняется и имеет смысл только после выделения
-		m_Colormap[i].pixel = 0;
-		
-		m_Colormap[i].red = gdl_OrigColormapRed[i] << 8;
-		m_Colormap[i].green = gdl_OrigColormapGreen[i] << 8;
-		m_Colormap[i].blue = gdl_OrigColormapBlue[i] << 8;
-	}
-	/* остальные пробъем черным на всякий случай */
-	for (int i = BASECMAPSIZE; i < CMAPSIZE; i++)
-	{
-		m_Colormap[i].pixel = 0;
-		m_Colormap[i].red = 0;
-		m_Colormap[i].green = 0;
-		m_Colormap[i].blue = 0;
-	}
-	m_InitedColors = BASECMAPSIZE;
+	InitColormap( BASECMAPSIZE, gdl_OrigColormapRed, gdl_OrigColormapGreen, gdl_OrigColormapBlue);
 } /* DrawBuffer::InitColormapBaseColors */
 
 DrawBuffer::DrawBuffer( GtkWidget *drawing_area)
@@ -84,7 +65,6 @@ void DrawBuffer::SetVRGraphRef( VRGraph *vr_graph)
 	{
 		FreeColormap();
 	}
-	InitColormapBaseColors();
 	vr_graph->SetupDrawBufferSetting( this);
 	if (m_GC)
 	{
@@ -478,23 +458,31 @@ void DrawBuffer::InvalidateDa( const GdkRectangle *da_update_rect)
 								FALSE);
 } /* DrawBuffer::InvalidateDa */
 
-void DrawBuffer::InitColormapFixedColor( Color_t c, unsigned char red, unsigned char green, unsigned char blue)
+void DrawBuffer::InitColormap( int cmap_size, const byte *cmap_red, const byte *cmap_green, const byte *cmap_blue)
 {
 	/* иначе надо освобождать уже выделенные цвета */
 	assert( m_AllocedColors == 0 );
-
-	assert( c < CMAPSIZE );
-	if ( c >= m_InitedColors )
+	
+	assert( cmap_size <= CMAPSIZE );
+	for (int i=0; i < cmap_size; i++)
 	{
-		m_InitedColors = c + 1;
+		 // вообще-то это поле заполняется и имеет смысл только после выделения
+		m_Colormap[i].pixel = 0;
+		
+		m_Colormap[i].red = cmap_red[i] << 8;
+		m_Colormap[i].green = cmap_green[i] << 8;
+		m_Colormap[i].blue = cmap_blue[i] << 8;
 	}
-	// вообще-то это поле заполняется и имеет смысл только после выделения
-	m_Colormap[c].pixel = 0;
-
-	m_Colormap[c].red   = red << 8;
-	m_Colormap[c].green = green << 8;
-	m_Colormap[c].blue  = blue << 8;
-}
+	/* остальные пробъем черным на всякий случай */
+	for (int i = cmap_size; i < CMAPSIZE; i++)
+	{
+		m_Colormap[i].pixel = 0;
+		m_Colormap[i].red = 0;
+		m_Colormap[i].green = 0;
+		m_Colormap[i].blue = 0;
+	}
+	m_InitedColors = cmap_size;
+} /* DrawBuffer::InitColormap */
 
 void DrawBuffer::SetBackgroundColor( Color_t c)
 {

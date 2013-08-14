@@ -326,6 +326,24 @@ Color_t vcg_GetBgColor()
 	return G_color;
 } /* vcg_GetBgColor */
 
+int vcg_GetCmapSize()
+{
+	return G_cmap_size;
+}
+unsigned char *vcg_GetCmapRed()
+{
+	return G_redmap;
+}
+unsigned char *vcg_GetCmapGreen()
+{
+	return G_greenmap;
+}
+unsigned char *vcg_GetCmapBlue()
+{
+	return G_bluemap;
+}
+
+
 
 
 
