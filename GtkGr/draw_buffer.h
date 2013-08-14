@@ -86,6 +86,7 @@ public:
 	void PKey();
 	
 	/* vrg-функции */
+	void InitColormapFixedColor( Color_t c, unsigned char red, unsigned char green, unsigned char blue);
 	void SetBackgroundColor( Color_t c);
 	void SetCurrentColor( Color_t c);
 	void SetLineWidth( vrgint line_width, Linestyle_t lstyle = LS_SOLID);

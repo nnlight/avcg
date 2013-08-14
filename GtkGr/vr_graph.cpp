@@ -384,5 +384,10 @@ void VRGraph::LoadGDL()
 void VRGraph::SetupDrawBufferSetting( DrawBuffer *draw_buffer)
 {
 	draw_buffer->SetBackgroundColor( vcg_GetBgColor());
+
+	for ( int i = BASECMAPSIZE; i < G_cmap_size; i++ )
+	{
+		draw_buffer->InitColormapFixedColor( (Color_t)i, G_redmap[i], G_greenmap[i], G_bluemap[i]);
+	}
 } /* VRGraph::SetupDrawBufferSetting */
 
