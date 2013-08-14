@@ -83,32 +83,17 @@
 /* Time limit functions: Dummy's if the time limit is not available   */
 /*--------------------------------------------------------------------*/
 
-#ifdef ANSI_C
 void init_timelimit(int x)
-#else
-void init_timelimit(x)
-int x;
-#endif
 {
 	debugmessage("init_timelimit","");
 }
 
-#ifdef ANSI_C
 void free_timelimit(void)
-#else
-void free_timelimit()
-#endif
 {
 	debugmessage("free_timelimit","");
 }
 
-
-#ifdef ANSI_C
 int test_timelimit(int perc)
-#else
-int test_timelimit(perc)
-int perc;
-#endif
 {
 	debugmessage("test_timelimit","");
 	return(0);
@@ -132,12 +117,7 @@ static struct timezone tzpxend;  	/* and its time zone  */
  * This is only done if it was not done before.
  */
 
-#ifdef ANSI_C
 void init_timelimit(int x)
-#else
-void init_timelimit(x)
-int x;
-#endif
 {
 	debugmessage("init_timelimit","");
 	if (timelimit>0L) return;	
@@ -152,11 +132,7 @@ int x;
  * --------------------------
  */
 
-#ifdef ANSI_C
 void free_timelimit(void)
-#else
-void free_timelimit()
-#endif
 {
 	debugmessage("free_timelimit","");
 	timelimit = (unsigned long)0;
@@ -170,12 +146,7 @@ void free_timelimit()
  * Return true (1) if yes.
  */
 
-#ifdef ANSI_C
 int test_timelimit(int perc)
-#else
-int test_timelimit(perc)
-int perc;
-#endif
 {
 	unsigned long sec;
 	long int usec;

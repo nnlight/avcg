@@ -93,32 +93,6 @@ static int opt_give_version; /* indicates the version is needed         */
 static int opt_from_stdin;   /* indicates that the input is stdin       */
 
 
-/*  Special flags for X11:
- *  ----------------------
- */
-
-
-/*  Indicates that VCG should grab the input focus.
- */
-
-int grabinputfocus;
-
-char *Xmydiplayname   = NULL;
-char *Xmygeometry     = NULL;
-int  Xmyborderwidth   = 2;
-char *Xmybackingstore = NULL;
-
-#ifdef X11
-static char *Xmyfontname = NULL;
-extern char Xfontname[512];	/* from X11dev.c */
-#endif
-
-
-/*  Flag: indicates that we have more than one input file 
- */
-
-int multiple_files = 0;
-
 
 /*  Flag: indicates that we should be silent
  */
@@ -315,21 +289,6 @@ int G_flat_factor = 70;
 
 
 
-
-/*  Screen Specifics
- *  ----------------
- */
-
-#ifdef VMS
-int 	RootWinMaxDepth;    /* Depth of the frame buffer         */
-#else
-int 	maxDepth;           /* Depth of the frame buffer         */
-#endif
-int	ScreenWidth;	    /* Size of the screen                */
-int   	ScreenHeight;
-int	colored= -1; 	    /* Color screen (1) or BW screen (0) */
-
-
 /*  Layout Parameters
  *  -----------------
  */
@@ -454,13 +413,7 @@ int     locFlag;
  *  next recognizable argument.
  */
 
-
-#ifdef ANSI_C
 static int simpleOption(char *optstr)
-#else
-static int simpleOption(optstr)
-char *optstr;
-#endif
 {
 	char *c, *d;
 
@@ -492,14 +445,7 @@ char *optstr;
  *  next recognizable argument.
  */
 
-
-#ifdef ANSI_C
 static int intOption(char *optstr, int *res)
-#else
-static int intOption(optstr, res)
-char *optstr;
-int *res;
-#endif
 {
 	char *c, *d;
 	int oldi;
@@ -554,14 +500,7 @@ int *res;
  *  next recognizable argument.
  */
 
-
-#ifdef ANSI_C
 static int stringOption(char *optstr, char *strw)
-#else
-static int stringOption(optstr, strw)
-char *optstr;
-char *strw;
-#endif
 {
 	char *c, *d;
 	int oldi;
@@ -615,14 +554,7 @@ char *strw;
  *  next recognizable argument.
  */
 
-
-#ifdef ANSI_C
 static int fnameOption(char *optstr, char *res)
-#else
-static int fnameOption(optstr, res)
-char *optstr;
-char *res;
-#endif
 {
 	char *c, *d;
 	int oldi;
@@ -677,14 +609,7 @@ char *res;
  *  next recognizable argument.
  */
 
-
-#ifdef ANSI_C
 static int wordOption(char *optstr, char **res)
-#else
-static int wordOption(optstr, res)
-char *optstr;
-char **res;
-#endif
 {
 	char *c, *d;
 	int oldi;
@@ -729,14 +654,7 @@ char **res;
  *  next recognizable argument.
  */
 
-
-#ifdef ANSI_C
 static int unitOption(char *optstr, float *res)
-#else
-static int unitOption(optstr, res)
-char *optstr;
-float *res;
-#endif
 {
 	char *c, *d;
 	float help;
@@ -1340,14 +1258,14 @@ void print_help(void)
 	PRINTF("-bw <num> | -borderwidth <num>\n");
 	PRINTF("                  The border width of the window.\n");
 	/*PRINTF("-font <xfont>     (default is `%s').\n",Xfontname);*/
-	if (!grabinputfocus)
+	/*if (!grabinputfocus)
 	PRINTF("-grabinputfocus   Grab the input focus actively.\n"); 
 	else
-	PRINTF("-grabinputfocus   Avoid to grab the input focus actively.\n"); 
+	PRINTF("-grabinputfocus   Avoid to grab the input focus actively.\n"); */
 #endif
 	PRINTF("\n");
 	exit(0);
-}
+} /* print_help */
 
 	
 /*--------------------------------------------------------------------*/

@@ -379,12 +379,8 @@ static void sort_adjacencies(GNODE v)
                 a = ANEXT(a);
         }
 
-#ifdef ANSI_C
         qsort(adjarray2,NINDEG(v),sizeof(GEDGE),
 		(int (*) (const void *, const void *))compare_ppos);
-#else
-        qsort(adjarray2,NINDEG(v),sizeof(GEDGE), compare_ppos);
-#endif
         i = 0;
         a = NPRED(v);
         while (a) {
@@ -402,12 +398,8 @@ static void sort_adjacencies(GNODE v)
 		a = ANEXT(a);
 	}
 
-#ifdef ANSI_C
         qsort(adjarray2,NOUTDEG(v),sizeof(GEDGE),
 		(int (*) (const void *, const void *))compare_spos);
-#else
-        qsort(adjarray2,NOUTDEG(v),sizeof(GEDGE), compare_spos);
-#endif
         i = 0;
         a = NSUCC(v);
         while (a) {

@@ -119,11 +119,7 @@ extern int  gettimeofday _PP((struct timeval *tp, struct timezone *tzp));
 #endif
 
 
-#ifdef ANSI_C
 static void start_time(void)
-#else
-static void start_time()
-#endif
 {
 	struct rusage r;
 
@@ -145,12 +141,7 @@ struct timezone tzpend;
 
 static void stop_time	_PP((char *x));
 
-#ifdef ANSI_C
 static void stop_time(char *x)
-#else
-static void stop_time(x)
-char *x;
-#endif
 {
 	struct rusage r;
 	unsigned long sec;

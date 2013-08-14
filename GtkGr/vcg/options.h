@@ -45,14 +45,6 @@
  * ----------------
  */
 
-extern int grabinputfocus;
-
-extern char *Xmydiplayname;
-extern char *Xmygeometry;
-extern int  Xmyborderwidth;
-extern char *Xmybackingstore;
-
-extern int multiple_files;
 extern int silent;
 extern int nr_max_errors;
 extern int fastflag;
@@ -90,15 +82,6 @@ extern int layout_nearfactor;
 extern int G_spline;
 extern int G_flat_factor;
 
-
-#ifdef VMS
-extern int   RootWinMaxDepth;
-#else
-extern int maxDepth;
-#endif
-extern int ScreenWidth;
-extern int ScreenHeight;
-extern int colored;
 
 extern long V_xmin;
 extern long V_xmax;
@@ -159,7 +142,6 @@ extern int  max_nr_classes;
 extern int  class_name_available;
 extern char **class_names;
 
-extern int grabinputfocus;
 extern int locFlag;
 
 
