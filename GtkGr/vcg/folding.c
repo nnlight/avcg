@@ -175,11 +175,7 @@ static void db_print_somenode_list(GNODE w,GNODE wend);
 
 GNODE mydebugnode;
 
-#ifdef ANSI_C
 void init_mydebugnode(void)
-#else
-void init_mydebugnode()
-#endif
 {
 	GNODE v;
 
@@ -203,11 +199,7 @@ void init_mydebugnode()
 	if (!mydebugnode) PRINTF("not found\n");
 }
 
-#ifdef ANSI_C
 int check_mydebugnode(void)
-#else
-int check_mydebugnode()
-#endif
 {
 	ADJEDGE a;
 
@@ -234,13 +226,7 @@ int check_mydebugnode()
 }
 
 
-#ifdef ANSI_C
 static void print_all_nodes(char *x, GNODE v)
-#else
-static void print_all_nodes(x,v)
-char *x;
-GNODE	v;
-#endif
 {
 	printf("List %s: ",x);
 	while (v) {
@@ -279,11 +265,7 @@ GNLIST  ufoldstart;  /* Node where region unfolding starts		   */
  * ---------------------------------------
  */
 
-#ifdef ANSI_C
 void clear_folding_keepers(void)
-#else
-void clear_folding_keepers()
-#endif
 {
 	GNLIST l;
 
@@ -316,12 +298,7 @@ void clear_folding_keepers()
  *   Note: v is the root node of the graph.
  */
 
-#ifdef ANSI_C
 void add_sgfoldstart(GNODE v)
-#else
-void add_sgfoldstart(v)
-GNODE v;
-#endif
 {
 	GNLIST	l,*lp;
 
@@ -354,12 +331,7 @@ GNODE v;
  * The nodes get the same revert-flag as the root node.
  */
  
-#ifdef ANSI_C
 static void revert_subgraph(GNODE v)  
-#else
-static void revert_subgraph(v)
-GNODE v;  
-#endif
 {
         GNODE w; 
 	GNLIST l;
@@ -385,12 +357,7 @@ GNODE v;
  *   Add a new unfold subgraph starter v to the list foldstart.
  */
 
-#ifdef ANSI_C
 void add_sgunfoldstart(GNODE v)
-#else
-void add_sgunfoldstart(v)
-GNODE v;
-#endif
 {
 	GNLIST	l,*lp;
 
@@ -420,12 +387,7 @@ GNODE v;
  *   Add a new fold region starter v to the list foldstarters.
  */
 
-#ifdef ANSI_C
 void add_foldstart(GNODE v)
-#else
-void add_foldstart(v)
-GNODE v;
-#endif
 {
 	GNLIST	l,*lp;
 
@@ -456,12 +418,7 @@ GNODE v;
  *   Add a new unfold region starter v to the list foldstarters.
  */
 
-#ifdef ANSI_C
 void add_unfoldstart(GNODE v)
-#else
-void add_unfoldstart(v)
-GNODE v;
-#endif
 {
 	GNLIST	l,*lp;
 
@@ -491,12 +448,7 @@ GNODE v;
  *   Add a new fold region stopper v to the list foldstops.
  */
 
-#ifdef ANSI_C
 void add_foldstop(GNODE v)
-#else
-void add_foldstop(v)
-GNODE v;
-#endif
 {
 	GNLIST	l,*lp;
 
@@ -526,12 +478,7 @@ GNODE v;
  *   Returns 1 if v is in the list foldstops, i.e. if v is a fold stopper.
  */
  
-#ifdef ANSI_C
 static int foldstop_reached(GNODE v)
-#else
-static int foldstop_reached(v)
-GNODE	v;
-#endif
 {
 	GNLIST	l;
 
@@ -588,11 +535,7 @@ GNODE	v;
  *   or by menu interaction.
  */
 
-#ifdef ANSI_C
 void	folding(void)
-#else
-void	folding()
-#endif
 {
 	GNODE	v,vn;
 	GNLIST	l;
@@ -785,13 +728,7 @@ void	folding()
  *   is invisible.
  */
 
-#ifdef ANSI_C
 static void	delete_node(GNODE v,int k)
-#else
-static void	delete_node(v,k)
-GNODE	v;
-int k;
-#endif
 {
 	assert((v));
 	assert((k!=0));
@@ -820,13 +757,7 @@ int k;
  *   then the insertion cannot be done.
  */
 
-#ifdef ANSI_C
 static void	insert_node(GNODE v,int k)
-#else
-static void	insert_node(v,k)
-GNODE	v;
-int k;
-#endif
 {
 	assert((v));
 	assert((k!=0));
@@ -857,12 +788,7 @@ int k;
  *  i.e. it hides the subgraph u (and all its subgraphs too).
  */
 
-#ifdef ANSI_C
 static void	delete_sgnodes(GNODE u)
-#else
-static void	delete_sgnodes(u)
-GNODE	u;
-#endif
 {
 	GNODE	v;
 	GNLIST	s;
@@ -886,12 +812,7 @@ GNODE	u;
  *   and insert the summary node.
  */
 
-#ifdef ANSI_C
 static void	fold_sg(GNODE u)
-#else
-static void	fold_sg(u)
-GNODE	u;
-#endif
 {
 	if (!u) return;
 	debugmessage("fold_sg",(NTITLE(u)?NTITLE(u):"(null)"));
@@ -908,13 +829,7 @@ GNODE	u;
  *   and insert all its nodes.
  */
 
-
-#ifdef ANSI_C
 static void	unfold_sg(GNODE	u)
-#else
-static void	unfold_sg(u)
-GNODE	u;
-#endif
 {
 	GNODE	v;
 	GNLIST	s;
@@ -967,13 +882,7 @@ GNODE	u;
  *   Before, the adjacency lists were created.
  */
 
-#ifdef ANSI_C
 static void	fold_region(GNODE n,int	k)
-#else
-static void	fold_region(n,k)
-GNODE	n;
-int	k;
-#endif
 {
 	ADJEDGE a;
 	GEDGE	e;
@@ -1037,14 +946,7 @@ int	k;
  *  and the substed will be later removed. 
  */
 
-#ifdef ANSI_C
 static void	recursive_fold(GNODE v,GNODE n,int k)
-#else
-static void	recursive_fold(v,n,k)
-GNODE	v;
-GNODE	n;
-int	k;
-#endif
 {
 	ADJEDGE a;
 	GEDGE	e,ee;
@@ -1133,12 +1035,7 @@ int	k;
  *   lists exist. Unfold the region that has summary node n.
  */
 
-#ifdef ANSI_C
 static void	unfold_region(GNODE n)
-#else
-static void	unfold_region(n)
-GNODE	n;
-#endif
 {
 	GNLIST	l, startl;
 	GNODE	h;
@@ -1210,11 +1107,7 @@ int 	*hide_class=NULL; 	/* table which edge classes are hidden*/
  *  All classes are visible, no class is hidden.
  */
 
-#ifdef ANSI_C
 void	clear_hide_class(void)
-#else
-void	clear_hide_class()
-#endif
 {
 	int	i;
 
@@ -1235,12 +1128,7 @@ void	clear_hide_class()
 
 static GNODE tmpinvis_nodes;
 
-#ifdef ANSI_C
 static void	hide_node(GNODE v)
-#else
-static void	hide_node(v)
-GNODE v;
-#endif
 {
 	debugmessage("hide_node","");
 
@@ -1263,11 +1151,7 @@ GNODE v;
  *  -------------------
  */
   
-#ifdef ANSI_C
 static void	hide_edge_classes(void)
-#else
-static void	hide_edge_classes()
-#endif
 {
 	GEDGE h;
 	GNODE v,w;
@@ -1404,11 +1288,7 @@ static void	hide_edge_classes()
  *   of adjacency lists.
  */
 
-#ifdef ANSI_C
 static void	refresh(void)
-#else
-static void	refresh()
-#endif
 {
 	GNODE	v;
 	GEDGE	e;
@@ -1463,12 +1343,7 @@ static void	refresh()
  *  Old adjacency list are cleared.
  */
 
-#ifdef ANSI_C
 static void refresh_all_nodes(GNODE v)
-#else
-static void refresh_all_nodes(v)
-GNODE	v;
-#endif
 {
 	debugmessage("refresh_all_nodes","");
 	while (v) {
@@ -1514,11 +1389,7 @@ GNODE	v;
 static GNODE *node_sort_array = NULL;
 static int    noso_size = 0;
 
-#ifdef ANSI_C
 static void sort_all_nodes(void)
-#else
-static void sort_all_nodes()
-#endif
 {
 	GNODE v, w;
 	int   i,max;
@@ -1551,12 +1422,8 @@ static void sort_all_nodes()
 		v = NNEXT(v);
 	}
 
-#ifdef ANSI_C
 	qsort(node_sort_array,max,sizeof(GNODE),
 		(int (*) (const void *, const void *))compare_ndfs);
-#else
-	qsort(node_sort_array,max,sizeof(GNODE), compare_ndfs);
-#endif
 
 	/* Now check whether the 10 % time limit is exceeded */
 
@@ -1638,12 +1505,10 @@ static void sort_all_nodes()
 	switch (layout_flag) {
 	case 4: case 5: case 6: case 7: case 8:
 	case 9: case 10: case 11:
-#ifdef ANSI_C
+
 		qsort(node_sort_array,max,sizeof(GNODE),
 			(int (*) (const void *, const void *))compare_ndfs);
-#else
-		qsort(node_sort_array,max,sizeof(GNODE), compare_ndfs);
-#endif
+
 	}
 
 	for (i=1; i<max-1; i++) {
@@ -1667,13 +1532,7 @@ static void sort_all_nodes()
  *  returns 1 if NDFS(*a) > NDFS(*b), 0 if equal, -1 otherwise.
  */
  
-#ifdef ANSI_C
 static int      compare_ndfs(const GNODE *a,const GNODE *b)
-#else
-static int      compare_ndfs(a,b)
-GNODE   *a;
-GNODE   *b;
-#endif
 {
         if (NDFS(*a) > NDFS(*b))                return(1);
         if (NDFS(*a) < NDFS(*b))                return(-1);
@@ -1692,12 +1551,7 @@ GNODE   *b;
  *  layout.
  */
 
-#ifdef ANSI_C
 static long	no_dfs(GNODE n)
-#else
-static long	no_dfs(n)
-GNODE n;
-#endif
 {
 	ADJEDGE edge;
 	long res, z;
@@ -1721,12 +1575,7 @@ GNODE n;
  * --------------------------------
  */
 
-#ifdef ANSI_C
 static long	no_indeg(GNODE n)
-#else
-static long	no_indeg(n)
-GNODE n;
-#endif
 {
 	ADJEDGE edge;
 	long res;
@@ -1744,12 +1593,7 @@ GNODE n;
  * --------------------------------
  */
 
-#ifdef ANSI_C
 static long	no_outdeg(GNODE n)
-#else
-static long	no_outdeg(n)
-GNODE n;
-#endif
 {
 	ADJEDGE edge;
 	long res;
@@ -1767,12 +1611,7 @@ GNODE n;
  * --------------------------------
  */
 
-#ifdef ANSI_C
 static long	no_degree(GNODE n)
-#else
-static long	no_degree(n)
-GNODE n;
-#endif
 {
 	ADJEDGE edge;
 	long res;
@@ -1803,12 +1642,7 @@ GNODE n;
  *   target node.
  */
 
-#ifdef ANSI_C
 void	create_adjedge(GEDGE edge)
-#else
-void	create_adjedge(edge)
-GEDGE	edge;
-#endif
 {
 	ADJEDGE a;
 	debugmessage("create_adjedge","");
@@ -1837,13 +1671,7 @@ GEDGE	edge;
  *   and target node.
  */
 
-
-#ifdef ANSI_C
 void	delete_adjedge(GEDGE edge)
-#else
-void	delete_adjedge(edge)
-GEDGE	edge;
-#endif
 {
 	ADJEDGE a,b,*ap,*abp;
 
@@ -1883,12 +1711,7 @@ GEDGE	edge;
  *   The new temporary node is inserted into the label list.
  */
 
-#ifdef ANSI_C
 GNODE	create_labelnode(GEDGE e)
-#else
-GNODE	create_labelnode(e)
-GEDGE	e;
-#endif
 {
 	GNODE	v;
 
@@ -1917,13 +1740,7 @@ GEDGE	e;
  *   case, all positions are recalculated anyway. 
  */
 
-#ifdef ANSI_C
 static void adapt_labelpos(GNODE v,GEDGE e)
-#else
-static void adapt_labelpos(v,e)
-GNODE v;
-GEDGE e;
-#endif
 {
 	int	a,b,c;
 	char	*ss;
@@ -1954,12 +1771,7 @@ int gs_stringh =16;
  *   The Search is driven by the reason why v is unvisible.
  */
 
-#ifdef ANSI_C
 static GNODE	search_visible(GNODE v)
-#else
-static GNODE	search_visible(v)
-GNODE	v;
-#endif
 {
 	GNODE w;
 
@@ -2006,12 +1818,7 @@ GNODE	v;
  *   and edge hiding is done after that !
  */
 	
-#ifdef ANSI_C
 static GEDGE	substed_edge(GEDGE e)
-#else
-static GEDGE	substed_edge(e)
-GEDGE	e;
-#endif
 {
 	GNODE	s,t,ss,tt;
 	GEDGE	h;
@@ -2086,12 +1893,7 @@ GEDGE	e;
  *   Adjacency lists of all nodes in the nodelist, i.e. of all visible nodes.
  */
 
-
-#ifdef ANSI_C
 static void create_adjacencies(void)
-#else
-static void create_adjacencies()
-#endif
 {
 	GEDGE	edge, e;
 
@@ -2117,12 +1919,7 @@ static void create_adjacencies()
  *   it is quite seldom.
  */
 
-
-#ifdef ANSI_C
 static void create_lab_adjacencies(void)
-#else
-static void create_lab_adjacencies()
-#endif
 {
 	GEDGE	edge, e, e1, e2;
 	GNODE	v;
@@ -2190,11 +1987,7 @@ static void create_lab_adjacencies()
  * complexity. Thus it is optional.
  */
 
-#ifdef ANSI_C
 static void summarize_edges(void)
-#else
-static void summarize_edges()
-#endif
 {
 	GNODE v;
 	GEDGE e1, e2;
@@ -2269,11 +2062,7 @@ static void summarize_edges()
  * of self loops.
  */
 
-#ifdef ANSI_C
 static void split_double_edges(void)
-#else
-static void split_double_edges()
-#endif
 {
 	GNODE v,w;
 	GEDGE e, e1, e2;
@@ -2362,13 +2151,7 @@ static void split_double_edges()
 
 #define DB_MAXNODES 25
 
-#ifdef ANSI_C
 static void db_print_somenode_list(GNODE w,GNODE wend)
-#else
-static void db_print_somenode_list(w,wend)
-GNODE w;
-GNODE wend;
-#endif
 {
 	GNODE v; int i;
 
