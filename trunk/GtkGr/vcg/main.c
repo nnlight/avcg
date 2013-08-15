@@ -303,7 +303,7 @@ void vcg_Parse( FILE *input_file)
 		max_straighttune = 2;
 	}
 
-	if (!silent) { FPRINTF(stdout,"Wait "); FFLUSH(stdout); }
+	/*if (!silent) { FPRINTF(stdout,"Wait "); FFLUSH(stdout); }*/
 	parse_part( input_file);
 	visualize_part();
 
@@ -315,6 +315,7 @@ void vcg_Parse( FILE *input_file)
 		 * selected.
 		 */
 		/*display_part(); */
+		/* see draw_main() for draw algorithm details! */
 	}
 
 	return;
