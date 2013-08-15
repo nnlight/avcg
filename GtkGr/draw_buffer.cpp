@@ -297,9 +297,9 @@ void DrawBuffer::ButtonPress2( daint x, daint y)
 {
 	vrgint vrg_x, vrg_y;
 	Da2Vrg( x,y, vrg_x,vrg_y);
-	m_VRGraph->AddNode( this, 
+	/*m_VRGraph->AddNode( this, 
 						vrg_x, vrg_y, 
-						"title", " label\nnext line");
+						"title", " label\nnext line");*/
 	m_VRGraph->Expose( this);
 	InvalidateDa( NULL);
 }
