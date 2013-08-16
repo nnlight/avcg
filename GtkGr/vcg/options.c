@@ -1276,3 +1276,33 @@ void print_help(void)
 /*--------------------------------------------------------------------*/
 
 
+void initOptions()
+{
+	layout_flag = 0;
+	crossing_heuristics = 0;
+	local_unwind = 1;
+	near_edge_layout = 1;
+	fine_tune_layout = 1;
+	edge_label_phase = 0;
+
+	min_baryiterations = 0;
+	max_baryiterations = MAXINT;
+
+	skip_baryphase2 = 0; 
+	max_mediumshifts = 100;
+	min_mediumshifts = 0;
+	nwdumping_phase = 0;
+	max_centershifts = 100;
+	min_centershifts = 0;
+	max_straighttune = 100;
+	prio_phase = 0;
+	straight_phase = 0;
+	max_edgebendings = 100;
+	manhatten_edges = 0;
+	one_line_manhatten = 0;
+}
+
+	
+/*--------------------------------------------------------------------*/
+
+

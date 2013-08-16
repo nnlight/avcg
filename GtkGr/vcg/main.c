@@ -292,6 +292,8 @@ void vcg_Parse( FILE *input_file)
 
 	G_xmax = G_ymax = -1;
 
+	initOptions();
+
 	if (fastflag) {
 		min_baryiterations = 0;
 		max_baryiterations = 2;
