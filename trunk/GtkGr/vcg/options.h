@@ -161,6 +161,8 @@ int  scanOptions		(int argc, char *argv[]);
 void print_basic_help	(void);
 void print_help			(void);
 
+void initOptions();
+
 
 /*--------------------------------------------------------------------*/
  
