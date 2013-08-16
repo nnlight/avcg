@@ -198,7 +198,7 @@ void DrawBuffer::ExposeDa( daint x,
 										   m_PixmapDims[AXIS_Y]);
 		if ( m_VRGraph )
 		{
-			m_VRGraph->Expose( this);
+			m_VRGraph->DrawGraph( this);
 		}
 		m_IsNeedRedrawPixmap = false;
 	}
@@ -300,7 +300,7 @@ void DrawBuffer::ButtonPress2( daint x, daint y)
 	/*m_VRGraph->AddNode( this, 
 						vrg_x, vrg_y, 
 						"title", " label\nnext line");*/
-	m_VRGraph->Expose( this);
+	m_VRGraph->DrawGraph( this);
 	InvalidateDa( NULL);
 }
 
