@@ -11,6 +11,7 @@
 class VRGraph;
 #define VRNODE_INFO_COUNT 3
 #define NODE_LABEL_MARGIN 3
+#define EDGE_LABEL_MARGIN 1
 #define VREDGE_DOT_COUNT 4
 
 /**
@@ -74,14 +75,24 @@ private:
 class VRGraph : public GrGraph
 {
 private:
-	struct VRIBox
+	struct VRInfoBox
 	{
 		int x_, y_;
 		int width_, height_;
 		VRNode *node_;
 		int info_num_;
 	};
-	std::list<VRIBox> ibox_list_;
+	std::list<VRInfoBox> ibox_list_;
+
+	struct EdgeLabel
+	{
+		int x_, y_;
+		int width_, height_;
+		string label_;
+		Color_t color_;
+		Color_t textcolor_; //!< цвет текста
+	};
+	std::list<EdgeLabel> elabel_list_;
 public:
 	VRGraph();
 	/* не предназначен для иcпользования в качестве базового класса */
@@ -89,7 +100,7 @@ public:
 
 	void AddNode( DrawBuffer *draw_buffer, int x, int y, const char *title, const char *label);
 	VRNode *AddSizedNode( int x, int y, int width, int height, const char *title, const char *label);
-	void Expose( DrawBuffer *draw_buffer);
+	void DrawGraph( DrawBuffer *draw_buffer);
 
 	void HandleInfoBoxPress( DrawBuffer *draw_buffer, int x, int y, int info_num);
 
@@ -104,7 +115,8 @@ private:
 	void DrawNode( DrawBuffer *draw_buffer, VRNode *node);
 	void DrawEdgeArrow( DrawBuffer *draw_buffer, VREdge *edge, VRDir_t dir);
 	void DrawEdge( DrawBuffer *draw_buffer, VREdge *edge);
-	void DrawIBox( DrawBuffer *draw_buffer, VRIBox *ibox);
+	void DrawInfoBox( DrawBuffer *draw_buffer, VRInfoBox *ibox);
+	void DrawEdgeLabel( DrawBuffer *draw_buffer, EdgeLabel *elabel);
 
 };
 

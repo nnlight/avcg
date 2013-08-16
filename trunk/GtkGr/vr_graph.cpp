@@ -79,7 +79,7 @@ VRNode *VRGraph::AddSizedNode( int x, int y, int width, int height, const char *
 /**
  * Отрисовать заданную область в draw_buffer
  */
-void VRGraph::Expose( DrawBuffer *draw_buffer)
+void VRGraph::DrawGraph( DrawBuffer *draw_buffer)
 {
 	for ( GrNode *n = GrGetFirstNode();
 		  n; 
@@ -105,17 +105,25 @@ void VRGraph::Expose( DrawBuffer *draw_buffer)
 		assert( dynamic_cast<VREdge*>(e) );
 		DrawEdge( draw_buffer, edge);
 	}
-	for ( std::list<VRIBox>::iterator iter = ibox_list_.begin();
+	/* лейблы дуг специально рисуются после дуг, ибо для лейблов в vcg строятся узлы маленького размера
+	 * и дуги идут к границам этих узлов, образуя пересечениние с текстом лейбла */
+	for ( std::list<EdgeLabel>::iterator iter = elabel_list_.begin();
+		  iter != elabel_list_.end();
+		  ++iter )
+	{
+		DrawEdgeLabel( draw_buffer, &(*iter));
+	}
+	for ( std::list<VRInfoBox>::iterator iter = ibox_list_.begin();
 		  iter != ibox_list_.end();
 		  ++iter )
 	{
-		DrawIBox( draw_buffer, &(*iter));
+		DrawInfoBox( draw_buffer, &(*iter));
 	}
-} /* VRGraph::Expose */
+} /* VRGraph::DrawGraph */
 
 void VRGraph::HandleInfoBoxPress( DrawBuffer *draw_buffer, int x, int y, int info_num)
 {
-	for ( std::list<VRIBox>::reverse_iterator riter = ibox_list_.rbegin();
+	for ( std::list<VRInfoBox>::reverse_iterator riter = ibox_list_.rbegin();
 		  riter != ibox_list_.rend();
 		  ++riter )
 	{
@@ -128,7 +136,7 @@ void VRGraph::HandleInfoBoxPress( DrawBuffer *draw_buffer, int x, int y, int inf
 			assert( r_addr == addr );
 			ibox_list_.erase( --riter.base());
 			draw_buffer->PublicFillByBgColor();
-			Expose( draw_buffer);
+			DrawGraph( draw_buffer);
 			draw_buffer->PublicInvalidateDa();
 			return;
 		}
@@ -143,7 +151,7 @@ void VRGraph::HandleInfoBoxPress( DrawBuffer *draw_buffer, int x, int y, int inf
 			 && node->y_ <= y  && y < node->y_ + node->height_
 			 && !node->infos_[info_num-1].empty() )
 		{
-			VRIBox ibox;
+			VRInfoBox ibox;
 			int twidth, theight;
 			ibox.x_ = node->x_;
 			ibox.y_ = node->y_;
@@ -154,7 +162,7 @@ void VRGraph::HandleInfoBoxPress( DrawBuffer *draw_buffer, int x, int y, int inf
 			ibox.node_ = node;
 			ibox.info_num_ = info_num;
 			ibox_list_.push_back( ibox);
-			Expose( draw_buffer);
+			DrawGraph( draw_buffer);
 			draw_buffer->PublicInvalidateDa();
 			return;
 		}
@@ -242,7 +250,7 @@ void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
 	}
 } /* VRGraph::DrawEdge */
 
-void VRGraph::DrawIBox( DrawBuffer *draw_buffer, VRIBox *ibox)
+void VRGraph::DrawInfoBox( DrawBuffer *draw_buffer, VRInfoBox *ibox)
 {
 	VRNode *node = ibox->node_;
 	draw_buffer->SetCurrentColor( /*node->color_*/ WHITE);
@@ -254,7 +262,25 @@ void VRGraph::DrawIBox( DrawBuffer *draw_buffer, VRIBox *ibox)
 	draw_buffer->DrawText( ibox->x_ + node->borderw_ + NODE_LABEL_MARGIN, 
 						   ibox->y_ + node->borderw_ + NODE_LABEL_MARGIN,
 						   node->infos_[ibox->info_num_ - 1].c_str());
-} /* VRGraph::DrawIBox */
+} /* VRGraph::DrawInfoBox */
+
+void VRGraph::DrawEdgeLabel( DrawBuffer *draw_buffer, EdgeLabel *elabel)
+{
+	int twidth, theight;
+	draw_buffer->GetTextPixelSize( elabel->label_.c_str(), &twidth, &theight);
+
+	int x = elabel->x_ + (elabel->width_ - twidth) / 2 - EDGE_LABEL_MARGIN;
+	int y = elabel->y_ + (elabel->height_ - theight) / 2 - EDGE_LABEL_MARGIN;
+	int width = twidth + 2*EDGE_LABEL_MARGIN;
+	int height = theight + 2*EDGE_LABEL_MARGIN;
+
+	draw_buffer->SetCurrentColor( elabel->color_);
+	draw_buffer->DrawRectangle( x, y, width, height, true);
+	draw_buffer->SetCurrentColor( elabel->textcolor_);
+	draw_buffer->DrawText( x + EDGE_LABEL_MARGIN, 
+						   y + EDGE_LABEL_MARGIN,
+						   elabel->label_.c_str());
+} /* VRGraph::DrawEdgeLabel */
 
 
 
@@ -373,6 +399,21 @@ void VRGraph::LoadGDL()
 		node->infos_[0] = NINFO1(v);
 		node->infos_[1] = NINFO2(v);
 		node->infos_[2] = NINFO3(v);
+	}
+	/* лейблы дуг (узлы без границ) */
+	for ( v = labellist; v; v = NNEXT(v) )
+	{
+		if (NWIDTH(v) == 0)
+			continue;
+		EdgeLabel elabel;
+		elabel.x_ = NX(v);
+		elabel.y_ = NY(v);
+		elabel.width_ = NWIDTH(v);
+		elabel.height_ = NHEIGHT(v);
+		elabel.label_ = NLABEL(v);
+		elabel.color_ = (Color_t)NCOLOR(v);
+		elabel.textcolor_ = (Color_t)NTCOLOR(v);
+		elabel_list_.push_back( elabel);
 	}
 
 	/* дуги */
