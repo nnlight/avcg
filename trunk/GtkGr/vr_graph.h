@@ -25,9 +25,11 @@ public:
 	int x_,y_;
 	int width_, height_;
 	Color_t color_;
-	Color_t textcolor_; //!< цвет текста
-	Color_t bcolor_;    //!< цвет границы
-	int borderw_;       //!< ширина границы
+	Color_t textcolor_;   //!< цвет текста
+	Color_t bcolor_;      //!< цвет границы
+	int borderw_;         //!< ширина границы
+	Nodeshape_t shape_;   //!< форма узла
+	Textmode_t textmode_; //!< центровка текста
 	int stretch_;
 	int shrink_;
 	string infos_[VRNODE_INFO_COUNT];

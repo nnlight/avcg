@@ -10,6 +10,8 @@ VRNode::VRNode( VRGraph *graph, const char *title, int x, int y)
 	, width_(0), height_(0)
 	, color_(WHITE), textcolor_(BLACK), bcolor_(BLACK)
 	, borderw_(2)
+	, shape_(NS_BOX)
+	, textmode_(TM_CENTER)
 	, stretch_ (1), shrink_(1)
 {
 }
@@ -173,10 +175,24 @@ void VRGraph::HandleInfoBoxPress( DrawBuffer *draw_buffer, int x, int y, int inf
 void VRGraph::DrawNode( DrawBuffer *draw_buffer, VRNode *node)
 {
 	draw_buffer->SetCurrentColor( node->color_);
-	draw_buffer->DrawRectangle( node->x_, node->y_, node->width_, node->height_, true);
+	switch (node->shape_)
+	{
+	case NS_BOX:      draw_buffer->DrawRectangle( node->x_, node->y_, node->width_, node->height_, true); break;
+	case NS_RHOMB:    draw_buffer->DrawRhomb( node->x_, node->y_, node->width_, node->height_, true); break;
+	case NS_ELLIPSE:  draw_buffer->DrawEllipse( node->x_, node->y_, node->width_, node->height_, true); break;
+	case NS_TRIANGLE: draw_buffer->DrawGdlTriang( node->x_, node->y_, node->width_, node->height_, true); break;
+	default: assert( !"unknown nodeshape" );
+	}
 	draw_buffer->SetLineWidth( node->borderw_);
 	draw_buffer->SetCurrentColor( node->bcolor_);
-	draw_buffer->DrawRectangle( node->x_, node->y_, node->width_, node->height_, false);
+	switch (node->shape_)
+	{
+	case NS_BOX:      draw_buffer->DrawRectangle( node->x_, node->y_, node->width_, node->height_, false); break;
+	case NS_RHOMB:    draw_buffer->DrawRhomb( node->x_, node->y_, node->width_, node->height_, false); break;
+	case NS_ELLIPSE:  draw_buffer->DrawEllipse( node->x_, node->y_, node->width_, node->height_, false); break;
+	case NS_TRIANGLE: draw_buffer->DrawGdlTriang( node->x_, node->y_, node->width_, node->height_, false); break;
+	default: assert( !"unknown nodeshape" );
+	}
 	draw_buffer->SetCurrentColor( node->textcolor_);
 	draw_buffer->DrawText( node->x_ + node->borderw_ + NODE_LABEL_MARGIN, 
 						   node->y_ + node->borderw_ + NODE_LABEL_MARGIN,
@@ -236,6 +252,10 @@ void VRGraph::DrawEdgeArrow( DrawBuffer *draw_buffer, VREdge *edge, VRDir_t dir)
 
 void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
 {
+	if (edge->linestyle_ == LS_UNVISIBLE)
+	{
+		return;
+	}
 	draw_buffer->SetLineWidth( edge->thickness_, edge->linestyle_);
 	draw_buffer->SetCurrentColor( edge->color_);
 	for ( int i = 1; i < edge->dots_; i++ )
@@ -396,6 +416,8 @@ void VRGraph::LoadGDL()
 		node->bcolor_ = (Color_t)NBCOLOR(v);
 		node->borderw_ = NBORDERW(v);
 		node->textcolor_ = (Color_t)NTCOLOR(v);
+		node->shape_ = (Nodeshape_t)NSHAPE(v);
+		node->textmode_ = (Textmode_t)NTEXTMODE(v);
 		node->infos_[0] = NINFO1(v);
 		node->infos_[1] = NINFO2(v);
 		node->infos_[2] = NINFO3(v);

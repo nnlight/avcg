@@ -65,6 +65,21 @@ enum Arrowstyle_t
 	AS_NONESPEC = 3
 };
 
+enum Nodeshape_t
+{
+	NS_BOX      = 0,
+	NS_RHOMB    = 1,
+	NS_ELLIPSE  = 2,
+	NS_TRIANGLE = 3
+};
+
+enum Textmode_t
+{
+	TM_CENTER = 0,
+	TM_LEFT   = 1,
+	TM_RIGHT  = 2
+};
+
 
 
 #define	COLOR(c)	(c)
@@ -80,6 +95,17 @@ enum Arrowstyle_t
 #define	ASSOLID	   AS_SOLID
 #define	ASLINE 	   AS_LINE
 #define	ASNONESPEC AS_NONESPEC
+
+/* Shapes */
+#define BOX        NS_BOX
+#define RHOMB      NS_RHOMB
+#define ELLIPSE    NS_ELLIPSE
+#define TRIANGLE   NS_TRIANGLE
+
+/* Textmodes */
+#define CENTER     TM_CENTER
+#define	LEFT       TM_LEFT
+#define	RIGHT      TM_RIGHT
 
 
 
