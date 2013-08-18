@@ -93,6 +93,9 @@ public:
 	void DrawLine( vrgint x, vrgint y, vrgint endx, vrgint endy);
 	void DrawRectangle( vrgint x, vrgint y, vrgint width, vrgint height, bool filled);
 	void DrawTriangle( vrgint x1, vrgint y1, vrgint x2, vrgint y2, vrgint x3, vrgint y3, bool filled);
+	void DrawRhomb( vrgint x, vrgint y, vrgint width, vrgint height, bool filled);
+	void DrawEllipse( vrgint x, vrgint y, vrgint width, vrgint height, bool filled);
+	void DrawGdlTriang( vrgint x, vrgint y, vrgint width, vrgint height, bool filled);
 	void DrawPie( vrgint x, vrgint y, vrgint radius, bool filled, std::list<int> &colors);
 	void GetTextPixelSize( const char *text, int *width_p, int *height_p);
 	void DrawText( vrgint x, vrgint y, const char *text);

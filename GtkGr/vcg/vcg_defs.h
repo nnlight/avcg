@@ -35,23 +35,10 @@ extern "C" {
 #define NO	0
 #define YES	1
 
-/* Textmodes */
-
-#define CENTER	0
-#define	LEFT	1
-#define	RIGHT	2
-
 /* Arrow modi */
 
 #define AMFIXED 0
 #define AMFREE  1
-
-/* Shapes */
-
-#define BOX      0
-#define RHOMB    1
-#define ELLIPSE  2
-#define TRIANGLE 3
 
 /* Edge orientation (no orientation, north, north east, ...) */
 

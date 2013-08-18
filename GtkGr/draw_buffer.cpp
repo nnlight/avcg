@@ -549,6 +549,51 @@ void DrawBuffer::DrawTriangle( vrgint x1, vrgint y1, vrgint x2, vrgint y2, vrgin
 	gdk_draw_polygon( m_Pixmap, m_GC, pm_filled, 
 					  pm_p, 3);
 }
+void DrawBuffer::DrawRhomb( vrgint x, vrgint y, vrgint width, vrgint height, bool filled)
+{
+	gboolean pm_filled = filled ? TRUE : FALSE;
+	int pm_x, pm_y;
+	Vrg2Pm( x,y, pm_x, pm_y);
+	int pm_width = width * m_Scaling;
+	int pm_height = height * m_Scaling;
+
+	GdkPoint pm_p[4];
+	pm_p[0].x = pm_x;
+	pm_p[0].y = pm_y + pm_height / 2;
+	pm_p[1].x = pm_x + pm_width /2;
+	pm_p[1].y = pm_y;
+	pm_p[2].x = pm_x + pm_width;
+	pm_p[2].y = pm_y + pm_height / 2;
+	pm_p[3].x = pm_x + pm_width /2;
+	pm_p[3].y = pm_y + pm_height;
+
+	gdk_draw_polygon( m_Pixmap, m_GC, pm_filled, 
+					  pm_p, 4);
+}
+void DrawBuffer::DrawEllipse( vrgint x, vrgint y, vrgint width, vrgint height, bool filled)
+{
+	gboolean pm_filled = filled ? TRUE : FALSE;
+	int pm_x, pm_y;
+	Vrg2Pm( x,y, pm_x, pm_y);
+	int pm_width = width * m_Scaling;
+	int pm_height = height * m_Scaling;
+
+	gdk_draw_arc( m_Pixmap, m_GC, pm_filled, 
+				  pm_x, pm_y, 
+				  pm_width, pm_height,
+				  0, 64 * 360);
+}
+void DrawBuffer::DrawGdlTriang( vrgint x, vrgint y, vrgint width, vrgint height, bool filled)
+{
+	gboolean pm_filled = filled ? TRUE : FALSE;
+	GdkPoint pm_p[3];
+	Vrg2Pm( x + width / 2, y,      pm_p[0].x, pm_p[0].y);
+	Vrg2Pm( x + width, y + height, pm_p[1].x, pm_p[1].y);
+	Vrg2Pm( x, y + height,         pm_p[2].x, pm_p[2].y);
+
+	gdk_draw_polygon( m_Pixmap, m_GC, pm_filled, 
+					  pm_p, 3);
+}
 void DrawBuffer::DrawPie( vrgint x, vrgint y, vrgint radius, bool filled, std::list<int> &colors)
 {
 	int pmx, pmy;
