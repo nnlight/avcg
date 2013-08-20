@@ -114,6 +114,7 @@ private:
 	void LoadVcgEdge( GEDGE e);
 	void LoadVcgPredEdgesForVcgNodeList( GNODE list);
 
+	void DrawNodeText( DrawBuffer *draw_buffer, VRNode *node);
 	void DrawNode( DrawBuffer *draw_buffer, VRNode *node);
 	void DrawEdgeArrow( DrawBuffer *draw_buffer, VREdge *edge, VRDir_t dir);
 	void DrawEdge( DrawBuffer *draw_buffer, VREdge *edge);

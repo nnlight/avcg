@@ -14,6 +14,13 @@ enum Axis_t
 	AXIS_LAST
 };
 
+enum DrawTextPos_t
+{
+	DTP_MIN,    /*!< указывается минимальная координата */
+	DTP_CENTER, /*!< указывается центр */
+	DTP_MAX     /*!< указывается максимальная координата */
+};
+
 /* forward declaration */
 class VRGraph;
 /**
@@ -98,7 +105,7 @@ public:
 	void DrawGdlTriang( vrgint x, vrgint y, vrgint width, vrgint height, bool filled);
 	void DrawPie( vrgint x, vrgint y, vrgint radius, bool filled, std::list<int> &colors);
 	void GetTextPixelSize( const char *text, int *width_p, int *height_p);
-	void DrawText( vrgint x, vrgint y, const char *text);
+	void DrawText( vrgint x, DrawTextPos_t x_pos, vrgint y, DrawTextPos_t y_pos, const char *text);
 
 	void PublicInvalidateDa() { InvalidateDa( NULL); };
 	void PublicFillByBgColor() 

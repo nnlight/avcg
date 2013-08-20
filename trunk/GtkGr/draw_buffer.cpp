@@ -552,20 +552,11 @@ void DrawBuffer::DrawTriangle( vrgint x1, vrgint y1, vrgint x2, vrgint y2, vrgin
 void DrawBuffer::DrawRhomb( vrgint x, vrgint y, vrgint width, vrgint height, bool filled)
 {
 	gboolean pm_filled = filled ? TRUE : FALSE;
-	int pm_x, pm_y;
-	Vrg2Pm( x,y, pm_x, pm_y);
-	int pm_width = width * m_Scaling;
-	int pm_height = height * m_Scaling;
-
 	GdkPoint pm_p[4];
-	pm_p[0].x = pm_x;
-	pm_p[0].y = pm_y + pm_height / 2;
-	pm_p[1].x = pm_x + pm_width /2;
-	pm_p[1].y = pm_y;
-	pm_p[2].x = pm_x + pm_width;
-	pm_p[2].y = pm_y + pm_height / 2;
-	pm_p[3].x = pm_x + pm_width /2;
-	pm_p[3].y = pm_y + pm_height;
+	Vrg2Pm( x + width / 2, y,          pm_p[0].x, pm_p[0].y);
+	Vrg2Pm( x + width, y + height /2,  pm_p[1].x, pm_p[1].y);
+	Vrg2Pm( x + width / 2, y + height, pm_p[2].x, pm_p[2].y);
+	Vrg2Pm( x, y + height / 2,         pm_p[3].x, pm_p[3].y);
 
 	gdk_draw_polygon( m_Pixmap, m_GC, pm_filled, 
 					  pm_p, 4);
@@ -585,14 +576,10 @@ void DrawBuffer::DrawEllipse( vrgint x, vrgint y, vrgint width, vrgint height, b
 }
 void DrawBuffer::DrawGdlTriang( vrgint x, vrgint y, vrgint width, vrgint height, bool filled)
 {
-	gboolean pm_filled = filled ? TRUE : FALSE;
-	GdkPoint pm_p[3];
-	Vrg2Pm( x + width / 2, y,      pm_p[0].x, pm_p[0].y);
-	Vrg2Pm( x + width, y + height, pm_p[1].x, pm_p[1].y);
-	Vrg2Pm( x, y + height,         pm_p[2].x, pm_p[2].y);
-
-	gdk_draw_polygon( m_Pixmap, m_GC, pm_filled, 
-					  pm_p, 3);
+	DrawTriangle( x + width / 2, y,
+				  x + width, y + height,
+				  x, y + height,
+				  filled);
 }
 void DrawBuffer::DrawPie( vrgint x, vrgint y, vrgint radius, bool filled, std::list<int> &colors)
 {
@@ -655,11 +642,28 @@ void DrawBuffer::DrawPie( vrgint x, vrgint y, vrgint radius, bool filled, std::l
 }
 void DrawBuffer::GetTextPixelSize( const char *text, int *width_p, int *height_p)
 {
+#if 0
 	PangoLayout *layout;
 	layout = gtk_widget_create_pango_layout( m_da, text);
 	pango_layout_get_pixel_size( layout, width_p, height_p);
 	g_object_unref( layout);
+#else
+	PangoLayout *layout;
+	PangoFontDescription *font_description;
+	font_description = pango_font_description_new();
+	pango_font_description_set_family_static( font_description, "monospace");
+
+	layout = gtk_widget_create_pango_layout( m_da, text);
+	pango_layout_set_font_description( layout, font_description);
+	//pango_layout_set_text (layout, text, -1);
+	pango_layout_get_pixel_size( layout, width_p, height_p);
+
+	g_object_unref( layout);
+	pango_font_description_free( font_description);
+
+#endif
 }
+#if 0
 void DrawBuffer::DrawText( vrgint x, vrgint y, const char *text)
 {
 	int pm_x, pm_y;
@@ -680,3 +684,47 @@ void DrawBuffer::DrawText( vrgint x, vrgint y, const char *text)
 	gdk_draw_layout( m_Pixmap, m_GC, pm_x, pm_y, layout);
 	g_object_unref( layout);
 }
+#else
+void DrawBuffer::DrawText( vrgint x, DrawTextPos_t x_pos, vrgint y, DrawTextPos_t y_pos, const char *text)
+{
+	int pm_x, pm_y;
+	Vrg2Pm( x,y, pm_x, pm_y);
+
+	PangoLayout *layout;
+	PangoFontDescription *font_description;
+
+	font_description = pango_font_description_new();
+	//pango_font_description_set_family( font_description, "serif");
+	pango_font_description_set_family_static( font_description, "monospace");
+	//pango_font_description_set_weight( font_description, PANGO_WEIGHT_NORMAL);
+	pango_font_description_set_absolute_size( font_description, 13 * PANGO_SCALE  * m_Scaling);
+
+	layout = gtk_widget_create_pango_layout( m_da, text);
+	pango_layout_set_font_description( layout, font_description);
+	
+	//pango_layout_set_text( layout, text, -1);
+
+	//PangoAttrList *attr_list = pango_attr_list_new();
+	//pango_attr_list_insert( attr_list, pango_attr_scale_new( m_Scaling));
+	//pango_attr_list_insert( attr_list, pango_attr_family_new( "monospace"));
+	//pango_layout_set_attributes( layout, attr_list);
+
+	int pm_width, pm_height;
+	pango_layout_get_pixel_size( layout, &pm_width, &pm_height);
+	switch (x_pos)
+	{
+	case DTP_CENTER: pm_x = pm_x - pm_width / 2; break;
+	case DTP_MAX: pm_x = pm_x - pm_width; break;
+	}
+	switch (y_pos)
+	{
+	case DTP_CENTER: pm_y = pm_y - pm_height / 2; break;
+	case DTP_MAX: pm_y = pm_y - pm_height; break;
+	}
+	gdk_draw_layout( m_Pixmap, m_GC, pm_x, pm_y, layout);
+
+	//pango_attr_list_unref( attr_list);
+	g_object_unref( layout);
+	pango_font_description_free( font_description);
+} /* DrawBuffer::DrawText */
+#endif
