@@ -172,6 +172,61 @@ void VRGraph::HandleInfoBoxPress( DrawBuffer *draw_buffer, int x, int y, int inf
 	return;
 } /* VRGraph::HandleInfoBoxPress */
 
+void VRGraph::DrawNodeText( DrawBuffer *draw_buffer, VRNode *node)
+{
+	draw_buffer->SetCurrentColor( node->textcolor_);
+	/*draw_buffer->DrawText( node->x_ + node->borderw_ + NODE_LABEL_MARGIN, DTP_MIN,
+						   node->y_ + node->borderw_ + NODE_LABEL_MARGIN, DTP_MIN,
+						   node->label_.c_str());*/
+	int text_x, text_y;
+	DrawTextPos_t pos_x, pos_y;
+	int x = node->x_, y =  node->y_, w =  node->width_, h =  node->height_;
+	int b = node->borderw_;
+	
+	switch (node->shape_)
+	{
+	case NS_BOX:
+		switch (node->textmode_)
+		{
+		case TM_LEFT:   text_x = x + b; pos_x = DTP_MIN;      text_y = y + h/2; pos_y = DTP_CENTER; break;
+		case TM_CENTER: text_x = x + w/2; pos_x = DTP_CENTER; text_y = y + h/2; pos_y = DTP_CENTER; break;
+		case TM_RIGHT:  text_x = x + w - b; pos_x = DTP_MAX;  text_y = y + h/2; pos_y = DTP_CENTER; break;
+		default: assert( !"unknown textmode" );
+		}
+		break;
+	case NS_RHOMB:
+		switch (node->textmode_)
+		{
+		case TM_LEFT:   text_x = x + w/4 + b; pos_x = DTP_MIN;   text_y = y + h/2; pos_y = DTP_CENTER; break;
+		case TM_CENTER: text_x = x + w/2; pos_x = DTP_CENTER;    text_y = y + h/2; pos_y = DTP_CENTER; break;
+		case TM_RIGHT:  text_x = x + 3*w/4 - b; pos_x = DTP_MAX; text_y = y + h/2; pos_y = DTP_CENTER; break;
+		default: assert( !"unknown textmode" );
+		}
+		break;
+	case NS_ELLIPSE:
+		switch (node->textmode_)
+		{
+		case TM_LEFT:   text_x = x + 146*w/1000 + b; pos_x = DTP_MIN;     text_y = y + h/2; pos_y = DTP_CENTER; break;
+		case TM_CENTER: text_x = x + w/2; pos_x = DTP_CENTER;             text_y = y + h/2; pos_y = DTP_CENTER; break;
+		case TM_RIGHT:  text_x = x + w - 146*w/1000 - b; pos_x = DTP_MAX; text_y = y + h/2; pos_y = DTP_CENTER; break;
+		default: assert( !"unknown textmode" );
+		}
+		break;
+	case NS_TRIANGLE:
+		switch (node->textmode_)
+		{
+		case TM_LEFT:   text_x = x + w/4 + b; pos_x = DTP_MIN;   text_y = y + 3*h/4; pos_y = DTP_CENTER; break;
+		case TM_CENTER: text_x = x + w/2; pos_x = DTP_CENTER;    text_y = y + 3*h/4; pos_y = DTP_CENTER; break;
+		case TM_RIGHT:  text_x = x + 3*w/4 - b; pos_x = DTP_MAX; text_y = y + 3*h/4; pos_y = DTP_CENTER; break;
+		default: assert( !"unknown textmode" );
+		}
+		break;
+	default: assert( !"unknown nodeshape" );
+	}
+	draw_buffer->DrawText( text_x, pos_x, text_y, pos_y, node->label_.c_str());
+	return;
+} /* VRGraph::DrawNodeText */
+
 void VRGraph::DrawNode( DrawBuffer *draw_buffer, VRNode *node)
 {
 	draw_buffer->SetCurrentColor( node->color_);
@@ -193,10 +248,8 @@ void VRGraph::DrawNode( DrawBuffer *draw_buffer, VRNode *node)
 	case NS_TRIANGLE: draw_buffer->DrawGdlTriang( node->x_, node->y_, node->width_, node->height_, false); break;
 	default: assert( !"unknown nodeshape" );
 	}
-	draw_buffer->SetCurrentColor( node->textcolor_);
-	draw_buffer->DrawText( node->x_ + node->borderw_ + NODE_LABEL_MARGIN, 
-						   node->y_ + node->borderw_ + NODE_LABEL_MARGIN,
-						   node->label_.c_str());
+	DrawNodeText( draw_buffer, node);
+	return;
 } /* VRGraph::DrawNode */
 
 void VRGraph::DrawEdgeArrow( DrawBuffer *draw_buffer, VREdge *edge, VRDir_t dir)
@@ -279,8 +332,8 @@ void VRGraph::DrawInfoBox( DrawBuffer *draw_buffer, VRInfoBox *ibox)
 	draw_buffer->SetCurrentColor( /*node->bcolor_*/ BLACK);
 	draw_buffer->DrawRectangle( ibox->x_, ibox->y_, ibox->width_, ibox->height_, false);
 	draw_buffer->SetCurrentColor( /*node->textcolor_*/ BLACK);
-	draw_buffer->DrawText( ibox->x_ + node->borderw_ + NODE_LABEL_MARGIN, 
-						   ibox->y_ + node->borderw_ + NODE_LABEL_MARGIN,
+	draw_buffer->DrawText( ibox->x_ + node->borderw_ + NODE_LABEL_MARGIN, DTP_MIN,
+						   ibox->y_ + node->borderw_ + NODE_LABEL_MARGIN, DTP_MIN,
 						   node->infos_[ibox->info_num_ - 1].c_str());
 } /* VRGraph::DrawInfoBox */
 
@@ -297,8 +350,8 @@ void VRGraph::DrawEdgeLabel( DrawBuffer *draw_buffer, EdgeLabel *elabel)
 	draw_buffer->SetCurrentColor( elabel->color_);
 	draw_buffer->DrawRectangle( x, y, width, height, true);
 	draw_buffer->SetCurrentColor( elabel->textcolor_);
-	draw_buffer->DrawText( x + EDGE_LABEL_MARGIN, 
-						   y + EDGE_LABEL_MARGIN,
+	draw_buffer->DrawText( x + EDGE_LABEL_MARGIN, DTP_MIN,
+						   y + EDGE_LABEL_MARGIN, DTP_MIN,
 						   elabel->label_.c_str());
 } /* VRGraph::DrawEdgeLabel */
 
