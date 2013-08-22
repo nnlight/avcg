@@ -16,6 +16,7 @@ private:
 	int m_MovePixels; /*! на скольлко пикселей сдвигается видимая облась по стрелкам */
 	int m_SizeX; /*! ширина окна в пикселях */
 	int m_SizeY; /*! высота окна в пикселях */
+	string m_FontFamily; /*! используемый класс шрифта: monospace, sans, serif, etc */
 	/* [Debug] */
 	bool m_PrintEvents;         /*! печатать ли приходящие события */
 	bool m_PrintActions;		/*! печать действий */
@@ -27,6 +28,8 @@ private:
 	                         double default_val);
 	bool GetKeyFileBool( GKeyFile *key_file, const gchar *group_name, const gchar *key,
 	                     bool default_val);
+	string GetKeyFileString( GKeyFile *key_file, const gchar *group_name, const gchar *key,
+	                         string default_val);
 public:
 	Preferences(void);
 	~Preferences(void);
@@ -35,6 +38,7 @@ public:
 	int GetMovePixels() { return m_MovePixels; };
 	int GetSizeX() { return m_SizeX; };
 	int GetSizeY() { return m_SizeY; };
+	const string &GetFontFamily() { return m_FontFamily; };
 	bool DebugGetPrintEvents() { return m_PrintEvents; };
 	bool DebugGetPrintActions() { return m_PrintActions; };
 
