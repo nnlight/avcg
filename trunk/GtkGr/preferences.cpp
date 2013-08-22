@@ -12,6 +12,7 @@ Preferences::Preferences(void)
 	, m_MovePixels(60)
 	, m_SizeX(1100)
 	, m_SizeY(850)
+	, m_FontFamily( "monospace")
 	, m_PrintEvents( false)
 	, m_PrintActions( false)
 {
@@ -60,6 +61,21 @@ bool Preferences::GetKeyFileBool( GKeyFile *key_file, const gchar *group_name, c
 	return res;
 } /* Preferences::GetKeyFileDouble */
 
+string Preferences::GetKeyFileString( GKeyFile *key_file, const gchar *group_name, const gchar *key,
+									  string default_val)
+{
+	GError *error = NULL;
+	gchar *str = g_key_file_get_string( key_file, group_name, key, &error);
+	string res( str);
+	g_free( str);
+	if ( error != NULL )
+	{
+		g_error_free( error);
+		res = default_val;
+	}
+	return res;
+} /* Preferences::GetKeyFileString */
+
 void Preferences::LoadFromFile()
 {
 	GKeyFile *key_file = g_key_file_new();
@@ -85,6 +101,7 @@ void Preferences::LoadFromFile()
 	m_SizeX = GetKeyFileInteger( key_file, "General", "SizeX", m_SizeX);
 	m_SizeY = GetKeyFileInteger( key_file, "General", "SizeY", m_SizeY);
 	//m_DefaultBgColorNum = GetKeyFileInteger( key_file, "General", "DefaultBgColorNum", m_DefaultBgColorNum);
+	m_FontFamily = GetKeyFileString( key_file, "General", "FontFamily", m_FontFamily);
 	m_PrintEvents = GetKeyFileBool( key_file, "Debug", "PrintEvents", m_PrintEvents);
 	m_PrintActions = GetKeyFileBool( key_file, "Debug", "PrintActions", m_PrintActions);
 
@@ -104,6 +121,7 @@ void Preferences::SaveToFile()
 	g_key_file_set_integer( key_file, "General", "SizeX", m_SizeX);
 	g_key_file_set_integer( key_file, "General", "SizeY", m_SizeY);
 	//g_key_file_set_integer( key_file, "General", "DefaultBgColorNum", m_DefaultBgColorNum);
+	g_key_file_set_string( key_file, "General", "FontFamily", m_FontFamily.c_str());
 	g_key_file_set_boolean( key_file, "Debug", "PrintEvents", (gboolean)m_PrintEvents);
 	g_key_file_set_boolean( key_file, "Debug", "PrintActions", (gboolean)m_PrintActions);
 
