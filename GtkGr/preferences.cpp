@@ -66,7 +66,7 @@ string Preferences::GetKeyFileString( GKeyFile *key_file, const gchar *group_nam
 {
 	GError *error = NULL;
 	gchar *str = g_key_file_get_string( key_file, group_name, key, &error);
-	string res( str);
+	string res( str ? str : "");
 	g_free( str);
 	if ( error != NULL )
 	{
