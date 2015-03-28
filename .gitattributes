@@ -1,0 +1,6 @@
+*.txt    text !eol
+*.h      text !eol
+*.c      text !eol
+*.cpp    text !eol
+*.sln    text !eol
+*.vcproj text !eol
