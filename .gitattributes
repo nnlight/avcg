@@ -1,4 +1,4 @@
-*.txt    text !eol
+*.txt    text eol=auto
 *.h      text !eol
 *.c      text !eol
 *.cpp    text !eol
