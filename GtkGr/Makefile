@@ -19,17 +19,19 @@ all: $(SOURCES) $(EXECUTABLE)
 $(EXECUTABLE): $(OBJECTS) $(VCG_OBJECTS) $(MW_OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) $(VCG_OBJECTS) $(MW_OBJECTS) -o $@
 
-.cpp.o:
+%.o: %.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
-vcg/%.o: vcg/%.c
+# use `::` instead of `:` to tell make that prerequisite may not be an intermediate file
+# thats's for disabling chain of implicit rules  %o <- %.c <- %.y
+vcg/%.o:: vcg/%.c
 	$(CC) $(VCG_CFLAGS) $< -o $@
 
 mw/%.o: mw/%.c
 	$(CC) $(MW_CFLAGS) $< -o $@
 
-vcg.o:
-	$(CC) $(CFLAGS) $(VCG_SOURCES) -o $@
+#vcg.o:
+#	$(CC) $(CFLAGS) $(VCG_SOURCES) -o $@
 
 
 #for testing makefile syntax:)
