@@ -1,0 +1,235 @@
+graph: {
+ymax: 2000
+shrink: 4
+stretch: 3
+yspace: 40
+color: lightgrey
+node: {
+title: "10"
+label: "STOP NODE 10"
+shape: ellipse
+info1: "   2. begin                                                                          (0x00000000)  P:  S: 
+   1. end                                                                            (0x00000000)  P:  S: 
+"
+}
+node: {
+title: "9"
+label: "START NODE 9"
+shape: ellipse
+info1: "   4. begin                                                                          (0x00000000)  P:  S: 
+   3. end                                                                            (0x00000000)  P:  S: 
+"
+}
+node: {
+title: "8"
+label: "NODE 8"
+info1: "   6. begin                                                                          (0x080e27df)  P:  S: 
+   7. ldr.w          UG3         L0x789C4                            ->  UG0         (0x080e27df)  P:  S: 
+   8. str.w          UG6         UG3         L0x789C4                                (0x080e27e5)  P:  S: 
+   9. str.w          UG0         UG6         S0x14                                   (0x080e27eb)  P:  S: 
+  10. branch                                                                         (0x080e27ee)  P:  S: 
+   5. end                                                                            (0x00000000)  P:  S: 
+"
+}
+node: {
+title: "7"
+label: "NODE 7"
+info1: "  12. begin                                                                          (0x080e27cf)  P:  S: 
+  13. ldr.w          UG4         S0x10                               ->  UG3         (0x080e27cf)  P:  S: 
+  14. ldr.w          UG4         S0x14                               ->  UG6         (0x080e27d3)  P:  S: 
+  15. ldr.w          UG4         S0x18                               ->  UG7         (0x080e27d7)  P:  S: 
+  16. add            UG4         S0x1C                               ->  UG4         (0x080e27db)  P:  S: 
+  81. mov            S0x3                                            ->  R0          (0x080e27db)  P:  S: 85. 
+  82. mov            UG4                                             ->  R1          (0x080e27db)  P:  S: 85. 
+  83. mov            S0x1C                                           ->  R2          (0x080e27db)  P:  S: 85. 
+  84. mov            S0x7D                                           ->  R3          (0x080e27db)  P:  S: 85. 
+  85. mcall          Calcflags  R0  R1  R2  R3      (0x080e27db)  P: 81. 82. 83. 84.  S: 
+  18. ldria.w        UG4         S0x4                                ->  UG8   UG4   (0x080e27de)  P:  S: 
+  19. mexit          Dispatch                                                        (0x080e27de)  P:  S: 
+  11. end                                                                            (0x00000000)  P:  S: 
+"
+}
+node: {
+title: "6"
+label: "NODE 6"
+color: yellow
+info1: "  21. begin                                                                          (0x080e27b8)  P:  S: 
+  22. ldr.w          UG3         L0x789C4                            ->  UG0         (0x080e27b8)  P:  S: 
+  23. str.w          UG6         UG3         L0x789C4                                (0x080e27be)  P:  S: 
+  24. str.w          UG0         UG6         S0x14                                   (0x080e27c4)  P:  S: 
+  25. str.w          UG7         UG4         S0x0                                    (0x080e27c7)  P:  S: 
+  26. mov            L0x80E27CF                                      ->  V0          (0x080e27ca)  P:  S: 27. 
+  27. strdb.w        V0          UG4         S0x4                    ->  UG4         (0x080e27ca)  P: 26.  S: 
+  28. leave          S0x0                                                            (0x080e27ca)  P:  S: 
+  20. end                                                                            (0x00000000)  P:  S: 
+"
+}
+node: {
+title: "5"
+label: "NODE 5"
+info1: "  30. begin                                                                          (0x080e27aa)  P:  S: 
+  31. lea            UG3         L0x789AC    S0x0                    ->  UG7         (0x080e27aa)  P:  S: 
+  32. str.w          UG7         UG4         S0x0                                    (0x080e27b0)  P:  S: 
+  33. mov            L0x80E27B8                                      ->  V1          (0x080e27b3)  P:  S: 34. 
+  34. strdb.w        V1          UG4         S0x4                    ->  UG4         (0x080e27b3)  P: 33.  S: 
+  35. leave          S0x0                                                            (0x080e27b3)  P:  S: 
+  29. end                                                                            (0x00000000)  P:  S: 
+"
+}
+node: {
+title: "4"
+label: "NODE 4"
+info1: "  37. begin                                                                          (0x080e277c)  P:  S: 
+  38. ldr.w          UG4         S0x28                               ->  UG2         (0x080e277c)  P:  S: 
+  39. ldr.w          UG3         L0xFFFFFFF8                         ->  UG7         (0x080e2780)  P:  S: 
+  40. mov            S0x0                                            ->  V2          (0x080e2786)  P:  S: 41. 
+  41. str.w          V2          UG6         S0x10                                   (0x080e2786)  P: 40.  S: 
+  42. mov            L0xFFFFFFFF                                     ->  V3          (0x080e278d)  P:  S: 43. 
+  43. str.w          V3          UG6         S0x0                                    (0x080e278d)  P: 42.  S: 
+  44. str.w          UG2         UG6         S0x4                                    (0x080e2793)  P:  S: 
+  45. ldr.w          UG4         S0x2C                               ->  UG2         (0x080e2796)  P:  S: 
+  86. mov            S0xF                                            ->  R0          (0x080e279a)  P:  S: 90. 
+  87. mov            UG7                                             ->  R1          (0x080e279a)  P:  S: 90. 
+  88. mov            UG7                                             ->  R2          (0x080e279a)  P:  S: 90. 
+  89. mov            S0x7D                                           ->  R3          (0x080e279a)  P:  S: 90. 
+  90. mcall          Calcflags  R0  R1  R2  R3      (0x080e279a)  P: 86. 87. 88. 89.  S: 
+  47. str.w          UG0         UG6         S0xC                                    (0x080e279c)  P:  S: 
+  48. lea            UG6         S0x10       S0x0                    ->  V6          (0x080e279f)  P:  S: 50. 
+  49. mov            S0x7F8                                          ->  V4          (0x080e279f)  P:  S: 50. 
+  50. str.h          V4          V6          S0x0                                    (0x080e279f)  P: 49. 48.  S: 
+  51. str.w          UG2         UG6         S0x8                                    (0x080e27a5)  P:  S: 
+  91. ldr.b          R13         S0x15A                              ->  V7          (0x00000000)  P:  S: 92. 
+  92. cmp            V7          S0x1                                ->  Flags0      (0x00000000)  P: 91.  S: 
+  53. branch.ne      Flags0                                                          (0x080e27a8)  P:  S: 
+  54. branch                                                                         (0x080e27a8)  P:  S: 
+  36. end                                                                            (0x00000000)  P:  S: 
+"
+}
+node: {
+title: "3"
+label: "NODE 3"
+info1: "  56. begin                                                                          (0x080e2776)  P:  S: 
+  57. ldr.w          UG0         S0x0                                ->  UG2         (0x080e2776)  P:  S: 
+  93. mov            S0xF                                            ->  R0          (0x080e2778)  P:  S: 97. 
+  94. mov            UG2                                             ->  R1          (0x080e2778)  P:  S: 97. 
+  95. mov            UG2                                             ->  R2          (0x080e2778)  P:  S: 97. 
+  96. mov            S0x7D                                           ->  R3          (0x080e2778)  P:  S: 97. 
+  97. mcall          Calcflags  R0  R1  R2  R3      (0x080e2778)  P: 93. 94. 95. 96.  S: 
+  98. ldr.b          R13         S0x15A                              ->  V8          (0x00000000)  P:  S: 99. 
+  99. cmp            V8          S0x1                                ->  Flags0      (0x00000000)  P: 98.  S: 
+  60. branch.ne      Flags0                                                          (0x080e277a)  P:  S: 
+  61. branch                                                                         (0x080e277a)  P:  S: 
+  55. end                                                                            (0x00000000)  P:  S: 
+"
+}
+node: {
+title: "2"
+label: "NODE 2"
+color: yellow
+info1: "  63. begin                                                                          (0x080e2760)  P:  S: 
+  64. add            UG3         L0x34894                            ->  UG3         (0x080e2760)  P:  S: 
+  65. str.w          UG6         UG4         S0x14                                   (0x080e2766)  P:  S: 
+  66. ldr.w          UG4         S0x24                               ->  UG6         (0x080e276a)  P:  S: 
+ 100. mov            S0xF                                            ->  R0          (0x080e276e)  P:  S: 104. 
+ 101. mov            UG0                                             ->  R1          (0x080e276e)  P:  S: 104. 
+ 102. mov            UG0                                             ->  R2          (0x080e276e)  P:  S: 104. 
+ 103. mov            S0x7D                                           ->  R3          (0x080e276e)  P:  S: 104. 
+ 104. mcall          Calcflags  R0  R1  R2  R3      (0x080e276e)  P: 100. 101. 102. 103.  S: 
+  68. str.w          UG7         UG4         S0x18                                   (0x080e2770)  P:  S: 
+ 105. ldr.b          R13         S0x15A                              ->  V9          (0x00000000)  P:  S: 106. 
+ 106. cmp            V9          S0x1                                ->  Flags0      (0x00000000)  P: 105.  S: 
+  70. branch.ne      Flags0                                                          (0x080e2774)  P:  S: 
+  71. branch                                                                         (0x080e2774)  P:  S: 
+  62. end                                                                            (0x00000000)  P:  S: 
+"
+}
+node: {
+title: "1"
+label: "NODE 1"
+color: yellow
+info1: "  73. begin                                                                          (0x080e2750)  P:  S: 
+  74. sub            UG4         S0x1C                               ->  UG4         (0x080e2750)  P:  S: 
+ 107. mov            S0x6                                            ->  R0          (0x080e2750)  P:  S: 111. 
+ 108. mov            UG4                                             ->  R1          (0x080e2750)  P:  S: 111. 
+ 109. mov            S0x1C                                           ->  R2          (0x080e2750)  P:  S: 111. 
+ 110. mov            S0x7D                                           ->  R3          (0x080e2750)  P:  S: 111. 
+ 111. mcall          Calcflags  R0  R1  R2  R3      (0x080e2750)  P: 107. 108. 109. 110.  S: 
+  76. ldr.w          UG4         S0x20                               ->  UG0         (0x080e2753)  P:  S: 
+  77. str.w          UG3         UG4         S0x10                                   (0x080e2757)  P:  S: 
+  78. mov            L0x80E2760                                      ->  V5          (0x080e275b)  P:  S: 79. 
+  79. strdb.w        V5          UG4         S0x4                    ->  UG4         (0x080e275b)  P: 78.  S: 
+  80. leave          L0x80E0FB5                                                      (0x080e275b)  P:  S: 
+  72. end                                                                            (0x00000000)  P:  S: 
+"
+}
+edge: {
+sourcename: "9"
+targetname: "2"
+label: "EDGE 9 -> 2"
+}
+edge: {
+sourcename: "9"
+targetname: "6"
+label: "EDGE 9 -> 6"
+}
+edge: {
+sourcename: "9"
+targetname: "1"
+label: "EDGE 9 -> 1"
+}
+edge: {
+sourcename: "8"
+targetname: "7"
+label: "EDGE 8 -> 7"
+}
+edge: {
+sourcename: "7"
+targetname: "10"
+label: "EDGE 7 -> 10"
+}
+edge: {
+sourcename: "6"
+targetname: "10"
+label: "EDGE 6 -> 10"
+}
+edge: {
+sourcename: "5"
+targetname: "10"
+label: "EDGE 5 -> 10"
+}
+edge: {
+sourcename: "4"
+targetname: "8"
+label: "EDGE 4 -> 8"
+}
+edge: {
+sourcename: "4"
+targetname: "5"
+label: "EDGE 4 -> 5"
+}
+edge: {
+sourcename: "3"
+targetname: "7"
+label: "EDGE 3 -> 7"
+}
+edge: {
+sourcename: "3"
+targetname: "4"
+label: "EDGE 3 -> 4"
+}
+edge: {
+sourcename: "2"
+targetname: "7"
+label: "EDGE 2 -> 7"
+}
+edge: {
+sourcename: "2"
+targetname: "3"
+label: "EDGE 2 -> 3"
+}
+edge: {
+sourcename: "1"
+targetname: "10"
+label: "EDGE 1 -> 10"
+}
+}
