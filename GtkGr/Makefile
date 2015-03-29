@@ -23,7 +23,7 @@ $(EXECUTABLE): $(OBJECTS) $(VCG_OBJECTS) $(MW_OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 # use `::` instead of `:` to tell make that prerequisite may not be an intermediate file
-# thats's for disabling chain of implicit rules  %o <- %.c <- %.y
+# thats's for disabling chain of implicit rules  %.o <- %.c <- %.y
 vcg/%.o:: vcg/%.c
 	$(CC) $(VCG_CFLAGS) $< -o $@
 
