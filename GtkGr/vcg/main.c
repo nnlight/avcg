@@ -48,7 +48,6 @@
 #include "timelim.h"
 #include "main.h"
 #include "options.h"
-#include "grprint.h"
 #include "timing.h"
 #include "vcg_iface.h"
 

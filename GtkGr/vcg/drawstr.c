@@ -91,7 +91,6 @@ void finish_fast_chars(void)
 #include "main.h"
 #include "options.h"
 #include "alloc.h"
-#include "grprint.h"
 #include "drawlib.h"
 #include "drawstr.h"
 

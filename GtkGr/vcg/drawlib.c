@@ -180,7 +180,6 @@ void x11_followedge_line(int fx,int fy,int tx,int ty,int t,int c)
 #include "main.h"
 #include "options.h"
 #include "alloc.h"
-#include "grprint.h"
 #include "drawstr.h"
 #include "drawlib.h"
 
