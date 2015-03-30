@@ -1951,7 +1951,7 @@ void init_hash_cursor(void)
 	for (i=0; i<maxhashtable; i++)
                	if (hashtable[i]!=NULL) {
 			if (!act_hash_cursor) {
-				act_hash_cursor = hashtable[act_hash_pos];
+				act_hash_cursor = hashtable[i];
 				act_hash_pos = i;
 			}
 			h = hashtable[i];
