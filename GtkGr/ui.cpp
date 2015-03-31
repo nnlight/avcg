@@ -754,14 +754,13 @@ void UIController::ShowAboutDialog()
 	gchar *filename;
 
 	const gchar *authors[] = {
-		"John Smith* <nnlight@gmail.com>",
-		"and many more...",
+		"Nikita S <nnlight@gmail.com>",
+		"Georg Sander (author of original xvcg tool)",
+		"Iris Lemke (author of original xvcg tool)",
 		NULL
 	};
 
 	const gchar *documentors[] = {
-		"John Smith* <nnlight@gmail.com>",
-		"and many more...",
 		NULL
 	};
 
@@ -799,8 +798,8 @@ void UIController::ShowAboutDialog()
 			"program-name", "avcg tool",
 			"version", "v0.1 (Build: " __DATE__ ")",
 			"comments", "Another realization of xvcg tool based on GTK+ library.",
-			"copyright", "(C) 2009-2011 ...",
-			"website", "http://code.google.com/p/avcg/",
+			"copyright", "(C) 2009-2013, 2015 ...",
+			"website", "https://github.com/nnlight/avcg",
 			"license", license,
 			"authors", authors,
 			"documenters", documentors,
