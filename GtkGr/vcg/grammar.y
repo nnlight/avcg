@@ -275,13 +275,9 @@
 #include "grammar.h"
 
 
-#ifndef YY_CHAR
-#define YY_CHAR char
-extern YY_CHAR *yytext;
-#endif
-
 
 #ifndef yyerror
+extern char *yytext;
 #define yyerror(x) { \
         syntaxerror(line_nr,pos_nr, \
                  "unexpected %s \"%s\" (%s)", \
@@ -296,8 +292,6 @@ extern YY_CHAR *yytext;
 #define yylocate(x) (&(x))
 #endif
 
-#define YY_NEVERNEEDED (@1)
-#undef  YY_NEVERNEEDED 
 
 /*-------------------------------------------------------------*/
 /*               YACC or BISON Specification                   */
