@@ -335,7 +335,8 @@ do_list_store (GtkWidget *do_widget)
 }
 #endif
 
-void
+
+static void
 row_activated_cb( GtkTreeView       *tree_view,
                   GtkTreePath       *path,
                   GtkTreeViewColumn *column,
@@ -354,6 +355,24 @@ row_activated_cb( GtkTreeView       *tree_view,
 						GLS_COLUMN_Y, &y,
 						-1);
 	db->CenterVisibleAreaByVrgCoords( x, y);
+}
+
+static gboolean
+match_selected_cb(GtkEntryCompletion *widget,
+               GtkTreeModel       *model,
+               GtkTreeIter        *iter,
+               gpointer            user_data)
+{
+	//printf("match_selected_cb\n");
+	DrawBuffer *db = (DrawBuffer *)user_data;
+	gint x, y;
+	gtk_tree_model_get( model, iter,
+						GLS_COLUMN_X, &x,
+						GLS_COLUMN_Y, &y,
+						-1);
+	db->CenterVisibleAreaByVrgCoords( x, y);
+	// возвращаем FALSE(сигнал не обработан), что бы еще действие по умолчанию отработало
+	return FALSE;
 }
 
 void UiShowFindNodeDialog( UIController *uic)
@@ -383,6 +402,7 @@ void UiShowFindNodeDialog( UIController *uic)
 	gtk_entry_set_completion (GTK_ENTRY (entry), completion);
 	g_object_unref (completion);
 
+	
 	label = gtk_label_new( "Select node from the list bellow. Main window will ceterized by double click.");
 	gtk_box_pack_start( GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
@@ -413,9 +433,13 @@ void UiShowFindNodeDialog( UIController *uic)
 
 	g_object_unref( model);
 
+
+	g_signal_connect( completion, "match-selected", G_CALLBACK(match_selected_cb), uic->m_DrawBuffer.get());
+
 	/* finish & show */
 	//gtk_window_set_default_size( GTK_WINDOW(window), 280, 250);
 	gtk_window_set_default_size( GTK_WINDOW(dialog), 280, 250);
+	//gtk_window_set_default_size( GTK_WINDOW(dialog), 450, 500);
     
 	//gtk_widget_show_all( window);
 	gtk_widget_show_all( dialog);
