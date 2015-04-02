@@ -20,6 +20,16 @@ VRNode::~VRNode()
 {
 }
 
+int VRNode::FindInfoNumBySubstring( const char *substring)
+{
+	for ( int i = 0; i < VRNODE_INFO_COUNT; i++ )
+	{
+		if ( infos_[i].find( substring) != string::npos )
+			return i + 1;
+	}
+	return 0;
+}
+
 VREdge::VREdge( VRGraph *graph)
 	: GrEdge( graph->GrGetDummyNode(), graph->GrGetDummyNode())
     , label_()

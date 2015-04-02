@@ -36,6 +36,7 @@ public:
 public:
 	VRNode( VRGraph *graph, const char *title, int x, int y);
 	~VRNode();
+	int FindInfoNumBySubstring( const char *substring);
 private:
 	VRNode( const VRNode &a);
 };
