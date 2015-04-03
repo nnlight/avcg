@@ -1,11 +1,12 @@
+/*--------------------------------------------------------------------*/
+/*                 A flex scanner specification                       */
+/*--------------------------------------------------------------------*/
+
+%option yylineno
+%option noyywrap
+
 %{
 
-
-
-/*--------------------------------------------------------------------*/
-/*            A flex scanner specification made by parsegen           */
-/*--------------------------------------------------------------------*/
- 
 #include "grammar.h"
 
 #include <stdio.h>
@@ -39,20 +40,14 @@
 #include "main.h"
 #include "options.h"
 
- 
 
-/*--------------------------------------------------------------------*/
-
+%}
 
 
 
 /*--------------------------------------------------------------------*/
 /*   Character classes                                                */
 /*--------------------------------------------------------------------*/
-
-
-%}
-
 
 LETTER		[a-zA-Z]
 DIGIT		[0-9]
@@ -70,21 +65,9 @@ PRAGMADIR       {WSPACE}#{WSPACE}"pragma".*\n
 
 
 
-%{
-
-
-#ifndef yywrap
-/* Changed for flex 2.4.6 (static removed) */
-int yywrap(void) { return (1); }
-#endif
-
-
 /*--------------------------------------------------------------------*/
 /*   Token rules                                                      */
 /*--------------------------------------------------------------------*/
-
-
-%}
 
 %%
 
@@ -815,6 +798,7 @@ int yywrap(void) { return (1); }
 
 .              { 
 		 syntaxerror(line_nr,pos_nr,"scanner reads unexpected %c",yytext[0]);
+/*printf("XX %d %d \n", yylloc.first_line, yylloc.first_column);*/
                  RETURN(' '); }
 
 %%

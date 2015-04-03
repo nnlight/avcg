@@ -1,25 +1,48 @@
+/*-------------------------------------------------------------*/
+/*               YACC or BISON Specification                   */
+/*-------------------------------------------------------------*/
+
 %{
-
-
-/*--------------------------------------------------------------------*/
-/*            A bison parser specification                            */
-/*--------------------------------------------------------------------*/
-
-
-/*--------------------------------------------------------------------*/
-/* Prototypes and Externals					      */
-/*--------------------------------------------------------------------*/
+/************* FIRST USER DECLARATIONS *****/
 
 
 #define YYDEBUG 1
  
-/*--------------------------------------------------------------------*/
-/* Tokens from scanner                                                */ 
-/*--------------------------------------------------------------------*/
+
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <math.h>
+#include "globals.h"
+#include "main.h"
+#include "options.h"
+#include "grammar.h"
+
+
+
+#ifndef yyerror
+extern char *yytext;
+#define yyerror(x) { \
+        syntaxerror(line_nr,pos_nr, \
+                 "unexpected %s \"%s\" (%s)", \
+                 ((yychar<0)?"(?)":yytname[YYTRANSLATE(yychar)]),     \
+                 (strlen(yytext)<48?yytext:"(?)"), \
+				 x); \
+    }
+#endif
+ 
+
+#ifndef yylocate
+#define yylocate(x) (&(x))
+#endif
 
 
 %}
 
+
+/*--------------------------------------------------------------------*/
+/* Tokens from scanner                                                */ 
+/*--------------------------------------------------------------------*/
 
 %token LEXWORD_ABOVE
 %token LEXWORD_ANCHORPOINTS
@@ -257,52 +280,10 @@
 %token LEX_CHAR
 %token LEX_STRING
 
-%{
-
-
-
-/*--------------------------------------------------------------------*/
-/* Includes                                                           */ 
-/*--------------------------------------------------------------------*/
-
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
-#include <math.h>
-#include "globals.h"
-#include "main.h"
-#include "options.h"
-#include "grammar.h"
-
-
-
-#ifndef yyerror
-extern char *yytext;
-#define yyerror(x) { \
-        syntaxerror(line_nr,pos_nr, \
-                 "unexpected %s \"%s\" (%s)", \
-                 ((yychar<0)?"(?)":yytname[YYTRANSLATE(yychar)]),     \
-                 (strlen(yytext)<48?yytext:"(?)"), \
-				 x); \
-    }
-#endif
- 
-
-#ifndef yylocate
-#define yylocate(x) (&(x))
-#endif
-
-
-/*-------------------------------------------------------------*/
-/*               YACC or BISON Specification                   */
-/*-------------------------------------------------------------*/
-
 
 /*-------------------------------------------------------------*/
 /*                  YYSTYPE definition                         */
 /*-------------------------------------------------------------*/
-
-%}
 
 %union { 
 	unsigned char      byte;
@@ -376,6 +357,9 @@ extern char *yytext;
 %start graph 
 
 
+%{
+/************* SECOND USER DECLARATIONS *****/
+%}
 
 %%
 
@@ -1315,7 +1299,7 @@ str_const	: LEX_STRING		{
 /*----------------------------*/
 
 /*   returns the number of detected errors and binds the syntaxtree
- *   to the variable syntaxtree.
+ *   to the variable Syntax_Tree.
  */
 int parse(void)
 {
