@@ -2169,9 +2169,3 @@ static void db_print_somenode_list(GNODE w,GNODE wend)
 #endif 
 
 
-/**********************/
-void	gs_wait_message(int ch)
-{
-	return;
-}
-

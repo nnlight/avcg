@@ -5130,8 +5130,12 @@ void yyfree (void * ptr )
 /*   Initialize scanner                                               */
 /*--------------------------------------------------------------------*/
 
-void init_lex(void)
+void init_lex( FILE *input_file)
 {
+	yyin = input_file;
+	/* Turn yy_flex_debug on if you want to debug the scanner */
+	yy_flex_debug = 0;
+
 	/*yy_init = 0;*/
 }
 

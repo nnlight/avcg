@@ -45,22 +45,21 @@
  */
 
 
-/* from parser -------------------------------------------*/
-extern FILE     *yyin;
-
 #define SYERR(x,m) syntaxerror(xfirst_line(x),xfirst_column(x),m)
 
+
+
 /* from device --------------------------------------------*/
-void gs_wait_message	_PP((int c));
+void gs_wait_message(int c);
 
 /*---------------------------------------------------------*/
+
 
 /*  Prototypes
  *  ----------
  */
 
-void Fatal_error	_PP((char *x, char *y));
-void relayout		_PP((void));
+extern void Fatal_error(char *x, char *y);
 
 /*--------------------------------------------------------------------*/
  

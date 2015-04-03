@@ -1301,11 +1301,11 @@ str_const	: LEX_STRING		{
 /*   returns the number of detected errors and binds the syntaxtree
  *   to the variable Syntax_Tree.
  */
-int parse(void)
+int parse( FILE *input_file)
 {
 	nr_errors=0;
 	debugmessage("init_lex()\n", "");
-	init_lex();
+	init_lex(input_file);
 	line_nr = 1;
 	pos_nr = 0;
 	debugmessage("yyparse()\n", "");

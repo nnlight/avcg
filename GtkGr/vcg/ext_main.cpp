@@ -31,6 +31,6 @@ int main(int argc , char *argv[])
 	}
 	vcg_Parse( f);
 	fclose(f);
-	printf("\n2st ok\n");
+	printf("\n2nd ok\n");
 	return 0;
 }

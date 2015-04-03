@@ -317,7 +317,7 @@ long HashInsert( char *s)
 	new_node = hashtable[hashval];
 	look = -1L;
 	while (new_node != NULL) {
-		if ( strcmp(s,decode[new_node->num]) == 0L) {
+		if ( strcmp(s,decode[new_node->num]) == 0 ) {
 			look = new_node->num;
 			break;
 		}
@@ -524,7 +524,7 @@ static yysyntaxtree TreeTab[1024];
 
 /* without sons */
 
-syntaxtree BuildCont(int mtag,union special x,YYLTYPE *l)
+yysyntaxtree BuildCont(int mtag,union special x,YYLTYPE *l)
 {
         yysyntaxtree help;
         help = st_malloc(1);

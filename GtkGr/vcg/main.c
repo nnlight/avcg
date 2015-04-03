@@ -52,6 +52,8 @@
 #include "vcg_iface.h"
 
 
+static void relayout(void);
+
 /*--------------------------------------------------------------------*/
 /*  Main routines 						      */
 /*--------------------------------------------------------------------*/
@@ -60,9 +62,6 @@
 /*  Call of the parser
  *  ==================
  */
-
-extern int yy_flex_debug;
-
 static void parse_part( FILE *f)
 {
 	int 	errs,i;
@@ -82,7 +81,6 @@ static void parse_part( FILE *f)
 	for (i=0; i<3; i++) info_names[i]=NULL;
 
 	free_memory();
-	yyin = f;
 
 
 	free_timelimit();
@@ -90,13 +88,11 @@ static void parse_part( FILE *f)
 	debugmessage("start_parsing", "");
 
 #if 0
-	while ((c = getc(yyin)) != EOF) {
+	while ((c = getc(f)) != EOF) {
 	  putc(c, stderr);
 	}
 #endif
-	/* Turn yy_flex_debug on if you want to debug the scanner */
-	yy_flex_debug = 0;
-	errs = parse();
+	errs = parse( f);
 	debugmessage("finished_parsing", "");
 	
 
@@ -133,8 +129,7 @@ void Fatal_error(char *x,char *y)
 /*  Call of the visualizer 
  *  ======================
  */
-
-static void	visualize_part(void)
+static void visualize_part(void)
 {
 	debugmessage("visualize_part","");
 
@@ -207,8 +202,7 @@ static void	visualize_part(void)
 /* Relayout the graph 
  * ------------------
  */
-
-void relayout(void)
+static void relayout(void)
 {
 	debugmessage("relayout","");
         start_time();
@@ -269,6 +263,11 @@ void relayout(void)
 
 /*--------------------------------------------------------------------*/
 
+
+void gs_wait_message(int ch)
+{
+	return;
+}
 
 
 

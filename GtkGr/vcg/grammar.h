@@ -8,19 +8,20 @@
 
 extern int line_nr;
 extern int pos_nr;
-extern int nr_errors;  /* from Scanner */
+extern int nr_errors;
 
-extern void init_lex(void);
+extern void init_lex( FILE *input_file);
+extern int parse( FILE *input_file);
 
 
 
 void   line_directive (char *text);
 void   escape_transl  (char *text);
 void   syntaxerror    (int line, int pos, const char *fmt, ...);
-void   warning        (int line, int pos,char *mesge);
+void   warning        (int line, int pos, char *mesge);
+void   fatal_error(char *message);
 
 
-void fatal_error(char *message);
 
 void FreeHash(void);
 long HashInsert( char *s);
@@ -30,13 +31,9 @@ char *Decode(long x);
 
 
 
-typedef struct stree_node *syntaxtree;
-#define yysyntaxtree syntaxtree
+typedef struct stree_node *yysyntaxtree;
 
 extern yysyntaxtree Syntax_Tree;
-
-extern int parse(void);
-
 
 /*--------------------------------------------------------------------*/
 /*  Standard Tree Construction Interface                              */
@@ -112,11 +109,11 @@ union special UnionLnum(long int x);
 union special UnionLrealnum(double x);
 union special UnionString(char *x);
 
-syntaxtree BuildCont(int mtag,union special x,YYLTYPE *l);
+yysyntaxtree BuildCont(int mtag,union special x,YYLTYPE *l);
 yysyntaxtree BuildTree(int mtag,int len, YYLTYPE *l, ...);
 
-syntaxtree Copy(syntaxtree x);
-syntaxtree Revert(syntaxtree list);
+yysyntaxtree Copy(yysyntaxtree x);
+yysyntaxtree Revert(yysyntaxtree list);
 
 const char *ConstructorName(int i);
 int   ConstructorArity(int i);
