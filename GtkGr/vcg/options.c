@@ -99,11 +99,6 @@ static int opt_from_stdin;   /* indicates that the input is stdin       */
 
 int silent = 0;
 
-/*  Maximal number of parse errors
- */
-
-int nr_max_errors = 16;
-
 /*  Flag to suppress various tests
  */
 
@@ -300,16 +295,6 @@ long	V_ymax;
 
 long 	V_xmin_initial = 0L;	    /* and their initial values */
 long 	V_ymin_initial = 0L;
-
-
-/*  File Specifics 
- *  --------------
- *  Because of C-stile line directives, the file name used by the
- *  parser for error messages is not always the same as the filename
- *  of the actal input file. 
- */
-
-char    filename[1024];     /* Filename from the view of the parser */ 
 
 
 /*  Global Graph Attributes 

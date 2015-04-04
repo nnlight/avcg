@@ -4,7 +4,6 @@
 #include <malloc.h>
 #include <stdarg.h>
 #include "grammar.h"
-#include "options.h" /* for filename & nr_max_errors */
 #include "globals.h" /* for MEMBLOCKSIZE */
 
 
@@ -33,14 +32,21 @@ void fatal_error(char *message)
 /*   Errors and Warnings                                              */
 /*====================================================================*/
 
+/*  File Specifics 
+ *  --------------
+ *  Because of C-stile line directives, the file name used by the
+ *  parser for error messages is not always the same as the filename
+ *  of the actal input file. 
+ */
+char    filename[1024];     /* Filename from the view of the parser */ 
+
+static int nr_max_errors = 16;
 int nr_errors;
 
 /*
  *   syntaxerror prints an error message with position of the
- *   error place in the specification, and increments the counter of
- *   errors.
+ *   error place, and increments the counter of errors.
  */
-
 void syntaxerror(int line, int pos, const char *fmt, ...)
 {
 	va_list args;
@@ -55,19 +61,6 @@ void syntaxerror(int line, int pos, const char *fmt, ...)
 } /* syntaxerror */
 
 
-/*
- *   warning prints a warning with position of the problematic place
- *   in the specification, but does not increment the counter of
- *   errors.
- */
-
-void warning(int line, int pos, char *mesge)
-{
-        (void)fprintf(stderr,"Warning (%s: l:%d p:%d): %s !\n",
-                filename,line,pos,mesge);
-}
-
-
 /*--------------------------------------------------------------*/
 
 
@@ -78,7 +71,29 @@ void warning(int line, int pos, char *mesge)
 
 int line_nr;
 int pos_nr;
- 
+
+/**
+ * Сработало правило сканнера.
+ * Обновляем line_nr, pos_nr и определяем yylloc для парсера.
+ */
+void lex_rule_match( char *text)
+{
+	char *c;
+	yylloc.first_line = line_nr;
+	yylloc.first_column = pos_nr;
+
+	for ( c = text; *c != '\0'; c++ )
+	{
+		if (c[1] == '\0') {
+			yylloc.last_line = line_nr;
+			yylloc.last_column = pos_nr;
+		}
+		if (*c == '\n') { line_nr++; pos_nr = 1; }
+                else pos_nr++;
+
+	}
+}
+
 /*  Handle directive left by the C preprocessor, i.e.
  *
  *    # line 123 "foo.h"
@@ -95,7 +110,7 @@ void line_directive(char *text)
         while ((*c) && (*c!='"')) c++;
         while ((*d) && ((*d<'0') || (*d>'9'))) d++;
  
-        if (d<c) { line_nr = atoi(d); pos_nr = 0; }
+        if (d<c) { line_nr = atoi(d); pos_nr = 1; }
  
         if (*c) {
                 c++;
@@ -265,7 +280,7 @@ static void increase_decode(void)
 } /* increase_decode */
 
 /**
- * Освобождение памяти, выделенной под нужды хэш таблицы
+ * Освобождение памяти, выделенной под нужды хэш таблицы.
  */
 void FreeHash(void)
 {
@@ -348,7 +363,7 @@ long HashTableSize(void)
 } /* HashTableSize */
 
 /**
- * Получить строчку по индексу
+ * Получить строчку по индексу.
  */
 char *Decode(long x)
 {

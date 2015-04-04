@@ -9,16 +9,16 @@
 extern int line_nr;
 extern int pos_nr;
 extern int nr_errors;
+extern char filename[];
 
 extern void init_lex( FILE *input_file);
 extern int parse( FILE *input_file);
 
 
-
+void lex_rule_match( char *text);
 void   line_directive (char *text);
 void   escape_transl  (char *text);
 void   syntaxerror    (int line, int pos, const char *fmt, ...);
-void   warning        (int line, int pos, char *mesge);
 void   fatal_error(char *message);
 
 
@@ -648,13 +648,13 @@ int   ConstructorArity(int i);
 #define COPY(x)   Copy(x)
 
 
-#define SKIPYYTEXT { char *c; c = yytext; while (*c) { \
+#define SKIPYYTEXT /*{ char *c; c = yytext; while (*c) { \
                      if (*c == '\n') { pos_nr = 1; line_nr++; }  \
                      else pos_nr++; \
-                     c++; }}
+                     c++; }}*/
 
 
-#define RETURN(x) { 	pos_nr += strlen(yytext); \
+#define RETURN(x) { 	/*pos_nr += strlen(yytext);*/ \
 			return(x); }
 
 

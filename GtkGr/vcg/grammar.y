@@ -2,6 +2,9 @@
 /*               YACC or BISON Specification                   */
 /*-------------------------------------------------------------*/
 
+%locations
+/*%t oken_table*/
+
 %{
 /************* FIRST USER DECLARATIONS *****/
 
@@ -23,11 +26,11 @@
 #ifndef yyerror
 extern char *yytext;
 #define yyerror(x) { \
-        syntaxerror(line_nr,pos_nr, \
+        syntaxerror(yylloc.first_line, yylloc.first_column, \
                  "unexpected %s \"%s\" (%s)", \
-                 ((yychar<0)?"(?)":yytname[YYTRANSLATE(yychar)]),     \
-                 (strlen(yytext)<48?yytext:"(?)"), \
-				 x); \
+                 (yychar<0)?"(?)":yytname[YYTRANSLATE(yychar)], \
+                 strlen(yytext)<48?yytext:"(?)", \
+                 x); \
     }
 #endif
  
@@ -1307,7 +1310,7 @@ int parse( FILE *input_file)
 	debugmessage("init_lex()\n", "");
 	init_lex(input_file);
 	line_nr = 1;
-	pos_nr = 0;
+	pos_nr = 1;
 	debugmessage("yyparse()\n", "");
 	yyparse();
 

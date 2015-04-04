@@ -48,7 +48,6 @@
  */
 
 extern int silent;
-extern int nr_max_errors;
 extern int fastflag;
 extern int supress_nodes;
 extern int supress_edges;
@@ -93,8 +92,6 @@ extern long V_xmin_initial;
 extern long V_ymin_initial;
 
 
-
-extern char filename[];
 
 #define MAXCLASS  16
 

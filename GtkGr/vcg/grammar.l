@@ -2,7 +2,7 @@
 /*                 A flex scanner specification                       */
 /*--------------------------------------------------------------------*/
 
-%option yylineno
+/*%option yylineno*/
 %option noyywrap
 
 %{
@@ -40,6 +40,8 @@
 #include "main.h"
 #include "options.h"
 
+
+#define YY_USER_ACTION    lex_rule_match( yytext);
 
 %}
 
@@ -743,11 +745,11 @@ PRAGMADIR       {WSPACE}#{WSPACE}"pragma".*\n
 		 /* ignore pragma directive */ }
 
 [\f ]+			{
-		 pos_nr+=strlen(yytext); }
+		 /*pos_nr+=strlen(yytext);*/ }
 [\t]			{
-		 pos_nr++;               }
+		 /*pos_nr++;*/               }
 [\n]			{
-		 line_nr++; pos_nr=1;    }
+		 /*line_nr++; pos_nr=1;*/    }
 
 {INT}			{
 		 yylval.lnum = atol(yytext); 
@@ -795,10 +797,9 @@ PRAGMADIR       {WSPACE}#{WSPACE}"pragma".*\n
 		 RETURN('-'); }
 
 
-
 .              { 
-		 syntaxerror(line_nr,pos_nr,"scanner reads unexpected %c",yytext[0]);
-/*printf("XX %d %d \n", yylloc.first_line, yylloc.first_column);*/
+		 syntaxerror(yylloc.first_line, yylloc.first_column,
+			"scanner reads unexpected %c",yytext[0]);
                  RETURN(' '); }
 
 %%
