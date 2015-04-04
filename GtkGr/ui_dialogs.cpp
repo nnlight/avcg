@@ -18,17 +18,17 @@ enum
 static GtkTreeModel *
 create_model( VRGraph *vrg)
 {
-	GtkListStore *store;
+	GtkListStore *list_store;
 	GtkTreeIter iter;
 
 	/* create list store */
-	store = gtk_list_store_new( FND_COLUMNS_COUNT,
-								G_TYPE_STRING,
-								G_TYPE_STRING,
-								G_TYPE_INT,
-								G_TYPE_INT,
-								G_TYPE_BOOLEAN,
-								G_TYPE_POINTER);
+	list_store = gtk_list_store_new( FND_COLUMNS_COUNT,
+									G_TYPE_STRING,
+									G_TYPE_STRING,
+									G_TYPE_INT,
+									G_TYPE_INT,
+									G_TYPE_BOOLEAN,
+									G_TYPE_POINTER);
 
 	/* add data to the list store */
 	for ( GrNode *n = vrg->GrGetFirstNode();
@@ -37,8 +37,8 @@ create_model( VRGraph *vrg)
 	{
 		VRNode *node = static_cast<VRNode*>(n);
 		assert( dynamic_cast<VRNode*>(n) );
-		gtk_list_store_append( store, &iter);
-		gtk_list_store_set( store, &iter,
+		gtk_list_store_append( list_store, &iter);
+		gtk_list_store_set( list_store, &iter,
 						FND_COLUMN_TITLE, node->title_.c_str(),
 						FND_COLUMN_LABEL, node->label_.c_str(),
 						FND_COLUMN_X, node->x_ + node->width_ / 2,
@@ -49,32 +49,30 @@ create_model( VRGraph *vrg)
 	}
 
 	// сортируем список
-	gtk_tree_sortable_set_sort_column_id( GTK_TREE_SORTABLE(store),
+	gtk_tree_sortable_set_sort_column_id( GTK_TREE_SORTABLE(list_store),
 										  FND_COLUMN_LABEL,
-										  GTK_SORT_ASCENDING/*GTK_SORT_DESCENDING*/);
-	return GTK_TREE_MODEL( store);
+										  GTK_SORT_ASCENDING);
+	return GTK_TREE_MODEL( list_store);
 }
 
 
 static void
-add_columns( GtkTreeView *treeview)
+add_columns_to_treeview( GtkTreeView *treeview)
 {
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn *column;
-	//GtkTreeModel *model = gtk_tree_view_get_model( treeview);
 
 	/* column for node titles */
 	renderer = gtk_cell_renderer_text_new();
-	//g_signal_connect( renderer, "toggled",
-	//	G_CALLBACK (fixed_toggled_cb), model);
 	column = gtk_tree_view_column_new_with_attributes( "Title",
 									renderer,
 									"text", FND_COLUMN_TITLE,
 									NULL);
 	/* set this column to a fixed sizing (of 50 pixels) */
-	gtk_tree_view_column_set_sizing( GTK_TREE_VIEW_COLUMN(column), GTK_TREE_VIEW_COLUMN_FIXED);
-	gtk_tree_view_column_set_fixed_width( GTK_TREE_VIEW_COLUMN(column), 50);
-	//gtk_tree_view_column_set_sort_column_id( column, FND_COLUMN_TITLE);
+	/*gtk_tree_view_column_set_sizing( column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width( column, 50);*/
+	//gtk_tree_view_column_set_resizable( column, TRUE);
+	gtk_tree_view_column_set_sort_column_id( column, FND_COLUMN_TITLE);
 	gtk_tree_view_append_column( treeview, column);
 
 	/* column for node labels */
@@ -83,8 +81,7 @@ add_columns( GtkTreeView *treeview)
 									renderer,
 									"text", FND_COLUMN_LABEL,
 									NULL);
-	/* GtkTreeModelFilter не поддерживает сортировку
-	gtk_tree_view_column_set_sort_column_id( column, FND_COLUMN_LABEL);*/
+	gtk_tree_view_column_set_sort_column_id( column, FND_COLUMN_LABEL);
 	gtk_tree_view_append_column( treeview, column);
 }
 
@@ -119,13 +116,12 @@ static void
 entry_changed_cb( GtkEntry *entry,
                   gpointer  user_data)
 {
-	const char *text = gtk_entry_get_text( entry);
-	//printf( "(change)entry text: %s\n", text);
 	GtkWidget *treeview = (GtkWidget *)user_data;
+	const char *text = gtk_entry_get_text( entry);
 
-	GtkTreeModel *filter_model = gtk_tree_view_get_model( GTK_TREE_VIEW(treeview));
-	GtkTreeModelFilter *filter = GTK_TREE_MODEL_FILTER( filter_model);
-	GtkTreeModel *model = gtk_tree_model_filter_get_model( filter);
+	GtkTreeModel *sort_model = gtk_tree_view_get_model( GTK_TREE_VIEW(treeview));
+	GtkTreeModel *filter_model = gtk_tree_model_sort_get_model( GTK_TREE_MODEL_SORT(sort_model));
+	GtkTreeModel *model = gtk_tree_model_filter_get_model( GTK_TREE_MODEL_FILTER(filter_model));
 
 	recalc_visibility_for_model( model, text);
 }
@@ -134,13 +130,12 @@ static void
 entry_activate_cb( GtkEntry *entry,
                    gpointer  user_data)
 {
-	const char *text = gtk_entry_get_text( entry);
-	//printf( "(activate)entry text: %s\n", text);
 	GtkWidget *treeview = (GtkWidget *)user_data;
+	const char *text = gtk_entry_get_text( entry);
 
-	GtkTreeModel *filter_model = gtk_tree_view_get_model( GTK_TREE_VIEW(treeview));
-	GtkTreeModelFilter *filter = GTK_TREE_MODEL_FILTER( filter_model);
-	GtkTreeModel *model = gtk_tree_model_filter_get_model( filter);
+	GtkTreeModel *sort_model = gtk_tree_view_get_model( GTK_TREE_VIEW(treeview));
+	GtkTreeModel *filter_model = gtk_tree_model_sort_get_model( GTK_TREE_MODEL_SORT(sort_model));
+	GtkTreeModel *model = gtk_tree_model_filter_get_model( GTK_TREE_MODEL_FILTER(filter_model));
 
 	recalc_visibility_for_model( model, text);
 
@@ -153,11 +148,11 @@ row_activated_cb( GtkTreeView       *tree_view,
                   GtkTreeViewColumn *column,
                   gpointer           user_data)
 {
+	DrawBuffer *db = (DrawBuffer *)user_data;
 	GtkTreeModel *model = gtk_tree_view_get_model( tree_view);
 	GtkTreeIter iter;
 	gboolean res;
 	gint x, y;
-	DrawBuffer *db = (DrawBuffer *)user_data;
 
 	res = gtk_tree_model_get_iter( model, &iter, path);
 	assert( res );
@@ -169,12 +164,11 @@ row_activated_cb( GtkTreeView       *tree_view,
 }
 
 static gboolean
-match_selected_cb(GtkEntryCompletion *widget,
-               GtkTreeModel       *model,
-               GtkTreeIter        *iter,
-               gpointer            user_data)
+completion_match_selected_cb( GtkEntryCompletion *widget,
+                              GtkTreeModel       *model,
+                              GtkTreeIter        *iter,
+                              gpointer            user_data)
 {
-	//printf("match_selected_cb\n");
 	DrawBuffer *db = (DrawBuffer *)user_data;
 	gint x, y;
 	gtk_tree_model_get( model, iter,
@@ -212,9 +206,10 @@ void UiShowFindNodeDialog( UIController *uic)
 	g_object_unref( completion);
 
 
-	label = gtk_label_new( "Select node from the list bellow. Main window will ceterized by double click.");
-	gtk_box_pack_start( GTK_BOX(vbox), label, FALSE, FALSE, 0);
+	//label = gtk_label_new( "Select node from the list bellow. Main window will ceterized by double click.");
+	//gtk_box_pack_start( GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
+	/* Scrolled Window */
 	sw = gtk_scrolled_window_new( NULL, NULL);
 	gtk_scrolled_window_set_shadow_type( GTK_SCROLLED_WINDOW(sw), GTK_SHADOW_ETCHED_IN);
 	gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW(sw),
@@ -230,17 +225,26 @@ void UiShowFindNodeDialog( UIController *uic)
 	gtk_tree_model_filter_set_visible_column( GTK_TREE_MODEL_FILTER(filter),
 											  FND_COLUMN_VISIBLE);
 
-	/* create tree view */
-	treeview = gtk_tree_view_new_with_model( filter);
-	gtk_tree_view_set_rules_hint( GTK_TREE_VIEW(treeview), TRUE);
-	gtk_tree_view_set_search_column( GTK_TREE_VIEW(treeview), -1);
-	//gtk_tree_view_set_grid_lines( GTK_TREE_VIEW(treeview), GTK_TREE_VIEW_GRID_LINES_HORIZONTAL);
-	g_signal_connect( treeview, "row-activated", G_CALLBACK(row_activated_cb), uic->m_DrawBuffer.get());
+	// модель для сортировки
+	GtkTreeModel *sort = gtk_tree_model_sort_new_with_model( filter);
+	// начальная сортировка
+	gtk_tree_sortable_set_sort_column_id( GTK_TREE_SORTABLE(sort),
+										  FND_COLUMN_LABEL,
+										  GTK_SORT_ASCENDING);
+	// это значит, что у этой модели не будет состояния `не отсортирована`
+	gtk_tree_sortable_set_default_sort_func( GTK_TREE_SORTABLE(sort), NULL, NULL, NULL);
 
+	/* create tree view */
+	treeview = gtk_tree_view_new_with_model( sort);
+	gtk_tree_view_set_rules_hint( GTK_TREE_VIEW(treeview), TRUE);
+	//gtk_tree_view_set_grid_lines( GTK_TREE_VIEW(treeview), GTK_TREE_VIEW_GRID_LINES_HORIZONTAL);
+	gtk_tree_view_set_search_column( GTK_TREE_VIEW(treeview), -1);
+	g_signal_connect( treeview, "row-activated", G_CALLBACK(row_activated_cb), uic->m_DrawBuffer.get());
+	/* add columns to the tree view */
+	add_columns_to_treeview( GTK_TREE_VIEW(treeview));
+	
 	gtk_container_add( GTK_CONTAINER(sw), treeview);
 
-	/* add columns to the tree view */
-	add_columns( GTK_TREE_VIEW(treeview));
 
 	/* добавляем модель к completion, указываем по какому столбцу работать */
 	gtk_entry_completion_set_model( completion, model);
@@ -248,12 +252,14 @@ void UiShowFindNodeDialog( UIController *uic)
 
 	g_object_unref( model);
 	g_object_unref( filter);
+	g_object_unref( sort);
 
 
 	g_signal_connect( entry, "changed", G_CALLBACK(entry_changed_cb), treeview);
 	g_signal_connect( entry, "activate", G_CALLBACK(entry_activate_cb), treeview);
 
-	g_signal_connect( completion, "match-selected", G_CALLBACK(match_selected_cb), uic->m_DrawBuffer.get());
+	g_signal_connect( completion, "match-selected", G_CALLBACK(completion_match_selected_cb),
+				uic->m_DrawBuffer.get());
 
 	/* finish & show */
 	gtk_window_set_default_size( GTK_WINDOW(dialog), 440, 300);

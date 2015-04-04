@@ -1,8 +1,7 @@
-﻿
+
 1) координаты в statusbar
-2) доделать FindDialog
-3) в файле есть начальный scaling - надо его подцеплять
-4) управляющие символы в лейблах (charset.vcg, colors.vcg, morecol.vcg)
+2) в файле есть начальный scaling - надо его подцеплять
+3) управляющие символы в лейблах (charset.vcg, colors.vcg, morecol.vcg)
 
 
 
