@@ -3,24 +3,19 @@
 /*-------------------------------------------------------------*/
 
 %locations
-/*%t oken_table*/
+/*%token_table*/
 
 %{
 /************* FIRST USER DECLARATIONS *****/
 
-
-#define YYDEBUG 1
- 
-
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
-#include <math.h>
-#include "globals.h"
-#include "main.h"
-#include "options.h"
 #include "grammar.h"
+#include "globals.h"
 
+
+
+#define YYDEBUG 1
 
 
 #ifndef yyerror
@@ -1291,7 +1286,6 @@ str_const	: LEX_STRING		{
 		;
 
 
-
 %%
 
 
@@ -1304,13 +1298,9 @@ str_const	: LEX_STRING		{
 /*   returns the number of detected errors and binds the syntaxtree
  *   to the variable Syntax_Tree.
  */
-int parse( FILE *input_file)
+int parse()
 {
-	nr_errors=0;
-	debugmessage("init_lex()\n", "");
-	init_lex(input_file);
-	line_nr = 1;
-	pos_nr = 1;
+	nr_errors = 0;
 	debugmessage("yyparse()\n", "");
 	yyparse();
 

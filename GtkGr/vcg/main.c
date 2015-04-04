@@ -62,7 +62,7 @@ static void relayout(void);
 /*  Call of the parser
  *  ==================
  */
-static void parse_part( FILE *f)
+static void parse_part( FILE *f, const char *fname)
 {
 	int 	errs,i;
 	char c;
@@ -92,7 +92,8 @@ static void parse_part( FILE *f)
 	  putc(c, stderr);
 	}
 #endif
-	errs = parse( f);
+	init_lex( f, fname);
+	errs = parse();
 	debugmessage("finished_parsing", "");
 	
 
@@ -277,8 +278,7 @@ void gs_wait_message(int ch)
 /*  The main program
  *  ================
  */
-
-void vcg_Parse( FILE *input_file)
+void vcg_Parse( FILE *input_file, const char *filename)
 {
 	char testvar = -1;
 
@@ -304,7 +304,7 @@ void vcg_Parse( FILE *input_file)
 	}
 
 	/*if (!silent) { FPRINTF(stdout,"Wait "); FFLUSH(stdout); }*/
-	parse_part( input_file);
+	parse_part( input_file, filename);
 	visualize_part();
 
 
@@ -320,6 +320,19 @@ void vcg_Parse( FILE *input_file)
 
 	return;
 } /* vcg_Parse */
+
+void vcg_ParseFile( const char *filename)
+{
+	FILE *f = fopen( filename, "r");
+	if (!f)
+	{
+		printf("Cant open file: %s\n", filename);
+		exit(-1);
+	}
+	vcg_Parse( f, filename);
+	fclose(f);
+	return;
+} /* vcg_ParseFile */
 
 
 Color_t vcg_GetBgColor()

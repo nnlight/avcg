@@ -11,7 +11,8 @@ extern "C" {
 
 
 
-void vcg_Parse( FILE *input_file);
+void vcg_Parse( FILE *input_file, const char *filename);
+void vcg_ParseFile( const char *filename);
 
 Color_t vcg_GetBgColor();
 int            vcg_GetCmapSize();

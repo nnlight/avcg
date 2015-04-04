@@ -307,7 +307,7 @@ ui_activate_action( GtkAction *action, gpointer data)
 		{
 			char *filename;
 			filename = gtk_file_chooser_get_filename( GTK_FILE_CHOOSER(dialog));
-			uic->LoadGDL( filename);
+			uic->LoadGDLFile( filename);
 			g_free( filename);
 		}
 		gtk_widget_destroy (dialog);
@@ -315,7 +315,7 @@ ui_activate_action( GtkAction *action, gpointer data)
 	{
 		if ( !uic->m_CurrentFilename.empty() )
 		{
-			uic->LoadGDL( uic->m_CurrentFilename.c_str());
+			uic->LoadGDLFile( uic->m_CurrentFilename.c_str());
 		}
 	} else if ( !strcmp( action_name, "FindNode") )
 	{
@@ -691,21 +691,11 @@ UIController::~UIController(void)
 	g_object_unref( m_UIManager);
 } /* UIController::~UIController */
 
-void UIController::LoadGDL( const char *filename)
+void UIController::LoadGDLFile( const char *filename)
 {
 	assert( filename );
-	if ( !m_CurrentFilename.empty() )
-	{
-	}
 
-	FILE *f = fopen( filename, "r");
-	if (!f)
-	{
-		printf("Cant open file: %s\n", filename);
-		exit(-1);
-	}
-	vcg_Parse( f);
-	fclose(f);
+	vcg_ParseFile( filename);
 
 	/* удаляем старый граф (если есть)*/
 	m_VRGraph.reset( NULL);
@@ -714,7 +704,7 @@ void UIController::LoadGDL( const char *filename)
 	m_DrawBuffer->SetVRGraphRef( m_VRGraph.get());
 	m_CurrentFilename = filename;
 	gtk_window_set_title( GTK_WINDOW(m_MainWindow), filename);
-} /* UIController::LoadGDL */
+} /* UIController::LoadGDLFile */
 
 void UIController::UpdateStatusbar()
 {

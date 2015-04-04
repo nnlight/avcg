@@ -1,18 +1,19 @@
+/*--------------------------------------------------------------------*/
+/*              Scanner and Parser Interface                          */
+/*--------------------------------------------------------------------*/
+
 #ifndef SCANPARSE_H
 #define SCANPARSE_H
-
-/*--------------------------------------------------------------------*/
-/*  Scanner and Parser Interface                                      */
-/*--------------------------------------------------------------------*/
 
 
 extern int line_nr;
 extern int pos_nr;
 extern int nr_errors;
-extern char filename[];
+#define FILENAME_BUF_SIZE 128
+extern char filename[FILENAME_BUF_SIZE];
 
-extern void init_lex( FILE *input_file);
-extern int parse( FILE *input_file);
+extern void init_lex( FILE *f, const char *fname);
+extern int parse();
 
 
 void lex_rule_match( char *text);
@@ -648,14 +649,8 @@ int   ConstructorArity(int i);
 #define COPY(x)   Copy(x)
 
 
-#define SKIPYYTEXT /*{ char *c; c = yytext; while (*c) { \
-                     if (*c == '\n') { pos_nr = 1; line_nr++; }  \
-                     else pos_nr++; \
-                     c++; }}*/
-
-
-#define RETURN(x) { 	/*pos_nr += strlen(yytext);*/ \
-			return(x); }
+#define SKIPYYTEXT {}
+#define RETURN(x)  { return(x); }
 
 
 

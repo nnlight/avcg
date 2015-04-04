@@ -7,38 +7,11 @@
 
 %{
 
+#include <stdio.h>
+#include <string.h>
 #include "grammar.h"
-
-#include <stdio.h>
-#include <string.h>
-
-
-/*
- *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium 
- *
- *  This program and documentation is free software; you can redistribute 
- *  it under the terms of the  GNU General Public License as published by
- *  the  Free Software Foundation;  either version 2  of the License,  or
- *  (at your option) any later version.
- *
- *  This  program  is  distributed  in  the hope that it will be useful,
- *  but  WITHOUT ANY WARRANTY;  without  even  the  implied  warranty of
- *  MERCHANTABILITY  or  FITNESS  FOR  A  PARTICULAR  PURPOSE.  See  the
- *  GNU General Public License for more details.
- *
- *  You  should  have  received a copy of the GNU General Public License
- *  along  with  this  program;  if  not,  write  to  the  Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- */
-
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
-#include <math.h>
 #include "globals.h"
-#include "main.h"
-#include "options.h"
+
 
 
 #define YY_USER_ACTION    lex_rule_match( yytext);
@@ -745,11 +718,11 @@ PRAGMADIR       {WSPACE}#{WSPACE}"pragma".*\n
 		 /* ignore pragma directive */ }
 
 [\f ]+			{
-		 /*pos_nr+=strlen(yytext);*/ }
+					}
 [\t]			{
-		 /*pos_nr++;*/               }
+		 			}
 [\n]			{
-		 /*line_nr++; pos_nr=1;*/    }
+					}
 
 {INT}			{
 		 yylval.lnum = atol(yytext); 
@@ -811,13 +784,17 @@ PRAGMADIR       {WSPACE}#{WSPACE}"pragma".*\n
 /*   Initialize scanner                                               */
 /*--------------------------------------------------------------------*/
 
-void init_lex( FILE *input_file)
+void init_lex( FILE *f, const char *fname)
 {
-	yyin = input_file;
+	yyin = f;
+	line_nr = 1;
+	pos_nr = 1;
+	strncpy( filename, fname, FILENAME_BUF_SIZE-1);
+
 	/* Turn yy_flex_debug on if you want to debug the scanner */
 	yy_flex_debug = 0;
 
 	/*yy_init = 0;*/
-}
+} /* init_lex */
 
 

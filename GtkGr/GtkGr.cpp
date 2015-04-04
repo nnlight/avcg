@@ -30,14 +30,7 @@ int main(int argc, char *argv[])
 	if (argc > 1)
 	{
 		filename = argv[1];
-		FILE *f = fopen( filename, "r");
-		if (!f)
-		{
-			printf("Cant open file: %s\n", filename);
-			exit(-1);
-		}
-		vcg_Parse( f);
-		fclose(f);
+		vcg_ParseFile( filename);
 	}
 	
 	// Иннициализация GTK;

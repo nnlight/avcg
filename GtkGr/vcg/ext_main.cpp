@@ -13,24 +13,11 @@ int main(int argc , char *argv[])
 		exit(1);
 	}
 
-	FILE *f = fopen( argv[1], "r");
-	if ( !f )
-	{
-		printf("cant open file:%s\n", argv[1]);
-		exit(1);
-	}
-	vcg_Parse( f);
-	fclose(f);
+	vcg_ParseFile( argv[1]);
 	printf("\n1st ok\n");
 
-	f = fopen( argv[1], "r");
-	if ( !f )
-	{
-		printf("cant open file:%s\n", argv[1]);
-		exit(1);
-	}
-	vcg_Parse( f);
-	fclose(f);
+	vcg_ParseFile( argv[1]);
 	printf("\n2nd ok\n");
+
 	return 0;
 }

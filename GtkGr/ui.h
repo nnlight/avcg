@@ -53,7 +53,7 @@ public:
 	void MainLoop() { gtk_main(); };
 
 	/* загрузка GDL-файла */
-	void LoadGDL( const char *filename);
+	void LoadGDLFile( const char *filename);
 
 
 private:

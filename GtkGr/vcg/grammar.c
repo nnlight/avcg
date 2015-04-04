@@ -38,7 +38,7 @@ void fatal_error(char *message)
  *  parser for error messages is not always the same as the filename
  *  of the actal input file. 
  */
-char    filename[1024];     /* Filename from the view of the parser */ 
+char    filename[FILENAME_BUF_SIZE];     /* Filename from the view of the parser */ 
 
 static int nr_max_errors = 16;
 int nr_errors;
@@ -51,7 +51,7 @@ void syntaxerror(int line, int pos, const char *fmt, ...)
 {
 	va_list args;
 	va_start(args, fmt);
-	(void)fprintf(stderr,"Syntax error (%s: l:%d p:%d): ",filename,line,pos);
+	(void)fprintf(stderr,"Syntax error (%s: l:%d c:%d): ",filename,line,pos);
 	(void)vfprintf(stderr, fmt, args);
 	(void)fprintf(stderr," !\n");
 	va_end(args);
@@ -89,10 +89,9 @@ void lex_rule_match( char *text)
 			yylloc.last_column = pos_nr;
 		}
 		if (*c == '\n') { line_nr++; pos_nr = 1; }
-                else pos_nr++;
-
+		else pos_nr++;
 	}
-}
+} /* lex_rule_match */
 
 /*  Handle directive left by the C preprocessor, i.e.
  *
@@ -117,7 +116,7 @@ void line_directive(char *text)
                 d = c;
                 while ((*d) && (*d!='"')) d++;
                 *d=0;
-                strcpy(filename, c);
+                strncpy( filename, c, FILENAME_BUF_SIZE-1);
         }
 } /* line_directive */
 
