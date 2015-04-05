@@ -1,6 +1,3 @@
-
-/* SCCS-info %W% %E% */
-
 /*--------------------------------------------------------------------*/
 /*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
@@ -18,10 +15,6 @@
 /*                                                                    */
 /*--------------------------------------------------------------------*/
 
-
-#ifndef lint
-static char *id_string="$Id: tree.c,v 1.6 1995/02/08 11:11:14 sander Exp $";
-#endif
 
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
@@ -46,32 +39,6 @@ static char *id_string="$Id: tree.c,v 1.6 1995/02/08 11:11:14 sander Exp $";
  */
 
 
-/* 
- * $Log: tree.c,v $
- * Revision 1.6  1995/02/08  11:11:14  sander
- * Distribution version 1.3.
- *
- * Revision 1.5  1994/12/23  18:12:45  sander
- * Manhatten layout added.
- * Option interface cleared.
- * infobox behaviour improved.
- * First version of fisheye (carthesian).
- * Options Noedge and nonode.
- * Titles in the node title box are now sorted.
- *
- * Revision 1.4  1994/08/09  15:06:36  sander
- * Cosmetic change.
- *
- * Revision 1.3  1994/08/08  16:01:47  sander
- * Attributes xraster, xlraster, yraster added.
- *
- * Revision 1.2  1994/08/05  14:27:31  sander
- * Negative values of G_width, etc. corrected.
- *
- * Revision 1.1  1994/08/05  12:13:25  sander
- * Initial revision
- *
- */
 
 /************************************************************************
  * The situation here is the following:
@@ -163,14 +130,6 @@ static char *id_string="$Id: tree.c,v 1.6 1995/02/08 11:11:14 sander Exp $";
 #include "timing.h"
 
 
-#ifndef ANSI_C
-#ifndef const
-#define const
-#endif
-#endif
-
-
-
 /* Prototypes
  * ----------
  */
@@ -224,11 +183,7 @@ static int tree_factor2;
  *   returns TREE_LAYOUT on success, otherwise 0.
  */
 
-#ifdef ANSI_C
 int tree_main(void)
-#else
-int tree_main()
-#endif
 {
 	start_time();
 	debugmessage("tree_main","");
@@ -322,11 +277,7 @@ int tree_main()
 #define backward_connection1(c) ((CEDGE(c))&& (EEND(CEDGE(c))==v))
 #define backward_connection2(c) ((CEDGE2(c))&&(EEND(CEDGE2(c))==v))
 
-#ifdef ANSI_C
 static int is_tree(void)
-#else
-static int is_tree()
-#endif
 {
 	int i;
 	int result;
@@ -374,13 +325,7 @@ static int is_tree()
  * As side effect, NINDEG and NOUTDEG are calculated.
  */
 
-
-#ifdef ANSI_C
 static int is_shared(GNODE v)
-#else
-static int is_shared(v)
-GNODE v;
-#endif
 {
 	int i;
 	ADJEDGE a;
@@ -422,11 +367,7 @@ GNODE v;
 /*  Calculate the degree of the nodes                                 */
 /*--------------------------------------------------------------------*/
 
-#ifdef ANSI_C
 static void calc_degree(void)
-#else
-static void calc_degree()
-#endif
 {
 	int i, j;
 	GNODE v;
@@ -464,11 +405,7 @@ static void calc_degree()
 /*  Create the TPRED lists of the layers                              */
 /*--------------------------------------------------------------------*/
 
-#ifdef ANSI_C
 static void create_tpred_lists(void)
-#else
-static void create_tpred_lists()
-#endif
 {
 	int i, k;
 	GNLIST h1, h2;
@@ -501,11 +438,7 @@ static void create_tpred_lists()
 /* This initializes also NPOS. 
  */
 
-#ifdef ANSI_C
 static void sort_tsucc_and_tpred(void)
-#else
-static void sort_tsucc_and_tpred()
-#endif
 {
 	int i, k, max;
 	GNLIST h1;
@@ -521,12 +454,10 @@ static void sort_tsucc_and_tpred()
 		}
 		max = k;
 
-#ifdef ANSI_C
-		if (k) qsort(sort_array, k, sizeof(GNODE),
-			(int (*) (const void *, const void *))compare_xpos); 
-#else
-		if (k) qsort(sort_array, k, sizeof(GNODE),compare_xpos); 
-#endif
+		if (k) {
+			qsort(sort_array, k, sizeof(GNODE),
+				(int (*) (const void *, const void *))compare_xpos);
+		}
 
 		h1 = TSUCC(layer[i]);
 		k = 0;
@@ -553,13 +484,7 @@ static void sort_tsucc_and_tpred()
  *  returns 1 if NX(*a) > NX(*b), 0 if equal, -1 otherwise.
  */
  
-#ifdef ANSI_C
-static int 	compare_xpos(const GNODE *a,const GNODE *b)
-#else
-static int 	compare_xpos(a,b)
-GNODE	*a;
-GNODE   *b;
-#endif
+static int 	compare_xpos(const GNODE *a, const GNODE *b)
 { 
 	if (NX(*a) > NX(*b)) return(1);
 	if (NX(*a) < NX(*b)) return(-1);
@@ -575,11 +500,7 @@ GNODE   *b;
  * ----------------------------------------------------------------
  */
 
-#ifdef ANSI_C
 static void sort_all_adjacencies(void)
-#else
-static void sort_all_adjacencies()
-#endif
 {
 	int i;
 	GNLIST h1;
@@ -657,11 +578,7 @@ static int horder_warn; /* 1 if the horder-warning was already printed */
 #define yralign(a)  ((((a)+G_yraster-1)/G_yraster)*G_yraster)
 
 
-#ifdef ANSI_C
 static void	tree_layout(void)
-#else
-static void	tree_layout()
-#endif
 {
 	int actypos;
 	int maxboxheight;
@@ -756,13 +673,7 @@ static void	tree_layout()
  * It returns the center of the positioned node.
  */
 
-#ifdef ANSI_C
 static int find_position(GNODE v, int leftest_pos)
-#else
-static int find_position(v,leftest_pos)
-GNODE v;
-int leftest_pos;
-#endif
 {
 	int xpos, minpos, maxpos, l, num, i;
 	ADJEDGE a;
@@ -998,13 +909,7 @@ int leftest_pos;
 
 #define TMINX(x) TCROSS(x)
 
-#ifdef ANSI_C
 static void correct_position(GNODE conn, GNODE v)
-#else
-static void correct_position(conn,v)
-GNODE conn;
-GNODE v;
-#endif
 {
 	int i, depth, diff;
 	debugmessage("correct_position","");
@@ -1029,13 +934,7 @@ GNODE v;
  * We return the maximal depth of the tree.
  */
 
-#ifdef ANSI_C
 static int min_x_in_tree(GNODE v, GNODE conn)
-#else
-static int min_x_in_tree(v,conn)
-GNODE v;
-GNODE conn;
-#endif
 {
 	int maxlevel, l, h;
 	ADJEDGE a;
@@ -1078,13 +977,7 @@ GNODE conn;
  * If the tree at v is deeper than the right neigbour tree, we return 0.
  */
 
-#ifdef ANSI_C
 static int max_x_in_tree(GNODE v, int depth)
-#else
-static int max_x_in_tree(v,depth)
-GNODE v;
-int depth;
-#endif
 {
 	int mindiff, l, h;
 	ADJEDGE a;
@@ -1121,13 +1014,7 @@ int depth;
  * -----------------------------------------------
  */
 
-#ifdef ANSI_C
 static void correct_xpos(GNODE v, int diff)
-#else
-static void correct_xpos(v,diff)
-GNODE v;
-int diff;
-#endif
 {
 	ADJEDGE a;
 	CONNECT c;

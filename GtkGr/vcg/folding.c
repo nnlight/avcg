@@ -1651,12 +1651,12 @@ void	create_adjedge(GEDGE edge)
 	assert((EEND(edge)));
 	a = NSUCC(ESTART(edge));
 	while (a) {
-		if (AKANTE(a)==edge) { return; }
+		if (AKANTE(a)==edge) { assert(0); return; }
 		a   = ANEXT(a);
 	}
 	a = NPRED(EEND(edge));
 	while (a) {
-		if (AKANTE(a)==edge) { return; }
+		if (AKANTE(a)==edge) { assert(0); return; }
 		a   = ANEXT(a);
 	}
 

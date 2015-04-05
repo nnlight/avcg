@@ -404,12 +404,7 @@ static GNODE endnodesend;
  *  The endnodes are sorted according NREFNUMS.
  */ 
 
-#ifdef ANSI_C
 static void 	insert_endnode(GNODE node)
-#else
-static void 	insert_endnode(node)
-GNODE node;
-#endif
 {
 	GNODE h,*hp;
 
@@ -446,11 +441,7 @@ GNODE node;
  *  ============================================
  */
 
-#ifdef ANSI_C
 static void	prepare_startnodes(void)
-#else
-static void	prepare_startnodes()
-#endif
 {
 	GNODE	node,nxt_node;
 
@@ -499,11 +490,7 @@ static void	prepare_startnodes()
  *  Note: The use of anchored edges restricts the use of nearedges.
  */
 
-#ifdef ANSI_C
 void insert_anchor_edges(void)
-#else
-void insert_anchor_edges()
-#endif
 {
 	GEDGE   edge;
 
@@ -532,12 +519,7 @@ void insert_anchor_edges()
  *  Otherwise we create the anchornode and redirect the edge, too. 
  */
 
-#ifdef ANSI_C
 static void prepare_anchoredge(GEDGE edge)
-#else
-static void prepare_anchoredge(edge)
-GEDGE edge;
-#endif
 {
 	GEDGE   h;
 	GNODE   v;
@@ -624,11 +606,7 @@ GEDGE edge;
  *  be visualized without at least one edge which is not backwards.  
  */
 
-#ifdef ANSI_C
 void prepare_back_edges(void)
-#else
-void prepare_back_edges()
-#endif
 {
 	ADJEDGE e;
 	ADJEDGE a1, a2;
@@ -667,11 +645,7 @@ void prepare_back_edges()
  *  nodes that are connected by usual edges.
  */
 
-#ifdef ANSI_C
 static void	insert_bent_near_edges(void)
-#else
-static void	insert_bent_near_edges()
-#endif
 {
 	GNODE   v;
 	ADJEDGE edge1;
@@ -774,11 +748,7 @@ static void	insert_bent_near_edges()
  *  nodes that are connected by usual edges.
  */
 
-#ifdef ANSI_C
 static void	insert_near_edges(void)
-#else
-static void	insert_near_edges()
-#endif
 {
 	ADJEDGE edge;
 	CONNECT c1,c2;
@@ -869,14 +839,7 @@ static void	insert_near_edges()
  * We return 1, if z is reacheavle.
  */
 
-#ifdef ANSI_C
 static int  check_connect_cycle(GNODE v, GNODE w, GNODE z)
-#else
-static int  check_connect_cycle(v,w,z)
-GNODE v;
-GNODE w;
-GNODE z;
-#endif
 {
 	CONNECT c;
 	int r;
@@ -929,11 +892,7 @@ GNODE z;
 static long	act_dfsnum;  /* actual ref. number of entry of dfs      */
 static int	act_level;   /* actual level (depth) in spanning tree   */
 
-#ifdef ANSI_C
 static void partition_edges(void)
-#else
-static void partition_edges()
-#endif
 {
 	GNODE	node;
 	int	depth1;
@@ -1083,12 +1042,7 @@ static void partition_edges()
  *  traverses the tree starting at node and does the partitioning.  
  */
 
-#ifdef ANSI_C
 static void depth_first_search(GNODE node)
-#else
-static void depth_first_search(node)
-GNODE	node;
-#endif
 {
     	GNODE  	kn;
     	ADJEDGE	edge;
@@ -1175,12 +1129,7 @@ GNODE	node;
  *  traverses the tree starting at node and does the partitioning.  
  */
 
-#ifdef ANSI_C
 static void alt_depth_first_search(GNODE node)
-#else
-static void alt_depth_first_search(node)
-GNODE	node;
-#endif
 {
 	GNODE kn;
     	ADJEDGE	edge;
@@ -1231,17 +1180,10 @@ GNODE	node;
  *  backwards.
  */
 
-#ifdef ANSI_C
 static void start_dfs_backwards(
 	ADJEDGE edge,
 	GNODE   node,
 	int 	priority)
-#else
-static void start_dfs_backwards(edge,node,priority)
-ADJEDGE edge;
-GNODE   node;
-int 	priority;
-#endif
 {
     	GNODE  	kn;
 
@@ -1303,12 +1245,7 @@ static GNLIST zero_free_list;
  * ------------------------------------
  */
 
-#ifdef ANSI_C
 static void add_to_zero_indegree_list(GNODE v)
-#else
-static void add_to_zero_indegree_list(v)
-GNODE v;
-#endif
 {
 	GNLIST h;
 
@@ -1329,11 +1266,7 @@ GNODE v;
  * and return the node. Returns NULL on failure.
  */
 
-#ifdef ANSI_C
 static GNODE get_zero_indegree(void)
-#else
-static GNODE get_zero_indegree()
-#endif
 {
 	GNLIST h;
 
@@ -1353,11 +1286,7 @@ static GNODE get_zero_indegree()
  * ====================
  */
 
-#ifdef ANSI_C
 static void	topological_sort(void)
-#else
-static void	topological_sort()
-#endif
 {
 	GNODE  v;
 	int    not_ready, actlevel;
@@ -1428,13 +1357,7 @@ static void	topological_sort()
  * node1 is the node we want to analyze. node2 is the node we just come from.
  */
 
-#ifdef ANSI_C
 static int topsort_maxlevel(GNODE node1, GNODE node2)
-#else
-static int topsort_maxlevel(node1,node2)
-GNODE node1;
-GNODE node2;
-#endif
 {
 	int result, h;
 	ADJEDGE a;
@@ -1468,14 +1391,7 @@ GNODE node2;
  * node1 is the node we want to analyze. node2 is the node we just come from.
  */
 
-#ifdef ANSI_C
 static void topsort_setlevel(GNODE node1,GNODE node2,int level)
-#else
-static void topsort_setlevel(node1,node2,level)
-GNODE node1;
-GNODE node2;
-int   level;
-#endif
 {
 	CONNECT c;
 
@@ -1503,13 +1419,7 @@ int   level;
  * node1 is the node we want to analyze. node2 is the node we just come from.
  */
 
-#ifdef ANSI_C
 static void topsort_add_succs(GNODE node1, GNODE node2)
-#else
-static void topsort_add_succs(node1,node2)
-GNODE node1;
-GNODE node2;
-#endif
 {
 	ADJEDGE a;
 	CONNECT c;
@@ -1537,13 +1447,7 @@ GNODE node2;
  * node1 is the node we want to analyze. node2 is the node we just come from.
  */
 
-#ifdef ANSI_C
-static int topsort_indegree(GNODE node1,GNODE node2)
-#else
-static int topsort_indegree(node1,node2)
-GNODE node1;
-GNODE node2;
-#endif
+static int topsort_indegree(GNODE node1, GNODE node2)
 {
 	int result;
 	ADJEDGE a;
@@ -1576,13 +1480,7 @@ static GNLIST global_node_list;
  * ------------------------
  */
 
-#ifdef ANSI_C
 static void add_to_nlist(GNODE v, GNLIST *l)
-#else
-static void add_to_nlist(v, l)
-GNODE v;
-GNLIST *l;
-#endif
 {
 	GNLIST h;
 
@@ -1604,12 +1502,7 @@ GNLIST *l;
  * and return the node. Returns NULL on failure.
  */
 
-#ifdef ANSI_C
 static GNODE get_nlist(GNLIST *l)
-#else
-static GNODE get_nlist(l)
-GNLIST *l;
-#endif
 {
 	GNLIST h;
 
@@ -1629,11 +1522,7 @@ GNLIST *l;
  * ================================
  */
 
-#ifdef ANSI_C
 static void	sc_component_sort(void)
-#else
-static void	sc_component_sort()
-#endif
 {
 	GNODE  v;
 
@@ -1672,12 +1561,7 @@ static void	sc_component_sort()
  */
 
 
-#ifdef ANSI_C
 static void	calc_sc_component(GNLIST *nlist)
-#else
-static void	calc_sc_component(nlist)
-GNLIST *nlist;
-#endif
 {
 	GNODE  v;
 	GNLIST h;
@@ -1727,14 +1611,7 @@ GNLIST *nlist;
  *  is also a backward depth first search with some additions.
  */
 
-#ifdef ANSI_C
 static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
-#else
-static void scc_traversal(node, dfsnum, open_sccp)
-GNODE	node;
-long *dfsnum;
-GNLIST *open_sccp;
-#endif
 {
     	GNODE  	kn;
 	GNLIST  h;
@@ -1970,12 +1847,7 @@ GNLIST *open_sccp;
  * Return 1 in this case.
  */
 
-#ifdef ANSI_C
 static int complete_scc(GNLIST nlist)
-#else
-static int complete_scc(nlist)
-GNLIST nlist;
-#endif
 {
 	GNODE v;
 	GNLIST h;
@@ -2053,14 +1925,7 @@ GNLIST nlist;
  * along the CTARGET's.
  */
 
-#ifdef ANSI_C
 static int scc_outdeg(GNODE v, GNODE w, int prio) 
-#else
-static int scc_outdeg(v, w, prio)
-GNODE v;
-GNODE w; 
-int prio;
-#endif
 {
 
 	int degree;
@@ -2099,13 +1964,7 @@ int prio;
  * along the CTARGET's.
  */
 
-#ifdef ANSI_C
 static int scc_succoutdeg(GNODE v, GNODE w) 
-#else
-static int scc_succoutdeg(v, w)
-GNODE v;
-GNODE w; 
-#endif
 {
 
 	int degree;
@@ -2144,13 +2003,7 @@ GNODE w;
  * along the CTARGET's.
  */
 
-#ifdef ANSI_C
 static int scc_indeg(GNODE v, GNODE w) 
-#else
-static int scc_indeg(v, w)
-GNODE v;
-GNODE w; 
-#endif
 {
 
 	int degree;
@@ -2187,13 +2040,7 @@ GNODE w;
  * along the CTARGET's.
  */
 
-#ifdef ANSI_C
 static void	revert_outedges(GNODE v, GNODE w) 
-#else
-static void	revert_outedges(v, w)
-GNODE v;
-GNODE w; 
-#endif
 {
 	ADJEDGE e, en;
 	CONNECT c;
@@ -2228,11 +2075,7 @@ GNODE w;
  * and add the labels in between.
  */
 
-#ifdef ANSI_C
 static void 	add_phase1_labels(void)
-#else
-static void 	add_phase1_labels()
-#endif
 {
 	GNODE v, vl, vt;
 	ADJEDGE edge, edgenext;
@@ -2331,11 +2174,7 @@ static void 	add_phase1_labels()
  *  even if the result is still not optimal.
  */
 
-#ifdef ANSI_C
 static void tune_partitioning(void)
-#else
-static void tune_partitioning()
-#endif
 {
 	GNODE v;
 	int   changed,count;
@@ -2378,13 +2217,7 @@ static void tune_partitioning()
  *  This node has no nearedge, thus we can change its depth NTIEFE.
  */
 
-#ifdef ANSI_C
 static int tune_node_depth(GNODE v,int lab)
-#else
-static int tune_node_depth(v, lab)
-GNODE v;
-int lab;
-#endif
 { 
 	int   nodelevel,leveldiff,nr_edges, nr_redges, changed, delta, hdelta;
 	ADJEDGE edge, hedge;
@@ -2626,11 +2459,7 @@ int lab;
  *  not the TPRED list.
  */
  
-#ifdef ANSI_C
 static void create_depth_lists(void)
-#else
-static void create_depth_lists()
-#endif
 {
 	GNODE h;
 	GNLIST hl;
@@ -2689,11 +2518,7 @@ static void create_depth_lists()
  * or backward connection.
  */
 
-#ifdef ANSI_C
 static void	complete_depth_lists(void)
-#else
-static void	complete_depth_lists()
-#endif
 {
 	int 	i;
 	GNLIST	n,hl;
@@ -2793,14 +2618,7 @@ static void	complete_depth_lists()
  *             connections                           connections
  */
 
-#ifdef ANSI_C
 static void calc_connect_adjlists(GNODE v,GNODE w, GNODE predw)
-#else
-static void calc_connect_adjlists(v,w,predw)
-GNODE v;
-GNODE w;
-GNODE predw;
-#endif
 {
 	ADJEDGE	edge;
 	CONNECT c;
@@ -2816,15 +2634,15 @@ GNODE predw;
 	edge = NSUCC(w);
 	if (v==w) NSUCC(v) = NULL;
 	while (edge) {
-		succedgealloc(v,AKANTE(edge));
 		SOURCE(edge) = v;
+		succedgealloc(v,AKANTE(edge));
 		edge = ANEXT(edge);
 	}
 	edge = NPRED(w);
 	if (v==w) NPRED(v) = NULL;
 	while (edge) {
-		prededgealloc(v,AKANTE(edge));
 		TARGET(edge) = v;
+		prededgealloc(v,AKANTE(edge));
 		edge = ANEXT(edge);
 	}
 
@@ -2849,11 +2667,7 @@ GNODE predw;
  *  actual or an upper layer. Thus we need recursion in check_edge.
  */ 
 
-#ifdef ANSI_C
 static void    inspect_edges(void)
-#else
-static void    inspect_edges()
-#endif
 {
 	int     i;
 	GNLIST	li;
@@ -2946,14 +2760,7 @@ static void    inspect_edges()
  *                                                    M
  */
 
-#ifdef ANSI_C
-static void check_edge(GNODE node,ADJEDGE edge,int level)
-#else
-static void check_edge(node,edge,level)
-GNODE node;
-ADJEDGE edge;
-int level;
-#endif
+static void check_edge(GNODE node, ADJEDGE edge, int level)
 {
 	int edgelen;	/* length of the edge, i.e. difference of levels */
 	int i,j;
@@ -3078,12 +2885,7 @@ int level;
  *  of the new source node is returned.
  */
  
-#ifdef ANSI_C
 ADJEDGE revert_edge(GEDGE edge)
-#else
-ADJEDGE revert_edge(edge)
-GEDGE edge;
-#endif
 {
 	GNODE h;
 	char  hh;
@@ -3127,15 +2929,7 @@ GEDGE edge;
  *  arrow = 3 means both source and target are no dummy nodes.
  */
 
-#ifdef ANSI_C
-static ADJEDGE	create_edge(GNODE start,GNODE end,GEDGE edge,int arrow)
-#else
-static ADJEDGE	create_edge(start, end, edge,arrow)
-GNODE	start;
-GNODE  	end;
-GEDGE   edge;
-int	arrow;
-#endif
+static ADJEDGE	create_edge(GNODE start, GNODE end, GEDGE edge, int arrow)
 {
 	GEDGE	h;
 	
@@ -3196,12 +2990,7 @@ int	arrow;
  *  A dummy node is always a temporary node.
  */
 
-#ifdef ANSI_C
 static GNODE create_dummy(int t)
-#else
-static GNODE create_dummy(t)
-int t;
-#endif
 {
 	GNLIST hl;
 	GNODE  v;
@@ -3243,12 +3032,7 @@ int t;
  *  summarize_edges (see folding.c) in one function.
  */
 
-
-#ifdef ANSI_C
 static void	inspect_double_edges(void)
-#else
-static void	inspect_double_edges()
-#endif
 {
 	int     i;
 	GNLIST	li;
@@ -3282,13 +3066,7 @@ static void	inspect_double_edges()
  *  Thus, no recursion is necessary.
  */
 
-
-#ifdef ANSI_C
 static void	check_double_edge(ADJEDGE edge)
-#else
-static void	check_double_edge(edge)
-ADJEDGE	edge;
-#endif
 {
 	ADJEDGE	l, lnext;
 	GNODE   d1; 	/* for dummy nodes */
@@ -3356,11 +3134,7 @@ ADJEDGE	edge;
 
 int number_reversions;
 
-#ifdef ANSI_C
 void calc_number_reversions(void)
-#else
-void calc_number_reversions()
-#endif
 {
 	GNODE v;
 	ADJEDGE e;
@@ -3413,11 +3187,7 @@ void calc_number_reversions()
 
 #ifdef DEBUG
 
-#ifdef ANSI_C
 void db_output_graph(void)
-#else
-void db_output_graph()
-#endif
 {
 	PRINTF("Nodes:\n");
 	db_output_nodes(nodelist);
@@ -3441,12 +3211,7 @@ void db_output_graph()
 
 #ifdef DEBUG
 
-#ifdef ANSI_C
 static void db_output_nodes(GNODE n)
-#else
-static void db_output_nodes(n)
-GNODE   n;
-#endif
 {
 	if (!n) return; 
 	db_output_nodes(NNEXT(n));
@@ -3462,12 +3227,7 @@ GNODE   n;
 
 #ifdef DEBUG
 
-#ifdef ANSI_C
 static void db_output_edges(GEDGE e)
-#else
-static void db_output_edges(e)
-GEDGE   e;
-#endif
 {
  	if (!e) return; 
 	db_output_edges(ENEXT(e));

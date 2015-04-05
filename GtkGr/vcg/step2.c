@@ -3398,12 +3398,10 @@ GNODE 	v;
 		adjarray2[i++] = AKANTE(a);
 		a = ANEXT(a);
 	}
-#ifdef ANSI_C
+
 	qsort(adjarray2,NINDEG(v),sizeof(GNODE),
 		(int (*) (const void *, const void *))compare_srcpos);
-#else
-	qsort(adjarray2,NINDEG(v),sizeof(GNODE), compare_srcpos);
-#endif
+
 	i = 0;
 	a = NPRED(v);
 	while (a) {
@@ -3421,12 +3419,10 @@ GNODE 	v;
 		adjarray2[i++] = AKANTE(a);
 		a = ANEXT(a);
 	}
-#ifdef ANSI_C
+
 	qsort(adjarray2,NOUTDEG(v),sizeof(GNODE),
 		(int (*) (const void *, const void *))compare_tarpos);
-#else
-	qsort(adjarray2,NOUTDEG(v),sizeof(GNODE),compare_tarpos);
-#endif
+
 	i = 0;
 	a = NSUCC(v);
 	while (a) {

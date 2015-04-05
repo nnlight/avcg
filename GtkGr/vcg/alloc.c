@@ -1163,7 +1163,7 @@ ADJEDGE prededgealloc(GNODE node, GEDGE edge)
 {
 	ADJEDGE e;
         
-	/* assert((EEND(edge)==node)); */
+	assert(EEND(edge)==node);
 	e = edgelist_alloc();
 	AKANTE(e)	= edge;
 	ANEXT(e)  	= NPRED(node);
@@ -1180,7 +1180,7 @@ ADJEDGE succedgealloc(GNODE node, GEDGE edge)
 {
 	ADJEDGE e;   
         
-	/* assert((ESTART(edge)==node)); */
+	assert(ESTART(edge)==node);
 	e = edgelist_alloc();
 	AKANTE(e)	= edge;
 	ANEXT(e) 	= NSUCC(node);
