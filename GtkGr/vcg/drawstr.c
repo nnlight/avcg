@@ -190,12 +190,7 @@ static int myaktxpos, myaktypos;
  *  Set turtle to (x,y) relatively to the origin (myxpos,myypos).
  */
 
-#ifdef ANSI_C
 static void mysetto(int x,int y)
-#else
-static void mysetto(x,y)
-int x,y;
-#endif
 {
 	int s=mystretch;
 	int t=myshrink;
@@ -209,12 +204,7 @@ int x,y;
  *  the origin (myxpos,myypos). Draw this movement with color c.
  */
 
-#ifdef ANSI_C
 static void mymoveto(int x,int y,int c)
-#else
-static void mymoveto(x,y,c)
-int x,y,c;
-#endif
 {
 	int s=mystretch;
 	int t=myshrink;
@@ -317,14 +307,7 @@ static void myoutchar(int c, int col, int underline)
 
 #define MAXCHARS 20000
 
-
-#ifdef ANSI_C
 void gs_printstr(char *s, int c)
-#else
-void gs_printstr(s,c)
-char	*s;
-int	c;
-#endif
 {
 	int	mx,my;		/* origin of the whole string */
 	int 	xcnt, ycnt;	/* counter for the positions  */
@@ -366,11 +349,9 @@ int	c;
 		case '\r': /* Carriage return: ignore */
 		case '\v': /* Vertical tabbing: ignore */
 			break;
-#ifdef ANSI_C
 		case '\a': /* Beep in ANSI C */
 			PRINTF("\a");FFLUSH(stdout);
 			break;
-#endif
 		case '\b': /* Backspace */
 			xcnt--;
 			break;
@@ -444,13 +425,7 @@ int	c;
 int gs_stringw; 
 int gs_stringh; 
 
-
-#ifdef ANSI_C
 void gs_calcstringsize(char *s)
-#else
-void gs_calcstringsize(s)
-char *s;
-#endif
 {
 	int	a,b,c;
 	char	*ss;   
@@ -470,9 +445,7 @@ char *s;
 			break;
 		case '\r': /* Carriage return: ignore */
 		case '\v': /* Vertical tabbing: ignore */
-#ifdef ANSI_C
 		case '\a': /* Beep in ANSI C */
-#endif
 			break;
 		case '\b': /* Backspace */
 			c--;
@@ -539,12 +512,7 @@ char *s;
  *  ------------------------------
  */
 
-#ifdef ANSI_C
 void gs_setto(int x,int y)
-#else
-void gs_setto(x,y)
-int x,y;
-#endif
 {
 	myxpos = x;
 	myypos = y;
@@ -555,12 +523,7 @@ int x,y;
  *  ----------------------------
  */
 
-#ifdef ANSI_C
 void gs_setshrink(int a,int b)
-#else
-void gs_setshrink(a,b)
-int a,b;
-#endif
 {
 	mystretch = a;
 	myshrink  = b;

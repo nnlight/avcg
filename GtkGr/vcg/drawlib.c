@@ -340,13 +340,7 @@ int gs_actbackground;
 int	gs_boxw;
 int	gs_boxh;
 
-
-#ifdef ANSI_C
 void gs_calctextboxsize(GNODE v)
-#else
-void gs_calctextboxsize(v)
-GNODE	v;
-#endif
 {
 	int	border;
 	
@@ -368,12 +362,7 @@ GNODE	v;
  *  or right justified accordung to the flag in v.
  */
 
-#ifdef ANSI_C
 void gs_textbox(GNODE v)
-#else
-void gs_textbox(v)
-GNODE	v;
-#endif
 {
 	int	t;
 	int	border, height, width;
@@ -505,12 +494,7 @@ GNODE	v;
  *  The color is reverted.
  */
 
-#ifdef ANSI_C
 void gs_reverttextbox(GNODE v)
-#else
-void gs_reverttextbox(v)
-GNODE	v;
-#endif
 {
 	int	t;
 	int	border, height, width;
@@ -644,12 +628,7 @@ GNODE	v;
  *  The color is reverted.
  */
 
-#ifdef ANSI_C
 void gs_halfreverttextbox(GNODE	v)
-#else
-void gs_halfreverttextbox(v)
-GNODE	v;
-#endif
 {
 	int	t;
 	int	border, height, width;
@@ -783,12 +762,7 @@ GNODE	v;
  *  No border is drawn. This is used for labels.
  */
 
-#ifdef ANSI_C
 void gs_stringbox(GNODE	v)
-#else
-void gs_stringbox(v)
-GNODE	v;
-#endif
 {
 	int	height, width;
 	int	x,y,w,h;
@@ -882,12 +856,7 @@ GNODE	v;
  *  No border is drawn. This is used for labels.
  */
 
-#ifdef ANSI_C
 static void gs_labelbox(GEDGE e)
-#else
-static void gs_labelbox(e)
-GEDGE	e;
-#endif
 {
 	int	height, width;
 	int	x,y,w,h;
@@ -992,12 +961,7 @@ GEDGE	e;
  *  NO SCALING !!!
  */
 
-#ifdef ANSI_C
 static void	gs_border(int x,int y,int w,int h,int t,int c)
-#else
-static void	gs_border(x, y, w, h, t, c)
-int x, y, w, h, t, c;
-#endif
 {
 	int mx,my,mw,mh;
 
@@ -1053,13 +1017,7 @@ int x, y, w, h, t, c;
  * but the size of the entire box.
  */
 
-
-#ifdef ANSI_C
 void gs_calcrhombsize(GNODE v)
-#else
-void gs_calcrhombsize(v)
-GNODE	v;
-#endif
 {
 	int	border;
 	
@@ -1575,13 +1533,7 @@ static void	gs_rhombborder(int x,int y,int w,int h,int t,int c)
  * but the size of the entire box.
  */
 
-
-#ifdef ANSI_C
 void gs_calctrianglesize(GNODE v)
-#else
-void gs_calctrianglesize(v)
-GNODE	v;
-#endif
 {
 	int	border;
 	
@@ -2183,12 +2135,7 @@ void gs_halfreverttriangle(GNODE v)
  *  NO SCALING !!!
  */
 
-#ifdef ANSI_C
 static void	gs_triborder(int x,int y,int w,int h,int t,int c)
-#else
-static void	gs_triborder(x, y, w, h, t, c)
-int x, y, w, h, t, c;
-#endif
 {
 	switch (G_orientation) {
 	case LEFT_TO_RIGHT:
@@ -2242,13 +2189,7 @@ int x, y, w, h, t, c;
  * but the size of the entire box.
  */
 
-
-#ifdef ANSI_C
 void gs_calcellipsesize(GNODE v)
-#else
-void gs_calcellipsesize(v)
-GNODE	v;
-#endif
 {
 	int	border;
 	
@@ -2271,12 +2212,7 @@ GNODE	v;
  *  to the inner box of the ellipse.
  */
 
-#ifdef ANSI_C
 void gs_ellipse(GNODE v)
-#else
-void gs_ellipse(v)
-GNODE	v;
-#endif
 {
 	int	t;
 	int	border;
@@ -2408,12 +2344,7 @@ GNODE	v;
  *  The color is reverted.
  */
 
-#ifdef ANSI_C
 void gs_revertellipse(GNODE v)
-#else
-void gs_revertellipse(v)
-GNODE	v;
-#endif
 {
 	int	t;
 	int	border;
@@ -2545,12 +2476,7 @@ GNODE	v;
  *  The color is half reverted.
  */
 
-#ifdef ANSI_C
 void gs_halfrevertellipse(GNODE v)
-#else
-void gs_halfrevertellipse(v)
-GNODE	v;
-#endif
 {
 	int	t;
 	int	border;
@@ -2679,12 +2605,7 @@ GNODE	v;
  *  Note: here we could speedup for X11 here.
  */
 
-#ifdef ANSI_C
 static void	gs_ellipsborder(int x,int y,int w,int h,int t,int c)
-#else
-static void	gs_ellipsborder(x, y, w, h, t, c)
-int x, y, w, h, t, c;
-#endif
 {
 	int i,j, old_i,old_j;
 
@@ -2754,12 +2675,7 @@ static void	gs_filledellips(int x,int y,int w,int h,int c1,int c2)
  * Similar for the other orientations.
  */
 
-#ifdef ANSI_C
 static int	gs_arroworientation(int x1,int y1,int x2,int y2)
-#else
-static int	gs_arroworientation(x1, y1, x2, y2)
-int	x1, y1, x2, y2;
-#endif
 {
 	int	delta_x, delta_y, abs_x, abs_y;
 
@@ -2829,13 +2745,7 @@ int	x1, y1, x2, y2;
 
 static int gbl_x1,gbl_x2,gbl_y1,gbl_y2;
 
-#ifdef ANSI_C
 static void draw_arrowhead(GEDGE e, int flag)
-#else
-static void draw_arrowhead(e, flag)
-GEDGE e;
-int flag;
-#endif
 {
 	int c, s, okay, x2, y2, m, ls;
 
@@ -2960,12 +2870,7 @@ int flag;
 
 #ifdef X11
 
-#ifdef ANSI_C
 void x11_followedge_arrow(GEDGE e)
-#else
-void x11_followedge_arrow(e)
-GEDGE	e;
-#endif
 {
 	int	x1, x2, y1, y2, x3, y3, x4, y4, c;
 	int	t,topbend,botbend;
@@ -3027,12 +2932,7 @@ GEDGE	e;
 }
 
 
-#ifdef ANSI_C
 void x11_followedge_anchors(GEDGE e)
-#else
-void x11_followedge_anchors(e)
-GEDGE e;
-#endif
 {
 	GEDGE e1;
 	ADJEDGE a;
@@ -3169,12 +3069,7 @@ GEDGE e;
  *  (G_stretch/G_shrink).
  */
 
-#ifdef ANSI_C
 void	gs_solidarrow(GEDGE e)
-#else
-void	gs_solidarrow(e)
-GEDGE	e;
-#endif
 {
 	int	x1, x2, y1, y2, x3, y3, x4, y4, c;
 	int	t,topbend,botbend;
@@ -3244,12 +3139,7 @@ GEDGE	e;
  * --------------------------------------------------
  */
 
-#ifdef ANSI_C
 static void draw_solidanchors(GEDGE e)
-#else
-static void draw_solidanchors(e)
-GEDGE e;
-#endif
 {
 	GEDGE e1;
 	ADJEDGE a;
@@ -3393,12 +3283,7 @@ GEDGE e;
  * Draw a line from (x1,y1) to (x2,y3) with thickness t and color c
  */
 
-#ifdef ANSI_C
 static void gs_mysolidline(int x1,int y1,int x2,int y2,int t,int c)
-#else
-static void gs_mysolidline(x1,y1,x2,y2,t,c)
-int x1,y1,x2,y2,t,c;
-#endif
 {
 	/* note: checkvisible changes gbl_x1, ..., gbl_y2 again
 	 * such that after check_visible(a,b,c,d) holds:
@@ -3459,12 +3344,7 @@ int x1,y1,x2,y2,t,c;
  *  c is the color. t is the thickness of the line.
  */
 
-#ifdef ANSI_C
 static void	gs_sosolidline(int x1,int y1,int x2,int y2,int t,int c)
-#else
-static void	gs_sosolidline(x1, y1, x2, y2, t, c)
-int	x1, y1, x2, y2, t, c;
-#endif
 {
 	int i,e1,e2;
 
@@ -3492,12 +3372,7 @@ int	x1, y1, x2, y2, t, c;
  *  c is the color. t is the thickness of the line.
  */
 
-#ifdef ANSI_C
 static void	gs_wesolidline(int x1,int y1,int x2,int y2,int t,int c)
-#else
-static void	gs_wesolidline(x1, y1, x2, y2, t, c)
-int	x1, y1, x2, y2, t, c;
-#endif
 {
 	int i,e1,e2;
 
@@ -3525,12 +3400,7 @@ int	x1, y1, x2, y2, t, c;
  *  c is the color. t is the thickness of the line.
  */
 
-#ifdef ANSI_C
 static void	gs_sesolidline(int x1,int y1,int x2,int y2,int t,int c)
-#else
-static void	gs_sesolidline(x1, y1, x2, y2, t, c)
-int	x1, y1, x2, y2, t, c;
-#endif
 {
 	int i,w;
 
@@ -3562,12 +3432,7 @@ int	x1, y1, x2, y2, t, c;
  *  c is the color. t is the thickness of the line.
  */
 
-#ifdef ANSI_C
 static void	gs_swsolidline(int x1,int y1,int x2,int y2,int t,int c)
-#else
-static void	gs_swsolidline(x1, y1, x2, y2, t, c)
-int	x1, y1, x2, y2, t, c;
-#endif
 {
 	int i,w;
 
@@ -3606,12 +3471,7 @@ int	x1, y1, x2, y2, t, c;
  *  (G_stretch/G_shrink).
  */
 
-#ifdef ANSI_C
 void	gs_dashedarrow(GEDGE e)
-#else
-void	gs_dashedarrow(e)
-GEDGE	e;
-#endif
 {
 	int	x1, x2, y1, y2, x3, y3, x4, y4, c;
 	int	t,topbend,botbend;
@@ -3681,12 +3541,7 @@ GEDGE	e;
  * --------------------------------------------------
  */
 
-#ifdef ANSI_C
 static void draw_dashedanchors(GEDGE e)
-#else
-static void draw_dashedanchors(e)
-GEDGE e;
-#endif
 {
 	GEDGE e1;
 	ADJEDGE a;
@@ -3829,12 +3684,7 @@ GEDGE e;
  * Draw a dashed line from (x1,y1) to (x2,y3) with thickness t and color c
  */
 
-#ifdef ANSI_C
 static void gs_mydashedline(int x1,int y1,int x2,int y2,int t,int c)
-#else
-static void gs_mydashedline(x1,y1,x2,y2,t,c)
-int x1,y1,x2,y2,t,c;
-#endif
 {
 	/* note: checkvisible changes gbl_x1, ..., gbl_y2 again
 	 * such that after check_visible(a,b,c,d) holds:
@@ -3894,12 +3744,7 @@ int x1,y1,x2,y2,t,c;
  *  c is the color. t is the thickness of the line.
  */
 
-#ifdef ANSI_C
 static void	gs_sodashedline(int x1,int y1,int x2,int y2,int t,int c)
-#else
-static void	gs_sodashedline(x1, y1, x2, y2, t, c)
-int	x1, y1, x2, y2, t, c;
-#endif
 {
 	int i, h, d;
 	int xx1, xx2, yy1, yy2;
@@ -4023,12 +3868,7 @@ int	x1, y1, x2, y2, t, c;
  *  c is the color. t is the thickness of the line.
  */
 
-#ifdef ANSI_C
 static void	gs_wedashedline(int x1,int y1,int x2,int y2,int t,int c)
-#else
-static void	gs_wedashedline(x1, y1, x2, y2, t, c)
-int	x1, y1, x2, y2, t, c;
-#endif
 {
 	int i, h, d;
 	int xx1, xx2, yy1, yy2;
@@ -4152,12 +3992,7 @@ int	x1, y1, x2, y2, t, c;
  *  c is the color. t is the thickness of the line.
  */
 
-#ifdef ANSI_C
 static void	gs_sedashedline(int x1,int y1,int x2,int y2,int t,int c)
-#else
-static void	gs_sedashedline(x1, y1, x2, y2, t, c)
-int	x1, y1, x2, y2, t, c;
-#endif
 {
 	int i, h, d;
 	int xx1, xx2, yy1, yy2;
@@ -4252,12 +4087,7 @@ int	x1, y1, x2, y2, t, c;
  *  c is the color. t is the thickness of the line.
  */
 
-#ifdef ANSI_C
 static void	gs_swdashedline(int x1,int y1,int x2,int y2,int t,int c)
-#else
-static void	gs_swdashedline(x1, y1, x2, y2, t, c)
-int	x1, y1, x2, y2, t, c;
-#endif
 {
 	int i, h, d;
 	int xx1, xx2, yy1, yy2;
@@ -4358,12 +4188,7 @@ int	x1, y1, x2, y2, t, c;
  *  (G_stretch/G_shrink).
  */
 
-#ifdef ANSI_C
 void	gs_dottedarrow(GEDGE e)
-#else
-void	gs_dottedarrow(e)
-GEDGE	e;
-#endif
 {
 	int	x1, x2, y1, y2, x3, y3, x4, y4, c;
 	int	t,topbend,botbend;
@@ -4433,12 +4258,7 @@ GEDGE	e;
  * --------------------------------------------------
  */
 
-#ifdef ANSI_C
 static void draw_dottedanchors(GEDGE e)
-#else
-static void draw_dottedanchors(e)
-GEDGE e;
-#endif
 {
 	GEDGE e1;
 	ADJEDGE a;
@@ -4583,12 +4403,7 @@ GEDGE e;
  * Draw a dotted line from (x1,y1) to (x2,y3) with thickness t and color c
  */
 
-#ifdef ANSI_C
 static void gs_mydottedline(int x1,int y1,int x2,int y2,int t,int c)
-#else
-static void gs_mydottedline(x1,y1,x2,y2,t,c)
-int x1,y1,x2,y2,t,c;
-#endif
 {
 	/* note: checkvisible changes gbl_x1, ..., gbl_y2 again
 	 * such that after check_visible(a,b,c,d) holds:
@@ -4651,12 +4466,7 @@ int x1,y1,x2,y2,t,c;
  *  c is the color. t is the thickness of the line.
  */
 
-#ifdef ANSI_C
 static void	gs_sodottedline(int x1,int y1,int x2,int y2,int t,int c)
-#else
-static void	gs_sodottedline(x1, y1, x2, y2, t, c)
-int	x1, y1, x2, y2, t, c;
-#endif
 {
 	int i, h, d;
 	int xx1, yy1;
@@ -4766,12 +4576,7 @@ int	x1, y1, x2, y2, t, c;
  *  c is the color. t is the thickness of the line.
  */
 
-#ifdef ANSI_C
 static void	gs_wedottedline(int x1,int y1,int x2,int y2,int t,int c)
-#else
-static void	gs_wedottedline(x1, y1, x2, y2, t, c)
-int	x1, y1, x2, y2, t, c;
-#endif
 {
 	int i, h, d;
 	int xx1, yy1;
@@ -4880,12 +4685,7 @@ int	x1, y1, x2, y2, t, c;
  *  c is the color. t is the thickness of the line.
  */
 
-#ifdef ANSI_C
 static void	gs_sedottedline(int x1,int y1,int x2,int y2,int t,int c)
-#else
-static void	gs_sedottedline(x1, y1, x2, y2, t, c)
-int	x1, y1, x2, y2, t, c;
-#endif
 {
 	int i, h, d;
 	int xx1, yy1;
@@ -4973,12 +4773,7 @@ int	x1, y1, x2, y2, t, c;
  *  c is the color. t is the thickness of the line.
  */
 
-#ifdef ANSI_C
 static void	gs_swdottedline(int x1,int y1,int x2,int y2,int t,int c)
-#else
-static void	gs_swdottedline(x1, y1, x2, y2, t, c)
-int	x1, y1, x2, y2, t, c;
-#endif
 {
 	int i, h, d;
 	int xx1, yy1;
@@ -5070,12 +4865,7 @@ int	x1, y1, x2, y2, t, c;
  * point and their target.
  */
 
-#ifdef ANSI_C
 void    gs_anchornode(GNODE w)
-#else
-void    gs_anchornode(w)
-GNODE w;
-#endif
 {
 	GEDGE e,e1;
 	GNODE v;
@@ -5282,14 +5072,9 @@ GNODE w;
  *  flat factor = 100 means: the curve is maximal bend.
  */ 
 
-#ifdef ANSI_C
 static void gs_bezierspline(
 		int x0,int y0,int x1,int y1,int x2,int y2,int x3,int y3,
 		int t,int c,int m)
-#else
-static void gs_bezierspline(x0,y0,x1,y1,x2,y2,x3,y3,t,c,m)
-int	x0, y0, x1, y1, x2, y2, x3, y3, t, c,m;
-#endif
 {
 	int sx1,sy1,sx2,sy2;
 	int ax,bx,cx;
@@ -5397,14 +5182,8 @@ int	x0, y0, x1, y1, x2, y2, x3, y3, t, c,m;
 /*   Arrowhead drawing						      */
 /*--------------------------------------------------------------------*/
 
-#ifdef ANSI_C
 static void gs_freearrowpoint(int x1, int y1, int x2, int y2, 
 				int size, int color, int mode, int t)
-#else
-static void gs_freearrowpoint(x1, y1, x2, y2, size, color, mode, t)
-int x1, y1, x2, y2;
-int size, color, mode, t;
-#endif
 {
 	int d, ax, ay, bx, by, s1, s2, rx1, rx2, ry1, ry2;
 
@@ -5489,13 +5268,7 @@ int size, color, mode, t;
  * with `size' of katheses and color
  */
 
- 
-#ifdef ANSI_C
 static void	gs_n_arrowpoint(int x,int y,int size,int color,int mode,int t)
-#else
-static void	gs_n_arrowpoint(x, y, size, color, mode, t)
-int	x, y, size, color, mode, t;
-#endif
 {
 	int	i, ax, ay, bx, by;
 
@@ -5529,13 +5302,7 @@ int	x, y, size, color, mode, t;
  * with `size' of katheses and color
  */
 
-
-#ifdef ANSI_C
 static void	gs_ne_arrowpoint(int x,int y,int size,int color,int mode,int t)
-#else
-static void	gs_ne_arrowpoint(x, y, size, color, mode, t)
-int	x, y, size, color, mode, t;
-#endif
 {
 	int	i, ax, ay, bx, by;
 
@@ -5567,13 +5334,7 @@ int	x, y, size, color, mode, t;
  * with `size' of katheses and color
  */
 
-
-#ifdef ANSI_C
 static void	gs_nw_arrowpoint(int x,int y,int size,int color,int mode,int t)
-#else
-static void	gs_nw_arrowpoint(x, y, size, color, mode, t)
-int	x, y, size, color, mode, t;
-#endif
 {
 	int	i, ax, ay, bx, by;
 
@@ -5605,13 +5366,7 @@ int	x, y, size, color, mode, t;
  * with `size' of katheses and color
  */
 
-
-#ifdef ANSI_C
 static void	gs_s_arrowpoint(int x,int y,int size,int color,int mode,int t)
-#else
-static void	gs_s_arrowpoint(x, y, size, color, mode,t)
-int	x, y, size, color, mode, t;
-#endif
 {
 	int	i, ax, ay, bx, by;
 
@@ -5644,13 +5399,7 @@ int	x, y, size, color, mode, t;
  * with `size' of katheses and color
  */
 
-
-#ifdef ANSI_C
 static void	gs_se_arrowpoint(int x,int y,int size,int color,int mode,int t)
-#else
-static void	gs_se_arrowpoint(x, y, size, color, mode, t)
-int	x, y, size, color, mode, t;
-#endif
 {
 	int	i, ax, ay, bx, by;
 
@@ -5682,13 +5431,7 @@ int	x, y, size, color, mode, t;
  * with `size' of katheses and color
  */
 
-
-#ifdef ANSI_C
 static void	gs_sw_arrowpoint(int x,int y,int size,int color,int mode,int t)
-#else
-static void	gs_sw_arrowpoint(x, y, size, color, mode, t)
-int	x, y, size, color, mode, t;
-#endif
 {
 	int	i, ax, ay, bx, by;
 
@@ -5720,13 +5463,7 @@ int	x, y, size, color, mode, t;
  * with `size' of katheses and color
  */
 
-
-#ifdef ANSI_C
 static void	gs_e_arrowpoint(int x,int y,int size,int color,int mode,int t)
-#else
-static void	gs_e_arrowpoint(x, y, size, color, mode,t)
-int	x, y, size, color, mode, t;
-#endif
 {
 	int	i, ax, ay, bx, by;
 
@@ -5759,13 +5496,7 @@ int	x, y, size, color, mode, t;
  * with `size' of katheses and color
  */
 
-
-#ifdef ANSI_C
 static void	gs_w_arrowpoint(int x,int y,int size,int color,int mode,int t)
-#else
-static void	gs_w_arrowpoint(x, y, size, color, mode, t)
-int	x, y, size, color, mode, t;
-#endif
 {
 	int	i, ax, ay, bx, by;
 
@@ -5933,13 +5664,7 @@ int	x, y, size, color, mode, t;
  *  (V_xmin,V_ymin) and (V_xmax-1,V_ymax-1).
  */
 
-
-#ifdef ANSI_C
 static int     check_visible(int a,int b,int c,int d)
-#else
-static int     check_visible(a,b,c,d)
-int	a, b, c, d;	
-#endif
 {
 	int	qab, qcd;
 	int	quadrantrelation;
@@ -6309,13 +6034,7 @@ static int ax[7];
 static int ay[7];
 static int nr_points;
 
-#ifdef ANSI_C
 static void draw_spline(GEDGE e, int first)
-#else
-static void draw_spline(e,first)
-GEDGE e;
-int first;
-#endif
 {
 	GNODE sn,en;
         int     x1, x2, y1, y2, x3, y3, x4, y4, c;
@@ -6496,12 +6215,7 @@ if (first) {
  * ---------------------------------------------------
  */
 
-#ifdef ANSI_C
 static void draw_splineanchors(GEDGE e)
-#else
-static void draw_splineanchors(e)
-GEDGE e;
-#endif
 {
 	GEDGE e1;
 	ADJEDGE a;
@@ -6670,13 +6384,7 @@ GEDGE e;
  *  The one of these edges is e. We a looking for the other edge.
  */
 
-#ifdef ANSI_C
 static GEDGE dummy_continue_edge(GNODE v, GEDGE e)
-#else
-static GEDGE dummy_continue_edge(v,e)
-GNODE v;
-GEDGE e;
-#endif
 {
 	GEDGE e2;
 	CONNECT c;
@@ -6719,12 +6427,7 @@ GEDGE e;
  *  ------------------------------------------------------
  */
 
-#ifdef ANSI_C
 static void draw_start_part(int x0,int y0,int x1,int y1,int c,int t,int m)
-#else
-static void draw_start_part(x0,y0,x1,y1,c,t,m)
-int x0,y0,x1,y1,c,t,m;
-#endif
 {
 	debugmessage("draw_start_part","");
 
@@ -6746,12 +6449,7 @@ int x0,y0,x1,y1,c,t,m;
  *  ------------------------------------------------------
  */
 
-#ifdef ANSI_C
 static void draw_final_part(int x0,int y0,int x1,int y1,int c,int t,int m)
-#else
-static void draw_final_part(x0,y0,x1,y1,c,t,m)
-int x0,y0,x1,y1,c,t,m;
-#endif
 {
 	debugmessage("draw_start_part","");
 
@@ -6779,13 +6477,8 @@ int x0,y0,x1,y1,c,t,m;
 
 static int spl_x0, spl_y0, spl_x2, spl_y2;
 
-#ifdef ANSI_C
 static void draw_spline_part(
 		int x0,int y0,int x1,int y1,int x2,int y2,int c,int t,int m)
-#else
-static void draw_spline_part(x0,y0,x1,y1,x2,y2,c,t,m)
-int x0,y0,x1,y1,x2,y2,c,t,m;
-#endif
 {
 	GNODE v,w;
 	int k,r;
@@ -6910,14 +6603,7 @@ int x0,y0,x1,y1,x2,y2,c,t,m;
  *                /\                    /       \
  */
 
-#ifdef ANSI_C
 static void check_special_dummy(GNODE node,GNODE sn,int x1,int y1)
-#else
-static void check_special_dummy(node,sn,x1,y1)
-GNODE node;
-GNODE sn;
-int x1,y1;
-#endif
 {
 	int cross1, cross2;
 	GEDGE e1,e2,e3,e4;
@@ -6979,13 +6665,7 @@ int x1,y1;
  *  of v is inside the triangle.
  */
 
-#ifdef ANSI_C
 static void check_border_points(GNODE node,int x1,int y1)
-#else
-static void check_border_points(node,x1,y1)
-GNODE node;
-int x1,y1;
-#endif
 {
 	int kx,ky;
 	ADJEDGE a;
@@ -7112,12 +6792,7 @@ int x1,y1;
  *  of v is inside the triangle.
  */
 
-#ifdef ANSI_C
 static void check_spline_point(int kx,int ky,int x1,int y1)
-#else
-static void check_spline_point(kx,ky,x1,y1)
-int kx,ky,x1,y1;
-#endif
 {
 	int ngx0,ngx2,ngy0,ngy2;
 	int gradAZ, gradAN, gradBZ, gradBN;

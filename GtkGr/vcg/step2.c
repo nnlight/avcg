@@ -1405,12 +1405,7 @@ static int level_crossing_optimization(int level,int nearedges)
  * ----------------------------------------------
  */
 
-#ifdef ANSI_C
 static void local_crossing_optimization(int nearedges)
-#else
-static void local_crossing_optimization(nearedges)
-int nearedges;
-#endif
 {
 	int i;
 
@@ -1457,11 +1452,7 @@ int nearedges;
  * --------------------------------------------------
  */
 
-#ifdef ANSI_C
 static void prepare_positions(void)
-#else
-static void prepare_positions()
-#endif
 {
 	GNLIST h1;
 	int i,j;
@@ -1487,12 +1478,7 @@ static void prepare_positions()
  * to split edges that cross levels.
  */
 
-#ifdef ANSI_C
 static int is_complex(GNODE v)
-#else
-static int is_complex(v)
-GNODE v;
-#endif
 {
 	ADJEDGE a;
 
@@ -1520,14 +1506,7 @@ GNODE v;
  * neighboured.
  */
 
-#ifdef ANSI_C
-static int check_exchange(GNODE v1,GNODE v2,int dir)
-#else
-static int check_exchange(v1,v2,dir)
-GNODE v1;
-GNODE v2;
-int dir;
-#endif
+static int check_exchange(GNODE v1, GNODE v2, int dir)
 {
 	int d1,d2;
 	GNODE n1,n2;
@@ -1560,14 +1539,7 @@ int dir;
  * The NPOS-numbers are updated, too.
  */
 
-#ifdef ANSI_C
-static void do_exchange(GNODE v1,GNODE v2,int dir)
-#else
-static void do_exchange(v1,v2,dir)
-GNODE v1;
-GNODE v2;
-int dir;
-#endif
+static void do_exchange(GNODE v1, GNODE v2, int dir)
 {
 	int 	d1,d2,h;
 	GNODE 	n1,n2;
@@ -1614,12 +1586,7 @@ int dir;
  * ------------------------------------------------------
  */
 
-#ifdef ANSI_C
 static void unwind_crossed_edges(GNODE v)
-#else
-static void unwind_crossed_edges(v)
-GNODE v;
-#endif
 {
 	ADJEDGE a1,a2;
 
@@ -1654,11 +1621,7 @@ GNODE v;
  * -----------------------------------------
  */
 
-#ifdef ANSI_C
 static void local_unwind_crossings(void)
-#else
-static void local_unwind_crossings()
-#endif
 {
 	GNODE v;
 
@@ -1699,11 +1662,7 @@ static int phase1_allowed;
  * --------------------------------
  */
 
-#ifdef ANSI_C
 static void init_barycentering(void)
-#else
-static void init_barycentering()
-#endif
 {
 	have_alternative = 0;
 	phase1_allowed   = 1;
@@ -1749,11 +1708,7 @@ static void init_barycentering()
 
 static int phase2_startlevel;
 
-#ifdef ANSI_C
 static void    barycentering(void)
-#else
-static void    barycentering()
-#endif
 {
 	int alt;	/* temporary flag: exist an alternative ? */
 	int cross;	/* number crossings of tmp_layer          */
@@ -1919,12 +1874,7 @@ static void    barycentering()
  *  and sorts a the nodes of each level according to the predbary values.
  */
 
-
-#ifdef ANSI_C
 static void    Phase1_down(void)
-#else
-static void    Phase1_down()
-#endif
 {
         int     i;
 
@@ -1946,11 +1896,7 @@ static void    Phase1_down()
  *  and sorts a the nodes of each level according to the succbary values.
  */
 
-#ifdef ANSI_C
 static void    Phase1_up(void)
-#else
-static void    Phase1_up()
-#endif
 {
         int     i;
 
@@ -1976,12 +1922,7 @@ static void    Phase1_up()
  *  We return 1 if this step has changed level i+1.
  */
 
-#ifdef ANSI_C
 static int     resort_down_layer(int i)
-#else
-static int     resort_down_layer(i)
-int     i;
-#endif
 {
 	int c;
 	int j;
@@ -2040,12 +1981,7 @@ int     i;
  *  We return 1 if this step has changed level i.
  */
 
-#ifdef ANSI_C
 static int     resort_up_layer(int i)
-#else
-static int     resort_up_layer(i)
-int     i;
-#endif
 {
 	int c;
 	int j;
@@ -2120,12 +2056,7 @@ int     i;
  *  traversal from the layer locally downwards and upwards through the layers.
  */
 
-
-#ifdef ANSI_C
 static void    Phase2_down(void)
-#else
-static void    Phase2_down()
-#endif
 {
         int     i,j;
 	int 	cross;
@@ -2240,12 +2171,7 @@ static void    Phase2_down()
  *  traversal from the layer locally downwards and upwards through the layers.
  */
 
-
-#ifdef ANSI_C
 static void    Phase2_up(void)
-#else
-static void    Phase2_up()
-#endif
 {
         int     i,j;
 	int 	cross;
@@ -2363,12 +2289,7 @@ static void    Phase2_up()
  *  changes anymore.
  */
 
-#ifdef ANSI_C
 static void	resort_up_down_layer(int level)
-#else
-static void	resort_up_down_layer(level)
-int level;
-#endif
 {
 	int change;
 	int i;
@@ -2401,12 +2322,7 @@ int level;
  *  changes anymore.
  */
 
-#ifdef ANSI_C
 static void	resort_down_up_layer(int level)
-#else
-static void	resort_down_up_layer(level)
-int level;
-#endif
 {
 	int change;
 	int i;
@@ -2438,12 +2354,7 @@ int level;
  *  is NOT in the original situation.
  */
 
-#ifdef ANSI_C
 static int 	cycle_sort_array(int siz)
-#else
-static int 	cycle_sort_array(siz)
-int siz;
-#endif
 {
 	int j,k;
 	int original_sit;  /* flag: original situation reached      */
@@ -2491,12 +2402,7 @@ int siz;
  *  succbary(v) = ( Sum pos(successors(v)) ) / outdegree(v) )
  */
 
-#ifdef ANSI_C
 static float   succbary(GNODE node)
-#else
-static float   succbary(node)
-GNODE	node;
-#endif
 {
 	int	Sum;
 	ADJEDGE	w;
@@ -2521,12 +2427,7 @@ GNODE	node;
  *  predbary(v) = ( Sum pos(predecessors(v)) ) / indegree(v) )
  */
 
-#ifdef ANSI_C
 static float	predbary(GNODE node)
-#else
-static float	predbary(node)
-GNODE	node;
-#endif
 {
 	int	Sum;
 	ADJEDGE	w;
@@ -2561,12 +2462,7 @@ GNODE	node;
  *  median = ((13-5) * 49 + (62-57) * 13) /  (13-5+62-57) = 35.153
  */
 
-#ifdef ANSI_C
 static float   succmedian(GNODE	node)
-#else
-static float   succmedian(node)
-GNODE	node;
-#endif
 {
 	int	i, leftpart, rightpart;
 	ADJEDGE	w;
@@ -2613,12 +2509,7 @@ GNODE	node;
  *  See Succmedian for explanations.
  */
 
-#ifdef ANSI_C
 static float   predmedian(GNODE	node)
-#else
-static float   predmedian(node)
-GNODE	node;
-#endif
 {
 	int	i, leftpart, rightpart;
 	ADJEDGE	w;
@@ -2670,13 +2561,7 @@ GNODE	node;
  *  Dito may happen with predecessors and predbary.
  */
  
-#ifdef ANSI_C
 static int 	compare_bary(const GNODE *a, const GNODE *b)
-#else
-static int 	compare_bary(a,b)
-GNODE	*a;
-GNODE   *b;
-#endif
 { 
         if ((NBARY(*a)==0.0) || (NBARY(*b)==0.0)) return(0);
 	if (NBARY(*a) > NBARY(*b))	          return(1);
@@ -2691,13 +2576,7 @@ GNODE   *b;
  *  returns 1 if NPOS(*a) > NPOS(*b), 0 if equal, -1 otherwise.
  */
  
-#ifdef ANSI_C
 static int 	compare_pos(const GNODE *a, const GNODE *b)
-#else
-static int 	compare_pos(a,b)
-GNODE	*a;
-GNODE     *b;
-#endif
 { 
 	if (NPOS(*a) > NPOS(*b))   return(1);
 	if (NPOS(*a) < NPOS(*b))   return(-1);
@@ -2726,12 +2605,7 @@ GNODE     *b;
 
 static unsigned int rand_num = 211;
 
-#ifdef ANSI_C
 static void 	myqsort(int l, int r)
-#else
-static void 	myqsort(l, r)
-int l, r;
-#endif
 {
 	int   i, j, k;
 	GNODE v, t;
@@ -2767,7 +2641,7 @@ int l, r;
         if (j+1<r) myqsort(j+1,r);
 }
 
-#endif
+#endif /* OWN_QUICKSORT */
 
 
 /*--------------------------------------------------------------------*/
@@ -2782,13 +2656,7 @@ int l, r;
  *  Note the size of the layer is as long as the size of the array.
  */
 
-#ifdef ANSI_C
 static void	level_to_array(int i,int dir)
-#else
-static void	level_to_array(i,dir)
-int i;
-int dir;
-#endif
 {
 	int j;
 	GNLIST hn;
@@ -2822,12 +2690,7 @@ int dir;
  *  Note the size of the layer is as long as the size of the array.
  */
 
-#ifdef ANSI_C
 static void	array_to_level(int i)
-#else
-static void	array_to_level(i)
-int i;
-#endif
 {
 	int j;
 	GNLIST hn;
@@ -2848,12 +2711,7 @@ int i;
  *  This is done to store the tmp_layer[i] temporary.
  */
 
-#ifdef ANSI_C
 static void	save_level(int i)
-#else
-static void	save_level(i)
-int i;
-#endif
 {
 	int j;
 	GNLIST hn;
@@ -2873,12 +2731,7 @@ int i;
  *  This is done to restore the tmp_layer[i].
  */
 
-#ifdef ANSI_C
 static void	restore_level(int i)
-#else
-static void	restore_level(i)
-int i;
-#endif
 {
 	int j;
 	GNLIST hn;
@@ -2900,13 +2753,7 @@ int i;
  *  sorting it according to NHORDER and storing it back. 
  */
 
-
-#ifdef ANSI_C
 static void apply_horder(int i)
-#else
-static void apply_horder(i)
-int i;
-#endif
 {
 	GNLIST hn;
 	int j;
@@ -2955,13 +2802,7 @@ int i;
  *  They are recreated later.
  */
 
-#ifdef ANSI_C
-static void copy_layers(DEPTH *l1,DEPTH *l2)
-#else
-static void copy_layers(l1,l2)
-DEPTH *l1;
-DEPTH *l2;
-#endif
+static void copy_layers(DEPTH *l1, DEPTH *l2)
 {
         int     i;
 	GNLIST  h1,h2;
@@ -3021,11 +2862,7 @@ DEPTH *l2;
 #define forward_connection1(c)  ((CEDGE(c))&& (EEND(CEDGE(c))==CTARGET(c)))
 #define forward_connection2(c)  ((CEDGE2(c))&&(EEND(CEDGE2(c))==CTARGET2(c)))
 
-#ifdef ANSI_C
 static void insert_connects_in_layer(void)
-#else
-static void insert_connects_in_layer()
-#endif
 {
 	int i,j;
 	GNLIST 	hl,hln;
@@ -3087,13 +2924,7 @@ static GNLIST *insertpoint;	/* *insertpoint becomes leftlist           */
 static GNLIST middlepoint;      /* GNNEXT(middlepoint) becomes rightlist   */
 static GNLIST endpoint;		/* GNNEXT(rightlistend) will point to this */
 
-#ifdef ANSI_C
 static void check_connect(int level,GNODE node)
-#else
-static void check_connect(level,node)
-int    level;
-GNODE  node;
-#endif
 {
 	CONNECT c;
 	int 	j,clr, crl;
@@ -3178,13 +3009,7 @@ GNODE  node;
  * is recalculated.
  */
 
-#ifdef ANSI_C
 static void insert_left_right(int level,GNODE node)
-#else
-static void insert_left_right(level,node)
-int level;
-GNODE node;
-#endif
 {
 	GNLIST hl,*hlp;
 	int j;
@@ -3237,13 +3062,7 @@ GNODE node;
  * of the connection nodes.
  */
 
-#ifdef ANSI_C
 static void left_conn_list(GNODE v,GNODE w)
-#else
-static void left_conn_list(v,w)
-GNODE v;
-GNODE w;
-#endif
 {
 	GNLIST h;
 	ADJEDGE e;
@@ -3280,13 +3099,7 @@ GNODE w;
  * of the connection nodes.
  */
 
-#ifdef ANSI_C
 static void right_conn_list(GNODE v,GNODE w)
-#else
-static void right_conn_list(v,w)
-GNODE v;
-GNODE w;
-#endif
 {
 	GNLIST h;
 	ADJEDGE e;
@@ -3329,11 +3142,7 @@ GNODE w;
  * NPREDL, NPREDR.
  */
 
-#ifdef ANSI_C
 static void 	recreate_predlists(void)
-#else
-static void 	recreate_predlists()
-#endif
 {
 	GNLIST h1,h2;
 	int i,j,k;
@@ -3380,12 +3189,7 @@ static void 	recreate_predlists()
  *  is very small.
  */
 
-#ifdef ANSI_C
 static void sort_adjedges(GNODE	v)
-#else
-static void sort_adjedges(v)
-GNODE 	v;
-#endif
 {
 	int i;
 	ADJEDGE a;
@@ -3442,26 +3246,14 @@ GNODE 	v;
  *  returns 1 if NPOS(*a) > NPOS(*b), 0 if equal, -1 otherwise
  */
  
-#ifdef ANSI_C
 static int compare_srcpos(const GEDGE *a, const GEDGE *b)
-#else
-static int compare_srcpos(a,b)
-GEDGE	*a;
-GEDGE     *b;
-#endif
 { 
 	if (NPOS(ESTART(*a)) > NPOS(ESTART(*b)))	return(1);
 	if (NPOS(ESTART(*a)) < NPOS(ESTART(*b)))	return(-1);
 	return(0);
 }
 
-#ifdef ANSI_C
 static int compare_tarpos(const GEDGE *a, const GEDGE *b)
-#else
-static int compare_tarpos(a,b)
-GEDGE	*a;
-GEDGE     *b;
-#endif
 { 
 	if (NPOS(EEND(*a)) > NPOS(EEND(*b)))	return(1);
 	if (NPOS(EEND(*a)) < NPOS(EEND(*b)))	return(-1);
@@ -3484,11 +3276,7 @@ GEDGE     *b;
 
 #ifdef DEBUG
 
-#ifdef ANSI_C
 void    db_output_all_layers(void)
-#else
-void    db_output_all_layers()
-#endif
 {
 	int i;
 	for (i=0; i<=maxdepth+1; i++) db_output_layer(i); 
@@ -3504,12 +3292,7 @@ void    db_output_all_layers()
 
 #ifdef DEBUG
 
-#ifdef ANSI_C
 void    db_output_layer(int i)
-#else
-void    db_output_layer(i)
-int     i;
-#endif
 {
         GNLIST	li;
 	ADJEDGE li2;
@@ -3552,13 +3335,7 @@ int     i;
 
 #ifdef DEBUG
 
-#ifdef ANSI_C
-int db_check_proper(GNODE v,int level)
-#else
-int db_check_proper(v,level)
-GNODE v;
-int level;
-#endif
+int db_check_proper(GNODE v, int level)
 {
 	int t;
 	char *title,*st,*tt;

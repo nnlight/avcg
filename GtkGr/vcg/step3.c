@@ -228,11 +228,7 @@ GNLIST	 *tpred_connection2 = NULL;
 static int firstcall = 1;
 #endif
 
-#ifdef ANSI_C
 void	step3_main(void)
-#else
-void	step3_main()
-#endif
 {
 	start_time();
 	debugmessage("step3_main","");
@@ -1009,11 +1005,7 @@ static int min_nw2 = MAXINT;
 static int jump_done1 = 0;
 static int jump_done2 = 0;
 
-#ifdef ANSI_C
 static void iterate_dump_mediumshifts(void)
-#else
-static void iterate_dump_mediumshifts()
-#endif
 {
 	int count;
 	int changed;
@@ -1073,11 +1065,7 @@ static void iterate_dump_mediumshifts()
  * or a rightest x-position of a level that has increased.
  */
 
-#ifdef ANSI_C
 static int changed_nw_sum(void)
-#else
-static int changed_nw_sum() 
-#endif
 {
 	int i, nwval1, nwval2, k;
 	int changed;
@@ -1151,12 +1139,7 @@ static int changed_nw_sum()
  * become nearly the width of the most dense layer.
  */
 
-#ifdef ANSI_C
 static int dumpmediumshift(int first)
-#else
-static int dumpmediumshift(first)
-int first;
-#endif
 {
 	int i;
 	int layer_changed;
@@ -1230,12 +1213,7 @@ int first;
  *  -------------------
  */
 
-#ifdef ANSI_C
 static int is_fullprio_node(GNODE v) 
-#else
-static int is_fullprio_node(v) 
-GNODE v;
-#endif
 {
 	int	nr_edges;
 	int 	pr;
@@ -1267,12 +1245,7 @@ GNODE v;
  *  -----------------------------
  */
 
-#ifdef ANSI_C
 static int is_prio_snode(GNODE v) 
-#else
-static int is_prio_snode(v) 
-GNODE v;
-#endif
 {
 	int	nr_edges;
 	ADJEDGE a;
@@ -1292,12 +1265,7 @@ GNODE v;
  *  --------------------------------
  */
 
-#ifdef ANSI_C
 static int is_prio_pnode(GNODE v) 
-#else
-static int is_prio_pnode(v) 
-GNODE v;
-#endif
 {
 	int	nr_edges;
 	ADJEDGE a;
@@ -1337,13 +1305,7 @@ GNODE v;
  *                  N   M             N   M
  */
 
-#ifdef ANSI_C
-static int nwsdump_mediumshift(int i,int dir)
-#else
-static int nwsdump_mediumshift(i,dir)
-int i;
-int dir;
-#endif
+static int nwsdump_mediumshift(int i, int dir)
 {
 	GNLIST	li;
 	int	j;
@@ -1405,13 +1367,7 @@ int dir;
  *          Y  X  Z   K           Y X Z  K   (K is shifted even if nwp(K)=0)
  */
 
-#ifdef ANSI_C
-static int nwpdump_mediumshift(int i,int dir)
-#else
-static int nwpdump_mediumshift(i,dir)
-int i;
-int dir;
-#endif
+static int nwpdump_mediumshift(int i, int dir)
 {
 	GNLIST	li;
 	int	j;
@@ -1462,13 +1418,7 @@ int dir;
  *
  */
 
-#ifdef ANSI_C
-static int nwdump_mediumshift(int i,int dir)
-#else
-static int nwdump_mediumshift(i,dir)
-int i;
-int dir;
-#endif
+static int nwdump_mediumshift(int i, int dir)
 {
 	GNLIST	li, li1;
 	int	j;
@@ -1527,13 +1477,7 @@ int dir;
       			||(NX(w)-NX(v)-NWIDTH(v)<=2*G_xraster)) 
 
 
-#ifdef ANSI_C
-static int summarize_dumpshift(int i,int dir)
-#else
-static int summarize_dumpshift(i,dir)
-int i;
-int dir;
-#endif
+static int summarize_dumpshift(int i, int dir)
 {
 	GNLIST	li;
 	int	j;
@@ -1663,14 +1607,7 @@ int dir;
  * blocked. 
  */
 
-
-#ifdef ANSI_C
-static int priosummarize_dumpshift(int i,int dir)
-#else
-static int priosummarize_dumpshift(i,dir)
-int i;
-int dir;
-#endif
+static int priosummarize_dumpshift(int i, int dir)
 {
 	GNLIST	li;
 	int	j;
@@ -1831,12 +1768,7 @@ int dir;
 
 
 
-#ifdef ANSI_C
 static int correct_priority_nodes(int i)
-#else
-static int correct_priority_nodes(i)
-int i;
-#endif
 {
 	GNLIST	li;
 	int	j, k, changed;
@@ -1951,11 +1883,7 @@ int i;
 /*--------------------------------------------------------------------*/
 
 
-#ifdef ANSI_C
 static void straight_line_tuning(void)
-#else
-static void straight_line_tuning()
-#endif
 {
 	int i, count;
 	int changed;
@@ -1994,12 +1922,7 @@ static void straight_line_tuning()
 
 
 
-#ifdef ANSI_C
 static int do_straight_line(GNODE v)
-#else
-static int do_straight_line(v)
-GNODE v;
-#endif
 {
 	GNODE 	w, sw, tw, minw, maxw;
 	ADJEDGE a;
@@ -2295,15 +2218,7 @@ GNODE v;
 
 
 
-
-#ifdef ANSI_C
 static int full_straight_possible(GNODE sw, int sxpos, int dir)
-#else
-static int full_straight_possible(sw, sxpos, dir)
-GNODE sw;
-int sxpos;
-int dir;
-#endif
 {
 	GNODE 	w, nw;
 	GNLIST	li;
@@ -2364,15 +2279,7 @@ int dir;
 
 
 
-
-#ifdef ANSI_C
 static void straight_part(GNODE sw, int sxpos, int dir)
-#else
-static void straight_part(sw, sxpos, dir)
-GNODE sw;
-int sxpos;
-int dir;
-#endif
 {
 	GNODE 	w, nw;
 	GNLIST	li;
@@ -2449,11 +2356,7 @@ int dir;
  *	   nw(node) = G(node) / number(edges to n)
  */
 
-#ifdef ANSI_C
 static void iterate_centershifts(void)
-#else
-static void iterate_centershifts()
-#endif
 {
 	int	i,count;
 	int	weight,h;
@@ -2505,11 +2408,7 @@ static void iterate_centershifts()
  *  This is  sum( abs(G(all nodes)) )
  */
 
-#ifdef ANSI_C
 static int center_weight(void)
-#else
-static int center_weight()
-#endif
 {
 	int	i;
 	GNLIST	li;
@@ -2555,12 +2454,7 @@ static int center_weight()
  *	       C  D		  C    D
  */
 
-#ifdef ANSI_C
 static int center_layer(int i)
-#else
-static int center_layer(i)
-int i;
-#endif
 {
 	GNLIST	li, li1;
 	int	j;
@@ -2736,12 +2630,7 @@ static int	do_rightshifts(int i)
  *     |/_			_\|
  */
 
-#ifdef ANSI_C
 static int	ews(GEDGE edge)
-#else
-static int	ews(edge)
-GEDGE	edge;
-#endif
 {
 	GNODE	start, ende;
 	int 	x1,x2;
@@ -2754,12 +2643,7 @@ GEDGE	edge;
 }
 
 
-#ifdef ANSI_C
 static int	ewp(GEDGE edge)
-#else
-static int	ewp(edge)
-GEDGE	edge;
-#endif
 {
 	GNODE	start, ende;
 	int 	x1,x2;
@@ -2783,12 +2667,7 @@ GEDGE	edge;
  * nwp(n) > 0  => shift n to the right
  */
 
-#ifdef ANSI_C
 static int	nws(GNODE node)
-#else
-static int	nws(node)
-GNODE	node;
-#endif
 {
 	int     h;
 	int	weight;
@@ -2834,12 +2713,7 @@ GNODE	node;
 }
 
 
-#ifdef ANSI_C
 static int	nwp(GNODE node)
-#else
-static int	nwp(node)
-GNODE	node;
-#endif
 {
 	int     h;
 	int	weight;
@@ -2908,12 +2782,7 @@ GNODE	node;
  * nw(n) > 0  => shift n to the right
  */
 
-#ifdef ANSI_C
 static int	nw(GNODE node)
-#else
-static int	nw(node)
-GNODE	node;
-#endif
 {
 	int	weight;
 	int     dx1, dx2, dy1, dy2;
@@ -3037,12 +2906,7 @@ GNODE	node;
  *  nwbend(n) < 0  => shift n to the lefti, etc.
  */
 
-#ifdef ANSI_C
 static int	nwbend(GNODE node,GNODE lnode,GNODE rnode)
-#else
-static int	nwbend(node, lnode, rnode)
-GNODE	node, lnode, rnode;
-#endif
 {
 	GNODE pred, succ;
 	int ax,ay,mx,my,bx,by,kx,h, dist;
@@ -3113,12 +2977,7 @@ GNODE	node, lnode, rnode;
  *  Both arrays are initialized, further.
  */
 
-#ifdef ANSI_C
 static void	save_plevel(int i)
-#else
-static void	save_plevel(i)
-int i;
-#endif
 {
 	int j;
 	GNLIST hn;
@@ -3143,13 +3002,7 @@ int i;
 
 #ifdef DRAWDEBUG
 
-#ifdef ANSI_C
-static void drawdebug_show_graph(char *m,int i,int j,int k)
-#else
-static void drawdebug_show_graph(m,i,j,k)
-char *m;
-int i,j,k;
-#endif
+static void drawdebug_show_graph(char *m, int i, int j, int k)
 {
 	PRINTF("%s %d (%d %d)\n",m,i,j,k);
 	PRINTF("Enter CR into the text window\n");

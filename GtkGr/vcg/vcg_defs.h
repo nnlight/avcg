@@ -470,14 +470,10 @@ typedef struct gedge
 	char	arrowcolor2;
 	char	labelcolor;
 
-#ifdef ANSI_C
 #ifdef VMS
 	int     anchor;
 #else
 	signed char    anchor;
-#endif
-#else
-	int     anchor;
 #endif
 
 	/* The layout decides wether an edge is visible or reverted, etc. */

@@ -1,5 +1,3 @@
-/* SCCS-info %W% %E% */
- 
 /*--------------------------------------------------------------------*/
 /*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
@@ -17,11 +15,6 @@
 /*   status:       in work                                            */
 /*                                                                    */
 /*--------------------------------------------------------------------*/
-
-
-#ifndef lint
-static char *id_string="$Id: step4.c,v 3.10 1995/02/08 11:11:14 sander Exp $";
-#endif
 
 
 /*
@@ -44,63 +37,6 @@ static char *id_string="$Id: step4.c,v 3.10 1995/02/08 11:11:14 sander Exp $";
  *
  *  The software is available per anonymous ftp at ftp.cs.uni-sb.de.
  *  Contact  sander@cs.uni-sb.de  for additional information.
- */
-
-
-/* 
- * $Log: step4.c,v $
- * Revision 3.10  1995/02/08  11:11:14  sander
- * Distribution version 1.3.
- *
- * Revision 3.9  1994/12/23  18:12:45  sander
- * Manhatten layout added.
- * Option interface cleared.
- *
- * Revision 3.8  1994/11/23  14:50:47  sander
- * Bug in calc_bot_bendings corrected.
- *
- * Revision 3.7  1994/08/05  12:13:25  sander
- * Treelayout added. Attributes "treefactor" and "spreadlevel" added.
- * Scaling as abbreviation of "stretch/shrink" added.
- *
- * Revision 3.6  1994/08/02  15:36:12  sander
- * Minor change. Some debugmessages added.
- *
- * Revision 3.5  1994/06/07  14:09:59  sander
- * Splines implemented.
- * HP-UX, Linux, AIX, Sun-Os, IRIX compatibility tested.
- * The tool is now ready to be distributed.
- *
- * Revision 3.4  1994/05/17  16:39:00  sander
- * attribute node_align added to allow nodes to be centered in the levels.
- *
- * Revision 3.3  1994/05/16  08:56:03  sander
- * shape attribute (boxes, rhombs, ellipses, triangles) added.
- *
- * Revision 3.2  1994/04/27  16:05:19  sander
- * Some general changes for the PostScript driver.
- * Horizontal order added. Bug fixes of the folding phases:
- * Folding of nested graphs works now.
- *
- * Revision 3.1  1994/03/01  10:59:55  sander
- * Copyright and Gnu Licence message added.
- * Problem with "nearedges: no" and "selfloops" solved.
- *
- * Revision 2.5  1994/02/14  11:03:24  sander
- * Menu point `Node Information -> Statistics' added.
- * It is now possible to get a statistics of the visibility
- * of nodes and edges.
- *
- * Revision 2.4  1994/01/21  19:33:46  sander
- * VCG Version tested on Silicon Graphics IRIX, IBM R6000 AIX and Sun 3/60.
- * Option handling improved. Option -grabinputfocus installed.
- * X11 Font selection scheme implemented. The user can now select a font
- * during installation.
- * Sun K&R C (a nonansi compiler) tested. Some portabitility problems solved.
- *
- * Revision 2.3  1994/01/03  15:29:06  sander
- * First complete X11 version.
- *
  */
 
 
@@ -236,11 +172,7 @@ static void 	flip_ver_edge		_PP((GEDGE e));
 /*  Calculation of co-ordinates of edges                              */
 /*--------------------------------------------------------------------*/
 
-#ifdef ANSI_C
 void	step4_main(void)
-#else
-void	step4_main()
-#endif
 {
         start_time();
 	debugmessage("step4_main","");
@@ -321,12 +253,7 @@ void	step4_main()
  *   EWEIGHTS and EWEIGHTP become the port number of an edge 
  */
 
-#ifdef ANSI_C
 void	calc_all_ports(int xypos_avail)
-#else
-void	calc_all_ports(xypos_avail)
-int xypos_avail;
-#endif
 {
 	GNODE   v;
 
@@ -361,14 +288,7 @@ int xypos_avail;
  *                  |    |        EWEIGHTS(e) = 1 .. 2
  */
 
-
-#ifdef ANSI_C
 void calc_node_ports(GNODE v,int xypos_avail)
-#else
-void calc_node_ports(v,xypos_avail)
-GNODE 	v;
-int xypos_avail;
-#endif
 {
 	int act_port;
 	int act_pcol, act_pstyle, act_psize;
@@ -557,11 +477,7 @@ int xypos_avail;
  *  that ETBENDY and EBBENDY are corrected later.
  */
 
-#ifdef ANSI_C
 static void calc_all_edge_xy(void)
-#else
-static void calc_all_edge_xy()
-#endif
 {
 	GNODE   v;
 
@@ -590,12 +506,7 @@ static void calc_all_edge_xy()
  *  because the ports should be distingishable in the drawing.
  */
 
-#ifdef ANSI_C
 void calc_edge_xy(GNODE v)
-#else
-void calc_edge_xy(v)
-GNODE v;
-#endif
 {
 	int node_x,node_y,node_width,node_height;
 	int node_predports,node_succports, dist, dist1;
@@ -763,11 +674,7 @@ GNODE v;
  * layout, it holds ETBENDY==EBBENDY.
  */
 
-#ifdef ANSI_C
 static void 	calc_manhatten(void)
-#else
-static void 	calc_manhatten()
-#endif
 {
 	GNLIST li;
 	int topbendp, botbendp;
@@ -843,12 +750,7 @@ static  DLLIST  upper_list_end = NULL;  /* and its end                   */
 static  int 	upperxpos;
 static  int 	lowerxpos;
 
-#ifdef ANSI_C
 static int 	fill_row_indicators(int level)
-#else
-static int 	fill_row_indicators(level)
-int level;
-#endif
 {
 	GNLIST li1, li2;
 	ADJEDGE a1, a2;
@@ -925,13 +827,7 @@ int level;
  * the maximal number of rows is recalculated.
  */
 
-#ifdef ANSI_C
 static void 	finish_upper(GNODE v, int xpos)
-#else
-static void 	finish_upper(v, xpos)
-GNODE v;
-int xpos;
-#endif
 {
 	ADJEDGE a;
 	GEDGE ee;
@@ -982,13 +878,7 @@ int xpos;
  * This is symmetrical to finish_upper.
  */
 
-#ifdef ANSI_C
-static void 	finish_lower(GNODE v,int xpos)
-#else
-static void 	finish_lower(v, xpos)
-GNODE v;
-int xpos;
-#endif
+static void 	finish_lower(GNODE v, int xpos)
 {
 	ADJEDGE a;
 	GEDGE ee;
@@ -1041,13 +931,7 @@ int xpos;
  *  --------------------------------------
  */
 
-#ifdef ANSI_C
 static void	append_to_upper(GEDGE e, GNODE n)
-#else
-static void	append_to_upper(e, n)
-GEDGE 	e;
-GNODE	n;
-#endif
 {
 	DLLIST	d;
 
@@ -1070,13 +954,7 @@ GNODE	n;
  *  --------------------------------------
  */
 
-#ifdef ANSI_C
 static void	append_to_lower(GEDGE e, GNODE n)
-#else
-static void	append_to_lower(e, n)
-GEDGE 	e;
-GNODE	n;
-#endif
 {
 	DLLIST	d;
 
@@ -1099,12 +977,7 @@ GNODE	n;
  *  -----------------------------
  */
 
-#ifdef ANSI_C
 static void 	delete_upper(DLLIST x)
-#else
-static void 	delete_upper(x)
-DLLIST x;
-#endif
 {
 	assert((x));
 	assert((DNODE(x)));
@@ -1123,12 +996,7 @@ DLLIST x;
  *  -----------------------------
  */
 
-#ifdef ANSI_C
 static void 	delete_lower(DLLIST x)
-#else
-static void 	delete_lower(x)
-DLLIST x;
-#endif
 {
 	assert((x));
 	assert((DNODE(x)));
@@ -1149,12 +1017,7 @@ DLLIST x;
  * ---------------------------------------------------------------
  */
 
-#ifdef ANSI_C
 static void 	evaluate_row_indicators(int level, int maxr, int miny, int maxy)
-#else
-static void 	evaluate_row_indicators(level, maxr, miny, maxy)
-int level, maxr, miny, maxy;
-#endif
 {
 	GNLIST li;
         ADJEDGE a;
@@ -1267,12 +1130,7 @@ int level, maxr, miny, maxy;
  *  be more the the height of the largest node of the level.
  */
 
-
-#ifdef ANSI_C
 static void calc_all_bendpoints(void)
-#else
-static void calc_all_bendpoints()
-#endif
 {
 	int i,j;
 	GNLIST li;
@@ -1420,13 +1278,7 @@ static void calc_all_bendpoints()
  *  If something has changed, we return 1.
  */
 
-#ifdef ANSI_C
-static int set_topbendpoint(GNLIST li,int bendp)
-#else
-static int set_topbendpoint(li,bendp)
-GNLIST li;
-int    bendp;
-#endif
+static int set_topbendpoint(GNLIST li, int bendp)
 {
         ADJEDGE a;
 	int changed;
@@ -1453,13 +1305,7 @@ int    bendp;
  *  If something has changed, we return 1.
  */
 
-#ifdef ANSI_C
-static int set_botbendpoint(GNLIST li,int bendp)
-#else
-static int set_botbendpoint(li,bendp)
-GNLIST li;
-int    bendp;
-#endif
+static int set_botbendpoint(GNLIST li, int bendp)
 {
         ADJEDGE a;
 	int changed;
@@ -1508,12 +1354,7 @@ int    bendp;
  *                       -----
  */
 
-#ifdef ANSI_C
 static int calc_topbendpoint(GNLIST li)
-#else
-static int calc_topbendpoint(li)
-GNLIST li;
-#endif
 {
 	int    bendp, h;
 	GEDGE  e;
@@ -1547,13 +1388,7 @@ GNLIST li;
 
 #define bendformula  ((sx-tx)*(ky-ty))/(kx-tx)+ty
 
-#ifdef ANSI_C
-static int calc_edgetopbendpoint(GEDGE e,GNLIST li)
-#else
-static int calc_edgetopbendpoint(e,li)
-GEDGE e;
-GNLIST li;
-#endif
+static int calc_edgetopbendpoint(GEDGE e, GNLIST li)
 {
 	int    bendp, h;
 	GEDGE  e2;
@@ -1706,12 +1541,7 @@ GNLIST li;
  *        -     --------
  */
 
-#ifdef ANSI_C
 static int calc_botbendpoint(GNLIST li)
-#else
-static int calc_botbendpoint(li)
-GNLIST li;
-#endif
 {
 	int    bendp, h;
 	GEDGE  e;
@@ -1746,14 +1576,7 @@ GNLIST li;
  *   #define bendformula  ((sx-tx)*(ky-ty))/(kx-tx)+ty
  */
 
-
-#ifdef ANSI_C
-static int calc_edgebotbendpoint(GEDGE e,GNLIST li)
-#else
-static int calc_edgebotbendpoint(e,li)
-GEDGE e;
-GNLIST li;
-#endif
+static int calc_edgebotbendpoint(GEDGE e, GNLIST li)
 {
 	int    bendp, h;
 	GEDGE  e2;
@@ -1962,11 +1785,7 @@ GNLIST li;
  *   and similar for bottom-bendings, if the dummy node has no top-bending.
  */
 
-#ifdef ANSI_C
 static void 	tune_dummy_bendings(void)
-#else
-static void 	tune_dummy_bendings()
-#endif
 {
 	int i;
 	GNLIST li, li2;
@@ -2207,11 +2026,7 @@ static void 	tune_dummy_bendings()
  *  where the arrow starts.
  */
 
-#ifdef ANSI_C
 static void	calc_all_edgearrows(void)
-#else
-static void	calc_all_edgearrows()
-#endif
 {
 	GNODE v;
 
@@ -2243,12 +2058,7 @@ static void	calc_all_edgearrows()
  *  The vertical edges reach ports. 
  */
 
-#ifdef ANSI_C
 void 	calc_edgearrow(GNODE v)
-#else
-void 	calc_edgearrow(v)
-GNODE v;
-#endif
 {
 	ADJEDGE a;
 	int 	act_port, j;
@@ -2321,12 +2131,7 @@ GNODE v;
  *  Here, we do not have a bending.
  */
 
-#ifdef ANSI_C
 static void check_horizontal(GEDGE e)
-#else
-static void check_horizontal(e)
-GEDGE e;
-#endif
 {
 	float 	fval;
 
@@ -2368,12 +2173,7 @@ GEDGE e;
  *  shorten the edge lines later. 
  */
 
-#ifdef ANSI_C
 static void check_up_port(ADJEDGE a)
-#else
-static void check_up_port(a)
-ADJEDGE a;
-#endif
 {
 	int port;
 	int is_north, is_northeast, is_northwest;
@@ -2451,13 +2251,7 @@ ADJEDGE a;
  *  shorten the edge lines later. 
  */
 
-
-#ifdef ANSI_C
 static void check_down_port(ADJEDGE a)
-#else
-static void check_down_port(a)
-ADJEDGE a;
-#endif
 {
 	int port;
 	int is_south, is_southwest, is_southeast;
@@ -2536,11 +2330,7 @@ ADJEDGE a;
  *  axis is the x = y axis.
  */
 
-#ifdef ANSI_C
 static void flip_mirror(void)
-#else
-static void flip_mirror()
-#endif
 {
 	debugmessage("flip_mirror","");
 
@@ -2558,12 +2348,7 @@ static void flip_mirror()
 #define backward_connection1(c) ((CEDGE(c))&& (EEND(CEDGE(c)) ==v))
 #define backward_connection2(c) ((CEDGE2(c))&&(EEND(CEDGE2(c))==v))
 
-#ifdef ANSI_C
 static void flip_all_nodes(GNODE v)
-#else
-static void flip_all_nodes(v)
-GNODE v; 
-#endif
 {	
 	int h;
 	CONNECT c;
@@ -2597,12 +2382,7 @@ GNODE v;
  *  ------------
  */
 
-#ifdef ANSI_C
 static void flip_edge(GEDGE e) 
-#else
-static void flip_edge(e)
-GEDGE e; 
-#endif
 {
 	int h;
 
@@ -2656,11 +2436,7 @@ GEDGE e;
 
 static int my_maxy;
 
-#ifdef ANSI_C
 static void flip_ver_mirror(void)
-#else
-static void flip_ver_mirror()
-#endif
 {
 	int i;
 	GNLIST k;
@@ -2695,13 +2471,7 @@ static void flip_ver_mirror()
 #define backward_connection1(c) ((CEDGE(c))&& (EEND(CEDGE(c)) ==v))
 #define backward_connection2(c) ((CEDGE2(c))&&(EEND(CEDGE2(c))==v))
 
-
-#ifdef ANSI_C
 static void flip_ver_all_nodes(GNODE v)
-#else
-static void flip_ver_all_nodes(v)
-GNODE v; 
-#endif
 {	
 	CONNECT c;
 	ADJEDGE li;
@@ -2729,12 +2499,7 @@ GNODE v;
  *  ------------
  */
 
-#ifdef ANSI_C
 static void flip_ver_edge(GEDGE e) 
-#else
-static void flip_ver_edge(e)
-GEDGE e; 
-#endif
 {
 	debugmessage("flip_ver_edge","");
 	ESTARTY(e) = my_maxy - ESTARTY(e);
@@ -2769,11 +2534,7 @@ GEDGE e;
 int maximal_xpos;
 int maximal_ypos;
 
-#ifdef ANSI_C
 void calc_max_xy_pos(void)
-#else
-void calc_max_xy_pos()
-#endif
 {
 	GNODE v;
 
@@ -2830,12 +2591,7 @@ int st_max_degree;
 #define backward_connection1(c) ((CEDGE(c))&& (EEND(CEDGE(c)) ==v))
 #define backward_connection2(c) ((CEDGE2(c))&&(EEND(CEDGE2(c))==v))
 
-
-#ifdef ANSI_C
 void statistics(void)
-#else
-void statistics()
-#endif
 {
 	GNODE v;
 	GEDGE e;

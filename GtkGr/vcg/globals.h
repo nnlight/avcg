@@ -37,7 +37,6 @@
 
 
 
-
 /*   This file contains the setup of the tool for the C compiler.
  *   It is included into every other C file.
  *   Please adapt corresponding to your configuration.
@@ -48,25 +47,6 @@
 
 /*------------- Please change according to your configuration --------*/
 
-/*   Ansi C compiler or K&R C compiler ?
- *   Mainly, this causes to use prototypes or not. Note that the Suntool
- *   include files on some systems are Non-Ansi and may cause confusion.
- *   See the corresponding comments in the Makefile.
- *   Ansi C compiler set __STDC__, but Non-Ansi compilers may set this, too.
- *   Thus we use our own flag ANSI_C.
- */
-
-/* #ifdef __STDC__==1
- * #define ANSI_C
- * #endif
- */
-
-/* #define ANSI_C */
-/* #undef  ANSI_C */
-#define ANSI_C
-
-
-
 /* Good quicksort available or not ?
  * If there exist a good randomized quicksort `qsort' in the library,
  * please use it. But if the quicksort in the library is slow, or not
@@ -76,7 +56,7 @@
  * exchanged, but only the critical ones.
  */
 
-/* #undef OWN_QUICKSORT  */
+/* #undef OWN_QUICKSORT */
 #define OWN_QUICKSORT
 
 
@@ -106,7 +86,6 @@
 
 /* #define MEMBLOCKSIZE 1048576 */
 #define MEMBLOCKSIZE 1048576
-
 
 
 
@@ -150,11 +129,7 @@
 
 /* Prototype support */
 
-#ifdef ANSI_C
 #define	_PP(x) x
-#else
-#define	_PP(x) ()
-#endif
 
 
 /* Debugging messages */

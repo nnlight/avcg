@@ -210,7 +210,7 @@ static int size_of_layer = 0;  /* Size of table of layers */
 /* Macros
  * ------
  */
-
+/* FIXME: forward & backward are the same ??? */
 #define forward_connection1(c)  ((CEDGE(c))&& (EEND(CEDGE(c))==CTARGET(c)))
 #define forward_connection2(c)  ((CEDGE2(c))&&(EEND(CEDGE2(c))==CTARGET2(c)))
 #define backward_connection1(c) ((CEDGE(c))&& (EEND(CEDGE(c))!=CTARGET(c)))
