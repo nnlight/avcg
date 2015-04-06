@@ -21,12 +21,12 @@ ui_win32_main_window_filter( GdkXEvent *xevent,
  */
 enum Mode_t
 {
+  MODE_ADD_NODE,	// режим добавления узлов
+  MODE_ADD_EDGE,	// режим добавления дуг
   MODE_VIEW,		// режим просмотра
   MODE_VIEW_NODE_INFO1,
   MODE_VIEW_NODE_INFO2,
   MODE_VIEW_NODE_INFO3,
-  MODE_ADD_NODE,	// режим добавления узлов
-  MODE_ADD_EDGE,	// режим добавления дуг
 };
 
 /**

@@ -715,9 +715,16 @@ void UIController::UpdateStatusbar()
 	 */
 	gtk_statusbar_pop( GTK_STATUSBAR( m_Statusbar), 0);
 
-	msg = g_strdup_printf( "Current Scaling: %f  Mode: %d",
+	const char *mode_name = "undef";
+	switch (m_CurrentMode) {
+		case MODE_VIEW: mode_name = "view"; break;
+		case MODE_VIEW_NODE_INFO1: mode_name = "info1"; break;
+		case MODE_VIEW_NODE_INFO2: mode_name = "info2"; break;
+		case MODE_VIEW_NODE_INFO3: mode_name = "info3"; break;
+	}
+	msg = g_strdup_printf( "Current Scaling: %f  Mode: %s",
 							m_DrawBuffer->GetScaling(),
-							m_CurrentMode);
+							mode_name);
 	gtk_statusbar_push( GTK_STATUSBAR( m_Statusbar), 0, msg);
 
 	g_free (msg);
