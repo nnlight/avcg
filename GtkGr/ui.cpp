@@ -421,7 +421,7 @@ static GtkActionEntry entries[] = {
 };
 
 static GtkRadioActionEntry mode_entries[] = {
-  { "AddNode", NULL,                               /* name, stock id */
+	{ "AddNode", NULL,                               /* name, stock id */
     "Add_Node", NULL,                      /* label, accelerator */     
     "", MODE_ADD_NODE },                      /* tooltip, value */
   { "AddEdge", NULL,                             /* name, stock id */
@@ -499,8 +499,8 @@ static const gchar *ui_info =
 "    </menu>"
 "    <menu action='EditMenu'>"
 "      <separator/>"
-"      <menuitem action='AddNode'/>"
-"      <menuitem action='AddEdge'/>"
+//"      <menuitem action='AddNode'/>"
+//"      <menuitem action='AddEdge'/>"
 "      <menuitem action='View'/>"
 "      <menuitem action='Mode_ViewNodeInfo1'/>"
 "      <menuitem action='Mode_ViewNodeInfo2'/>"
