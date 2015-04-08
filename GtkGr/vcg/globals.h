@@ -180,7 +180,13 @@
 #define MAXINT INT_MAX
 #define MININT  INT_MIN
 
-#define NOTIMELIMIT
+
+/* Check whether the percentual time limit is reached
+ * --------------------------------------------------
+ * Return true (1) if yes.
+ */
+#define test_timelimit(perc) 0
+
 
 /*--------------------------------------------------------------------*/
 #ifdef WIN32

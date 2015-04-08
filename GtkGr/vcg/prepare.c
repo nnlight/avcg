@@ -141,10 +141,8 @@ void	prepare_nodes(void)
 
 	/* First, calculate width and height of each node */
 	maxindeg = maxoutdeg = 0;
-	v = nodelist;
-	while (v) { calc_node_size(v); v = NNEXT(v); }
-	v = labellist;
-	while (v) { calc_node_size(v); v = NNEXT(v); }
+	for (v = nodelist; v; v = NNEXT(v)) { calc_node_size(v); }
+	for (v = labellist; v; v = NNEXT(v)) { calc_node_size(v); }
 
         /* prepare back edges, i.e. revert all back edges initially
          */
@@ -193,20 +191,14 @@ void	prepare_nodes(void)
 
 	/* Now, check the anchor points */
 	maxindeg = maxoutdeg = 0;
-	v = nodelist;
-	while (v) { calc_node_anchor(v); v = NNEXT(v); }
-	v = labellist;
-	while (v) { calc_node_anchor(v); v = NNEXT(v); }
-	v = dummylist;
-	while (v) { calc_node_anchor(v); v = NNEXT(v); }
+	for (v = nodelist; v; v = NNEXT(v)) { calc_node_anchor(v); }
+	for (v = labellist; v; v = NNEXT(v)) { calc_node_anchor(v); }
+	for (v = dummylist; v; v = NNEXT(v)) { calc_node_anchor(v); }
 
 	/* Then, calculate the node in/outdegree */
-	v = nodelist;
-	while (v) { calc_node_degree(v); v = NNEXT(v); }
-	v = labellist;
-	while (v) { calc_node_degree(v); v = NNEXT(v); }
-	v = dummylist;
-	while (v) { calc_node_degree(v); v = NNEXT(v); }
+	for (v = nodelist; v; v = NNEXT(v)) { calc_node_degree(v); }
+	for (v = labellist; v; v = NNEXT(v)) { calc_node_degree(v); }
+	for (v = dummylist; v; v = NNEXT(v)) { calc_node_degree(v); }
 
         i = (maxindeg > maxoutdeg ? maxindeg : maxoutdeg);
         if (i+2 > size_of_adjarray) {
@@ -222,34 +214,23 @@ void	prepare_nodes(void)
 
 
 	/* Now, sort the adjacency lists */
-	v = nodelist;
-	while (v) { sort_adjacencies(v); v = NNEXT(v); }
-	v = labellist;
-	while (v) { sort_adjacencies(v); v = NNEXT(v); }
-	v = dummylist;
-	while (v) { sort_adjacencies(v); v = NNEXT(v); }
+	for (v = nodelist; v; v = NNEXT(v)) { sort_adjacencies(v); }
+	for (v = labellist; v; v = NNEXT(v)) { sort_adjacencies(v); }
+	for (v = dummylist; v; v = NNEXT(v)) { sort_adjacencies(v); }
 
 	/* Now, calculate the node ports */
-	v = nodelist;
-	while (v) { calc_node_ports(v,1); v = NNEXT(v); }
-	v = labellist;
-	while (v) { calc_node_ports(v,1); v = NNEXT(v); }
-	v = dummylist;
-	while (v) { calc_node_ports(v,1); v = NNEXT(v); }
+	for (v = nodelist; v; v = NNEXT(v)) { calc_node_ports(v,1); }
+	for (v = labellist; v; v = NNEXT(v)) { calc_node_ports(v,1); }
+	for (v = dummylist; v; v = NNEXT(v)) { calc_node_ports(v,1); }
 
 	/* Now, calculate the node ports */
-	v = nodelist;
-	while (v) { calc_edge_xy(v); v = NNEXT(v); }
-	v = labellist;
-	while (v) { calc_edge_xy(v); v = NNEXT(v); }
-	v = dummylist;
-	while (v) { calc_edge_xy(v); v = NNEXT(v); }
+	for (v = nodelist; v; v = NNEXT(v)) { calc_edge_xy(v); }
+	for (v = labellist; v; v = NNEXT(v)) { calc_edge_xy(v); }
+	for (v = dummylist; v; v = NNEXT(v)) { calc_edge_xy(v); }
 
 	/* Now, calculate the arrow orientation */
-	v = nodelist;
-	while (v) { calc_edgearrow(v); v = NNEXT(v); }
-	v = dummylist;
-	while (v) { calc_edgearrow(v); v = NNEXT(v); }
+	for (v = nodelist; v; v = NNEXT(v)) { calc_edgearrow(v); }
+	for (v = dummylist; v; v = NNEXT(v)) { calc_edgearrow(v); }
 	/* Labels and dummy nodes have no arrows */
 
 	/* calculate maximal x-y position

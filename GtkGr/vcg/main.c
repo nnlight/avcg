@@ -45,7 +45,6 @@
 #include "alloc.h"
 #include "folding.h"
 #include "steps.h"
-#include "timelim.h"
 #include "main.h"
 #include "options.h"
 #include "timing.h"
@@ -83,8 +82,6 @@ static void parse_part( FILE *f, const char *fname)
 	free_memory();
 
 
-	free_timelimit();
-	if (G_timelimit>0) init_timelimit(G_timelimit);
 	debugmessage("start_parsing", "");
 
 #if 0
@@ -208,7 +205,6 @@ static void relayout(void)
 	debugmessage("relayout","");
         start_time();
 
-	if (G_timelimit>0) init_timelimit(G_timelimit);
 	free_all_lists();
         if (nr_errors==0) folding();
         stop_time("folding");
@@ -259,7 +255,6 @@ static void relayout(void)
 
 		prepare_nodes();
 	}
-	free_timelimit();
 } /* relayout */
 
 /*--------------------------------------------------------------------*/

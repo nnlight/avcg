@@ -303,10 +303,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\vcg\timelim.h"
-				>
-			</File>
-			<File
 				RelativePath=".\vcg\timing.h"
 				>
 			</File>
@@ -384,10 +380,6 @@
 			</File>
 			<File
 				RelativePath=".\vcg\step4.c"
-				>
-			</File>
-			<File
-				RelativePath=".\vcg\timelim.c"
 				>
 			</File>
 			<File

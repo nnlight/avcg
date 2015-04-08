@@ -637,12 +637,9 @@ static void	tree_layout(void)
 		actypos = yralign(actypos);
 	}
 
-	v = nodelist;
-	while (v) { NMARK(v) = 1; v = NNEXT(v); }
-	v = labellist;
-	while (v) { NMARK(v) = 1; v = NNEXT(v); }
-	v = dummylist;
-	while (v) { NMARK(v) = 1; v = NNEXT(v); }
+	for (v = nodelist; v; v = NNEXT(v)) { NMARK(v) = 1; }
+	for (v = labellist; v; v = NNEXT(v)) { NMARK(v) = 1; }
+	for (v = dummylist; v; v = NNEXT(v)) { NMARK(v) = 1; }
 
 	/* Now the real tree layout */
 

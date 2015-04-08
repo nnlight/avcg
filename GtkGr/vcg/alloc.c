@@ -303,8 +303,8 @@ GNODE nodealloc(GNODE refnode)
 	NBEFORE(h)      = nodelistend;
 	if (nodelistend) NNEXT(nodelistend) = h;
 	nodelistend	= h;
-	nodeanz++;
 	if (nodelist == NULL) nodelist = h;
+	nodeanz++;
 	return(h);
 
 }

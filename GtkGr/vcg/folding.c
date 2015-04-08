@@ -119,7 +119,6 @@
 #include "alloc.h"
 #include "main.h"
 #include "options.h"
-#include "timelim.h"
 #include "folding.h"
 #include "steps.h"
 
@@ -172,59 +171,6 @@ static void db_print_somenode_list(GNODE w,GNODE wend);
 /*--------------------------------------------------------------------*/
 
 #ifdef NEVER 
-
-GNODE mydebugnode;
-
-void init_mydebugnode(void)
-{
-	GNODE v;
-
-	mydebugnode = NULL;
-	v = nodelist;
-	while (v) {
-		if ((NTITLE(v)) && (strcmp(NTITLE(v),"")==0)) {
-			PRINTF("found in nodelist\n");
-			mydebugnode = v;
-		}
-		v = NNEXT(v);
-	}
-	v = graphlist;
-	while (v) {
-		if ((NTITLE(v)) && (strcmp(NTITLE(v),"")==0)) {
-			PRINTF("found in graphlist\n");
-			mydebugnode = v;
-		}
-		v = NNEXT(v);
-	}
-	if (!mydebugnode) PRINTF("not found\n");
-}
-
-int check_mydebugnode(void)
-{
-	ADJEDGE a;
-
-	if (!mydebugnode) return(1);
-
-	a = NSUCC(mydebugnode);
-
-	while (a) {
-		if (SOURCE(a)!=mydebugnode) {
-			printf("%d\n",SOURCE(a));
-			return(0);
-		}
-		a   = ANEXT(a);
-	}
-	a = NPRED(mydebugnode);
-	while (a) {
-		if (TARGET(a)!=mydebugnode) {
-			printf("%d\n",TARGET(a));
-			return(0);
-		}
-		a   = ANEXT(a);
-	}
-	return(1);
-}
-
 
 static void print_all_nodes(char *x, GNODE v)
 {
@@ -1399,9 +1345,8 @@ static void sort_all_nodes(void)
 	 * according to their refnum.
 	 */
 
-	v = nodelist;
 	i = 0;
-	while (v) { i++; NDFS(v) = NREFNUM(v); v = NNEXT(v); }
+	for (v = nodelist; v; v = NNEXT(v)) { i++; NDFS(v) = NREFNUM(v); }
 	
 	max = i;
 	if (max < 2) return;
@@ -1415,12 +1360,8 @@ static void sort_all_nodes(void)
                         (max+2)*sizeof(GNODE));
 #endif
         }
-	v = nodelist;
 	i = 0;
-	while (v) {
-		node_sort_array[i++] = v;			
-		v = NNEXT(v);
-	}
+	for (v = nodelist; v; v = NNEXT(v)) { node_sort_array[i++] = v; }
 
 	qsort(node_sort_array,max,sizeof(GNODE),
 		(int (*) (const void *, const void *))compare_ndfs);
@@ -1522,8 +1463,7 @@ static void sort_all_nodes(void)
 	nodelist    = node_sort_array[0];
 	nodelistend = node_sort_array[max-1];
 
-	v = nodelist;
-	while (v) { NDFS(v) = 0L; NMARK(v) = 0; v = NNEXT(v); }
+	for (v = nodelist; v; v = NNEXT(v)) { NDFS(v) = 0L; NMARK(v) = 0; }
 }
 
 

@@ -2044,13 +2044,12 @@ static void debug_init_checknode(void)
 {
 	GNODE h;
 
-	h = nodelist;
-	while (h) {
+	for (h = nodelist; h; h = NNEXT(h))
+	{
 		if (NREFNUM(h)==1L) {
 			debug_checknode = h;
 			return;
 		}
-		h = NNEXT(h);
 	}
 }
 

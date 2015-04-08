@@ -128,7 +128,6 @@
 #include "options.h"
 #include "folding.h"
 #include "steps.h"
-#include "timelim.h"
 #include "timing.h"
 
 /* Prototypes
@@ -288,7 +287,7 @@ void	calc_all_ports(int xypos_avail)
  *                  |    |        EWEIGHTS(e) = 1 .. 2
  */
 
-void calc_node_ports(GNODE v,int xypos_avail)
+void calc_node_ports(GNODE v, int xypos_avail)
 {
 	int act_port;
 	int act_pcol, act_pstyle, act_psize;

@@ -132,7 +132,6 @@
 #include "alloc.h"
 #include "main.h"
 #include "options.h"
-#include "timelim.h"
 #include "folding.h"
 #include "steps.h"
 #include "timing.h"
