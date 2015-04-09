@@ -500,6 +500,15 @@ void VRGraph::LoadGDL()
 		elabel.textcolor_ = (Color_t)NTCOLOR(v);
 		elabel_list_.push_back( elabel);
 	}
+	/*  Normal dummy nodes need not to be drawn, because they have no size. 
+	 *  Anchor nodes are drawn.
+	 */
+	/*for ( v = dummylist; v; v = NNEXT(v) )
+	{
+		if (!NANCHORNODE(v))
+			continue;
+		gs_anchornode(v);
+	}*/
 
 	/* дуги */
 	LoadVcgPredEdgesForVcgNodeList( nodelist);

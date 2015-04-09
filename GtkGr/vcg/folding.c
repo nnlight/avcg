@@ -166,25 +166,6 @@ static void 	split_double_edges _PP((void));
 static void db_print_somenode_list(GNODE w,GNODE wend);
 #endif
 
-/*--------------------------------------------------------------------*/
-/*  For Debugging only           				      */
-/*--------------------------------------------------------------------*/
-
-#ifdef NEVER 
-
-static void print_all_nodes(char *x, GNODE v)
-{
-	printf("List %s: ",x);
-	while (v) {
-		PRINTF("%s  ",(NTITLE(v)?NTITLE(v):"(null)"));
-		v = NNEXT(v);
-	}
-	printf("\n");
-}
-
-#endif
-
-
 
 /*--------------------------------------------------------------------*/
 /*  Management of folding keepers				      */
@@ -1379,9 +1360,9 @@ static void sort_all_nodes(void)
 	/* Now, we sort according to a second criterium, e.g. degree, etc.
 	 */
 
-	v = nodelist;
 	switch (layout_flag) {
-	case 4: while (v) { 
+	case 4: for (v = nodelist; v; v = NNEXT(v))
+		{
 			if (G_timelimit>0) { 
 				if (test_timelimit(15)) {
 					gs_wait_message('t');
@@ -1389,13 +1370,12 @@ static void sort_all_nodes(void)
 					break; 
 				}
 			}
-			w = nodelist;
-			while (w) { NMARK(w) = 0; w = NNEXT(w); }
+			for (w = nodelist; w; w = NNEXT(w)) { NMARK(w) = 0; }
 			NDFS(v) =  - no_dfs(v); 
-			v = NNEXT(v); 
 		}
 		break;
-	case 5: while (v) { 
+	case 5: for (v = nodelist; v; v = NNEXT(v))
+		{
 			if (G_timelimit>0) { 
 				if (test_timelimit(15)) {
 					gs_wait_message('t');
@@ -1403,10 +1383,8 @@ static void sort_all_nodes(void)
 					break; 
 				}
 			}
-			w = nodelist;
-			while (w) { NMARK(w) = 0; w = NNEXT(w); }
+			for (w = nodelist; w; w = NNEXT(w)) { NMARK(w) = 0; }
 			NDFS(v) =  no_dfs(v); 
-			v = NNEXT(v); 
 		}
 		break;
 	case 6: while (v) { 
@@ -1934,8 +1912,8 @@ static void summarize_edges(void)
 	ADJEDGE a,b,c;
 	int found, ide;
 
-	v = nodelist;
-	while (v) {
+	for (v = nodelist; v; v = NNEXT(v))
+	{
 		a = NSUCC(v);
 		while (a) {
 			b = ANEXT(a);
@@ -1970,14 +1948,12 @@ static void summarize_edges(void)
 			if (found) delete_adjedge(AKANTE(a));	
 			a = b;
 		}	
-		v = NNEXT(v);
 	}
 #ifdef CHECK_ASSERTIONS
-	v = labellist;
-	while (v) {
+	for (v = labellist; v; v = NNEXT(v))
+	{
 		a = NSUCC(v);
 		assert((ANEXT(a)==NULL));  /* only one edge !!! */
-		v = NNEXT(v);
 	}
 #endif
 }
@@ -2009,8 +1985,8 @@ static void split_double_edges(void)
 	ADJEDGE a,b,c;
 	int found;
 
-	v = nodelist;
-	while (v) {
+	for (v = nodelist; v; v = NNEXT(v))
+	{
 		a = NSUCC(v);
 		while (a) {
 			b = ANEXT(a);
@@ -2072,7 +2048,6 @@ static void split_double_edges(void)
 			}
 			a = b;
 		}	
-		v = NNEXT(v);
 	}
 }
 
@@ -2095,15 +2070,14 @@ static void db_print_somenode_list(GNODE w,GNODE wend)
 {
 	GNODE v; int i;
 
-	v = w;
 	i = 0;
 	PRINTF("Addresses Startnode %p Endnode %p\n",w,wend);
-	while (v) {
+	for (v = w; v; v = NNEXT(v))
+	{
 		i++; if (i>DB_MAXNODES) break;
 		PRINTF("Address %p:%s [%d]    (Address next: %p)\n",
-			v,(NTITLE(v)?NTITLE(v):"(null)"),NINVISIBLE(v),
+			v, NTITLE(v)?NTITLE(v):"(null)", NINVISIBLE(v),
 			NNEXT(v));
-		v = NNEXT(v);
 	}
 }
 #endif 
