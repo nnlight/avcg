@@ -130,7 +130,7 @@ static int      size_of_adjarray = 0;
 /*  Preparation of nodes         			      */
 /*--------------------------------------------------------------------*/
 
-void	prepare_nodes(void)
+void prepare_nodes(void)
 {
 	int i,h,hh, xp, na;
 	GNODE v,w;
@@ -154,8 +154,8 @@ void	prepare_nodes(void)
 	 */
 
 	insert_anchor_edges();
-	v = dummylist;
-	while (v) { 
+	for (v = dummylist; v; v = NNEXT(v))
+	{
 		if (NANCHORNODE(v)) {
 			assert((NCONNECT(v)));
 			w = CTARGET(NCONNECT(v));
@@ -186,7 +186,6 @@ void	prepare_nodes(void)
 			else
 				NX(v) = NX(w)-NWIDTH(v)-G_xspace;
 		}
-		v = NNEXT(v); 
 	}
 
 	/* Now, check the anchor points */
@@ -263,7 +262,7 @@ static void calc_node_degree(GNODE v)
 	while (a) { k++; a = ANEXT(a); }
 	NOUTDEG(v) = k;
 	if (k>maxindeg) maxindeg = k;
-}
+} /* calc_node_degree */
 
 
 /* Set NWIDTH and NHEIGHT of the node

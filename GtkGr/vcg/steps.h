@@ -77,7 +77,6 @@
  */
 
 /* from step0.c */
-extern int act_hash_size;
 extern struct gnode foldnode;
 extern struct gedge foldedge;
 
@@ -124,9 +123,6 @@ extern double tree_factor;
 void 	step0_main 		_PP((void));
 GNODE   search_visible_node	_PP((char *title));
 GNODE 	lookup_hashnode   	_PP((char *title));
-void 	init_hash_cursor	_PP((void));
-void 	position_hash_cursor	_PP((int j));
-GNODE 	get_hash_cursor_succ	_PP((int i));
 
 
 /* from step1.c */

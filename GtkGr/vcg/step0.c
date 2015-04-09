@@ -87,12 +87,6 @@
  *                      no dummy node. The node need not to be visible.
  * search_visible_node  returns a node of a given title, but only if it
  *			is visible. Similar to lookup_hashnode.
- * 
- * We have a curser that allows to browse through the hashtable.
- * init_hash_cursor     initializes the hash curser, i.e. sets it to the
- *			first position.
- * position_hash_cursor sets the hash cursor to a fixed position.
- * get_hash_cursor_succ returns the i.th node after the hash cursor.
  ***********************************************************************/
 
 #include <stdio.h>
@@ -1916,114 +1910,6 @@ GNODE lookup_hashnode(char *title)
 		h = NINTERN(h);
 	}
 	return(NULL);	
-}
-
-
-/*--------------------------------------------------------------------*/
-
-/*  Hashtable Cursor
- *  ================
- *
- *  The hash table cursor points into the hashtable and can be
- *  moved backwards and forewards through the hashtable.
- *  It is used to allow easy selection of nodes.
- */
-
-static GNODE act_hash_cursor;
-static int   act_hash_pos;
-int 	     act_hash_size;
-
-
-/*  Initialize the cursor
- *  ---------------------
- */
-
-void init_hash_cursor(void)
-{
-	GNODE h;
-	int i;
-
-	debugmessage("init_hash_cursor","");
-
-	act_hash_cursor = NULL;
-	act_hash_pos    = 0;
-	act_hash_size   = 0;
-	for (i=0; i<maxhashtable; i++)
-               	if (hashtable[i]!=NULL) {
-			if (!act_hash_cursor) {
-				act_hash_cursor = hashtable[i];
-				act_hash_pos = i;
-			}
-			h = hashtable[i];
-			while (h) { act_hash_size++; h=NINTERN(h); }
-		} 
-}
-
-
-/*  Position cursor 
- *  ---------------
- */
-
-void position_hash_cursor(int j)
-{
-	GNODE h;
-	int i;
-
-	debugmessage("position_hash_cursor","");
-
-	assert((j>=0));
-	if (!act_hash_cursor) return;
-	if (act_hash_size == 0) return;
-
-	for (i=0; i<maxhashtable; i++)
-               	if (hashtable[i]!=NULL) {
-			h = hashtable[i];
-			while (h) { 
-				if (j==0) {
-		                	act_hash_cursor = h;
-                                	act_hash_pos    = i;
-					return;
-				}
-				j--;
-				h=NINTERN(h); 
-			}
-		} 
-}
-
-
-
-/*  Get i.th node after the cursor
- *  ------------------------------
- */
-
-GNODE get_hash_cursor_succ(int i)
-{
-	GNODE h;
-	int j;
-
-	debugmessage("get_hash_cursor_succ","");
-
-	if (!act_hash_cursor) return(NULL);
-	if (i<0) i=0;
-
-	j = act_hash_pos;
-	h = act_hash_cursor;
-
-	while (i>0) {
-		i--;
-		if (NINTERN(h)) h = NINTERN(h);
-		else {
-			j++;
-			h = NULL;
-			for (; j<maxhashtable; j++)
-       		         	if (hashtable[j]!=NULL) {
-					h = hashtable[j];
-					break;
-				} 
-			if (!h) return(NULL); 
-		}
-	}
-	return(h);
 }
 
 
