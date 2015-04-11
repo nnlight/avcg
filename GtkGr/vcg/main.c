@@ -195,7 +195,7 @@ static void relayout(void)
         start_time();
 
 	free_all_lists();
-        if (nr_errors==0) folding();
+        folding();
         stop_time("folding");
 
         if (!locFlag) {

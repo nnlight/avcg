@@ -721,6 +721,7 @@ void UIController::UpdateStatusbar()
 		case MODE_VIEW_NODE_INFO1: mode_name = "info1"; break;
 		case MODE_VIEW_NODE_INFO2: mode_name = "info2"; break;
 		case MODE_VIEW_NODE_INFO3: mode_name = "info3"; break;
+		default: break;
 	}
 	msg = g_strdup_printf( "Current Scaling: %f  Mode: %s",
 							m_DrawBuffer->GetScaling(),

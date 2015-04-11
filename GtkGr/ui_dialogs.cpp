@@ -182,7 +182,7 @@ completion_match_selected_cb( GtkEntryCompletion *widget,
 
 void UiShowFindNodeDialog( UIController *uic)
 {
-	GtkWidget *dialog, *label;
+	GtkWidget *dialog;
 	GtkWidget *entry;
 	GtkEntryCompletion *completion;
 	GtkWidget *vbox;
@@ -205,9 +205,6 @@ void UiShowFindNodeDialog( UIController *uic)
 	gtk_entry_set_completion( GTK_ENTRY(entry), completion);
 	g_object_unref( completion);
 
-
-	//label = gtk_label_new( "Select node from the list bellow. Main window will ceterized by double click.");
-	//gtk_box_pack_start( GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
 	/* Scrolled Window */
 	sw = gtk_scrolled_window_new( NULL, NULL);

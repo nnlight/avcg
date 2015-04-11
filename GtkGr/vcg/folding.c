@@ -479,37 +479,33 @@ void	folding(void)
 	 */
 
 	gs_wait_message('f');
-	v = invis_nodes;
-	while (v) {
-		vn = NNEXT(v);	
-		insert_node(v,HIDDEN_CNODE);
-		v = vn; 	/* because insert_node changes NNEXT(v) */
+	for (v = invis_nodes; v; v = vn)
+	{
+		vn = NNEXT(v);
+		insert_node(v, HIDDEN_CNODE);
 	}
 	invis_nodes = NULL;
 
 
 	/* 2) subgraph folding */
 
-	l = f_subgraphs;
-	while (l) {
+	for (l = f_subgraphs; l; l = GNNEXT(l))
+	{
 		fold_sg(GNNODE(l));
-		l = GNNEXT(l);
 	}
 
 	/* 3) subgraph unfolding */
 
-	l = uf_subgraphs;
-	while (l) {
+	for (l = uf_subgraphs; l; l = GNNEXT(l))
+	{
 		unfold_sg(GNNODE(l));
-		l = GNNEXT(l);
 	}
 
 	/* 4) Unfold region (independent of the class) */
 
-	l = ufoldstart;
-	while (l) {
+	for (l = ufoldstart; l; l = GNNEXT(l))
+	{
 		unfold_region(GNNODE(l));
-		l = GNNEXT(l);
 	}
 
 	/* 5) refresh the situation: initialize indegree of nodes,
@@ -602,7 +598,7 @@ void	folding(void)
 	 */
 
 	clear_folding_keepers();
-}
+} /* folding */
 
 
 /*--------------------------------------------------------------------*/
@@ -635,8 +631,7 @@ void	folding(void)
  *   The invisibly flag is set to k, which is the reason why the node
  *   is invisible.
  */
-
-static void	delete_node(GNODE v,int k)
+static void delete_node(GNODE v, int k)
 {
 	assert((v));
 	assert((k!=0));
@@ -662,8 +657,7 @@ static void	delete_node(GNODE v,int k)
  *   is not anymore valid. If k was not the invisibility reason,
  *   then the insertion cannot be done.
  */
-
-static void	insert_node(GNODE v,int k)
+static void insert_node(GNODE v, int k)
 {
 	assert((v));
 	assert((k!=0));
@@ -679,7 +673,6 @@ static void	insert_node(GNODE v,int k)
 	}
 	ins_node_in_dl_list(v,nodelist,nodelistend);
 	nodeanz++;
-
 }
 
 
@@ -691,20 +684,18 @@ static void	insert_node(GNODE v,int k)
  *  ------------------------------------------------
  *  i.e. it hides the subgraph u (and all its subgraphs too).
  */
-
-static void	delete_sgnodes(GNODE u)
+static void delete_sgnodes(GNODE u)
 {
 	GNODE	v;
-	GNLIST	s;
+	GNLIST	l;
 
-	if (!u) return;
 	debugmessage("delete_sgnodes",(NTITLE(u)?NTITLE(u):"(null)"));
-	s = NSGRAPH(u);
-	while (s) {
-		v = GNNODE(s);
-		delete_node(v,FOLDED_SGNODE);
-		if (NSGRAPH(v)) delete_sgnodes(v);
-		s = GNNEXT(s);
+	for (l = NSGRAPH(u); l; l = GNNEXT(l))
+	{
+		v = GNNODE(l);
+		delete_node(v, FOLDED_SGNODE);
+		if (NSGRAPH(v))
+			delete_sgnodes(v);
 	}
 }
 
@@ -715,14 +706,13 @@ static void	delete_sgnodes(GNODE u)
  *   Folding means: delete all nodes of this subgraph from the nodelist
  *   and insert the summary node.
  */
-
-static void	fold_sg(GNODE u)
+static void fold_sg(GNODE u)
 {
 	if (!u) return;
 	debugmessage("fold_sg",(NTITLE(u)?NTITLE(u):"(null)"));
 
 	delete_sgnodes(u);
-	insert_node(u,UNFOLDED_SGRAPH);
+	insert_node(u, UNFOLDED_SGRAPH);
 }
 
 
@@ -732,19 +722,18 @@ static void	fold_sg(GNODE u)
  *   Unfolding means: delete this subgraph summary node from the nodelist
  *   and insert all its nodes.
  */
-
-static void	unfold_sg(GNODE	u)
+static void unfold_sg(GNODE u)
 {
 	GNODE	v;
-	GNLIST	s;
+	GNLIST	l;
 
 	if (!u) return;
 	debugmessage("unfold_sg",(NTITLE(u)?NTITLE(u):"(null)"));
 
-	s = NSGRAPH(u);
-	while (s) {
-		v = GNNODE(s);
-		insert_node(v,FOLDED_SGNODE);
+	for (l = NSGRAPH(u); l; l = GNNEXT(l))
+	{
+		v = GNNODE(l);
+		insert_node(v, FOLDED_SGNODE);
 
 		/* If v was an unfolded subgraph before the folding,
 		 * it was before not visible, thus it is not inserted,
@@ -754,7 +743,6 @@ static void	unfold_sg(GNODE	u)
 		 */
 		if (NSGRAPH(v) && (NINVISIBLE(v)==UNFOLDED_SGRAPH)) 
 			unfold_sg(v);
-		s = GNNEXT(s);
 	}
 	delete_node(u,UNFOLDED_SGRAPH);
 }
@@ -1213,8 +1201,8 @@ static void	refresh(void)
 
 	/* Revert reverted edges and make them visible */
 
-	e = edgelist;
-	while (e) {
+	for (e = edgelist; e; e = ENEXT(e))
+	{
 		if (EART(e) == 'R') {
 			v	  = ESTART(e);
 			ESTART(e) = EEND(e);
@@ -1234,7 +1222,6 @@ static void	refresh(void)
 		EINVISIBLE(e)	= 0;
 		EORI(e) 	= NO_ORI;
 		EORI2(e)	= NO_ORI;
-		e = ENEXT(e);
 	}
 }
 
@@ -1245,11 +1232,11 @@ static void	refresh(void)
  *  undefined deepth, position, mark, indegree, outdegree.
  *  Old adjacency list are cleared.
  */
-
 static void refresh_all_nodes(GNODE v)
 {
 	debugmessage("refresh_all_nodes","");
-	while (v) {
+	for ( ; v; v = NNEXT(v))
+	{
 		NTIEFE(v)	= -1;
 		NPOS(v) 	= -1;
 		NMARK(v)	= 0;
@@ -1260,10 +1247,10 @@ static void refresh_all_nodes(GNODE v)
 		NX(v) 		= 0L;
 		NY(v) 		= 0L;
 		NCONNECT(v)	= NULL;
-		NSUCC(v)	= NPRED(v)	= NULL;
 		NSUCCL(v)	= NSUCCR(v)	= NULL;
 		NPREDL(v)	= NPREDR(v)	= NULL;
-		v = NNEXT(v);
+		unlink_node_edges(v);
+		/*init_node_adj_fields(v);*/
 	}
 }
 
@@ -1534,7 +1521,6 @@ static long	no_degree(GNODE n)
  *   i.e. insert an edge into the adjacency lists of its source and
  *   target node.
  */
-
 void	create_adjedge(GEDGE edge)
 {
 	ADJEDGE a;
@@ -1555,6 +1541,8 @@ void	create_adjedge(GEDGE edge)
 
 	prededgealloc(EEND(edge),edge);
 	succedgealloc(ESTART(edge),edge);
+
+	
 	EINVISIBLE(edge) = 0;
 }
 
@@ -1590,6 +1578,8 @@ void	delete_adjedge(GEDGE edge)
 		a = b;
 		ap = abp;
 	}
+
+	
 	EINVISIBLE(edge) = 1;
 }
 
@@ -1783,17 +1773,15 @@ static GEDGE	substed_edge(GEDGE e)
  *   This is the first version: we don't need labels.
  *   Adjacency lists of all nodes in the nodelist, i.e. of all visible nodes.
  */
-
 static void create_adjacencies(void)
 {
-	GEDGE	edge, e;
+	GEDGE edge, e;
 
 	debugmessage("create_adjacencies","");
-	edge = edgelist;
-	while (edge) {
+	for (edge = edgelist; edge; edge = ENEXT(edge))
+	{
 		e = substed_edge(edge);
 		if (e) create_adjedge(e);
-		edge = ENEXT(edge);
 	}
 }
 

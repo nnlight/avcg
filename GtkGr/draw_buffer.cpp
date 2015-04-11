@@ -721,11 +721,13 @@ void DrawBuffer::DrawText( vrgint x, DrawTextPos_t x_pos, vrgint y, DrawTextPos_
 	{
 	case DTP_CENTER: pm_x = pm_x - pm_width / 2; break;
 	case DTP_MAX: pm_x = pm_x - pm_width; break;
+	default: break;
 	}
 	switch (y_pos)
 	{
 	case DTP_CENTER: pm_y = pm_y - pm_height / 2; break;
 	case DTP_MAX: pm_y = pm_y - pm_height; break;
+	default: break;
 	}
 	gdk_draw_layout( m_Pixmap, m_GC, pm_x, pm_y, layout);
 

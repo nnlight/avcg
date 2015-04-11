@@ -308,6 +308,7 @@ GNODE nodealloc(GNODE refnode)
 	h = internal_nodealloc();
 	copy_nodeattributes(refnode, h);
 	ins_node_in_dl_list(h,nodelist,nodelistend);
+	init_node_adj_fields(h);
 	nodeanz++;
 	return(h);
 }
@@ -462,6 +463,7 @@ GNODE graphalloc(GNODE refnode)
 	NDFS(h)		= 0L;
 
 	ins_node_in_dl_list(h,graphlist,graphlistend);
+	init_node_adj_fields(h);
 	return(h);
 }
 

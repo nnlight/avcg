@@ -37,6 +37,11 @@ GEDGE NextSucc(GEDGE e);
 
 void init_node_graph_fields_as_dead(GNODE v);
 void init_edge_graph_fields_as_dead(GEDGE e);
+void init_node_adj_fields(GNODE v);
+
+void unlink_node_edges(GNODE v);
+void link_edge(GEDGE e);
+void unlink_edge(GEDGE e);
 
 /*--------------------------------------------------------------------*/
 /**
@@ -68,7 +73,7 @@ void init_edge_graph_fields_as_dead(GEDGE e);
     assert(NPREV(v) == DEAD_GNODE); \
     assert(NNEXT(v) == DEAD_GNODE); \
                                     \
-    if (h) 	NPREV(v) = NPREV(h);        \
+    if (h)  NPREV(v) = NPREV(h);        \
     else    NPREV(v) = le;              \
     NNEXT(v) = h;                       \
     {                                   \

@@ -60,12 +60,12 @@ extern "C" {
 };*/
 
 /* adjacency list id: direction in gaph */
-enum Graphdir_t
+typedef enum Graphdir_t
 {
 	GD_PRED,  /* predecessor(s) (list) */
 	GD_SUCC,  /* successor(s)  (list) */
 	GD_COUNT
-};
+} Graphdir_t;
 /*--------------------------------------------------------------------*/
 
 /*  Auxiliary Structs

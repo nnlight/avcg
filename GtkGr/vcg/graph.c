@@ -117,7 +117,146 @@ void init_edge_graph_fields_as_dead(GEDGE e)
     EPREV(e) = DEAD_GEDGE;
 }
 
+void init_node_adj_fields(GNODE v)
+{
+    assert(NADJFIRST(v,GD_PRED) == DEAD_GEDGE);
+    assert(NADJFIRST(v,GD_SUCC) == DEAD_GEDGE);
+    assert(NADJLAST(v,GD_PRED) == DEAD_GEDGE);
+    assert(NADJLAST(v,GD_SUCC) == DEAD_GEDGE);
 
+    NADJFIRST(v,GD_PRED) = NULL;
+    NADJFIRST(v,GD_SUCC) = NULL;
+    NADJLAST(v,GD_PRED) = NULL;
+    NADJLAST(v,GD_SUCC) = NULL;
+
+    NSUCC(v) = NPRED(v) = NULL;
+}
+
+static unlink_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
+{
+    if (dir == GD_PRED) {
+        assert(EDST(e) == v);
+    } else {
+        assert(ESRC(e) == v);
+    }
+    assert(EADJPREV(e, dir) != DEAD_GEDGE);
+    assert(EADJNEXT(e, dir) != DEAD_GEDGE);
+    assert(NADJFIRST(v, dir) != DEAD_GEDGE);
+    assert(NADJLAST(v, dir) != DEAD_GEDGE);
+
+    if (EADJPREV(e, dir)) EADJPREV(e, dir) = EADJNEXT(e, dir);
+    else                  NADJFIRST(v, dir)= EADJNEXT(e, dir);
+    if (EADJNEXT(e, dir)) EADJNEXT(e, dir) = EADJPREV(e, dir);
+    else                  NADJLAST(v, dir) = EADJPREV(e, dir);
+
+    EADJPREV(e, dir) = DEAD_GEDGE;
+    EADJNEXT(e, dir) = DEAD_GEDGE;
+    EADJENTRY(e, dir) = NULL;
+}
+
+void unlink_node_edges(GNODE v)
+{
+    GEDGE e, nxt_e;
+
+#if 0
+    for (e = FirstSucc(v); e; e = nxt_e)
+    {
+        nxt_e = NextSucc(e);
+        unlink_node_edge(v, e, GD_SUCC);
+    }
+    for (e = FirstPred(v); e; e = nxt_e)
+    {
+        nxt_e = NextPred(e);
+        unlink_node_edge(v, e, GD_PRED);
+    }
+#endif
+    NSUCC(v) = NPRED(v) = NULL;
+}
+
+static void link_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
+{
+    if (dir == GD_PRED) {
+        assert(EDST(e) == v);
+    } else {
+        assert(ESRC(e) == v);
+    }
+    assert(EADJPREV(e, dir) == DEAD_GEDGE);
+    assert(EADJNEXT(e, dir) == DEAD_GEDGE);
+    assert(NADJFIRST(v, dir) != DEAD_GEDGE);
+    assert(NADJLAST(v, dir) != DEAD_GEDGE);
+
+    EADJPREV(e,dir) = NULL;
+    EADJNEXT(e,dir) = NADJFIRST(v,dir);
+    if (NADJFIRST(v,dir)) EADJPREV(NADJFIRST(v,dir),dir) = e;
+    else                  NADJLAST(v,dir) = e;
+    NADJFIRST(v,dir) = e;
+}
+
+/*   Create an adjacency
+ *   -------------------
+ *   i.e. insert an edge into the adjacency lists of its source and
+ *   target node.
+ */
+void link_edge(GEDGE edge)
+{
+	ADJEDGE a;
+    GNODE v;
+
+    assert(ESTART(edge));
+    assert(EEND(edge));
+
+    for (a = NSUCC(ESTART(edge)); a; a = ANEXT(a))
+    {
+        assert(AKANTE(a) != edge);
+    }
+    for (a = NPRED(EEND(edge)); a; a = ANEXT(a))
+    {
+        assert(AKANTE(a) != edge);
+    }
+
+    a = prededgealloc(EEND(edge), edge);
+    EADJENTRY(edge, GD_PRED) = a;
+    link_node_edge(EEND(edge), edge, GD_PRED);
+
+    a = succedgealloc(ESTART(edge), edge);
+    EADJENTRY(edge, GD_SUCC) = a;
+    link_node_edge(ESTART(edge), edge, GD_SUCC);
+}
+
+/*   Delete an adjacency
+ *   -------------------
+ *   i.e. delete an edge e from the adjacency lists of its source
+ *   and target node.
+ */
+void unlink_edge(GEDGE edge)
+{
+    ADJEDGE a,b,*ap,*abp;
+
+    assert(edge);
+    assert(ESTART(edge));
+    assert(EEND(edge));
+    a = NSUCC(ESTART(edge));
+    ap = &(NSUCC(ESTART(edge)));
+    while (a) {
+        abp = &ANEXT(a);
+        b   = ANEXT(a);
+        if (AKANTE(a)==edge) *ap = ANEXT(a); 
+        a = b;
+        ap = abp;
+    }
+    a = NPRED(EEND(edge));
+    ap = &(NPRED(EEND(edge)));
+    while (a) {
+        abp = &(ANEXT(a));
+        b = ANEXT(a);
+        if (AKANTE(a)==edge) *ap = ANEXT(a);
+        a = b;
+        ap = abp;
+    }
+
+    unlink_node_edge(ESTART(edge), edge, GD_SUCC);
+    unlink_node_edge(EEND(edge), edge, GD_PRED);
+}
 
 
 
