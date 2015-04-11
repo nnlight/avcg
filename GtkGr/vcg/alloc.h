@@ -54,8 +54,9 @@ extern GNODE debug_checknode;
  * See alloc.c for more information.
  */
 
-char *myalloc 		_PP((int x));
-void free_memory 	_PP((void));
+char *myalloc(int x);
+void free_memory(void);
+void *libc_malloc(int size);
 
 GNODE nodealloc		_PP((GNODE refnode));
 GNODE graphalloc	_PP((GNODE refnode));

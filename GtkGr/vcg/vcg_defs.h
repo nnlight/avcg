@@ -52,6 +52,20 @@ extern "C" {
 #define	ORI_EAST	7
 #define	ORI_WEST	8
 
+/*enum Listdir_t
+{
+	LD_PREV,
+	LD_NEXT,
+	LD_COUNT
+};*/
+
+/* adjacency list id: direction in gaph */
+enum Graphdir_t
+{
+	GD_PRED,  /* predecessor(s) (list) */
+	GD_SUCC,  /* successor(s)  (list) */
+	GD_COUNT
+};
 /*--------------------------------------------------------------------*/
 
 /*  Auxiliary Structs
@@ -290,6 +304,8 @@ typedef struct gnode
 	struct	gedge	*predright;    	/* rightest predecessor         */
 	struct	gedge	*succleft;	/* leftest successor		*/
 	struct	gedge	*succright;	/* rightest successor           */
+	struct gedge *adjfirst[GD_COUNT]; /* adjacency list, first edge */
+	struct gedge *adjlast[GD_COUNT];  /* adjacency list, last edge  */
 
 	struct	connect	*connection;	/* horizontal connection to a   */
 					/* neighboured node, see above  */
@@ -335,6 +351,7 @@ typedef struct gnode
 #define	NREGROOT(x)	((x)->regroot)
 #define	NNEXT(x)	((x)->next)
 #define NBEFORE(x)	((x)->before)
+#define NPREV(x)	((x)->before)
 #define NINLIST(x)	((x)->in_nodelist)
 #define	NINVISIBLE(x)	((x)->invisible)
 #define	NTIEFE(x)	((x)->tiefe)
@@ -361,13 +378,15 @@ typedef struct gnode
 #define	NPREDR(x)	((x)->predright)
 #define	NSUCCL(x)	((x)->succleft)
 #define	NSUCCR(x)	((x)->succright)
+#define NADJFIRST(x,di) ((x)->adjfirst[di])
+#define NADJLAST(x,dir) ((x)->adjlast[dir])
+/*#define FirstPred(x)    NADJFIRST(x, GD_PRED)
+#define FirstSucc(x)    NADJFIRST(x, GD_SUCC)*/
+#define LastPred(x)     NADJLAST(x, GD_PRED)
+#define LastSucc(x)     NADJLAST(x, GD_SUCC)
 #define NCONNECT(x)	((x)->connection)
 #define NINTERN(x)	((x)->internal_next)
 
-#define	NCONTAR(x)	(CTARGET(NCONNECT(x)))
-#define NCONEDG(x)	(CEDGE(NCONNECT(x)))
-#define	NCONTAR2(x)	(CTARGET2(NCONNECT(x)))
-#define NCONEDG2(x)	(CEDGE2(NCONNECT(x)))
 
 /* For NREVERT, we allow the values:
  * ---------------------------------
@@ -407,7 +426,6 @@ typedef struct gnlist
  *  the following possibilities:
  *	'U' -> the kind of this edge is undefined, (it is a normal edge)
  *	'S' -> this is a self loop
- *	'D' -> this is a biconnection, i.e. arrows at both sides
  *	'R' -> this is a reverted edge.
  *  If we do not self-layout, we have further:
  *	'l' -> this edge goes to the left
@@ -492,14 +510,21 @@ typedef struct gedge
 	struct	gnode	*labelnode; /* Label node if the edge is replaced */ 	
 
 	/* edgelist links: these are double linked lists */
-
 	struct	gedge	*next;		 /* successor in the edgelist   */
 	struct 	gedge	*before; 	 /* predecessor in the edgelist */
+
+	/* adjacency lists: these are double linked lists */
+	struct gedge *adjnext[GD_COUNT]; /* adjacency list, next edge */
+	struct gedge *adjprev[GD_COUNT]; /* adjacency list, prev edge */
+	struct adjedge *xxadjentry[GD_COUNT]; /* for temporary checks */
+
 	struct	gedge	*internal_next;  /* for memory allocation       */
 } *GEDGE;
 
 #define	ESTART(x)	((x)->start)
 #define	EEND(x)		((x)->end)
+#define	ESRC(x)         ((x)->start)
+#define	EDST(x)         ((x)->end)
 #define	ESTARTX(x)	((x)->sxloc)
 #define ESTARTY(x)	((x)->syloc)
 #define	ETBENDX(x)	((x)->btxloc)
@@ -528,6 +553,14 @@ typedef struct gedge
 #define	ELNODE(x)	((x)->labelnode)
 #define	ENEXT(x)	((x)->next)
 #define	EBEFORE(x)	((x)->before)
+#define	EPREV(x)	((x)->before)
+#define EADJNEXT(x,dir) ((x)->adjnext[dir])
+#define EADJPREV(x,dir) ((x)->adjprev[dir])
+/*#define NextPred(x)     EADJNEXT(x, GD_PRED)
+#define NextSucc(x)     EADJNEXT(x, GD_SUCC)*/
+#define PrevPred(x)     EADJPREV(x, GD_PRED)
+#define PrevSucc(x)     EADJPREV(x, GD_SUCC)
+#define EADJENTRY(x, dir) ((x)->xxadjentry[dir])
 #define EART(x)		((x)->kantenart)
 #define	EINVISIBLE(x)	((x)->invisible)
 #define	EWEIGHTS(x)	((x)->weights)

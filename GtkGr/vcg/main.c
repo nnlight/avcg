@@ -64,31 +64,20 @@ static void relayout(void);
 static void parse_part( FILE *f, const char *fname)
 {
 	int 	errs,i;
-	char c;
 
 	start_time();
 	debugmessage("parse_part","");
 	
-#if 0
-	while ((c = getc(stdin)) != EOF) {
-	  putc(c, stderr);
-	}
-#endif
 	/* We start from the scratch */
 
 	info_name_available = 0;
-	for (i=0; i<3; i++) info_names[i]=NULL;
+	for (i=0; i<3; i++) info_names[i] = NULL;
 
 	free_memory();
 
 
 	debugmessage("start_parsing", "");
 
-#if 0
-	while ((c = getc(f)) != EOF) {
-	  putc(c, stderr);
-	}
-#endif
 	init_lex( f, fname);
 	errs = parse();
 	debugmessage("finished_parsing", "");
@@ -134,7 +123,7 @@ static void visualize_part(void)
 	/* Init of the default values */
 
         G_title         = myalloc(256);
-		strcpy( G_title, "G_title");
+	strcpy( G_title, "G_title");
 	G_title[255] = 0;
         G_x             = -1L;
         G_y             = -1L;

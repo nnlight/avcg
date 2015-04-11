@@ -121,6 +121,7 @@
 #include "options.h"
 #include "folding.h"
 #include "steps.h"
+#include "graph.h"
 
 
 /* Prototypes
@@ -191,25 +192,22 @@ GNLIST  ufoldstart;  /* Node where region unfolding starts		   */
 /* Clear all fold starter or stopper lists.
  * ---------------------------------------
  */
-
 void clear_folding_keepers(void)
 {
 	GNLIST l;
 
 	/* Set folding keeper to NOREVERT */
-	l = f_subgraphs;
-	while (l) { NREVERT(GNNODE(l))= NOREVERT; 
-		    revert_subgraph(GNNODE(l));
-	      	    l = GNNEXT(l); 
-		  }
-	l = uf_subgraphs;
-	while (l) { NREVERT(GNNODE(l))= NOREVERT; l = GNNEXT(l); }
-	l = foldstops;
-	while (l) { NREVERT(GNNODE(l))= NOREVERT; l = GNNEXT(l); }
-	l = foldstart;
-	while (l) { NREVERT(GNNODE(l))= NOREVERT; l = GNNEXT(l); }
-	l = ufoldstart;
-	while (l) { NREVERT(GNNODE(l))= NOREVERT; l = GNNEXT(l); }
+	for (l = f_subgraphs; l; l = GNNEXT(l))
+	{
+		NREVERT(GNNODE(l)) = NOREVERT;
+		revert_subgraph(GNNODE(l));
+	}
+
+	for (l = uf_subgraphs; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
+	for (l = foldstops; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
+	for (l = foldstart; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
+	for (l = ufoldstart; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
+
 	free_foldnodelists();
 	ufoldstart  = NULL;
 	foldstart   = NULL;
@@ -257,25 +255,24 @@ void add_sgfoldstart(GNODE v)
  * are reverted, to easy the menu selection.
  * The nodes get the same revert-flag as the root node.
  */
- 
-static void revert_subgraph(GNODE v)  
+static void revert_subgraph(GNODE v)
 {
-        GNODE w; 
+        GNODE w;
 	GNLIST l;
-        int rev; 
- 
+        int rev;
+
 	debugmessage("revert_subgraph",(NTITLE(v)?NTITLE(v):"(null)"));
-        rev = NREVERT(v); 
-        l = NSGRAPH(v); 
+        rev = NREVERT(v);
+        l = NSGRAPH(v);
  
-        while (l) { 
-                w = GNNODE(l); 
-                NREVERT(w) = rev;  
+        while (l) {
+                w = GNNODE(l);
+                NREVERT(w) = rev;
 		if (NSGRAPH(w)) {
 			revert_subgraph(w);
 		}
-                l = GNNEXT(l); 
-        } 
+                l = GNNEXT(l);
+        }
 }
  
 
@@ -631,22 +628,6 @@ void	folding(void)
  *	UNFOLDED_SGRAPH, FOLDED_SGNODE, FOLDED_RGNODE, HIDDEN_CNODE 
  */
 
-/* Abbreviation to delete and insert nodes in double linked lists */
-
-#define del_node_from_dl_list(v,l,le) { \
-	if (NBEFORE(v)) NNEXT(NBEFORE(v)) = NNEXT(v); \
-	else		l		  = NNEXT(v); \
-	if (NNEXT(v)) NBEFORE(NNEXT(v)) = NBEFORE(v); \
-	else	      le		= NBEFORE(v); \
-}
-
-#define ins_node_in_dl_list(v,l,le) { \
-	NBEFORE(v)   = le;     \
-	if (le) NNEXT(le) = v; \
-	le = v; 	       \
-	if (!l) l = v;	       \
-}
-
 
 /*   Delete a node v from the nodelist
  *   ---------------------------------
@@ -664,8 +645,6 @@ static void	delete_node(GNODE v,int k)
 	NINLIST(v) = 0;
 	NINVISIBLE(v) = k;
 	del_node_from_dl_list(v,nodelist,nodelistend);
-	NNEXT(v)   = NULL;
-	NBEFORE(v) = NULL;
 	if (NSGRAPH(v)) { /* a subgraph comes back into the graph list */
 		if (k==UNFOLDED_SGRAPH) {
 			ins_node_in_dl_list(v,graphlist,graphlistend);
@@ -698,8 +677,6 @@ static void	insert_node(GNODE v,int k)
 			del_node_from_dl_list(v,graphlist,graphlistend);
 		}
 	}
-	NNEXT(v)   = NULL;
-	NBEFORE(v) = NULL;
 	ins_node_in_dl_list(v,nodelist,nodelistend);
 	nodeanz++;
 
@@ -1062,7 +1039,6 @@ static void	hide_node(GNODE v)
 	/* remove node from the node list */
 	if (!NINLIST(v)) {
 		del_node_from_dl_list(v,labellist,labellistend); 
-		NBEFORE(v) = NULL;
 		NNEXT(v) = tmpinvis_nodes;
 		tmpinvis_nodes = v;
 	} 
@@ -1333,8 +1309,7 @@ static void sort_all_nodes(void)
 	if (max < 2) return;
         if (max+2 > noso_size) {
                 if (node_sort_array) free(node_sort_array);
-                node_sort_array = (GNODE *)malloc((max+2)*sizeof(GNODE));
-                if (!node_sort_array) Fatal_error("memory exhausted","");
+                node_sort_array = (GNODE *)libc_malloc((max+2)*sizeof(GNODE));
                 noso_size = max+2;
 #ifdef DEBUG
                 PRINTF("Sizeof table `node_sort_array': %d Bytes\n",
@@ -1643,8 +1618,6 @@ GNODE	create_labelnode(GEDGE e)
 	NSTRETCH(v) = 1;
 	NSHRINK(v)  = 1;
 	adapt_labelpos(v,e);
-	NNEXT(v)   = NULL;
-	NBEFORE(v) = NULL;
 	ins_node_in_dl_list(v,labellist,labellistend); 
 	EINVISIBLE(e)=1;
 	ELNODE(e) = v;

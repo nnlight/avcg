@@ -230,10 +230,10 @@ void step0_main(void)
 	/* Allocate the string field for edge classes */
 
 	if (class_names) free(class_names);
-	class_names = (char **)malloc(max_nr_classes * sizeof(char *));
+	class_names = (char **)libc_malloc(max_nr_classes * sizeof(char *));
 	for (i=0; i<max_nr_classes; i++) class_names[i]=0;
 	if (hide_class) free(hide_class);
-	hide_class = (int *)malloc(max_nr_classes * sizeof(int));
+	hide_class = (int *)libc_malloc(max_nr_classes * sizeof(int));
 
 	/* Initialize folding attributes of nodes and edges */
 
@@ -283,25 +283,24 @@ void step0_main(void)
 
 /* Check number of necessary nodes
  * ===============================
- * The result is in numnodes. We traverse the syntax tree and look
+ * We traverse the syntax tree and look
  * for T_Co_graph and T_Co_node parts.
  */
-
-static int numnodes;    /* Number of necessary nodes */
-
-static void estimate_num_nodes(yysyntaxtree x)
+static int estimate_num_nodes(yysyntaxtree x)
 {
-        register int j,len;
+        int j,len;
+	int res = 0;
 
-        if (!x) return;
+        if (!x) return res;
         len = nr_of_sons(x);
 
-	if (tag(x)==T_Co_graph) numnodes++;
-        else if (tag(x)==T_Co_node)  numnodes++; 
+	if (tag(x)==T_Co_graph || tag(x)==T_Co_node)
+		res++;
 
         for (j=1; j<=len; j++) {
-                estimate_num_nodes(son(x,j));
+                res += estimate_num_nodes(son(x,j));
         }
+	return res;
 } /* estimate_num_nodes */
 
 
@@ -338,18 +337,18 @@ static void estimate_num_nodes(yysyntaxtree x)
 	}}
 
 
-static void	node_analyse(yysyntaxtree node, GNODE root, GNODE defnode) 
+static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
 {
-	register yysyntaxtree	node1, node2;	/* auxiliary variables */
+	yysyntaxtree    node1, node2;	/* auxiliary variables */
 	struct 	gnode defaultnode;
-	GNODE	v;
+	GNODE   v;
 	GNLIST  l;
-	int 	invis;
+	int     invis;
 	GNLIST  rootend;	/* end of the actual node list */
 	int     rootshrink;	/* shrink factor of the root   */
-	int 	rootstretch;	/* stretch factor of the root  */
+	int     rootstretch;	/* stretch factor of the root  */
 	int     h;
-	int 	borderc_set;	/* Flag, whether the default border color */
+	int     borderc_set;	/* Flag, whether the default border color */
 				/* was set explicitely                    */
 
 	debugmessage("node_analyse","");
@@ -922,12 +921,11 @@ static void	node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
  *  The situation is always the following:
  *      all edges are collected into the edge list
  */
-
-static void	edge_analyse(yysyntaxtree node, GEDGE	defedge)
+static void edge_analyse(yysyntaxtree node, GEDGE defedge)
 {
-	register yysyntaxtree	node1, node2;	/* auxiliary variables */
+	yysyntaxtree node1, node2;	/* auxiliary variables */
 	struct gedge defaultedge;
-	GEDGE	e;
+	GEDGE e;
 	int elcol_set, arrowc_set, barrowc_set;
 	                /* Flags, whether the default edge label color */
 			/* etc. were set explicitely                   */
@@ -1093,7 +1091,7 @@ static void	graph_attributes(
 			int rootshrink,
 			int rootstretch)
 {
-	register yysyntaxtree	node1, node2;
+	yysyntaxtree node1, node2;
 	int borderc_set;
 
 	debugmessage("graph_attributes","");
@@ -1231,7 +1229,7 @@ static void	node_attributes(
 			int rootshrink,
 			int rootstretch)
 {
-	register yysyntaxtree	node1, node2;
+	yysyntaxtree node1, node2;
 	int borderc_set;
 
 	debugmessage("node_attributes","");
@@ -1407,7 +1405,7 @@ static void	one_node_attribute(
 
 static void	edge_attributes(yysyntaxtree node, GEDGE e)
 {
-	register yysyntaxtree	node1, node2;
+	yysyntaxtree node1, node2;
 	int elcol_set, arrowc_set, barrowc_set;
 
 	debugmessage("edge_attributes","");
@@ -1651,7 +1649,6 @@ static int get_yesno(yysyntaxtree node)
  *   We traverse recursively the syntax tree to look for class declarations.
  *   The maximal number that occurs is stored into max_nr_classes. 
  */
-
 static void calc_nr_classes(yysyntaxtree node)
 {
 	yysyntaxtree node1, node2;
@@ -1765,31 +1762,26 @@ GNODE   search_visible_node(char *title)
 
 
 
-/*  Node Check  
- *  - - - - -  
+/*  Node Check
+ *  - - - - -
  *  Check whether a node already exists in the node list and graphlist.
  *  Creates an error message, if the node is avalable.
  *  Furthermore: insert the node into the hash table.
- */          	
- 
+ */
 static void check_node(yysyntaxtree x, GNODE m)
 {
 	char *title;
-	GNODE n;
 
 	assert((m));
 	title = NTITLE(m);
 	debugmessage("check_node",(title?title:"(null)"));
-	if (title && (!fastflag)) {
-		n = lookup_hashnode(title);
-		if (n!=NULL) {
-			SPRINTF(buffer,"Double defined node %s",title);
-			SYERR(x,buffer);
-		}
-	} 
+	if (title && lookup_hashnode(title)) {
+		SPRINTF(buffer,"Double defined node %s",title);
+		SYERR(x,buffer);
+	}
 	insert_hashnode(m);
 } /* check_node */
- 
+
 
 /*--------------------------------------------------------------------*/
 
@@ -1818,13 +1810,11 @@ static GNODE *hashtable = 0;
 /*  Initialization of the Hashtable
  *  -------------------------------
  */ 
-
 static void init_hashtable(void)
 {
 	int i;
 	if (!hashtable) {
-		numnodes = 0;
-		estimate_num_nodes(Syntax_Tree);
+		int numnodes = estimate_num_nodes(Syntax_Tree);
 
 		if (numnodes>30000)      maxhashtable = 32003; 
 		else if (numnodes>25000) maxhashtable = 30011; 
@@ -1835,10 +1825,7 @@ static void init_hashtable(void)
 		else if (numnodes>5000)  maxhashtable = 7507;
 		else if (numnodes>2000)  maxhashtable = 5003;
 		else maxhashtable = 2003;
-		hashtable = (GNODE *)malloc(maxhashtable*sizeof(GNODE));
-		if (!hashtable) {
-			Fatal_error("memory exhausted","");
-		}
+		hashtable = (GNODE *)libc_malloc(maxhashtable*sizeof(GNODE));
 #ifdef DEBUG
 		PRINTF("Number of detected nodes: %d\n", numnodes);
 		PRINTF("Sizeof tables `hashtable': %d Bytes\n",
@@ -1855,17 +1842,17 @@ static void init_hashtable(void)
  *  the ASCII value of the character.  
  *  The hashvalue is between 0 and maxhashtable-1.
  */
-
 static int hashval(char *s)
 {
-	register int res;
+	int res;
 
 	assert((s));
 	res = 0;
 	while (*s) { res = (10 * res + *s + 101) % maxhashtable; s++; }
 	if (res<0) res = -res;
-	return(res % maxhashtable);
+	return (res % maxhashtable);
 } /* hashval */
+
 
 /*  Insert a node into the hash table.
  *  ----------------------------------
@@ -1874,7 +1861,6 @@ static int hashval(char *s)
  *  Usually, graph summary nodes and real nodes are inserted after
  *  fetching all attributes.
  */
-
 static void insert_hashnode(GNODE x)
 {
 	char *title;
@@ -1882,7 +1868,6 @@ static void insert_hashnode(GNODE x)
 
 	assert((x));
 	title = NTITLE(x);
-	debugmessage("insert_hashnode",(title?title:"(null)"));
 	if (!title) {
 		FPRINTF(stderr,"Missing title of a node");
 		return;
@@ -1897,12 +1882,10 @@ static void insert_hashnode(GNODE x)
  *  ------------------------
  *  returns the first node that has the title, or NULL.
  */
-
 GNODE lookup_hashnode(char *title)
 {
 	GNODE h;
 
-	debugmessage("lookup_hashnode",(title?title:"(null)"));
 	h = hashtable[hashval(title)];
 	while (h) {
                 if (title==NTITLE(h)) return(h);

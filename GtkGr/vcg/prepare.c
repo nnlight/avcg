@@ -202,8 +202,7 @@ void prepare_nodes(void)
         i = (maxindeg > maxoutdeg ? maxindeg : maxoutdeg);
         if (i+2 > size_of_adjarray) {
                 if (adjarray2) free(adjarray2);
-                adjarray2 = (GEDGE *)malloc((i+2)*sizeof(GEDGE));
-                if (!adjarray2) Fatal_error("memory exhausted","");
+                adjarray2 = (GEDGE *)libc_malloc((i+2)*sizeof(GEDGE));
                 size_of_adjarray = i+2;
 #ifdef DEBUG
                 PRINTF("Sizeof table `adjarray2': %d Bytes\n",

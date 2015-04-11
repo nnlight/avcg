@@ -333,12 +333,10 @@ void step2_main(void)
 	if (max_nodes_per_layer+2 > size_of_sortarray) {
 		if (sort_array)  free(sort_array);
 		if (save_array)  free(save_array);
-		sort_array = (GNODE *)malloc((max_nodes_per_layer+2)
+		sort_array = (GNODE *)libc_malloc((max_nodes_per_layer+2)
 					* sizeof(GNODE));
-		save_array = (GNODE *)malloc((max_nodes_per_layer+2)
+		save_array = (GNODE *)libc_malloc((max_nodes_per_layer+2)
 					* sizeof(GNODE));
-		if ((!sort_array)||(!save_array)) 
-				Fatal_error("memory exhausted","");
 		size_of_sortarray = max_nodes_per_layer+2;
 #ifdef DEBUG
 		PRINTF("Sizeof tables `sort_array',`save_array': %d Bytes\n",
@@ -352,10 +350,8 @@ void step2_main(void)
 	if (i+2 > size_of_adjarray) {
 		if (adjarray)  free(adjarray);
 		if (adjarray2) free(adjarray2);
-		adjarray  = (GNODE *)malloc((i+2)*sizeof(GNODE));
-		adjarray2 = (GEDGE *)malloc((i+2)*sizeof(GEDGE));
-		if ((!adjarray)||(!adjarray2)) 
-			Fatal_error("memory exhausted","");
+		adjarray  = (GNODE *)libc_malloc((i+2)*sizeof(GNODE));
+		adjarray2 = (GEDGE *)libc_malloc((i+2)*sizeof(GEDGE));
 		size_of_adjarray = i+2;
 #ifdef DEBUG
 		PRINTF("Sizeof table `adjarray[12]': %d Bytes\n",
@@ -498,8 +494,7 @@ static void	create_tmp_layer(void)
 
 	if (maxdepth+2 > size_of_tlayer) {
 		if (tmp_layer) free(tmp_layer);
-		tmp_layer = (DEPTH *)malloc((maxdepth+2)*sizeof(struct depth_entry));
-		if (!tmp_layer) Fatal_error("memory exhausted","");
+		tmp_layer = (DEPTH *)libc_malloc((maxdepth+2)*sizeof(struct depth_entry));
 		size_of_tlayer = maxdepth+2;
 #ifdef DEBUG
 		PRINTF("Sizeof table `tmp_layer': %d Bytes\n",

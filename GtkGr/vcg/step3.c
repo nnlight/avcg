@@ -324,16 +324,14 @@ void alloc_levelshift(void)
 		if (levelshift)        free(levelshift);
 		if (tpred_connection1)  free(tpred_connection1);
 		if (tpred_connection2)  free(tpred_connection2);
-		levelshift = (int *)malloc((max_nodes_per_layer+2)
+		levelshift = (int *)libc_malloc((max_nodes_per_layer+2)
 					* sizeof(int));
-		tpred_connection1 = (GNLIST *)malloc((max_nodes_per_layer+2)
+		tpred_connection1 = (GNLIST *)libc_malloc((max_nodes_per_layer+2)
 					* sizeof(GNLIST));
-		tpred_connection2 = (GNLIST *)malloc((max_nodes_per_layer+2)
+		tpred_connection2 = (GNLIST *)libc_malloc((max_nodes_per_layer+2)
 					* sizeof(GNLIST));
 		levelweight  = (int *)tpred_connection1;
 		slayer_array = (GNODE *)tpred_connection2;
-		if ((!levelshift)||(!levelweight)||(!slayer_array))
-				Fatal_error("memory exhausted","");
 		size_of_levelsw = max_nodes_per_layer+2;
 #ifdef DEBUG
 		PRINTF("Sizeof tables `levelshift',`levelweight',`slayer_array': %d Bytes\n",

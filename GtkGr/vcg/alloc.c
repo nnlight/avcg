@@ -100,6 +100,7 @@
 #include "options.h"
 #include "alloc.h"
 #include "folding.h"
+#include "graph.h"
 
 #undef DEBUG
 #undef debugmessage
@@ -139,12 +140,9 @@ static long act_alloc_nodes = 0;
 static long node_refnum = 0L;	/* reference counter for REFNUM	of nodes */
 
 
-/*   Core Memory allocation
- *   ----------------------  
- *   allocate x bytes. We use the memory mechanism from the generated 
- *   parser. 
+/**
+ *   Allocate x bytes. We use the memory mechanism from the parser.
  */
-
 char *myalloc(int x)
 {
 	debugmessage("myalloc. Nr. of Bytes:",itoa(x));
@@ -153,15 +151,12 @@ char *myalloc(int x)
 	PRINTF("Alloc Summary: %ld Bytes allocated\n",act_alloc_size);
 #endif
 	return(ParseMalloc(x));
-}
+} /* myalloc */
 
-
-/*   Core Memory deallocation
- *   ------------------------  
- *   deallocate the complete memory.
+/**
+ *   Deallocate the complete memory.
  */
-
-void 	free_memory(void)
+void free_memory(void)
 {
 	debugmessage("free_memory","");
 #ifdef DEBUG
@@ -173,7 +168,19 @@ void 	free_memory(void)
 	ParseFree();
 	node_refnum = 0L;	
 	reinit_all_lists();
-}
+} /* free_memory */
+
+/**
+ * Выделить память с помощью malloc, проверив указатель на NULL.
+ */
+void *libc_malloc(int size)
+{
+	void *p = malloc(size);
+	if (!p) {
+		Fatal_error("memory exhausted","");
+	}
+	return p;
+} /* libc_malloc */
 
 /*--------------------------------------------------------------------*/
 
@@ -265,7 +272,7 @@ static GNODE internal_nodealloc(void)
 	NMARK(h)     	= 0; 
 	NREVERT(h)     	= 0; 
 	NANCHORNODE(h) 	= 0; 
-	h->bary 	= -1;
+	NBARY(h) 	= -1;
 	NDFS(h)      	= -1L; 
 	NINDEG(h)    	= 0;
 	NOUTDEG(h)	= 0;
@@ -279,8 +286,8 @@ static GNODE internal_nodealloc(void)
         NSUCCL(h)       = NULL; 
         NSUCCR(h)       = NULL;
 	NCONNECT(h)  	= NULL;
-	NNEXT(h) 	= NULL;
 	NINTERN(h)	= NULL;
+	init_node_graph_fields_as_dead(h);
 	return(h);
 }
 
@@ -300,13 +307,9 @@ GNODE nodealloc(GNODE refnode)
 	debugmessage("nodealloc","");
 	h = internal_nodealloc();
 	copy_nodeattributes(refnode, h);
-	NBEFORE(h)      = nodelistend;
-	if (nodelistend) NNEXT(nodelistend) = h;
-	nodelistend	= h;
-	if (nodelist == NULL) nodelist = h;
+	ins_node_in_dl_list(h,nodelist,nodelistend);
 	nodeanz++;
 	return(h);
-
 }
 
 /*  Initialize a node with the node defaults
@@ -338,13 +341,14 @@ void nodedefaults(GNODE node)
 	NBCOLOR(node)	= BLACK;
 	NSHRINK(node)	= 1;
 	NSTRETCH(node)	= 1;
+
+	init_node_graph_fields_as_dead(node);
 }
 
 
 /*  Initialize a node with the foldnode defaults
  *  --------------------------------------------
  */
-
 void foldnodedefaults(GNODE node)
 {
 	debugmessage("foldnodedefaults","");
@@ -370,6 +374,8 @@ void foldnodedefaults(GNODE node)
 	NBCOLOR(node)	= -1;
 	NSHRINK(node)	= -1;
 	NSTRETCH(node)	= -1;
+
+	init_node_graph_fields_as_dead(node);
 }
 
 
@@ -454,11 +460,8 @@ GNODE graphalloc(GNODE refnode)
 	NINLIST(h)	= 0;
 	NINVISIBLE(h) 	= 1;
 	NDFS(h)		= 0L;
-	NBEFORE(h)	= graphlistend;
 
-	if (graphlistend) NNEXT(graphlistend) = h;
-	graphlistend	= h;
-	if (graphlist == NULL) graphlist = h;
+	ins_node_in_dl_list(h,graphlist,graphlistend);
 	return(h);
 }
 
@@ -502,7 +505,6 @@ GNODE	tmpnodealloc(
         NINLIST(h)      = 0;
         NINVISIBLE(h)   = 1;
         NDFS(h)         = 0L;
-        NBEFORE(h)      = NULL;
 	
 	NINTERN(h)   = tmpnodelist;
 	tmpnodelist  = h;
@@ -563,8 +565,8 @@ GNODE	search_xy_node(long x,long y)
 	int	width, height;
 	long	xpos, ypos;
 
-	v = nodelist;
-	while (v) {
+	for (v = nodelist; v; v = NNEXT(v))
+	{
 		xpos = (NX(v)*G_stretch)/G_shrink - V_xmin;
 		ypos = (NY(v)*G_stretch)/G_shrink - V_ymin;
 		width = (NWIDTH(v)*G_stretch)/G_shrink;
@@ -572,9 +574,8 @@ GNODE	search_xy_node(long x,long y)
 		if ( (xpos <= x) && (x <= xpos+width) && 
 	     	     (ypos <= y) && (y <= ypos+height) )
 		    	return(v);      /* node found */
-		v = NNEXT(v);
 	}
-	return(NULL);		/* no node found */
+	return NULL;		/* no node found */
 } 
 
 
@@ -584,20 +585,18 @@ GNODE	search_xy_node(long x,long y)
  *  This leads to confusion if such a subgraph is folded.
  *  Thus, for such subgraphs, we add auxiliary nodes.
  */
-
 void check_graph_consistency(void)
 {
 	GNODE v,w;
 
-	v = graphlist;
-
-	while (v) {
+	for (v = graphlist; v; v = NNEXT(v))
+	{
 		if (NSGRAPH(v)==NULL) {
 			if (!silent) {
 				FPRINTF(stderr,"\nWarning: Graph %s", 
 					(NTITLE(v)?NTITLE(v):""));	
 				FPRINTF(stderr," has no nodes.");
-				FPRINTF(stderr," I add a node ! \n");
+				FPRINTF(stderr," I add a node !\n");
 			}
 			
 			w = nodealloc( v );
@@ -605,9 +604,8 @@ void check_graph_consistency(void)
 			NROOT(w) = v;
 			NSGRAPH(v) = nodelist_alloc(w);
 		}
-		v = NNEXT(v);
 	}
-}
+} /* check_graph_consistency */
 
 /*--------------------------------------------------------------------*/
 
@@ -637,8 +635,7 @@ static GNLIST ncons_freelist = NULL;  /* list of free cons cells      */
  *  need not to be freed unless a reload of the graph. Thus we don't
  *  store them in the tmpnconslist.
  */
-
-GNLIST  nodelist_alloc(GNODE v)
+GNLIST nodelist_alloc(GNODE v)
 {
 	GNLIST	h;
 
@@ -658,7 +655,6 @@ GNLIST  nodelist_alloc(GNODE v)
  *  These node lists are temporary, thus we store them in the
  *  tmpnconslist, to give them free later.
  */
-
 GNLIST  tmpnodelist_alloc(void)
 {
 	GNLIST	h;
@@ -709,11 +705,11 @@ GNLIST  foldnodelist_alloc(void)
 /*  Deallocate all temporary GNLIST objects
  *  --------------------------------------
  */
-
 static void free_nodelists(void)
 {
 	GNLIST	h;
 
+	/* все из tmpnconslist переносим в ncons_freelist */
 	debugmessage("free_nodelists","");
 	h = tmpnconslist;
 	if (h) {
@@ -728,15 +724,15 @@ static void free_nodelists(void)
 /*  Deallocate all fold GNLIST objects
  *  ----------------------------------
  */
-
 void free_foldnodelists(void)
 {
 	GNLIST	h;
 
+	/* все из foldnconslist переносим в ncons_freelist */
 	debugmessage("free_foldnodelists","");
 	h = foldnconslist;
 	if (h) {
-		while(GNINTERN(h)) h = GNINTERN(h);
+		while (GNINTERN(h)) h = GNINTERN(h);
 		GNINTERN(h) = ncons_freelist;
 		ncons_freelist = foldnconslist;
 		foldnconslist = NULL;
@@ -831,15 +827,15 @@ static GEDGE internal_edgealloc(void)
 	EORI(h)		= NO_ORI;
 	EORI2(h)	= NO_ORI;
 	ELABEL(h)  	= NULL;
+	ELABELCOL(h)	= BLACK;
 	EART(h)       	= 'U';
 	ELNODE(h)      	= NULL;
 	EANCHOR(h)	= 0;
 	EINVISIBLE(h)	= 0;
 	EWEIGHTS(h)   	= 0;
 	EWEIGHTP(h)   	= 0;
-	ENEXT(h)	= NULL;
 	EINTERN(h)	= NULL;
-	ELABELCOL(h)	= BLACK;
+	init_edge_graph_fields_as_dead(h);
 	return(h);
 }
 
@@ -858,11 +854,8 @@ GEDGE edgealloc(GEDGE refedge)
 	debugmessage("edgealloc","");
 	h = internal_edgealloc();
 	copy_edgeattributes(refedge, h);
-	EBEFORE(h)	= edgelistend;
-	if (edgelistend) ENEXT(edgelistend) = h;
-	edgelistend     = h;
+	ins_edge_in_dl_list(h, edgelist, edgelistend);
 	edgeanz++;
-	if (edgelist == NULL) edgelist = h;
 	return(h);
 }
 
@@ -889,13 +882,14 @@ void edgedefaults(GEDGE edge)
 	EARROWBSIZE(edge)	= 0;
 	EARROWBSTYLE(edge)	= ASNONESPEC;
 	EARROWBCOL(edge)	= BLACK;
+
+	init_edge_graph_fields_as_dead(edge);
 }
 
 
 /*  Initialize an edge with the foldedge defaults
  *  ---------------------------------------------
  */
-
 void foldedgedefaults(GEDGE edge)
 {
 	debugmessage("foldedgedefaults","");
@@ -914,6 +908,8 @@ void foldedgedefaults(GEDGE edge)
 	EARROWBSIZE(edge)	= -1;
 	EARROWBSTYLE(edge)	= -1;
 	EARROWBCOL(edge)	= -1;
+
+	init_edge_graph_fields_as_dead(edge);
 }
 
 
@@ -999,7 +995,6 @@ GEDGE	tmpedgealloc(
 	EHORDER(h)	= horder;
 	ECOLOR(h)	= ecolor;
 	ELABELCOL(h)	= elcol;
-	EBEFORE(h)	= NULL;
 	EARROWSTYLE(h)	= ASSOLID;
 	EARROWCOL(h)	= ecolor;
 	EARROWSIZE(h)	= arrows;
@@ -1359,7 +1354,7 @@ void	dllist_free_all(DLLIST x)
 /*  Deallocation of all temporary lists 
  *  ===================================
  */
-void	free_all_lists(void)
+void free_all_lists(void)
 {
 	free_tmpnodes();
 	free_tmpedges();
@@ -1372,7 +1367,7 @@ void	free_all_lists(void)
 /*  Reinitialization of all struct keeping lists 
  *  --------------------------------------------
  */
-void    reinit_all_lists(void)
+void reinit_all_lists(void)
 {
 	ufoldstart   = NULL;
 	foldstart    = NULL;

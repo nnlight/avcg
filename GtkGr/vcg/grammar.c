@@ -596,7 +596,7 @@ yysyntaxtree BuildTree(int mtag,int len, YYLTYPE *l, ...)
 
 yysyntaxtree Copy(yysyntaxtree x)
 {
-	register int j,len;
+	int j,len;
         yysyntaxtree help; 
 
 	if (!x) return(x);

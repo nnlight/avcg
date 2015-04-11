@@ -135,6 +135,7 @@
 #include "folding.h"
 #include "steps.h"
 #include "timing.h"
+#include "graph.h"
 
 
 /* Prototypes
@@ -274,8 +275,7 @@ void	step1_main(void)
 
 	if (maxdepth+2 > size_of_layer) {
 		if (layer) free(layer);
-		layer = (DEPTH *)malloc((maxdepth+2)*sizeof(struct depth_entry));
-		if (!layer) Fatal_error("memory exhausted","");
+		layer = (DEPTH *)libc_malloc((maxdepth+2)*sizeof(struct depth_entry));
 		size_of_layer = maxdepth+2;
 #ifdef DEBUG
 		PRINTF("Maxdepth of this layout: %d \n",maxdepth);
@@ -365,33 +365,23 @@ static GNODE startnodesend;
 
 static void 	insert_startnode(GNODE node)
 {
-	GNODE h,*hp;
+	GNODE h;
 
 	assert((node));
 	debugmessage("insert_startnode",(NTITLE(node)?NTITLE(node):"(null)"));
 
 	/* delete the node from the nodelist */
-	if (NNEXT(node))   NBEFORE(NNEXT(node)) = NBEFORE(node);
-	else 		   nodelistend 	  	= NBEFORE(node);
-	if (NBEFORE(node)) NNEXT(NBEFORE(node)) = NNEXT(node);
-	else 		   nodelist 	  	= NNEXT(node);
+	del_node_from_dl_list(node, nodelist, nodelistend);
 
 	/* search insertion point */
-	h  = startnodes;
-	hp = &startnodes;
-	while (h) {
-		if (NREFNUM(h)>=NREFNUM(node)) break;
-		hp = &(NNEXT(h));
-		h  = NNEXT(h);
+	for (h  = startnodes; h; h  = NNEXT(h))
+	{
+		if (NREFNUM(h)>=NREFNUM(node))
+			break;
 	}
 
 	/* insert the node into the startlist just before h */
-	*hp = node;
-	if (h) 	NBEFORE(node) = NBEFORE(h);
-	else	NBEFORE(node) = startnodesend; 
-	NNEXT(node)   = h;
-	if (h)  NBEFORE(h)    = node;
-	else    startnodesend = node;
+	ins_node_in_dl_list_before(node, startnodes, startnodesend, h);
 }
 
 
@@ -405,33 +395,23 @@ static GNODE endnodesend;
 
 static void 	insert_endnode(GNODE node)
 {
-	GNODE h,*hp;
+	GNODE h;
 
 	assert((node));
 	debugmessage("insert_endnode",(NTITLE(node)?NTITLE(node):"(null)"));
 
 	/* delete the node from the nodelist */
-	if (NNEXT(node))   NBEFORE(NNEXT(node)) = NBEFORE(node);
-	else 		   nodelistend 	  	= NBEFORE(node);
-	if (NBEFORE(node)) NNEXT(NBEFORE(node)) = NNEXT(node);
-	else 		   nodelist 	  	= NNEXT(node);
+	del_node_from_dl_list(node, nodelist, nodelistend);
 
 	/* search insertion point */
-	h  = endnodes;
-	hp = &endnodes;
-	while (h) {
-		if (NREFNUM(h)>=NREFNUM(node)) break;
-		hp = &(NNEXT(h));
-		h  = NNEXT(h);
+	for (h  = endnodes; h; h  = NNEXT(h))
+	{
+		if (NREFNUM(h)>=NREFNUM(node))
+			break;
 	}
 
 	/* insert the node into the endlist just before h */
-	*hp = node;
-	if (h) 	NBEFORE(node) = NBEFORE(h);
-	else	NBEFORE(node) = endnodesend; 
-	NNEXT(node)   = h;
-	if (h)  NBEFORE(h)    = node;
-	else    endnodesend = node;
+	ins_node_in_dl_list_before(node, endnodes, endnodesend, h);
 }
 
 
@@ -451,12 +431,11 @@ static void	prepare_startnodes(void)
 	endnodesend = NULL;
 	
 	/* create the list of start nodes and end nodes */
-	node 	 = nodelist;
-	while (node) {
+	for (node = nodelist; node; node = nxt_node)
+	{
 		nxt_node = NNEXT(node);
 		if (!NPRED(node)) 	insert_startnode(node);
 		else if (!NSUCC(node)) 	insert_endnode(node);
-		node = nxt_node;
 	}
 
 	/* and insert the start node list just in front of nodelist */
