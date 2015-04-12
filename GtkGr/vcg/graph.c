@@ -162,6 +162,7 @@ static void link_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
     else                  NADJLAST(v,dir) = e;
     NADJFIRST(v,dir) = e;
 #else
+	{
 	/* добавляем в начало списка дуг (в направлении dir) */
     GEDGE first = NADJFIRST(v, dir);
     if (first)
@@ -179,6 +180,7 @@ static void link_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
         NADJFIRST(v, dir) = e;
         NADJLAST(v, dir) = e;
     }
+	}
 #endif
 }
 
@@ -200,6 +202,7 @@ static unlink_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
     if (EADJNEXT(e, dir)) EADJPREV(EADJNEXT(e, dir),dir) = EADJPREV(e, dir);
     else                  NADJLAST(v, dir) = EADJPREV(e, dir);
 #else
+	{
     GEDGE prev = EADJPREV(e, dir);
     GEDGE next = EADJNEXT(e, dir);
 	if (prev)
@@ -217,6 +220,7 @@ static unlink_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
 	{
         assert(NADJLAST(v, dir) == e);
         NADJLAST(v, dir) = prev;
+	}
 	}
 #endif
 
