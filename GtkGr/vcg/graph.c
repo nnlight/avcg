@@ -183,7 +183,7 @@ static void link_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
 #endif
 }
 
-static unlink_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
+static void unlink_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
 {
     GEDGE prev = EADJPREV(e, dir);
     GEDGE next = EADJNEXT(e, dir);
@@ -264,8 +264,7 @@ void unlink_node_edges(GNODE v)
  */
 void link_edge(GEDGE edge)
 {
-	ADJEDGE a;
-    GNODE v;
+    ADJEDGE a;
 
     assert(ESTART(edge));
     assert(EEND(edge));

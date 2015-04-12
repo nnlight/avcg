@@ -1,41 +1,24 @@
 /*--------------------------------------------------------------------*/
-/*								      */
-/*		VCG : Visualization of Compiler Graphs		      */
-/*		--------------------------------------		      */
-/*								      */
-/*   file:	   folding.c					      */
-/*   version:	   1.00.00					      */
-/*   creation:	   17.9.1993					      */
-/*   author:	   I. Lemke  (...-Version 0.99.99)		      */
-/*		   G. Sander (Version 1.00.00-...)		      */  
-/*		   Universitaet des Saarlandes, 66041 Saarbruecken    */
-/*		   ESPRIT Project #5399 Compare 		      */
-/*   description:  Folding and Unfolding of the graph		      */
-/*   status:	   in work					      */
-/*								      */
+/*              VCG : Visualization of Compiler Graphs                */
 /*--------------------------------------------------------------------*/
-
-
 /*
- *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium 
+ * Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
+ *                             the Compare Consortium
+ * Copyright (C) 2015 Nikita S <nnlight@gmail.com>
  *
- *  This program and documentation is free software; you can redistribute 
- *  it under the terms of the  GNU General Public License as published by
- *  the  Free Software Foundation;  either version 2  of the License,  or
- *  (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  This  program  is  distributed  in  the hope that it will be useful,
- *  but  WITHOUT ANY WARRANTY;  without  even  the  implied  warranty of
- *  MERCHANTABILITY  or  FITNESS  FOR  A  PARTICULAR  PURPOSE.  See  the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- *  You  should  have  received a copy of the GNU General Public License
- *  along  with  this  program;  if  not,  write  to  the  Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
-
-
 
 /************************************************************************
  * The situation here is the following:
@@ -1528,16 +1511,12 @@ GNODE	create_labelnode(GEDGE e)
  *   from nodes that have no coordinates may be wrong; but in this
  *   case, all positions are recalculated anyway. 
  */
-
-static void adapt_labelpos(GNODE v,GEDGE e)
+static void adapt_labelpos(GNODE v, GEDGE e)
 {
-	int	a,b,c;
-	char	*ss;
+	char *ss;
 int gs_stringw =8;
 int gs_stringh =16;
 	assert((v));
-	b = 1;
-	a = c = 0;
 	ss = NLABEL(v);
 	if (!ss) return;
 	if (NSHRINK(v)==0) NSHRINK(v) = 1;
@@ -1784,6 +1763,7 @@ static void summarize_edges(void)
 		for (e1 = FirstSucc(v); e1; e1 = nxt_e1)
 		{
 			nxt_e1 = NextSucc(e1);
+			found = 0;
 			for (e2 = FirstSucc(v); e2; e2 = NextSucc(e2))
 			{
 				if (e2 == e1)
