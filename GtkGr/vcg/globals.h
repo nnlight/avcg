@@ -192,7 +192,7 @@
  * Значание для отладочных целей.
  * Указатель с таким значеним никогда не должен разименовываться.
  */
-#define DEAD_PTR    ((void*)0xDEAD0001)
+#define DEAD_PTR    ((void*)0xDEAD0003DEAD0001ll)
 #define DEAD_GNODE  ((GNODE)DEAD_PTR)
 #define DEAD_GEDGE  ((GEDGE)DEAD_PTR)
 
