@@ -1,41 +1,24 @@
 /*--------------------------------------------------------------------*/
-/*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
-/*              --------------------------------------                */
-/*                                                                    */
-/*   file:         step1.c                                            */
-/*   version:      1.00.00                                            */
-/*   creation:     14.4.1993                                          */
-/*   author:       I. Lemke  (...-Version 0.99.99)                    */
-/*                 G. Sander (Version 1.00.00-...)                    */  
-/*                 Universitaet des Saarlandes, 66041 Saarbruecken    */
-/*                 ESPRIT Project #5399 Compare                       */
-/*   description:  Layout phase 1: building a proper hierarchy        */
-/*   status:       in work                                            */
-/*                                                                    */
 /*--------------------------------------------------------------------*/
-
-
 /*
- *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium 
+ * Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
+ *                             the Compare Consortium
+ * Copyright (C) 2015 Nikita S <nnlight@gmail.com>
  *
- *  This program and documentation is free software; you can redistribute 
- *  it under the terms of the  GNU General Public License as published by
- *  the  Free Software Foundation;  either version 2  of the License,  or
- *  (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  This  program  is  distributed  in  the hope that it will be useful,
- *  but  WITHOUT ANY WARRANTY;  without  even  the  implied  warranty of
- *  MERCHANTABILITY  or  FITNESS  FOR  A  PARTICULAR  PURPOSE.  See  the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- *  You  should  have  received a copy of the GNU General Public License
- *  along  with  this  program;  if  not,  write  to  the  Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
-
-
 
 /************************************************************************
  * The situation here is the following:
@@ -189,11 +172,11 @@ static void 	complete_depth_lists	_PP((void));
 static void 	calc_connect_adjlists	_PP((GNODE v, GNODE w, GNODE predw));
 
 static void	inspect_edges 		_PP((void));
-static void 	check_edge		_PP((GNODE n, ADJEDGE e, int l));
+static void     check_edge(GNODE n, GEDGE e, int l);
 static void	inspect_double_edges	_PP((void));
-static void	check_double_edge 	_PP((ADJEDGE e));
+static void     check_double_edge(GEDGE e);
 static GNODE	create_dummy 		_PP((int t));
-static ADJEDGE	create_edge		_PP((GNODE x, GNODE y,GEDGE e,int t));
+static GEDGE    create_edge(GNODE x, GNODE y,GEDGE e,int t);
 
 
 /* Global variables
@@ -349,7 +332,6 @@ void	step1_main(void)
 /* startnodes is a double linked list to contain temporarily 
  * the start nodes.
  */
-
 static GNODE startnodes;
 static GNODE startnodesend;
 
@@ -357,8 +339,7 @@ static GNODE startnodesend;
  *  ---------------------------------
  *  The startnodes are sorted according NREFNUMS.
  */ 
-
-static void 	insert_startnode(GNODE node)
+static void insert_startnode(GNODE node)
 {
 	GNODE h;
 
@@ -369,7 +350,7 @@ static void 	insert_startnode(GNODE node)
 	del_node_from_dl_list(node, nodelist, nodelistend);
 
 	/* search insertion point */
-	for (h  = startnodes; h; h  = NNEXT(h))
+	for (h = startnodes; h; h = NNEXT(h))
 	{
 		if (NREFNUM(h)>=NREFNUM(node))
 			break;
@@ -379,7 +360,6 @@ static void 	insert_startnode(GNODE node)
 	ins_node_in_dl_list_before(node, startnodes, startnodesend, h);
 }
 
-
 static GNODE endnodes;
 static GNODE endnodesend;
 
@@ -387,8 +367,7 @@ static GNODE endnodesend;
  *  -------------------------------
  *  The endnodes are sorted according NREFNUMS.
  */ 
-
-static void 	insert_endnode(GNODE node)
+static void insert_endnode(GNODE node)
 {
 	GNODE h;
 
@@ -399,7 +378,7 @@ static void 	insert_endnode(GNODE node)
 	del_node_from_dl_list(node, nodelist, nodelistend);
 
 	/* search insertion point */
-	for (h  = endnodes; h; h  = NNEXT(h))
+	for (h = endnodes; h; h = NNEXT(h))
 	{
 		if (NREFNUM(h)>=NREFNUM(node))
 			break;
@@ -409,15 +388,12 @@ static void 	insert_endnode(GNODE node)
 	ins_node_in_dl_list_before(node, endnodes, endnodesend, h);
 }
 
-
-
 /*  Prepare nodelist to have startnodes in front
  *  ============================================
  */
-
-static void	prepare_startnodes(void)
+static void prepare_startnodes(void)
 {
-	GNODE	node,nxt_node;
+	GNODE   node, nxt_node;
 
 	debugmessage("prepare_startnodes","");
 	startnodes = NULL;
@@ -429,8 +405,8 @@ static void	prepare_startnodes(void)
 	for (node = nodelist; node; node = nxt_node)
 	{
 		nxt_node = NNEXT(node);
-		if (!NPRED(node)) 	insert_startnode(node);
-		else if (!NSUCC(node)) 	insert_endnode(node);
+		if (!FirstPred(node))      insert_startnode(node);
+		else if (!FirstSucc(node)) insert_endnode(node);
 	}
 
 	/* and insert the start node list just in front of nodelist */
@@ -469,19 +445,18 @@ void insert_anchor_edges(void)
 
 	debugmessage("insert_anchor_edges","");
 	assert((dummylist==NULL));
-	edge = edgelist;
-	while (edge) {
+	
+	for (edge = edgelist; edge; edge = ENEXT(edge))
+	{
 		if (  (EANCHOR(edge)<=64) && (EANCHOR(edge)>0)
 		    &&(!EINVISIBLE(edge))) 
 			prepare_anchoredge(edge);
-		edge = ENEXT(edge);
 	}
-	edge = tmpedgelist;
-	while (edge) {
+	for (edge = tmpedgelist; edge; edge = EINTERN(edge))
+	{
 		if (  (EANCHOR(edge)<=64) && (EANCHOR(edge)>0)
 		    &&(!EINVISIBLE(edge))) 
 			prepare_anchoredge(edge);
-		edge = EINTERN(edge);
 	}
 }
 
@@ -491,7 +466,6 @@ void insert_anchor_edges(void)
  *  we redirect the edge to point from this anchornode.
  *  Otherwise we create the anchornode and redirect the edge, too. 
  */
-
 static void prepare_anchoredge(GEDGE edge)
 {
 	GEDGE   h;
@@ -562,7 +536,7 @@ static void prepare_anchoredge(GEDGE edge)
 	delete_adjedge(edge);
 	EINVISIBLE(edge) = 0;
 	create_adjedge(h);
-}
+} /* prepare_anchoredge */
 
 
 /*--------------------------------------------------------------------*/
@@ -578,27 +552,27 @@ static void prepare_anchoredge(GEDGE edge)
  *  This is necessary since for instance a cycle of back edges cannot 
  *  be visualized without at least one edge which is not backwards.  
  */
-
 void prepare_back_edges(void)
 {
-	ADJEDGE e;
+	ADJEDGE li;
+	GEDGE e;
 	ADJEDGE a1, a2;
 
 	debugmessage("prepare_back_edges","");
-	e = back_edge_list;
-	while (e) {
-		if (!EINVISIBLE(AKANTE(e))) revert_edge(AKANTE(e));
-		else if (ELNODE(AKANTE(e))) {
-			a1 = NSUCC(ELNODE(AKANTE(e)));
-			a2 = NPRED(ELNODE(AKANTE(e)));
-			if (a1) 
-				if (!EINVISIBLE(AKANTE(a1))) 
+	for (li = back_edge_list; li; li = ANEXT(li))
+	{
+		e = AKANTE(li);
+		if (!EINVISIBLE(e)) revert_edge(e);
+		else if (ELNODE(e)) {
+			a1 = NSUCC(ELNODE(e));
+			a2 = NPRED(ELNODE(e));
+			if (a1)
+				if (!EINVISIBLE(AKANTE(a1)))
 					revert_edge(AKANTE(a1));
-			if (a2) 
-				if (!EINVISIBLE(AKANTE(a2))) 
+			if (a2)
+				if (!EINVISIBLE(AKANTE(a2)))
 					revert_edge(AKANTE(a2));
 		}
-		e = ANEXT(e);
 	}
 }
 
@@ -617,94 +591,93 @@ void prepare_back_edges(void)
  *  fields if it happen to be possible to neighbour directly some
  *  nodes that are connected by usual edges.
  */
-
-static void	insert_bent_near_edges(void)
+static void insert_bent_near_edges(void)
 {
 	GNODE   v;
-	ADJEDGE edge1;
-	ADJEDGE edge;
+	ADJEDGE li1;
+	GEDGE edge1;
+	GEDGE edge;
 	CONNECT c1,c2;
 	int connection_possible, invisible;
 
 	debugmessage("insert_bent_near_edges","");
-	edge1 = bent_near_edge_list;
-	while (edge1) {
-
-		invisible = EINVISIBLE(AKANTE(edge1));
-		v = ELNODE(AKANTE(edge1));
+	for (li1 = bent_near_edge_list; li1; li1 = ANEXT(li1))
+	{
+		edge1 = AKANTE(li1);
+		invisible = EINVISIBLE(edge1);
+		v = ELNODE(edge1);
 		if (v) {
-			edge = NSUCC(v);
+			edge = FirstSucc(v);
 			if (!edge) invisible = 1;
-			else invisible = EINVISIBLE(AKANTE(edge));
-			edge = NPRED(v);
+			else invisible = EINVISIBLE(edge);
+			edge = FirstPred(v);
 			if (!edge) invisible |= 1;
-			else invisible |= EINVISIBLE(AKANTE(edge));
+			else invisible |= EINVISIBLE(edge);
 		} 
 		else if (!invisible) {
 			if (G_displayel==YES) 
-				v = create_labelnode(AKANTE(edge1));
+				v = create_labelnode(edge1);
 			else {  v = create_dummy(-1);
 				NINVISIBLE(v) = 0;
 			}
-			NLEVEL(v) = NLEVEL(SOURCE(edge1));
-			NHORDER(v) = NHORDER(SOURCE(edge1));
-			edge = create_edge(v,TARGET(edge1),AKANTE(edge1),1);
-			ELABEL(AKANTE(edge)) = NULL;
-			edge = create_edge(SOURCE(edge1),v,AKANTE(edge1),0);
-			ELABEL(AKANTE(edge)) = NULL;
-			EPRIO(AKANTE(edge)) = 0;
-			delete_adjedge(AKANTE(edge1));
-			EINVISIBLE(AKANTE(edge1)) = 0;
+			NLEVEL(v) = NLEVEL(ESOURCE(edge1));
+			NHORDER(v) = NHORDER(ESOURCE(edge1));
+			edge = create_edge(v,ETARGET(edge1),edge1,1);
+			ELABEL(edge) = NULL;
+			edge = create_edge(ESOURCE(edge1),v,edge1,0);
+			ELABEL(edge) = NULL;
+			EPRIO(edge) = 0;
+			delete_adjedge(edge1);
+			EINVISIBLE(edge1) = 0;
 		}
 
 		if (!invisible) {
-			c1 = NCONNECT(SOURCE(edge));
-			c2 = NCONNECT(TARGET(edge));
+			c1 = NCONNECT(ESOURCE(edge));
+			c2 = NCONNECT(ETARGET(edge));
 			connection_possible = 1;
 			if ((c1) && (CTARGET(c1)) && (CTARGET2(c1))) 
 				connection_possible = 0;
 			if ((c2) && (CTARGET(c2)) && (CTARGET2(c2))) 
 				connection_possible = 0;
 
-			if (check_connect_cycle(TARGET(edge),NULL,
-						SOURCE(edge))) 
+			if (check_connect_cycle(ETARGET(edge),NULL,
+						ESOURCE(edge))) 
 				connection_possible = 0;
 
 			if (connection_possible) {
 				if (!c1) {
-					c1 = connectalloc(SOURCE(edge));
-					CTARGET(c1) = TARGET(edge);
-					CEDGE(c1)   = AKANTE(edge);
+					c1 = connectalloc(ESOURCE(edge));
+					CTARGET(c1) = ETARGET(edge);
+					CEDGE(c1)   = edge;
 				}
 				else if (!CTARGET2(c1)) {
-					CTARGET2(c1) = TARGET(edge);
-					CEDGE2(c1)   = AKANTE(edge);
+					CTARGET2(c1) = ETARGET(edge);
+					CEDGE2(c1)   = edge;
 				}
 				if (!c2) {
-					c2 = connectalloc(TARGET(edge));
-					CTARGET(c2) = SOURCE(edge);
-					CEDGE(c2)   = AKANTE(edge);
+					c2 = connectalloc(ETARGET(edge));
+					CTARGET(c2) = ESOURCE(edge);
+					CEDGE(c2)   = edge;
 				}
 				else if (!CTARGET2(c2)) {
-					CTARGET2(c2) = SOURCE(edge);
-					CEDGE2(c2)   = AKANTE(edge);
+					CTARGET2(c2) = ESOURCE(edge);
+					CEDGE2(c2)   = edge;
 				}
-				delete_adjedge(AKANTE(edge));
-				EINVISIBLE(AKANTE(edge)) = 0;
+				delete_adjedge(edge);
+				EINVISIBLE(edge) = 0;
 			}
 			else if (!silent) {
 				FPRINTF(stderr,"Nearedge connection (");
-				if (NTITLE(SOURCE(edge))[0])
-					FPRINTF(stderr,"%s",NTITLE(SOURCE(edge)));
+				if (NTITLE(ESOURCE(edge))[0])
+					FPRINTF(stderr,"%s",NTITLE(ESOURCE(edge)));
 				FPRINTF(stderr," , ");
-				if (NTITLE(TARGET(edge))[0])
-					FPRINTF(stderr,"%s",NTITLE(TARGET(edge)));
+				if (NTITLE(ETARGET(edge))[0])
+					FPRINTF(stderr,"%s",NTITLE(ETARGET(edge)));
 				FPRINTF(stderr,") ignored ! Sorry !\n");
 			}
 		}
-		edge1 = ANEXT(edge1);
 	}
-}
+} /* insert_bent_near_edges */
 
 
 /*--------------------------------------------------------------------*/
@@ -720,87 +693,87 @@ static void	insert_bent_near_edges(void)
  *  fields if it happen to be possible to neighbour directly some
  *  nodes that are connected by usual edges.
  */
-
-static void	insert_near_edges(void)
+static void insert_near_edges(void)
 {
-	ADJEDGE edge;
+	ADJEDGE li;
+	GEDGE   edge;
 	CONNECT c1,c2;
 	int connection_possible;
 
 	debugmessage("insert_near_edges","");
-	edge = near_edge_list;
-	while (edge) {
-		if (!EINVISIBLE(AKANTE(edge))) { 
-			c1 = NCONNECT(SOURCE(edge));
-			c2 = NCONNECT(TARGET(edge));
+	for (li = near_edge_list; li; li = ANEXT(li))
+	{
+		edge = AKANTE(li);
+		if (!EINVISIBLE(edge)) { 
+			c1 = NCONNECT(ESOURCE(edge));
+			c2 = NCONNECT(ETARGET(edge));
 			connection_possible = 1;
 			if ((c1) && (CTARGET(c1)) && (CTARGET2(c1))) 
 				connection_possible = 0;
 			if ((c2) && (CTARGET(c2)) && (CTARGET2(c2))) 
 				connection_possible = 0;
 
-			if (check_connect_cycle(TARGET(edge),NULL,
-						SOURCE(edge))) 
+			if (check_connect_cycle(ETARGET(edge),NULL,
+						ESOURCE(edge))) 
 				connection_possible = 0;
 
 			if (connection_possible) {
 				if (!c1) {
-					c1 = connectalloc(SOURCE(edge));
-					CTARGET(c1) = TARGET(edge);
-					CEDGE(c1)   = AKANTE(edge);
+					c1 = connectalloc(ESOURCE(edge));
+					CTARGET(c1) = ETARGET(edge);
+					CEDGE(c1)   = edge;
 				}
 				else if (!CTARGET2(c1)) {
-					CTARGET2(c1) = TARGET(edge);
-					CEDGE2(c1)   = AKANTE(edge);
+					CTARGET2(c1) = ETARGET(edge);
+					CEDGE2(c1)   = edge;
 				}
 				if (!c2) {
-					c2 = connectalloc(TARGET(edge));
-					CTARGET(c2) = SOURCE(edge);
-					CEDGE(c2)   = AKANTE(edge);
+					c2 = connectalloc(ETARGET(edge));
+					CTARGET(c2) = ESOURCE(edge);
+					CEDGE(c2)   = edge;
 				}
 				else if (!CTARGET2(c2)) {
-					CTARGET2(c2) = SOURCE(edge);
-					CEDGE2(c2)   = AKANTE(edge);
+					CTARGET2(c2) = ESOURCE(edge);
+					CEDGE2(c2)   = edge;
 				}
-				if (  (NLEVEL(SOURCE(edge))>=0) 
-				    &&(NLEVEL(TARGET(edge))>=0) 
-				    &&(NLEVEL(SOURCE(edge))!=
-				    		NLEVEL(TARGET(edge))>=0) ) {
+				if (  (NLEVEL(ESOURCE(edge))>=0) 
+				    &&(NLEVEL(ETARGET(edge))>=0) 
+				    &&(NLEVEL(ESOURCE(edge))!=
+				    		NLEVEL(ETARGET(edge))>=0) ) {
 					if (!silent) {
 		FPRINTF(stderr,"Nearedge connection (");
-		if (NTITLE(SOURCE(edge))[0])
-			FPRINTF(stderr,"%s",NTITLE(SOURCE(edge)));
+		if (NTITLE(ESOURCE(edge))[0])
+			FPRINTF(stderr,"%s",NTITLE(ESOURCE(edge)));
 		FPRINTF(stderr," , ");
-		if (NTITLE(TARGET(edge))[0])
-			FPRINTF(stderr,"%s",NTITLE(TARGET(edge)));
+		if (NTITLE(ETARGET(edge))[0])
+			FPRINTF(stderr,"%s",NTITLE(ETARGET(edge)));
 		FPRINTF(stderr,"): level of target ignored ! Sorry !\n");
 					}
 				}
-				if (NLEVEL(SOURCE(edge))>=0) {
-				    	NLEVEL(TARGET(edge)) = 
-				    		NLEVEL(SOURCE(edge)); 
+				if (NLEVEL(ESOURCE(edge))>=0) {
+				    	NLEVEL(ETARGET(edge)) =
+				    		NLEVEL(ESOURCE(edge));
 				} 
-				if (NLEVEL(TARGET(edge))>=0) {
-				    	NLEVEL(SOURCE(edge)) = 
-				    		NLEVEL(TARGET(edge)); 
+				if (NLEVEL(ETARGET(edge))>=0) {
+				    	NLEVEL(ESOURCE(edge)) =
+				    		NLEVEL(ETARGET(edge));
 				} 
 
-				delete_adjedge(AKANTE(edge));
-				EINVISIBLE(AKANTE(edge)) = 0;
+				delete_adjedge(edge);
+				EINVISIBLE(edge) = 0;
 			}
 			else if (!silent) {
 				FPRINTF(stderr,"Nearedge connection (");
-				if (NTITLE(SOURCE(edge))[0])
-					FPRINTF(stderr,"%s",NTITLE(SOURCE(edge)));
+				if (NTITLE(ESOURCE(edge))[0])
+					FPRINTF(stderr,"%s",NTITLE(ESOURCE(edge)));
 				FPRINTF(stderr," , ");
-				if (NTITLE(TARGET(edge))[0])
-					FPRINTF(stderr,"%s",NTITLE(TARGET(edge)));
+				if (NTITLE(ETARGET(edge))[0])
+					FPRINTF(stderr,"%s",NTITLE(ETARGET(edge)));
 				FPRINTF(stderr,") ignored ! Sorry !\n");
 			}
 		}
-		edge = ANEXT(edge);
 	}
-}
+} /* insert_near_edges */
 
 
 /* Check the connection chain for cycles 
@@ -811,8 +784,7 @@ static void	insert_near_edges(void)
  * previously.
  * We return 1, if z is reacheavle.
  */
-
-static int  check_connect_cycle(GNODE v, GNODE w, GNODE z)
+static int check_connect_cycle(GNODE v, GNODE w, GNODE z)
 {
 	CONNECT c;
 	int r;
@@ -915,32 +887,19 @@ static void partition_edges(void)
        	depth1 = maxdepth;
 
 	gs_wait_message('p');
-	node = nodelist;
-	while (node) {
-		NMARK(node) = 0; 
-		node = NNEXT(node);
-   	} 
-	node = labellist;
-	while (node) {
-		NMARK(node) = 0; 
-		node = NNEXT(node);
-   	} 
-	node = dummylist;
-	while (node) {
-		NMARK(node) = 0; 
-		node = NNEXT(node);
-   	} 
+	for (node = nodelist; node; node = NNEXT(node)) { NMARK(node) = 0; }
+	for (node = labellist; node; node = NNEXT(node)) { NMARK(node) = 0; }
+	for (node = dummylist; node; node = NNEXT(node)) { NMARK(node) = 0; }
 
     	act_dfsnum = 1L;
     	maxdepth = 0;		/* maximal depth of the spanning tree */
         
-	node = nodelist;
-	while (node) {
+	for (node = nodelist; node; node = NNEXT(node))
+	{
 		if ( !NMARK(node) ) {
 			act_level 	= 0; 
 			alt_depth_first_search(node);
         	}
-		node = NNEXT(node);
    	} 
 
 	/* labels are always reachable from other nodes, thus all label
@@ -963,32 +922,19 @@ static void partition_edges(void)
 	/* ----------------------------- */
 
 	gs_wait_message('p');
-	node = nodelist;
-	while (node) {
-		NMARK(node) = 0; 
-		node = NNEXT(node);
-   	} 
-	node = labellist;
-	while (node) {
-		NMARK(node) = 0; 
-		node = NNEXT(node);
-   	} 
-	node = dummylist;
-	while (node) {
-		NMARK(node) = 0; 
-		node = NNEXT(node);
-   	} 
+	for (node = nodelist; node; node = NNEXT(node)) { NMARK(node) = 0; }
+	for (node = labellist; node; node = NNEXT(node)) { NMARK(node) = 0; }
+	for (node = dummylist; node; node = NNEXT(node)) { NMARK(node) = 0; }
 
     	act_dfsnum = 1L;
     	maxdepth = 0;		/* maximal depth of the spanning tree */
         
-	node = nodelist;
-	while (node) {
+	for (node = nodelist; node; node = NNEXT(node))
+	{
 		if ( !NMARK(node) ) {
 			act_level 	= 0; 
 			depth_first_search(node);
         	}
-		node = NNEXT(node);
    	} 
 
 	/* labels are always reachaeble from other nodes, thus all label
@@ -2055,35 +2001,29 @@ static void 	add_phase1_labels(void)
 	/* In order to avoid that the level of a node is double duplicated,
 	 * we mark the nodes.
 	 */
-	v = nodelist;
-	while (v) { NMARK(v) = 0; v = NNEXT(v); }
-	v = dummylist;
-	while (v) { NMARK(v) = 0; v = NNEXT(v); }
-	v = labellist;
-	while (v) { NMARK(v) = 0; v = NNEXT(v); }
+	for (v = nodelist; v; v = NNEXT(v)) { NMARK(v) = 0; }
+	for (v = dummylist; v; v = NNEXT(v)) { NMARK(v) = 0; }
+	for (v = labellist; v; v = NNEXT(v)) { NMARK(v) = 0; }
 
 	maxdepth = 2*maxdepth;
-	v = nodelist;
-	while (v) {
+	for (v = nodelist; v; v = NNEXT(v))
+	{
 		if (!NMARK(v)) { NTIEFE(v) = 2* NTIEFE(v); NMARK(v) = 1; }
 		else assert((0));;
-		v = NNEXT(v);
 	}	
-	v = dummylist;
-	while (v) {
+	for (v = dummylist; v; v = NNEXT(v))
+	{
 		if (!NMARK(v)) { NTIEFE(v) = 2* NTIEFE(v); NMARK(v) = 1; }
 		else assert((0));;
-		v = NNEXT(v);
 	}	
-	v = labellist;
-	while (v) {
+	for (v = labellist; v; v = NNEXT(v))
+	{
 		if (!NMARK(v)) { NTIEFE(v) = 2* NTIEFE(v); NMARK(v) = 1; }
 		else assert((0));;
-		v = NNEXT(v);
 	}	
 
-	v = nodelist;
-	while (v) {
+	for (v = nodelist; v; v = NNEXT(v))
+	{
 		edge = NSUCC(v); 
 		while (edge) {
 			edgenext = ANEXT(edge);
@@ -2098,10 +2038,9 @@ static void 	add_phase1_labels(void)
 			}
 			edge = edgenext;
 		}
-		v = NNEXT(v);
 	}	
-	v = tmpnodelist;
-	while (v) {
+	for (v = tmpnodelist; v; v = NNEXT(v))
+	{
 		edge = NSUCC(v); 
 		while (edge) {
 			edgenext = ANEXT(edge);
@@ -2116,7 +2055,6 @@ static void 	add_phase1_labels(void)
 			}
 			edge = edgenext;
 		}
-		v = NNEXT(v);
 	}	
 }
 
@@ -2164,18 +2102,17 @@ static void tune_partitioning(void)
 		}
 
 		/* First, check normal nodes */
-		v = nodelist;
-		while (v) {
-			if (!NCONNECT(v)) changed += tune_node_depth(v,0); 
-			v = NNEXT(v);
-		}	
+		for (v = nodelist; v; v = NNEXT(v))
+		{
+			if (!NCONNECT(v)) changed += tune_node_depth(v,0);
+		}
 
 		/* Then, check labels */
-		v = labellist;
-		while (v) {
-			if (!NCONNECT(v)) changed += tune_node_depth(v,1); 
+		for (v = labellist; v; v = NNEXT(v))
+		{
+			if (!NCONNECT(v)) changed += tune_node_depth(v,1);
 			v = NNEXT(v);
-		}	
+		}
 		count++;
 		if (count>=50) return;
 	}
@@ -2437,35 +2374,32 @@ static void create_depth_lists(void)
 
 	debugmessage("create_depth_lists","");
 
-	h = nodelist;
-	while (h) {
+	for (h = nodelist; h; h = NNEXT(h))
+	{
 		t = NTIEFE(h);
 		assert((t<=maxdepth));
 		hl = tmpnodelist_alloc();
 		GNNEXT(hl) = TSUCC(layer[t]);
 		TSUCC(layer[t]) = hl;
         	GNNODE(hl) = h;
-		h = NNEXT(h);
 	}
-	h = labellist;
-	while (h) {
+	for (h = labellist; h; h = NNEXT(h))
+	{
 		t = NTIEFE(h);
 		assert((t<=maxdepth+1));
 		hl = tmpnodelist_alloc();
 		GNNEXT(hl) = TSUCC(layer[t]);
 		TSUCC(layer[t]) = hl;
         	GNNODE(hl) = h;
-		h = NNEXT(h);
 	}
-	h = dummylist;
-	while (h) {
+	for (h = dummylist; h; h = NNEXT(h))
+	{
 		t = NTIEFE(h);
 		assert((t<=maxdepth+1));
 		hl = tmpnodelist_alloc();
 		GNNEXT(hl) = TSUCC(layer[t]);
 		TSUCC(layer[t]) = hl;
         	GNNODE(hl) = h;
-		h = NNEXT(h);
 	}
 }
 
@@ -2641,9 +2575,9 @@ static void inspect_edges(void)
 	int     i;
 	GNLIST  li;
 	GNODE   node;
-	ADJEDGE edge, nextedge;
+	GEDGE   edge, nextedge;
 	GNODE   d1, d2; 	/* for dummy nodes */
-	ADJEDGE e1,e2,e3,e4;	/* for dummy edges */
+	GEDGE   e1,e2,e3,e4;	/* for dummy edges */
 	GEDGE   a1, a2;
 
 	debugmessage("inspect_edges","");
@@ -2652,49 +2586,48 @@ static void inspect_edges(void)
 		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
 		{
 			node = GNNODE(li);
-			edge = NSUCC(node);
-			while (edge) {
+			for (edge = FirstSucc(node); edge; edge = nextedge)
+			{
 				/* Because check_edge may delete edge */
-				assert((SOURCE(edge)==node));
-				nextedge = ANEXT(edge);
+				nextedge = NextSucc(edge);
+				assert(ESOURCE(edge) == node);
 				check_edge(node, edge, i);
-				edge = nextedge;
 			}
 		}
 	}
 	for (node = labellist; node; node = NNEXT(node))
 	{
-		edge = NSUCC(node);
-		if (edge && (ANEXT(edge))) {
-			a1 = AKANTE(edge);
-			a2 = AKANTE(ANEXT(edge));
+		edge = FirstSucc(node);
+		if (edge && NextSucc(edge)) {
+			a1 = edge;
+			a2 = NextSucc(edge);
 			d1 = create_dummy(NTIEFE(node));
 			d2 = create_dummy(NTIEFE(node));
 			e1 = create_edge(node,d1,a1,0);
 			e2 = create_edge(d1,EEND(a1),a1,1);
 			e3 = create_edge(node,d2,a2,0);
 			e4 = create_edge(d2,EEND(a2),a2,1);
-			check_edge(SOURCE(e1),e1,NTIEFE(node));
-			check_edge(SOURCE(e2),e2,NTIEFE(node));
-			check_edge(SOURCE(e3),e3,NTIEFE(node));
-			check_edge(SOURCE(e4),e4,NTIEFE(node));
+			check_edge(ESOURCE(e1),e1,NTIEFE(node));
+			check_edge(ESOURCE(e2),e2,NTIEFE(node));
+			check_edge(ESOURCE(e3),e3,NTIEFE(node));
+			check_edge(ESOURCE(e4),e4,NTIEFE(node));
 			delete_adjedge(a1);
 			delete_adjedge(a2);
 		}
-		edge = NPRED(node);
-		if (edge && (ANEXT(edge))) {
-			a1 = AKANTE(edge);
-			a2 = AKANTE(ANEXT(edge));
+		edge = FirstPred(node);
+		if (edge && NextPred(edge)) {
+			a1 = edge;
+			a2 = NextPred(edge);
 			d1 = create_dummy(NTIEFE(node));
 			d2 = create_dummy(NTIEFE(node));
 			e1 = create_edge(d1,node,a1,1);
 			e2 = create_edge(ESTART(a1),d1,a1,0);
 			e3 = create_edge(d2,node,a2,1);
 			e4 = create_edge(ESTART(a2),d2,a2,0);
-			check_edge(SOURCE(e1),e1,NTIEFE(node));
-			check_edge(SOURCE(e2),e2,NTIEFE(node)-1);
-			check_edge(SOURCE(e3),e3,NTIEFE(node));
-			check_edge(SOURCE(e4),e4,NTIEFE(node)-1);
+			check_edge(ESOURCE(e1),e1,NTIEFE(node));
+			check_edge(ESOURCE(e2),e2,NTIEFE(node)-1);
+			check_edge(ESOURCE(e3),e3,NTIEFE(node));
+			check_edge(ESOURCE(e4),e4,NTIEFE(node)-1);
 			delete_adjedge(a1);
 			delete_adjedge(a2);
 		}
@@ -2727,80 +2660,79 @@ static void inspect_edges(void)
  *                                                    M
  */
 
-static void check_edge(GNODE node, ADJEDGE edge, int level)
+static void check_edge(GNODE node, GEDGE edge, int level)
 {
 	int edgelen;	/* length of the edge, i.e. difference of levels */
 	int i, j;
-	GNODE   d1, d2; 	/* for dummy nodes */
-	ADJEDGE e1, e2, e3;	/* for dummy edges */
+	GNODE d1, d2; 	/* for dummy nodes */
+	GEDGE e1, e2, e3;	/* for dummy edges */
 	CONNECT c1, c2;
 	int connection_possible, lab_set;
 
 	debugmessage("check_edge","");
-	assert((node));
-	assert((edge));
-	assert((AKANTE(edge)));
-	assert((NTIEFE(node)==level));
-	assert((SOURCE(edge)==node));
+	assert(node);
+	assert(edge);
+	assert(NTIEFE(node) == level);
+	assert(ESOURCE(edge) == node);
 
-	edgelen = NTARTIEFE(edge) - level;
+	edgelen = NTIEFE(ETARGET(edge)) - level;
 	if (edgelen < 0) { /* Revert edge and continue checking */
-		e1 = revert_edge(AKANTE(edge));
+		e1 = revert_edge(edge);
 		/* it may be an forward edge now */
-		check_edge(SOURCE(e1),e1,NTIEFE(SOURCE(e1)));
+		check_edge(ESOURCE(e1),e1,NTIEFE(ESOURCE(e1)));
 	}
 	else if (edgelen == 0) { /* edge at the same level */
-		if (EKIND(edge)=='R') {
-			e1 = revert_edge(AKANTE(edge));
-			check_edge(SOURCE(e1),e1,NTIEFE(SOURCE(e1)));
+		if (EART(edge)=='R') {
+			e1 = revert_edge(edge);
+			check_edge(ESOURCE(e1),e1,NTIEFE(ESOURCE(e1)));
 		}
-		else if (SOURCE(edge) == TARGET(edge)) { /* self loop */
-			assert((TARGET(edge)==node));
-			assert((level<=maxdepth));
+		else if (ESOURCE(edge) == ETARGET(edge)) { /* self loop */
+			assert(ETARGET(edge)==node);
+			assert(level<=maxdepth);
 			d1 = create_dummy(level+1);
 			d2 = create_dummy(level+1);
-			NHORDER(d1) = NHORDER(d2) = EHORDER(AKANTE(edge));
-			e1 = create_edge(node,d1,AKANTE(edge),0);
-			e2 = create_edge(d1,d2,  AKANTE(edge),2);
-			e3 = create_edge(d2,node,AKANTE(edge),1);
-			ELABEL(AKANTE(e2)) = ELABEL(AKANTE(edge));
+			NHORDER(d1) = NHORDER(d2) = EHORDER(edge);
+			e1 = create_edge(node,d1,edge,0);
+			e2 = create_edge(d1,d2,  edge,2);
+			e3 = create_edge(d2,node,edge,1);
+			ELABEL(e2) = ELABEL(edge);
 			/* e1 is already okay: no recursion necessary  */
-			check_edge(SOURCE(e2),e2,NTIEFE(SOURCE(e2)));
-			check_edge(SOURCE(e3),e3,NTIEFE(SOURCE(e3)));
-			delete_adjedge(AKANTE(edge));
+			check_edge(ESOURCE(e2),e2,NTIEFE(ESOURCE(e2)));
+			check_edge(ESOURCE(e3),e3,NTIEFE(ESOURCE(e3)));
+			delete_adjedge(edge);
 		}
 		else { /* no self loop: try to neighbour the nodes */
 			c1 = NCONNECT(node);
-			c2 = NCONNECT(TARGET(edge));
+			c2 = NCONNECT(ETARGET(edge));
 			connection_possible = 1;
 			if ((c1) && (CTARGET(c1)) && (CTARGET2(c1))) 
 				connection_possible = 0;
 			if ((c2) && (CTARGET(c2)) && (CTARGET2(c2))) 
 				connection_possible = 0;
-			if (check_connect_cycle(TARGET(edge),NULL,
-						SOURCE(edge))) 
+			if (check_connect_cycle(ETARGET(edge),NULL,
+						ESOURCE(edge)))
 				connection_possible = 0;
 			if (connection_possible) {
 				if (!c1) {
 					c1 = connectalloc(node);
-					CTARGET(c1) = TARGET(edge);
-					CEDGE(c1)   = AKANTE(edge);
+					CTARGET(c1) = ETARGET(edge);
+					CEDGE(c1)   = edge;
 				}
 				else if (!CTARGET2(c1)) {
-					CTARGET2(c1) = TARGET(edge);
-					CEDGE2(c1)   = AKANTE(edge);
+					CTARGET2(c1) = ETARGET(edge);
+					CEDGE2(c1)   = edge;
 				}
 				if (!c2) {
-					c2 = connectalloc(TARGET(edge));
+					c2 = connectalloc(ETARGET(edge));
 					CTARGET(c2) = node;
-					CEDGE(c2)   = AKANTE(edge);
+					CEDGE(c2)   = edge;
 				}
 				else if (!CTARGET2(c2)) {
 					CTARGET2(c2) = node;
-					CEDGE2(c2)   = AKANTE(edge);
+					CEDGE2(c2)   = edge;
 				}
-				delete_adjedge(AKANTE(edge));
-				EINVISIBLE(AKANTE(edge)) = 0;
+				delete_adjedge(edge);
+				EINVISIBLE(edge) = 0;
 			}
 			else {
 				if (level<=maxdepth) 
@@ -2809,13 +2741,13 @@ static void check_edge(GNODE node, ADJEDGE edge, int level)
 					d1 = create_dummy(level-1);
 				
 				else { assert((0)); }
-				NHORDER(d1) = EHORDER(AKANTE(edge));
-				e1 = create_edge(node,d1,AKANTE(edge),0);
-				e2 = create_edge(d1,TARGET(edge),AKANTE(edge),1);
-				ELABEL(AKANTE(e2)) = ELABEL(AKANTE(edge));
-				check_edge(SOURCE(e1),e1,NTIEFE(SOURCE(e1)));
-				check_edge(SOURCE(e2),e2,NTIEFE(SOURCE(e2)));
-				delete_adjedge(AKANTE(edge));
+				NHORDER(d1) = EHORDER(edge);
+				e1 = create_edge(node,d1,edge,0);
+				e2 = create_edge(d1,ETARGET(edge),edge,1);
+				ELABEL(e2) = ELABEL(edge);
+				check_edge(ESOURCE(e1),e1,NTIEFE(ESOURCE(e1)));
+				check_edge(ESOURCE(e2),e2,NTIEFE(ESOURCE(e2)));
+				delete_adjedge(edge);
 			}
 		}
 	}
@@ -2827,20 +2759,20 @@ static void check_edge(GNODE node, ADJEDGE edge, int level)
 		j  = lab_set = 0;
 		for (i=1; i<edgelen; i++) {
 			d2 = create_dummy(level+i);
-			NHORDER(d2) = EHORDER(AKANTE(edge));
-			e1 = create_edge(d1,d2,AKANTE(edge),j);
+			NHORDER(d2) = EHORDER(edge);
+			e1 = create_edge(d1,d2,edge,j);
 			if (i==(edgelen+1)/2) {
-				ELABEL(AKANTE(e1)) = ELABEL(AKANTE(edge));
+				ELABEL(e1) = ELABEL(edge);
 				lab_set = 1;
 			}
 			/* e1 is already okay: no recursion necessary  */
 			d1 = d2;
 			j = 2;
 		}
-		e1 = create_edge(d1,TARGET(edge),AKANTE(edge),1);
-		if (!lab_set) ELABEL(AKANTE(e1)) = ELABEL(AKANTE(edge));
+		e1 = create_edge(d1,ETARGET(edge),edge,1);
+		if (!lab_set) ELABEL(e1) = ELABEL(edge);
 		/* e1 is already okay: no recursion necessary  */
-		delete_adjedge(AKANTE(edge));
+		delete_adjedge(edge);
 	}
 } /* check_edge */
 
@@ -2851,8 +2783,7 @@ static void check_edge(GNODE node, ADJEDGE edge, int level)
  *  are exchanged, and the edge is marked by 'R'. The adjacency entry
  *  of the new source node is returned.
  */
- 
-ADJEDGE revert_edge(GEDGE edge)
+GEDGE revert_edge(GEDGE edge)
 {
 	GNODE h;
 	char  hh;
@@ -2878,13 +2809,8 @@ ADJEDGE revert_edge(GEDGE edge)
 
 	create_adjedge(edge);
 
-	/* Warning: We know from folding.c that this is the edge we just
- 	 * created. But it is not quite obvious.
-	 */
-
-	return(NSUCC(ESTART(edge)));
+	return edge;
 }
-
 
 /*  Create an additional edge
  *  -------------------------
@@ -2895,10 +2821,9 @@ ADJEDGE revert_edge(GEDGE edge)
  *  arrow = 2 means both source and target are dummy nodes.
  *  arrow = 3 means both source and target are no dummy nodes.
  */
-
-static ADJEDGE	create_edge(GNODE start, GNODE end, GEDGE edge, int arrow)
+static GEDGE create_edge(GNODE start, GNODE end, GEDGE edge, int arrow)
 {
-	GEDGE	h;
+	GEDGE h;
 	
 	h = tmpedgealloc(
 		ELSTYLE(edge),
@@ -2942,13 +2867,8 @@ static ADJEDGE	create_edge(GNODE start, GNODE end, GEDGE edge, int arrow)
 	if (start==end) EART(h) = 'S';
 	create_adjedge(h);
 
-	/* Warning: We know from alloc.c that this is the edge we just
- 	 * created. But it is not quite obvious.
-	 */
-
-	return(NSUCC(ESTART(h)));
-}
-
+	return h;
+} /* create_edge */
 
 
 /*  Create a dummy node
@@ -2998,32 +2918,28 @@ static GNODE create_dummy(int t)
  *  This is basically the same as split_double_edges and
  *  summarize_edges (see folding.c) in one function.
  */
-
-static void	inspect_double_edges(void)
+static void inspect_double_edges(void)
 {
 	int     i;
-	GNLIST	li;
+	GNLIST  li;
 	GNODE   node;
-	ADJEDGE edge,nextedge;
+	GEDGE   edge, nextedge;
 
 	debugmessage("inspect_double_edge","");
 	for (i=0; i<=maxdepth; i++) {
-		li = TSUCC(layer[i]);
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			node = GNNODE(li);
-			edge = NSUCC(node);
-			while (edge) {
-				/* Because check_double_edge may delete edge */
-				assert((SOURCE(edge)==node));
-				nextedge = ANEXT(edge);
+			for (edge = FirstSucc(node); edge; edge = nextedge)
+			{
+				/* Because check_edge may delete edge */
+				nextedge = NextSucc(edge);
+				assert(ESOURCE(edge) == node);
 				check_double_edge(edge);
-				edge = nextedge;
 			}
-			li = GNNEXT(li);
 		}
 	}
 }
-
 
 /*  Check whether a doublicate of edge exist
  *  ----------------------------------------
@@ -3032,25 +2948,23 @@ static void	inspect_double_edges(void)
  *  new edges, but none of these new edges can be doublicated. 
  *  Thus, no recursion is necessary.
  */
-
-static void	check_double_edge(ADJEDGE edge)
+static void check_double_edge(GEDGE edge)
 {
-	ADJEDGE	l, lnext;
 	GNODE   d1; 	/* for dummy nodes */
-	ADJEDGE e1;	/* for dummy edges */
-	GEDGE   f1, f2;
-	int 	ide, aside1, aside2, tide;
+	GEDGE   e1;	/* for dummy edges */
+	GEDGE   f1, f2, nxt_f2;
+	int     ide, aside1, aside2, tide;
 
 	debugmessage("check_double_edge","");
 
-	f1 = AKANTE(edge);
-	l = NSUCC(SOURCE(edge));
-	while (l) {
-		lnext = ANEXT(l);
+	f1 = edge;
+	for (f2 = FirstSucc(ESOURCE(edge)); f2; f2 = nxt_f2)
+	{
+		nxt_f2 = NextSucc(f2);
+		if (f1==f2)
+			continue;
 
-		f2 = AKANTE(l);
-		if (f1!=f2) { tide = ide = aside1 = aside2 = 1; }
-		else { tide = ide = aside1 = aside2 = 0; }
+		tide = ide = aside1 = aside2 = 1;
 
                 if (ESTART(f1)      != ESTART(f2))       tide=0;
                 if (EEND(f1)        != EEND(f2))         tide=0;
@@ -3068,19 +2982,19 @@ static void	check_double_edge(ADJEDGE edge)
                 if (EARROWBCOL(f1)  != EARROWBCOL(f2))   aside2=0;
                 if (EANCHOR(f1)     != EANCHOR(f2))      ide=0;
 
-                if (tide && ide && aside1&&aside2 && summarize_double_edges) { 
-			delete_adjedge(f1); 
-			return; 
+                if (tide && ide && aside1 && aside2 && summarize_double_edges) {
+			delete_adjedge(f1);
+			return;
 		}
 
 		if (tide) {
-			d1 = create_dummy(NTIEFE(TARGET(l)));
+			d1 = create_dummy(NTIEFE(ETARGET(f2)));
 			NHORDER(d1) = EHORDER(f1);
-			e1 = create_edge(SOURCE(edge),d1,f1,0);
-			check_edge(SOURCE(e1),e1,NTIEFE(SOURCE(e1)));
-			e1 = create_edge(d1,TARGET(edge),AKANTE(edge),1);
-			ELABEL(AKANTE(e1)) = ELABEL(f1);
-			check_edge(SOURCE(e1),e1,NTIEFE(SOURCE(e1)));
+			e1 = create_edge(ESOURCE(edge),d1,f1,0);
+			check_edge(ESOURCE(e1),e1,NTIEFE(ESOURCE(e1)));
+			e1 = create_edge(d1,ETARGET(edge),edge,1);
+			ELABEL(e1) = ELABEL(f1);
+			check_edge(ESOURCE(e1),e1,NTIEFE(ESOURCE(e1)));
 
 			/* The double edge is not anymore a 
 			 * double edge. Thus the original edge
@@ -3089,8 +3003,6 @@ static void	check_double_edge(ADJEDGE edge)
 			delete_adjedge(f1); 
 			return; 
 		}
-
-		l = lnext;
 	}
 } /* check_double_edge */
 

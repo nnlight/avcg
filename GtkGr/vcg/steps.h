@@ -126,7 +126,7 @@ GNODE 	lookup_hashnode   	_PP((char *title));
 
 /* from step1.c */
 void    step1_main              _PP((void));
-ADJEDGE revert_edge             _PP((GEDGE edge));
+GEDGE   revert_edge(GEDGE edge);
 void	 calc_number_reversions _PP((void));
 void     prepare_back_edges     _PP((void));
 void    insert_anchor_edges     _PP((void));
