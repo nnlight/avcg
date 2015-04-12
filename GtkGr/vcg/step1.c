@@ -2111,7 +2111,6 @@ static void tune_partitioning(void)
 		for (v = labellist; v; v = NNEXT(v))
 		{
 			if (!NCONNECT(v)) changed += tune_node_depth(v,1);
-			v = NNEXT(v);
 		}
 		count++;
 		if (count>=50) return;
