@@ -525,6 +525,8 @@ typedef struct gedge
 #define	EEND(x)		((x)->end)
 #define	ESRC(x)         ((x)->start)
 #define	EDST(x)         ((x)->end)
+#define ESOURCE(x)      ((x)->start)
+#define ETARGET(x)      ((x)->end)
 #define	ESTARTX(x)	((x)->sxloc)
 #define ESTARTY(x)	((x)->syloc)
 #define	ETBENDX(x)	((x)->btxloc)

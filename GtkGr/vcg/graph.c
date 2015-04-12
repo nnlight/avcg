@@ -85,7 +85,7 @@ GEDGE NextSucc(GEDGE edge)
         assert(AKANTE(EADJENTRY(e,GD_SUCC)) == e);
     } else {
         assert( !ANEXT(EADJENTRY(edge,GD_SUCC)) );
-        assert(LastPred(ESRC(edge)) == edge);
+        assert(LastSucc(ESRC(edge)) == edge);
     }
     if (EADJPREV(edge,GD_SUCC)) {
         GEDGE prev_edge = EADJPREV(edge,GD_SUCC);
@@ -132,6 +132,56 @@ void init_node_adj_fields(GNODE v)
     NSUCC(v) = NPRED(v) = NULL;
 }
 
+void check_node_no_adj_edges(GNODE v)
+{
+    assert(NADJFIRST(v,GD_PRED) == NULL);
+    assert(NADJFIRST(v,GD_SUCC) == NULL);
+    assert(NADJLAST(v,GD_PRED) == NULL);
+    assert(NADJLAST(v,GD_SUCC) == NULL);
+
+    assert(NSUCC(v) == NULL);
+    assert(NPRED(v) == NULL);
+}
+
+static void link_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
+{
+    if (dir == GD_PRED) {
+        assert(EDST(e) == v);
+    } else {
+        assert(ESRC(e) == v);
+    }
+    assert(EADJPREV(e, dir) == DEAD_GEDGE);
+    assert(EADJNEXT(e, dir) == DEAD_GEDGE);
+    assert(NADJFIRST(v, dir) != DEAD_GEDGE);
+    assert(NADJLAST(v, dir) != DEAD_GEDGE);
+
+#if 0
+    EADJPREV(e,dir) = NULL;
+    EADJNEXT(e,dir) = NADJFIRST(v,dir);
+    if (NADJFIRST(v,dir)) EADJPREV(NADJFIRST(v,dir),dir) = e;
+    else                  NADJLAST(v,dir) = e;
+    NADJFIRST(v,dir) = e;
+#else
+	/* добавляем в начало списка дуг (в направлении dir) */
+    GEDGE first = NADJFIRST(v, dir);
+    if (first)
+    {
+        EADJPREV(first, dir) = e;
+        EADJPREV(e, dir) = NULL;
+        EADJNEXT(e, dir) = first;
+        NADJFIRST(v, dir) = e;
+    } else
+    {
+        /* тогда и последний элемент списка должен быть нулевым, т.е. список пустой */
+        assert(NADJLAST(v, dir) == NULL);
+        EADJPREV(e, dir) = NULL;
+        EADJNEXT(e, dir) = NULL;
+        NADJFIRST(v, dir) = e;
+        NADJLAST(v, dir) = e;
+    }
+#endif
+}
+
 static unlink_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
 {
     if (dir == GD_PRED) {
@@ -144,10 +194,31 @@ static unlink_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
     assert(NADJFIRST(v, dir) != DEAD_GEDGE);
     assert(NADJLAST(v, dir) != DEAD_GEDGE);
 
-    if (EADJPREV(e, dir)) EADJPREV(e, dir) = EADJNEXT(e, dir);
+#if 0
+    if (EADJPREV(e, dir)) EADJNEXT(EADJPREV(e, dir),dir) = EADJNEXT(e, dir);
     else                  NADJFIRST(v, dir)= EADJNEXT(e, dir);
-    if (EADJNEXT(e, dir)) EADJNEXT(e, dir) = EADJPREV(e, dir);
+    if (EADJNEXT(e, dir)) EADJPREV(EADJNEXT(e, dir),dir) = EADJPREV(e, dir);
     else                  NADJLAST(v, dir) = EADJPREV(e, dir);
+#else
+    GEDGE prev = EADJPREV(e, dir);
+    GEDGE next = EADJNEXT(e, dir);
+	if (prev)
+	{
+        EADJNEXT(prev, dir) = next;
+	} else
+	{
+        assert(NADJFIRST(v, dir) == e);
+        NADJFIRST(v, dir) = next;
+	}
+	if (next)
+	{
+        EADJPREV(next, dir) = prev;
+	} else
+	{
+        assert(NADJLAST(v, dir) == e);
+        NADJLAST(v, dir) = prev;
+	}
+#endif
 
     EADJPREV(e, dir) = DEAD_GEDGE;
     EADJNEXT(e, dir) = DEAD_GEDGE;
@@ -169,27 +240,19 @@ void unlink_node_edges(GNODE v)
         nxt_e = NextPred(e);
         unlink_node_edge(v, e, GD_PRED);
     }
+#else
+    for (e = NADJFIRST(v,GD_SUCC); e; e = nxt_e)
+    {
+        nxt_e = EADJNEXT(e, GD_SUCC);
+        unlink_node_edge(v, e, GD_SUCC);
+    }
+    for (e = NADJFIRST(v,GD_PRED); e; e = nxt_e)
+    {
+        nxt_e = EADJNEXT(e, GD_PRED);
+        unlink_node_edge(v, e, GD_PRED);
+    }
 #endif
     NSUCC(v) = NPRED(v) = NULL;
-}
-
-static void link_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
-{
-    if (dir == GD_PRED) {
-        assert(EDST(e) == v);
-    } else {
-        assert(ESRC(e) == v);
-    }
-    assert(EADJPREV(e, dir) == DEAD_GEDGE);
-    assert(EADJNEXT(e, dir) == DEAD_GEDGE);
-    assert(NADJFIRST(v, dir) != DEAD_GEDGE);
-    assert(NADJLAST(v, dir) != DEAD_GEDGE);
-
-    EADJPREV(e,dir) = NULL;
-    EADJNEXT(e,dir) = NADJFIRST(v,dir);
-    if (NADJFIRST(v,dir)) EADJPREV(NADJFIRST(v,dir),dir) = e;
-    else                  NADJLAST(v,dir) = e;
-    NADJFIRST(v,dir) = e;
 }
 
 /*   Create an adjacency

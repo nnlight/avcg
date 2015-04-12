@@ -510,6 +510,7 @@ GNODE	tmpnodealloc(
 	
 	NINTERN(h)   = tmpnodelist;
 	tmpnodelist  = h;
+	init_node_adj_fields(h);
 	return(h);
 }
 
@@ -550,6 +551,7 @@ void free_tmpnodes(void)
 void free_node(GNODE h)
 {
 	debugmessage("free_node","");
+	check_node_no_adj_edges(h);
 	NINTERN(h) = node_freelist;
 	node_freelist = h;
 }
@@ -747,11 +749,11 @@ void free_foldnodelists(void)
  *  These GNLIST objects should be allocated by nodelist_alloc,
  *  i.e. should not be temporary.
  */
-
-void free_regionnodelist(GNLIST	r)
+void free_regionnodelist(GNLIST r)
 {
-	GNLIST	h;
+	GNLIST  h;
 
+	/* все из r переносим в ncons_freelist, r не нулим */
 	debugmessage("free_regionnodelists","");
 	h = r;
 	if (h) {

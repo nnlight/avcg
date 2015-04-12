@@ -318,11 +318,6 @@ void	step1_main(void)
 			}
         }
 
-	/* For the statisctics, calculate the number of reverted edges.
-	 */
-
-	calc_number_reversions();
-
 
 	if (layout_flag != TREE_LAYOUT) {
 		complete_depth_lists();
@@ -872,8 +867,8 @@ static int	act_level;   /* actual level (depth) in spanning tree   */
 
 static void partition_edges(void)
 {
-	GNODE	node;
-	int	depth1;
+	GNODE   node;
+	int     depth1;
  
 	debugmessage("partition_edges","");
 
@@ -898,11 +893,10 @@ static void partition_edges(void)
 	 */
 
 #ifdef CHECK_ASSERTIONS
-	node = labellist;
-	while (node)	{
-		if ( !NMARK(node) ) assert((0));
-		node = NNEXT(node);
-   	} 
+	for (node = labellist; node; node = NNEXT(node))
+	{
+		assert( NMARK(node) );
+   	}
 #endif
 
 	/* maximize or minimize ? */
@@ -954,11 +948,10 @@ static void partition_edges(void)
 	 */
 
 #ifdef CHECK_ASSERTIONS
-	node = labellist;
-	while (node)	{
-		if ( !NMARK(node) ) assert((0));
-		node = NNEXT(node);
-   	} 
+	for (node = labellist; node; node = NNEXT(node))
+	{
+		assert( NMARK(node) );
+   	}
 #endif
 
 	/* maximize ? */
@@ -1004,14 +997,13 @@ static void partition_edges(void)
 
 
 #ifdef CHECK_ASSERTIONS
-	node = labellist;
-	while (node)	{
-		if ( !NMARK(node) ) assert((0));
-		node = NNEXT(node);
-   	} 
+	for (node = labellist; node; node = NNEXT(node))
+	{
+		assert( NMARK(node) );
+   	}
 #endif
 
-}
+} /* partition_edges */
 
 
 
@@ -2596,7 +2588,7 @@ static void	complete_depth_lists(void)
  *             connections                           connections
  */
 
-static void calc_connect_adjlists(GNODE v,GNODE w, GNODE predw)
+static void calc_connect_adjlists(GNODE v, GNODE w, GNODE predw)
 {
 	ADJEDGE	edge;
 	CONNECT c;
@@ -2644,13 +2636,12 @@ static void calc_connect_adjlists(GNODE v,GNODE w, GNODE predw)
  *  i.e. are not automatically checked, if they are inserted at the
  *  actual or an upper layer. Thus we need recursion in check_edge.
  */ 
-
-static void    inspect_edges(void)
+static void inspect_edges(void)
 {
 	int     i;
-	GNLIST	li;
+	GNLIST  li;
 	GNODE   node;
-	ADJEDGE edge,nextedge;
+	ADJEDGE edge, nextedge;
 	GNODE   d1, d2; 	/* for dummy nodes */
 	ADJEDGE e1,e2,e3,e4;	/* for dummy edges */
 	GEDGE   a1, a2;
@@ -2658,22 +2649,21 @@ static void    inspect_edges(void)
 	debugmessage("inspect_edges","");
  
 	for (i=0; i<=maxdepth; i++) {
-		li = TSUCC(layer[i]);
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			node = GNNODE(li);
 			edge = NSUCC(node);
 			while (edge) {
 				/* Because check_edge may delete edge */
 				assert((SOURCE(edge)==node));
 				nextedge = ANEXT(edge);
-				check_edge(node,edge,i);
+				check_edge(node, edge, i);
 				edge = nextedge;
 			}
-			li = GNNEXT(li);
 		}
 	}
-	node = labellist;
-	while (node) {
+	for (node = labellist; node; node = NNEXT(node))
+	{
 		edge = NSUCC(node);
 		if (edge && (ANEXT(edge))) {
 			a1 = AKANTE(edge);
@@ -2708,7 +2698,6 @@ static void    inspect_edges(void)
 			delete_adjedge(a1);
 			delete_adjedge(a2);
 		}
-		node = NNEXT(node);
 	}
 }
 
@@ -2741,10 +2730,10 @@ static void    inspect_edges(void)
 static void check_edge(GNODE node, ADJEDGE edge, int level)
 {
 	int edgelen;	/* length of the edge, i.e. difference of levels */
-	int i,j;
+	int i, j;
 	GNODE   d1, d2; 	/* for dummy nodes */
-	ADJEDGE e1,e2,e3;	/* for dummy edges */
-	CONNECT	c1,c2;
+	ADJEDGE e1, e2, e3;	/* for dummy edges */
+	CONNECT c1, c2;
 	int connection_possible, lab_set;
 
 	debugmessage("check_edge","");
@@ -2853,7 +2842,7 @@ static void check_edge(GNODE node, ADJEDGE edge, int level)
 		/* e1 is already okay: no recursion necessary  */
 		delete_adjedge(AKANTE(edge));
 	}
-}
+} /* check_edge */
 
 
 /*  Revert an edge
@@ -3103,52 +3092,7 @@ static void	check_double_edge(ADJEDGE edge)
 
 		l = lnext;
 	}
-}
-
-
-/*--------------------------------------------------------------------*/
-/*  Calculation of the number of reverted edges                       */
-/*--------------------------------------------------------------------*/
-
-int number_reversions;
-
-void calc_number_reversions(void)
-{
-	GNODE v;
-	ADJEDGE e;
-
-	debugmessage("calc_number_reversions","");
-
-	number_reversions = 0;
-
-	v = nodelist;
-	while (v) {
-		e = NPRED(v);
-		while (e) {
-			if (EKIND(e)=='R') number_reversions++;
-			e = ANEXT(e);
-		}
-		v = NNEXT(v);
-	}
-	v = labellist;
-	while (v) {
-		e = NPRED(v);
-		while (e) {
-			if (EKIND(e)=='R') number_reversions++;
-			e = ANEXT(e);
-		}
-		v = NNEXT(v);
-	}
-	v = dummylist;
-	while (v) {
-		e = NPRED(v);
-		while (e) {
-			if (EKIND(e)=='R') number_reversions++;
-			e = ANEXT(e);
-		}
-		v = NNEXT(v);
-	}
-}
+} /* check_double_edge */
 
 
 /*--------------------------------------------------------------------*/

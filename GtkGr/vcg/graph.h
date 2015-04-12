@@ -38,6 +38,7 @@ GEDGE NextSucc(GEDGE e);
 void init_node_graph_fields_as_dead(GNODE v);
 void init_edge_graph_fields_as_dead(GEDGE e);
 void init_node_adj_fields(GNODE v);
+void check_node_no_adj_edges(GNODE v);
 
 void unlink_node_edges(GNODE v);
 void link_edge(GEDGE e);
