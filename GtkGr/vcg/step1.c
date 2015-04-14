@@ -501,6 +501,7 @@ static void prepare_anchoredge(GEDGE edge)
 		ELABEL(h) = NULL;
 		create_connection(ESTART(edge), v, h);
 	}
+	c = NCONNECT(ESTART(edge));
 	v = CTARGET(c);
 	assert(v);
 	assert(NANCHORNODE(v));
