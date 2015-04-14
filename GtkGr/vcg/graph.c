@@ -26,7 +26,39 @@
 #include "globals.h"
 #include "graph.h"
 #include "alloc.h"
+#include "vcg_defs.h"
 
+
+#if !CONN_MACROS
+int forward_connection1(CONNECT c) {
+	GEDGE e = CEDGE(c);
+	if (e) {
+		assert(CTARGET(c) == ESTART(e) || CTARGET(c) == EEND(e));
+	}
+	return ((CEDGE(c))&& (EEND(CEDGE(c)) ==CTARGET(c)));
+}
+int forward_connection2(CONNECT c) {
+	GEDGE e = CEDGE2(c);
+	if (e) {
+		assert(CTARGET2(c) == ESTART(e) || CTARGET2(c) == EEND(e));
+	}
+	return ((CEDGE2(c))&&(EEND(CEDGE2(c))==CTARGET2(c)));
+}
+int backward_connection1(CONNECT c) {
+	GEDGE e = CEDGE(c);
+	if (e) {
+		assert(CTARGET(c) == ESTART(e) || CTARGET(c) == EEND(e));
+	}
+	return ((CEDGE(c))&& (EEND(CEDGE(c)) !=CTARGET(c)));
+}
+int backward_connection2(CONNECT c) {
+	GEDGE e = CEDGE2(c);
+	if (e) {
+		assert(CTARGET2(c) == ESTART(e) || CTARGET2(c) == EEND(e));
+	}
+	return ((CEDGE2(c))&&(EEND(CEDGE2(c))!=CTARGET2(c)));
+}
+#endif
 
 GEDGE FirstPred(GNODE v)
 {

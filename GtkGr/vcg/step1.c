@@ -138,7 +138,9 @@ static void	prepare_startnodes 	_PP((void));
 static void 	prepare_anchoredge	_PP((GEDGE edge));
 static void	insert_near_edges	_PP((void));
 static void	insert_bent_near_edges	_PP((void));
-static int  	check_connect_cycle	_PP((GNODE v,GNODE w,GNODE z));
+static int      check_connect_cycle(GNODE v,GNODE w,GNODE z);
+static int      is_connection_possible(GNODE src, GNODE dst, GEDGE edge);
+static void     create_connection(GNODE src, GNODE dst, GEDGE edge);
 static void	partition_edges		_PP((void));
 static void	depth_first_search 	_PP((GNODE node));
 static void	alt_depth_first_search 	_PP((GNODE node));
@@ -190,14 +192,6 @@ DEPTH *layer = NULL;	       /* The table of layers     */
 int    maxdepth = 0;           /* Max. depth of layout    */
 static int size_of_layer = 0;  /* Size of table of layers */ 
 
-/* Macros
- * ------
- */
-/* FIXME: forward & backward are the same ??? */
-#define forward_connection1(c)  ((CEDGE(c))&& (EEND(CEDGE(c))==CTARGET(c)))
-#define forward_connection2(c)  ((CEDGE2(c))&&(EEND(CEDGE2(c))==CTARGET2(c)))
-#define backward_connection1(c) ((CEDGE(c))&& (EEND(CEDGE(c))!=CTARGET(c)))
-#define backward_connection2(c) ((CEDGE2(c))&&(EEND(CEDGE2(c))!=CTARGET2(c)))
 
 /*--------------------------------------------------------------------*/
 /*  Building a proper hierarchy                                       */
@@ -470,7 +464,7 @@ static void prepare_anchoredge(GEDGE edge)
 {
 	GEDGE   h;
 	GNODE   v;
-	CONNECT c1,c2;
+	CONNECT c;
 
 	debugmessage("prepare_anchoredge","");
 	if ((G_orientation==LEFT_TO_RIGHT)||(G_orientation==RIGHT_TO_LEFT)) {
@@ -480,8 +474,8 @@ static void prepare_anchoredge(GEDGE edge)
 			FPRINTF(stderr," edge attribute `anchor' used !\n");
 		}
 	}
-	c1 = NCONNECT(ESTART(edge));
-	if (!c1) { 
+	c = NCONNECT(ESTART(edge));
+	if (!c) { 
 		v = create_dummy(-1);
 		NINVISIBLE(v) = 0;
 		NLEVEL(v) = NLEVEL(ESTART(edge));
@@ -505,16 +499,11 @@ static void prepare_anchoredge(GEDGE edge)
 		ESTART(h) = ESTART(edge);
 		EEND(h)   = v;
 		ELABEL(h) = NULL;
-		c1 = connectalloc(ESTART(h));
-		CTARGET(c1) = v;
-		CEDGE(c1)   = h;
-		c2 = connectalloc(v);
-		CTARGET(c2) = ESTART(h);
-		CEDGE(c2)   = h;
+		create_connection(ESTART(edge), v, h);
 	}
-	v = CTARGET(c1); 		
-	assert((v));
-	assert((NANCHORNODE(v)));
+	v = CTARGET(c);
+	assert(v);
+	assert(NANCHORNODE(v));
 	h = tmpedgealloc(
 		ELSTYLE(edge),
 		ETHICKNESS(edge),
@@ -597,8 +586,7 @@ static void insert_bent_near_edges(void)
 	ADJEDGE li1;
 	GEDGE edge1;
 	GEDGE edge;
-	CONNECT c1,c2;
-	int connection_possible, invisible;
+	int invisible;
 
 	debugmessage("insert_bent_near_edges","");
 	for (li1 = bent_near_edge_list; li1; li1 = ANEXT(li1))
@@ -632,47 +620,17 @@ static void insert_bent_near_edges(void)
 		}
 
 		if (!invisible) {
-			c1 = NCONNECT(ESOURCE(edge));
-			c2 = NCONNECT(ETARGET(edge));
-			connection_possible = 1;
-			if ((c1) && (CTARGET(c1)) && (CTARGET2(c1))) 
-				connection_possible = 0;
-			if ((c2) && (CTARGET(c2)) && (CTARGET2(c2))) 
-				connection_possible = 0;
 
-			if (check_connect_cycle(ETARGET(edge),NULL,
-						ESOURCE(edge))) 
-				connection_possible = 0;
-
-			if (connection_possible) {
-				if (!c1) {
-					c1 = connectalloc(ESOURCE(edge));
-					CTARGET(c1) = ETARGET(edge);
-					CEDGE(c1)   = edge;
-				}
-				else if (!CTARGET2(c1)) {
-					CTARGET2(c1) = ETARGET(edge);
-					CEDGE2(c1)   = edge;
-				}
-				if (!c2) {
-					c2 = connectalloc(ETARGET(edge));
-					CTARGET(c2) = ESOURCE(edge);
-					CEDGE(c2)   = edge;
-				}
-				else if (!CTARGET2(c2)) {
-					CTARGET2(c2) = ESOURCE(edge);
-					CEDGE2(c2)   = edge;
-				}
+			if (is_connection_possible(ESOURCE(edge), ETARGET(edge), edge)) {
+				create_connection(ESOURCE(edge), ETARGET(edge), edge);
 				delete_adjedge(edge);
 				EINVISIBLE(edge) = 0;
 			}
 			else if (!silent) {
 				FPRINTF(stderr,"Nearedge connection (");
-				if (NTITLE(ESOURCE(edge))[0])
-					FPRINTF(stderr,"%s",NTITLE(ESOURCE(edge)));
+				FPRINTF(stderr,"%s",NTITLE(ESOURCE(edge)));
 				FPRINTF(stderr," , ");
-				if (NTITLE(ETARGET(edge))[0])
-					FPRINTF(stderr,"%s",NTITLE(ETARGET(edge)));
+				FPRINTF(stderr,"%s",NTITLE(ETARGET(edge)));
 				FPRINTF(stderr,") ignored ! Sorry !\n");
 			}
 		}
@@ -697,57 +655,25 @@ static void insert_near_edges(void)
 {
 	ADJEDGE li;
 	GEDGE   edge;
-	CONNECT c1,c2;
-	int connection_possible;
 
 	debugmessage("insert_near_edges","");
 	for (li = near_edge_list; li; li = ANEXT(li))
 	{
 		edge = AKANTE(li);
 		if (!EINVISIBLE(edge)) { 
-			c1 = NCONNECT(ESOURCE(edge));
-			c2 = NCONNECT(ETARGET(edge));
-			connection_possible = 1;
-			if ((c1) && (CTARGET(c1)) && (CTARGET2(c1))) 
-				connection_possible = 0;
-			if ((c2) && (CTARGET(c2)) && (CTARGET2(c2))) 
-				connection_possible = 0;
 
-			if (check_connect_cycle(ETARGET(edge),NULL,
-						ESOURCE(edge))) 
-				connection_possible = 0;
-
-			if (connection_possible) {
-				if (!c1) {
-					c1 = connectalloc(ESOURCE(edge));
-					CTARGET(c1) = ETARGET(edge);
-					CEDGE(c1)   = edge;
-				}
-				else if (!CTARGET2(c1)) {
-					CTARGET2(c1) = ETARGET(edge);
-					CEDGE2(c1)   = edge;
-				}
-				if (!c2) {
-					c2 = connectalloc(ETARGET(edge));
-					CTARGET(c2) = ESOURCE(edge);
-					CEDGE(c2)   = edge;
-				}
-				else if (!CTARGET2(c2)) {
-					CTARGET2(c2) = ESOURCE(edge);
-					CEDGE2(c2)   = edge;
-				}
+			if (is_connection_possible(ESOURCE(edge), ETARGET(edge), edge)) {
+				create_connection(ESOURCE(edge), ETARGET(edge), edge);
 				if (  (NLEVEL(ESOURCE(edge))>=0) 
 				    &&(NLEVEL(ETARGET(edge))>=0) 
 				    &&(NLEVEL(ESOURCE(edge))!=
 				    		NLEVEL(ETARGET(edge))>=0) ) {
 					if (!silent) {
-		FPRINTF(stderr,"Nearedge connection (");
-		if (NTITLE(ESOURCE(edge))[0])
-			FPRINTF(stderr,"%s",NTITLE(ESOURCE(edge)));
-		FPRINTF(stderr," , ");
-		if (NTITLE(ETARGET(edge))[0])
-			FPRINTF(stderr,"%s",NTITLE(ETARGET(edge)));
-		FPRINTF(stderr,"): level of target ignored ! Sorry !\n");
+						FPRINTF(stderr,"Nearedge connection (");
+						FPRINTF(stderr,"%s",NTITLE(ESOURCE(edge)));
+						FPRINTF(stderr," , ");
+						FPRINTF(stderr,"%s",NTITLE(ETARGET(edge)));
+						FPRINTF(stderr,"): level of target ignored ! Sorry !\n");
 					}
 				}
 				if (NLEVEL(ESOURCE(edge))>=0) {
@@ -764,11 +690,9 @@ static void insert_near_edges(void)
 			}
 			else if (!silent) {
 				FPRINTF(stderr,"Nearedge connection (");
-				if (NTITLE(ESOURCE(edge))[0])
-					FPRINTF(stderr,"%s",NTITLE(ESOURCE(edge)));
+				FPRINTF(stderr,"%s",NTITLE(ESOURCE(edge)));
 				FPRINTF(stderr," , ");
-				if (NTITLE(ETARGET(edge))[0])
-					FPRINTF(stderr,"%s",NTITLE(ETARGET(edge)));
+				FPRINTF(stderr,"%s",NTITLE(ETARGET(edge)));
 				FPRINTF(stderr,") ignored ! Sorry !\n");
 			}
 		}
@@ -802,6 +726,62 @@ static int check_connect_cycle(GNODE v, GNODE w, GNODE z)
 	if (CTARGET2(c) && (CTARGET2(c)!=w)) 
 		r |= check_connect_cycle(CTARGET2(c),v,z);
 	return(r);
+}
+
+static int is_connection_possible(GNODE src, GNODE dst, GEDGE edge)
+{
+	CONNECT c1, c2;
+	int connection_possible;
+
+	assert(ESOURCE(edge) == src);
+	assert(ETARGET(edge) == dst);
+
+	c1 = NCONNECT(ESOURCE(edge));
+	c2 = NCONNECT(ETARGET(edge));
+	connection_possible = 1;
+	if ((c1) && (CTARGET(c1)) && (CTARGET2(c1))) 
+		connection_possible = 0;
+	if ((c2) && (CTARGET(c2)) && (CTARGET2(c2))) 
+		connection_possible = 0;
+
+	if (check_connect_cycle(ETARGET(edge),NULL,
+				ESOURCE(edge))) 
+		connection_possible = 0;
+
+	return connection_possible;
+}
+
+static void create_connection(GNODE src, GNODE dst, GEDGE edge)
+{
+	CONNECT c1, c2;
+
+	assert(ESOURCE(edge) == src);
+	assert(ETARGET(edge) == dst);
+
+	c1 = NCONNECT(ESOURCE(edge));
+	c2 = NCONNECT(ETARGET(edge));
+	if (!c1) {
+		c1 = connectalloc(ESOURCE(edge));
+		CTARGET(c1) = ETARGET(edge);
+		CEDGE(c1)   = edge;
+	}
+	else if (!CTARGET2(c1)) {
+		CTARGET2(c1) = ETARGET(edge);
+		CEDGE2(c1)   = edge;
+	} else {
+		assert(0);
+	}
+	if (!c2) {
+		c2 = connectalloc(ETARGET(edge));
+		CTARGET(c2) = ESOURCE(edge);
+		CEDGE(c2)   = edge;
+	}
+	else if (!CTARGET2(c2)) {
+		CTARGET2(c2) = ESOURCE(edge);
+		CEDGE2(c2)   = edge;
+	} else {
+		assert(0);
+	}
 }
 
 
@@ -1540,6 +1520,7 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
 	int	maxoutdeg;
 	int	maxpreindeg;
 	int 	minlevel;
+	CONNECT c;
 
 	assert((node));
 	debugmessage("scc_traversal",(NTITLE(node)?NTITLE(node):"(null)"));
@@ -1553,18 +1534,19 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
 
 	add_to_nlist(node, open_sccp);
 
-	if (NCONNECT(node)) {
+	c = NCONNECT(node);
+	if (c) {
 		/* Connections should be on the same level !!! 
 		 * Note: Connections are never self loops.
 		 */
-		if (CTARGET(NCONNECT(node))) {
-			kn = CTARGET(NCONNECT(node));
+		if (CTARGET(c)) {
+			kn = CTARGET(c);
 			scc_traversal(kn,dfsnum,open_sccp);
 			if ((NOPENSCC(kn)) && (NLOWPT(kn)<NLOWPT(node))) 
 				NLOWPT(node) = NLOWPT(kn);
 		}
-		if (CTARGET2(NCONNECT(node))) {
-			kn = CTARGET2(NCONNECT(node));
+		if (CTARGET2(c)) {
+			kn = CTARGET2(c);
 			scc_traversal(kn,dfsnum,open_sccp);
 			if ((NOPENSCC(kn)) && (NLOWPT(kn)<NLOWPT(node))) 
 				NLOWPT(node) = NLOWPT(kn);
@@ -2665,8 +2647,7 @@ static void check_edge(GNODE node, GEDGE edge, int level)
 	int i, j;
 	GNODE d1, d2; 	/* for dummy nodes */
 	GEDGE e1, e2, e3;	/* for dummy edges */
-	CONNECT c1, c2;
-	int connection_possible, lab_set;
+	int lab_set;
 
 	debugmessage("check_edge","");
 	assert(node);
@@ -2701,35 +2682,9 @@ static void check_edge(GNODE node, GEDGE edge, int level)
 			delete_adjedge(edge);
 		}
 		else { /* no self loop: try to neighbour the nodes */
-			c1 = NCONNECT(node);
-			c2 = NCONNECT(ETARGET(edge));
-			connection_possible = 1;
-			if ((c1) && (CTARGET(c1)) && (CTARGET2(c1))) 
-				connection_possible = 0;
-			if ((c2) && (CTARGET(c2)) && (CTARGET2(c2))) 
-				connection_possible = 0;
-			if (check_connect_cycle(ETARGET(edge),NULL,
-						ESOURCE(edge)))
-				connection_possible = 0;
-			if (connection_possible) {
-				if (!c1) {
-					c1 = connectalloc(node);
-					CTARGET(c1) = ETARGET(edge);
-					CEDGE(c1)   = edge;
-				}
-				else if (!CTARGET2(c1)) {
-					CTARGET2(c1) = ETARGET(edge);
-					CEDGE2(c1)   = edge;
-				}
-				if (!c2) {
-					c2 = connectalloc(ETARGET(edge));
-					CTARGET(c2) = node;
-					CEDGE(c2)   = edge;
-				}
-				else if (!CTARGET2(c2)) {
-					CTARGET2(c2) = node;
-					CEDGE2(c2)   = edge;
-				}
+
+			if (is_connection_possible(node, ETARGET(edge), edge)) {
+				create_connection(node, ETARGET(edge), edge);
 				delete_adjedge(edge);
 				EINVISIBLE(edge) = 0;
 			}

@@ -2344,9 +2344,6 @@ static void flip_mirror(void)
  *  Flip all nodes and all incoming edges.
  */
 
-#define backward_connection1(c) ((CEDGE(c))&& (EEND(CEDGE(c)) ==v))
-#define backward_connection2(c) ((CEDGE2(c))&&(EEND(CEDGE2(c))==v))
-
 static void flip_all_nodes(GNODE v)
 {	
 	int h;
@@ -2467,9 +2464,6 @@ static void flip_ver_mirror(void)
  *  Flip all nodes and all incoming edges.
  */
 
-#define backward_connection1(c) ((CEDGE(c))&& (EEND(CEDGE(c)) ==v))
-#define backward_connection2(c) ((CEDGE2(c))&&(EEND(CEDGE2(c))==v))
-
 static void flip_ver_all_nodes(GNODE v)
 {	
 	CONNECT c;
@@ -2587,8 +2581,6 @@ int st_max_indeg;
 int st_max_outdeg;
 int st_max_degree;
 
-#define backward_connection1(c) ((CEDGE(c))&& (EEND(CEDGE(c)) ==v))
-#define backward_connection2(c) ((CEDGE2(c))&&(EEND(CEDGE2(c))==v))
 
 void statistics(void)
 {

@@ -756,7 +756,7 @@ static void unfold_sg(GNODE u)
  */
 static void fold_region(GNODE n, int k)
 {
-	GEDGE   e;
+	GEDGE   e, nxt_e;
 	GNODE   h;
 
 
@@ -793,8 +793,9 @@ static void fold_region(GNODE n, int k)
 	NREGION(n)  = NULL;   /* here we collect the nodes of this region */
 
 	/* Fold the nodes recursively */
-	for (e = FirstSucc(n); e; e = NextSucc(e))
+	for (e = FirstSucc(n); e; e = nxt_e)
 	{
+		nxt_e = NextSucc(e);
 		if ( ECLASS(e) <= k ) {
 			if ( !foldstop_reached(EEND(e)) ) {
 				EINVISIBLE(e) = 1;
@@ -843,8 +844,9 @@ static void recursive_fold(GNODE v, GNODE n, int k)
 	delete_node(v,FOLDED_RGNODE);
 
 	/* Go into the recursion */
-	for (e = FirstSucc(v); e; e = NextSucc(e))
+	for (e = FirstSucc(v); e; e = nxt_e)
 	{
+		nxt_e = NextSucc(e);
 		if ( ECLASS(e) <= k ) {
 			if ( !foldstop_reached(EEND(e)) ) {
 				EINVISIBLE(e) = 1;
@@ -888,6 +890,13 @@ static void recursive_fold(GNODE v, GNODE n, int k)
 			if (ee && (EEND(ee)!=n)) create_adjedge(ee);
 		}
 	}
+
+	/* nnlight - my watching checks */
+	assert(NPRED(v) == NULL);
+	assert(NSUCC(v) == NULL);
+	assert(FirstPred(v) == NULL);
+	assert(FirstSucc(v) == NULL);
+	
 	/*NPRED(v) = NSUCC(v) = NULL;*/  /* because v is invisible */
 	unlink_node_edges(v);
 } /* recursive_fold */

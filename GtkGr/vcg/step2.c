@@ -2850,12 +2850,6 @@ static void copy_layers(DEPTH *l1, DEPTH *l2)
  * are found.
  */
 
-/* Abreviations to check whether a connection is a forward connection.
- */
-
-#define forward_connection1(c)  ((CEDGE(c))&& (EEND(CEDGE(c))==CTARGET(c)))
-#define forward_connection2(c)  ((CEDGE2(c))&&(EEND(CEDGE2(c))==CTARGET2(c)))
-
 static void insert_connects_in_layer(void)
 {
 	int i,j;

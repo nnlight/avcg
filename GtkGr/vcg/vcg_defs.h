@@ -118,8 +118,6 @@ typedef enum Graphdir_t
  *
  *
  */ 
- 
-
 typedef struct connect
 {
 	struct gnode	*target;        /* First found target         */
@@ -135,6 +133,19 @@ typedef struct connect
 #define CEDGE2(x)	((x)->edge2)
 #define CINTERN(x)	((x)->internal_next)
 
+/* в реале forward и backward перепутаны местами */
+#define CONN_MACROS 0
+#if CONN_MACROS
+#define forward_connection1(c)  ((CEDGE(c))&& (EEND(CEDGE(c)) ==CTARGET(c)))
+#define forward_connection2(c)  ((CEDGE2(c))&&(EEND(CEDGE2(c))==CTARGET2(c)))
+#define backward_connection1(c) ((CEDGE(c))&& (EEND(CEDGE(c)) !=CTARGET(c)))
+#define backward_connection2(c) ((CEDGE2(c))&&(EEND(CEDGE2(c))!=CTARGET2(c)))
+#else
+extern int forward_connection1(CONNECT c);
+extern int forward_connection2(CONNECT c);
+extern int backward_connection1(CONNECT c);
+extern int backward_connection2(CONNECT c);
+#endif
 
 
 /*--------------------------------------------------------------------*/

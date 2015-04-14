@@ -272,11 +272,6 @@ int tree_main(void)
  * if it is a tree. Dito for maxindeg and maxoutdeg.
  */
 
-#define forward_connection1(c)  ((CEDGE(c))&& (EEND(CEDGE(c))!=v))
-#define forward_connection2(c)  ((CEDGE2(c))&&(EEND(CEDGE2(c))!=v))
-#define backward_connection1(c) ((CEDGE(c))&& (EEND(CEDGE(c))==v))
-#define backward_connection2(c) ((CEDGE2(c))&&(EEND(CEDGE2(c))==v))
-
 static int is_tree(void)
 {
 	int i;

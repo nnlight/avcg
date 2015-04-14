@@ -213,10 +213,6 @@ GNLIST	 *tpred_connection2 = NULL;
  * ------
  */
 
-#define forward_connection1(c)  ((CEDGE(c))&& (EEND(CEDGE(c))==CTARGET(c)))
-#define forward_connection2(c)  ((CEDGE2(c))&&(EEND(CEDGE2(c))==CTARGET2(c)))
-#define backward_connection1(c) ((CEDGE(c))&& (EEND(CEDGE(c))!=CTARGET(c)))
-#define backward_connection2(c) ((CEDGE2(c))&&(EEND(CEDGE2(c))!=CTARGET2(c)))
 #define TMINX(x) TCROSS(x)
 
 /*--------------------------------------------------------------------*/

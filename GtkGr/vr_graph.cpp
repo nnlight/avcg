@@ -427,9 +427,6 @@ void VRGraph::LoadVcgPredEdgesForVcgNodeList( GNODE list)
  *  This allows to correct EARROWSIZE at dummy nodes and label nodes.
  */
 
-#define backward_connection1(c) ((CEDGE(c))&& (EEND(CEDGE(c)) ==v))
-#define backward_connection2(c) ((CEDGE2(c))&&(EEND(CEDGE2(c))==v))
-
 	GNODE	v;
 	GEDGE	e;
 	ADJEDGE li;
