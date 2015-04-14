@@ -14,10 +14,10 @@ int main(int argc , char *argv[])
 	}
 
 	vcg_ParseFile( argv[1]);
-	printf("\n1st ok\n");
+	printf("1st ok (%s)\n", argv[1]);
 
 	vcg_ParseFile( argv[1]);
-	printf("\n2nd ok\n");
+	printf("2nd ok (%s)\n", argv[1]);
 
 	return 0;
 }
