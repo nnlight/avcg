@@ -31,12 +31,10 @@ create_model( VRGraph *vrg)
 									G_TYPE_POINTER);
 
 	/* add data to the list store */
-	for ( GrNode *n = vrg->GrGetFirstNode();
-		  n; 
-		  n = n->GrGetNextNode() )
+	for ( VRNode *node = vrg->GetFirstNode();
+		  node; 
+		  node = node->GetNextNode() )
 	{
-		VRNode *node = static_cast<VRNode*>(n);
-		assert( dynamic_cast<VRNode*>(n) );
 		gtk_list_store_append( list_store, &iter);
 		gtk_list_store_set( list_store, &iter,
 						FND_COLUMN_TITLE, node->title_.c_str(),

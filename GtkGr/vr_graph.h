@@ -8,6 +8,8 @@
 
 
 
+class VRNode;
+class VREdge;
 class VRGraph;
 #define VRNODE_INFO_COUNT 3
 #define NODE_LABEL_MARGIN 3
@@ -36,6 +38,8 @@ public:
 public:
 	VRNode( VRGraph *graph, const char *title, int x, int y);
 	~VRNode();
+	VRNode *GetNextNode() { return static_cast<VRNode*>(GrGetNextNode()); }
+	VREdge *GetFirstSucc() { return (VREdge *)(GrGetFirstSucc()); }
 	int FindInfoNumBySubstring( const char *substring);
 private:
 	VRNode( const VRNode &a);
@@ -66,6 +70,7 @@ public:
 public:
 	VREdge( VRGraph *graph);
 	~VREdge();
+	VREdge *GetNextSucc() { return static_cast<VREdge*>(GrGetNextSucc()); }
 private:
 	VREdge( const VRNode &a);
 };
@@ -100,6 +105,9 @@ public:
 	VRGraph();
 	/* не предназначен для иcпользования в качестве базового класса */
 	~VRGraph();
+
+	VRNode *GetFirstNode() { return static_cast<VRNode*>(GrGetFirstNode()); }
+	VREdge *GetDummyNodeFirstSucc() { return static_cast<VREdge*>(GrGetDummyNode()->GrGetFirstSucc());}
 
 	void AddNode( DrawBuffer *draw_buffer, int x, int y, const char *title, const char *label);
 	VRNode *AddSizedNode( int x, int y, int width, int height, const char *title, const char *label);

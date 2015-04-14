@@ -93,28 +93,22 @@ VRNode *VRGraph::AddSizedNode( int x, int y, int width, int height, const char *
  */
 void VRGraph::DrawGraph( DrawBuffer *draw_buffer)
 {
-	for ( GrNode *n = GrGetFirstNode();
-		  n; 
-		  n = n->GrGetNextNode() )
+	for ( VRNode *node = GetFirstNode();
+		  node; 
+		  node = node->GetNextNode() )
 	{
-		VRNode *node = static_cast<VRNode*>(n);
-		assert( dynamic_cast<VRNode*>(n) );
 		DrawNode( draw_buffer, node);
-		for ( GrEdge *e = n->GrGetFirstSucc();
-			  e;
-			  e = e->GrGetNextSucc() )
+		for ( VREdge *edge = node->GetFirstSucc();
+			  edge;
+			  edge = edge->GetNextSucc() )
 		{
-			VREdge *edge = static_cast<VREdge*>(e);
-			assert( dynamic_cast<VREdge*>(e) );
 			DrawEdge( draw_buffer, edge);
 		}
 	}
-	for ( GrEdge *e = GrGetDummyNode()->GrGetFirstSucc();
-		  e;
-		  e = e->GrGetNextSucc() )
+	for ( VREdge *edge = GetDummyNodeFirstSucc();
+		  edge;
+		  edge = edge->GetNextSucc() )
 	{
-		VREdge *edge = static_cast<VREdge*>(e);
-		assert( dynamic_cast<VREdge*>(e) );
 		DrawEdge( draw_buffer, edge);
 	}
 	/* лейблы дуг специально рисуются после дуг, ибо для лейблов в vcg строятся узлы маленького размера
@@ -153,12 +147,10 @@ void VRGraph::HandleInfoBoxPress( DrawBuffer *draw_buffer, int x, int y, int inf
 			return;
 		}
 	}
-	for ( GrNode *n = GrGetFirstNode();
-		  n; 
-		  n = n->GrGetNextNode() )
+	for ( VRNode *node = GetFirstNode();
+		  node;
+		  node = node->GetNextNode() )
 	{
-		VRNode *node = static_cast<VRNode*>(n);
-		assert( dynamic_cast<VRNode*>(n) );
 		if ( node->x_ <= x  && x < node->x_ + node->width_
 			 && node->y_ <= y  && y < node->y_ + node->height_
 			 && !node->infos_[info_num-1].empty() )
