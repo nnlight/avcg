@@ -5,26 +5,30 @@ MW_CFLAGS=-g -c -Wall `pkg-config --cflags gtk+-2.0`
 LDFLAGS=-g `pkg-config --libs gtk+-2.0` -lstdc++
 VCG_SOURCES=$(wildcard vcg/*.c)
 MW_SOURCES=$(wildcard mw/*.c)
-#SOURCES= draw_buffer.cpp  GtkGr.cpp stdafx.cpp  ui.cpp gr.cpp preferences.cpp vr_graph.cpp
 ALLCXX_SOURCES=$(wildcard *.cpp)
 SOURCES=$(ALLCXX_SOURCES:tes_mw.cpp=)
 OBJECTS=$(SOURCES:.cpp=.o)
 VCG_OBJECTS=$(VCG_SOURCES:.c=.o)
 MW_OBJECTS=$(MW_SOURCES:.c=.o)
+HEADERS=$(wildcard *.h)
+VCG_HEADERS=$(wildcard vcg/*.h)
 EXECUTABLE=avcg
 
+#disable make implicit suffix rules
+#this to the make did not genetare `grammar.c' from `grammar.y'
+.SUFFIXES:
+
 .PHONY: all
-all: $(SOURCES) $(EXECUTABLE)
+all: $(EXECUTABLE)
 	
 $(EXECUTABLE): $(OBJECTS) $(VCG_OBJECTS) $(MW_OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) $(VCG_OBJECTS) $(MW_OBJECTS) -o $@
 
-%.o: %.cpp
+%.o: %.cpp $(HEADERS) $(VCG_HEADERS)
 	$(CC) $(CFLAGS) $< -o $@
 
 # use `::` instead of `:` to tell make that prerequisite may not be an intermediate file
-# thats's for disabling chain of implicit rules  %.o <- %.c <- %.y
-vcg/%.o:: vcg/%.c
+vcg/%.o: vcg/%.c $(VCG_HEADERS)
 	$(CC) $(VCG_CFLAGS) $< -o $@
 
 mw/%.o: mw/%.c

@@ -93,6 +93,8 @@ struct stree_node {
 
 #include "y.tab.h"
 
+extern int yylex();
+
 #define Y_TAB_H
 #endif /* Y_TAB_H */
 
