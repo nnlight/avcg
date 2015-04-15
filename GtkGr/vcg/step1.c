@@ -832,13 +832,12 @@ static void partition_edges(void)
     	maxdepth = 0;		/* maximal depth of the spanning tree */
         
 	gs_wait_message('p');
-	node = nodelist;
-	while (node) {
+	for (node = nodelist; node; node = NNEXT(node))
+	{
 		if ( !NMARK(node) ) {
-			act_level 	= 0; 
+			act_level = 0;
 			depth_first_search(node);
         	}
-		node = NNEXT(node);
    	} 
 
 	/* labels are always reachaeble from other nodes, thus all label
@@ -878,7 +877,7 @@ static void partition_edges(void)
 	for (node = nodelist; node; node = NNEXT(node))
 	{
 		if ( !NMARK(node) ) {
-			act_level 	= 0; 
+			act_level = 0;
 			alt_depth_first_search(node);
         	}
    	} 
@@ -913,7 +912,7 @@ static void partition_edges(void)
 	for (node = nodelist; node; node = NNEXT(node))
 	{
 		if ( !NMARK(node) ) {
-			act_level 	= 0; 
+			act_level = 0;
 			depth_first_search(node);
         	}
    	} 
@@ -1135,13 +1134,12 @@ static void start_dfs_backwards(
  * the relayout, see alloc.c.
  */
 
-static GNLIST zero_indegree_list; 
-static GNLIST zero_free_list; 
+static GNLIST zero_indegree_list;
+static GNLIST zero_free_list;
 
 /* Add a node to the zero_indegree_list
  * ------------------------------------
  */
-
 static void add_to_zero_indegree_list(GNODE v)
 {
 	GNLIST h;
@@ -1162,7 +1160,6 @@ static void add_to_zero_indegree_list(GNODE v)
  * ------------------------------------------------
  * and return the node. Returns NULL on failure.
  */
-
 static GNODE get_zero_indegree(void)
 {
 	GNLIST h;
@@ -1182,8 +1179,7 @@ static GNODE get_zero_indegree(void)
 /* Topological sort try
  * ====================
  */
-
-static void	topological_sort(void)
+static void topological_sort(void)
 {
 	GNODE  v;
 	int    not_ready, actlevel;
@@ -1195,11 +1191,10 @@ static void	topological_sort(void)
 	 */ 
 
 	zero_indegree_list = NULL;
-  	zero_free_list     = NULL;  
-	v = nodelist;
-	while (v) {
+  	zero_free_list     = NULL;
+	for (v = nodelist; v; v = NNEXT(v))
+	{
 		if (topsort_indegree(v,v)==0) add_to_zero_indegree_list(v);
-		v = NNEXT(v);
 	}
 	/* Labels don't have zero indegree here */
 
@@ -1223,30 +1218,27 @@ static void	topological_sort(void)
 		 * Check whether there are remainig parts.
 		 */
 		gs_wait_message('p');
-		not_ready = 0;	
-		v = nodelist;
-		while (v && !not_ready) {
+		not_ready = 0;
+		for (v = nodelist; v && !not_ready; v = NNEXT(v))
+		{
 			if (!NMARK(v)) {
 				add_to_zero_indegree_list(v); not_ready = 1;
 			}
-			v = NNEXT(v);
 		}
-		v = labellist;
-		while (v && !not_ready) {
+		for (v = labellist; v && !not_ready; v = NNEXT(v))
+		{
 			if (!NMARK(v)) {
 				add_to_zero_indegree_list(v); not_ready = 1;
 			}
-			v = NNEXT(v);
 		}
-		v = dummylist;
-		while (v && !not_ready) {
+		for (v = dummylist; v && !not_ready; v = NNEXT(v))
+		{
 			if (!NMARK(v)) {
 				add_to_zero_indegree_list(v); not_ready = 1;
 			}
-			v = NNEXT(v);
 		}
 	}
-}
+} /* topological_sort */
 
 
 /* Calculate the maximal predecessor level
@@ -1257,26 +1249,25 @@ static void	topological_sort(void)
 static int topsort_maxlevel(GNODE node1, GNODE node2)
 {
 	int result, h;
-	ADJEDGE a;
+	GEDGE e;
 	CONNECT c;
 
 	debugmessage("topsort_maxlevel","");
 	result = 0;
-	a = NPRED(node1);
-	while (a) {
-		if (SOURCE(a)==node1) EKIND(a) = 'S';
-		else if (NMARK(SOURCE(a))) {
-			if (NTIEFE(SOURCE(a))>=result)
-				result = NTIEFE(SOURCE(a))+1;
+	for (e = FirstPred(node1); e; e = NextPred(e))
+	{
+		if (ESOURCE(e)==node1) EART(e) = 'S';
+		else if (NMARK(ESOURCE(e))) {
+			if (NTIEFE(ESOURCE(e))>=result)
+				result = NTIEFE(ESOURCE(e))+1;
 		}
-		a = ANEXT(a);
 	}
 	c = NCONNECT(node1);
-	if (c && CTARGET(c) && (CTARGET(c)!=node2)) {  
+	if (c && CTARGET(c) && (CTARGET(c)!=node2)) {
 		h = topsort_maxlevel(CTARGET(c),node1);
 		if (h>result) result = h;
 	}
-	if (c && CTARGET2(c) && (CTARGET2(c)!=node2)) {  
+	if (c && CTARGET2(c) && (CTARGET2(c)!=node2)) {
 		h = topsort_maxlevel(CTARGET2(c),node1);
 		if (h>result) result = h;
 	}
@@ -1287,8 +1278,7 @@ static int topsort_maxlevel(GNODE node1, GNODE node2)
  * --------------------------------
  * node1 is the node we want to analyze. node2 is the node we just come from.
  */
-
-static void topsort_setlevel(GNODE node1,GNODE node2,int level)
+static void topsort_setlevel(GNODE node1, GNODE node2, int level)
 {
 	CONNECT c;
 
@@ -1315,25 +1305,23 @@ static void topsort_setlevel(GNODE node1,GNODE node2,int level)
  * the successors to the zero_indegree_list.
  * node1 is the node we want to analyze. node2 is the node we just come from.
  */
-
 static void topsort_add_succs(GNODE node1, GNODE node2)
 {
-	ADJEDGE a;
+	GEDGE e;
 	CONNECT c;
 
 	debugmessage("topsort_add_succs","");
 
-	a = NSUCC(node1);
-	while (a) {
-		if (  (topsort_indegree(TARGET(a),TARGET(a))==0)
-		    &&(!NMARK(TARGET(a))) ) 
-			add_to_zero_indegree_list(TARGET(a));
-		a = ANEXT(a);
+	for (e = FirstSucc(node1); e; e = NextSucc(e))
+	{
+		if (  (topsort_indegree(ETARGET(e),ETARGET(e))==0)
+		    &&(!NMARK(ETARGET(e))) )
+			add_to_zero_indegree_list(ETARGET(e));
 	}
 	c = NCONNECT(node1);
-	if (c && CTARGET(c) && (CTARGET(c)!=node2))  
+	if (c && CTARGET(c) && (CTARGET(c)!=node2))
 		topsort_add_succs(CTARGET(c),node1);
-	if (c && CTARGET2(c) && (CTARGET2(c)!=node2)) 
+	if (c && CTARGET2(c) && (CTARGET2(c)!=node2))
 		topsort_add_succs(CTARGET2(c),node1);
 }
 
@@ -1343,19 +1331,17 @@ static void topsort_add_succs(GNODE node1, GNODE node2)
  * returns the number of unmarked indegrees
  * node1 is the node we want to analyze. node2 is the node we just come from.
  */
-
 static int topsort_indegree(GNODE node1, GNODE node2)
 {
 	int result;
-	ADJEDGE a;
+	GEDGE e;
 	CONNECT c;
 
 	debugmessage("topsort_indegree","");
 	result = 0;
-	a = NPRED(node1);
-	while (a) {
-		if ( !NMARK(SOURCE(a)) ) result++;
-		a = ANEXT(a);
+	for (e = FirstPred(node1); e; e = NextPred(e))
+	{
+		if ( !NMARK(ESOURCE(e)) ) result++;
 	}
 	c = NCONNECT(node1);
 	if (c && CTARGET(c) && (CTARGET(c)!=node2))  
@@ -1376,7 +1362,6 @@ static GNLIST global_node_list;
 /* Add a node to the list l 
  * ------------------------
  */
-
 static void add_to_nlist(GNODE v, GNLIST *l)
 {
 	GNLIST h;
@@ -1393,12 +1378,10 @@ static void add_to_nlist(GNODE v, GNLIST *l)
 	*l = h;
 }
 
-
 /* Delete the first entry of the list l
  * ------------------------------------
  * and return the node. Returns NULL on failure.
  */
-
 static GNODE get_nlist(GNLIST *l)
 {
 	GNLIST h;
@@ -1418,32 +1401,31 @@ static GNODE get_nlist(GNLIST *l)
 /* Strongly connected component try
  * ================================
  */
-
-static void	sc_component_sort(void)
+static void sc_component_sort(void)
 {
 	GNODE  v;
 
 	debugmessage("sc_component_sort","");
 
-  	zero_free_list   = NULL;  
-	global_node_list = NULL; 
+  	zero_free_list   = NULL;
+	global_node_list = NULL;
 
     	maxdepth = 1;		/* maximal depth of the layout */
 
-	v = nodelist;
-	while (v) { if (!NINVISIBLE(v)) add_to_nlist(v, &global_node_list);
-		    NTIEFE(v) = 1;
-		    v = NNEXT(v);
+	for (v = nodelist; v; v = NNEXT(v))
+	{
+		if (!NINVISIBLE(v)) add_to_nlist(v, &global_node_list);
+		NTIEFE(v) = 1;
 	}
-	v = labellist;
-	while (v) { add_to_nlist(v, &global_node_list);
-		    NTIEFE(v) = 1;
-		    v = NNEXT(v);
+	for (v = labellist; v; v = NNEXT(v))
+	{
+		if (!NINVISIBLE(v)) add_to_nlist(v, &global_node_list);
+		NTIEFE(v) = 1;
 	}
-	v = dummylist;
-	while (v) { add_to_nlist(v, &global_node_list);
-		    NTIEFE(v) = 1;
-		    v = NNEXT(v);
+	for (v = dummylist; v; v = NNEXT(v))
+	{
+		if (!NINVISIBLE(v)) add_to_nlist(v, &global_node_list);
+		NTIEFE(v) = 1;
 	}
 
 	/* Calc connected components */
@@ -1456,9 +1438,7 @@ static void	sc_component_sort(void)
 /* Calculation of the strongly connected components of nlist 
  * ---------------------------------------------------------
  */
-
-
-static void	calc_sc_component(GNLIST *nlist)
+static void calc_sc_component(GNLIST *nlist)
 {
 	GNODE  v;
 	GNLIST h;
@@ -1471,15 +1451,14 @@ static void	calc_sc_component(GNLIST *nlist)
 	PRINTF("Calc SCC:\n");
 #endif
 
-	h = *nlist;
-	while (h) {
+	for (h = *nlist; h; h = GNNEXT(h))
+	{
 		v = GNNODE(h);
 		NMARK(v) = NTIEFE(v) = 0;
 		NLOWPT(v) = NOPENSCC(v) = 0L;
 #ifdef SCCDEBUG
 		PRINTF("[%ld|%s] ", v,(NTITLE(v)?NTITLE(v):"null"));
 #endif
-		h = GNNEXT(h);
 	}
 #ifdef SCCDEBUG
 	PRINTF("\n");
@@ -1494,10 +1473,9 @@ static void	calc_sc_component(GNLIST *nlist)
 	 * all nodes outside nlist have NTIEFE != 0.
 	 */
 
-	v = get_nlist(nlist);
-	while (v) {
-		scc_traversal(v,&mydfsnum,&open_scc_list);
-		v = get_nlist(nlist);
+	for (v = get_nlist(nlist); v; v = get_nlist(nlist))
+	{
+		scc_traversal(v, &mydfsnum, &open_scc_list);
 	}
 }
 
@@ -1507,20 +1485,19 @@ static void	calc_sc_component(GNLIST *nlist)
  *  ------------------------------------------
  *  is also a backward depth first search with some additions.
  */
-
 static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
 {
-    	GNODE  	kn;
+    	GNODE   kn;
 	GNLIST  h;
 	GNLIST  closed_scc_list;
-    	ADJEDGE	edge;
+    	GEDGE   edge;
 	int mylevel;
 	GNODE   actrev;
-	int	degree;
-	int 	minindeg;
-	int	maxoutdeg;
-	int	maxpreindeg;
-	int 	minlevel;
+	int     degree;
+	int     minindeg;
+	int     maxoutdeg;
+	int     maxpreindeg;
+	int     minlevel;
 	CONNECT c;
 
 	assert((node));
@@ -1542,31 +1519,30 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
 		 */
 		if (CTARGET(c)) {
 			kn = CTARGET(c);
-			scc_traversal(kn,dfsnum,open_sccp);
+			scc_traversal(kn, dfsnum, open_sccp);
 			if ((NOPENSCC(kn)) && (NLOWPT(kn)<NLOWPT(node))) 
 				NLOWPT(node) = NLOWPT(kn);
 		}
 		if (CTARGET2(c)) {
 			kn = CTARGET2(c);
-			scc_traversal(kn,dfsnum,open_sccp);
+			scc_traversal(kn, dfsnum, open_sccp);
 			if ((NOPENSCC(kn)) && (NLOWPT(kn)<NLOWPT(node))) 
 				NLOWPT(node) = NLOWPT(kn);
 		}
 	}
 
-    	edge = NPRED(node);
-    	while (edge) {
-		assert((TARGET(edge)==node));
-		kn = SOURCE(edge);
+	for (edge = FirstPred(node); edge; edge = NextPred(edge))
+	{
+		assert(ETARGET(edge)==node);
+		kn = ESOURCE(edge);
 		if (NTIEFE(kn)==0) {
 			/* The nodes with NTIEFE != 0 are not in the
 			 * actual list of nodes to be inspected.
 			 */
-			scc_traversal(kn,dfsnum,open_sccp);
+			scc_traversal(kn, dfsnum, open_sccp);
 			if ((NOPENSCC(kn)) && (NLOWPT(kn)<NLOWPT(node))) 
 				NLOWPT(node) = NLOWPT(kn);
 		}
-		edge = ANEXT(edge);
 	}
 
 	if (NLOWPT(node) == NDFS(node)) {
@@ -1574,15 +1550,15 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
 		/* split the scc from the open_scc list */
 
 		h = closed_scc_list = *open_sccp;
-		assert((h));
+		assert(h);
 		kn = GNNODE(h);
 		while (kn!=node) {
 			NOPENSCC(kn) = 0L;
 			h = GNNEXT(h);
-			assert((h));
+			assert(h);
 			kn = GNNODE(h);
 		}
-		assert((kn==node));
+		assert(kn==node);
 		NOPENSCC(node) = 0L;
 
 		*open_sccp = GNNEXT(h);
@@ -1590,11 +1566,10 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
 
 #ifdef SCCDEBUG
 		PRINTF("Test SCC:\n");
-		h = closed_scc_list;
-		while (h) {
+		for (h = closed_scc_list; h; h = GNNEXT(h))
+		{
 			kn = GNNODE(h);
 			PRINTF("[%ld|%s] ", kn,(NTITLE(kn)?NTITLE(kn):"null"));
-			h = GNNEXT(h);
 		}
 #endif
 
@@ -1603,17 +1578,15 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
 		 */
 
 		minlevel = -1;
-		h = closed_scc_list;
-		while (h) {
+		for (h = closed_scc_list; h; h = GNNEXT(h))
+		{
 			node = GNNODE(h);
-    			edge = NPRED(node);
-			while (edge) {
-				kn = SOURCE(edge);
+			for (edge = FirstPred(node); edge; edge = NextPred(edge))
+			{
+				kn = ESOURCE(edge);
 				mylevel = NTIEFE(kn);	
 				if (mylevel > minlevel) minlevel = mylevel;
-				edge = ANEXT(edge);
 			}
-			h = GNNEXT(h);
 		}
 
 #ifdef SCCDEBUG
@@ -1626,7 +1599,7 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
 		 * we can assign the level.
 		 */
 
-		assert((closed_scc_list));
+		assert(closed_scc_list);
 		degree = complete_scc(closed_scc_list);
 
 		if (degree) {
@@ -1667,10 +1640,9 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
 		 * just at the beginning of calc_sc_component.
 		 */
 
-		h = closed_scc_list;
-		while (h) {
+		for (h = closed_scc_list; h; h = GNNEXT(h))
+		{
 			NTIEFE(GNNODE(h)) = MAXINT;
-			h = GNNEXT(h);
 		}
 
 		/* Calculate node actrev which predecessor edges must be
@@ -1681,18 +1653,16 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
 		minindeg    = MAXINT;
 		maxoutdeg   = 0;
 		maxpreindeg = 0;
-		h = closed_scc_list;
-		while (h) {
+		for (h = closed_scc_list; h; h = GNNEXT(h))
+		{
 			node = GNNODE(h);
 			degree = scc_outdeg(node, NULL, 1); 
 			if (degree < minindeg) {
 				minindeg = degree;
 				actrev = node;
-				h = GNNEXT(h);
 				continue;
 			}
 			else if (degree > minindeg) {
-				h = GNNEXT(h);
 				continue;
 			}
 
@@ -1702,11 +1672,9 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
 			if (degree > maxoutdeg) {
 				maxoutdeg = degree;
 				actrev = node;
-				h = GNNEXT(h);
 				continue;
 			}
 			else if (degree < maxoutdeg) {
-				h = GNNEXT(h);
 				continue;
 			}
 
@@ -1717,8 +1685,6 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
 				maxpreindeg = degree;
 				actrev = node;
 			}
-			
-			h = GNNEXT(h);
 		}
 
 		/* Revert all predecessor edges of the SCC of actrev. */
@@ -1745,7 +1711,6 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
  * or it is only one node, or it is one connected chain of nearedges.
  * Return 1 in this case.
  */
-
 static int complete_scc(GNLIST nlist)
 {
 	GNODE v;
@@ -1758,29 +1723,27 @@ static int complete_scc(GNLIST nlist)
 	assert((nlist));
 	count = 0;
 	res = 1;
-	h = nlist;
-	while (h) {
+	for (h = nlist; h; h = GNNEXT(h))
+	{
 		count++;
 		if (NLEVEL(GNNODE(h))<0) res = 0;
-		h = GNNEXT(h);
 	}
 
 	if (res) return(1);
 	if (count==1) return(1);
 
-	h = nlist;
-	while (h) {
-		assert((NMARK(GNNODE(h))==1));
+	for (h = nlist; h; h = GNNEXT(h))
+	{
+		assert(NMARK(GNNODE(h))==1);
 		NMARK(GNNODE(h)) = 0;
-		h = GNNEXT(h);
 	}
 
 	count = 1;
 	NMARK(GNNODE(nlist)) = 1;
 	while (count) {
 		count = 0;
-		h = nlist;
-		while (h) {
+		for (h = nlist; h; h = GNNEXT(h))
+		{
 			v = GNNODE(h);
 			if (NMARK(v)) {
 				c = NCONNECT(v);
@@ -1797,24 +1760,21 @@ static int complete_scc(GNLIST nlist)
 					NMARK(EEND(CEDGE2(c))) = 1;
 				}
 			}	
-			h = GNNEXT(h);
 		}	
 	}
 
 	res = 1;
-	h = nlist;
-	while (h) {
+	for (h = nlist; h; h = GNNEXT(h))
+	{
 		if (!NMARK(GNNODE(h))) { res = 0; break; }
-		h = GNNEXT(h);
 	}
 
-	h = nlist;
-	while (h) {
+	for (h = nlist; h; h = GNNEXT(h))
+	{
 		NMARK(GNNODE(h)) = 1;
-		h = GNNEXT(h);
 	}
 	return(res);	
-}
+} /* complete_scc */
 
 
 /* Calculate the outdegree of node and its neighbours
@@ -1823,34 +1783,30 @@ static int complete_scc(GNLIST nlist)
  * w is the node we just were previously, in order to avoid cycling
  * along the CTARGET's.
  */
-
 static int scc_outdeg(GNODE v, GNODE w, int prio) 
 {
-
 	int degree;
-	ADJEDGE e;
+	GEDGE e;
 	CONNECT c;
 
 	degree = 0;
-    	e = NSUCC(v);
-	while (e) {
-		if (NTIEFE(TARGET(e))==MAXINT) {
+	for (e = FirstSucc(v); e; e = NextSucc(e))
+	{
+		if (NTIEFE(ETARGET(e))==MAXINT) {
 			/* if NTIEFE<MAXINT, it is not part 
 		   	 * of the closed_scc_list.
 		  	 */
 			if (prio)
-				degree+=EPRIO(AKANTE(e));
-			else 	degree++;
+				degree+=EPRIO(e);
+			else
+				degree++;
 		}
-		e = ANEXT(e);
 	}
 	c = NCONNECT(v);
-	if (!c) return(degree);
-
-	if (CTARGET(c) && (w!=CTARGET(c))) 
-		degree += scc_outdeg(CTARGET(c),v, prio);
-	if (CTARGET2(c) && (w!=CTARGET2(c))) 
-		degree += scc_outdeg(CTARGET2(c),v, prio);
+	if (c && CTARGET(c) && (CTARGET(c)!=w))
+		degree += scc_outdeg(CTARGET(c), v, prio);
+	if (c && CTARGET2(c) && (CTARGET2(c)!=w))
+		degree += scc_outdeg(CTARGET2(c), v, prio);
 
 	return(degree);
 }
@@ -1862,37 +1818,30 @@ static int scc_outdeg(GNODE v, GNODE w, int prio)
  * w is the node we just were previously, in order to avoid cycling
  * along the CTARGET's.
  */
-
 static int scc_succoutdeg(GNODE v, GNODE w) 
 {
-
 	int degree;
-	ADJEDGE e;
+	GEDGE e;
 	CONNECT c;
 
 	degree = 0;
-    	e = NSUCC(v);
-	while (e) {
-		if (NTIEFE(TARGET(e))==MAXINT) {
+	for (e = FirstSucc(v); e; e = NextSucc(e))
+	{
+		if (NTIEFE(ETARGET(e))==MAXINT) {
 			/* if NTIEFE<MAXINT, it is not part 
 		   	 * of the closed_scc_list.
 		  	 */
-			degree += scc_outdeg(SOURCE(e),NULL,0);
+			degree += scc_outdeg(ESOURCE(e), NULL, 0);
 		}
-		e = ANEXT(e);
 	}
 	c = NCONNECT(v);
-	if (!c) return(degree);
-
-	if (CTARGET(c) && (w!=CTARGET(c))) 
-		degree += scc_succoutdeg(CTARGET(c),v);
-	if (CTARGET2(c) && (w!=CTARGET2(c))) 
-		degree += scc_succoutdeg(CTARGET2(c),v);
+	if (c && CTARGET(c) && (CTARGET(c)!=w))
+		degree += scc_succoutdeg(CTARGET(c), v);
+	if (c && CTARGET2(c) && (CTARGET2(c)!=w))
+		degree += scc_succoutdeg(CTARGET2(c), v);
 
 	return(degree);
 }
-
-
 
 
 /* Calculate the outdegree of node and its neighbours
@@ -1901,32 +1850,27 @@ static int scc_succoutdeg(GNODE v, GNODE w)
  * w is the node we just were previously, in order to avoid cycling
  * along the CTARGET's.
  */
-
 static int scc_indeg(GNODE v, GNODE w) 
 {
-
 	int degree;
-	ADJEDGE e;
+	GEDGE e;
 	CONNECT c;
 
 	degree = 0;
-    	e = NPRED(v);
-	while (e) {
-		if (NTIEFE(SOURCE(e))==MAXINT) {
+	for (e = FirstPred(v); e; e = NextPred(e))
+	{
+		if (NTIEFE(ESOURCE(e))==MAXINT) {
 			/* if NTIEFE<MAXINT, it is not part 
 		   	 * of the closed_scc_list.
 		  	 */
 			degree++;
 		}
-		e = ANEXT(e);
 	}
 	c = NCONNECT(v);
-	if (!c) return(degree);
-
-	if (CTARGET(c) && (w!=CTARGET(c))) 
-		degree += scc_indeg(CTARGET(c),v);
-	if (CTARGET2(c) && (w!=CTARGET2(c))) 
-		degree += scc_indeg(CTARGET2(c),v);
+	if (c && CTARGET(c) && (CTARGET(c)!=w))
+		degree += scc_indeg(CTARGET(c), v);
+	if (c && CTARGET2(c) && (CTARGET2(c)!=w))
+		degree += scc_indeg(CTARGET2(c), v);
 
 	return(degree);
 }
@@ -1938,30 +1882,26 @@ static int scc_indeg(GNODE v, GNODE w)
  * w is the node we just were previously, in order to avoid cycling
  * along the CTARGET's.
  */
-
-static void	revert_outedges(GNODE v, GNODE w) 
+static void revert_outedges(GNODE v, GNODE w) 
 {
-	ADJEDGE e, en;
+	GEDGE e, nxt_e;
 	CONNECT c;
 
-    	e = NSUCC(v);
-	while (e) {
-		en = ANEXT(e);
-		if (NTIEFE(TARGET(e))==MAXINT) {
+	for (e = FirstSucc(v); e; e = nxt_e)
+	{
+		nxt_e = NextSucc(e);
+		if (NTIEFE(ETARGET(e))==MAXINT) {
 			/* if NTIEFE<MAXINT, it is not part 
 		   	 * of the closed_scc_list.
 		  	 */
-			revert_edge(AKANTE(e));
+			revert_edge(e);
 		}
-		e = en;
 	}
 	c = NCONNECT(v);
-	if (!c) return;
-
-	if (CTARGET(c) && (w!=CTARGET(c))) 
-		revert_outedges(CTARGET(c),v);
-	if (CTARGET2(c) && (w!=CTARGET2(c))) 
-		revert_outedges(CTARGET2(c),v);
+	if (c && CTARGET(c) && (CTARGET(c)!=w))
+		revert_outedges(CTARGET(c), v);
+	if (c && CTARGET2(c) && (CTARGET2(c)!=w))
+		revert_outedges(CTARGET2(c), v);
 }
 
 
@@ -1973,11 +1913,10 @@ static void	revert_outedges(GNODE v, GNODE w)
 /* If we still don't have the labels, we double the NTIEFE of the nodes
  * and add the labels in between.
  */
-
-static void 	add_phase1_labels(void)
+static void add_phase1_labels(void)
 {
 	GNODE v, vl, vt;
-	ADJEDGE edge, edgenext;
+	GEDGE edge, edgenext;
 
 	debugmessage("add_phase1_labels","");
 
@@ -2007,39 +1946,37 @@ static void 	add_phase1_labels(void)
 
 	for (v = nodelist; v; v = NNEXT(v))
 	{
-		edge = NSUCC(v); 
-		while (edge) {
-			edgenext = ANEXT(edge);
-			if (ELABEL(AKANTE(edge))) {
-				vl = create_labelnode(AKANTE(edge));
-				vt = TARGET(edge);
-				NTIEFE(vl) = ( NTIEFE(SOURCE(edge))
-					      +NTIEFE(TARGET(edge)))/2;
-				(void)create_edge(v,vl,AKANTE(edge),0);
-				(void)create_edge(vl,vt,AKANTE(edge),1);
-				delete_adjedge(AKANTE(edge));
+		for (edge = FirstSucc(v); edge; edge = edgenext)
+		{
+			edgenext = NextSucc(edge);
+			if (ELABEL(edge)) {
+				vl = create_labelnode(edge);
+				vt = ETARGET(edge);
+				NTIEFE(vl) = ( NTIEFE(ESOURCE(edge))
+					      +NTIEFE(ETARGET(edge)))/2;
+				(void)create_edge(v,vl,edge,0);
+				(void)create_edge(vl,vt,edge,1);
+				delete_adjedge(edge);
 			}
-			edge = edgenext;
 		}
 	}	
 	for (v = tmpnodelist; v; v = NNEXT(v))
 	{
-		edge = NSUCC(v); 
-		while (edge) {
-			edgenext = ANEXT(edge);
-			if (ELABEL(AKANTE(edge))) {
-				vl = create_labelnode(AKANTE(edge));
-				vt = TARGET(edge);
-				NTIEFE(vl) = ( NTIEFE(SOURCE(edge))
-					      +NTIEFE(TARGET(edge)))/2;
-				(void)create_edge(v,vl,AKANTE(edge),0);
-				(void)create_edge(vl,vt,AKANTE(edge),1);
-				delete_adjedge(AKANTE(edge));
+		for (edge = FirstSucc(v); edge; edge = edgenext)
+		{
+			edgenext = NextSucc(edge);
+			if (ELABEL(edge)) {
+				vl = create_labelnode(edge);
+				vt = ETARGET(edge);
+				NTIEFE(vl) = ( NTIEFE(ESOURCE(edge))
+					      +NTIEFE(ETARGET(edge)))/2;
+				(void)create_edge(v,vl,edge,0);
+				(void)create_edge(vl,vt,edge,1);
+				delete_adjedge(edge);
 			}
-			edge = edgenext;
 		}
-	}	
-}
+	}
+} /* add_phase1_labels */
 
 
 /*--------------------------------------------------------------------*/
