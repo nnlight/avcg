@@ -144,7 +144,7 @@ static void     create_connection(GNODE src, GNODE dst, GEDGE edge);
 static void	partition_edges		_PP((void));
 static void	depth_first_search 	_PP((GNODE node));
 static void	alt_depth_first_search 	_PP((GNODE node));
-static void 	start_dfs_backwards	_PP((ADJEDGE edge,GNODE node,int prio));
+static void     start_dfs_backwards(GEDGE edge, GNODE node, int prio);
 
 static void	topological_sort	  _PP((void));
 static void 	add_to_zero_indegree_list _PP((GNODE v));
@@ -197,7 +197,7 @@ static int size_of_layer = 0;  /* Size of table of layers */
 /*  Building a proper hierarchy                                       */
 /*--------------------------------------------------------------------*/
 
-void	step1_main(void)
+void step1_main(void)
 {
 	int i;
 
@@ -940,9 +940,9 @@ static void partition_edges(void)
 
 static void depth_first_search(GNODE node)
 {
-    	GNODE  	kn;
-    	ADJEDGE	edge;
-	int     priority;
+    	GNODE kn;
+    	GEDGE edge;
+	int   priority;
 	
 	assert((node));
 	debugmessage("depth_first_sea",(NTITLE(node)?NTITLE(node):"(null)"));
@@ -969,24 +969,22 @@ static void depth_first_search(GNODE node)
 
 		/* Fetch next priority value */
 		priority = -1;
-    		edge = NSUCC(node);
-    		while (edge) {
-			assert((SOURCE(edge)==node));
-			kn = TARGET(edge);
-			if ((!NMARK(kn)) && (EPRIO(AKANTE(edge))>priority)) 
-				priority = EPRIO(AKANTE(edge));
-			edge = ANEXT(edge);
+		for (edge = FirstSucc(node); edge; edge = NextSucc(edge))
+		{
+			assert(ESOURCE(edge)==node);
+			kn = ETARGET(edge);
+			if ((!NMARK(kn)) && (EPRIO(edge)>priority))
+				priority = EPRIO(edge);
 		}
 		if (priority== -1) break;
 
-    		edge = NSUCC(node);
-    		while (edge) {
-			if (EPRIO(AKANTE(edge))!=priority) {
-				edge = ANEXT(edge);
+		for (edge = FirstSucc(node); edge; edge = NextSucc(edge))
+		{
+			if (EPRIO(edge)!=priority) {
 				continue;
 			}
-			assert((SOURCE(edge)==node));
-			kn = TARGET(edge);
+			assert(ESOURCE(edge)==node);
+			kn = ETARGET(edge);
         		if ( !NMARK(kn) ) {
 			       /*
         		 	* EKIND(edge) = 'T';
@@ -1002,22 +1000,21 @@ static void depth_first_search(GNODE node)
 				* be NCOMP(kn)>NCOMP(node).
 				*
             			* if ( NDFS(node)<NDFS(kn) ) EKIND(edge)='F';
-            			* else if (NDFS(node)>NDFS(kn) && NCOMP(kn)==0) 
+            			* else if (NDFS(node)>NDFS(kn) && NCOMP(kn)==0)
                 		* 	EKIND(edge) = 'B';
 				* else if (kn == node) EKIND(edge) = 'S';
-				* else EKIND(edge) = 'C';	
+				* else EKIND(edge) = 'C';
 				*
 				* The tags 'T', 'B', 'C' and 'F' are never used!
 				* Thus it is nonsense to calculate them.
 				* The tag 'S' is important.
 				*/
-				if (kn == node) EKIND(edge) = 'S';
+				if (kn == node) EART(edge) = 'S';
         		}
-            		edge = ANEXT(edge);
 		}
 	} /* while priority */
 
-}
+} /* depth_first_search */
      	
 
 /*  The depth first search (2. version)
@@ -1028,8 +1025,8 @@ static void depth_first_search(GNODE node)
 static void alt_depth_first_search(GNODE node)
 {
 	GNODE kn;
-    	ADJEDGE	edge;
-	int     priority;
+    	GEDGE edge;
+	int   priority;
 
 	assert((node));
 	debugmessage("alt_depth_first",(NTITLE(node)?NTITLE(node):"(null)"));
@@ -1055,17 +1052,16 @@ static void alt_depth_first_search(GNODE node)
 
 		/* Fetch next priority value */
 		priority = -1;
-    		edge = NSUCC(node);
-    		while (edge) {
-			assert((SOURCE(edge)==node));
-			kn = TARGET(edge);
-			if ((!NMARK(kn)) && (EPRIO(AKANTE(edge))>priority)) 
-				priority = EPRIO(AKANTE(edge));
-			edge = ANEXT(edge);
+		for (edge = FirstSucc(node); edge; edge = NextSucc(edge))
+		{
+			assert(ESOURCE(edge)==node);
+			kn = ETARGET(edge);
+			if ((!NMARK(kn)) && (EPRIO(edge)>priority))
+				priority = EPRIO(edge);
 		}
 		if (priority== -1) break;
 
-		start_dfs_backwards(NSUCC(node),node,priority);
+		start_dfs_backwards(FirstSucc(node), node, priority);
 	}
 }
 
@@ -1075,22 +1071,18 @@ static void alt_depth_first_search(GNODE node)
  *  In alt_depth_first_search, we traverse the adjacency lists
  *  backwards.
  */
-
-static void start_dfs_backwards(
-	ADJEDGE edge,
-	GNODE   node,
-	int 	priority)
+static void start_dfs_backwards(GEDGE edge, GNODE node, int priority)
 {
     	GNODE  	kn;
 
 	debugmessage("start_dfs_backwards","");
 
 	if (!edge) return;
-	start_dfs_backwards(ANEXT(edge),node,priority);
+	start_dfs_backwards(NextSucc(edge), node, priority);
 
-	if (EPRIO(AKANTE(edge))!=priority) return;
+	if (EPRIO(edge)!=priority) return;
 
-	kn = TARGET(edge);
+	kn = ETARGET(edge);
        	if ( !NMARK(kn) ) {
 		/*
        		 * EKIND(edge) = 'T';
@@ -1106,16 +1098,16 @@ static void start_dfs_backwards(
 		* be NCOMP(kn)>NCOMP(node).
 		*
            	* if ( NDFS(node) < NDFS(kn) ) EKIND(edge) = 'F';
-           	* else if ( NDFS(node) > NDFS(kn) && NCOMP(kn) == 0) 
+           	* else if ( NDFS(node) > NDFS(kn) && NCOMP(kn) == 0)
                	* 	EKIND(edge) = 'B';
 		* else if (kn == node) EKIND(edge) = 'S';
-		* else EKIND(edge) = 'C';	
+		* else EKIND(edge) = 'C';
 		*
 		* The tags 'T', 'B', 'C' and 'F' are never used !
 		* Thus it is nonsense to calculate them.
 		* The tag 'S' is important.
 		*/
-		if (kn == node) EKIND(edge) = 'S';
+		if (kn == node) EART(edge) = 'S';
         }
 }
 
@@ -2045,8 +2037,8 @@ static void tune_partitioning(void)
 
 static int tune_node_depth(GNODE v,int lab)
 { 
-	int   nodelevel,leveldiff,nr_edges, nr_redges, changed, delta, hdelta;
-	ADJEDGE edge, hedge;
+	int   nodelevel, leveldiff, nr_edges, nr_redges, changed, delta, hdelta;
+	GEDGE edge, hedge;
 	GNODE hh;
 
 	debugmessage("tune_node_depth","");
@@ -2068,26 +2060,24 @@ static int tune_node_depth(GNODE v,int lab)
 
 	nr_redges  = nr_edges = leveldiff = 0;
 	nodelevel = NTIEFE(v);
-	if ((!NSUCC(v)) || (!NPRED(v))) delta = 1;
+	if ((!FirstSucc(v)) || (!FirstPred(v))) delta = 1;
 	else delta = 0;
 
-    	edge = NPRED(v);
-	while (edge) {
-		nr_edges += EPRIO(AKANTE(edge));
+    	for (edge = FirstPred(v); edge; edge = NextPred(edge))
+	{
+		nr_edges += EPRIO(edge);
 		nr_redges++;
-		if (NTIEFE(SOURCE(edge))!=nodelevel)
-			leveldiff += (EPRIO(AKANTE(edge))*
-			  	(NTIEFE(SOURCE(edge))-nodelevel+delta));
-		edge = ANEXT(edge);
+		if (NTIEFE(ESOURCE(edge))!=nodelevel)
+			leveldiff += (EPRIO(edge)*
+			  	(NTIEFE(ESOURCE(edge))-nodelevel+delta));
 	}
-    	edge = NSUCC(v);
-    	while (edge) {
-		nr_edges += EPRIO(AKANTE(edge));
+    	for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
+	{
+		nr_edges += EPRIO(edge);
 		nr_redges++;
-		if (NTIEFE(TARGET(edge))!=nodelevel)
-			leveldiff += (EPRIO(AKANTE(edge))*
-				(NTIEFE(TARGET(edge))-nodelevel-delta));
-		edge = ANEXT(edge);
+		if (NTIEFE(ETARGET(edge))!=nodelevel)
+			leveldiff += (EPRIO(edge)*
+				(NTIEFE(ETARGET(edge))-nodelevel-delta));
 	}
 
 	/*  Nodes without edges should be at position 0.
@@ -2134,36 +2124,32 @@ static int tune_node_depth(GNODE v,int lab)
 		if (near_edge_layout) delta = 0; else delta = 1;
 
 		if (nodelevel > NTIEFE(v)) {
-                	edge = NSUCC(v);
-                	while (edge) {
-                        	if (   (NTIEFE(TARGET(edge))>NTIEFE(v)) 
-                           	    && (nodelevel>=NTIEFE(TARGET(edge))))
-					nodelevel = NTIEFE(TARGET(edge))-delta; 
-                        	edge = ANEXT(edge);
+		    	for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
+			{
+                        	if (   (NTIEFE(ETARGET(edge))>NTIEFE(v))
+                           	    && (nodelevel>=NTIEFE(ETARGET(edge))))
+					nodelevel = NTIEFE(ETARGET(edge))-delta;
                 	}
-                	edge = NPRED(v);
-                	while (edge) {
-                       		if (   (NTIEFE(SOURCE(edge))>NTIEFE(v)) 
-                        	    && (nodelevel>=NTIEFE(SOURCE(edge))))
-					nodelevel = NTIEFE(SOURCE(edge))-delta; 
-                        	edge = ANEXT(edge);
+		    	for (edge = FirstPred(v); edge; edge = NextPred(edge))
+			{
+                       		if (   (NTIEFE(ESOURCE(edge))>NTIEFE(v))
+                        	    && (nodelevel>=NTIEFE(ESOURCE(edge))))
+					nodelevel = NTIEFE(ESOURCE(edge))-delta;
                 	}
 			if (nodelevel <= NTIEFE(v)) return(0);
 		}
 	    	if (nodelevel < NTIEFE(v)) {
-                	edge = NSUCC(v);
-                	while (edge) {
-                        	if (   (NTIEFE(TARGET(edge))<NTIEFE(v)) 
-                        	    && (nodelevel<=NTIEFE(TARGET(edge))))
-					nodelevel = NTIEFE(TARGET(edge))+delta; 
-                        	edge = ANEXT(edge);
+		    	for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
+			{
+                        	if (   (NTIEFE(ETARGET(edge))<NTIEFE(v))
+                        	    && (nodelevel<=NTIEFE(ETARGET(edge))))
+					nodelevel = NTIEFE(ETARGET(edge))+delta;
                 	}
-                	edge = NPRED(v);
-                	while (edge) {
-                        	if (   (NTIEFE(SOURCE(edge))<NTIEFE(v)) 
-                        	    && (nodelevel<=NTIEFE(SOURCE(edge))))
-					nodelevel = NTIEFE(SOURCE(edge))+delta; 
-                        	edge = ANEXT(edge);
+		    	for (edge = FirstPred(v); edge; edge = NextPred(edge))
+			{
+                        	if (   (NTIEFE(ESOURCE(edge))<NTIEFE(v))
+                        	    && (nodelevel<=NTIEFE(ESOURCE(edge))))
+					nodelevel = NTIEFE(ESOURCE(edge))+delta;
                 	}
 			if (nodelevel >= NTIEFE(v)) return(0);
 		}
@@ -2172,38 +2158,34 @@ static int tune_node_depth(GNODE v,int lab)
 		 * whether they are still not reverted. But we allow to 
 		 * re-revert edges such that they are now normal again.
 		 */
-                edge = NPRED(v);
-                while (edge) {
-			if (EKIND(edge)!='R') {
-                        	if (  (nodelevel< NTIEFE(SOURCE(edge))) 
-                    	            &&(NTIEFE(v)>=NTIEFE(SOURCE(edge))) )
+	    	for (edge = FirstPred(v); edge; edge = NextPred(edge))
+		{
+			if (EART(edge)!='R') {
+                        	if (  (nodelevel< NTIEFE(ESOURCE(edge)))
+                    	            &&(NTIEFE(v)>=NTIEFE(ESOURCE(edge))) )
 					return(0);
 			}
-                        edge = ANEXT(edge);
                 }
-                edge = NSUCC(v);
-                while (edge) {
-			if (EKIND(edge)!='R') {
-                        	if (  (nodelevel> NTIEFE(TARGET(edge))) 
-                            	    &&(NTIEFE(v)<=NTIEFE(TARGET(edge))) )
+	    	for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
+		{
+			if (EART(edge)!='R') {
+                        	if (  (nodelevel> NTIEFE(ETARGET(edge)))
+                            	    &&(NTIEFE(v)<=NTIEFE(ETARGET(edge))) )
 					return(0);
 			}
-                        edge = ANEXT(edge);
                 }
 	}
 	else {  /*  For tree layout, it is not allowed to create nearedges
 		 *  where previously no nearedges existed.
 		 */
 
-                edge = NPRED(v);
-                while (edge) {
-                        if (nodelevel==NTIEFE(SOURCE(edge))) return(0);
-                        edge = ANEXT(edge);
+	    	for (edge = FirstPred(v); edge; edge = NextPred(edge))
+		{
+                        if (nodelevel==NTIEFE(ESOURCE(edge))) return(0);
                 }
-                edge = NSUCC(v);
-                while (edge) {
-                        if (nodelevel==NTIEFE(TARGET(edge))) return(0);
-                        edge = ANEXT(edge);
+	    	for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
+		{
+                        if (nodelevel==NTIEFE(ETARGET(edge))) return(0);
                 }
         }
 
@@ -2213,47 +2195,41 @@ static int tune_node_depth(GNODE v,int lab)
 	 */
  
 	delta = 0;
-        edge = NPRED(v);
-        while (edge) {
-		hh = SOURCE(edge);
+    	for (edge = FirstPred(v); edge; edge = NextPred(edge))
+	{
+		hh = ESOURCE(edge);
                 if (nodelevel==NTIEFE(hh)) {
 			delta++;
 			if (NCONNECT(hh)) return(0);
 			hdelta = 0;
-        		hedge = NPRED(hh);
-        		while (hedge) {
-				if (NTIEFE(hh)==NTIEFE(SOURCE(hedge))) hdelta++;
-                		hedge = ANEXT(hedge);
+		    	for (hedge = FirstPred(hh); hedge; hedge = NextPred(hedge))
+			{
+				if (NTIEFE(hh)==NTIEFE(ESOURCE(hedge))) hdelta++;
 			}
-        		hedge = NSUCC(hh);
-        		while (hedge) {
-				if (NTIEFE(hh)==NTIEFE(TARGET(hedge))) hdelta++;
-                		hedge = ANEXT(hedge);
+		    	for (hedge = FirstSucc(hh); hedge; hedge = NextSucc(hedge))
+			{
+				if (NTIEFE(hh)==NTIEFE(ETARGET(hedge))) hdelta++;
 			}
 			if (hdelta>1) return(0);
 		}
-                edge = ANEXT(edge);
         }
-        edge = NSUCC(v);
-        while (edge) {
-		hh = TARGET(edge);
+    	for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
+	{
+		hh = ETARGET(edge);
                 if (nodelevel==NTIEFE(hh)) {
 			delta++;
 			if (NCONNECT(hh)) return(0);
 			hdelta = 0;
-        		hedge = NPRED(hh);
-        		while (hedge) {
-				if (NTIEFE(hh)==NTIEFE(SOURCE(hedge))) hdelta++;
-                		hedge = ANEXT(hedge);
+		    	for (hedge = FirstPred(hh); hedge; hedge = NextPred(hedge))
+			{
+				if (NTIEFE(hh)==NTIEFE(ESOURCE(hedge))) hdelta++;
 			}
-        		hedge = NSUCC(hh);
-        		while (hedge) {
-				if (NTIEFE(hh)==NTIEFE(TARGET(hedge))) hdelta++;
-                		hedge = ANEXT(hedge);
+		    	for (hedge = FirstSucc(hh); hedge; hedge = NextSucc(hedge))
+			{
+				if (NTIEFE(hh)==NTIEFE(ETARGET(hedge))) hdelta++;
 			}
 			if (hdelta>1) return(0);
 		}
-                edge = ANEXT(edge);
         }
 	if (delta>2) return(0);
 
@@ -2270,7 +2246,7 @@ static int tune_node_depth(GNODE v,int lab)
 	if (NTIEFE(v)!=nodelevel) changed = 1;
 	NTIEFE(v) = nodelevel;
 	return(changed);
-}
+} /* tune_node_depth */
 
 
 /*--------------------------------------------------------------------*/
@@ -2344,7 +2320,7 @@ static void create_depth_lists(void)
 static void	complete_depth_lists(void)
 {
 	int 	i;
-	GNLIST	n,hl;
+	GNLIST	n, hl;
 	GNODE	node;
 	ADJEDGE	edge;
 	int	backward_connection;
@@ -2356,17 +2332,14 @@ static void	complete_depth_lists(void)
 	maxindeg = maxoutdeg = 0;
 
 	for (i=0; i<=maxdepth+1; i++) {
-		n = TSUCC(layer[i]);
-		while (n) {
+		for (n = TSUCC(layer[i]); n; n = GNNEXT(n))
+		{
 			NMARK(GNNODE(n))=0;
-			n = GNNEXT(n);
 		}
-		n = TSUCC(layer[i]);
-		assert((TPRED(layer[i])==NULL));
-		while (n) {
+		assert(TPRED(layer[i])==NULL);
+		for (n = TSUCC(layer[i]); n; n = GNNEXT(n))
+		{
 			node = GNNODE(n);
-
-			edge = NSUCC(node);
 
 			/* If there is a forward connection, save the
 			 * adjacency lists. Check for backward connection.
@@ -2385,11 +2358,11 @@ static void	complete_depth_lists(void)
 					forward_connection = 1;
 			}
 			if (  (forward_connection)&&(!backward_connection)
-			    &&(NMARK(GNNODE(n))==0)) 
+			    &&(NMARK(node)==0)) 
 				calc_connect_adjlists(node,node,NULL);
 
 			/* fill TPRED-list */
-			if (  (!backward_connection)&&(NMARK(GNNODE(n))==0)) {
+			if (  (!backward_connection)&&(NMARK(node)==0)) {
 				hl = tmpnodelist_alloc();
 				GNNEXT(hl) = TPRED(layer[i]);
 				TPRED(layer[i]) = hl;
@@ -2415,7 +2388,6 @@ static void	complete_depth_lists(void)
 				maxoutdeg = NOUTDEG(node);
 			if (NINDEG(node) > maxindeg)
 				maxindeg = NINDEG(node);
-			n = GNNEXT(n);
 		}
 	}
 }
@@ -2972,63 +2944,54 @@ static void db_output_edges(GEDGE e)
 
 void db_output_adjacencies(void)
 {
-	GNODE	node;
-	ADJEDGE	edge;
+	GNODE node;
+	GEDGE edge;
 
 	PRINTF("\n\nAdjacency lists: ");
-	node = nodelist;
-	while (node) {
+	for (node = nodelist; node; node = NNEXT(node))
+	{
 		PRINTF("\n%s(%d)%p\n", NTITLE(node), NTIEFE(node),node);
 		PRINTF("(in:%d,out:%d)\n", NINDEG(node), NOUTDEG(node));
 		PRINTF("Succs:");
-		edge = NSUCC(node);
-		while (edge) {
-			PRINTF("|%s(%p) ", NTITLE(TARGET(edge)), TARGET(edge));
-			edge = ANEXT(edge);
+		for (edge = FirstSucc(node); edge; edge = NextSucc(edge))
+		{
+			PRINTF("|%s(%p) ", NTITLE(ETARGET(edge)), ETARGET(edge));
 		}
 		PRINTF("\nPreds:");
-		edge = NPRED(node);
-		while (edge) {
-			PRINTF("|%s(%p) ", NTITLE(SOURCE(edge)), SOURCE(edge));
-            		edge = ANEXT(edge); 
-        	}
-		node = NNEXT(node);
+		for (edge = FirstPred(node); edge; edge = NextPred(edge))
+		{
+			PRINTF("|%s(%p) ", NTITLE(ESOURCE(edge)), ESOURCE(edge));
+		}
 	}
-	node = labellist;
-	while (node) {
+	for (node = labellist; node; node = NNEXT(node))
+	{
 		PRINTF("\n%s(%d)%p\n", NTITLE(node), NTIEFE(node),node);
 		PRINTF("(in:%d,out:%d)\n", NINDEG(node), NOUTDEG(node));
 		PRINTF("Succs:");
-		edge = NSUCC(node);
-		while (edge) {
-			PRINTF("|%s(%p) ", NTITLE(TARGET(edge)), TARGET(edge));
-			edge = ANEXT(edge);
+		for (edge = FirstSucc(node); edge; edge = NextSucc(edge))
+		{
+			PRINTF("|%s(%p) ", NTITLE(ETARGET(edge)), ETARGET(edge));
 		}
 		PRINTF("\nPreds:");
-		edge = NPRED(node);
-		while (edge) {
-			PRINTF("|%s(%p) ", NTITLE(SOURCE(edge)), SOURCE(edge));
-            		edge = ANEXT(edge); 
-        	}
-		node = NNEXT(node);
+		for (edge = FirstPred(node); edge; edge = NextPred(edge))
+		{
+			PRINTF("|%s(%p) ", NTITLE(ESOURCE(edge)), ESOURCE(edge));
+		}
 	}
-	node = dummylist;
-	while (node) {
+	for (node = dummylist; node; node = NNEXT(node))
+	{
 		PRINTF("\n%s(%d)%p\n", NTITLE(node), NTIEFE(node),node);
 		PRINTF("(in:%d,out:%d)\n", NINDEG(node), NOUTDEG(node));
 		PRINTF("Succs:");
-		edge = NSUCC(node);
-		while (edge) {
-			PRINTF("|%s(%p) ", NTITLE(TARGET(edge)), TARGET(edge));
-			edge = ANEXT(edge);
+		for (edge = FirstSucc(node); edge; edge = NextSucc(edge))
+		{
+			PRINTF("|%s(%p) ", NTITLE(ETARGET(edge)), ETARGET(edge));
 		}
 		PRINTF("\nPreds:");
-		edge = NPRED(node);
-		while (edge) {
-			PRINTF("|%s(%p) ", NTITLE(SOURCE(edge)), SOURCE(edge));
-            		edge = ANEXT(edge); 
-        	}
-		node = NNEXT(node);
+		for (edge = FirstPred(node); edge; edge = NextPred(edge))
+		{
+			PRINTF("|%s(%p) ", NTITLE(ESOURCE(edge)), ESOURCE(edge));
+		}
 	}
 	PRINTF("\n");
 } /* db_output_adjacencies */
@@ -3044,33 +3007,30 @@ void db_output_adjacencies(void)
 
 #define gtitle(v)  (NTITLE(v)?NTITLE(v):"??")
 
-void db_output_adjacency(GNODE node,int f)
+void db_output_adjacency(GNODE node, int f)
 {
-	ADJEDGE	edge;
+	GEDGE edge;
 
 	PRINTF("\n\nAdjacency lists: ");
 	PRINTF("\n%p %s(%d)\n", node, gtitle(node), NTIEFE(node));
 	if (f!=1) {
-	PRINTF("Succs:");
-	edge = NSUCC(node);
-	while (edge) {
-		PRINTF("%p %c:",edge,EKIND(edge));
-		PRINTF("(%p)%s-", SOURCE(edge),gtitle(SOURCE(edge)));
-		PRINTF("(%p)%s ", TARGET(edge),gtitle(TARGET(edge)));
-		edge = ANEXT(edge);
-	}
+		PRINTF("Succs:");
+		for (edge = FirstSucc(node); edge; edge = NextSucc(edge))
+		{
+			PRINTF("%p %c:",edge,EART(edge));
+			PRINTF("(%p)%s-", ESOURCE(edge),gtitle(ESOURCE(edge)));
+			PRINTF("(%p)%s ", ETARGET(edge),gtitle(ETARGET(edge)));
+		}
 	}
 	if (f!=0) {
-	PRINTF("\nPreds:");
-	edge = NPRED(node);
-	while (edge) {
-		PRINTF("%p %c:",edge,EKIND(edge));
-		PRINTF("(%p)%s-", SOURCE(edge),gtitle(SOURCE(edge))); 
-		PRINTF("(%p)%s ", TARGET(edge),gtitle(TARGET(edge)));
-            	edge = ANEXT(edge); 
-        }
-	node = NNEXT(node);
-	PRINTF("End\n");
+		PRINTF("\nPreds:");
+		for (edge = FirstPred(node); edge; edge = NextPred(edge))
+		{
+			PRINTF("%p %c:",edge,EART(edge));
+			PRINTF("(%p)%s-", ESOURCE(edge),gtitle(ESOURCE(edge))); 
+			PRINTF("(%p)%s ", ETARGET(edge),gtitle(ETARGET(edge)));
+		}
+		PRINTF("End\n");
 	}
 } /* db_output_adjacency */
 #endif
@@ -3084,19 +3044,18 @@ void db_output_adjacency(GNODE node,int f)
 
 #define mtitle(v)  (NTITLE(v)?NTITLE(v):"??")
 
-static void    db_output_layer(void)
+static void db_output_layer(void)
 {
-	int     i;
-	GNLIST	li;
-	GNODE   node;
+	int    i;
+	GNLIST li;
+	GNODE  node;
 
 	for (i=0; i<=maxdepth+1; i++) {
 		PRINTF("Layer %d:\n",i);
-		li = TSUCC(layer[i]);
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			node = GNNODE(li);
 			PRINTF("\n%p %s(%d)\n",node, mtitle(node),NTIEFE(node));
-			li = GNNEXT(li);
 		}
 		PRINTF("-----------------\n");
 	}
@@ -3109,12 +3068,12 @@ static void    db_output_layer(void)
 
 #ifdef DEBUG
 
-static void    db_output_vcglayer(char *fn)
+static void db_output_vcglayer(char *fn)
 {
 	int     i, j;
-	GNLIST	li;
+	GNLIST  li;
 	GNODE   node;
-	ADJEDGE	edge;
+	GEDGE   edge;
 	CONNECT c1;
 	FILE *f;
 
@@ -3123,9 +3082,9 @@ static void    db_output_vcglayer(char *fn)
 	FPRINTF(f, "graph: { title: \"db_%s\" \n",fn);
 
 	for (i=0; i<=maxdepth+1; i++) {
-		li = TSUCC(layer[i]);
 		j = 1;
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			node = GNNODE(li);
 			FPRINTF(f, "\nnode: { title: \"%p\" ",node );
 			if ((NTITLE(node)) && (NTITLE(node)[0]))
@@ -3134,24 +3093,23 @@ static void    db_output_vcglayer(char *fn)
 			FPRINTF(f, "horizontal_order: %d ", j);
 			FPRINTF(f, "loc: { x: %d y: %d } ", 10+j*80, 10+i*60);
 			FPRINTF(f, "}\n");
-			edge = NSUCC(node);
-			while (edge) {
+			for (edge = FirstSucc(node); edge; edge = NextSucc(edge))
+			{
 				FPRINTF(f,"edge: { ");
-				FPRINTF(f,"sourcename: \"%p\" ",SOURCE(edge));
-				FPRINTF(f,"targetname: \"%p\" ",TARGET(edge));
+				FPRINTF(f,"sourcename: \"%p\" ",ESOURCE(edge));
+				FPRINTF(f,"targetname: \"%p\" ",ETARGET(edge));
 				FPRINTF(f,"}\n");
-				edge = ANEXT(edge);
 			}
 			c1 = NCONNECT(node);
 			if (c1) {
-				if ((CTARGET(c1)) && (CTARGET(c1)!=node)) { 
+				if ((CTARGET(c1)) && (CTARGET(c1)!=node)) {
 					FPRINTF(f,"edge: { ");
 					FPRINTF(f,"sourcename: \"%p\" ",node);
 					FPRINTF(f,"targetname: \"%p\" ",
 							CTARGET(c1));
 					FPRINTF(f, "linestyle: dashed }\n");
 				}
-				if ((CTARGET2(c1)) && (CTARGET2(c1)!=node)) { 
+				if ((CTARGET2(c1)) && (CTARGET2(c1)!=node)) {
 					FPRINTF(f,"edge: { ");
 					FPRINTF(f,"sourcename: \"%p\" ",node);
 					FPRINTF(f,"targetname: \"%p\" ",
@@ -3160,7 +3118,6 @@ static void    db_output_vcglayer(char *fn)
 				}
 			}
 			j++;
-			li = GNNEXT(li);
 		}
 	}
 	FPRINTF(f, "}\n");
