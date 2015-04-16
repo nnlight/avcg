@@ -1,44 +1,24 @@
 /*--------------------------------------------------------------------*/
-/*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
-/*              --------------------------------------                */
-/*                                                                    */
-/*   file:         tree.c                                             */
-/*   version:      1.00.00                                            */
-/*   creation:     14.4.1993                                          */
-/*   author:       I. Lemke  (...-Version 0.99.99)                    */
-/*                 G. Sander (Version 1.00.00-...)                    */  
-/*                 Universitaet des Saarlandes, 66041 Saarbruecken    */
-/*                 ESPRIT Project #5399 Compare                       */
-/*   description:  Layout phase 2/3: Tree Layout                      */
-/*   status:       in work                                            */
-/*                                                                    */
 /*--------------------------------------------------------------------*/
-
-
 /*
- *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium 
+ * Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
+ *                             the Compare Consortium
+ * Copyright (C) 2015 Nikita S <nnlight@gmail.com>
  *
- *  This program and documentation is free software; you can redistribute 
- *  it under the terms of the  GNU General Public License as published by
- *  the  Free Software Foundation;  either version 2  of the License,  or
- *  (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  This  program  is  distributed  in  the hope that it will be useful,
- *  but  WITHOUT ANY WARRANTY;  without  even  the  implied  warranty of
- *  MERCHANTABILITY  or  FITNESS  FOR  A  PARTICULAR  PURPOSE.  See  the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- *  You  should  have  received a copy of the GNU General Public License
- *  along  with  this  program;  if  not,  write  to  the  Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  The software is available per anonymous ftp at ftp.cs.uni-sb.de.
- *  Contact  sander@cs.uni-sb.de  for additional information.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
-
-
 
 /************************************************************************
  * The situation here is the following:
@@ -128,6 +108,7 @@
 #include "folding.h"
 #include "steps.h"
 #include "timing.h"
+#include "graph.h"
 
 
 /* Prototypes
@@ -191,8 +172,8 @@ int tree_main(void)
 
 	if (tree_factor<0) tree_factor = -tree_factor;
 	if (tree_factor>1.0) {
-		tree_factor2 = (int)(10.0/tree_factor);
 		tree_factor1 = 10;
+		tree_factor2 = (int)(10.0/tree_factor);
 	}
 	else {
 		tree_factor1 = (int)(tree_factor*10.0);
@@ -256,7 +237,7 @@ int tree_main(void)
 
 	stop_time("tree_main");
 	return(TREE_LAYOUT);
-}
+} /* tree_main */
 
 
 
@@ -268,10 +249,7 @@ int tree_main(void)
 /* Tree check main function
  * ------------------------
  * return 1 if it is a downward tree.
- * As side effect, NINDEG and NOUTDEG are calculated, but only valid,
- * if it is a tree. Dito for maxindeg and maxoutdeg.
  */
-
 static int is_tree(void)
 {
 	int i;
@@ -284,18 +262,15 @@ static int is_tree(void)
 
 	debugmessage("is_tree","");
 
-	v = nodelist;
-	while (v) { NMARK(v) = 1; v = NNEXT(v); }
-	v = labellist;
-	while (v) { NMARK(v) = 1; v = NNEXT(v); }
-	v = dummylist;
-	while (v) { NMARK(v) = 1; v = NNEXT(v); }
+	for (v = nodelist; v; v = NNEXT(v)) { NMARK(v) = 1; }
+	for (v = labellist; v; v = NNEXT(v)) { NMARK(v) = 1; }
+	for (v = dummylist; v; v = NNEXT(v)) { NMARK(v) = 1; }
 
 	/* Check whether a node is shared */
 
 	for (i=0; i<= maxdepth+1; i++) {
-		li = TSUCC(layer[i]);
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			v = GNNODE(li);
 			fresh = NMARK(v);
 			c = NCONNECT(v);
@@ -306,7 +281,6 @@ static int is_tree(void)
 			result = 0;
 			if (fresh) result = is_shared(v);
 			if (result) return(0);
-			li = GNNEXT(li);
 		}
 	}
 
@@ -317,13 +291,11 @@ static int is_tree(void)
 /* Traverse a tree by dfs and check whether a node is shared
  * ---------------------------------------------------------
  * returns 1 if a node is shared.
- * As side effect, NINDEG and NOUTDEG are calculated.
  */
-
 static int is_shared(GNODE v)
 {
 	int i;
-	ADJEDGE a;
+	GEDGE e;
 	CONNECT c;
 
 	debugmessage("is_shared","");
@@ -333,16 +305,17 @@ static int is_shared(GNODE v)
 	NMARK(v) = 0;
 
 	i = 0;
-	a = NPRED(v);
-	while (a) { i++; a = ANEXT(a); }
+	for (e = FirstPred(v); e; e = NextPred(e))
+	{
+		i++;
+	}
 	if (i>1) return(1);
 
 	i = 0;
-	a = NSUCC(v);
-	while (a) {
+	for (e = FirstSucc(v); e; e = NextSucc(e))
+	{
 		i++;
-		if (is_shared(TARGET(a))) return(1);
-		a = ANEXT(a);
+		if (is_shared(ETARGET(e))) return(1);
 	}
 
 	c = NCONNECT(v);
@@ -367,7 +340,7 @@ static void calc_degree(void)
 	int i, j;
 	GNODE v;
 	GNLIST li;
-	ADJEDGE a;
+	GEDGE e;
 
 	debugmessage("calc_degree","");
 
@@ -375,20 +348,23 @@ static void calc_degree(void)
 
 	mymaxoutdeg = 0;
 	for (i=0; i<= maxdepth+1; i++) {
-		li = TSUCC(layer[i]);
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			v = GNNODE(li);
 			j = 0;
-			a = NPRED(v);
-			while (a) { j++; a = ANEXT(a); }
+			for (e = FirstPred(v); e; e = NextPred(e))
+			{
+				j++;
+			}
 			NINDEG(v) = j;
-			assert((j<=1));
+			assert(j<=1);
 			j = 0;
-			a = NSUCC(v);
-			while (a) { j++; a = ANEXT(a); }
+			for (e = FirstSucc(v); e; e = NextSucc(e))
+			{
+				j++;
+			}
 			NOUTDEG(v) = j;
 			if (j>mymaxoutdeg) mymaxoutdeg = j;
-			li = GNNEXT(li);
 		}
 	}
 	maxindeg = 1;
@@ -409,16 +385,15 @@ static void create_tpred_lists(void)
 
 	max_nodes_per_layer = 0;
 	for (i=0; i<=maxdepth+1; i++) {
-		h1 = TSUCC(layer[i]);
 		TPRED(layer[i]) = NULL;
 		k = 0;
-		while (h1) {
+		for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
+		{
 			k++;
 			h2 = tmpnodelist_alloc();
 			GNNEXT(h2) = TPRED(layer[i]);
 			TPRED(layer[i]) = h2;
 			GNNODE(h2) = GNNODE(h1);
-			h1 = GNNEXT(h1);
 		}
 		TANZ(layer[i]) = k;
 		if (k>max_nodes_per_layer) max_nodes_per_layer = k;
@@ -432,7 +407,6 @@ static void create_tpred_lists(void)
 
 /* This initializes also NPOS. 
  */
-
 static void sort_tsucc_and_tpred(void)
 {
 	int i, k, max;
@@ -441,11 +415,10 @@ static void sort_tsucc_and_tpred(void)
 	debugmessage("sort_tsucc_and_tpred","");
 
 	for (i=0; i<=maxdepth+1; i++) {
-		h1 = TSUCC(layer[i]);
 		k = 0;
-		while (h1) {
+		for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
+		{
 			sort_array[k++] = GNNODE(h1);
-			h1 = GNNEXT(h1);
 		}
 		max = k;
 
@@ -454,23 +427,21 @@ static void sort_tsucc_and_tpred(void)
 				(int (*) (const void *, const void *))compare_xpos);
 		}
 
-		h1 = TSUCC(layer[i]);
 		k = 0;
-		while (h1) {
+		for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
+		{
 			NPOS(sort_array[k]) = k;
 			GNNODE(h1) = sort_array[k++];
-			h1 = GNNEXT(h1);
 		}
 		assert((k==max));
 		k--;
-		h1 = TPRED(layer[i]);
-		while (h1) {
+		for (h1 = TPRED(layer[i]); h1; h1 = GNNEXT(h1))
+		{
 			GNNODE(h1) = sort_array[k--];
-			h1 = GNNEXT(h1);
 		}
 		assert((k== -1));
 	}
-}
+} /* sort_tsucc_and_tpred */
 
 
 
@@ -478,8 +449,7 @@ static void sort_tsucc_and_tpred(void)
  *  -----------------------------------------
  *  returns 1 if NX(*a) > NX(*b), 0 if equal, -1 otherwise.
  */
- 
-static int 	compare_xpos(const GNODE *a, const GNODE *b)
+static int compare_xpos(const GNODE *a, const GNODE *b)
 { 
 	if (NX(*a) > NX(*b)) return(1);
 	if (NX(*a) < NX(*b)) return(-1);
@@ -505,21 +475,19 @@ static void sort_all_adjacencies(void)
 
 	for (i=0; i<=maxdepth+1; i++) {
 		if (i>0) {
-			h1 = TSUCC(layer[i-1]);
-			while (h1) {
+			for (h1 = TSUCC(layer[i-1]); h1; h1 = GNNEXT(h1))
+			{
 				NTMPADJ(GNNODE(h1)) = NSUCC(GNNODE(h1));
-				h1 = GNNEXT(h1);
 			}
 		}
 		if (i<maxdepth+1) {
-			h1 = TSUCC(layer[i+1]);
-			while (h1) {
+			for (h1 = TSUCC(layer[i+1]); h1; h1 = GNNEXT(h1))
+			{
 				NTMPADJ(GNNODE(h1)) = NPRED(GNNODE(h1));
-				h1 = GNNEXT(h1);
 			}
 		}
-		h1 = TSUCC(layer[i]);
-		while (h1) {
+		for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
+		{
 			a = NPRED(GNNODE(h1));
 			while (a) {
 				assert((NTMPADJ(SOURCE(a))));
@@ -534,13 +502,12 @@ static void sort_all_adjacencies(void)
 				NTMPADJ(TARGET(a)) = ANEXT(NTMPADJ(TARGET(a)));
 				a = ANEXT(a);
 			}
-			h1 = GNNEXT(h1);
 		}
 	}
 
 	for (i=0; i<=maxdepth+1; i++) {
-		h1 = TSUCC(layer[i]);
-		while (h1) {
+		for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
+		{
 			NPREDL(GNNODE(h1)) = NPREDR(GNNODE(h1)) = 0;
 			a = NPRED(GNNODE(h1));
 			if (a) {
@@ -555,10 +522,9 @@ static void sort_all_adjacencies(void)
 				while (ANEXT(a)) a = ANEXT(a);
 				NSUCCR(GNNODE(h1)) = AKANTE(a);
 			}
-			h1 = GNNEXT(h1);
 		}
 	}
-}
+} /* sort_all_adjacencies */
 
 
 /*--------------------------------------------------------------------*/
@@ -573,7 +539,7 @@ static int horder_warn; /* 1 if the horder-warning was already printed */
 #define yralign(a)  ((((a)+G_yraster-1)/G_yraster)*G_yraster)
 
 
-static void	tree_layout(void)
+static void tree_layout(void)
 {
 	int actypos;
 	int maxboxheight;
@@ -605,27 +571,24 @@ static void	tree_layout(void)
 	for (i=0; i<=maxdepth+1; i++) {
 		TACTX(layer[i]) = G_xbase;
 		maxboxheight = 0;
-		li      = TSUCC(layer[i]);
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			NY(GNNODE(li))   = actypos;
-			if (maxboxheight<NHEIGHT(GNNODE(li)))
+			if (maxboxheight < NHEIGHT(GNNODE(li)))
 				maxboxheight = NHEIGHT(GNNODE(li));
-			li = GNNEXT(li);
 		}	
 		if (G_yalign==AL_CENTER) {
-			li      = TSUCC(layer[i]);
-			while (li) {
-				NY(GNNODE(li))   += (maxboxheight-
+			for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+			{
+				NY(GNNODE(li)) += (maxboxheight-
 						      NHEIGHT(GNNODE(li)))/2;
-				li = GNNEXT(li);
 			}
 		}
 		else if (G_yalign==AL_BOTTOM) {
-			li      = TSUCC(layer[i]);
-			while (li) {
-				NY(GNNODE(li))   += (maxboxheight-
+			for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+			{
+				NY(GNNODE(li)) += (maxboxheight-
 						      NHEIGHT(GNNODE(li)));
-				li = GNNEXT(li);
 			}
 		}
 		actypos += (maxboxheight + G_yspace);
@@ -640,8 +603,8 @@ static void	tree_layout(void)
 
 	mymaxoutdeg = 0;
 	for (i=0; i<= maxdepth+1; i++) {
-		li = TSUCC(layer[i]);
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			v = GNNODE(li);
 			fresh = NMARK(v);
 			c = NCONNECT(v);
@@ -651,12 +614,11 @@ static void	tree_layout(void)
 			}
 			if (fresh) {
 				gs_wait_message('T');
-				(void)find_position(v,G_xbase+NWIDTH(v)/2);
+				(void)find_position(v, G_xbase+NWIDTH(v)/2);
 			}
-			li = GNNEXT(li);
 		}
 	}
-}
+} /* tree_layout */
 
 
 /* Find position of a node
@@ -664,11 +626,10 @@ static void	tree_layout(void)
  * leftest_pos is the leftest position allowed as center of the node.
  * It returns the center of the positioned node.
  */
-
 static int find_position(GNODE v, int leftest_pos)
 {
 	int xpos, minpos, maxpos, l, num, i;
-	ADJEDGE a;
+	GEDGE e;
 	int minhorder, maxhorder;
 	GNODE w, actl, actr, actn;
 	GNODE conn1, conn2, leftconn;
@@ -756,43 +717,40 @@ static int find_position(GNODE v, int leftest_pos)
 	case 0:
 		break;
 	case 1:
-		a = NSUCC(v);
-		assert((a));
-		minpos = find_position(TARGET(a),xpos);
+		e = FirstSucc(v);
+		assert(e);
+		minpos = find_position(ETARGET(e), xpos);
 		xpos = minpos;
 		break;
 	default:
-		a = NSUCC(v);
 		actl = NULL; 
 		minhorder = MAXINT;
-		while (a) {
-			w = TARGET(a);
+		for (e = FirstSucc(v); e; e = NextSucc(e))
+		{
+			w = ETARGET(e);
 			if (NHORDER(w)<minhorder) {
 				minhorder = NHORDER(w);
 				actl = w;
 			}
-			a = ANEXT(a);	
 		}
 
-		a = NSUCC(v);
 		actr = NULL; 
 		maxhorder = MININT;
-		while (a) {
-			w = TARGET(a);
+		for (e = FirstSucc(v); e; e = NextSucc(e))
+		{
+			w = ETARGET(e);
 			if ((w!=actl) && (NHORDER(w)>maxhorder)) {
 				maxhorder = NHORDER(w);
 				actr = w;
 			}
-			a = ANEXT(a);	
 		}
 
 		assert((actl)&&(actr)&&(actl!=actr));
 		
-		a = NSUCC(v);
 		num = 0;
-		while (a) {
-			num+=NWIDTH(TARGET(a));
-			a = ANEXT(a);
+		for (e = FirstSucc(v); e; e = NextSucc(e))
+		{
+			num += NWIDTH(ETARGET(e));
 		}
 		num += ((NOUTDEG(v)-1) * G_xspace);
 		num -= NWIDTH(actl)/2;
@@ -800,16 +758,15 @@ static int find_position(GNODE v, int leftest_pos)
 
 		minpos = find_position(actl, xpos - (num*tree_factor1)/tree_factor2); 
 
-		a = NSUCC(v);
 		actn = NULL;
 		minhorder = MAXINT;
-		while (a) {
-			w = TARGET(a);
+		for (e = FirstSucc(v); e; e = NextSucc(e))
+		{
+			w = ETARGET(e);
 			if ((w!=actr) && (NMARK(w)) && (NHORDER(w)<minhorder)) {
 				minhorder = NHORDER(w);
 				actn = w;
 			}
-			a = ANEXT(a);	
 		}
 
 		i = 2;
@@ -832,17 +789,16 @@ static int find_position(GNODE v, int leftest_pos)
 				if (xpos<leftest_pos) xpos = leftest_pos;
 			}
 			i++;
-			a = NSUCC(v);
 			actn = NULL;
 			minhorder = MAXINT;
-			while (a) {
-				w = TARGET(a);
+			for (e = FirstSucc(v); e; e = NextSucc(e))
+			{
+				w = ETARGET(e);
 				if (   (w!=actr) && (NMARK(w)) 
 				    && (NHORDER(w)<minhorder)) {
 					minhorder = NHORDER(w);
 					actn = w;
 				}
-				a = ANEXT(a);	
 			}
 
 		}
@@ -886,7 +842,7 @@ static int find_position(GNODE v, int leftest_pos)
 	if (leftconn) correct_position(leftconn,v);
 
 	return(xpos);	
-}
+} /* find_position */
 
 
 /* Correct the position of a left neighbor node
@@ -911,9 +867,9 @@ static void correct_position(GNODE conn, GNODE v)
 	for (i=0; i<=maxdepth+1; i++) 
 		TMINX(layer[i]) = MAXINT; 
 
-	depth = min_x_in_tree(v,conn);
+	depth = min_x_in_tree(v, conn);
 
-	diff  = max_x_in_tree(conn,depth);
+	diff  = max_x_in_tree(conn, depth);
 
 	if (diff-G_xspace>0) correct_xpos(conn, xlalign(diff-G_xspace));
 }
@@ -925,11 +881,10 @@ static void correct_position(GNODE conn, GNODE v)
  * The minimal x-positions at each level are stored in TMINX of the levels.
  * We return the maximal depth of the tree.
  */
-
 static int min_x_in_tree(GNODE v, GNODE conn)
 {
 	int maxlevel, l, h;
-	ADJEDGE a;
+	GEDGE e;
 	CONNECT c;
 
 	debugmessage("min_x_in_tree","");
@@ -939,22 +894,21 @@ static int min_x_in_tree(GNODE v, GNODE conn)
 	maxlevel = l = NTIEFE(v);
 	if (NX(v) < TMINX(layer[l])) TMINX(layer[l]) = NX(v);
 
-	a = NSUCC(v);
-	while (a) {
-		h = min_x_in_tree(TARGET(a),conn);
+	for (e = FirstSucc(v); e; e = NextSucc(e))
+	{
+		h = min_x_in_tree(ETARGET(e), conn);
 		if (h>maxlevel) maxlevel = h;	
-		a = ANEXT(a);
 	}
 
 	c = NCONNECT(v);
 	if (c) {
 		if (forward_connection1(c)) {
-			h = min_x_in_tree(EEND(CEDGE(c)),conn); 
-			if (h>maxlevel) maxlevel = h;	
+			h = min_x_in_tree(EEND(CEDGE(c)), conn);
+			if (h>maxlevel) maxlevel = h;
 		}
 		if (forward_connection2(c)) {
-			h = min_x_in_tree(EEND(CEDGE2(c)),conn); 
-			if (h>maxlevel) maxlevel = h;	
+			h = min_x_in_tree(EEND(CEDGE2(c)), conn);
+			if (h>maxlevel) maxlevel = h;
 		}
 	}
 	return(maxlevel);
@@ -968,11 +922,10 @@ static int min_x_in_tree(GNODE v, GNODE conn)
  * minimal difference.
  * If the tree at v is deeper than the right neigbour tree, we return 0.
  */
-
 static int max_x_in_tree(GNODE v, int depth)
 {
 	int mindiff, l, h;
-	ADJEDGE a;
+	GEDGE e;
 	CONNECT c;
 
 	debugmessage("max_x_in_tree","");
@@ -980,22 +933,22 @@ static int max_x_in_tree(GNODE v, int depth)
 	l = NTIEFE(v);
 	if (l>depth) return(0);
 	mindiff = TMINX(layer[l]) - NX(v) - NWIDTH(v);
-	a = NSUCC(v);
-	while (a) {
-		h = max_x_in_tree(TARGET(a),depth);
-		if (h<mindiff) mindiff = h;	
-		a = ANEXT(a);
+
+	for (e = FirstSucc(v); e; e = NextSucc(e))
+	{
+		h = max_x_in_tree(ETARGET(e), depth);
+		if (h<mindiff) mindiff = h;
 	}
 
 	c = NCONNECT(v);
 	if (c) {
 		if (forward_connection1(c)) {
-			h = max_x_in_tree(EEND(CEDGE(c)),depth); 
-			if (h<mindiff) mindiff = h;	
+			h = max_x_in_tree(EEND(CEDGE(c)), depth);
+			if (h<mindiff) mindiff = h;
 		}
 		if (forward_connection2(c)) {
-			h = max_x_in_tree(EEND(CEDGE2(c)),depth); 
-			if (h<mindiff) mindiff = h;	
+			h = max_x_in_tree(EEND(CEDGE2(c)), depth);
+			if (h<mindiff) mindiff = h;
 		}
 	}
 	return(mindiff);
@@ -1005,29 +958,27 @@ static int max_x_in_tree(GNODE v, int depth)
 /* Correct the x-position of the tree at v by diff
  * -----------------------------------------------
  */
-
 static void correct_xpos(GNODE v, int diff)
 {
-	ADJEDGE a;
+	GEDGE e;
 	CONNECT c;
 
 	debugmessage("correc_xpos","");
 
 	NX(v) += diff;
 
-	a = NSUCC(v);
-	while (a) {
-		correct_xpos(TARGET(a),diff);
-		a = ANEXT(a);
+	for (e = FirstSucc(v); e; e = NextSucc(e))
+	{
+		correct_xpos(ETARGET(e), diff);
 	}
 
 	c = NCONNECT(v);
 	if (c) {
 		if (forward_connection1(c)) {
-			correct_xpos(EEND(CEDGE(c)),diff); 
+			correct_xpos(EEND(CEDGE(c)), diff);
 		}
 		if (forward_connection2(c)) {
-			correct_xpos(EEND(CEDGE2(c)),diff); 
+			correct_xpos(EEND(CEDGE2(c)), diff);
 		}
 	}
 }

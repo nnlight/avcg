@@ -251,27 +251,23 @@ void	step4_main(void)
  *   NWEIGHTS and NWEIGHTP become the number of ports of a node 
  *   EWEIGHTS and EWEIGHTP become the port number of an edge 
  */
-
-void	calc_all_ports(int xypos_avail)
+void calc_all_ports(int xypos_avail)
 {
 	GNODE   v;
 
 	debugmessage("calc_all_ports","");
 
-	v = nodelist;
-        while (v) {
-		calc_node_ports(v,xypos_avail);
-                v = NNEXT(v);
+	for (v = nodelist; v; v = NNEXT(v))
+	{
+		calc_node_ports(v, xypos_avail);
         }
-        v = labellist;
-        while (v) {
-		calc_node_ports(v,xypos_avail);
-                v = NNEXT(v);
+	for (v = labellist; v; v = NNEXT(v))
+	{
+		calc_node_ports(v, xypos_avail);
         }
-        v = dummylist;
-        while (v) {
-		calc_node_ports(v,xypos_avail);
-                v = NNEXT(v);
+	for (v = dummylist; v; v = NNEXT(v))
+	{
+		calc_node_ports(v, xypos_avail);
         }
 }
 
@@ -463,7 +459,7 @@ void calc_node_ports(GNODE v, int xypos_avail)
 			break;
 		}
 	}
-}
+} /* calc_node_ports */
 
 
 /*--------------------------------------------------------------------*/

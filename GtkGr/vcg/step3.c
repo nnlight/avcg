@@ -305,6 +305,8 @@ void	step3_main(void)
 
 void alloc_levelshift(void)
 {
+	int len;
+
 	debugmessage("alloc_levelshift","");
 
 	if (sizeof(GNLIST)<sizeof(GNODE))
@@ -318,14 +320,12 @@ void alloc_levelshift(void)
 #endif
 	if (max_nodes_per_layer+2 > size_of_levelsw) {
 		if (levelshift)        free(levelshift);
-		if (tpred_connection1)  free(tpred_connection1);
-		if (tpred_connection2)  free(tpred_connection2);
-		levelshift = (int *)libc_malloc((max_nodes_per_layer+2)
-					* sizeof(int));
-		tpred_connection1 = (GNLIST *)libc_malloc((max_nodes_per_layer+2)
-					* sizeof(GNLIST));
-		tpred_connection2 = (GNLIST *)libc_malloc((max_nodes_per_layer+2)
-					* sizeof(GNLIST));
+		if (tpred_connection1) free(tpred_connection1);
+		if (tpred_connection2) free(tpred_connection2);
+		len = max_nodes_per_layer+2;
+		levelshift = (int *)libc_malloc(len * sizeof(int));
+		tpred_connection1 = (GNLIST *)libc_malloc(len * sizeof(GNLIST));
+		tpred_connection2 = (GNLIST *)libc_malloc(len * sizeof(GNLIST));
 		levelweight  = (int *)tpred_connection1;
 		slayer_array = (GNODE *)tpred_connection2;
 		size_of_levelsw = max_nodes_per_layer+2;
@@ -345,16 +345,15 @@ void alloc_levelshift(void)
  * If NWIDTH and NHEIGHT are not already set, they are derived from
  * the size of the label. 
  */
-
 void calc_all_node_sizes(void)
 {
 	GNODE v;
-	int   h,hh,hhh;
+	int   h, hh, hhh;
 	ADJEDGE a;
 
 	debugmessage("calc_all_node_sizes","");
-	v = nodelist;
-	while (v) {
+	for (v = nodelist; v; v = NNEXT(v))
+	{
 		calc_node_size(v);
 
 		if (  (G_orientation==LEFT_TO_RIGHT) 
@@ -363,7 +362,6 @@ void calc_all_node_sizes(void)
 			NWIDTH(v)  = NHEIGHT(v);
 			NHEIGHT(v) = h;
 		}
-		v = NNEXT(v);
 	}
 
 	/* For the labellist, width and height are already set.
@@ -373,17 +371,16 @@ void calc_all_node_sizes(void)
 	 */
 	if (  (G_orientation==LEFT_TO_RIGHT) 
 	    ||(G_orientation==RIGHT_TO_LEFT)) {
-		v = labellist;
-		while (v) {
+		for (v = labellist; v; v = NNEXT(v))
+		{
 			h          = NWIDTH(v);
 			NWIDTH(v)  = NHEIGHT(v);
 			NHEIGHT(v) = h;
-			v = NNEXT(v);
 		}
 	}
 
-	v = dummylist;
-	while (v) {
+	for (v = dummylist; v; v = NNEXT(v))
+	{
 		if (NANCHORNODE(v)) {
 			a = NPRED(v);
 			h = 0;
@@ -411,7 +408,6 @@ void calc_all_node_sizes(void)
 			NWIDTH(v)  = NHEIGHT(v);
 			NHEIGHT(v) = h;
 		}
-		v = NNEXT(v);
 	}
 } /* calc_all_node_sizes */
 

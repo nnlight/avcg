@@ -133,7 +133,6 @@ typedef struct connect
 #define CEDGE2(x)	((x)->edge2)
 #define CINTERN(x)	((x)->internal_next)
 
-/* в реале forward и backward перепутаны местами */
 #define CONN_MACROS 0
 #if CONN_MACROS
 #define forward_connection1(c)  ((CEDGE(c))&& (EEND(CEDGE(c)) ==CTARGET(c)))

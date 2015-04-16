@@ -790,12 +790,12 @@ static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
                         	break;
                 	case T_Co_spreadlevel:
 				if (!subg_bit) {
-/*TODO					spread_level = (int)FETCHNUM();*/
+					spread_level = (int)FETCHNUM();
 				}
                         	break;
                 	case T_Co_treefactor:
 				if (!subg_bit) {
-/*TODO					tree_factor = FETCHFLOAT();*/
+					tree_factor = FETCHFLOAT();
 				}
                         	break;
 			case T_Co_layoutalgorithm:
