@@ -196,6 +196,11 @@
 #define DEAD_GNODE  ((GNODE)DEAD_PTR)
 #define DEAD_GEDGE  ((GEDGE)DEAD_PTR)
 
+/**
+ * Использовать ли для некоторых функций макрос-версии?
+ */
+#define VCG_USE_MACROS 0
+
 /*--------------------------------------------------------------------*/
 #ifdef WIN32
 #pragma warning (disable: 4996)     // disable deprecated functions warning

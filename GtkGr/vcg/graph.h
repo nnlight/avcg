@@ -30,10 +30,12 @@
 
 /*--------------------------------------------------------------------*/
 
+#if !VCG_USE_MACROS
 GEDGE FirstPred(GNODE v);
 GEDGE FirstSucc(GNODE v);
 GEDGE NextPred(GEDGE e);
 GEDGE NextSucc(GEDGE e);
+#endif
 
 void init_node_graph_fields_as_dead(GNODE v);
 void init_edge_graph_fields_as_dead(GEDGE e);

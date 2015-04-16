@@ -29,7 +29,7 @@
 #include "vcg_defs.h"
 
 
-#if !CONN_MACROS
+#if !VCG_USE_MACROS
 int forward_connection1(CONNECT c) {
 	GEDGE e = CEDGE(c);
 	if (e) {
@@ -58,8 +58,9 @@ int backward_connection2(CONNECT c) {
 	}
 	return ((CEDGE2(c))&&(EEND(CEDGE2(c))!=CTARGET2(c)));
 }
-#endif
+#endif /* !VCG_USE_MACROS */
 
+#if !VCG_USE_MACROS
 GEDGE FirstPred(GNODE v)
 {
     GEDGE e = NADJFIRST(v,GD_PRED);
@@ -68,6 +69,7 @@ GEDGE FirstPred(GNODE v)
         assert(NPRED(v) == EADJENTRY(e,GD_PRED));
         assert(AKANTE(NPRED(v)) == e);
         assert(PrevPred(e) == NULL);
+        assert(ETARGET(e) == v);
     } else {
         assert(!NPRED(v));
         assert(!LastPred(v));
@@ -82,6 +84,7 @@ GEDGE FirstSucc(GNODE v)
         assert(NSUCC(v) == EADJENTRY(e,GD_SUCC));
         assert(AKANTE(NSUCC(v)) == e);
         assert(PrevSucc(e) == NULL);
+        assert(ESOURCE(e) == v);
     } else {
         assert(!NSUCC(v));
         assert(!LastSucc(v));
@@ -95,16 +98,17 @@ GEDGE NextPred(GEDGE edge)
     if (e) {
         assert(AKANTE(ANEXT(EADJENTRY(edge,GD_PRED))) == e);
         assert(AKANTE(EADJENTRY(e,GD_PRED)) == e);
+        assert(ETARGET(e) == ETARGET(edge));
     } else {
         assert( !ANEXT(EADJENTRY(edge,GD_PRED)) );
-        assert(LastPred(EDST(edge)) == edge);
+        assert(LastPred(ETARGET(edge)) == edge);
     }
     if (EADJPREV(edge,GD_PRED)) {
         GEDGE prev_edge = EADJPREV(edge,GD_PRED);
         assert(AKANTE(EADJENTRY(prev_edge,GD_PRED)) == prev_edge);
     } else {
-        assert(FirstPred(EDST(edge)) == edge);
-        assert(AKANTE(NPRED(EDST(edge))) == edge);
+        assert(FirstPred(ETARGET(edge)) == edge);
+        assert(AKANTE(NPRED(ETARGET(edge))) == edge);
     }
     return e;
 }
@@ -115,19 +119,21 @@ GEDGE NextSucc(GEDGE edge)
     if (e) {
         assert(AKANTE(ANEXT(EADJENTRY(edge,GD_SUCC))) == e);
         assert(AKANTE(EADJENTRY(e,GD_SUCC)) == e);
+        assert(ESOURCE(e) == ESOURCE(edge));
     } else {
         assert( !ANEXT(EADJENTRY(edge,GD_SUCC)) );
-        assert(LastSucc(ESRC(edge)) == edge);
+        assert(LastSucc(ESOURCE(edge)) == edge);
     }
     if (EADJPREV(edge,GD_SUCC)) {
         GEDGE prev_edge = EADJPREV(edge,GD_SUCC);
         assert(AKANTE(EADJENTRY(prev_edge,GD_SUCC)) == prev_edge);
     } else {
-        assert(FirstSucc(ESRC(edge)) == edge);
-        assert(AKANTE(NSUCC(ESRC(edge))) == edge);
+        assert(FirstSucc(ESOURCE(edge)) == edge);
+        assert(AKANTE(NSUCC(ESOURCE(edge))) == edge);
     }
     return e;
 }
+#endif /* !VCG_USE_MACROS */
 
 void init_node_graph_fields_as_dead(GNODE v)
 {
@@ -180,9 +186,9 @@ static void link_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
     GEDGE first = NADJFIRST(v, dir);
 
     if (dir == GD_PRED) {
-        assert(EDST(e) == v);
+        assert(ETARGET(e) == v);
     } else {
-        assert(ESRC(e) == v);
+        assert(ESOURCE(e) == v);
     }
     assert(EADJPREV(e, dir) == DEAD_GEDGE);
     assert(EADJNEXT(e, dir) == DEAD_GEDGE);
@@ -221,9 +227,9 @@ static void unlink_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
     GEDGE next = EADJNEXT(e, dir);
 
     if (dir == GD_PRED) {
-        assert(EDST(e) == v);
+        assert(ETARGET(e) == v);
     } else {
-        assert(ESRC(e) == v);
+        assert(ESOURCE(e) == v);
     }
     assert(EADJPREV(e, dir) != DEAD_GEDGE);
     assert(EADJNEXT(e, dir) != DEAD_GEDGE);

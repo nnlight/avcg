@@ -312,7 +312,8 @@ static int nr_bary_iterations;
 
 void step2_main(void)
 {
-        int     i;
+	int len;
+	int     i;
 	int 	old_nr_crossings;
 
 	start_time();
@@ -331,12 +332,11 @@ void step2_main(void)
 	 */
 
 	if (max_nodes_per_layer+2 > size_of_sortarray) {
-		if (sort_array)  free(sort_array);
-		if (save_array)  free(save_array);
-		sort_array = (GNODE *)libc_malloc((max_nodes_per_layer+2)
-					* sizeof(GNODE));
-		save_array = (GNODE *)libc_malloc((max_nodes_per_layer+2)
-					* sizeof(GNODE));
+		if (sort_array) free(sort_array);
+		if (save_array) free(save_array);
+		len = max_nodes_per_layer+2;
+		sort_array = (GNODE *)libc_malloc(len * sizeof(GNODE));
+		save_array = (GNODE *)libc_malloc(len * sizeof(GNODE));
 		size_of_sortarray = max_nodes_per_layer+2;
 #ifdef DEBUG
 		PRINTF("Sizeof tables `sort_array',`save_array': %d Bytes\n",

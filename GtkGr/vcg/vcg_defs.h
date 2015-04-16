@@ -133,8 +133,7 @@ typedef struct connect
 #define CEDGE2(x)	((x)->edge2)
 #define CINTERN(x)	((x)->internal_next)
 
-#define CONN_MACROS 0
-#if CONN_MACROS
+#if VCG_USE_MACROS
 #define forward_connection1(c)  ((CEDGE(c))&& (EEND(CEDGE(c)) ==CTARGET(c)))
 #define forward_connection2(c)  ((CEDGE2(c))&&(EEND(CEDGE2(c))==CTARGET2(c)))
 #define backward_connection1(c) ((CEDGE(c))&& (EEND(CEDGE(c)) !=CTARGET(c)))
@@ -390,8 +389,10 @@ typedef struct gnode
 #define	NSUCCR(x)	((x)->succright)
 #define NADJFIRST(x,di) ((x)->adjfirst[di])
 #define NADJLAST(x,dir) ((x)->adjlast[dir])
-/*#define FirstPred(x)    NADJFIRST(x, GD_PRED)
-#define FirstSucc(x)    NADJFIRST(x, GD_SUCC)*/
+#if VCG_USE_MACROS
+#define FirstPred(x)    NADJFIRST(x, GD_PRED)
+#define FirstSucc(x)    NADJFIRST(x, GD_SUCC)
+#endif
 #define LastPred(x)     NADJLAST(x, GD_PRED)
 #define LastSucc(x)     NADJLAST(x, GD_SUCC)
 #define NCONNECT(x)	((x)->connection)
@@ -533,8 +534,6 @@ typedef struct gedge
 
 #define	ESTART(x)	((x)->start)
 #define	EEND(x)		((x)->end)
-#define	ESRC(x)         ((x)->start)
-#define	EDST(x)         ((x)->end)
 #define ESOURCE(x)      ((x)->start)
 #define ETARGET(x)      ((x)->end)
 #define	ESTARTX(x)	((x)->sxloc)
@@ -568,8 +567,10 @@ typedef struct gedge
 #define	EPREV(x)	((x)->before)
 #define EADJNEXT(x,dir) ((x)->adjnext[dir])
 #define EADJPREV(x,dir) ((x)->adjprev[dir])
-/*#define NextPred(x)     EADJNEXT(x, GD_PRED)
-#define NextSucc(x)     EADJNEXT(x, GD_SUCC)*/
+#if VCG_USE_MACROS
+#define NextPred(x)     EADJNEXT(x, GD_PRED)
+#define NextSucc(x)     EADJNEXT(x, GD_SUCC)
+#endif
 #define PrevPred(x)     EADJPREV(x, GD_PRED)
 #define PrevSucc(x)     EADJPREV(x, GD_SUCC)
 #define EADJENTRY(x, dir) ((x)->xxadjentry[dir])
