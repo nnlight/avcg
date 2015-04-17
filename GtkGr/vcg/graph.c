@@ -360,6 +360,35 @@ void unlink_edge(GEDGE edge)
     unlink_node_edge(EEND(edge), edge, GD_PRED);
 }
 
+/**
+ * Перенос дуги на другой источник не трогая исходный adjacency list.
+ */
+void change_edge_src_xxx(GEDGE e, GNODE new_v)
+{
+    GNODE v = ESOURCE(e);
+    ADJEDGE a;
 
+    unlink_node_edge(v, e, GD_SUCC);
 
+    ESOURCE(e) = new_v;
+    a = succedgealloc(new_v, e);
+    EADJENTRY(e, GD_SUCC) = a;
+    link_node_edge(new_v, e, GD_SUCC);
+}
+
+/**
+ * Перенос дуги на другой приемник не трогая исходный adjacency list.
+ */
+void change_edge_dst_xxx(GEDGE e, GNODE new_v)
+{
+    GNODE v = ETARGET(e);
+    ADJEDGE a;
+
+    unlink_node_edge(v, e, GD_PRED);
+
+    ETARGET(e) = new_v;
+    a = prededgealloc(new_v, e);
+    EADJENTRY(e, GD_PRED) = a;
+    link_node_edge(new_v, e, GD_PRED);
+}
 

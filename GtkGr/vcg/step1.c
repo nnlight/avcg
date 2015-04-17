@@ -2312,19 +2312,14 @@ static void create_depth_lists(void)
  *  If a node comes not into the TPRED-list because it has connections,
  *  we mark the node by NMARK.
  */
-
-/* Abreviations to check whether a connection is a forward connection 
- * or backward connection.
- */
-
-static void	complete_depth_lists(void)
+static void complete_depth_lists(void)
 {
-	int 	i;
-	GNLIST	n, hl;
-	GNODE	node;
-	ADJEDGE	edge;
-	int	backward_connection;
-	int	forward_connection;
+	int     i;
+	GNLIST  n, hl;
+	GNODE   node;
+	GEDGE   edge;
+	int     backward_connection;
+	int     forward_connection;
 	CONNECT c;
 
 	debugmessage("complete_depth_lists","");
@@ -2359,10 +2354,10 @@ static void	complete_depth_lists(void)
 			}
 			if (  (forward_connection)&&(!backward_connection)
 			    &&(NMARK(node)==0)) 
-				calc_connect_adjlists(node,node,NULL);
+				calc_connect_adjlists(node, node, NULL);
 
 			/* fill TPRED-list */
-			if (  (!backward_connection)&&(NMARK(node)==0)) {
+			if ( (!backward_connection)&&(NMARK(node)==0) ) {
 				hl = tmpnodelist_alloc();
 				GNNEXT(hl) = TPRED(layer[i]);
 				TPRED(layer[i]) = hl;
@@ -2373,16 +2368,21 @@ static void	complete_depth_lists(void)
 			 * have its successor and all successors of
 			 * their direct neigbours. 
 			 */
-			edge = NSUCC(node);
-			while (edge) {
-				NOUTDEG(node)++;
-				assert((NTIEFE(TARGET(edge))>=i));
-				edge = ANEXT(edge);
-			}
-			edge = NPRED(node);
-			while (edge) {
-				NINDEG(node)++;
-				edge = ANEXT(edge);
+			if ( (!backward_connection)&&(NMARK(node)==0) ) {
+				for (edge = FirstSucc(node); edge; edge = NextSucc(edge))
+				{
+					NOUTDEG(node)++;
+					assert(NTIEFE(ETARGET(edge)) >= i);
+				}
+				for (edge = FirstPred(node); edge; edge = NextPred(edge))
+				{
+					NINDEG(node)++;
+				}
+			} else {
+				/* раньше для таких узлов тоже считалось, поэтому поставим
+				 * неестественное значение, чтобы чекать */
+				NOUTDEG(node) = -2;
+				NINDEG(node) = -2;
 			}
 			if (NOUTDEG(node) > maxoutdeg)
 				maxoutdeg = NOUTDEG(node);
@@ -2390,7 +2390,7 @@ static void	complete_depth_lists(void)
 				maxindeg = NINDEG(node);
 		}
 	}
-}
+} /* complete_depth_lists */
 
 
 /*  Calculate adjacencies at connections
@@ -2415,38 +2415,49 @@ static void	complete_depth_lists(void)
 
 static void calc_connect_adjlists(GNODE v, GNODE w, GNODE predw)
 {
-	ADJEDGE	edge;
+	GEDGE edge, nxt_edge;
 	CONNECT c;
 
 	debugmessage("calc_connect_adjlists","");
 
-	if (v!=w) NMARK(w)=1;
+	if (v!=w) NMARK(w) = 1;
 	/* save a copy of the actual adjacency lists of w to v */
+	/* для основного узла списки сохраняются в NSV*,
+	 * для остальных списки остаются в N* (дуги не выходят) */
 	if (v==w) {
-		NSVSUCC(w) = NSUCC(w);
+		NSVSUCC(v) = NSUCC(v);
 		NSVPRED(v) = NPRED(v);
+		NSUCC(v) = NULL;
+		NPRED(v) = NULL;
 	}
-	edge = NSUCC(w);
-	if (v==w) NSUCC(v) = NULL;
-	while (edge) {
-		SOURCE(edge) = v;
-		succedgealloc(v,AKANTE(edge));
-		edge = ANEXT(edge);
+#if 0
+	for (edge = FirstSucc(w); edge; edge = nxt_edge)
+	{
+		nxt_edge = NextSucc(edge);
+#else
+	for (edge = NADJFIRST(w,GD_SUCC); edge; edge = nxt_edge)
+	{
+	        nxt_edge = EADJNEXT(edge, GD_SUCC);
+#endif
+		change_edge_src_xxx(edge, v);
 	}
-	edge = NPRED(w);
-	if (v==w) NPRED(v) = NULL;
-	while (edge) {
-		TARGET(edge) = v;
-		prededgealloc(v,AKANTE(edge));
-		edge = ANEXT(edge);
+#if 0
+	for (edge = FirstPred(w); edge; edge = nxt_edge)
+	{
+		nxt_edge = NextPred(edge);
+#else
+	for (edge = NADJFIRST(w,GD_PRED); edge; edge = nxt_edge)
+	{
+	        nxt_edge = EADJNEXT(edge, GD_PRED);
+#endif
+		change_edge_dst_xxx(edge, v);
 	}
 
 	c = NCONNECT(w);
-	if (!c) return;
-	if (CTARGET(c) && (CTARGET(c)!=predw)) 
-		calc_connect_adjlists(v,CTARGET(c),w);
-	if (CTARGET2(c) && (CTARGET2(c)!=predw)) 
-		calc_connect_adjlists(v,CTARGET2(c),w);
+	if (c && CTARGET(c) && (CTARGET(c)!=predw))
+		calc_connect_adjlists(v, CTARGET(c), w);
+	if (c && CTARGET2(c) && (CTARGET2(c)!=predw))
+		calc_connect_adjlists(v, CTARGET2(c), w);
 }
 
 

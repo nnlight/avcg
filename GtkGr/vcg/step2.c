@@ -2405,6 +2405,7 @@ static float   succbary(GNODE node)
 	debugmessage("succbary","");
 	/* Assertion: The NPOS-values are set before by level_to_array */
 
+	assert(NOUTDEG(node) != -2);
 	if (NOUTDEG(node)==0) return(0.0);
 	Sum = 0;
 	w = NSUCC(node);
@@ -2430,6 +2431,7 @@ static float	predbary(GNODE node)
 	debugmessage("predbary","");
 	/* Assertion: The NPOS-values are set before by level_to_array */
 
+	assert(NINDEG(node) != -2);
 	if (NINDEG(node)==0) return(0.0);
 	Sum = 0;
 	w = NPRED(node);
@@ -2467,6 +2469,7 @@ static float   succmedian(GNODE	node)
 	debugmessage("succmedian","");
 	/* Assertion: The NPOS-values are set before by level_to_array */
 
+	assert(NOUTDEG(node) != -2);
 	switch (NOUTDEG(node)) {
 	case 0: return(0.0);
 	case 1: return((float) NPOS(TARGET(NSUCC(node))));
@@ -2514,6 +2517,7 @@ static float   predmedian(GNODE	node)
 	debugmessage("predmedian","");
 	/* Assertion: The NPOS-values are set before by level_to_array */
 
+	assert(NINDEG(node) != -2);
 	switch (NINDEG(node)) {
 	case 0: return(0.0);
 	case 1: return((float) NPOS(SOURCE(NPRED(node))));
@@ -2887,6 +2891,35 @@ static void insert_connects_in_layer(void)
 	}
 }
 
+static void revive_conn_edges(GNODE v, GNODE w)
+{
+	GNLIST h;
+	ADJEDGE e;
+	CONNECT c;
+	int j;
+
+
+	/* restore the adjacency lists of the connection 
+	 * Remind: The adjacency lists were destroyed in step1 in
+    	 * calc_connect_adjlists.
+	 */
+	j = 0;
+	e = NSUCC(v);
+	while (e) { SOURCE(e) = v; j++; e = ANEXT(e); }
+	assert(NOUTDEG(v) == -2);
+	NOUTDEG(v) = j;
+
+	j = 0;
+	e = NPRED(v);
+	while (e) { TARGET(e) = v; j++; e = ANEXT(e); }
+	assert(NINDEG(v) == -2);
+	NINDEG(v) = j;
+
+	c = NCONNECT(v);
+        if (c && CTARGET(c) && (CTARGET(c)!=w))   revive_conn_edges(CTARGET(c), v);
+        if (c && CTARGET2(c) && (CTARGET2(c)!=w)) revive_conn_edges(CTARGET2(c), v);
+}
+
 /* Check one connection node
  * -------------------------
  * The connection node at level is analyzed.
@@ -2933,6 +2966,9 @@ static void check_connect(int level,GNODE node)
 	a = NPRED(node);
 	while (a) { j++; a = ANEXT(a); }
 	NINDEG(node) = j;
+
+	if (forward_connection1(c)) revive_conn_edges(CTARGET(c), node);
+	if (forward_connection2(c)) revive_conn_edges(CTARGET2(c), node);
 
 	/* First we try to insert left first:
  	 *   -> Cl -> Cl -> A -> Cr -> Cr -> ...
@@ -3063,9 +3099,9 @@ static void left_conn_list(GNODE v,GNODE w)
     	 * calc_connect_adjlists.
 	 */
 	e = NSUCC(v);
-	while (e) { SOURCE(e) = v; e = ANEXT(e); }
+	while (e) { assert(SOURCE(e) == v); e = ANEXT(e); }
 	e = NPRED(v);
-	while (e) { TARGET(e) = v; e = ANEXT(e); }
+	while (e) { assert(TARGET(e) == v); e = ANEXT(e); }
 
 	h = tmpnodelist_alloc();
 	GNNODE(h) = v;
@@ -3100,9 +3136,9 @@ static void right_conn_list(GNODE v,GNODE w)
     	 * calc_connect_adjlists.
 	 */
 	e = NSUCC(v);
-	while (e) { SOURCE(e) = v; e = ANEXT(e); }
+	while (e) { assert(SOURCE(e) == v); e = ANEXT(e); }
 	e = NPRED(v);
-	while (e) { TARGET(e) = v; e = ANEXT(e); }
+	while (e) { assert(TARGET(e) == v); e = ANEXT(e); }
 
 	h = tmpnodelist_alloc();
 	GNNODE(h) = v;
@@ -3191,6 +3227,7 @@ static void sort_adjedges(GNODE	v)
 		a = ANEXT(a);
 	}
 
+	assert(NINDEG(v) != -2);
 	qsort(adjarray2,NINDEG(v),sizeof(GNODE),
 		(int (*) (const void *, const void *))compare_srcpos);
 
@@ -3212,6 +3249,7 @@ static void sort_adjedges(GNODE	v)
 		a = ANEXT(a);
 	}
 
+	assert(NOUTDEG(v) != -2);
 	qsort(adjarray2,NOUTDEG(v),sizeof(GNODE),
 		(int (*) (const void *, const void *))compare_tarpos);
 
