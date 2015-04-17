@@ -1406,17 +1406,18 @@ static void sc_component_sort(void)
 
 	for (v = nodelist; v; v = NNEXT(v))
 	{
-		if (!NINVISIBLE(v)) add_to_nlist(v, &global_node_list);
+		if (!NINVISIBLE(v))
+			add_to_nlist(v, &global_node_list);
 		NTIEFE(v) = 1;
 	}
 	for (v = labellist; v; v = NNEXT(v))
 	{
-		if (!NINVISIBLE(v)) add_to_nlist(v, &global_node_list);
+		add_to_nlist(v, &global_node_list);
 		NTIEFE(v) = 1;
 	}
 	for (v = dummylist; v; v = NNEXT(v))
 	{
-		if (!NINVISIBLE(v)) add_to_nlist(v, &global_node_list);
+		add_to_nlist(v, &global_node_list);
 		NTIEFE(v) = 1;
 	}
 
