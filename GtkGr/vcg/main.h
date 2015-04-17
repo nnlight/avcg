@@ -45,8 +45,6 @@
  */
 
 
-#define SYERR(x,m) syntaxerror(xfirst_line(x),xfirst_column(x),m)
-
 
 
 /* from device --------------------------------------------*/

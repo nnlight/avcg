@@ -223,19 +223,15 @@ static void relayout(void)
 		/* Calculate new layout */
 
                 step1_main();
-		if (nr_errors!=0) Fatal_error("Wrong specification","");
 
 		/* step1_main calls tree_main, if TREE_LAYOUT.
 		 */
 
 		if (layout_flag != TREE_LAYOUT) {
                 	step2_main();
-			if (nr_errors!=0) Fatal_error("Wrong specification","");
                 	step3_main();
-			if (nr_errors!=0) Fatal_error("Wrong specification","");
 		}
         	step4_main();
-		if (nr_errors!=0) Fatal_error("Wrong specification","");
 	}
 	else {
 		/* Prepare given layout: calculate co-ordinate of edges 

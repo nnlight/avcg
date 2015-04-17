@@ -121,6 +121,7 @@ static int ScreenHeight = 0;
 #define FETCHNUM()   get_lnum(son1(node2))
 #define FETCHFLOAT() get_lrealnum(son1(node2))
 
+#define SYERR(x,m) syntaxerror(xfirst_line(x),xfirst_column(x),m)
 
 /* Global Variables
  * ----------------
