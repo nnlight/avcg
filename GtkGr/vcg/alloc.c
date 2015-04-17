@@ -119,7 +119,6 @@ static GNODE internal_nodealloc	_PP((void));
 static void free_nodelists	_PP((void));
 static GEDGE internal_edgealloc	_PP((void));
 static void free_tmpedges	_PP((void));
-static ADJEDGE  edgelist_alloc	_PP((void));
 static void free_edgelists	_PP((void));
 static void free_connect	_PP((void));
 
@@ -1138,7 +1137,7 @@ void back_edge_insert(GEDGE e)
  *  we allocate a cell from the core memory.
  */
 
-static ADJEDGE  edgelist_alloc(void)
+ADJEDGE edgelist_alloc(void)
 {
 	ADJEDGE	h;
 

@@ -45,8 +45,9 @@ void check_node_no_adj_edges(GNODE v);
 void unlink_node_edges(GNODE v);
 void link_edge(GEDGE e);
 void unlink_edge(GEDGE e);
-void change_edge_src_xxx(GEDGE e, GNODE new_v);
-void change_edge_dst_xxx(GEDGE e, GNODE new_v);
+void change_edge_src(GEDGE e, GNODE v, GNODE new_v);
+void change_edge_dst(GEDGE e, GNODE v, GNODE new_v);
+ADJEDGE save_node_adjlist(GNODE v, Graphdir_t dir);
 
 /*--------------------------------------------------------------------*/
 /**

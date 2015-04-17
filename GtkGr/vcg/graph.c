@@ -333,6 +333,7 @@ void link_edge(GEDGE edge)
 void unlink_edge(GEDGE edge)
 {
     ADJEDGE a,b,*ap,*abp;
+    int i = 0;
 
     assert(edge);
     assert(ESTART(edge));
@@ -342,19 +343,22 @@ void unlink_edge(GEDGE edge)
     while (a) {
         abp = &ANEXT(a);
         b   = ANEXT(a);
-        if (AKANTE(a)==edge) *ap = ANEXT(a); 
+        if (AKANTE(a)==edge) { *ap = ANEXT(a); i++; }
         a = b;
         ap = abp;
     }
+    assert(i <= 1);
+    i = 0;
     a = NPRED(EEND(edge));
     ap = &(NPRED(EEND(edge)));
     while (a) {
         abp = &(ANEXT(a));
         b = ANEXT(a);
-        if (AKANTE(a)==edge) *ap = ANEXT(a);
+        if (AKANTE(a)==edge) { *ap = ANEXT(a); i++; }
         a = b;
         ap = abp;
     }
+    assert(i <= 1);
 
     unlink_node_edge(ESTART(edge), edge, GD_SUCC);
     unlink_node_edge(EEND(edge), edge, GD_PRED);
@@ -363,11 +367,23 @@ void unlink_edge(GEDGE edge)
 /**
  * Перенос дуги на другой источник не трогая исходный adjacency list.
  */
-void change_edge_src_xxx(GEDGE e, GNODE new_v)
+void change_edge_src(GEDGE e, GNODE v, GNODE new_v)
 {
-    GNODE v = ESOURCE(e);
-    ADJEDGE a;
+    ADJEDGE a,b,*ap,*abp;
+    int i = 0;
 
+    assert(v == ESOURCE(e));
+
+    a = NSUCC(v);
+    ap = &(NSUCC(v));
+    while (a) {
+        abp = &ANEXT(a);
+        b   = ANEXT(a);
+        if (AKANTE(a)==e) { *ap = ANEXT(a); i++; }
+        a = b;
+        ap = abp;
+    }
+    assert(i <= 1);
     unlink_node_edge(v, e, GD_SUCC);
 
     ESOURCE(e) = new_v;
@@ -379,16 +395,69 @@ void change_edge_src_xxx(GEDGE e, GNODE new_v)
 /**
  * Перенос дуги на другой приемник не трогая исходный adjacency list.
  */
-void change_edge_dst_xxx(GEDGE e, GNODE new_v)
+void change_edge_dst(GEDGE e, GNODE v, GNODE new_v)
 {
-    GNODE v = ETARGET(e);
-    ADJEDGE a;
+    ADJEDGE a,b,*ap,*abp;
+    int i = 0;
 
+    assert(v == ETARGET(e));
+
+    a = NPRED(v);
+    ap = &(NPRED(v));
+    while (a) {
+        abp = &(ANEXT(a));
+        b = ANEXT(a);
+        if (AKANTE(a)==e) { *ap = ANEXT(a); i++; }
+        a = b;
+        ap = abp;
+    }
+    assert(i <= 1);
     unlink_node_edge(v, e, GD_PRED);
 
     ETARGET(e) = new_v;
     a = prededgealloc(new_v, e);
     EADJENTRY(e, GD_PRED) = a;
     link_node_edge(new_v, e, GD_PRED);
+}
+
+ADJEDGE save_node_adjlist(GNODE v, Graphdir_t dir)
+{
+    GEDGE e;
+    ADJEDGE a;
+    ADJEDGE prev_a = NULL;
+    ADJEDGE res = NULL;
+
+    if (dir == GD_PRED)
+    {
+        for (e = FirstPred(v); e; e = NextPred(e))
+        {
+            a = edgelist_alloc();
+            AKANTE(a) = e;
+            ANEXT(a) = NULL;
+            if (prev_a) {
+                ANEXT(prev_a) = a;
+            } else {
+                assert(res == NULL);
+                res = a;
+            }
+            prev_a = a;
+        }
+    } else
+    {
+        for (e = FirstSucc(v); e; e = NextSucc(e))
+        {
+            a = edgelist_alloc();
+            AKANTE(a) = e;
+            ANEXT(a) = NULL;
+            if (prev_a) {
+                ANEXT(prev_a) = a;
+            } else {
+                assert(res == NULL);
+                res = a;
+            }
+            prev_a = a;
+        }
+    }
+    return res;
 }
 

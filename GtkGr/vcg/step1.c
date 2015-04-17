@@ -2417,6 +2417,7 @@ static void calc_connect_adjlists(GNODE v, GNODE w, GNODE predw)
 {
 	GEDGE edge, nxt_edge;
 	CONNECT c;
+	ADJEDGE sv_preds, sv_succs;
 
 	debugmessage("calc_connect_adjlists","");
 
@@ -2424,33 +2425,27 @@ static void calc_connect_adjlists(GNODE v, GNODE w, GNODE predw)
 	/* save a copy of the actual adjacency lists of w to v */
 	/* для основного узла списки сохраняются в NSV*,
 	 * для остальных списки остаются в N* (дуги не выходят) */
+	sv_succs = save_node_adjlist(w, GD_SUCC);
+	sv_preds = save_node_adjlist(w, GD_PRED);
 	if (v==w) {
-		NSVSUCC(v) = NSUCC(v);
-		NSVPRED(v) = NPRED(v);
-		NSUCC(v) = NULL;
-		NPRED(v) = NULL;
+		NSVSUCC(w) = sv_succs;
+		NSVPRED(w) = sv_preds;
 	}
-#if 0
 	for (edge = FirstSucc(w); edge; edge = nxt_edge)
 	{
 		nxt_edge = NextSucc(edge);
-#else
-	for (edge = NADJFIRST(w,GD_SUCC); edge; edge = nxt_edge)
-	{
-	        nxt_edge = EADJNEXT(edge, GD_SUCC);
-#endif
-		change_edge_src_xxx(edge, v);
+		change_edge_src(edge, w, v);
 	}
-#if 0
 	for (edge = FirstPred(w); edge; edge = nxt_edge)
 	{
 		nxt_edge = NextPred(edge);
-#else
-	for (edge = NADJFIRST(w,GD_PRED); edge; edge = nxt_edge)
-	{
-	        nxt_edge = EADJNEXT(edge, GD_PRED);
-#endif
-		change_edge_dst_xxx(edge, v);
+		change_edge_dst(edge, w, v);
+	}
+	if (v!=w) {
+		assert(NSUCC(w) == NULL);
+		assert(NPRED(w) == NULL);
+		NSUCC(w) = sv_succs;
+		NPRED(w) = sv_preds;
 	}
 
 	c = NCONNECT(w);
