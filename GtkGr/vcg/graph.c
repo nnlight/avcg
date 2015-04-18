@@ -597,4 +597,28 @@ void print_node_succs(GNODE v)
 	printf("============\n");
 }
 
+int get_node_succs_num(GNODE v)
+{
+    GEDGE e;
+    int res = 0;
+
+    for (e = FirstSucc(v); e; e = NextSucc(e))
+    {
+        res++;
+    }
+    return res;
+}
+
+int get_node_preds_num(GNODE v)
+{
+    GEDGE e;
+    int res = 0;
+
+    for (e = FirstPred(v); e; e = NextPred(e))
+    {
+        res++;
+    }
+    return res;
+}
+
 

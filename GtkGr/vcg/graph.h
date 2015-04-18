@@ -53,6 +53,8 @@ ADJEDGE save_node_adjlist(GNODE v, Graphdir_t dir);
 ADJEDGE reverse_adjlist(ADJEDGE list);
 void delete_adjlist(ADJEDGE list);
 void print_node_succs(GNODE v);
+int get_node_succs_num(GNODE v);
+int get_node_preds_num(GNODE v);
 
 /*--------------------------------------------------------------------*/
 /**

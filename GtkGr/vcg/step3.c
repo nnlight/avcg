@@ -1,42 +1,24 @@
 /*--------------------------------------------------------------------*/
-/*								      */
-/*		VCG : Visualization of Compiler Graphs		      */
-/*		--------------------------------------		      */
-/*								      */
-/*   file:	   step3.c					      */
-/*   version:	   1.00.00					      */
-/*   creation:	   14.4.93					      */
-/*   author:	   I. Lemke  (...-Version 0.99.99)		      */
-/*		   G. Sander (Version 1.00.00-...)		      */  
-/*		   Universitaet des Saarlandes, 66041 Saarbruecken    */
-/*		   ESPRIT Project #5399 Compare 		      */
-/*   description:  Layout phase 3: calculation of coordinates	      */
-/*		   of nodes					      */
-/*   status:	   in work					      */
-/*								      */
+/*              VCG : Visualization of Compiler Graphs                */
 /*--------------------------------------------------------------------*/
-
-
 /*
- *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium 
+ * Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
+ *                             the Compare Consortium
+ * Copyright (C) 2015 Nikita S <nnlight@gmail.com>
  *
- *  This program and documentation is free software; you can redistribute 
- *  it under the terms of the  GNU General Public License as published by
- *  the  Free Software Foundation;  either version 2  of the License,  or
- *  (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  This  program  is  distributed  in  the hope that it will be useful,
- *  but  WITHOUT ANY WARRANTY;  without  even  the  implied  warranty of
- *  MERCHANTABILITY  or  FITNESS  FOR  A  PARTICULAR  PURPOSE.  See  the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- *  You  should  have  received a copy of the GNU General Public License
- *  along  with  this  program;  if  not,  write  to  the  Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
-
-
 
 /************************************************************************
  * The situation here is the following:
@@ -115,6 +97,7 @@
 #include "folding.h"
 #include "steps.h"
 #include "timing.h"
+#include "graph.h"
 
 /* Prototypes
  * ----------
@@ -223,7 +206,10 @@ GNLIST	 *tpred_connection2 = NULL;
 static int firstcall = 1;
 #endif
 
-void	step3_main(void)
+/**
+ * Layout phase 3: calculation of coordinates of nodes.
+ */
+void step3_main(void)
 {
 	start_time();
 	debugmessage("step3_main","");
@@ -266,11 +252,6 @@ void	step3_main(void)
 
 	iterate_dump_mediumshifts();
 
-/*	Not anymore needed:
- *      ------------------ 
- *	iterate_mediumshifts();
- *	iterate_pendling_mediumshifts();
- */
 
 	/* Shift nodes such that they are centered between all edges
 	 * pointing to or from the nodes. 
@@ -295,7 +276,7 @@ void	step3_main(void)
 
 	stop_time("step3_main");
 
-}
+} /* step3_main */
 
 
 /*--------------------------------------------------------------------*/
@@ -349,7 +330,6 @@ void calc_all_node_sizes(void)
 {
 	GNODE v;
 	int   h, hh, hhh;
-	ADJEDGE a;
 
 	debugmessage("calc_all_node_sizes","");
 	for (v = nodelist; v; v = NNEXT(v))
@@ -382,15 +362,10 @@ void calc_all_node_sizes(void)
 	for (v = dummylist; v; v = NNEXT(v))
 	{
 		if (NANCHORNODE(v)) {
-			a = NPRED(v);
-			h = 0;
-			while (a) { a=ANEXT(a); h++; }
-			a = NSUCC(v);
-			hh = 0;
-			while (a) { a=ANEXT(a); hh++; }
-			hhh = h;
-			if (hh>h) hhh = hh;
-			assert((NCONNECT(v)));
+			h = get_node_preds_num(v);
+			hh = get_node_succs_num(v);
+			hhh = (h > hh) ? h : hh;
+			assert(NCONNECT(v));
 			NHEIGHT(v) = NHEIGHT(CTARGET(NCONNECT(v)));
 			NWIDTH(v) =  (hhh+1)*G_xspace;
 			if (manhatten_edges==1) { 
@@ -462,8 +437,8 @@ static void init_xy_coordinates(void)
 	for (i=0; i<=maxdepth+1; i++) {
 		actxpos = G_xbase;
 		maxboxheight = 0;
-		li	= TSUCC(layer[i]);
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			v = GNNODE(li);
 
 			if ((NWIDTH(v)==0)&&(NHEIGHT(v)==0))
@@ -474,23 +449,20 @@ static void init_xy_coordinates(void)
 			actxpos = NX(v) + NWIDTH(v) + G_xspace;
 			if (maxboxheight<NHEIGHT(v))  
 				maxboxheight = NHEIGHT(v);
-			li = GNNEXT(li);
 		}
 
 		if (G_yalign==AL_CENTER) {
-			li	= TSUCC(layer[i]);
-			while (li) {
-				NY(GNNODE(li))   += (maxboxheight-
+			for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+			{
+				NY(GNNODE(li)) += (maxboxheight-
 						      NHEIGHT(GNNODE(li)))/2;
-				li = GNNEXT(li);
 			}
 		}
 		else if (G_yalign==AL_BOTTOM) {
-			li	= TSUCC(layer[i]);
-			while (li) {
-				NY(GNNODE(li))   += (maxboxheight-
+			for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+			{
+				NY(GNNODE(li)) += (maxboxheight-
 						      NHEIGHT(GNNODE(li)));
-				li = GNNEXT(li);
 			}
 		}
 		actypos += (maxboxheight + G_yspace);
@@ -513,7 +485,6 @@ static void init_xy_coordinates(void)
  *	 I J
  *	K L M 
  */
-
 static void center_layout(void)
 {
 	GNLIST	li;
@@ -522,10 +493,10 @@ static void center_layout(void)
 
 	debugmessage("center_layout","");
 	for (i=0; i<=maxdepth+1; i++) {
-		li	= TPRED(layer[i]); /* rightest node */
+		li = TPRED(layer[i]); /* rightest node */
 		if (li) {
-			assert((TSUCC(layer[i])));
-			shift_value = (NX(GNNODE(li))+NWIDTH(GNNODE(li)))/2;  
+			assert(TSUCC(layer[i]));
+			shift_value = (NX(GNNODE(li))+NWIDTH(GNNODE(li)))/2;
 			shift_value = xlalign(shift_value);
 			while (li) {
 				NX(GNNODE(li)) -= shift_value;
@@ -546,7 +517,6 @@ static void center_layout(void)
  *  the layout is shifted to the left upper part of the coordinate
  *  system.
  */
-
 static void shift_left_layout(void)
 {
 	GNLIST li;
@@ -558,11 +528,10 @@ static void shift_left_layout(void)
 	/* first, calculate minx and miny */
 	minx = miny = MAXINT;
 	for (i=0; i<=maxdepth+1; i++) {
-		li	= TSUCC(layer[i]);
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			if (NX(GNNODE(li))<minx) minx = NX(GNNODE(li));
 			if (NY(GNNODE(li))<miny) miny = NY(GNNODE(li));
-			li = GNNEXT(li);
 		}
 	}
 	
@@ -571,11 +540,10 @@ static void shift_left_layout(void)
 	minx = xlalign(minx);
 	miny = xlalign(miny);
 	for (i=0; i<=maxdepth+1; i++) {
-		li	= TSUCC(layer[i]);
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			NX(GNNODE(li)) -= minx;
 			NY(GNNODE(li)) -= miny;
-			li = GNNEXT(li);
 		}
 	}
 	
@@ -615,10 +583,9 @@ static void shift_left_together_layout(void)
 
 	/* first, set the NMARK field to 0 */
 	for (i=0; i<=maxdepth+1; i++) {
-		li	= TSUCC(layer[i]);
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			NMARK(GNNODE(li)) = 0;
-			li = GNNEXT(li);
 		}
 	}
 
@@ -634,8 +601,8 @@ static void shift_left_together_layout(void)
 		 * for the node with minimal x-co-ordinate.
 		 */
 		for (i=0; i<=maxdepth+1; i++) {
-			li	= TSUCC(layer[i]);
-			while (li) {
+			for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+			{
 				if (NMARK(GNNODE(li)) == 0) {
 					if (minx > NX(GNNODE(li))) {
 						node = GNNODE(li);
@@ -643,7 +610,6 @@ static void shift_left_together_layout(void)
 					}
 					break;
 				}
-				li = GNNEXT(li);
 			}
 		}
 		if (node) {
@@ -700,8 +666,8 @@ static void shift_intermixed_part(int t)
 		 * for the untouched node whose successor is touched.
 		 */
 		for (i=0; i<=maxdepth+1; i++) {
-			li	= TSUCC(layer[i]);
-			while (li) {
+			for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+			{
 				if (NMARK(GNNODE(li)) == 0) {
 					if (  (GNNEXT(li))
 					    &&(NMARK(GNNODE(GNNEXT(li))))) {
@@ -710,7 +676,6 @@ static void shift_intermixed_part(int t)
 						break;
 					}
 				}
-				li = GNNEXT(li);
 			}
 			if (intermixed_part_found) break;
 		}
@@ -732,7 +697,7 @@ static void shift_intermixed_part(int t)
 
 static void shift_left_part(GNODE node, int i)
 {
-	ADJEDGE e;
+	GEDGE e;
 
 	debugmessage("shift_left_part","");
 
@@ -743,19 +708,17 @@ static void shift_left_part(GNODE node, int i)
 
 	if (NCONNECT(node)) {
 		if (CTARGET(NCONNECT(node)))
-			shift_left_part(CTARGET(NCONNECT(node)),i);
+			shift_left_part(CTARGET(NCONNECT(node)), i);
 		if (CTARGET2(NCONNECT(node)))
-			shift_left_part(CTARGET2(NCONNECT(node)),i);
+			shift_left_part(CTARGET2(NCONNECT(node)), i);
 	}
-	e = NSUCC(node);
-	while (e) {
-		shift_left_part(TARGET(e),i);
-		e = ANEXT(e);
+	for (e = FirstSucc(node); e; e = NextSucc(e))
+	{
+		shift_left_part(ETARGET(e), i);
 	}
-	e = NPRED(node);
-	while (e) {
-		shift_left_part(SOURCE(e),i);
-		e = ANEXT(e);
+	for (e = FirstPred(node); e; e = NextPred(e))
+	{
+		shift_left_part(ESOURCE(e), i);
 	}
 } /* shift_left_part */
 
@@ -767,7 +730,7 @@ static void shift_left_part(GNODE node, int i)
 
 static void mark_and_calc_maxx(GNODE node)
 {
-	ADJEDGE e;
+	GEDGE e;
 
 	debugmessage("mark_and_calc_maxx","");
 
@@ -783,15 +746,13 @@ static void mark_and_calc_maxx(GNODE node)
 		if (CTARGET2(NCONNECT(node)))
 			mark_and_calc_maxx(CTARGET2(NCONNECT(node)));
 	}
-	e = NSUCC(node);
-	while (e) {
-		mark_and_calc_maxx(TARGET(e));
-		e = ANEXT(e);
+	for (e = FirstSucc(node); e; e = NextSucc(e))
+	{
+		mark_and_calc_maxx(ETARGET(e));
 	}
-	e = NPRED(node);
-	while (e) {
-		mark_and_calc_maxx(SOURCE(e));
-		e = ANEXT(e);
+	for (e = FirstPred(node); e; e = NextPred(e))
+	{
+		mark_and_calc_maxx(ESOURCE(e));
 	}
 } /* mark_and_calc_maxx */
 
@@ -823,8 +784,8 @@ static void shift_connect_together_layout(void)
 	debugmessage("shift_connect_together_layout","");
 
 	for (i=0; i<=maxdepth+1; i++) {
-		li	= TSUCC(layer[i]);
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			weight = 0;
 			node = GNNODE(li);
 			c = NCONNECT(node);
@@ -846,7 +807,6 @@ static void shift_connect_together_layout(void)
 				}
 			}
 			if (found) correct_connect_part(node);
-			li = GNNEXT(li);
 		}
 	}
 } /* shift_connect_together_layout */
@@ -866,13 +826,12 @@ static void correct_connect_part(GNODE v)
 
 	/* first, set the NMARK field to 0 */
 	for (i=0; i<=maxdepth+1; i++) {
-		li	= TSUCC(layer[i]);
 		TACTX(layer[i]) = MAXINT;
 		TMINX(layer[i]) = MAXINT;
 		TREFN(layer[i]) = NULL;
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			NMARK(GNNODE(li)) = 0;
-			li = GNNEXT(li);
 		}
 	}
 
@@ -885,12 +844,11 @@ static void correct_connect_part(GNODE v)
 
 	if ((mindist>0) && (mindist!=MAXINT)) {
 		for (i=0; i<=maxdepth+1; i++) {
-			li	= TSUCC(layer[i]);
 			found = 0;
-			while (li) {
+			for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+			{
 				if (GNNODE(li)==TREFN(layer[i])) found = 1;
 				if (found) NX(GNNODE(li)) -= mindist;
-				li = GNNEXT(li);
 			}
 		}
 	}	
@@ -905,7 +863,7 @@ static void traverse_and_search_mindist(GNODE v)
 {
 	int level, weight;
 	GNLIST  li;
-	ADJEDGE e;
+	GEDGE e;
 	CONNECT c;
 
 	debugmessage("traverse_and_search_mindist","");
@@ -945,15 +903,13 @@ static void traverse_and_search_mindist(GNODE v)
 				traverse_and_search_mindist(CTARGET2(c));
 		}
 	}
-	e = NSUCC(v);
-	while (e) {
-		traverse_and_search_mindist(TARGET(e));
-		e = ANEXT(e);
+	for (e = FirstSucc(v); e; e = NextSucc(e))
+	{
+		traverse_and_search_mindist(ETARGET(e));
 	}
-	e = NPRED(v);
-	while (e) {
-		traverse_and_search_mindist(SOURCE(e));
-		e = ANEXT(e);
+	for (e = FirstPred(v); e; e = NextPred(e))
+	{
+		traverse_and_search_mindist(ESOURCE(e));
 	}
 } /* traverse_and_search_mindist */
 
@@ -1064,19 +1020,18 @@ static int changed_nw_sum(void)
 
 	changed = nwval1 = nwval2 = 0;
 	for (i=0; i<=maxdepth+1; i++) {
-		li = TSUCC(layer[i]); 
-		while (li) {
-			k = nws(GNNODE(li));	
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
+			k = nws(GNNODE(li));
 			if (k<0) k = -k;
-			nwval1 += k;	
-			k = nwp(GNNODE(li));	
+			nwval1 += k;
+			k = nwp(GNNODE(li));
 			if (k<0) k = -k;
-			nwval2 += k;	
-			li = GNNEXT(li);
+			nwval2 += k;
 		}
 	}
 	
-	if (nwval1<min_nw1) { 
+	if (nwval1<min_nw1) {
 		changed = 1;
 		old_nw1 = min_nw1 = nwval1;
 		jump_done1 = 0;
@@ -1206,25 +1161,14 @@ static int is_fullprio_node(GNODE v)
 {
 	int	nr_edges;
 	int 	pr;
-	ADJEDGE a;
 
 	if (!v) return(0);
 	/* if (NCONNECT(v)&&(layout_nearfactor!=0)) return(0); */
 
 	pr = 1;
-	a = NSUCC(v);
-	nr_edges = 0;
-	while (a) {
-		nr_edges ++;
-		a = ANEXT(a);
-	}
+	nr_edges = get_node_succs_num(v);
 	if (nr_edges>1) pr = 0;
-	a = NPRED(v);
-	nr_edges = 0;
-	while (a) {
-		nr_edges ++;
-		a = ANEXT(a);
-	}
+	nr_edges = get_node_preds_num(v);
 	if (nr_edges>1) pr = 0;
 	return(pr);
 }
@@ -1237,16 +1181,10 @@ static int is_fullprio_node(GNODE v)
 static int is_prio_snode(GNODE v) 
 {
 	int	nr_edges;
-	ADJEDGE a;
 
 	if (!v) return(0);
 	/* if (NCONNECT(v)&&(layout_nearfactor!=0)) return(0); */
-	a = NSUCC(v);
-	nr_edges = 0;
-	while (a) {
-		nr_edges ++;
-		a = ANEXT(a);
-	}
+	nr_edges = get_node_succs_num(v);
 	return((nr_edges == 1));
 }
 
@@ -1257,16 +1195,10 @@ static int is_prio_snode(GNODE v)
 static int is_prio_pnode(GNODE v) 
 {
 	int	nr_edges;
-	ADJEDGE a;
 
 	if (!v) return(0);
 	/* if (NCONNECT(v)&&(layout_nearfactor!=0)) return(0); */
-	a = NPRED(v);
-	nr_edges = 0;
-	while (a) {
-		nr_edges ++;
-		a = ANEXT(a);
-	}
+	nr_edges = get_node_preds_num(v);
 	return((nr_edges == 1));
 }
 
@@ -1308,24 +1240,22 @@ static int nwsdump_mediumshift(int i, int dir)
 
 	/* calculate shift weights */
 
-	li = TSUCC(layer[i]);
 	j = 0; 
 	sign = 1;
-	while (li) {
-		levelshift[j] = nws(GNNODE(li)); 
-		if ((sign<0) && (levelshift[j]>=0)) levelweight[j]=1; 
+	for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+	{
+		levelshift[j] = nws(GNNODE(li));
+		if ((sign<0) && (levelshift[j]>=0)) levelweight[j]=1;
 		else levelweight[j]= MAXINT;
-		if (levelshift[j]<0) sign = -1; else sign = 1; 
+		if (levelshift[j]<0) sign = -1; else sign = 1;
 		j++;
-		li = GNNEXT(li);
 	}
 	levelweight[0]= 1;
 
 	if (prio_phase==1) {
-		li = TSUCC(layer[i]);
-		while (li) {
-			NHIGHPRIO(GNNODE(li)) = is_prio_snode(GNNODE(li)); 
-			li = GNNEXT(li);
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
+			NHIGHPRIO(GNNODE(li)) = is_prio_snode(GNNODE(li));
 		}
 		return(priosummarize_dumpshift(i,dir));
 	}
@@ -1370,24 +1300,22 @@ static int nwpdump_mediumshift(int i, int dir)
 
 	/* calculate shift weights */
 
-	li = TSUCC(layer[i]);
 	j = 0; 
 	sign = 1;
-	while (li) {
-		levelshift[j] = nwp(GNNODE(li)); 
-		if ((sign<0) && (levelshift[j]>=0)) levelweight[j]=1; 
+	for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+	{
+		levelshift[j] = nwp(GNNODE(li));
+		if ((sign<0) && (levelshift[j]>=0)) levelweight[j]=1;
 		else levelweight[j]= MAXINT;
-		if (levelshift[j]<0) sign = -1; else sign = 1; 
+		if (levelshift[j]<0) sign = -1; else sign = 1;
 		j++;
-		li = GNNEXT(li);
 	}
 	levelweight[0]= 1;
 
 	if (prio_phase==1) {
-		li = TSUCC(layer[i]);
-		while (li) {
-			NHIGHPRIO(GNNODE(li)) = is_prio_pnode(GNNODE(li)); 
-			li = GNNEXT(li);
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
+			NHIGHPRIO(GNNODE(li)) = is_prio_pnode(GNNODE(li));
 		}
 		return(priosummarize_dumpshift(i,dir));
 	}
@@ -1422,21 +1350,20 @@ static int nwdump_mediumshift(int i, int dir)
 
 	/* calculate shift weights */
 
-	li = TSUCC(layer[i]);
 	j = 0; 
 	sign = 1;
 	lnode = NULL;
-	while (li) {
+	for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+	{
 		node = GNNODE(li);
 		if (NWIDTH(node)==0) {
-			li1 = GNNEXT(li);
 			rnode = NULL;
-			while (li1) {
+			for (li1 = GNNEXT(li); li1; li1 = GNNEXT(li1))
+			{
 				if (NWIDTH(GNNODE(li1))!=0) {
 					rnode = GNNODE(li1);
 					break;
 				}
-				li1 = GNNEXT(li1);
 			}
 			levelshift[j] = nwbend(node,lnode,rnode);
 		}
@@ -1447,7 +1374,6 @@ static int nwdump_mediumshift(int i, int dir)
 		else levelweight[j]= MAXINT;
 		if (levelshift[j]<0) sign = -1; else sign = 1; 
 		j++;
-		li = GNNEXT(li);
 	}
 	levelweight[0]= 1;
 
@@ -1480,9 +1406,9 @@ static int summarize_dumpshift(int i, int dir)
  	 * region. If yes, we must split the region at this point.
 	 */
 
-	li = TSUCC(layer[i]);
 	j = 0; 
-	while (li) {
+	for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+	{
 		v = GNNODE(li);
 		if (GNNEXT(li)) {
 			w = GNNODE(GNNEXT(li));	
@@ -1490,7 +1416,6 @@ static int summarize_dumpshift(int i, int dir)
 				levelweight[j+1]=1; /* space => new region */
 		}		
 		j++;
-		li = GNNEXT(li);
 	}
 
 	/* Now, the level is partitioned into regions of directly neigboured
@@ -1505,11 +1430,11 @@ static int summarize_dumpshift(int i, int dir)
 	while (changed) {
 		changed = 0;
 
-		li = TSUCC(layer[i]);
 		j = 0; 
 		oldpos = -1;
 		nrnodes = 1;  /* not needed, only for the compiler */
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			if (levelweight[j]!=MAXINT) {
 				if (oldpos!= -1) levelweight[oldpos] = sum/nrnodes;
 				sum = levelshift[j];
@@ -1518,7 +1443,6 @@ static int summarize_dumpshift(int i, int dir)
 			}
 			else { sum += levelshift[j]; nrnodes++; }
 			j++;
-			li = GNNEXT(li);
 		}
 		if (oldpos!= -1) levelweight[oldpos] = sum/nrnodes;
 
@@ -1527,10 +1451,10 @@ static int summarize_dumpshift(int i, int dir)
 		 * the same direction. 
 		 */
 
-		li = TSUCC(layer[i]);
 		j = 0; 
 		sum = 0;
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			if (levelweight[j]!=MAXINT) sum = levelweight[j];
 			if (GNNEXT(li)&&(levelweight[j+1]!=MAXINT)) {
 				v = GNNODE(li);
@@ -1553,7 +1477,6 @@ static int summarize_dumpshift(int i, int dir)
 				} 
 			}
 			j++;
-			li = GNNEXT(li);
 		}
 	}
 
@@ -1562,15 +1485,14 @@ static int summarize_dumpshift(int i, int dir)
 	 * levelshift now.
 	 */
 
-	li = TSUCC(layer[i]);
 	j = 0; 
 	assert((levelweight[0]!=MAXINT));
-	while (li) {
+	for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+	{
 		if (levelweight[j]!=MAXINT) sum = dumpfactor * levelweight[j];
 		levelshift[j] = sum;
 		levelweight[j]= 1;
 		j++;
-		li = GNNEXT(li);
 	}
 	if (dir) {
 		changed  = do_rightshifts(i);
@@ -1582,7 +1504,7 @@ static int summarize_dumpshift(int i, int dir)
 	}
 
 	return(changed);
-}
+} /* summarize_dumpshift */
 
 
 
@@ -1611,17 +1533,16 @@ static int priosummarize_dumpshift(int i, int dir)
  	 * region. If yes, we must split the region at this point.
 	 */
 
-	li = TSUCC(layer[i]);
 	j = 0; 
-	while (li) {
+	for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+	{
 		v = GNNODE(li);
 		if (GNNEXT(li)) {
-			w = GNNODE(GNNEXT(li));	
-			if (!touching(v,w)) 
+			w = GNNODE(GNNEXT(li));
+			if (!touching(v,w))
 				levelweight[j+1]=1; /* space => new region */
 		}		
 		j++;
-		li = GNNEXT(li);
 	}
 
 	/* Now, the level is partitioned into regions of directly neigboured
@@ -1639,18 +1560,16 @@ static int priosummarize_dumpshift(int i, int dir)
 		/* High priority nodes with levelshift=0
 		 * form there own region.
 		 */
-		li = TSUCC(layer[i]);
 		j = 0;
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			if (NHIGHPRIO(GNNODE(li))&&(levelshift[j]==0)) {
 				levelweight[j]   = 1;
 				levelweight[j+1] = 1;
 			}
 			j++;
-			li = GNNEXT(li);
 		}
 
-		li = TSUCC(layer[i]);
 		j = 0; 
 		oldpos = -1;
 		nrnodes = 1;  /* not needed, only for the compiler */
@@ -1658,7 +1577,8 @@ static int priosummarize_dumpshift(int i, int dir)
 		lprio = 0;
 		rprio = 0;
 		nrprionodes = 0;
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			if (levelweight[j]!=MAXINT) {
 				if (oldpos!= -1) {
 					levelweight[oldpos] = sum/nrnodes;
@@ -1688,7 +1608,6 @@ static int priosummarize_dumpshift(int i, int dir)
 			sum += levelshift[j]; 
 			nrnodes++; 
 			j++;
-			li = GNNEXT(li);
 		}
 		if (oldpos!= -1) levelweight[oldpos] = sum/nrnodes;
 
@@ -1697,10 +1616,10 @@ static int priosummarize_dumpshift(int i, int dir)
 		 * the same direction. 
 		 */
 
-		li = TSUCC(layer[i]);
 		j = 0; 
 		sum = 0;
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			if (levelweight[j]!=MAXINT) sum = levelweight[j];
 			if (GNNEXT(li)&&(levelweight[j+1]!=MAXINT)) {
 				v = GNNODE(li);
@@ -1724,7 +1643,6 @@ static int priosummarize_dumpshift(int i, int dir)
 				} 
 			}
 			j++;
-			li = GNNEXT(li);
 		}
 	}
 
@@ -1733,15 +1651,14 @@ static int priosummarize_dumpshift(int i, int dir)
 	 * levelshift now.
 	 */
 
-	li = TSUCC(layer[i]);
 	j = 0; 
 	assert((levelweight[0]!=MAXINT));
-	while (li) {
+	for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+	{
 		if (levelweight[j]!=MAXINT) sum = dumpfactor * levelweight[j];
 		levelshift[j] = sum;
 		levelweight[j]= 1;
 		j++;
-		li = GNNEXT(li);
 	}
 	if (dir) {
 		changed  = do_rightshifts(i);
@@ -1753,7 +1670,7 @@ static int priosummarize_dumpshift(int i, int dir)
 	}
 
 	return(changed);
-}
+} /* priosummarize_dumpshift */
 
 
 
@@ -1790,8 +1707,8 @@ static int correct_priority_nodes(int i)
 	changed = 0;
 	j = 0;
 	oldv = NULL;
-	li = TSUCC(layer[i]);
-	while (li) {
+	for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+	{
  		levelshift[j]  = 0;
  		levelweight[j] = 1;
 		v = GNNODE(li);
@@ -1826,7 +1743,7 @@ static int correct_priority_nodes(int i)
  				levelshift[j]  = smove;
 			}
 		}
-		else if (is_prio_snode(v) && (NPRED(v)==NULL)) {
+		else if (is_prio_snode(v) && (FirstPred(v)==NULL)) {
 			smove = nws(v); 
 			if ((smove > 0) && (smove<=rdiff)) {
  				levelshift[j]  = smove;
@@ -1835,7 +1752,7 @@ static int correct_priority_nodes(int i)
  				levelshift[j]  = smove;
 			}
 		}
-		else if (is_prio_pnode(v) && (NSUCC(v)==NULL)) {
+		else if (is_prio_pnode(v) && (FirstSucc(v)==NULL)) {
 			pmove = nwp(v); 
 			if ((pmove > 0) && (pmove<=rdiff)) {
  				levelshift[j]  = pmove;
@@ -1845,7 +1762,6 @@ static int correct_priority_nodes(int i)
 			}
 		}
 		oldv = v;
-		li = GNNEXT(li);
 		j++;
 	}
 	changed += do_rightshifts(i);
@@ -1896,12 +1812,11 @@ static void straight_line_tuning(void)
                 	}
 		changed = 0;
 		for (i=0; i<=maxdepth+1; i++) {
-			li = TSUCC(layer[i]);
-			while (li) {
+			for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+			{
 				if (is_fullprio_node(GNNODE(li))) {
 					changed += do_straight_line(GNNODE(li));
 				}
-				li = GNNEXT(li);
 			}
 		}
 
@@ -1909,12 +1824,29 @@ static void straight_line_tuning(void)
 
 }
 
+static GNODE get_pred(GNODE v)
+{
+	GEDGE e = FirstPred(v);
+	GNODE res;
 
+	if (e) res = ESOURCE(e);
+	else res = NULL;
+	return res;
+}
+
+static GNODE get_succ(GNODE v)
+{
+	GEDGE e = FirstSucc(v);
+	GNODE res;
+
+	if (e) res = ETARGET(e);
+	else res = NULL;
+	return res;
+}
 
 static int do_straight_line(GNODE v)
 {
 	GNODE 	w, sw, tw, minw, maxw;
-	ADJEDGE a;
 	int 	sx, tx, sminx, smaxx, diff;
 	int 	possible, allzero, h2;
 	int 	changed;
@@ -1930,9 +1862,7 @@ static int do_straight_line(GNODE v)
 		sx = NX(w) + NWIDTH(w)/2;
 		if (sx<sminx) { sminx = sx; minw = w; }
 		if (sx>smaxx) { smaxx = sx; maxw = w; }
-		a = NPRED(w);
-		if (a) w = SOURCE(a);
-		else w = NULL;
+		w = get_pred(w);
 	}
 	w = v;
 	while (w && (is_fullprio_node(w))) {
@@ -1941,9 +1871,7 @@ static int do_straight_line(GNODE v)
 		tx = NX(w) + NWIDTH(w)/2;
 		if (tx<sminx) { sminx = tx; minw = w; }
 		if (tx>smaxx) { smaxx = tx; maxw = w; }
-		a = NSUCC(w);
-		if (a) w = TARGET(a);
-		else w = NULL;
+		w = get_succ(w);
 	}
 
 	if (sw==tw) return(0);
@@ -1973,9 +1901,7 @@ static int do_straight_line(GNODE v)
 				NX(w) = h2;
 				allzero = 0;
 			}
-			a = NPRED(w);
-			if (a) w = SOURCE(a);
-			else w = NULL;
+			w = get_pred(w);
 		}
 		w = sw;
 		while (w && (is_fullprio_node(w))) {
@@ -1995,9 +1921,7 @@ static int do_straight_line(GNODE v)
 				NX(w) = h2;
 				allzero = 0;
 			}
-			a = NSUCC(w);
-			if (a) w = TARGET(a);
-			else w = NULL;
+			w = get_succ(w);
 		}
 		return(1-allzero);
 	}
@@ -2028,9 +1952,7 @@ static int do_straight_line(GNODE v)
 				NX(w) = h2;
 				allzero = 0;
 			}
-			a = NPRED(w);
-			if (a) w = SOURCE(a);
-			else w = NULL;
+			w = get_pred(w);
 		}
 		w = tw;
 		while (w && (is_fullprio_node(w))) {
@@ -2050,9 +1972,7 @@ static int do_straight_line(GNODE v)
 				NX(w) = h2;
 				allzero = 0;
 			}
-			a = NSUCC(w);
-			if (a) w = TARGET(a);
-			else w = NULL;
+			w = get_succ(w);
 		}
 		return(1-allzero);
 	}
@@ -2083,9 +2003,7 @@ static int do_straight_line(GNODE v)
 				NX(w) = h2;
 				allzero = 0;
 			}
-			a = NPRED(w);
-			if (a) w = SOURCE(a);
-			else w = NULL;
+			w = get_pred(w);
 		}
 		w = minw;
 		while (w && (is_fullprio_node(w))) {
@@ -2105,9 +2023,7 @@ static int do_straight_line(GNODE v)
 				NX(w) = h2;
 				allzero = 0;
 			}
-			a = NSUCC(w);
-			if (a) w = TARGET(a);
-			else w = NULL;
+			w = get_succ(w);
 		}
 		return(1-allzero);
 	}
@@ -2137,9 +2053,7 @@ static int do_straight_line(GNODE v)
 				NX(w) = h2;
 				allzero = 0;
 			}
-			a = NPRED(w);
-			if (a) w = SOURCE(a);
-			else w = NULL;
+			w = get_pred(w);
 		}
 		w = maxw;
 		while (w && (is_fullprio_node(w))) {
@@ -2159,9 +2073,7 @@ static int do_straight_line(GNODE v)
 				NX(w) = h2;
 				allzero = 0;
 			}
-			a = NSUCC(w);
-			if (a) w = TARGET(a);
-			else w = NULL;
+			w = get_succ(w);
 		}
 		return(1-allzero);
 	}
@@ -2190,16 +2102,12 @@ static int do_straight_line(GNODE v)
 	w = v;
 	while (w && (is_fullprio_node(w))) {
 		if (TACTX(layer[NTIEFE(w)]) != NX(w)) changed = 1;
-		a = NPRED(w);
-		if (a) w = SOURCE(a);
-		else w = NULL;
+		w = get_pred(w);
 	}
 	w = v;
 	while (w && (is_fullprio_node(w))) {
 		if (TACTX(layer[NTIEFE(w)]) != NX(w)) changed = 1;
-		a = NSUCC(w);
-		if (a) w = TARGET(a);
-		else w = NULL;
+		w = get_succ(w);
 	}
 
 	return(changed);
@@ -2211,7 +2119,6 @@ static int full_straight_possible(GNODE sw, int sxpos, int dir)
 {
 	GNODE 	w, nw;
 	GNLIST	li;
-	ADJEDGE a;
 	int 	diff;
 	int 	sxpos_possible, h1, h2;
 
@@ -2254,13 +2161,9 @@ static int full_straight_possible(GNODE sw, int sxpos, int dir)
 			}
 		}
 		if (dir) {
-			a = NPRED(w);
-			if (a) w = SOURCE(a);
-			else w = NULL;
-		}
-		else { 	a = NSUCC(w);
-			if (a) w = TARGET(a);
-			else w = NULL;
+			w = get_pred(w);
+		} else {
+			w = get_succ(w);
 		}
 	}
 	return(sxpos_possible);
@@ -2272,7 +2175,6 @@ static void straight_part(GNODE sw, int sxpos, int dir)
 {
 	GNODE 	w, nw;
 	GNLIST	li;
-	ADJEDGE a;
 	int 	diff;
 	int 	sxpos_possible, h1, h2;
 
@@ -2319,13 +2221,9 @@ static void straight_part(GNODE sw, int sxpos, int dir)
 			}
 		}
 		if (dir) {
-			a = NPRED(w);
-			if (a) w = SOURCE(a);
-			else w = NULL;
-		}
-		else { 	a = NSUCC(w);
-			if (a) w = TARGET(a);
-			else w = NULL;
+			w = get_pred(w);
+		} else {
+			w = get_succ(w);
 		}
 	}
 }
@@ -2401,29 +2299,26 @@ static int center_weight(void)
 {
 	int	i;
 	GNLIST	li;
-	ADJEDGE a;
+	GEDGE e;
 	int	weight,h;
 
 	debugmessage("center_weight","");
 
 	weight = 0;
 	for (i=0; i<=maxdepth+1; i++) {
-		li = TSUCC(layer[i]);
-		while (li) {
+		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+		{
 			h = 0;
-			a = NSUCC(GNNODE(li));
-			while (a) {
-				h += ews(AKANTE(a));
-				a = ANEXT(a);
+			for (e = FirstSucc(GNNODE(li)); e; e = NextSucc(e))
+			{
+				h += ews(e);
 			}
-			a = NPRED(GNNODE(li));
-			while (a) {
-				h += ewp(AKANTE(a));
-				a = ANEXT(a);
+			for (e = FirstPred(GNNODE(li)); e; e = NextPred(e))
+			{
+				h += ewp(e);
 			}
 			if (h<0) h = -h;	
 			weight += h;
-			li = GNNEXT(li);
 		}
 	}
 	return(weight);
@@ -2457,21 +2352,20 @@ static int center_layer(int i)
 
 	/* calculate shift weights */
 
-	li = TSUCC(layer[i]);
 	j = 0; 
 	dir = 0;
 	lnode = NULL;
-	while (li) {
+	for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+	{
 		node = GNNODE(li);
 		if (NWIDTH(node)==0) {
-			li1 = GNNEXT(li);
 			rnode = NULL;
-			while (li1) {
+			for (li1 = GNNEXT(li); li1; li1 = GNNEXT(li1))
+			{
 				if (NWIDTH(GNNODE(li1))!=0) {
 					rnode = GNNODE(li1);
 					break;
 				} 
-				li1 = GNNEXT(li1);
 			}
 			levelshift[j] = nwbend(node,lnode,rnode);
 		}
@@ -2480,7 +2374,6 @@ static int center_layer(int i)
 		}
 		dir += levelshift[j];
 		levelweight[j++]= 1;
-		li = GNNEXT(li);
 	}
 	if (dir>=0) {
 		changed  = do_rightshifts(i);
@@ -2506,8 +2399,7 @@ static int center_layer(int i)
  *  of the level and shift to the left.
  *  The return value is 1, if something has changed.
  */
-
-static int	do_leftshifts(int i)
+static int do_leftshifts(int i)
 {
 	int   j;
 	int   diff;
@@ -2560,8 +2452,7 @@ static int	do_leftshifts(int i)
  *  of the level and shift to the right.
  *  The return value is 1, if something has changed.
  */
-
-static int	do_rightshifts(int i)
+static int do_rightshifts(int i)
 {
 	int   j;
 	int   diff;
@@ -2619,7 +2510,7 @@ static int	do_rightshifts(int i)
  *     |/_			_\|
  */
 
-static int	ews(GEDGE edge)
+static int ews(GEDGE edge)
 {
 	GNODE	start, ende;
 	int 	x1,x2;
@@ -2632,10 +2523,10 @@ static int	ews(GEDGE edge)
 }
 
 
-static int	ewp(GEDGE edge)
+static int ewp(GEDGE edge)
 {
 	GNODE	start, ende;
-	int 	x1,x2;
+	int 	x1, x2;
 
 	ende  = EEND(edge);
 	start = ESTART(edge);
@@ -2656,22 +2547,21 @@ static int	ewp(GEDGE edge)
  * nwp(n) > 0  => shift n to the right
  */
 
-static int	nws(GNODE node)
+static int nws(GNODE node)
 {
 	int     h;
 	int	weight;
 	int	nr_edges;
-	ADJEDGE a;
+	GEDGE e;
 	CONNECT c;
 
-	a = NSUCC(node);
 	weight = 0; 
 	nr_edges = 0;
-	while (a) {
-		h = (EPRIO(AKANTE(a))*layout_downfactor) * ews(AKANTE(a));
+	for (e = FirstSucc(node); e; e = NextSucc(e))
+	{
+		h = (EPRIO(e)*layout_downfactor) * ews(e);
 		weight += h;
-		nr_edges += (EPRIO(AKANTE(a))*layout_downfactor);
-		a = ANEXT(a);
+		nr_edges += (EPRIO(e)*layout_downfactor);
 	}
 	c = NCONNECT(node);
 	if (c) {
@@ -2699,25 +2589,24 @@ static int	nws(GNODE node)
 
 	if (nr_edges) return(weight/nr_edges);
 	else	      return(0);
-}
+} /* nws */
 
 
-static int	nwp(GNODE node)
+static int nwp(GNODE node)
 {
 	int     h;
 	int	weight;
 	int	nr_edges;
-	ADJEDGE a;
+	GEDGE e;
 	CONNECT c;
 
-	a = NPRED(node);
 	weight = 0; 
 	nr_edges = 0;
-	while (a) {
-		h = (EPRIO(AKANTE(a))*layout_upfactor) * ewp(AKANTE(a));
+	for (e = FirstPred(node); e; e = NextPred(e))
+	{
+		h = (EPRIO(e)*layout_upfactor) * ewp(e);
 		weight += h;
-		nr_edges += (EPRIO(AKANTE(a))*layout_upfactor);
-		a = ANEXT(a);
+		nr_edges += (EPRIO(e)*layout_upfactor);
 	}
 	c = NCONNECT(node);
 	if (c) {
@@ -2745,7 +2634,7 @@ static int	nwp(GNODE node)
 
 	if (nr_edges) return(weight/nr_edges);
 	else	      return(0);
-}
+} /* nwp */
 
 
 /* Node weights nw 
@@ -2771,56 +2660,53 @@ static int	nwp(GNODE node)
  * nw(n) > 0  => shift n to the right
  */
 
-static int	nw(GNODE node)
+static int nw(GNODE node)
 {
 	int	weight;
 	int     dx1, dx2, dy1, dy2;
 	int	nr_edges,p1,p2;
 	GEDGE   edge;
 	GNODE   v;
-	ADJEDGE a;
 	CONNECT c;
 
 	weight = 0; 
 	nr_edges = 0;
 	if (   (layout_downfactor==1)&&(layout_upfactor==1)
-	    && NSUCC(node) && (ANEXT(NSUCC(node))==0)
-	    && NPRED(node) && (ANEXT(NPRED(node))==0)
-	    && (EPRIO(AKANTE(NSUCC(node)))==EPRIO(AKANTE(NPRED(node))))
+	    && FirstSucc(node) && (NextSucc(FirstSucc(node))==NULL)
+	    && FirstPred(node) && (NextPred(FirstPred(node))==NULL)
+	    && (EPRIO(FirstSucc(node))==EPRIO(FirstPred(node)))
 	    && NCONNECT(node)==NULL) {
-		edge = AKANTE(NPRED(node));
+		edge = FirstPred(node);
 		v    = ESTART(edge);
 		p1 = NX(node)+(NWIDTH(node)*EWEIGHTP(edge)/(NWEIGHTP(node)+1));
 		p2 = NX(v) + (NWIDTH(v)*EWEIGHTS(edge)/(NWEIGHTS(v)+1));
 		dx1 = p1 - p2; 
 
-		edge = AKANTE(NSUCC(node));
+		edge = FirstSucc(node);
 		v    = EEND(edge);
 		p1 = NX(node)+(NWIDTH(node)*EWEIGHTS(edge)/(NWEIGHTS(node)+1));
 		p2 = NX(v) + (NWIDTH(v)*EWEIGHTP(edge)/(NWEIGHTP(v)+1));
 		dx2 = p2 - p1;
 		p1  = NY(node)+NHEIGHT(node)/2;
-		p2  = NY(SOURCE(NPRED(node)))+NHEIGHT(SOURCE(NPRED(node)))/2;
+		p2  = NY(ESOURCE(FirstPred(node)))+NHEIGHT(ESOURCE(FirstPred(node)))/2;
 		dy1 = p1 - p2;
-		p2  = NY(TARGET(NSUCC(node)))+NHEIGHT(TARGET(NSUCC(node)))/2;
+		p2  = NY(ETARGET(FirstSucc(node)))+NHEIGHT(ETARGET(FirstSucc(node)))/2;
 		dy2 = p2 - p1;
 		weight = (dx2*dy1-dx1*dy2)/(dy1+dy2);
 		return(weight);
 	}
 
-	a = NSUCC(node);
-	while (a) {
-		weight += (ews(AKANTE(a))*EPRIO(AKANTE(a))
+	for (edge = FirstSucc(node); edge; edge = NextSucc(edge))
+	{
+		weight += (ews(edge)*EPRIO(edge)
 				*layout_downfactor);
-		nr_edges += (EPRIO(AKANTE(a))*layout_downfactor);
-		a = ANEXT(a);
+		nr_edges += (EPRIO(edge)*layout_downfactor);
 	}
-	a = NPRED(node);
-	while (a) {
-		weight += (ewp(AKANTE(a))*EPRIO(AKANTE(a))
+	for (edge = FirstPred(node); edge; edge = NextPred(edge))
+	{
+		weight += (ewp(edge)*EPRIO(edge)
 				*layout_upfactor);
-		nr_edges += (EPRIO(AKANTE(a))*layout_upfactor);
-		a = ANEXT(a);
+		nr_edges += (EPRIO(edge)*layout_upfactor);
 	}
 	c = NCONNECT(node);
 	if (c) {
@@ -2849,7 +2735,7 @@ static int	nw(GNODE node)
 
 	if (nr_edges) return(weight/nr_edges);
 	else	      return(0);
-}
+} /* nw */
 
 
 /* Node weights nw on dummy nodes
@@ -2895,7 +2781,7 @@ static int	nw(GNODE node)
  *  nwbend(n) < 0  => shift n to the lefti, etc.
  */
 
-static int	nwbend(GNODE node,GNODE lnode,GNODE rnode)
+static int nwbend(GNODE node, GNODE lnode, GNODE rnode)
 {
 	GNODE pred, succ;
 	int ax,ay,mx,my,bx,by,kx,h, dist;
@@ -2903,9 +2789,9 @@ static int	nwbend(GNODE node,GNODE lnode,GNODE rnode)
 
 	act_nw = nw(node);
 
-	if (NPRED(node)) pred = SOURCE(NPRED(node));
+	if (FirstPred(node)) pred = ESOURCE(FirstPred(node));
 	else return(act_nw);
-	if (NSUCC(node)) succ = TARGET(NSUCC(node));
+	if (FirstSucc(node)) succ = ETARGET(FirstSucc(node));
 	else return(act_nw);
 
 	ax = NX(pred);
@@ -2965,21 +2851,19 @@ static int	nwbend(GNODE node,GNODE lnode,GNODE rnode)
  *  This is done to calculate levelshift and levelweight.
  *  Both arrays are initialized, further.
  */
-
-static void	save_plevel(int i)
+static void save_plevel(int i)
 {
 	int j;
-	GNLIST hn;
+	GNLIST li;
 
 	debugmessage("save_plevel","");
 	j  = 0;
-	hn = TSUCC(layer[i]);
-	while (hn) {
-		assert((NPOS(GNNODE(hn))==j));
-		slayer_array[j]	 = GNNODE(hn);
+	for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+	{
+		assert(NPOS(GNNODE(li)) == j);
+		slayer_array[j]	 = GNNODE(li);
 		levelshift[j]	 = 0;
 		levelweight[j++] = 0;
-		hn = GNNEXT(hn);
 	}
 	assert(j==TANZ(layer[i]));
 }
