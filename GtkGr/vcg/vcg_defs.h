@@ -575,6 +575,7 @@ typedef struct gedge
 #define PrevSucc(x)     EADJPREV(x, GD_SUCC)
 #define EADJENTRY(x, dir) ((x)->xxadjentry[dir])
 #define EART(x)		((x)->kantenart)
+#define	EKIND(x)        ((x)->kantenart)
 #define	EINVISIBLE(x)	((x)->invisible)
 #define	EWEIGHTS(x)	((x)->weights)
 #define	EWEIGHTP(x)	((x)->weightp)
@@ -612,7 +613,6 @@ typedef struct adjedge
 #define	ESOURCEY(x)	(ESTARTY(AKANTE(x)))
 #define ETARGETX(x)	(EENDX(AKANTE(x)))
 #define	ETARGETY(x)	(EENDY(AKANTE(x)))
-#define	EKIND(x)	(EART(AKANTE(x)))
 #define	NSOURTIEFE(x)	(NTIEFE(ESTART(AKANTE(x))))
 #define	NTARTIEFE(x)	(NTIEFE(EEND(AKANTE(x))))
 

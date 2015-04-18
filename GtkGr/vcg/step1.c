@@ -544,7 +544,7 @@ void prepare_back_edges(void)
 {
 	ADJEDGE li;
 	GEDGE e;
-	ADJEDGE a1, a2;
+	GEDGE ed1, ed2;
 
 	debugmessage("prepare_back_edges","");
 	for (li = back_edge_list; li; li = ANEXT(li))
@@ -552,14 +552,14 @@ void prepare_back_edges(void)
 		e = AKANTE(li);
 		if (!EINVISIBLE(e)) revert_edge(e);
 		else if (ELNODE(e)) {
-			a1 = NSUCC(ELNODE(e));
-			a2 = NPRED(ELNODE(e));
-			if (a1)
-				if (!EINVISIBLE(AKANTE(a1)))
-					revert_edge(AKANTE(a1));
-			if (a2)
-				if (!EINVISIBLE(AKANTE(a2)))
-					revert_edge(AKANTE(a2));
+			ed1 = FirstSucc(ELNODE(e));
+			ed2 = FirstPred(ELNODE(e));
+			if (ed1)
+				if (!EINVISIBLE(ed1))
+					revert_edge(ed1);
+			if (ed2)
+				if (!EINVISIBLE(ed2))
+					revert_edge(ed2);
 		}
 	}
 }

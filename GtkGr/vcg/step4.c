@@ -129,6 +129,7 @@
 #include "folding.h"
 #include "steps.h"
 #include "timing.h"
+#include "graph.h"
 
 /* Prototypes
  * ----------
@@ -157,8 +158,8 @@ static int  	set_botbendpoint	_PP((GNLIST li, int bendp));
 
 static void	calc_all_edgearrows	_PP((void));
 static void 	check_horizontal	_PP((GEDGE e));
-static void 	check_up_port		_PP((ADJEDGE a));
-static void 	check_down_port		_PP((ADJEDGE a));
+static void 	check_up_port(GEDGE edge);
+static void 	check_down_port(GEDGE edge);
 
 static void 	flip_mirror		_PP((void));
 static void 	flip_all_nodes		_PP((GNODE v)); 
@@ -289,7 +290,7 @@ void calc_node_ports(GNODE v, int xypos_avail)
 	int act_pcol, act_pstyle, act_psize;
 	int pcol, pstyle, psize;
 	int midport,nullport,portpos;
-	ADJEDGE a;
+	GEDGE e;
 
 	debugmessage("calc_node_ports","");
 
@@ -299,20 +300,21 @@ void calc_node_ports(GNODE v, int xypos_avail)
 	if (G_portsharing!=YES) act_port = 0;
 	if (NANCHORNODE(v))     act_port = 0;
 
-	a = NSUCC(v);
-	if (a) {
-		act_pstyle = EARROWBSTYLE(AKANTE(a));
-		act_pcol   = EARROWBCOL(AKANTE(a));
-		act_psize  = EARROWBSIZE(AKANTE(a));
-		if (EKIND(a)=='r')      act_pstyle = -1;
-		else if (EKIND(a)=='l') act_pstyle = -1;
+	e = FirstSucc(v);
+	if (e) {
+		act_pstyle = EARROWBSTYLE(e);
+		act_pcol   = EARROWBCOL(e);
+		act_psize  = EARROWBSIZE(e);
+		if (EKIND(e)=='r')      act_pstyle = -1;
+		else if (EKIND(e)=='l') act_pstyle = -1;
 	}
-	while (a) {
-		pstyle = EARROWBSTYLE(AKANTE(a));
-		pcol   = EARROWBCOL(AKANTE(a));
-		psize  = EARROWBSIZE(AKANTE(a));
-		if (EKIND(a)=='r')      pstyle = -1;
-		else if (EKIND(a)=='l') pstyle = -1;
+	for ( ; e; e = NextSucc(e))
+	{
+		pstyle = EARROWBSTYLE(e);
+		pcol   = EARROWBCOL(e);
+		psize  = EARROWBSIZE(e);
+		if (EKIND(e)=='r')      pstyle = -1;
+		else if (EKIND(e)=='l') pstyle = -1;
 
 		/* For anchornodes, pstyle must change always ! Dito, if ports
 		 * are not shared but separated. 
@@ -321,17 +323,16 @@ void calc_node_ports(GNODE v, int xypos_avail)
 		if (G_portsharing!=YES) pstyle= 5+(act_pstyle+1)%20;
 
 		if ((psize==act_psize)&&(pcol==act_pcol)&&(pstyle==act_pstyle)){
-			if (pstyle!= -1) EWEIGHTS(AKANTE(a)) = act_port;
+			if (pstyle!= -1) EWEIGHTS(e) = act_port;
 		}
 		else { 	act_pstyle = pstyle;
 			act_psize  = psize;
 			act_pcol   = pcol;
 			if (pstyle!= -1) { 
 				act_port++;
-				EWEIGHTS(AKANTE(a)) = act_port;
+				EWEIGHTS(e) = act_port;
 			}
 		}
-		a = ANEXT(a);
 	}
 	NWEIGHTS(v) = act_port;
 	
@@ -343,33 +344,31 @@ void calc_node_ports(GNODE v, int xypos_avail)
 	  	case RHOMB:
 			midport = 1;
 			nullport = 0;
-			a = NSUCC(v);
-			while (a) {
-				if (NX(TARGET(a))+NWIDTH(TARGET(a))<NX(v)) 
+			for (e = FirstSucc(v); e; e = NextSucc(e))
+			{
+				if (NX(ETARGET(e))+NWIDTH(ETARGET(e))<NX(v)) 
 					portpos = -1;
-				else if (NX(TARGET(a))>NX(v)+NWIDTH(v)) 
+				else if (NX(ETARGET(e))>NX(v)+NWIDTH(v)) 
 					portpos = 1;
 				else 	portpos = 0;
-				if (portpos<0) midport = EWEIGHTS(AKANTE(a));
+				if (portpos<0) midport = EWEIGHTS(e);
 				if (portpos==0) {
 					if (!nullport) 
 						midport = 
-						nullport = EWEIGHTS(AKANTE(a));
-					else 	midport = (EWEIGHTS(AKANTE(a))
+						nullport = EWEIGHTS(e);
+					else 	midport = (EWEIGHTS(e)
 								+nullport)/2; 
 				}
 				else nullport = 0;
-				a = ANEXT(a);
 			}
 			if (act_port-midport > midport-1) 
 				portpos = 2*act_port-3*midport+1;
 			else 	portpos = midport-1;
 			NWEIGHTS(v) = 2*(midport+portpos)-1; 
 			if (portpos) {
-				a = NSUCC(v);
-				while (a) { 
-					EWEIGHTS(AKANTE(a))+=portpos; 
-					a=ANEXT(a); 
+				for (e = FirstSucc(v); e; e = NextSucc(e))
+				{
+					EWEIGHTS(e)+=portpos; 
 				}
 			}	
 			break;
@@ -382,20 +381,21 @@ void calc_node_ports(GNODE v, int xypos_avail)
 	if (NANCHORNODE(v)) act_port = 0;
 	if (G_portsharing!=YES) act_port = 0;
 
-	a = NPRED(v);
-	if (a) {
-		act_pstyle = EARROWSTYLE(AKANTE(a));
-		act_pcol   = EARROWCOL(AKANTE(a));
-		act_psize  = EARROWSIZE(AKANTE(a));
-		if (EKIND(a)=='r')      act_pstyle = -1;
-		else if (EKIND(a)=='l') act_pstyle = -1;
+	e = FirstPred(v);
+	if (e) {
+		act_pstyle = EARROWSTYLE(e);
+		act_pcol   = EARROWCOL(e);
+		act_psize  = EARROWSIZE(e);
+		if (EKIND(e)=='r')      act_pstyle = -1;
+		else if (EKIND(e)=='l') act_pstyle = -1;
 	}
-	while (a) {
-		pstyle = EARROWSTYLE(AKANTE(a));
-		pcol   = EARROWCOL(AKANTE(a));
-		psize  = EARROWSIZE(AKANTE(a));
-		if (EKIND(a)=='r')      pstyle = -1;
-		else if (EKIND(a)=='l') pstyle = -1;
+	for ( ; e; e = NextPred(e))
+	{
+		pstyle = EARROWSTYLE(e);
+		pcol   = EARROWCOL(e);
+		psize  = EARROWSIZE(e);
+		if (EKIND(e)=='r')      pstyle = -1;
+		else if (EKIND(e)=='l') pstyle = -1;
 
 		/* For anchornodes, pstyle must change always ! Dito, if ports
 		 * are not shared but separated. 
@@ -404,17 +404,16 @@ void calc_node_ports(GNODE v, int xypos_avail)
 		if (G_portsharing!=YES) pstyle= 5+(act_pstyle+1)%20;
 
 		if ((psize==act_psize)&&(pcol==act_pcol)&&(pstyle==act_pstyle)){
-			if (pstyle!= -1) EWEIGHTP(AKANTE(a)) = act_port;
+			if (pstyle!= -1) EWEIGHTP(e) = act_port;
 		}
 		else { 	act_pstyle = pstyle;
 			act_psize  = psize;
 			act_pcol   = pcol;
 			if (pstyle!= -1) { 
 				act_port++;
-				EWEIGHTP(AKANTE(a)) = act_port;
+				EWEIGHTP(e) = act_port;
 			}
 		}
-		a = ANEXT(a);
 	}
 	NWEIGHTP(v) = act_port;
 
@@ -427,33 +426,31 @@ void calc_node_ports(GNODE v, int xypos_avail)
   		case RHOMB:
 			midport = 1;
 			nullport = 0;
-			a = NPRED(v);
-			while (a) {
-				if (NX(SOURCE(a))+NWIDTH(SOURCE(a))<NX(v)) 
+			for (e = FirstPred(v); e; e = NextPred(e))
+			{
+				if (NX(ESOURCE(e))+NWIDTH(ESOURCE(e))<NX(v)) 
 					portpos = -1;
-				else if (NX(SOURCE(a))>NX(v)+NWIDTH(v)) 
+				else if (NX(ESOURCE(e))>NX(v)+NWIDTH(v)) 
 					portpos = 1;
 				else 	portpos = 0;
-				if (portpos<0) midport = EWEIGHTP(AKANTE(a));
+				if (portpos<0) midport = EWEIGHTP(e);
 				if (portpos==0) {
 					if (!nullport) 
 						midport =
-						nullport = EWEIGHTP(AKANTE(a));
-					else 	midport = (EWEIGHTP(AKANTE(a))
+						nullport = EWEIGHTP(e);
+					else 	midport = (EWEIGHTP(e)
 								+nullport)/2; 
 				}
 				else nullport = 0;
-				a = ANEXT(a);
 			}
 			if (act_port-midport > midport-1) 
 				portpos = 2*act_port-3*midport+1;
 			else 	portpos = midport-1;
 			NWEIGHTP(v) = 2*(midport+portpos)-1; 
 			if (portpos) {
-				a = NPRED(v);
-				while (a) { 
-					EWEIGHTP(AKANTE(a))+=portpos; 
-					a=ANEXT(a); 
+				for (e = FirstPred(v); e; e = NextPred(e))
+				{
+					EWEIGHTP(e)+=portpos; 
 				}
 			}	
 			break;
@@ -2055,7 +2052,7 @@ static void	calc_all_edgearrows(void)
 
 void 	calc_edgearrow(GNODE v)
 {
-	ADJEDGE a;
+	GEDGE e;
 	int 	act_port, j;
 	CONNECT c;
 
@@ -2071,27 +2068,25 @@ void 	calc_edgearrow(GNODE v)
 	}
 
 	/* Now the remaining edges */
-	a = NSUCC(v);
 	act_port = -1;
-	while (a) {
-		if (act_port!=EWEIGHTS(AKANTE(a))) {
-			act_port = EWEIGHTS(AKANTE(a));
-			check_up_port(a);	
+	for (e = FirstSucc(v); e; e = NextSucc(e))
+	{
+		if (act_port!=EWEIGHTS(e)) {
+			act_port = EWEIGHTS(e);
+			check_up_port(e);
 		}
-		a = ANEXT(a);
 	}
 
 	/* Now the downward edges */
-	a = NPRED(v);
 	act_port = -1;
-	while (a) {
-		if ((EKIND(a)=='l')||(EKIND(a)=='r'))
-			check_horizontal(AKANTE(a));
-		else if (act_port!=EWEIGHTP(AKANTE(a))) {
-			act_port = EWEIGHTP(AKANTE(a));
-			check_down_port(a);	
+	for (e = FirstPred(v); e; e = NextPred(e))
+	{
+		if ((EKIND(e)=='l')||(EKIND(e)=='r'))
+			check_horizontal(e);
+		else if (act_port!=EWEIGHTP(e)) {
+			act_port = EWEIGHTP(e);
+			check_down_port(e);
 		}
-		a = ANEXT(a);
 	}
 
 	if (NANCHORNODE(v)) {
@@ -2101,15 +2096,13 @@ void 	calc_edgearrow(GNODE v)
 		if (ESTARTX(CEDGE(c))<EENDX(CEDGE(c)))
 			j = ORI_WEST;
 		else 	j = ORI_EAST;
-		a = NSUCC(v);
-		while (a) {
-			EORI2(AKANTE(a))= j;
-			a = ANEXT(a);
+		for (e = FirstSucc(v); e; e = NextSucc(e))
+		{
+			EORI2(e)= j;
 		}
-		a = NPRED(v);
-		while (a) {
-			EORI(AKANTE(a))= j;
-			a = ANEXT(a);
+		for (e = FirstPred(v); e; e = NextPred(e))
+		{
+			EORI(e)= j;
 		}
 		if (CTARGET2(c)) {
 			assert((ESTART(CEDGE2(c))==v));
@@ -2168,24 +2161,22 @@ static void check_horizontal(GEDGE e)
  *  shorten the edge lines later. 
  */
 
-static void check_up_port(ADJEDGE a)
+static void check_up_port(GEDGE edge)
 {
 	int port;
 	int is_north, is_northeast, is_northwest;
-	ADJEDGE b;
 	GEDGE   e;
 	float 	fval;
 
 	debugmessage("check_up_port","");
 
-	port = EWEIGHTS(AKANTE(a));
+	port = EWEIGHTS(edge);
 
 	/* Check orientation */
-	b = a;
 	is_north = is_northeast = is_northwest = 1;
-	while (b) {
-		if (port!=EWEIGHTS(AKANTE(b))) break; 
-		e = AKANTE(b);
+	for (e = edge; e; e = NextSucc(e))
+	{
+		if (port!=EWEIGHTS(e)) break; 
 		/* assert((ESTARTY(e)<EBBENDY(e))); */
 		if (ETBENDY(e)!=ESTARTY(e)) 
 		        fval = (float)(ETBENDX(e)-ESTARTX(e))/
@@ -2195,42 +2186,37 @@ static void check_up_port(ADJEDGE a)
 		if (!((-0.5<fval)&&(fval<0.5))) is_north = 0;	
 		if (!(0.1<fval)) 		is_northwest = 0;	
 		if (!(fval<-0.1)) 		is_northeast = 0;	
-		b = ANEXT(b);
 	}
 	if (is_north) {
-		b = a;
-		while (b) {
-			if (port!=EWEIGHTS(AKANTE(b))) break; 
-			EORI2(AKANTE(b)) = ORI_NORTH;
-			b = ANEXT(b);
+		for (e = edge; e; e = NextSucc(e))
+		{
+			if (port!=EWEIGHTS(e)) break; 
+			EORI2(e) = ORI_NORTH;
 		}
 		return;
 	}	
 	if (is_northwest) {
-		b = a;
-		while (b) {
-			if (port!=EWEIGHTS(AKANTE(b))) break; 
-			EORI2(AKANTE(b)) = ORI_NORTHWEST;
-			b = ANEXT(b);
+		for (e = edge; e; e = NextSucc(e))
+		{
+			if (port!=EWEIGHTS(e)) break; 
+			EORI2(e) = ORI_NORTHWEST;
 		}
 		return;
 	}	
 	if (is_northeast) {
-		b = a;
-		while (b) {
-			if (port!=EWEIGHTS(AKANTE(b))) break; 
-			EORI2(AKANTE(b)) = ORI_NORTHEAST;
-			b = ANEXT(b);
+		for (e = edge; e; e = NextSucc(e))
+		{
+			if (port!=EWEIGHTS(e)) break; 
+			EORI2(e) = ORI_NORTHEAST;
 		}
 		return;
 	}	
 
 	/* else: NORTH, but shorten the edge lines !!! */
-	b = a;
-	while (b) {
-		if (port!=EWEIGHTS(AKANTE(b))) break; 
-		EORI2(AKANTE(b)) = ORI_NORTH;
-		b = ANEXT(b);
+	for (e = edge; e; e = NextSucc(e))
+	{
+		if (port!=EWEIGHTS(e)) break; 
+		EORI2(e) = ORI_NORTH;
 	}
 }
 
@@ -2246,24 +2232,22 @@ static void check_up_port(ADJEDGE a)
  *  shorten the edge lines later. 
  */
 
-static void check_down_port(ADJEDGE a)
+static void check_down_port(GEDGE edge)
 {
 	int port;
 	int is_south, is_southwest, is_southeast;
-	ADJEDGE b;
 	GEDGE   e;
 	float 	fval;
 
 	debugmessage("check_down_port","");
 
-	port = EWEIGHTP(AKANTE(a));
+	port = EWEIGHTP(edge);
 
 	/* Check orientation */
-	b = a;
 	is_south = is_southeast = is_southwest = 1;
-	while (b) {
-		if (port!=EWEIGHTP(AKANTE(b))) break; 
-		e = AKANTE(b);
+	for (e = edge; e; e = NextPred(e))
+	{
+		if (port!=EWEIGHTP(e)) break; 
 		/* assert((ETBENDY(e)<EENDY(e))); */
 		if (EBBENDY(e)!=EENDY(e)) 
 			fval = (float)(EENDX(e)-EBBENDX(e))/
@@ -2273,42 +2257,37 @@ static void check_down_port(ADJEDGE a)
 		if (!((-0.5<fval)&&(fval<0.5))) is_south = 0;	
 		if (!(0.1<fval)) 		is_southeast = 0;	
 		if (!(fval<-0.1)) 		is_southwest = 0;	
-		b = ANEXT(b);
 	}
 	if (is_south) {
-		b = a;
-		while (b) {
-			if (port!=EWEIGHTP(AKANTE(b))) break; 
-			EORI(AKANTE(b)) = ORI_SOUTH;
-			b = ANEXT(b);
+		for (e = edge; e; e = NextPred(e))
+		{
+			if (port!=EWEIGHTP(e)) break; 
+			EORI(e) = ORI_SOUTH;
 		}
 		return;
 	}	
 	if (is_southeast) {
-		b = a;
-		while (b) {
-			if (port!=EWEIGHTP(AKANTE(b))) break; 
-			EORI(AKANTE(b)) = ORI_SOUTHEAST;
-			b = ANEXT(b);
+		for (e = edge; e; e = NextPred(e))
+		{
+			if (port!=EWEIGHTP(e)) break; 
+			EORI(e) = ORI_SOUTHEAST;
 		}
 		return;
 	}	
 	if (is_southwest) {
-		b = a;
-		while (b) {
-			if (port!=EWEIGHTP(AKANTE(b))) break; 
-			EORI(AKANTE(b)) = ORI_SOUTHWEST;
-			b = ANEXT(b);
+		for (e = edge; e; e = NextPred(e))
+		{
+			if (port!=EWEIGHTP(e)) break; 
+			EORI(e) = ORI_SOUTHWEST;
 		}
 		return;
 	}	
 
 	/* else: SOUTH, but shorten the edge lines !!! */
-	b = a;
-	while (b) {
-		if (port!=EWEIGHTP(AKANTE(b))) break; 
-		EORI(AKANTE(b)) = ORI_SOUTH;
-		b = ANEXT(b);
+	for (e = edge; e; e = NextPred(e))
+	{
+		if (port!=EWEIGHTP(e)) break; 
+		EORI(e) = ORI_SOUTH;
 	}
 }
 

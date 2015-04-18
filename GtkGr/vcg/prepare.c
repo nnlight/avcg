@@ -1,42 +1,24 @@
 /*--------------------------------------------------------------------*/
-/*								      */
-/*		VCG : Visualization of Compiler Graphs		      */
-/*		--------------------------------------		      */
-/*								      */
-/*   file:	   prepare.c					      */
-/*   version:	   1.00.00					      */
-/*   creation:	   14.4.93					      */
-/*   author:	   I. Lemke  (...-Version 0.99.99)		      */
-/*		   G. Sander (Version 1.00.00-...)		      */  
-/*		   Universitaet des Saarlandes, 66041 Saarbruecken    */
-/*		   ESPRIT Project #5399 Compare 		      */
-/*   description:  Preparation on fixed layout               	      */
-/*		   of nodes					      */
-/*   status:	   in work					      */
-/*								      */
+/*              VCG : Visualization of Compiler Graphs                */
 /*--------------------------------------------------------------------*/
-
-
 /*
- *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium 
+ * Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
+ *                             the Compare Consortium
+ * Copyright (C) 2015 Nikita S <nnlight@gmail.com>
  *
- *  This program and documentation is free software; you can redistribute 
- *  it under the terms of the  GNU General Public License as published by
- *  the  Free Software Foundation;  either version 2  of the License,  or
- *  (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  This  program  is  distributed  in  the hope that it will be useful,
- *  but  WITHOUT ANY WARRANTY;  without  even  the  implied  warranty of
- *  MERCHANTABILITY  or  FITNESS  FOR  A  PARTICULAR  PURPOSE.  See  the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- *  You  should  have  received a copy of the GNU General Public License
- *  along  with  this  program;  if  not,  write  to  the  Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
- 
-
 
 /************************************************************************
  * The situation here is the following:
@@ -104,6 +86,7 @@
 #include "drawlib.h"
 #include "steps.h"
 #include "timing.h"
+#include "graph.h"
 
 /* Prototypes
  * ----------
@@ -127,14 +110,14 @@ static GEDGE    *adjarray2 = NULL;
 static int      size_of_adjarray = 0;
 
 /*--------------------------------------------------------------------*/
-/*  Preparation of nodes         			      */
+/*  Preparation on fixed layout of nodes                              */
 /*--------------------------------------------------------------------*/
 
 void prepare_nodes(void)
 {
 	int i,h,hh, xp, na;
 	GNODE v,w;
-	ADJEDGE a;
+	GEDGE e;
 
 	start_time();
 	debugmessage("prepare_nodes","");
@@ -157,27 +140,25 @@ void prepare_nodes(void)
 	for (v = dummylist; v; v = NNEXT(v))
 	{
 		if (NANCHORNODE(v)) {
-			assert((NCONNECT(v)));
+			assert(NCONNECT(v));
 			w = CTARGET(NCONNECT(v));
 			NY(v) = NY(w);
 			NHEIGHT(v) = NHEIGHT(w);
 			xp = 0;
 			na = 0;
-			a = NPRED(v);
 			h = 0;
-			while (a) { 
+			for (e = FirstPred(v); e; e = NextPred(e))
+			{
 				h++;
 				na++;
-				xp += NX(SOURCE(a));
-				a=ANEXT(a); 
+				xp += NX(ESOURCE(e));
 			}
-			a = NSUCC(v);
 			hh = 0;
-			while (a) { 
+			for (e = FirstSucc(v); e; e = NextSucc(e))
+			{
 				hh++; 
 				na++;
-				xp += NX(TARGET(a));
-				a=ANEXT(a); 
+				xp += NX(ETARGET(e));
 			}
 			if (hh>h) h = hh;
 			NWIDTH(v) =  (h+1)*G_xspace;	
@@ -248,17 +229,12 @@ void prepare_nodes(void)
 static void calc_node_degree(GNODE v)
 {
 	int k;
-	ADJEDGE a;
 
-	debugmessage("calc_node_degree","");
-	a = NPRED(v);
-	k = 0;
-	while (a) { k++; a = ANEXT(a); }
+	k = get_node_preds_num(v);
 	NINDEG(v) = k;
 	if (k>maxoutdeg) maxoutdeg = k;
-	a = NSUCC(v);
-	k = 0;
-	while (a) { k++; a = ANEXT(a); }
+
+	k = get_node_succs_num(v);
 	NOUTDEG(v) = k;
 	if (k>maxindeg) maxindeg = k;
 } /* calc_node_degree */
@@ -300,42 +276,41 @@ void calc_node_size(GNODE v)
 
 static void calc_node_anchor(GNODE v)
 {
-	ADJEDGE a,b;
-	int 	x1,y1,x2,y2;
+	GEDGE e, nxt_e;
+	int   x1,y1,x2,y2;
 
 	debugmessage("calc_node_anchor","");
-	a = NSUCC(v);
-	while (a) {
-		b = ANEXT(a);
-		x1 = NX(SOURCE(a))+NWIDTH( SOURCE(a))/2;
-		y1 = NY(SOURCE(a))+NHEIGHT(SOURCE(a))/2;
-		x2 = NX(TARGET(a))+NWIDTH( TARGET(a))/2;
-		y2 = NY(TARGET(a))+NHEIGHT(TARGET(a))/2;
-		if (NY(SOURCE(a))>NY(TARGET(a))+NHEIGHT(TARGET(a))) {
-			(void)revert_edge(AKANTE(a));
-			if (y1==y2) EWEIGHTS(AKANTE(a)) = MININT;
-			else        EWEIGHTS(AKANTE(a)) = 1000*(x1-x2)/(y1-y2); 
-			if (y1==y2) EWEIGHTP(AKANTE(a)) = MAXINT;
-			else        EWEIGHTP(AKANTE(a)) = -1000*(x1-x2)/(y1-y2); 
+	for (e = FirstSucc(v); e; e = nxt_e)
+	{
+		nxt_e = NextSucc(e);
+		x1 = NX(ESOURCE(e))+NWIDTH( ESOURCE(e))/2;
+		y1 = NY(ESOURCE(e))+NHEIGHT(ESOURCE(e))/2;
+		x2 = NX(ETARGET(e))+NWIDTH( ETARGET(e))/2;
+		y2 = NY(ETARGET(e))+NHEIGHT(ETARGET(e))/2;
+		if (NY(ESOURCE(e))>NY(ETARGET(e))+NHEIGHT(ETARGET(e))) {
+			(void)revert_edge(e);
+			if (y1==y2) EWEIGHTS(e) = MININT;
+			else        EWEIGHTS(e) = 1000*(x1-x2)/(y1-y2); 
+			if (y1==y2) EWEIGHTP(e) = MAXINT;
+			else        EWEIGHTP(e) = -1000*(x1-x2)/(y1-y2); 
 		}
-		else if (NY(SOURCE(a))+NHEIGHT(SOURCE(a))<NY(TARGET(a))) {
-			if (y1==y2) EWEIGHTS(AKANTE(a)) = MININT;
-			else        EWEIGHTS(AKANTE(a)) = 1000*(x1-x2)/(y1-y2);
-			if (y1==y2) EWEIGHTP(AKANTE(a)) = MAXINT;
-			else        EWEIGHTP(AKANTE(a)) = -1000*(x1-x2)/(y1-y2); 
+		else if (NY(ESOURCE(e))+NHEIGHT(ESOURCE(e))<NY(ETARGET(e))) {
+			if (y1==y2) EWEIGHTS(e) = MININT;
+			else        EWEIGHTS(e) = 1000*(x1-x2)/(y1-y2);
+			if (y1==y2) EWEIGHTP(e) = MAXINT;
+			else        EWEIGHTP(e) = -1000*(x1-x2)/(y1-y2); 
 		}
-		else if (NX(SOURCE(a))>NX(TARGET(a))+NWIDTH(TARGET(a))) {
-			EWEIGHTS(AKANTE(a)) = MININT;
-			EWEIGHTP(AKANTE(a)) = MAXINT;
-			EART(AKANTE(a)) = 'l';
+		else if (NX(ESOURCE(e))>NX(ETARGET(e))+NWIDTH(ETARGET(e))) {
+			EWEIGHTS(e) = MININT;
+			EWEIGHTP(e) = MAXINT;
+			EART(e) = 'l';
 		}
-		else if (NX(SOURCE(a))+NWIDTH(SOURCE(a))<NX(TARGET(a))) {
-			EWEIGHTS(AKANTE(a)) = MAXINT;
-			EWEIGHTP(AKANTE(a)) = MININT;
-			EART(AKANTE(a)) = 'r';
+		else if (NX(ESOURCE(e))+NWIDTH(ESOURCE(e))<NX(ETARGET(e))) {
+			EWEIGHTS(e) = MAXINT;
+			EWEIGHTP(e) = MININT;
+			EART(e) = 'r';
 		}
-		else delete_adjedge(AKANTE(a)); /* Edge is not drawable */
-		a = b;
+		else delete_adjedge(e); /* Edge is not drawable */
 	}
 } /* calc_node_anchor */
 
@@ -348,43 +323,74 @@ static void sort_adjacencies(GNODE v)
 {
         int i;
         ADJEDGE a;
+	GEDGE e;
  
         debugmessage("sort_adjacencies","");
         assert((v));
-        i = 0;
-        a = NPRED(v);
-        while (a) {
-                adjarray2[i++] = AKANTE(a);
-                a = ANEXT(a);
+
+	i = 0;
+	for (e = FirstPred(v); e; e = NextPred(e))
+	{
+                adjarray2[i++] = e;
         }
 
         qsort(adjarray2,NINDEG(v),sizeof(GEDGE),
 		(int (*) (const void *, const void *))compare_ppos);
-        i = 0;
-        a = NPRED(v);
-        while (a) {
-                AKANTE(a) = adjarray2[i++];
-                a = ANEXT(a);
-        }
+	for ( i = 0, a = NPRED(v);
+		i < NINDEG(v);
+		i++, a = ANEXT(a) )
+	{
+		assert(a);
+		e = adjarray2[i];
+                AKANTE(a) = e;
+		EADJENTRY(e,GD_PRED) = a;
+		if (i > 0) {
+			EADJPREV(e,GD_PRED) = adjarray2[i-1];
+		} else {
+			EADJPREV(e,GD_PRED) = NULL;
+			NADJFIRST(v,GD_PRED) = e;
+		}
+		if (i < NINDEG(v)-1) {
+			EADJNEXT(e,GD_PRED) = adjarray2[i+1];
+		} else {
+			EADJNEXT(e,GD_PRED) = NULL;
+			NADJLAST(v,GD_PRED) = e;
+		}
+	}
         if (i) { /* at least one predecessor */
                 NPREDL(v) = adjarray2[0];
                 NPREDR(v) = adjarray2[i-1];
         }
+
 	i = 0;
-	a = NSUCC(v);
-	while (a) {
-		adjarray2[i++] = AKANTE(a);
-		a = ANEXT(a);
+	for (e = FirstSucc(v); e; e = NextSucc(e))
+	{
+		adjarray2[i++] = e;
 	}
 
         qsort(adjarray2,NOUTDEG(v),sizeof(GEDGE),
 		(int (*) (const void *, const void *))compare_spos);
-        i = 0;
-        a = NSUCC(v);
-        while (a) {
-                AKANTE(a) = adjarray2[i++];
-                a = ANEXT(a);
-        }
+	for ( i = 0, a = NSUCC(v);
+		i < NOUTDEG(v);
+		i++, a = ANEXT(a) )
+	{
+		assert(a);
+		e = adjarray2[i];
+                AKANTE(a) = e;
+		EADJENTRY(e,GD_SUCC) = a;
+		if (i > 0) {
+			EADJPREV(e,GD_SUCC) = adjarray2[i-1];
+		} else {
+			EADJPREV(e,GD_SUCC) = NULL;
+			NADJFIRST(v,GD_SUCC) = e;
+		}
+		if (i < NOUTDEG(v)-1) {
+			EADJNEXT(e,GD_SUCC) = adjarray2[i+1];
+		} else {
+			EADJNEXT(e,GD_SUCC) = NULL;
+			NADJLAST(v,GD_SUCC) = e;
+		}
+	}
         if (i) { /* at least one successor */
                 NSUCCL(v) = adjarray2[0];
                 NSUCCR(v) = adjarray2[i-1];
