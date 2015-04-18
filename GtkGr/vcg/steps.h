@@ -127,17 +127,24 @@ GNODE 	lookup_hashnode   	_PP((char *title));
 /* from step1.c */
 void    step1_main              _PP((void));
 GEDGE   revert_edge(GEDGE edge);
-void	 calc_number_reversions _PP((void));
-void     prepare_back_edges     _PP((void));
+void	calc_number_reversions _PP((void));
+void    prepare_back_edges     _PP((void));
 void    insert_anchor_edges     _PP((void));
 #ifdef DEBUG 
 void    db_output_graph         _PP((void));
 void    db_output_adjacencies   _PP((void));
-void 	db_output_adjacency	_PP((GNODE node, int f));
+void	db_output_adjacency	_PP((GNODE node, int f));
+void    db_output_layer		_PP((void));
+void    db_output_vcglayer	_PP((char *fn));
 #endif 
 
 /* from step2.c */
 void    step2_main              _PP((void));
+#ifdef DEBUG
+void    db_output_all_layers  	_PP((void));
+void    db_output_tmp_layer	_PP((int i));
+int 	db_check_proper     	_PP((GNODE v,int level));
+#endif
 
 /* from step3.c */
 void    step3_main              _PP((void));
@@ -156,6 +163,7 @@ void	statistics		_PP((void));
 
 /* from tree.c */
 int	tree_main		_PP((void));
+void sort_all_adjacencies();
 
 /* from prepare.c */
 void 	prepare_nodes		_PP((void));

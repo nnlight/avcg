@@ -128,8 +128,6 @@
 #ifdef DEBUG
 static void	db_output_nodes 	_PP((GNODE node));
 static void	db_output_edges  	_PP((GEDGE edge));
-static void     db_output_layer		_PP((void));
-static void     db_output_vcglayer	_PP((char *fn));
 #endif
 
 static void 	insert_startnode	_PP((GNODE node));
@@ -3051,7 +3049,7 @@ void db_output_adjacency(GNODE node, int f)
 
 #define mtitle(v)  (NTITLE(v)?NTITLE(v):"??")
 
-static void db_output_layer(void)
+void db_output_layer(void)
 {
 	int    i;
 	GNLIST li;
@@ -3075,7 +3073,7 @@ static void db_output_layer(void)
 
 #ifdef DEBUG
 
-static void db_output_vcglayer(char *fn)
+void db_output_vcglayer(char *fn)
 {
 	int     i, j;
 	GNLIST  li;

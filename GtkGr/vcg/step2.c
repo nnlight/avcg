@@ -117,7 +117,7 @@
  *
  * If DEBUG is switched on, we have further:
  * db_output_all_layers  prints all layers in tmp_layer.
- * db_output_layer       prints one tmp_layer[i]
+ * db_output_tmp_layer   prints one tmp_layer[i]
  * db_check_proper	 checks whether a nodes is proper in the 
  *			 hierarchy. Prints diagnostics.
  *
@@ -237,11 +237,6 @@ static int 	compare_tarpos		  _PP((const GEDGE *a, const GEDGE *b));
 #ifdef OWN_QUICKSORT
 static void 	myqsort			  _PP((int l,int r));
 #endif
-#ifdef DEBUG
-void    db_output_all_layers  	_PP((void));
-void    db_output_layer		_PP((int i));
-int 	db_check_proper     	_PP((GNODE v,int level));
-#endif
 
 
 /* Global variables
@@ -259,16 +254,6 @@ int	max_nodes_per_layer;
  */
 
 int 	nr_crossings;
-
-/* arrays where we can temporary sort the adjacency lists.
- * Used to calculate the number of crossings, e.g. to implement
- * the feature: for all NSUCC's of v in order of their NPOS ...
- * Both have the same size.
- */
-
-static GNODE	*adjarray  = NULL;
-static GEDGE    *adjarray2 = NULL;
-static int	size_of_adjarray = 0;
 
 /* array where we can temporary sort the nodes of one level.
  * Used for the barycenter method: All nodes of one level     
@@ -327,22 +312,6 @@ void step2_main(void)
 			(max_nodes_per_layer+2)*sizeof(GNODE));
 #endif
 	}
-
-	/* Allocate the adjarrays, that are used for crossing calculation */
-
-	i = (maxindeg > maxoutdeg ? maxindeg : maxoutdeg);
-	if (i+2 > size_of_adjarray) {
-		if (adjarray)  free(adjarray);
-		if (adjarray2) free(adjarray2);
-		adjarray  = (GNODE *)libc_malloc((i+2)*sizeof(GNODE));
-		adjarray2 = (GEDGE *)libc_malloc((i+2)*sizeof(GEDGE));
-		size_of_adjarray = i+2;
-#ifdef DEBUG
-		PRINTF("Sizeof table `adjarray[12]': %d Bytes\n",
-			(i+2)*sizeof(GNODE));
-#endif
-	}
-
 
 	/* Presort layers according to the tree traversal. */
 
@@ -438,7 +407,7 @@ void step2_main(void)
 	 * Copy this to layer.
 	 */
 
-	copy_layers(layer,tmp_layer); 
+	copy_layers(layer, tmp_layer);
 
 	/* Barycentering ignores the TPRED field and works only
 	 * with TSUCC. Thus we recreate the TPRED fields of layer now.
@@ -641,7 +610,7 @@ static void tree_horizontal_order(void)
 	}
 
 	/* layer = tmp_layer */
-	copy_layers(layer, tmp_layer); 
+	copy_layers(layer, tmp_layer);
 
 } /* tree_horizontal_order */
 
@@ -777,7 +746,7 @@ static void unmerge_connected_parts(void)
  */
 static void mark_all_nodes(GNODE node, int i)
 {
-	ADJEDGE e;
+	GEDGE e;
 
 	debugmessage("mark_all_nodes","");
 
@@ -787,15 +756,13 @@ static void mark_all_nodes(GNODE node, int i)
 					+(float)NHORDER(node);
 	else	NBARY(node) = (float)i*(float)(max_horder_num+1);
 
-	e = NSUCC(node);
-	while (e) {
-		mark_all_nodes(TARGET(e),i);
-		e = ANEXT(e);
+	for (e = FirstSucc(node); e; e = NextSucc(e))
+	{
+		mark_all_nodes(ETARGET(e), i);
 	}
-	e = NPRED(node);
-	while (e) {
-		mark_all_nodes(SOURCE(e),i);
-		e = ANEXT(e);
+	for (e = FirstPred(node); e; e = NextPred(e))
+	{
+		mark_all_nodes(ESOURCE(e), i);
 	}
 } /* mark_all_nodes */
 
@@ -1442,21 +1409,14 @@ static void prepare_positions(void)
  * successor. This holds for the most dummy nodes that are used
  * to split edges that cross levels.
  */
-
 static int is_complex(GNODE v)
 {
-	ADJEDGE a;
-
-	debugmessage("is_complex","");
-
-	if (NCONNECT(v)) return(1);
-	a = NSUCC(v);
-	if (!a) return(1);
-	if (ANEXT(a)) return(1);
-	a = NPRED(v);
-	if (!a) return(1);
-	if (ANEXT(a)) return(1);
-	return(0);
+	if (NCONNECT(v)) return 1;
+	if (!FirstSucc(v) || NextSucc(FirstSucc(v)))
+		return 1;
+	if (!FirstPred(v) || NextPred(FirstPred(v)))
+		return 1;
+	return 0;
 }
 
 
@@ -1470,11 +1430,10 @@ static int is_complex(GNODE v)
  * necessary, if they stop at complex nodes, or if they are not
  * neighboured.
  */
-
 static int check_exchange(GNODE v1, GNODE v2, int dir)
 {
-	int d1,d2;
-	GNODE n1,n2;
+	int d1, d2;
+	GNODE n1, n2;
 
 	debugmessage("check_exchange","");
 
@@ -1484,31 +1443,29 @@ static int check_exchange(GNODE v1, GNODE v2, int dir)
 	if (d1*d1!=1) return(0);
 
 	if (dir=='S') {
-		n1 = TARGET(NSUCC(v1));
-		n2 = TARGET(NSUCC(v2));
+		n1 = ETARGET(FirstSucc(v1));
+		n2 = ETARGET(FirstSucc(v2));
 	}
 	else { /* dir == 'P' */
-		n1 = SOURCE(NPRED(v1));
-		n2 = SOURCE(NPRED(v2));
+		n1 = ESOURCE(FirstPred(v1));
+		n2 = ESOURCE(FirstPred(v2));
  	}
 	d2 = NPOS(n1)-NPOS(n2);
 	if (d1*d2<0) return(1);
 
-	return(check_exchange(n1,n2,dir));
+	return check_exchange(n1, n2, dir);
 }
-
 
 /* Exchange two chains of simple nodes
  * -----------------------------------
  * Same as before, but this is not a check. We do the exchanging.
  * The NPOS-numbers are updated, too.
  */
-
 static void do_exchange(GNODE v1, GNODE v2, int dir)
 {
-	int 	d1,d2,h;
-	GNODE 	n1,n2;
-	GNLIST  vl1, vl2, vl3;
+	int    d1, d2, h;
+	GNODE  n1, n2;
+	GNLIST vl1, vl2, vl3;
 
 	debugmessage("do_exchange","");
 
@@ -1517,67 +1474,60 @@ static void do_exchange(GNODE v1, GNODE v2, int dir)
 	d1 = NPOS(v1)-NPOS(v2);
 	if (d1*d1!=1) return;
 
-	assert((NTIEFE(v1)==NTIEFE(v2)));
+	assert(NTIEFE(v1) == NTIEFE(v2));
 	vl1 = vl2 = NULL;
-	vl3 = TSUCC(tmp_layer[NTIEFE(v1)]);
-	while (vl3) {
+	for (vl3 = TSUCC(tmp_layer[NTIEFE(v1)]); vl3; vl3 = GNNEXT(vl3))
+	{
 		if (GNNODE(vl3)==v1) vl1 = vl3;
 		if (GNNODE(vl3)==v2) vl2 = vl3;
-		vl3 = GNNEXT(vl3);
 	}
-	assert((vl1));
-	assert((vl2));
+	assert(vl1);
+	assert(vl2);
 	GNNODE(vl1) = v2;
-	GNNODE(vl2) = v1; 
-	h = NPOS(v1); 
+	GNNODE(vl2) = v1;
+	h = NPOS(v1);
 	NPOS(v1) = NPOS(v2);
-	NPOS(v2) = h; 
+	NPOS(v2) = h;
 
 	if (dir=='S') {
-		n1 = TARGET(NSUCC(v1));
-		n2 = TARGET(NSUCC(v2));
+		n1 = ETARGET(FirstSucc(v1));
+		n2 = ETARGET(FirstSucc(v2));
 	}
 	else { /* dir == 'P' */
-		n1 = SOURCE(NPRED(v1));
-		n2 = SOURCE(NPRED(v2));
+		n1 = ESOURCE(FirstPred(v1));
+		n2 = ESOURCE(FirstPred(v2));
  	}
 	d2 = NPOS(n1)-NPOS(n2);
 	if (d1*d2<0) return;
-	do_exchange(n1,n2,dir);
+	do_exchange(n1, n2, dir);
 }
-
 
 /* Check chain exchange for all pair of edges of a node v
  * ------------------------------------------------------
  */
-
 static void unwind_crossed_edges(GNODE v)
 {
-	ADJEDGE a1,a2;
+	GEDGE e1, e2;
 
 	debugmessage("unwind_crossed_edges","");
 
-	a1 = NSUCC(v);
-	while (a1) {
-		a2 = NSUCC(v);
-		while (a2) {
-			if (check_exchange(TARGET(a1),TARGET(a2),'S')) {
-				do_exchange(TARGET(a1),TARGET(a2),'S');
+	for (e1 = FirstSucc(v); e1; e1 = NextSucc(e1))
+	{
+		for (e2 = FirstSucc(v); e2; e2 = NextSucc(e2))
+		{
+			if (check_exchange(ETARGET(e1), ETARGET(e2), 'S')) {
+				do_exchange(ETARGET(e1), ETARGET(e2), 'S');
 			}
-			a2 = ANEXT(a2);
 		}
-		a1 = ANEXT(a1);
 	}
-	a1 = NPRED(v);
-	while (a1) {
-		a2 = NPRED(v);
-		while (a2) {
-			if (check_exchange(SOURCE(a1),SOURCE(a2),'P')) {
-				do_exchange(SOURCE(a1),SOURCE(a2),'P');
+	for (e1 = FirstPred(v); e1; e1 = NextPred(e1))
+	{
+		for (e2 = FirstPred(v); e2; e2 = NextPred(e2))
+		{
+			if (check_exchange(ESOURCE(e1), ESOURCE(e2), 'P')) {
+				do_exchange(ESOURCE(e1), ESOURCE(e2), 'P');
 			}
-			a2 = ANEXT(a2);
 		}
-		a1 = ANEXT(a1);
 	}
 }
 
@@ -3165,125 +3115,40 @@ static void right_conn_list(GNODE v,GNODE w)
  * Further we sort the adjacencies here, and fill NSUCCL, NSUCCR,
  * NPREDL, NPREDR.
  */
-
-static void 	recreate_predlists(void)
+static void recreate_predlists(void)
 {
-	GNLIST h1,h2;
+	GNLIST h1, h2;
 	int i,j,k;
 	
 	debugmessage("recreate_predlists","");
 
 	/* First, give all nodes their position numbers */
-	for (i=0; i<=maxdepth+1; i++) { 
-		h1 = TSUCC(layer[i]);
+	for (i=0; i<=maxdepth+1; i++) {
 		j = 0;
-		while (h1) {
+		for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
+		{
 			NPOS(GNNODE(h1)) = j++;
-			h1 = GNNEXT(h1);
 		}
 	}
-	for (i=0; i<=maxdepth+1; i++) { 
-		h1 = TSUCC(layer[i]);
+	for (i=0; i<=maxdepth+1; i++) {
 		TPRED(layer[i]) = NULL;
 		k = 0;
-		while (h1) {
+		for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
+		{
 			k++;
 			h2 = tmpnodelist_alloc();
 			GNNEXT(h2) = TPRED(layer[i]);
 			TPRED(layer[i]) = h2;
 			GNNODE(h2) = GNNODE(h1);
-			sort_adjedges(GNNODE(h1)); 
-			h1 = GNNEXT(h1);
 		}
-		assert((TANZ(layer[i]) == k));
+		assert(TANZ(layer[i]) == k);
 	}
-}
-
-/*--------------------------------------------------------------------*/
-/*  Sort the adjacency edges of a node                                */
-/*--------------------------------------------------------------------*/
-
-/*  Sort adjacencies according NPOS
- *  -------------------------------
- *  To allow to access to the predecessor or successor nodes 
- *  of a node v in the order of their NPOS-values, we traverse
- *  the corresponding adjacency list of v and put the target nodes
- *  sorted into the array adjarray2.
- *  This gives the fine layout the last touch, even if the effect 
- *  is very small.
- */
-
-static void sort_adjedges(GNODE	v)
-{
-	int i;
-	ADJEDGE a;
-
-	debugmessage("sort_adjedges","");
-	assert((v));
-	i = 0;
-	a = NPRED(v);
-	while (a) {
-		adjarray2[i++] = AKANTE(a);
-		a = ANEXT(a);
-	}
-
-	assert(NINDEG(v) != -2);
-	qsort(adjarray2,NINDEG(v),sizeof(GNODE),
-		(int (*) (const void *, const void *))compare_srcpos);
-
-	i = 0;
-	a = NPRED(v);
-	while (a) {
-		AKANTE(a) = adjarray2[i++];
-		a = ANEXT(a);
-	}
-	NPREDL(v) = NPREDR(v) = 0;
-	if (i) { /* at least one predecessor */
-		NPREDL(v) = adjarray2[0];
-		NPREDR(v) = adjarray2[i-1];
-	}
-	i = 0;
-	a = NSUCC(v);
-	while (a) {
-		adjarray2[i++] = AKANTE(a);
-		a = ANEXT(a);
-	}
-
-	assert(NOUTDEG(v) != -2);
-	qsort(adjarray2,NOUTDEG(v),sizeof(GNODE),
-		(int (*) (const void *, const void *))compare_tarpos);
-
-	i = 0;
-	a = NSUCC(v);
-	while (a) {
-		AKANTE(a) = adjarray2[i++];
-		a = ANEXT(a);
-	}
-	NSUCCL(v) = NSUCCR(v) = 0;
-	if (i) { /* at least one successor */
-		NSUCCL(v) = adjarray2[0];
-		NSUCCR(v) = adjarray2[i-1];
-	}
-}
-
-
-/*  Compare functions for sort_adjedges
- *  ------------------------------------
- *  returns 1 if NPOS(*a) > NPOS(*b), 0 if equal, -1 otherwise
- */
- 
-static int compare_srcpos(const GEDGE *a, const GEDGE *b)
-{ 
-	if (NPOS(ESTART(*a)) > NPOS(ESTART(*b)))	return(1);
-	if (NPOS(ESTART(*a)) < NPOS(ESTART(*b)))	return(-1);
-	return(0);
-}
-
-static int compare_tarpos(const GEDGE *a, const GEDGE *b)
-{ 
-	if (NPOS(EEND(*a)) > NPOS(EEND(*b)))	return(1);
-	if (NPOS(EEND(*a)) < NPOS(EEND(*b)))	return(-1);
-	return(0);
+	/*  Sort adjacencies according NPOS
+	 *  -------------------------------
+	 *  This gives the fine layout the last touch, even if the effect 
+	 *  is very small.
+	 */
+	sort_all_adjacencies();
 }
 
 
@@ -3305,7 +3170,7 @@ static int compare_tarpos(const GEDGE *a, const GEDGE *b)
 void    db_output_all_layers(void)
 {
 	int i;
-	for (i=0; i<=maxdepth+1; i++) db_output_layer(i); 
+	for (i=0; i<=maxdepth+1; i++) db_output_tmp_layer(i); 
 	PRINTF("\n");
 }
 
@@ -3318,35 +3183,32 @@ void    db_output_all_layers(void)
 
 #ifdef DEBUG
 
-void    db_output_layer(int i)
+void    db_output_tmp_layer(int i)
 {
-        GNLIST	li;
-	ADJEDGE li2;
+        GNLIST li;
+	GEDGE e;
 
         PRINTF("layer[%d]: ", i);
-        li = TSUCC(tmp_layer[i]);
-        while (li) {
+        for (li = TSUCC(tmp_layer[i]); li; li = GNNEXT(li))
+	{
 		if (NTITLE(GNNODE(li))[0])
                 	PRINTF("%s[", NTITLE(GNNODE(li)));
-		else 	PRINTF("?[");
-		li2 = NPRED(GNNODE(li));
-		while (li2) {
-               		if (NTITLE(SOURCE(li2))[0])
-				PRINTF("%s,", NTITLE(SOURCE(li2)));
-			else 	 PRINTF("?,");
-			li2 = ANEXT(li2);
+		else	PRINTF("?[");
+		for (e = FirstPred(GNNODE(li)); e; e = NextPred(e))
+		{
+               		if (NTITLE(ESOURCE(e))[0])
+				PRINTF("%s,", NTITLE(ESOURCE(e)));
+			else	PRINTF("?,");
 		}
 		PRINTF("][");
-		li2 = NSUCC(GNNODE(li));
-		while (li2) {
-               		if (NTITLE(TARGET(li2))[0])
-               			PRINTF("%s,", NTITLE(TARGET(li2)));
-			else 	 PRINTF("?,");
-			li2 = ANEXT(li2);
+		for (e = FirstSucc(GNNODE(li)); e; e = NextSucc(e))
+		{
+               		if (NTITLE(ETARGET(e))[0])
+               			PRINTF("%s,", NTITLE(ETARGET(e)));
+			else	PRINTF("?,");
 		}
 		PRINTF("]");
 		PRINTF("b(%f)p(%d) ",NBARY(GNNODE(li)),NPOS(GNNODE(li)));
-                li = GNNEXT(li);
         }
 	PRINTF("\n");
 }
@@ -3365,7 +3227,7 @@ int db_check_proper(GNODE v, int level)
 {
 	int t;
 	char *title,*st,*tt;
-	ADJEDGE li;
+	GEDGE e;
 
 	if (NTITLE(v)[0])
                 title = NTITLE(v);
@@ -3373,63 +3235,59 @@ int db_check_proper(GNODE v, int level)
 	t = NTIEFE(v);
 	if (level!=t)
 		PRINTF("%s at level %d, expected %d\n",title,t,level);
-	li = NSUCC(v);
-	while (li) {
-		if (!AKANTE(li)) { PRINTF("%s missing edge\n",title); break; }
-		if (!SOURCE(li)) { 	
+	for (e = FirstSucc(v); e; e = NextSucc(e))
+	{
+		if (!ESOURCE(e)) { 	
 			PRINTF("Succedge at %s missing source\n",title); 
 			break; 
 		}
-		if (!TARGET(li)) { 	
+		if (!ETARGET(e)) { 	
 			PRINTF("Succedge at %s missing source\n",title); 
 			break; 
 		}
-		if (NTITLE(SOURCE(li))[0])
-               		st = NTITLE(SOURCE(li));
+		if (NTITLE(ESOURCE(e))[0])
+               		st = NTITLE(ESOURCE(e));
 		else 	st = "?";
-		if (NTITLE(TARGET(li))[0])
-               		tt = NTITLE(TARGET(li));
+		if (NTITLE(ETARGET(e))[0])
+               		tt = NTITLE(ETARGET(e));
 		else 	tt = "?";
-		if (SOURCE(li)!=v) { 	
+		if (ESOURCE(e)!=v) { 	
 			PRINTF("Succedge (%s,%s) at %s wrong source\n",
 				st,tt,title); 
 			break; 
 		}
-		if (NTIEFE(TARGET(li))!=t+1) { 	
+		if (NTIEFE(ETARGET(e))!=t+1) { 	
 			PRINTF("Succedge (%s,%s) depth %d (%d expected)\n",
-				st,tt,NTIEFE(TARGET(li)),t+1); 
+				st,tt,NTIEFE(ETARGET(e)),t+1); 
 			break; 
 		}
-		li = ANEXT(li);
 	}
-	li = NPRED(v);
-	while (li) {
-		if (!AKANTE(li)) { PRINTF("%s missing edge\n",title); break; }
-		if (!SOURCE(li)) { 	
+	for (e = FirstPred(v); e; e = NextPred(e))
+	{
+		if (!ESOURCE(e)) { 	
 			PRINTF("Prededge at %s missing source\n",title); 
 			break; 
 		}
-		if (!TARGET(li)) { 	
+		if (!ETARGET(e)) { 	
 			PRINTF("Prededge at %s missing source\n",title); 
 			break; 
 		}
-		if (NTITLE(SOURCE(li))[0])
-               		st = NTITLE(SOURCE(li));
+		if (NTITLE(ESOURCE(e))[0])
+               		st = NTITLE(ESOURCE(e));
 		else 	st = "?";
-		if (NTITLE(TARGET(li))[0])
-               		tt = NTITLE(TARGET(li));
+		if (NTITLE(ETARGET(e))[0])
+               		tt = NTITLE(ETARGET(e));
 		else 	tt = "?";
-		if (TARGET(li)!=v) { 	
+		if (ETARGET(e)!=v) { 	
 			PRINTF("Prededge (%s,%s) at %s wrong target\n",
 				st,tt,title); 
 			break; 
 		}
-		if (NTIEFE(SOURCE(li))!=t-1) { 	
+		if (NTIEFE(ESOURCE(e))!=t-1) { 	
 			PRINTF("Succedge (%s,%s) depth %d (%d expected)\n",
-				st,tt,NTIEFE(SOURCE(li)),t-1); 
+				st,tt,NTIEFE(ESOURCE(e)),t-1); 
 			break; 
 		}
-		li = ANEXT(li);
 	}
 	return(1);
 }

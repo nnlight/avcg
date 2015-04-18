@@ -121,7 +121,6 @@ static void 	calc_degree	_PP((void));
 static void 	create_tpred_lists 	_PP((void));
 static void 	sort_tsucc_and_tpred 	_PP((void));
 static  int 	compare_xpos 	   	_PP((const GNODE *a, const GNODE *b));
-static void 	sort_all_adjacencies	_PP((void));
 
 static void	tree_layout		_PP((void));
 static int 	find_position		_PP((GNODE v,int l));
@@ -464,8 +463,7 @@ static int compare_xpos(const GNODE *a, const GNODE *b)
 /* Sort the adjacency lists and init NPREDL, NPREDR, NSUCCL, NSUCCR
  * ----------------------------------------------------------------
  */
-
-static void sort_all_adjacencies(void)
+void sort_all_adjacencies(void)
 {
 	int i;
 	GNLIST h1;
