@@ -221,6 +221,38 @@ static void link_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
 #endif
 }
 
+static void link_node_edge_as_last(GNODE v, GEDGE e, Graphdir_t dir)
+{
+    GEDGE last = NADJLAST(v, dir);
+
+    if (dir == GD_PRED) {
+        assert(ETARGET(e) == v);
+    } else {
+        assert(ESOURCE(e) == v);
+    }
+    assert(EADJPREV(e, dir) == DEAD_GEDGE);
+    assert(EADJNEXT(e, dir) == DEAD_GEDGE);
+    assert(NADJFIRST(v, dir) != DEAD_GEDGE);
+    assert(NADJLAST(v, dir) != DEAD_GEDGE);
+
+	/* добавляем в конец списка дуг (в направлении dir) */
+    if (last)
+    {
+        EADJNEXT(last, dir) = e;
+        EADJPREV(e, dir) = last;
+        EADJNEXT(e, dir) = NULL;
+        NADJLAST(v, dir) = e;
+    } else
+    {
+        /* тогда и первый элемент списка должен быть нулевым, т.е. список пустой */
+        assert(NADJFIRST(v, dir) == NULL);
+        EADJPREV(e, dir) = NULL;
+        EADJNEXT(e, dir) = NULL;
+        NADJFIRST(v, dir) = e;
+        NADJLAST(v, dir) = e;
+    }
+}
+
 static void unlink_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
 {
     GEDGE prev = EADJPREV(e, dir);
@@ -347,7 +379,7 @@ void unlink_edge(GEDGE edge)
         a = b;
         ap = abp;
     }
-    assert(i <= 1);
+    assert(i == 1);
     i = 0;
     a = NPRED(EEND(edge));
     ap = &(NPRED(EEND(edge)));
@@ -358,14 +390,14 @@ void unlink_edge(GEDGE edge)
         a = b;
         ap = abp;
     }
-    assert(i <= 1);
+    assert(i == 1);
 
     unlink_node_edge(ESTART(edge), edge, GD_SUCC);
     unlink_node_edge(EEND(edge), edge, GD_PRED);
 }
 
 /**
- * Перенос дуги на другой источник не трогая исходный adjacency list.
+ * Перенос дуги на другой источник.
  */
 void change_edge_src(GEDGE e, GNODE v, GNODE new_v)
 {
@@ -383,7 +415,7 @@ void change_edge_src(GEDGE e, GNODE v, GNODE new_v)
         a = b;
         ap = abp;
     }
-    assert(i <= 1);
+    assert(i == 1);
     unlink_node_edge(v, e, GD_SUCC);
 
     ESOURCE(e) = new_v;
@@ -393,7 +425,7 @@ void change_edge_src(GEDGE e, GNODE v, GNODE new_v)
 }
 
 /**
- * Перенос дуги на другой приемник не трогая исходный adjacency list.
+ * Перенос дуги на другой приемник.
  */
 void change_edge_dst(GEDGE e, GNODE v, GNODE new_v)
 {
@@ -411,13 +443,86 @@ void change_edge_dst(GEDGE e, GNODE v, GNODE new_v)
         a = b;
         ap = abp;
     }
-    assert(i <= 1);
+    assert(i == 1);
     unlink_node_edge(v, e, GD_PRED);
 
     ETARGET(e) = new_v;
     a = prededgealloc(new_v, e);
     EADJENTRY(e, GD_PRED) = a;
     link_node_edge(new_v, e, GD_PRED);
+}
+
+void relink_node_edge_as_first(GNODE v, GEDGE e, Graphdir_t dir)
+{
+    if (dir == GD_PRED) {
+        assert(ETARGET(e) == v);
+        change_edge_dst(e, v, v);
+    } else {
+        assert(ESOURCE(e) == v);
+        change_edge_src(e, v, v);
+    }
+}
+
+void relink_node_edge_as_last(GNODE v, GEDGE e, Graphdir_t dir)
+{
+    ADJEDGE a,b,*ap,*abp;
+    int i = 0;
+    ADJEDGE last_a = NULL;
+
+    if (dir == GD_PRED) {
+        assert(ETARGET(e) == v);
+
+        a = NPRED(v);
+        ap = &(NPRED(v));
+        while (a) {
+            abp = &(ANEXT(a));
+            b = ANEXT(a);
+            if (AKANTE(a)==e) { *ap = ANEXT(a); i++; }
+            a = b;
+            ap = abp;
+        }
+        assert(i == 1);
+        unlink_node_edge(v, e, GD_PRED);
+
+        for (a = NPRED(v); a; a = ANEXT(a)) { last_a = a; }
+    	a = edgelist_alloc();
+        if (last_a) {
+            ANEXT(last_a) = a;
+        } else {
+            NPRED(v) = a;
+        }
+    	AKANTE(a) = e;
+	    ANEXT(a) = NULL;
+        EADJENTRY(e, GD_PRED) = a;
+        link_node_edge_as_last(v, e, GD_PRED);
+
+    } else {
+        assert(ESOURCE(e) == v);
+
+        a = NSUCC(v);
+        ap = &(NSUCC(v));
+        while (a) {
+            abp = &ANEXT(a);
+            b   = ANEXT(a);
+            if (AKANTE(a)==e) { *ap = ANEXT(a); i++; }
+            a = b;
+            ap = abp;
+        }
+        assert(i == 1);
+        unlink_node_edge(v, e, GD_SUCC);
+
+        for (a = NSUCC(v); a; a = ANEXT(a)) { last_a = a; }
+    	a = edgelist_alloc();
+        if (last_a) {
+            ANEXT(last_a) = a;
+        } else {
+            NSUCC(v) = a;
+        }
+    	AKANTE(a) = e;
+	    ANEXT(a) = NULL;
+        EADJENTRY(e, GD_SUCC) = a;
+        link_node_edge_as_last(v, e, GD_SUCC);
+    }
 }
 
 ADJEDGE save_node_adjlist(GNODE v, Graphdir_t dir)
@@ -460,4 +565,36 @@ ADJEDGE save_node_adjlist(GNODE v, Graphdir_t dir)
     }
     return res;
 }
+
+ADJEDGE reverse_adjlist(ADJEDGE list)
+{
+    ADJEDGE a, prev_a, next_a;
+
+    prev_a = NULL;
+    for (a = list; a; a = next_a)
+    {
+        next_a = ANEXT(a);
+        ANEXT(a) = prev_a;
+        prev_a = a;
+    }
+    return prev_a;
+}
+
+void delete_adjlist(ADJEDGE list)
+{
+    /* TODO! */
+}
+
+void print_node_succs(GNODE v)
+{
+	GEDGE e;
+
+	printf("===========\n");
+	for (e = FirstSucc(v); e; e = NextSucc(e))
+	{
+		printf("(%s) -> (%s)\n", NTITLE(ESOURCE(e)), NTITLE(ETARGET(e)));
+	}
+	printf("============\n");
+}
+
 

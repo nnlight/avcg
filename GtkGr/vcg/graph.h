@@ -47,7 +47,12 @@ void link_edge(GEDGE e);
 void unlink_edge(GEDGE e);
 void change_edge_src(GEDGE e, GNODE v, GNODE new_v);
 void change_edge_dst(GEDGE e, GNODE v, GNODE new_v);
+void relink_node_edge_as_first(GNODE v, GEDGE e, Graphdir_t dir);
+void relink_node_edge_as_last(GNODE v, GEDGE e, Graphdir_t dir);
 ADJEDGE save_node_adjlist(GNODE v, Graphdir_t dir);
+ADJEDGE reverse_adjlist(ADJEDGE list);
+void delete_adjlist(ADJEDGE list);
+void print_node_succs(GNODE v);
 
 /*--------------------------------------------------------------------*/
 /**

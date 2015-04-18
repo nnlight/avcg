@@ -1,41 +1,24 @@
 /*--------------------------------------------------------------------*/
-/*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
-/*              --------------------------------------                */
-/*                                                                    */
-/*   file:         step2.c                                            */
-/*   version:      1.00.00                                            */
-/*   creation:     14.4.1993                                          */
-/*   author:       I. Lemke  (...-Version 0.99.99)                    */
-/*                 G. Sander (Version 1.00.00-...)                    */  
-/*                 Universitaet des Saarlandes, 66041 Saarbruecken    */
-/*                 ESPRIT Project #5399 Compare                       */
-/*   description:  Layout phase 2: reduction of crossings             */
-/*   status:       in work                                            */
-/*                                                                    */
 /*--------------------------------------------------------------------*/
-
-
 /*
- *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium 
+ * Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
+ *                             the Compare Consortium
+ * Copyright (C) 2015 Nikita S <nnlight@gmail.com>
  *
- *  This program and documentation is free software; you can redistribute 
- *  it under the terms of the  GNU General Public License as published by
- *  the  Free Software Foundation;  either version 2  of the License,  or
- *  (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  This  program  is  distributed  in  the hope that it will be useful,
- *  but  WITHOUT ANY WARRANTY;  without  even  the  implied  warranty of
- *  MERCHANTABILITY  or  FITNESS  FOR  A  PARTICULAR  PURPOSE.  See  the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- *  You  should  have  received a copy of the GNU General Public License
- *  along  with  this  program;  if  not,  write  to  the  Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
-
-
 
 /************************************************************************
  * The situation here is the following:
@@ -152,6 +135,7 @@
 #include "folding.h"
 #include "steps.h"
 #include "timing.h"
+#include "graph.h"
 
 
 /* Defines
@@ -313,8 +297,8 @@ static int nr_bary_iterations;
 void step2_main(void)
 {
 	int len;
-	int     i;
-	int 	old_nr_crossings;
+	int i;
+	int old_nr_crossings;
 
 	start_time();
 	debugmessage("step2_main","");
@@ -483,11 +467,10 @@ void step2_main(void)
  *  the TSUCC-lists of layer to the TPRED-lists.
  *  Further TANZ(layer[i]) is calculated here.
  */
-
-static void	create_tmp_layer(void)
+static void create_tmp_layer(void)
 {
-	int	i,j;
-	GNLIST	h1, h2;
+	int    i, j;
+	GNLIST h1, h2;
 
 
 	/* Allocate the array tmp_layer */
@@ -514,10 +497,9 @@ static void	create_tmp_layer(void)
 		 * max_nodes_per_layer, we use TSUCC.
 		 */
 		j = 0;
-                h1  =  TSUCC(layer[i]);
-		while (h1) {
+                for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
+		{
 			j++;
-			h1 = GNNEXT(h1);
 		}
 		if (j > max_nodes_per_layer) max_nodes_per_layer = j;
 
@@ -525,35 +507,32 @@ static void	create_tmp_layer(void)
 		 * thus we copy revert.TPRED(layer[i]) -> TSUCC(tmp_layer[i])
 		 * TPRED(tmp_layer) is not needed for barycentering.
  		 */
-
 		j = 0;
-                h1  =  TPRED(layer[i]);
-		while (h1) {
+                for (h1 = TPRED(layer[i]); h1; h1 = GNNEXT(h1))
+		{
 			j++;
 			h2 = tmpnodelist_alloc();
 			GNNEXT(h2) = TSUCC(tmp_layer[i]);
 			TSUCC(tmp_layer[i]) = h2;
 			GNNODE(h2) = GNNODE(h1);
-			h1 = GNNEXT(h1);
 		}
 
 		TANZ(tmp_layer[i])      = TANZ(layer[i]) = j;
 		TRESNEEDED(tmp_layer[i])= TRESNEEDED(layer[i]);
 
 		/* for security only */
-		if (j > max_nodes_per_layer) max_nodes_per_layer = j;
+		assert(j <= max_nodes_per_layer);
 
 		/*
 		 * Now we adapt the TSUCC-fields of layer in the same way.
 		 */
 		TSUCC(layer[i]) = NULL;
-                h1  =  TPRED(layer[i]);
-		while (h1) {
+                for (h1 = TPRED(layer[i]); h1; h1 = GNNEXT(h1))
+		{
 			h2 = tmpnodelist_alloc();
 			GNNEXT(h2) = TSUCC(layer[i]);
 			TSUCC(layer[i]) = h2;
 			GNNODE(h2) = GNNODE(h1);
-			h1 = GNNEXT(h1);
 		}
 	}
 } /* create_tmp_layer */
@@ -572,14 +551,12 @@ static void	create_tmp_layer(void)
  *  priorities. We reorder the layers such that this spanning tree is
  *  planar embedded.
  */
-
 static void tree_horizontal_order(void)
 {
 	GNLIST li;
 	int    i, prio;
 	GNODE  node;
-	ADJEDGE a;
-	GEDGE   e;
+	GEDGE  e;
 	double maxbary;
 
 	debugmessage("tree_horizontal_order","");
@@ -589,15 +566,13 @@ static void tree_horizontal_order(void)
 	 */
 
 	for (i=0; i<=maxdepth+1; i++) {
-		li	= TSUCC(tmp_layer[i]);
-		while (li) { 
-			assert((NMARK(GNNODE(li))==0)); 
-			a = NSUCC(GNNODE(li));
-			while (a) {
-				EWEIGHTS(AKANTE(a)) = 0;
-				a = ANEXT(a);
+		for (li = TSUCC(tmp_layer[i]); li; li = GNNEXT(li))
+		{
+			assert(NMARK(GNNODE(li)) == 0);
+			for (e = FirstSucc(GNNODE(li)); e; e = NextSucc(e))
+			{
+				EWEIGHTS(e) = 0;
 			}
-			li = GNNEXT(li); 
 		}
 	}
 
@@ -605,21 +580,18 @@ static void tree_horizontal_order(void)
 
 	for (i=0; i<=maxdepth+1; i++) {
 		for (prio=max_eprio; prio >= 0; prio--) {
-			li	= TSUCC(tmp_layer[i]);
-			while (li) { 
-				a = NSUCC(GNNODE(li));
-				while (a) {
-					e = AKANTE(a);
+			for (li = TSUCC(tmp_layer[i]); li; li = GNNEXT(li))
+			{
+				for (e = FirstSucc(GNNODE(li)); e; e = NextSucc(e))
+				{
 					if (EPRIO(e)==prio) {
-						node = TARGET(a);	
+						node = ETARGET(e);
 						if (!NMARK(node)) {
 							NMARK(node) = 1;
 							EWEIGHTS(e) = 1;
 						}
 					}			
-					a = ANEXT(a);
 				}
-				li = GNNEXT(li); 
 			}
 		}
 	}
@@ -633,28 +605,24 @@ static void tree_horizontal_order(void)
 		level_to_array(i,'d');
 
 		maxbary = 0.1;
-		li = TSUCC(tmp_layer[i]);
-		while (li) {
+		for (li = TSUCC(tmp_layer[i]); li; li = GNNEXT(li))
+		{
 			node = GNNODE(li);
-			NBARY(node) =  predbary(node);	
+			NBARY(node) = predbary(node);
 			if (NBARY(node) > maxbary) maxbary = NBARY(node);
-			li = GNNEXT(li);
 		}
 		maxbary = maxbary + 1.0;
 
-		li = TSUCC(tmp_layer[i-1]);
-		while (li) {
-			a = NSUCC(GNNODE(li));
-			while (a) {
-				e = AKANTE(a);
+		for (li = TSUCC(tmp_layer[i-1]); li; li = GNNEXT(li))
+		{
+			for (e = FirstSucc(GNNODE(li)); e; e = NextSucc(e))
+			{
 				if (EWEIGHTS(e)) {
-					node = TARGET(a);
-					NBARY(node)=(double)(NPOS(GNNODE(li)))
+					node = ETARGET(e);
+					NBARY(node) = (double)(NPOS(GNNODE(li)))
 						 + NBARY(node)/maxbary;
 				}
-				a = ANEXT(a);
 			}
-			li = GNNEXT(li);
 		}
 
 		quicksort_sort_array(TANZ(layer[i]));
@@ -666,12 +634,14 @@ static void tree_horizontal_order(void)
 	/* Unmark all nodes again */
 
 	for (i=0; i<=maxdepth+1; i++) {
-		li	= TSUCC(tmp_layer[i]);
-		while (li) { NMARK(GNNODE(li)) = 0; li = GNNEXT(li); }
+		for (li = TSUCC(tmp_layer[i]); li; li = GNNEXT(li))
+		{
+			NMARK(GNNODE(li)) = 0;
+		}
 	}
 
 	/* layer = tmp_layer */
-	copy_layers(layer,tmp_layer); 
+	copy_layers(layer, tmp_layer); 
 
 } /* tree_horizontal_order */
 
@@ -702,14 +672,13 @@ static void prepare_horizontal_order(void)
 	max_horder_num = 0;
 
 	for (i=0; i<=maxdepth+1; i++) {
-		li	= TSUCC(tmp_layer[i]);
 		reorder_necessary = 0;
-		while (li) {
+		for (li = TSUCC(tmp_layer[i]); li; li = GNNEXT(li))
+		{
 			node = GNNODE(li);
-			if (NHORDER(node) >= 0) reorder_necessary = 1; 
+			if (NHORDER(node) >= 0) reorder_necessary = 1;
 			if (NHORDER(node)>max_horder_num)
 				max_horder_num = NHORDER(node);
-			li = GNNEXT(li);
 		}
 		TRESNEEDED(tmp_layer[i]) = 
 		    TRESNEEDED(layer[i]) = reorder_necessary;
@@ -736,11 +705,10 @@ static void prepare_horizontal_order(void)
  *  Of course, barycentering may reintroduce such intermixings, but if
  *  we start with a clean situation, the intermixing is very seldom.
  */
-
 static void unmerge_connected_parts(void)
 {
 	GNLIST li;
-	int    i,j;
+	int    i, j;
 	int    part_is_missing; 
 	GNODE  node;
 	int act_graph;
@@ -749,10 +717,9 @@ static void unmerge_connected_parts(void)
 
 	/* first, set the NBARY field to 0 */
 	for (i=0; i<=maxdepth+1; i++) {
-		li	= TSUCC(tmp_layer[i]);
-		while (li) {
+		for (li = TSUCC(tmp_layer[i]); li; li = GNNEXT(li))
+		{
 			NBARY(GNNODE(li)) = 0;
-			li = GNNEXT(li);
 		}
 	}
 
@@ -763,25 +730,24 @@ static void unmerge_connected_parts(void)
 
 		gs_wait_message('u');
 		part_is_missing =0;
-		node = (GNODE)0;
+		node = NULL;
 		act_graph++;
 
 		/* look for an untouched connected component
 		 */
 		for (i=0; i<=maxdepth+1; i++) {
-			li	= TSUCC(layer[i]);
-			while (li) {
+			for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+			{
 				if (NBARY(GNNODE(li)) == 0) {
 					node = GNNODE(li);
 					break;
 				}
-				li = GNNEXT(li);
 			}
 			if (node) break;
 		}
 		if (node) {
-			assert((NBARY(node)==0));
-			part_is_missing =1;
+			assert(NBARY(node)==0);
+			part_is_missing = 1;
 			mark_all_nodes(node, act_graph);
 		}
 	}
@@ -789,11 +755,10 @@ static void unmerge_connected_parts(void)
 
 	for (i=0; i<=maxdepth+1; i++) {
 		/* Copy tmp_layer -> sort_array */
-		li = TSUCC(tmp_layer[i]);
 		j = 0;
-		while (li) {
+		for (li = TSUCC(tmp_layer[i]); li; li = GNNEXT(li))
+		{
 			sort_array[j++] = GNNODE(li);
-			li = GNNEXT(li);
 		}
 		quicksort_sort_array(TANZ(layer[i]));
 		/* Copy sort_array -> tmp_layer */
@@ -801,7 +766,7 @@ static void unmerge_connected_parts(void)
 	}
 
 	/* layer = tmp_layer */
-	copy_layers(layer,tmp_layer); 
+	copy_layers(layer, tmp_layer);
 } /* unmerge_connected_parts */
 
 
@@ -810,8 +775,7 @@ static void unmerge_connected_parts(void)
 /* Mark all nodes with its graph number 
  * ------------------------------------
  */
-
-static void mark_all_nodes(GNODE node,int i)
+static void mark_all_nodes(GNODE node, int i)
 {
 	ADJEDGE e;
 
@@ -845,11 +809,10 @@ static void mark_all_nodes(GNODE node,int i)
  *  ===================================================
  *  The precondition is that the TCROSS-entries are already filled. 
  */
-
-static int	graph_crossings(void)
+static int graph_crossings(void)
 {
-	int	i;
-	int	sumC;
+	int i;
+	int sumC;
 
 	debugmessage("graph_crossings","");
 	assert((tmp_layer));
@@ -866,15 +829,14 @@ static int	graph_crossings(void)
  *  Before graph_crossings, we have to fill the TCROSS-entries of
  *  tmp_layer. This is done in the following function.
  */
-
-static void	calc_all_layers_crossings(void)
+static void calc_all_layers_crossings(void)
 {
-	int	i;
+	int i;
 
 	debugmessage("calc_all_layers_crossings","");
-	assert((tmp_layer));
+	assert(tmp_layer);
 	for (i=0; i<=maxdepth; i++) 
-		TCROSS(tmp_layer[i])=layer_crossing(i);
+		TCROSS(tmp_layer[i]) = layer_crossing(i);
 } /* calc_all_layers_crossings */
 
 
@@ -912,11 +874,12 @@ static	DLLIST	upper_list_end = NULL;  /* and its end                   */
 static	int	nr_tcrossings;		/* actual number of crossings    */
 
 
-static int 	layer_crossing(int level)
+static int layer_crossing(int level)
 {
-	GNLIST  vl1,vl2;
-	ADJEDGE a;
+	GNLIST vl1, vl2;
+	GEDGE e;
 	int i;
+	ADJEDGE a;
 
 	debugmessage("layer_crossings","");
 	assert((tmp_layer));
@@ -927,6 +890,7 @@ static int 	layer_crossing(int level)
 					 * and tmp_layer[maxdepth+1] exists 
 					 */
 
+#if 0
 	/* Later, we need to traverse the adjacency lists in the order
 	 * of their source or target nodes. We prepare this here, by
 	 * refilling the NPREDs of level+1 and NSUCCs of level. Therefore
@@ -982,6 +946,31 @@ static int 	layer_crossing(int level)
 		vl2 = GNNEXT(vl2);
 		i = i+2;
 	}
+#else
+	i = 1;
+	for (vl1 = TSUCC(tmp_layer[level]); vl1; vl1 = GNNEXT(vl1))
+	{
+		NVPTR(GNNODE(vl1)) = NULL;
+		NPOS(GNNODE(vl1))  = i;
+		for (e = FirstSucc(GNNODE(vl1)); e; e = NextSucc(e))
+		{
+			relink_node_edge_as_last(ETARGET(e), e, GD_PRED);
+		}
+		i = i+2;
+	}
+
+	i = 2;
+	for (vl2 = TSUCC(tmp_layer[level+1]); vl2; vl2 = GNNEXT(vl2))
+	{
+		NVPTR(GNNODE(vl2)) = NULL;
+		NPOS(GNNODE(vl2))  = i;
+		for (e = FirstPred(GNNODE(vl2)); e; e = NextPred(e))
+		{
+			relink_node_edge_as_last(ESOURCE(e), e, GD_SUCC);
+		}
+		i = i+2;
+	}
+#endif
 
 	/* Init the rest */
 
@@ -1041,11 +1030,10 @@ static int 	layer_crossing(int level)
  * are calculated if we finish these nodes n. Thus we touch them here
  * only.
  */
-
-static void 	finish_upper(GNODE v)
+static void finish_upper(GNODE v)
 {
-	ADJEDGE a;
-	DLLIST n,m;
+	GEDGE e;
+	DLLIST n, m;
 	int k1;  	/* number occurences of v in upper_list */
 	int k2;		/* number of nodes!=v in upper_list that*/
 			/* precede an occurence of v            */
@@ -1074,14 +1062,13 @@ static void 	finish_upper(GNODE v)
 	 * The adjacency lists are already sorted according to the
 	 * NPOS, see initialization phase in layer_crossing.
 	 */
-	a = NSUCC(v);
-	while (a) {
-		if (NPOS(TARGET(a)) > NPOS(v)) {
+	for (e = FirstSucc(v); e; e = NextSucc(e))
+	{
+		if (NPOS(ETARGET(e)) > NPOS(v)) {
 			/* nonfinished: touch it */
-			append_to_lower(TARGET(a));
-			NVPTR(TARGET(a)) = lower_list_end;
+			append_to_lower(ETARGET(e));
+			NVPTR(ETARGET(e)) = lower_list_end;
 		}
-		a = ANEXT(a);
 	}
 } /* finish_upper */
 
@@ -1091,10 +1078,9 @@ static void 	finish_upper(GNODE v)
  * and touch all nonfinished nodes.
  * This is symmetrical to finish_upper.
  */
-
-static void 	finish_lower(GNODE v)
+static void finish_lower(GNODE v)
 {
-	ADJEDGE a;
+	GEDGE e;
 	DLLIST n,m;
 	int k1;  	/* number occurences of v in lower_list */
 	int k2;		/* number of nodes!=v in lower_list that*/
@@ -1125,14 +1111,13 @@ static void 	finish_lower(GNODE v)
 	 * The adjacency lists are already sorted according to the
 	 * NPOS, see initialization phase in layer_crossing.
 	 */
-	a = NPRED(v);
-	while (a) {
-		if (NPOS(SOURCE(a)) > NPOS(v)) {
+	for (e = FirstPred(v); e; e = NextPred(e))
+	{
+		if (NPOS(ESOURCE(e)) > NPOS(v)) {
 			/* nonfinished: touch it */
-			append_to_upper(SOURCE(a));
-			NVPTR(SOURCE(a)) = upper_list_end;
+			append_to_upper(ESOURCE(e));
+			NVPTR(ESOURCE(e)) = upper_list_end;
 		}
-		a = ANEXT(a);
 	}
 } /* finish_lower */
 
@@ -1144,8 +1129,7 @@ static void 	finish_lower(GNODE v)
 /*  Insert node n at the end of upper_list
  *  --------------------------------------
  */
-
-static void	append_to_upper(GNODE n)
+static void append_to_upper(GNODE n)
 {
 	DLLIST	d;
 
@@ -1163,8 +1147,7 @@ static void	append_to_upper(GNODE n)
 /*  Insert node n at the end of lower_list
  *  --------------------------------------
  */
-
-static void	append_to_lower(GNODE n)
+static void append_to_lower(GNODE n)
 {
 	DLLIST	d;
 
@@ -1182,8 +1165,7 @@ static void	append_to_lower(GNODE n)
 /*  Delete node x from upper_list
  *  -----------------------------
  */
-
-static void 	delete_upper(DLLIST x)
+static void delete_upper(DLLIST x)
 {
 	assert((x));
 	assert((DNODE(x)));
@@ -1201,8 +1183,7 @@ static void 	delete_upper(DLLIST x)
 /*  Delete node x from lower_list
  *  -----------------------------
  */
-
-static void 	delete_lower(DLLIST x)
+static void delete_lower(DLLIST x)
 {
 	assert((x));
 	assert((DNODE(x)));
@@ -1283,12 +1264,11 @@ static void prepare_local_optimization(int level)
  *  This function returns 1, if the nodes C and D have less crossings
  *  if they are exchanged.
  */
-
 static int exchange_nodes_necessary(GNODE C, GNODE D)
 {
 	GNODE n;
 	DLLIST actlistC, h;
-	ADJEDGE a;
+	GEDGE e;
 	int Sum1, Sum2;
 
 	debugmessage("exchange_nodes_necessary","");
@@ -1298,50 +1278,46 @@ static int exchange_nodes_necessary(GNODE C, GNODE D)
 	/* First, build predC. We use actlistC to represent predC */
 
 	actlistC = NULL;
-	a = NPRED(C);
-	while (a) {
-		actlistC = dllist_alloc(SOURCE(a),actlistC);
+	for (e = FirstPred(C); e; e = NextPred(e))
+	{
+		actlistC = dllist_alloc(ESOURCE(e), actlistC);
 		DSUCC(actlistC) = DPRED(actlistC);  /* see dllist_free_all */
-		a = ANEXT(a);
 	}
 
 	/* We calculate the part of Sum1 and Sum2 originated by predC */
 
-	a = NPRED(D);
-	while (a) {
-		n = SOURCE(a);
+	for (e = FirstPred(D); e; e = NextPred(e))
+	{
+		n = ESOURCE(e);
 		h = actlistC;
 		while (h) {
 			if (NPOS(n)<NPOS(DNODE(h)))      Sum1++;
 			else if (NPOS(n)>NPOS(DNODE(h))) Sum2++;
 			h = DSUCC(h);
 		}
-		a = ANEXT(a);
 	}
 	dllist_free_all(actlistC);
 
 	/* Next, build succC. We use actlistC to represent succC */
 
 	actlistC = NULL;
-	a = NSUCC(C);
-	while (a) {
-		actlistC = dllist_alloc(TARGET(a),actlistC);
+	for (e = FirstSucc(C); e; e = NextSucc(e))
+	{
+		actlistC = dllist_alloc(ETARGET(e), actlistC);
 		DSUCC(actlistC) = DPRED(actlistC);  /* see dllist_free_all */
-		a = ANEXT(a);
 	}
 
 	/* We calculate the part of Sum1 and Sum2 originated by succC */
 
-	a = NSUCC(D);
-	while (a) {
-		n = TARGET(a);
+	for (e = FirstSucc(D); e; e = NextSucc(e))
+	{
+		n = ETARGET(e);
 		h = actlistC;
 		while (h) {
 			if (NPOS(n)<NPOS(DNODE(h)))      Sum1++;
 			else if (NPOS(n)>NPOS(DNODE(h))) Sum2++;
 			h = DSUCC(h);
 		}
-		a = ANEXT(a);
 	}
 	dllist_free_all(actlistC);
 
@@ -1354,8 +1330,7 @@ static int exchange_nodes_necessary(GNODE C, GNODE D)
  * ------------------------------------------
  * return 1, if something has changed.
  */
-
-static int level_crossing_optimization(int level,int nearedges)
+static int level_crossing_optimization(int level, int nearedges)
 {
 	int changed, possible;
 	GNLIST  vl1, vl2;
@@ -1370,8 +1345,8 @@ static int level_crossing_optimization(int level,int nearedges)
 
 	changed = 0;
 	vl1 = NULL;
-	vl2 = TSUCC(tmp_layer[level]);
-	while (vl2) {
+	for (vl2 = TSUCC(tmp_layer[level]); vl2; vl2 = GNNEXT(vl2))
+	{
 		n2 = GNNODE(vl2);
 		if (vl1) {
 			n1 = GNNODE(vl1);
@@ -1388,7 +1363,6 @@ static int level_crossing_optimization(int level,int nearedges)
 			}
 		}
 		vl1 = vl2;
-		vl2 = GNNEXT(vl2);
 	}
 	return(changed);
 } /* level_crossing_optimization */
@@ -1398,7 +1372,6 @@ static int level_crossing_optimization(int level,int nearedges)
 /* Local optimization of crossings for all levels
  * ----------------------------------------------
  */
-
 static void local_crossing_optimization(int nearedges)
 {
 	int i;
@@ -1445,21 +1418,19 @@ static void local_crossing_optimization(int nearedges)
 /* Assign position numbers to the nodes at each level
  * --------------------------------------------------
  */
-
 static void prepare_positions(void)
 {
 	GNLIST h1;
-	int i,j;
+	int i, j;
 
 	debugmessage("prepare_positions","");
 
 	/* First, give all nodes their position numbers */
 	for (i=0; i<=maxdepth+1; i++) { 
-		h1 = TSUCC(tmp_layer[i]);
 		j = 0;
-		while (h1) {
+		for (h1 = TSUCC(tmp_layer[i]); h1; h1 = GNNEXT(h1))
+		{
 			NPOS(GNNODE(h1)) = j++;
-			h1 = GNNEXT(h1);
 		}
 	}
 }
@@ -1614,7 +1585,6 @@ static void unwind_crossed_edges(GNODE v)
 /* The entry point of the local unwind phase
  * -----------------------------------------
  */
-
 static void local_unwind_crossings(void)
 {
 	GNODE v;
@@ -1628,10 +1598,9 @@ static void local_unwind_crossings(void)
        		}
 	gs_wait_message('l');
 	prepare_positions();
-	v = nodelist;
-	while (v) {
+	for (v = nodelist; v; v = NNEXT(v))
+	{
 		unwind_crossed_edges(v);
-		v = NNEXT(v);
 	}
 }
 
@@ -1655,7 +1624,6 @@ static int phase1_allowed;
 /* Initialize the barycenter method 
  * --------------------------------
  */
-
 static void init_barycentering(void)
 {
 	have_alternative = 0;
@@ -1702,12 +1670,12 @@ static void init_barycentering(void)
 
 static int phase2_startlevel;
 
-static void    barycentering(void)
+static void barycentering(void)
 {
 	int alt;	/* temporary flag: exist an alternative ? */
 	int cross;	/* number crossings of tmp_layer          */
 	int changed;
-	int tmp_startlevel,alt_startlevel;
+	int tmp_startlevel, alt_startlevel;
 
 	debugmessage("barycentering","");
 
@@ -1850,7 +1818,7 @@ static void    barycentering(void)
 		have_alternative = alt;
 		if (nr_crossings==0) return;
 	}
-}
+} /* barycentering */
 
 /*--------------------------------------------------------------------*/
 /*  Phases 1                                                          */
@@ -1948,7 +1916,7 @@ static int     resort_down_layer(int i)
 	save_level(i+1);	/* save old level temporary */
 
         array_to_level(i+1);
-	if (TRESNEEDED(layer[i+1])) apply_horder(i+1); 
+	if (TRESNEEDED(layer[i+1])) apply_horder(i+1);
 
 	c = layer_crossing(i);
 
@@ -1956,7 +1924,7 @@ static int     resort_down_layer(int i)
 		/* the new level+1 is better than the old one */
 
 		TCROSS(tmp_layer[i]) = c;
-		if (i<maxdepth) TCROSS(tmp_layer[i+1])= layer_crossing(i+1);	
+		if (i<maxdepth) TCROSS(tmp_layer[i+1])= layer_crossing(i+1);
                 return(1);
         }
 	/* the old level+1 is better than the new one. Thus restore it. */
@@ -2155,7 +2123,7 @@ static void    Phase2_down(void)
 	assert((i==graph_crossings()));
 	PRINTF("Phase2_down: nr_crossings old: %d new: %d\n",nr_crossings,i); 
 #endif
-}
+} /* Phase2_down */
 
 
 /*  Phase 2 upwards
@@ -2270,7 +2238,7 @@ static void    Phase2_up(void)
 	assert((i==graph_crossings()));
 	PRINTF("Phase2_up: nr_crossings old: %d new: %d\n",nr_crossings,i); 
 #endif
-}
+} /* Phase2_up */
 
 
 /*  Resort up and down 
@@ -2395,23 +2363,21 @@ static int 	cycle_sort_array(int siz)
  *  ------------------------
  *  succbary(v) = ( Sum pos(successors(v)) ) / outdegree(v) )
  */
-
-static float   succbary(GNODE node)
+static float succbary(GNODE node)
 {
-	int	Sum;
-	ADJEDGE	w;
+	int Sum;
+	GEDGE e;
 
-	assert((node));
+	assert(node);
 	debugmessage("succbary","");
 	/* Assertion: The NPOS-values are set before by level_to_array */
 
 	assert(NOUTDEG(node) != -2);
 	if (NOUTDEG(node)==0) return(0.0);
 	Sum = 0;
-	w = NSUCC(node);
-	while (w) {
-		Sum += NPOS(TARGET(w));
-		w = ANEXT(w);
+	for (e = FirstSucc(node); e; e = NextSucc(e))
+	{
+		Sum += NPOS(ETARGET(e));
 	}
 	return ( ((float) Sum) / ((float) NOUTDEG(node)) );
 }
@@ -2421,23 +2387,21 @@ static float   succbary(GNODE node)
  *  ------------------------
  *  predbary(v) = ( Sum pos(predecessors(v)) ) / indegree(v) )
  */
-
-static float	predbary(GNODE node)
+static float predbary(GNODE node)
 {
-	int	Sum;
-	ADJEDGE	w;
+	int Sum;
+	GEDGE e;
 
-	assert((node));
+	assert(node);
 	debugmessage("predbary","");
 	/* Assertion: The NPOS-values are set before by level_to_array */
 
 	assert(NINDEG(node) != -2);
 	if (NINDEG(node)==0) return(0.0);
 	Sum = 0;
-	w = NPRED(node);
-	while (w) {
-		Sum += NPOS(SOURCE(w));
-		w = ANEXT(w);
+	for (e = FirstPred(node); e; e = NextPred(e))
+	{
+		Sum += NPOS(ESOURCE(e));
 	}
 	return ( ((float) Sum) / ((float) NINDEG(node)) );
 }
@@ -2457,11 +2421,10 @@ static float	predbary(GNODE node)
  *  case we interpolate, i.e.
  *  median = ((13-5) * 49 + (62-57) * 13) /  (13-5+62-57) = 35.153
  */
-
-static float   succmedian(GNODE	node)
+static float succmedian(GNODE node)
 {
-	int	i, leftpart, rightpart;
-	ADJEDGE	w;
+	int i, leftpart, rightpart;
+	GEDGE e;
 
 	assert((node));
 	/* Assertion: the save_array must be unused at that time */
@@ -2472,20 +2435,19 @@ static float   succmedian(GNODE	node)
 	assert(NOUTDEG(node) != -2);
 	switch (NOUTDEG(node)) {
 	case 0: return(0.0);
-	case 1: return((float) NPOS(TARGET(NSUCC(node))));
+	case 1: return((float) NPOS(ETARGET(FirstSucc(node))));
 	case 2: 
-		w = NSUCC(node);
-		i = NPOS(TARGET(w));
-		w = ANEXT(w);
-		i += NPOS(TARGET(w));
+		e = FirstSucc(node);
+		i = NPOS(ETARGET(e));
+		e = NextSucc(e);
+		i += NPOS(ETARGET(e));
 		return ( ((float) i) / 2.0);
 	}
  
 	i = 0;
-	w = NSUCC(node);
-	while (w) {
-		save_array[i++] = TARGET(w);
-		w = ANEXT(w);
+	for (e = FirstSucc(node); e; e = NextSucc(e))
+	{
+		save_array[i++] = ETARGET(e);
 	}
 	quicksort_save_array(i);
 
@@ -2505,11 +2467,10 @@ static float   succmedian(GNODE	node)
  *
  *  See Succmedian for explanations.
  */
-
-static float   predmedian(GNODE	node)
+static float predmedian(GNODE node)
 {
-	int	i, leftpart, rightpart;
-	ADJEDGE	w;
+	int i, leftpart, rightpart;
+	GEDGE e;
 
 	assert((node));
 	/* Assertion: the save_array must be unused at that time */
@@ -2520,20 +2481,19 @@ static float   predmedian(GNODE	node)
 	assert(NINDEG(node) != -2);
 	switch (NINDEG(node)) {
 	case 0: return(0.0);
-	case 1: return((float) NPOS(SOURCE(NPRED(node))));
+	case 1: return((float) NPOS(ESOURCE(FirstPred(node))));
 	case 2: 
-		w = NPRED(node);
-		i = NPOS(SOURCE(w));
-		w = ANEXT(w);
-		i += NPOS(SOURCE(w));
+		e = FirstPred(node);
+		i = NPOS(ESOURCE(e));
+		e = NextPred(e);
+		i += NPOS(ESOURCE(e));
 		return ( ((float) i) / 2.0);
 	}
  
 	i = 0;
-	w = NPRED(node);
-	while (w) {
-		save_array[i++] = SOURCE(w);
-		w = ANEXT(w);
+	for (e = FirstPred(node); e; e = NextPred(e))
+	{
+		save_array[i++] = ESOURCE(e);
 	}
 	quicksort_save_array(i);
 
@@ -2653,18 +2613,16 @@ static void 	myqsort(int l, int r)
  *  This is done before sorting.
  *  Note the size of the layer is as long as the size of the array.
  */
-
-static void	level_to_array(int i,int dir)
+static void level_to_array(int i, int dir)
 {
 	int j;
 	GNLIST hn;
 
 	debugmessage("level_to_array","");
-	hn = TSUCC(tmp_layer[i]);
 	j = 0;
-	while (hn) {
+	for (hn = TSUCC(tmp_layer[i]); hn; hn = GNNEXT(hn))
+	{
 		sort_array[j++] = GNNODE(hn);
-		hn = GNNEXT(hn);
 	}
 	if (dir=='d') {
 		assert((i>0));
@@ -2674,10 +2632,10 @@ static void	level_to_array(int i,int dir)
 		assert((i<maxdepth+1));
 		hn = TSUCC(tmp_layer[i+1]);
 	}
-	j  = 1;
-	while (hn) {
+	j = 1;
+	for ( ; hn; hn = GNNEXT(hn))
+	{
 		NPOS(GNNODE(hn)) = j++;
-		hn = GNNEXT(hn);
 	}
 }
 
@@ -2687,20 +2645,18 @@ static void	level_to_array(int i,int dir)
  *  This is done after sorting.
  *  Note the size of the layer is as long as the size of the array.
  */
-
-static void	array_to_level(int i)
+static void array_to_level(int i)
 {
 	int j;
 	GNLIST hn;
 
 	debugmessage("array_to_level","");
 	j  = 0;
-	hn = TSUCC(tmp_layer[i]);
-	while (hn) {
+	for (hn = TSUCC(tmp_layer[i]); hn; hn = GNNEXT(hn))
+	{
 		GNNODE(hn) = sort_array[j++];
-		hn = GNNEXT(hn);
 	}
-	assert(j==TANZ(tmp_layer[i]));
+	assert(j == TANZ(tmp_layer[i]));
 }
 
 
@@ -2708,18 +2664,16 @@ static void	array_to_level(int i)
  *  ------------------------------------------
  *  This is done to store the tmp_layer[i] temporary.
  */
-
-static void	save_level(int i)
+static void save_level(int i)
 {
 	int j;
 	GNLIST hn;
 
 	debugmessage("save_level","");
 	j  = 0;
-	hn = TSUCC(tmp_layer[i]);
-	while (hn) {
+	for (hn = TSUCC(tmp_layer[i]); hn; hn = GNNEXT(hn))
+	{
 		save_array[j++] = GNNODE(hn);
-		hn = GNNEXT(hn);
 	}
 	assert(j==TANZ(tmp_layer[i]));
 }
@@ -2728,18 +2682,16 @@ static void	save_level(int i)
  *  -----------------------------------------
  *  This is done to restore the tmp_layer[i].
  */
-
-static void	restore_level(int i)
+static void restore_level(int i)
 {
 	int j;
 	GNLIST hn;
 
 	debugmessage("restore_level","");
 	j  = 0;
-	hn = TSUCC(tmp_layer[i]);
-	while (hn) {
+	for (hn = TSUCC(tmp_layer[i]); hn; hn = GNNEXT(hn))
+	{
 		GNNODE(hn) = save_array[j++];
-		hn = GNNEXT(hn);
 	}
 	assert(j==TANZ(tmp_layer[i]));
 }
@@ -2750,7 +2702,6 @@ static void	restore_level(int i)
  *  This is done by storing tmp_layer[i] to the sort_array,
  *  sorting it according to NHORDER and storing it back. 
  */
-
 static void apply_horder(int i)
 {
 	GNLIST hn;
@@ -2764,24 +2715,22 @@ static void apply_horder(int i)
 	 * The actual layer is tmp_Layer.
 	 */
 
-	hn = TSUCC(tmp_layer[i]);
 	j = 0;
-	while (hn) {
-		if (NHORDER(GNNODE(hn)) >=0) { 
+	for (hn = TSUCC(tmp_layer[i]); hn; hn = GNNEXT(hn))
+	{
+		if (NHORDER(GNNODE(hn)) >= 0) {
 			sort_array[j++] = GNNODE(hn);
 			NBARY(GNNODE(hn)) = NHORDER(GNNODE(hn));
 		}
-		hn = GNNEXT(hn);
 	}
 
 	quicksort_sort_array(j);
 
-	hn = TSUCC(tmp_layer[i]);
 	j = 0;
-	while (hn) {
-		if (NHORDER(GNNODE(hn)) >=0) 
+	for (hn = TSUCC(tmp_layer[i]); hn; hn = GNNEXT(hn))
+	{
+		if (NHORDER(GNNODE(hn)) >= 0)
 			GNNODE(hn) = sort_array[j++];
-		hn = GNNEXT(hn);
 	}
 }
 
@@ -2799,11 +2748,10 @@ static void apply_horder(int i)
  *  Further: the TPRED lists are not important here.
  *  They are recreated later.
  */
-
 static void copy_layers(DEPTH *l1, DEPTH *l2)
 {
-        int     i;
-	GNLIST  h1,h2;
+        int    i;
+	GNLIST h1, h2;
 
 	debugmessage("copy_layers","");
 	for (i=0; i<=maxdepth+1; i++) { 
@@ -2819,7 +2767,7 @@ static void copy_layers(DEPTH *l1, DEPTH *l2)
 			}
 		}
 		else {
-			assert ((TANZ(l1[i])<TANZ(l2[i])));
+			assert(TANZ(l1[i]) < TANZ(l2[i]));
 			while (h2) {
 				assert((h1));	
 				GNNODE(h1) = GNNODE(h2);
@@ -2853,21 +2801,20 @@ static void copy_layers(DEPTH *l1, DEPTH *l2)
  * of nodes and TANZ of the layers is updated, if connections
  * are found.
  */
-
 static void insert_connects_in_layer(void)
 {
-	int i,j;
-	GNLIST 	hl,hln;
+	int i, j;
+	GNLIST 	hl, hln;
 	CONNECT c;
 	int 	forward_conn;
 	int 	changed;
 
 	debugmessage("insert_connects_in_layer","");
 	for (i=0; i<=maxdepth+1; i++) { 
-		hl  = TSUCC(tmp_layer[i]);
 		changed = 0;
-		while (hl) {
-			hln  = GNNEXT(hl);
+		for (hl = TSUCC(tmp_layer[i]); hl; hl = hln)
+		{
+			hln = GNNEXT(hl);
 			c = NCONNECT(GNNODE(hl));
 			forward_conn = 0;
 			if (c) {
@@ -2878,9 +2825,8 @@ static void insert_connects_in_layer(void)
 			}
 			if (forward_conn&&(NMARK(GNNODE(hl))==0)) {
 				changed = 1;
-				check_connect(i,GNNODE(hl)); 
+				check_connect(i, GNNODE(hl));
 			}
-			hl  = hln;
 		}
 		if (changed) {
 			if (i<=maxdepth) 
@@ -2889,12 +2835,16 @@ static void insert_connects_in_layer(void)
 					(void)resort_down_layer(j);
 		}
 	}
-}
+} /* insert_connects_in_layer */
 
+/**
+ * Restore the edges that were in the adjacency lists
+ * of the connection nodes.
+ */
 static void revive_conn_edges(GNODE v, GNODE w)
 {
-	GNLIST h;
-	ADJEDGE e;
+	ADJEDGE sv_list, a;
+	GEDGE e;
 	CONNECT c;
 	int j;
 
@@ -2903,17 +2853,45 @@ static void revive_conn_edges(GNODE v, GNODE w)
 	 * Remind: The adjacency lists were destroyed in step1 in
     	 * calc_connect_adjlists.
 	 */
+#if 1
+	sv_list = reverse_adjlist(NSUCC(v));
+	NSUCC(v) = NULL;
 	j = 0;
-	e = NSUCC(v);
-	while (e) { SOURCE(e) = v; j++; e = ANEXT(e); }
+	for (a = sv_list; a; a = ANEXT(a))
+	{
+		e = AKANTE(a);
+		change_edge_src(e, ESOURCE(e), v);
+		j++;
+	}
+	assert(NOUTDEG(v) == -2);
+	NOUTDEG(v) = j;
+	delete_adjlist(sv_list);
+
+	sv_list = reverse_adjlist(NPRED(v));
+	NPRED(v) = NULL;
+	j = 0;
+	for (a = sv_list; a; a = ANEXT(a))
+	{
+		e = AKANTE(a);
+		change_edge_dst(e, ETARGET(e), v);
+		j++;
+	}
+	assert(NINDEG(v) == -2);
+	NINDEG(v) = j;
+	delete_adjlist(sv_list);
+#else	
+	j = 0;
+	a = NSUCC(v);
+	while (a) { SOURCE(a) = v; j++; a = ANEXT(a); }
 	assert(NOUTDEG(v) == -2);
 	NOUTDEG(v) = j;
 
 	j = 0;
-	e = NPRED(v);
-	while (e) { TARGET(e) = v; j++; e = ANEXT(e); }
+	a = NPRED(v);
+	while (a) { TARGET(a) = v; j++; a = ANEXT(a); }
 	assert(NINDEG(v) == -2);
 	NINDEG(v) = j;
+#endif
 
 	c = NCONNECT(v);
         if (c && CTARGET(c) && (CTARGET(c)!=w))   revive_conn_edges(CTARGET(c), v);
@@ -2945,15 +2923,54 @@ static GNLIST *insertpoint;	/* *insertpoint becomes leftlist           */
 static GNLIST middlepoint;      /* GNNEXT(middlepoint) becomes rightlist   */
 static GNLIST endpoint;		/* GNNEXT(rightlistend) will point to this */
 
-static void check_connect(int level,GNODE node)
+static void check_connect(int level, GNODE node)
 {
 	CONNECT c;
-	int 	j,clr, crl;
+	int     j, clr, crl;
+	GEDGE   e;
 	ADJEDGE a;
 
 	debugmessage("check_connect","");
 
 	c = NCONNECT(node);
+	if (forward_connection1(c)) revive_conn_edges(CTARGET(c), node);
+	if (forward_connection2(c)) revive_conn_edges(CTARGET2(c), node);
+
+#if 1
+	NSVSUCC(node) = reverse_adjlist(NSVSUCC(node));
+	j = 0;
+	for (a = NSVSUCC(node); a; a = ANEXT(a))
+	{
+		e = AKANTE(a);
+		assert(ESOURCE(e) == node);
+		change_edge_src(e, ESOURCE(e), node);
+		j++;
+	}
+	NOUTDEG(node) = j;
+	if (NSVSUCC(node)) {
+		e = AKANTE(NSVSUCC(node));
+		assert(NextSucc(e) == NULL); /* что нет лишних дуг */
+	}
+	delete_adjlist(NSVSUCC(node));
+	NSVSUCC(node) = NULL;
+
+	NSVPRED(node) = reverse_adjlist(NSVPRED(node));
+	j = 0;
+	for (a = NSVPRED(node); a; a = ANEXT(a))
+	{
+		e = AKANTE(a);
+		assert(ETARGET(e) == node);
+		change_edge_dst(e, ETARGET(e), node);
+		j++;
+	}
+	NINDEG(node) = j;
+	if (NSVPRED(node)) {
+		e = AKANTE(NSVPRED(node));
+		assert(NextPred(e) == NULL); /* что нет лишних дуг */
+	}
+	delete_adjlist(NSVPRED(node));
+	NSVPRED(node) = NULL;
+#else
 	NSUCC(node) = NSVSUCC(node);
 	NPRED(node) = NSVPRED(node);
 
@@ -2966,24 +2983,22 @@ static void check_connect(int level,GNODE node)
 	a = NPRED(node);
 	while (a) { j++; a = ANEXT(a); }
 	NINDEG(node) = j;
-
-	if (forward_connection1(c)) revive_conn_edges(CTARGET(c), node);
-	if (forward_connection2(c)) revive_conn_edges(CTARGET2(c), node);
+#endif
 
 	/* First we try to insert left first:
  	 *   -> Cl -> Cl -> A -> Cr -> Cr -> ...
 	 * and calculate the number of crossings, that now exist.
 	 */ 
 	leftlist = leftlistend = rightlist = rightlistend = NULL;
-	if (forward_connection1(c)) left_conn_list(CTARGET(c),node);
-	if (forward_connection2(c)) right_conn_list(CTARGET2(c),node);
+	if (forward_connection1(c)) left_conn_list(CTARGET(c), node);
+	if (forward_connection2(c)) right_conn_list(CTARGET2(c), node);
 
-	insert_left_right(level,node);
+	insert_left_right(level, node);
 
 	/* Calculate the actual number of crossings */
  	clr = 0;
-	if (level>0) 	     clr+=layer_crossing(level-1);
-	if (level<=maxdepth) clr+=layer_crossing(level);
+	if (level>0)         clr += layer_crossing(level-1);
+	if (level<=maxdepth) clr += layer_crossing(level);
 
 	/* Now we do the reverse inserting, 
  	 *   -> Cr -> Cr -> A -> Cl -> Cl -> ...
@@ -2994,16 +3009,16 @@ static void check_connect(int level,GNODE node)
 	GNNEXT(middlepoint) = endpoint;
 
 	leftlist = leftlistend = rightlist = rightlistend = NULL;
-	if (forward_connection1(c)) right_conn_list(CTARGET(c),node);
-	if (forward_connection2(c)) left_conn_list(CTARGET2(c),node);
+	if (forward_connection1(c)) right_conn_list(CTARGET(c), node);
+	if (forward_connection2(c)) left_conn_list(CTARGET2(c), node);
 
-	insert_left_right(level,node);
+	insert_left_right(level, node);
 
 
 	/* Calculate the actual number of crossings */
  	crl = 0;
-	if (level>0) 	     crl+=layer_crossing(level-1);
-	if (level<=maxdepth) crl+=layer_crossing(level);
+	if (level>0)         crl += layer_crossing(level-1);
+	if (level<=maxdepth) crl += layer_crossing(level);
 
 	/* If the the second try is better, we finish. If the first
 	 * try was better, we recreate the first situation.
@@ -3018,12 +3033,12 @@ static void check_connect(int level,GNODE node)
  	 *   -> Cl -> Cl -> A -> Cr -> Cr -> ...
 	 */ 
 	leftlist = leftlistend = rightlist = rightlistend = NULL;
-	if (forward_connection1(c)) left_conn_list(CTARGET(c),node);
-	if (forward_connection2(c)) right_conn_list(CTARGET2(c),node);
+	if (forward_connection1(c)) left_conn_list(CTARGET(c), node);
+	if (forward_connection2(c)) right_conn_list(CTARGET2(c), node);
 
-	insert_left_right(level,node);
+	insert_left_right(level, node);
 
-}
+} /* check_connect */
 
 
 /* Insert left_list and right_list 
@@ -3070,10 +3085,9 @@ static void insert_left_right(int level,GNODE node)
 	/* and recalculate TANZ */
 
 	j = 0;
-        hl  =  TSUCC(tmp_layer[level]);
-	while (hl) {
+        for (hl = TSUCC(tmp_layer[level]); hl; hl = GNNEXT(hl))
+	{
 		j++;
-		hl = GNNEXT(hl);
 	}
 	TANZ(tmp_layer[level]) = j;
 }
@@ -3085,7 +3099,6 @@ static void insert_left_right(int level,GNODE node)
  * Further, restore the edges that were in the adjacency lists
  * of the connection nodes.
  */
-
 static void left_conn_list(GNODE v,GNODE w)
 {
 	GNLIST h;
@@ -3094,10 +3107,6 @@ static void left_conn_list(GNODE v,GNODE w)
 
 	debugmessage("left_conn_list","");
 
-	/* restore the adjacency lists of the connection 
-	 * Remind: The adjacency lists were destroyed in step1 in
-    	 * calc_connect_adjlists.
-	 */
 	e = NSUCC(v);
 	while (e) { assert(SOURCE(e) == v); e = ANEXT(e); }
 	e = NPRED(v);
@@ -3110,10 +3119,8 @@ static void left_conn_list(GNODE v,GNODE w)
 	if (!leftlistend) leftlistend = h;	
 
 	c = NCONNECT(v);
-	if (!c) return;
-
-        if (CTARGET(c) && (CTARGET(c)!=w))   left_conn_list(CTARGET(c),v);
-        if (CTARGET2(c) && (CTARGET2(c)!=w)) left_conn_list(CTARGET2(c),v);
+        if (c && CTARGET(c) && (CTARGET(c)!=w))   left_conn_list(CTARGET(c), v);
+        if (c && CTARGET2(c) && (CTARGET2(c)!=w)) left_conn_list(CTARGET2(c), v);
 }
 
 /* Calculate right_list
@@ -3122,7 +3129,6 @@ static void left_conn_list(GNODE v,GNODE w)
  * Further, restore the edges that were in the adjacency lists
  * of the connection nodes.
  */
-
 static void right_conn_list(GNODE v,GNODE w)
 {
 	GNLIST h;
@@ -3131,10 +3137,6 @@ static void right_conn_list(GNODE v,GNODE w)
 
 	debugmessage("right_conn_list","");
 
-	/* restore the adjacency lists of the connection 
-	 * Remind: The adjacency lists were destroyed in step1 in
-    	 * calc_connect_adjlists.
-	 */
 	e = NSUCC(v);
 	while (e) { assert(SOURCE(e) == v); e = ANEXT(e); }
 	e = NPRED(v);
@@ -3148,10 +3150,8 @@ static void right_conn_list(GNODE v,GNODE w)
 	if (!rightlist) rightlist = h;	
 
 	c = NCONNECT(v);
-	if (!c) return;
-
-        if (CTARGET(c) && (CTARGET(c)!=w))   right_conn_list(CTARGET(c),v);
-        if (CTARGET2(c) && (CTARGET2(c)!=w)) right_conn_list(CTARGET2(c),v);
+        if (c && CTARGET(c) && (CTARGET(c)!=w))   right_conn_list(CTARGET(c), v);
+        if (c && CTARGET2(c) && (CTARGET2(c)!=w)) right_conn_list(CTARGET2(c), v);
 }
 
 
