@@ -304,7 +304,7 @@ typedef struct gnode
 	 * in the adjacency list.
          */
 
-	struct	adjedge	*tmpadj;      	/* temporary adjacency list     */
+	/*struct	adjedge	*tmpadj;*/      	/* temporary adjacency list     */
 	struct	adjedge	*pred;	       	/* adjacency list: predecessors */
 	struct	adjedge	*succ;	       	/* adjacency list: successors   */
 	struct	adjedge	*savepred;     	/* adjacency list: predecessors */

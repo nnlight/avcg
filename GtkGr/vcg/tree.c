@@ -469,11 +469,12 @@ static void sort_all_adjacencies(void)
 {
 	int i;
 	GNLIST h1;
-	ADJEDGE a;
+	GEDGE e;
 
 	debugmessage("sort_all_adjacencies","");
 
 	for (i=0; i<=maxdepth+1; i++) {
+#if 0
 		if (i>0) {
 			for (h1 = TSUCC(layer[i-1]); h1; h1 = GNNEXT(h1))
 			{
@@ -503,25 +504,30 @@ static void sort_all_adjacencies(void)
 				a = ANEXT(a);
 			}
 		}
+#else
+		for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
+		{
+			if (i == 0)          assert(!FirstPred(GNNODE(h1)));
+			if (i == maxdepth+1) assert(!FirstSucc(GNNODE(h1)));
+			for (e = FirstPred(GNNODE(h1)); e; e = NextPred(e))
+			{
+				relink_node_edge_as_last(ESOURCE(e), e, GD_SUCC);
+			}
+			for (e = FirstSucc(GNNODE(h1)); e; e = NextSucc(e))
+			{
+				relink_node_edge_as_last(ETARGET(e), e, GD_PRED);
+			}
+		}
+#endif
 	}
 
 	for (i=0; i<=maxdepth+1; i++) {
 		for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
 		{
-			NPREDL(GNNODE(h1)) = NPREDR(GNNODE(h1)) = 0;
-			a = NPRED(GNNODE(h1));
-			if (a) {
-				NPREDL(GNNODE(h1)) = AKANTE(a);
-				while (ANEXT(a)) a = ANEXT(a);
-				NPREDR(GNNODE(h1)) = AKANTE(a);
-			}
-			NSUCCL(GNNODE(h1)) = NSUCCR(GNNODE(h1)) = 0;
-			a = NSUCC(GNNODE(h1));
-			if (a) {
-				NSUCCL(GNNODE(h1)) = AKANTE(a);
-				while (ANEXT(a)) a = ANEXT(a);
-				NSUCCR(GNNODE(h1)) = AKANTE(a);
-			}
+			NPREDL(GNNODE(h1)) = FirstPred(GNNODE(h1));
+			NPREDR(GNNODE(h1)) = LastPred(GNNODE(h1));
+			NSUCCL(GNNODE(h1)) = FirstSucc(GNNODE(h1));
+			NSUCCR(GNNODE(h1)) = LastSucc(GNNODE(h1));
 		}
 	}
 } /* sort_all_adjacencies */
