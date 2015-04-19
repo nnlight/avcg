@@ -73,12 +73,6 @@
  *			is an edge that preferably is reverted.
  *			We use a special adjacency list to notify all 
  *			back edges.
- * prededgealloc	allocates an edge list element (i.e. a cons cell whose
- *                      head is a GEDGE object), used as adjacency list of
- *                      predecessors of a node.
- * succedgealloc	allocates an edge list element (i.e. a cons cell whose
- *                      head is a GEDGE object), used as adjacency list of
- *                      succecessors of a node.
  *
  * connectalloc		allocates a CONNECT element of a node
  *
@@ -1146,40 +1140,6 @@ ADJEDGE edgelist_alloc(void)
 	AINTERN(h) = tmpeconslist;
 	tmpeconslist = h;
 	return(h);
-}
-
-
-/*  Add a new edge to the predecessors of a node
- *  --------------------------------------------
- */
-
-ADJEDGE prededgealloc(GNODE node, GEDGE edge)
-{
-	ADJEDGE e;
-        
-	assert(EEND(edge)==node);
-	e = edgelist_alloc();
-	AKANTE(e)	= edge;
-	ANEXT(e)  	= NPRED(node);
-	NPRED(node) 	= e;
-	return(e);
-}
-
-
-/*  Add a new cons cell to the successors of a node
- *  -----------------------------------------------
- */
-
-ADJEDGE succedgealloc(GNODE node, GEDGE edge)
-{
-	ADJEDGE e;   
-        
-	assert(ESTART(edge)==node);
-	e = edgelist_alloc();
-	AKANTE(e)	= edge;
-	ANEXT(e) 	= NSUCC(node);
-	NSUCC(node)	= e;
-	return(e); 
 }
 
 

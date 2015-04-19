@@ -305,8 +305,8 @@ typedef struct gnode
          */
 
 	/*struct	adjedge	*tmpadj;*/      	/* temporary adjacency list     */
-	struct	adjedge	*pred;	       	/* adjacency list: predecessors */
-	struct	adjedge	*succ;	       	/* adjacency list: successors   */
+	/*struct	adjedge	*pred;*/	       	/* adjacency list: predecessors */
+	/*struct	adjedge	*succ;*/	       	/* adjacency list: successors   */
 	struct	adjedge	*savepred;     	/* adjacency list: predecessors */
 	struct	adjedge	*savesucc;     	/* adjacency list: successors   */
 	struct	gedge	*predleft;     	/* leftest predecessor          */
@@ -527,7 +527,6 @@ typedef struct gedge
 	/* adjacency lists: these are double linked lists */
 	struct gedge *adjnext[GD_COUNT]; /* adjacency list, next edge */
 	struct gedge *adjprev[GD_COUNT]; /* adjacency list, prev edge */
-	struct adjedge *xxadjentry[GD_COUNT]; /* for temporary checks */
 
 	struct	gedge	*internal_next;  /* for memory allocation       */
 } *GEDGE;
@@ -573,7 +572,6 @@ typedef struct gedge
 #endif
 #define PrevPred(x)     EADJPREV(x, GD_PRED)
 #define PrevSucc(x)     EADJPREV(x, GD_SUCC)
-#define EADJENTRY(x, dir) ((x)->xxadjentry[dir])
 #define EART(x)		((x)->kantenart)
 #define	EKIND(x)        ((x)->kantenart)
 #define	EINVISIBLE(x)	((x)->invisible)

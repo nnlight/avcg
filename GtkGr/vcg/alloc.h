@@ -89,8 +89,6 @@ void near_edge_insert       _PP((GEDGE e));
 void bentnear_edge_insert   _PP((GEDGE e));
 void back_edge_insert       _PP((GEDGE e));
 ADJEDGE edgelist_alloc(void);
-ADJEDGE prededgealloc 	    _PP((GNODE node,GEDGE edge));
-ADJEDGE succedgealloc 	    _PP((GNODE node,GEDGE edge));
 
 CONNECT	connectalloc	_PP((GNODE node));
 

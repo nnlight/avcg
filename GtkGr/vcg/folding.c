@@ -892,8 +892,6 @@ static void recursive_fold(GNODE v, GNODE n, int k)
 	}
 
 	/* nnlight - my watching checks */
-	assert(NPRED(v) == NULL);
-	assert(NSUCC(v) == NULL);
 	assert(FirstPred(v) == NULL);
 	assert(FirstSucc(v) == NULL);
 	

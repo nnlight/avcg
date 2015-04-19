@@ -322,7 +322,6 @@ static void calc_node_anchor(GNODE v)
 static void sort_adjacencies(GNODE v)
 {
         int i;
-        ADJEDGE a;
 	GEDGE e;
  
         debugmessage("sort_adjacencies","");
@@ -336,14 +335,11 @@ static void sort_adjacencies(GNODE v)
 
         qsort(adjarray2,NINDEG(v),sizeof(GEDGE),
 		(int (*) (const void *, const void *))compare_ppos);
-	for ( i = 0, a = NPRED(v);
+	for ( i = 0;
 		i < NINDEG(v);
-		i++, a = ANEXT(a) )
+		i++ )
 	{
-		assert(a);
 		e = adjarray2[i];
-                AKANTE(a) = e;
-		EADJENTRY(e,GD_PRED) = a;
 		if (i > 0) {
 			EADJPREV(e,GD_PRED) = adjarray2[i-1];
 		} else {
@@ -370,14 +366,11 @@ static void sort_adjacencies(GNODE v)
 
         qsort(adjarray2,NOUTDEG(v),sizeof(GEDGE),
 		(int (*) (const void *, const void *))compare_spos);
-	for ( i = 0, a = NSUCC(v);
+	for ( i = 0;
 		i < NOUTDEG(v);
-		i++, a = ANEXT(a) )
+		i++ )
 	{
-		assert(a);
 		e = adjarray2[i];
-                AKANTE(a) = e;
-		EADJENTRY(e,GD_SUCC) = a;
 		if (i > 0) {
 			EADJPREV(e,GD_SUCC) = adjarray2[i-1];
 		} else {
