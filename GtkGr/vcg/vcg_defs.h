@@ -307,12 +307,13 @@ typedef struct gnode
 	/*struct	adjedge	*tmpadj;*/      	/* temporary adjacency list     */
 	/*struct	adjedge	*pred;*/	       	/* adjacency list: predecessors */
 	/*struct	adjedge	*succ;*/	       	/* adjacency list: successors   */
+	/* TODO: перенести эти поля в connection */
 	struct	adjedge	*savepred;     	/* adjacency list: predecessors */
 	struct	adjedge	*savesucc;     	/* adjacency list: successors   */
-	struct	gedge	*predleft;     	/* leftest predecessor          */
-	struct	gedge	*predright;    	/* rightest predecessor         */
-	struct	gedge	*succleft;	/* leftest successor		*/
-	struct	gedge	*succright;	/* rightest successor           */
+	/*struct	gedge	*predleft;*/     	/* leftest predecessor          */
+	/*struct	gedge	*predright;*/    	/* rightest predecessor         */
+	/*struct	gedge	*succleft;*/	/* leftest successor		*/
+	/*struct	gedge	*succright;*/	/* rightest successor           */
 	struct gedge *adjfirst[GD_COUNT]; /* adjacency list, first edge */
 	struct gedge *adjlast[GD_COUNT];  /* adjacency list, last edge  */
 
@@ -381,12 +382,12 @@ typedef struct gnode
 #define	NTMPADJ(x)	((x)->tmpadj)
 #define	NPRED(x)	((x)->pred)
 #define NSUCC(x)	((x)->succ)
-#define	NSVPRED(x)	((x)->savepred)
-#define NSVSUCC(x)	((x)->savesucc)
-#define	NPREDL(x)	((x)->predleft)
-#define	NPREDR(x)	((x)->predright)
-#define	NSUCCL(x)	((x)->succleft)
-#define	NSUCCR(x)	((x)->succright)
+#define NSVPRED(x)      ((x)->savepred)
+#define NSVSUCC(x)      ((x)->savesucc)
+#define NPREDL(x)       FirstPred(x)
+#define NPREDR(x)       LastPred(x)
+#define NSUCCL(x)       FirstSucc(x)
+#define NSUCCR(x)       LastSucc(x)
 #define NADJFIRST(x,di) ((x)->adjfirst[di])
 #define NADJLAST(x,dir) ((x)->adjlast[dir])
 #if VCG_USE_MACROS

@@ -270,10 +270,6 @@ static GNODE internal_nodealloc(void)
 	NINDEG(h)    	= 0;
 	NOUTDEG(h)	= 0;
 	NVPTR(h)	= NULL;
-	NPREDL(h)       = NULL;
-        NPREDR(h)       = NULL; 
-        NSUCCL(h)       = NULL; 
-        NSUCCR(h)       = NULL;
 	NCONNECT(h)  	= NULL;
 	NINTERN(h)	= NULL;
 	init_node_graph_fields_as_dead(h);

@@ -1210,8 +1210,6 @@ static void refresh_all_nodes(GNODE v)
 		NX(v) 		= 0L;
 		NY(v) 		= 0L;
 		NCONNECT(v)	= NULL;
-		NSUCCL(v)	= NSUCCR(v)	= NULL;
-		NPREDL(v)	= NPREDR(v)	= NULL;
 		unlink_node_edges(v);
 		/*init_node_adj_fields(v);*/
 	}

@@ -518,16 +518,6 @@ void sort_all_adjacencies(void)
 		}
 #endif
 	}
-
-	for (i=0; i<=maxdepth+1; i++) {
-		for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
-		{
-			NPREDL(GNNODE(h1)) = FirstPred(GNNODE(h1));
-			NPREDR(GNNODE(h1)) = LastPred(GNNODE(h1));
-			NSUCCL(GNNODE(h1)) = FirstSucc(GNNODE(h1));
-			NSUCCR(GNNODE(h1)) = LastSucc(GNNODE(h1));
-		}
-	}
 } /* sort_all_adjacencies */
 
 

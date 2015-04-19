@@ -353,10 +353,6 @@ static void sort_adjacencies(GNODE v)
 			NADJLAST(v,GD_PRED) = e;
 		}
 	}
-        if (i) { /* at least one predecessor */
-                NPREDL(v) = adjarray2[0];
-                NPREDR(v) = adjarray2[i-1];
-        }
 
 	i = 0;
 	for (e = FirstSucc(v); e; e = NextSucc(e))
@@ -384,10 +380,6 @@ static void sort_adjacencies(GNODE v)
 			NADJLAST(v,GD_SUCC) = e;
 		}
 	}
-        if (i) { /* at least one successor */
-                NSUCCL(v) = adjarray2[0];
-                NSUCCR(v) = adjarray2[i-1];
-        }
 } /* sort_adjacencies */
 
 
