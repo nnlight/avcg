@@ -914,6 +914,19 @@ static int layer_crossing(int level)
 		i = i+2;
 	}
 #else
+/*
+ * Данные циклы горячие и из-за них VCG_USE_MACROS и NDEBUG (assert)
+ * имеют сильное влияние (11 сек -> 7.4 сек).
+ * Следующий трюк тоже дает привар (7.4->6.7), хотя, возможно, когда
+ * инициализации DEAD_PTR вырубить, он перестанет быть заметным.
+ */
+#define LC_HACK_FOR_PERF 0
+#if LC_HACK_FOR_PERF
+	for (vl2 = TSUCC(tmp_layer[level+1]); vl2; vl2 = GNNEXT(vl2))
+	{
+		LastPred(GNNODE(vl2)) = NULL;
+	}
+#endif
 	i = 1;
 	for (vl1 = TSUCC(tmp_layer[level]); vl1; vl1 = GNNEXT(vl1))
 	{
@@ -921,11 +934,32 @@ static int layer_crossing(int level)
 		NPOS(GNNODE(vl1))  = i;
 		for (e = FirstSucc(GNNODE(vl1)); e; e = NextSucc(e))
 		{
+#if !LC_HACK_FOR_PERF
 			relink_node_edge_as_last(ETARGET(e), e, GD_PRED);
+#else
+			GNODE n = ETARGET(e);
+			if (LastPred(n)) {
+				EADJNEXT(LastPred(n),GD_PRED) = e;
+				EADJPREV(e,GD_PRED) = LastPred(n);
+				EADJNEXT(e,GD_PRED) = NULL;
+				NADJLAST(n,GD_PRED) = e;
+			} else {
+				EADJPREV(e,GD_PRED) = NULL;
+				EADJNEXT(e,GD_PRED) = NULL;
+				NADJFIRST(n,GD_PRED) = e;
+				NADJLAST(n,GD_PRED) = e;
+			}
+#endif
 		}
 		i = i+2;
 	}
 
+#if LC_HACK_FOR_PERF
+	for (vl1 = TSUCC(tmp_layer[level]); vl1; vl1 = GNNEXT(vl1))
+	{
+		LastSucc(GNNODE(vl1)) = NULL;
+	}
+#endif
 	i = 2;
 	for (vl2 = TSUCC(tmp_layer[level+1]); vl2; vl2 = GNNEXT(vl2))
 	{
@@ -933,7 +967,22 @@ static int layer_crossing(int level)
 		NPOS(GNNODE(vl2))  = i;
 		for (e = FirstPred(GNNODE(vl2)); e; e = NextPred(e))
 		{
+#if !LC_HACK_FOR_PERF			
 			relink_node_edge_as_last(ESOURCE(e), e, GD_SUCC);
+#else
+			GNODE n = ESOURCE(e);
+			if (LastSucc(n)) {
+				EADJNEXT(LastSucc(n),GD_SUCC) = e;
+				EADJPREV(e,GD_SUCC) = LastSucc(n);
+				EADJNEXT(e,GD_SUCC) = NULL;
+				NADJLAST(n,GD_SUCC) = e;
+			} else {
+				EADJPREV(e,GD_SUCC) = NULL;
+				EADJNEXT(e,GD_SUCC) = NULL;
+				NADJFIRST(n,GD_SUCC) = e;
+				NADJLAST(n,GD_SUCC) = e;
+			}
+#endif
 		}
 		i = i+2;
 	}
