@@ -521,15 +521,11 @@ typedef struct gedge
 
 	struct	gnode	*labelnode; /* Label node if the edge is replaced */ 	
 
-	/* edgelist links: these are double linked lists */
-	struct	gedge	*next;		 /* successor in the edgelist   */
-	struct 	gedge	*before; 	 /* predecessor in the edgelist */
+	struct	gedge	*next;		 /* [tmp]edgelist next element */
 
 	/* adjacency lists: these are double linked lists */
 	struct gedge *adjnext[GD_COUNT]; /* adjacency list, next edge */
 	struct gedge *adjprev[GD_COUNT]; /* adjacency list, prev edge */
-
-	struct	gedge	*internal_next;  /* for memory allocation       */
 } *GEDGE;
 
 #define	ESTART(x)	((x)->start)
@@ -562,9 +558,7 @@ typedef struct gedge
 #define	EARROWBCOL(x)	((x)->arrowcolor2)
 #define	EANCHOR(x)	((x)->anchor)
 #define	ELNODE(x)	((x)->labelnode)
-#define	ENEXT(x)	((x)->next)
-#define	EBEFORE(x)	((x)->before)
-#define	EPREV(x)	((x)->before)
+#define ENEXT(x)        ((x)->next)
 #define EADJNEXT(x,dir) ((x)->adjnext[dir])
 #define EADJPREV(x,dir) ((x)->adjprev[dir])
 #if VCG_USE_MACROS
@@ -573,12 +567,11 @@ typedef struct gedge
 #endif
 #define PrevPred(x)     EADJPREV(x, GD_PRED)
 #define PrevSucc(x)     EADJPREV(x, GD_SUCC)
-#define EART(x)		((x)->kantenart)
-#define	EKIND(x)        ((x)->kantenart)
+#define EART(x)         ((x)->kantenart)
+#define EKIND(x)        ((x)->kantenart)
 #define	EINVISIBLE(x)	((x)->invisible)
 #define	EWEIGHTS(x)	((x)->weights)
 #define	EWEIGHTP(x)	((x)->weightp)
-#define EINTERN(x)	((x)->internal_next)
 
 
 

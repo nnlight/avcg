@@ -444,7 +444,7 @@ void insert_anchor_edges(void)
 		    &&(!EINVISIBLE(edge))) 
 			prepare_anchoredge(edge);
 	}
-	for (edge = tmpedgelist; edge; edge = EINTERN(edge))
+	for (edge = tmpedgelist; edge; edge = ENEXT(edge))
 	{
 		if (  (EANCHOR(edge)<=64) && (EANCHOR(edge)>0)
 		    &&(!EINVISIBLE(edge))) 

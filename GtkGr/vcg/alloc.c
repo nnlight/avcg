@@ -785,7 +785,6 @@ static GEDGE edge_freelist = NULL;     /* list of free GEDGE objects        */
  *  we allocate an edge from the core memory.
  *  We also set some default values.
  */
-
 static GEDGE internal_edgealloc(void)
 {
 	GEDGE   h;
@@ -793,7 +792,7 @@ static GEDGE internal_edgealloc(void)
 	debugmessage("internal_edgealloc","");
 	if (edge_freelist) {
 		h = edge_freelist;
-		edge_freelist = EINTERN(edge_freelist);
+		edge_freelist = ENEXT(edge_freelist);
 	}
 	else {
 	 	h = (GEDGE) myalloc(sizeof(struct gedge));
@@ -823,7 +822,6 @@ static GEDGE internal_edgealloc(void)
 	EINVISIBLE(h)	= 0;
 	EWEIGHTS(h)   	= 0;
 	EWEIGHTP(h)   	= 0;
-	EINTERN(h)	= NULL;
 	init_edge_graph_fields_as_dead(h);
 	return(h);
 }
@@ -993,7 +991,8 @@ GEDGE	tmpedgealloc(
 	EARROWBSTYLE(h)	= barrowsty;
 	EARROWBCOL(h)	= barrowc;
 
-	EINTERN(h) = tmpedgelist;
+	assert(ENEXT(h) == DEAD_GEDGE);
+	ENEXT(h) = tmpedgelist;
 	tmpedgelist = h;
 	return(h);
 }
@@ -1010,8 +1009,8 @@ static void free_tmpedges(void)
 	debugmessage("free_tmpedges","");
 	h = tmpedgelist;
 	if (h) {
-		while (EINTERN(h)) h = EINTERN(h);
-		EINTERN(h) = edge_freelist;
+		while (ENEXT(h)) h = ENEXT(h);
+		ENEXT(h) = edge_freelist;
 		edge_freelist = tmpedgelist;
 		tmpedgelist = NULL;
 	}

@@ -135,7 +135,6 @@ void init_edge_graph_fields_as_dead(GEDGE e)
     EADJPREV(e, GD_PRED) = DEAD_GEDGE;
     EADJPREV(e, GD_SUCC) = DEAD_GEDGE;
     ENEXT(e) = DEAD_GEDGE;
-    EPREV(e) = DEAD_GEDGE;
 }
 
 void init_node_adj_fields(GNODE v)

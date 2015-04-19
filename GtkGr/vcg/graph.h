@@ -101,9 +101,7 @@ int get_node_preds_num(GNODE v);
 
 #define ins_edge_in_dl_list(e,l,le) \
 { \
-    assert(EPREV(e) == DEAD_GEDGE); \
     assert(ENEXT(e) == DEAD_GEDGE); \
-    EPREV(e) = le;                  \
     ENEXT(e) = NULL;                \
     if (le) ENEXT(le) = e;          \
     le = e;                         \

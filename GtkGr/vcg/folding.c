@@ -1116,7 +1116,7 @@ static void hide_edge_classes(void)
 			EINVISIBLE(h) = 1;
 		}
 	}
-	for (h = tmpedgelist; h; h = EINTERN(h))
+	for (h = tmpedgelist; h; h = ENEXT(h))
 	{
 		assert(ECLASS(h)>0);
 		if (hide_class[ECLASS(h)-1]) {
@@ -1625,10 +1625,9 @@ static GEDGE	substed_edge(GEDGE e)
 	 *  Before the first call, we assume that tmpedgelist is NULL.
 	 */
 
-	h = tmpedgelist;
-	while (h) {
+	for (h = tmpedgelist; h; h = ENEXT(h))
+	{
 		if ((ESTART(h)==ss) && (EEND(h)==tt)) return(h);
-		h = EINTERN(h);
 	}	
 
 	/*  HERE IS THE POSSIBLE ENTRY POINT TO GIVE THE EDGES TO FOLDED
@@ -1696,8 +1695,8 @@ static void create_lab_adjacencies(void)
 	GNODE	v;
 
 	debugmessage("create_lab_adjacencies","");
-	edge = edgelist;
-	while (edge) {
+	for (edge = edgelist; edge; edge = ENEXT(edge))
+	{
 		e = substed_edge(edge);
 		if (e) {
 			if ( ELABEL(e) ) {
@@ -1742,7 +1741,6 @@ static void create_lab_adjacencies(void)
 			}
 			else create_adjedge(e);
 		}
-		edge = ENEXT(edge);
 	}
 }
 
