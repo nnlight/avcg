@@ -1,45 +1,24 @@
 /*--------------------------------------------------------------------*/
-/*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
-/*              --------------------------------------                */
-/*                                                                    */
-/*   file:         step4.c                                            */
-/*   version:      1.00.00                                            */
-/*   creation:     14.4.93                                            */
-/*   author:       I. Lemke  (...-Version 0.99.99)                    */
-/*                 G. Sander (Version 1.00.00-...)                    */
-/*                 Universitaet des Saarlandes, 66041 Saarbruecken    */
-/*                 ESPRIT Project #5399 Compare                       */
-/*   description:  Layout phase 4: calculation of coordinates         */
-/*                 of edges                                           */
-/*   status:       in work                                            */
-/*                                                                    */
 /*--------------------------------------------------------------------*/
-
-
 /*
- *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium 
+ * Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
+ *                             the Compare Consortium
+ * Copyright (C) 2015 Nikita S <nnlight@gmail.com>
  *
- *  This program and documentation is free software; you can redistribute 
- *  it under the terms of the  GNU General Public License as published by
- *  the  Free Software Foundation;  either version 2  of the License,  or
- *  (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  This  program  is  distributed  in  the hope that it will be useful,
- *  but  WITHOUT ANY WARRANTY;  without  even  the  implied  warranty of
- *  MERCHANTABILITY  or  FITNESS  FOR  A  PARTICULAR  PURPOSE.  See  the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- *  You  should  have  received a copy of the GNU General Public License
- *  along  with  this  program;  if  not,  write  to  the  Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  The software is available per anonymous ftp at ftp.cs.uni-sb.de.
- *  Contact  sander@cs.uni-sb.de  for additional information.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
-
-
 
 /************************************************************************
  * The situation here is the following:
@@ -171,7 +150,9 @@ static void 	flip_ver_edge		_PP((GEDGE e));
 /*--------------------------------------------------------------------*/
 /*  Calculation of co-ordinates of edges                              */
 /*--------------------------------------------------------------------*/
-
+/**
+ * Layout phase 4: calculation of coordinates of edges.
+ */
 void	step4_main(void)
 {
         start_time();
@@ -504,7 +485,6 @@ void calc_edge_xy(GNODE v)
 	int node_predports,node_succports, dist, dist1;
 	CONNECT c;
 	GEDGE   e;
-	ADJEDGE a;
 
 	debugmessage("calc_edge_xy","");
 	assert((v));
@@ -557,9 +537,8 @@ void calc_edge_xy(GNODE v)
 	}
 
 	/* Now: check all successors */
-	a = NSUCC(v);
-	while (a) {
-		e = AKANTE(a);
+	for (e = FirstSucc(v); e; e = NextSucc(e))
+	{
 		switch (EART(e)) {
 		case 'l': ETBENDY(e) = ESTARTY(e) = node_y+node_height/2;
 			  ETBENDX(e) = ESTARTX(e) = node_x+dist1;
@@ -597,12 +576,10 @@ void calc_edge_xy(GNODE v)
 			  }
 			  ETBENDY(e) = ESTARTY(e);
 		}
-		a = ANEXT(a);
 	}
 	/* Now: check all predecessors */
-	a = NPRED(v);
-	while (a) {
-		e = AKANTE(a);
+	for (e = FirstPred(v); e; e = NextPred(e))
+	{
 		switch (EART(e)) {
 		case 'l': EBBENDY(e) = EENDY(e) = node_y+node_height/2;
 			  EBBENDX(e) = EENDX(e) = node_x+node_width-dist1;
@@ -650,7 +627,6 @@ void calc_edge_xy(GNODE v)
 			  }
 			  EBBENDY(e) = EENDY(e);
 		}
-		a = ANEXT(a);
 	}
 }
 
@@ -745,7 +721,7 @@ static  int 	lowerxpos;
 static int 	fill_row_indicators(int level)
 {
 	GNLIST li1, li2;
-	ADJEDGE a1, a2;
+	GEDGE e1, e2;
 
 	debugmessage("fill_row_indicator","");
         assert((level>=0));
@@ -762,46 +738,46 @@ static int 	fill_row_indicators(int level)
 
 	li1 = TSUCC(layer[level]);
 	li2 = TSUCC(layer[level+1]);
-	a1 = NULL;
-	while (li1 && (!a1)) {
-		a1 = NSUCC(GNNODE(li1));
-		if (!a1) li1 = GNNEXT(li1); 
+	e1 = NULL;
+	while (li1 && (!e1)) {
+		e1 = FirstSucc(GNNODE(li1));
+		if (!e1) li1 = GNNEXT(li1);
 	}
-	a2 = NULL;
-	while (li2 && (!a2)) {
-		a2 = NPRED(GNNODE(li2));
-		if (!a2) li2 = GNNEXT(li2); 
+	e2 = NULL;
+	while (li2 && (!e2)) {
+		e2 = FirstPred(GNNODE(li2));
+		if (!e2) li2 = GNNEXT(li2); 
 	}
 	while ((li1)||(li2)) {
-		if (a1 && a2) {
-			if (ESTARTX(AKANTE(a1)) < EENDX(AKANTE(a2))) {
-				finish_upper(GNNODE(li1),ESTARTX(AKANTE(a1)));
-				a1 = ANEXT(a1);
+		if (e1 && e2) {
+			if (ESTARTX(e1) < EENDX(e2)) {
+				finish_upper(GNNODE(li1),ESTARTX(e1));
+				e1 = NextSucc(e1);
 			}
-			else {  finish_lower(GNNODE(li2),EENDX(AKANTE(a2)));
-				a2 = ANEXT(a2);
-			}
-		}
-		else if (a1) {
-			finish_upper(GNNODE(li1),ESTARTX(AKANTE(a1)));
-			a1 = ANEXT(a1);
-		}
-		else if (a2) {
-			finish_lower(GNNODE(li2),EENDX(AKANTE(a2)));
-			a2 = ANEXT(a2);
-		}
-		if (!a1) { 
-			if (li1) li1 = GNNEXT(li1); 
-			while (li1 && (!a1)) {
-				a1 = NSUCC(GNNODE(li1));
-				if (!a1) li1 = GNNEXT(li1); 
+			else {  finish_lower(GNNODE(li2),EENDX(e2));
+				e2 = NextPred(e2);
 			}
 		}
-		if (!a2) { 
-			if (li2) li2 = GNNEXT(li2); 
-			while (li2 && (!a2)) {
-				a2 = NPRED(GNNODE(li2));
-				if (!a2) li2 = GNNEXT(li2); 
+		else if (e1) {
+			finish_upper(GNNODE(li1),ESTARTX(e1));
+			e1 = NextSucc(e1);
+		}
+		else if (e2) {
+			finish_lower(GNNODE(li2),EENDX(e2));
+			e2 = NextPred(e2);
+		}
+		if (!e1) { 
+			if (li1) li1 = GNNEXT(li1);
+			while (li1 && (!e1)) {
+				e1 = FirstSucc(GNNODE(li1));
+				if (!e1) li1 = GNNEXT(li1);
+			}
+		}
+		if (!e2) { 
+			if (li2) li2 = GNNEXT(li2);
+			while (li2 && (!e2)) {
+				e2 = FirstPred(GNNODE(li2));
+				if (!e2) li2 = GNNEXT(li2);
 			}
 		}
 	}
@@ -821,8 +797,7 @@ static int 	fill_row_indicators(int level)
 
 static void 	finish_upper(GNODE v, int xpos)
 {
-	ADJEDGE a;
-	GEDGE ee;
+	GEDGE e;
 	DLLIST n,m;
 	int k;
 
@@ -837,14 +812,12 @@ static void 	finish_upper(GNODE v, int xpos)
 	/* for all NSUCC's of v in order of their gradient... 
  	 * the edges, that are not yet threated are now inserted.
 	 */
-	a = NSUCC(v);
-	while (a) {
-		ee = AKANTE(a);
-		if ((ESTARTX(ee)==xpos) && (EENDX(ee) > ESTARTX(ee))) {
+	for (e = FirstSucc(v); e; e = NextSucc(e))
+	{
+		if ((ESTARTX(e)==xpos) && (EENDX(e) > ESTARTX(e))) {
 			/* nonfinished: touch it */
-			append_to_lower(ee,TARGET(a));
+			append_to_lower(e,ETARGET(e));
 		}
-		a = ANEXT(a);
 	}
 	k = maxr_upper_list + maxr_lower_list;
 	if (k>maxr_sum) maxr_sum = k;
@@ -872,8 +845,7 @@ static void 	finish_upper(GNODE v, int xpos)
 
 static void 	finish_lower(GNODE v, int xpos)
 {
-	ADJEDGE a;
-	GEDGE ee;
+	GEDGE e;
 	DLLIST n,m;
 	int k;
 
@@ -888,14 +860,12 @@ static void 	finish_lower(GNODE v, int xpos)
 	/* for all NPRED's of v in order of their gradient... 
  	 * the edges, that are not yet threated are now inserted.
 	 */
-	a = NPRED(v);
-	while (a) {
-		ee = AKANTE(a);
-		if ((EENDX(ee)==xpos) && (EENDX(ee) <= ESTARTX(ee))) {
+	for (e = FirstPred(v); e; e = NextPred(e))
+	{
+		if ((EENDX(e)==xpos) && (EENDX(e) <= ESTARTX(e))) {
 			/* nonfinished: touch it */
-			append_to_upper(ee,SOURCE(a));
+			append_to_upper(e,ESOURCE(e));
 		}
-		a = ANEXT(a);
 	}
 	k = maxr_upper_list + maxr_lower_list;
 	if (k>maxr_sum) maxr_sum = k;
@@ -1012,73 +982,68 @@ static void 	delete_lower(DLLIST x)
 static void 	evaluate_row_indicators(int level, int maxr, int miny, int maxy)
 {
 	GNLIST li;
-        ADJEDGE a;
-	GEDGE ee;
+	GEDGE e;
 	GNODE node;
 	int k, k1, k2;
 	debugmessage("evaluate_row_indicators","");
 
-	li = TSUCC(layer[level]);
-	while (li) {
-        	a = NSUCC(GNNODE(li));
-        	while (a) {
-			ee = AKANTE(a);
+	for (li = TSUCC(layer[level]); li; li = GNNEXT(li))
+	{
+		for (e = FirstSucc(GNNODE(li)); e; e = NextSucc(e))
+		{
 			if (one_line_manhatten==1) {
 				k = maxy- (maxy-miny) / 2; 
 			}
 			else {
-				if (ESTARTX(ee) >= EENDX(ee))
+				if (ESTARTX(e) >= EENDX(e))
 					k = maxy- (maxy-miny) * 
-					       (maxr+1-ETBENDY(ee)) / (maxr+1);
+					       (maxr+1-ETBENDY(e)) / (maxr+1);
 				else    k = miny+ (maxy-miny) *
-					       (maxr+1-ETBENDY(ee)) / (maxr+1);
+					       (maxr+1-ETBENDY(e)) / (maxr+1);
 			}
-			ETBENDY(ee) = k;
-			EBBENDY(ee) = k;
-                	a = ANEXT(a);
+			ETBENDY(e) = k;
+			EBBENDY(e) = k;
         	}
-		li = GNNEXT(li);
 	}
 
-	li = TSUCC(layer[level]);
-	while (li) {
+	for (li = TSUCC(layer[level]); li; li = GNNEXT(li))
+	{
 		node = GNNODE(li);
 
 		if (  (NWIDTH(node)==0) && (NHEIGHT(node)==0)
-		    &&(NSUCC(node)) && (NNEXT(NSUCC(node)))
-		    &&(NNEXT(NNEXT(NSUCC(node)))==NULL)
-		    &&((NPRED(node))==NULL)) {
+		    &&(FirstSucc(node)) && (NextSucc(FirstSucc(node)))
+		    &&(NextSucc(NextSucc(FirstSucc(node)))==NULL)
+		    &&((FirstPred(node))==NULL)) {
 
 			/* It is a dummy node with two successors
 			 * and no predecessor.
 			 */
 				
-			k1 = ETBENDY(AKANTE(NSUCC(node)));
-			k2 = ETBENDY(AKANTE(NNEXT(NSUCC(node))));
+			k1 = ETBENDY(FirstSucc(node));
+			k2 = ETBENDY(NextSucc(FirstSucc(node)));
 			if (k1<k2) k = k1;
 			else k = k2;
 			NY(node)  = k;
-			ESTARTY(AKANTE(NSUCC(node))) = k; 
-			ESTARTY(AKANTE(NNEXT(NSUCC(node)))) = k;
+			ESTARTY(FirstSucc(node)) = k; 
+			ESTARTY(NextSucc(FirstSucc(node))) = k;
 		}
 		if (  (NWIDTH(node)==0) && (NHEIGHT(node)==0)
-		    &&(NPRED(node)) && (NNEXT(NPRED(node)))
-		    &&(NNEXT(NNEXT(NPRED(node)))==NULL)
-		    &&((NSUCC(node))==NULL)) {
+		    &&(FirstPred(node)) && (NextPred(FirstPred(node)))
+		    &&(NextPred(NextPred(FirstPred(node)))==NULL)
+		    &&((FirstSucc(node))==NULL)) {
 
 			/* It is a dummy node with two predecessors 
 			 * and no succecessor.
 			 */
 
-			k1 = EBBENDY(AKANTE(NPRED(node)));
-			k2 = EBBENDY(AKANTE(NNEXT(NPRED(node))));
+			k1 = EBBENDY(FirstPred(node));
+			k2 = EBBENDY(NextPred(FirstPred(node)));
 			if (k1>k2) k = k1;
 			else k = k2;
 			NY(node) = k;
-			EENDY(AKANTE(NPRED(node))) = k;
-			EENDY(AKANTE(NNEXT(NPRED(node)))) = k;
+			EENDY(FirstPred(node)) = k;
+			EENDY(NextPred(FirstPred(node))) = k;
 		}
-		li = GNNEXT(li);
 	}
 }
 
@@ -1160,34 +1125,34 @@ static void calc_all_bendpoints(void)
 			node = GNNODE(li);
 
 			if (  (NWIDTH(node)==0) && (NHEIGHT(node)==0)
-			    &&(NSUCC(node)) && (NNEXT(NSUCC(node)))
-			    &&(NNEXT(NNEXT(NSUCC(node)))==NULL)
-			    &&((NPRED(node))==NULL)) {
+			    &&(FirstSucc(node)) && (NextSucc(FirstSucc(node)))
+			    &&(NextSucc(NextSucc(FirstSucc(node)))==NULL)
+			    &&((FirstPred(node))==NULL)) {
 
 				/* It is a dummy node with two successors
 				 * and no predecessor.
 				 */
 				
 				NY(node)  = maxx;
-				ESTARTY(AKANTE(NSUCC(node))) = maxx;
-				ETBENDY(AKANTE(NSUCC(node))) = maxx;
-				ESTARTY(AKANTE(NNEXT(NSUCC(node)))) = maxx;
-				ETBENDY(AKANTE(NNEXT(NSUCC(node)))) = maxx;
+				ESTARTY(FirstSucc(node)) = maxx;
+				ETBENDY(FirstSucc(node)) = maxx;
+				ESTARTY(NextSucc(FirstSucc(node))) = maxx;
+				ETBENDY(NextSucc(FirstSucc(node))) = maxx;
 			}
 			if (  (NWIDTH(node)==0) && (NHEIGHT(node)==0)
-			    &&(NPRED(node)) && (NNEXT(NPRED(node)))
-			    &&(NNEXT(NNEXT(NPRED(node)))==NULL)
-			    &&((NSUCC(node))==NULL)) {
+			    &&(FirstPred(node)) && (NextPred(FirstPred(node)))
+			    &&(NextPred(NextPred(FirstPred(node)))==NULL)
+			    &&((FirstSucc(node))==NULL)) {
 
 				/* It is a dummy node with two successors
 				 * and no predecessor.
 				 */
 				
 				NY(node) = minx;
-				EENDY(AKANTE(NPRED(node))) = minx;
-				EBBENDY(AKANTE(NPRED(node))) = minx;
-				EENDY(AKANTE(NNEXT(NPRED(node)))) = minx;
-				EBBENDY(AKANTE(NNEXT(NPRED(node)))) = minx;
+				EENDY(FirstPred(node)) = minx;
+				EBBENDY(FirstPred(node)) = minx;
+				EENDY(NextPred(FirstPred(node))) = minx;
+				EBBENDY(NextPred(FirstPred(node))) = minx;
 			}
 			li = GNNEXT(li);
 		}
@@ -1272,20 +1237,19 @@ static void calc_all_bendpoints(void)
 
 static int set_topbendpoint(GNLIST li, int bendp)
 {
-        ADJEDGE a;
+        GEDGE e;
 	int changed;
         
         debugmessage("set_topbendpoint","");
         assert((li));
         assert((GNNODE(li)));
 	changed = 0;
-        a = NSUCC(GNNODE(li));
-        while (a) {
-                if (ETBENDY(AKANTE(a))<bendp) {
-                        ETBENDY(AKANTE(a)) = bendp;
+	for (e = FirstSucc(GNNODE(li)); e; e = NextSucc(e))
+	{
+                if (ETBENDY(e)<bendp) {
+                        ETBENDY(e) = bendp;
 			changed = 1;
 		}
-                a = ANEXT(a);
         }
 	return(changed);
 }
@@ -1299,20 +1263,19 @@ static int set_topbendpoint(GNLIST li, int bendp)
 
 static int set_botbendpoint(GNLIST li, int bendp)
 {
-        ADJEDGE a;
+        GEDGE e;
 	int changed;
         
         debugmessage("set_botbendpoint","");
         assert((li));
         assert((GNNODE(li)));
 	changed = 0;
-        a = NPRED(GNNODE(li));
-        while (a) {
-                if (EBBENDY(AKANTE(a))>bendp) {
-                        EBBENDY(AKANTE(a)) = bendp;
+	for (e = FirstPred(GNNODE(li)); e; e = NextPred(e))
+	{
+                if (EBBENDY(e)>bendp) {
+                        EBBENDY(e) = bendp;
 			changed = 1;
 		}
-                a = ANEXT(a);
         }
 	return(changed);
 }
@@ -1802,15 +1765,15 @@ static void 	tune_dummy_bendings(void)
 		while (li) {
 			node = GNNODE(li);
 			if (  (NWIDTH(node)==0)
-			    &&(NSUCC(node)) && (NNEXT(NSUCC(node))==NULL)
-			    &&(NPRED(node)) && (NNEXT(NPRED(node))==NULL)) {
+			    &&(FirstSucc(node)) && (NextSucc(FirstSucc(node))==NULL)
+			    &&(FirstPred(node)) && (NextPred(FirstPred(node))==NULL)) {
 
 				/* It is a dummy node with just one successor
 				 * and one predecessor.
 				 */
 
-				e1 = AKANTE(NPRED(node));
-				e2 = AKANTE(NSUCC(node));
+				e1 = FirstPred(node);
+				e2 = FirstSucc(node);
 				my  = ESTARTY(e2);
 				by  = ETBENDY(e2);
 				b2y = EBBENDY(e1);
@@ -2323,7 +2286,7 @@ static void flip_all_nodes(GNODE v)
 {	
 	int h;
 	CONNECT c;
-	ADJEDGE li;
+	GEDGE e;
 
 	debugmessage("flip_all_nodes","");
 	while (v) {
@@ -2339,10 +2302,9 @@ static void flip_all_nodes(GNODE v)
 			if (backward_connection1(c)) flip_edge(CEDGE(c));
 			if (backward_connection2(c)) flip_edge(CEDGE2(c));
 		}
-		li = NPRED(v);
-		while (li) {
-			flip_edge(AKANTE(li));
-			li = ANEXT(li);
+		for (e = FirstPred(v); e; e = NextPred(e))
+		{
+			flip_edge(e);
 		}
 		v = NNEXT(v);
 	}
@@ -2442,7 +2404,7 @@ static void flip_ver_mirror(void)
 static void flip_ver_all_nodes(GNODE v)
 {	
 	CONNECT c;
-	ADJEDGE li;
+	GEDGE e;
 
 	debugmessage("flip_ver_all_nodes","");
 	while (v) {
@@ -2453,10 +2415,9 @@ static void flip_ver_all_nodes(GNODE v)
 			if (backward_connection1(c)) flip_ver_edge(CEDGE(c));
 			if (backward_connection2(c)) flip_ver_edge(CEDGE2(c));
 		}
-		li = NPRED(v);
-		while (li) {
-			flip_ver_edge(AKANTE(li));
-			li = ANEXT(li);
+		for (e = FirstPred(v); e; e = NextPred(e))
+		{
+			flip_ver_edge(e);
 		}
 		v = NNEXT(v);
 	}
@@ -2561,7 +2522,6 @@ void statistics(void)
 {
 	GNODE v;
 	GEDGE e;
-	ADJEDGE li;
 	CONNECT c;
 	int maxdegree;
 	int maxindeg;
@@ -2588,20 +2548,12 @@ void statistics(void)
 			if (backward_connection1(c)) st_nr_vis_nearedges++; 
 			if (backward_connection2(c)) st_nr_vis_nearedges++; 
 		}
-		maxdegree = maxindeg = maxoutdeg = 0;
-		li = NSUCC(v);
-                while (li) {
-			maxdegree++;
-			maxoutdeg++;
-			li = ANEXT(li);
-		}
-		li = NPRED(v);
-                while (li) {
-			st_nr_vis_edges++;		
-			maxdegree++;
-			maxindeg++;
-			li = ANEXT(li);
-		}
+		maxoutdeg = get_node_succs_num(v);
+		maxindeg = get_node_preds_num(v);
+		maxdegree = maxindeg + maxoutdeg;
+
+		st_nr_vis_edges += maxindeg;
+
 		if (maxdegree>st_max_degree) st_max_degree=maxdegree;
 		if (maxindeg >st_max_indeg)  st_max_indeg =maxindeg;
 		if (maxoutdeg>st_max_outdeg) st_max_outdeg=maxoutdeg;
@@ -2615,20 +2567,12 @@ void statistics(void)
 			if (backward_connection1(c)) st_nr_vis_nearedges++; 
 			if (backward_connection2(c)) st_nr_vis_nearedges++; 
 		}
-		maxdegree = maxindeg = maxoutdeg = 0;
-		li = NSUCC(v);
-                while (li) {
-			maxdegree++;
-			maxoutdeg++;
-			li = ANEXT(li);
-		}
-		li = NPRED(v);
-                while (li) {
-			st_nr_vis_edges++;		
-			maxdegree++;
-			maxindeg++;
-			li = ANEXT(li);
-		}
+		maxoutdeg = get_node_succs_num(v);
+		maxindeg = get_node_preds_num(v);
+		maxdegree = maxindeg + maxoutdeg;
+
+		st_nr_vis_edges += maxindeg;
+
 		if (maxdegree>st_max_degree) st_max_degree=maxdegree;
 		if (maxindeg >st_max_indeg)  st_max_indeg =maxindeg;
 		if (maxoutdeg>st_max_outdeg) st_max_outdeg=maxoutdeg;
@@ -2642,20 +2586,12 @@ void statistics(void)
 			if (backward_connection1(c)) st_nr_vis_nearedges++; 
 			if (backward_connection2(c)) st_nr_vis_nearedges++; 
 		}
-		maxdegree = maxindeg = maxoutdeg = 0;
-		li = NSUCC(v);
-                while (li) {
-			maxdegree++;
-			maxoutdeg++;
-			li = ANEXT(li);
-		}
-		li = NPRED(v);
-                while (li) {
-			st_nr_vis_edges++;		
-			maxdegree++;
-			maxindeg++;
-			li = ANEXT(li);
-		}
+		maxoutdeg = get_node_succs_num(v);
+		maxindeg = get_node_preds_num(v);
+		maxdegree = maxindeg + maxoutdeg;
+
+		st_nr_vis_edges += maxindeg;
+
 		if (maxdegree>st_max_degree) st_max_degree=maxdegree;
 		if (maxindeg >st_max_indeg)  st_max_indeg =maxindeg;
 		if (maxoutdeg>st_max_outdeg) st_max_outdeg=maxoutdeg;
