@@ -1,41 +1,27 @@
+/* ex: set sw=4 expandtab tabstop=4: */
 /*--------------------------------------------------------------------*/
-/*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
-/*              --------------------------------------                */
-/*                                                                    */
-/*   file:         globals.h                                          */
-/*   version:      1.00.00                                            */
-/*   creation:     1.4.1993                                           */
-/*   author:       I. Lemke  (...-Version 0.99.99)                    */
-/*                 G. Sander (Version 1.00.00-...)                    */
-/*                 Universitaet des Saarlandes, 66041 Saarbruecken    */
-/*                 ESPRIT Project #5399 Compare                       */
-/*   description:  Global definitions and setup                       */
-/*   status:       in work                                            */
-/*                                                                    */
 /*--------------------------------------------------------------------*/
-
-
 /*
- *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium
+ * Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
+ *                             the Compare Consortium
+ * Copyright (C) 2015 Nikita S <nnlight@gmail.com>
  *
- *  This program and documentation is free software; you can redistribute
- *  it under the terms of the  GNU General Public License as published by
- *  the  Free Software Foundation;  either version 2  of the License,  or
- *  (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  This  program  is  distributed  in  the hope that it will be useful,
- *  but  WITHOUT ANY WARRANTY;  without  even  the  implied  warranty of
- *  MERCHANTABILITY  or  FITNESS  FOR  A  PARTICULAR  PURPOSE.  See  the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- *  You  should  have  received a copy of the GNU General Public License
- *  along  with  this  program;  if  not,  write  to  the  Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
-
+/* Global definitions and setup */
 
 /*   This file contains the setup of the tool for the C compiler.
  *   It is included into every other C file.
@@ -96,9 +82,9 @@
  *      b) Assertion checking: only if an assertion fails, an
  *         appropriate message is produced.
  *      c) Node tracing: This is basically the same as the behaviour
- *	   tracing. At each function entry, the status of a node
- *	   will be printed. This happens if CHECKNODE is defined.
- *	   See step0 for the selection of the node to be traced.
+ *         tracing. At each function entry, the status of a node
+ *         will be printed. This happens if CHECKNODE is defined.
+ *         See step0 for the selection of the node to be traced.
  *   Behaviour or node tracing is only needed in very serious cases.
  *   The macros "debuggingmessage" can be redefined to do some special
  *   tests on every entry.
@@ -144,10 +130,10 @@
 #define DEBUG
 #undef debugmessage
 #define debugmessage(a,b) { \
-	FPRINTF(stderr,"Debug: %s %s &",a,b); \
-	if (debug_checknode)  \
-		FPRINTF(stderr,"Checknode: |%s|\n",NTITLE(debug_checknode)); \
-	FPRINTF(stderr,"\n"); \
+    FPRINTF(stderr,"Debug: %s %s &",a,b); \
+    if (debug_checknode)  \
+        FPRINTF(stderr,"Checknode: |%s|\n",NTITLE(debug_checknode)); \
+    FPRINTF(stderr,"\n"); \
 }
 #endif
 
@@ -177,7 +163,7 @@
 #define gstoint(x) ((int)(x))
 
 #include <limits.h>
-#define MAXINT INT_MAX
+#define MAXINT  INT_MAX
 #define MININT  INT_MIN
 
 
@@ -195,6 +181,7 @@
 #define DEAD_PTR    ((void*)0xDEAD0003DEAD0001ll)
 #define DEAD_GNODE  ((GNODE)DEAD_PTR)
 #define DEAD_GEDGE  ((GEDGE)DEAD_PTR)
+#define DEAD_GELIST ((ADJEDGE)DEAD_PTR)
 
 /**
  * Использовать ли для некоторых функций макрос-версии?

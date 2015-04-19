@@ -9,6 +9,8 @@
 extern "C" {
 #endif
 
+#include "graph.h"
+
 
 
 void vcg_Parse( FILE *input_file, const char *filename);

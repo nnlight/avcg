@@ -276,10 +276,6 @@ static GNODE internal_nodealloc(void)
 	NINDEG(h)    	= 0;
 	NOUTDEG(h)	= 0;
 	NVPTR(h)	= NULL;
-	NPRED(h)      	= NULL;
-	NSUCC(h)     	= NULL; 
-	NSVPRED(h)     	= NULL;
-	NSVSUCC(h)     	= NULL; 
 	NPREDL(h)       = NULL;
         NPREDR(h)       = NULL; 
         NSUCCL(h)       = NULL; 

@@ -2791,62 +2791,75 @@ static void insert_connects_in_layer(void)
  * Restore the edges that were in the adjacency lists
  * of the connection nodes.
  */
-static void revive_conn_edges(GNODE v, GNODE w)
+static void revive_conn_edges(GNODE v, GNODE w, GNODE predw)
 {
-	ADJEDGE sv_list, a;
+	ADJEDGE sv_succs, sv_preds, a;
 	GEDGE e;
 	CONNECT c;
 	int j;
-
 
 	/* restore the adjacency lists of the connection 
 	 * Remind: The adjacency lists were destroyed in step1 in
     	 * calc_connect_adjlists.
 	 */
-#if 1
-	sv_list = reverse_adjlist(NSUCC(v));
-	NSUCC(v) = NULL;
+	sv_succs = reverse_adjlist(NSVSUCC(w));
+	sv_preds = reverse_adjlist(NSVPRED(w));
+	NSVSUCC(w) = DEAD_GELIST;
+	NSVPRED(w) = DEAD_GELIST;
+
+	if (v!=w) {
+		assert(FirstSucc(w) == NULL);
+		assert(FirstPred(w) == NULL);
+	}
+
 	j = 0;
-	for (a = sv_list; a; a = ANEXT(a))
+	for (a = sv_succs; a; a = ANEXT(a))
 	{
 		e = AKANTE(a);
-		change_edge_src(e, ESOURCE(e), v);
+		assert(ESOURCE(e) == v);
+		change_edge_src(e, ESOURCE(e), w);
 		j++;
 	}
-	assert(NOUTDEG(v) == -2);
-	NOUTDEG(v) = j;
-	delete_adjlist(sv_list);
+	if (v!=w) { assert(NOUTDEG(w) == -2); }
+	NOUTDEG(w) = j;
 
-	sv_list = reverse_adjlist(NPRED(v));
-	NPRED(v) = NULL;
 	j = 0;
-	for (a = sv_list; a; a = ANEXT(a))
+	for (a = sv_preds; a; a = ANEXT(a))
 	{
 		e = AKANTE(a);
-		change_edge_dst(e, ETARGET(e), v);
+		assert(ETARGET(e) == v);
+		change_edge_dst(e, ETARGET(e), w);
 		j++;
 	}
-	assert(NINDEG(v) == -2);
-	NINDEG(v) = j;
-	delete_adjlist(sv_list);
-#else	
-	j = 0;
-	a = NSUCC(v);
-	while (a) { SOURCE(a) = v; j++; a = ANEXT(a); }
-	assert(NOUTDEG(v) == -2);
-	NOUTDEG(v) = j;
+	if (v!=w) { assert(NINDEG(w) == -2); }
+	NINDEG(w) = j;
 
-	j = 0;
-	a = NPRED(v);
-	while (a) { TARGET(a) = v; j++; a = ANEXT(a); }
-	assert(NINDEG(v) == -2);
-	NINDEG(v) = j;
-#endif
+	c = NCONNECT(w);
+	if (v==w) {
+		if (forward_connection1(c)) revive_conn_edges(v, CTARGET(c), v);
+		if (forward_connection2(c)) revive_conn_edges(v, CTARGET2(c), v);
 
-	c = NCONNECT(v);
-        if (c && CTARGET(c) && (CTARGET(c)!=w))   revive_conn_edges(CTARGET(c), v);
-        if (c && CTARGET2(c) && (CTARGET2(c)!=w)) revive_conn_edges(CTARGET2(c), v);
-}
+		/* для основного узла после переноса всех дуг еще проверяем,
+		 * что не осталось висеть лишних дуг */
+		if (sv_succs) {
+			e = AKANTE(sv_succs);
+			assert(NextSucc(e) == NULL); /* что нет лишних дуг */
+		} else {
+			assert(FirstSucc(v) == NULL);
+		}
+		if (sv_preds) {
+			e = AKANTE(sv_preds);
+			assert(NextPred(e) == NULL); /* что нет лишних дуг */
+		} else {
+			assert(FirstPred(v) == NULL);
+		}
+	} else {
+        	if (c && CTARGET(c) && (CTARGET(c)!=predw))   revive_conn_edges(v, CTARGET(c), w);
+	        if (c && CTARGET2(c) && (CTARGET2(c)!=predw)) revive_conn_edges(v, CTARGET2(c), w);
+	}
+	delete_adjlist(sv_succs);
+	delete_adjlist(sv_preds);
+} /* revive_conn_edges */
 
 /* Check one connection node
  * -------------------------
@@ -2875,65 +2888,13 @@ static GNLIST endpoint;		/* GNNEXT(rightlistend) will point to this */
 
 static void check_connect(int level, GNODE node)
 {
-	CONNECT c;
-	int     j, clr, crl;
-	GEDGE   e;
-	ADJEDGE a;
+	CONNECT c = NCONNECT(node);
+	int     clr, crl;
 
 	debugmessage("check_connect","");
 
-	c = NCONNECT(node);
-	if (forward_connection1(c)) revive_conn_edges(CTARGET(c), node);
-	if (forward_connection2(c)) revive_conn_edges(CTARGET2(c), node);
+	revive_conn_edges(node, node, NULL);
 
-#if 1
-	NSVSUCC(node) = reverse_adjlist(NSVSUCC(node));
-	j = 0;
-	for (a = NSVSUCC(node); a; a = ANEXT(a))
-	{
-		e = AKANTE(a);
-		assert(ESOURCE(e) == node);
-		change_edge_src(e, ESOURCE(e), node);
-		j++;
-	}
-	NOUTDEG(node) = j;
-	if (NSVSUCC(node)) {
-		e = AKANTE(NSVSUCC(node));
-		assert(NextSucc(e) == NULL); /* что нет лишних дуг */
-	}
-	delete_adjlist(NSVSUCC(node));
-	NSVSUCC(node) = NULL;
-
-	NSVPRED(node) = reverse_adjlist(NSVPRED(node));
-	j = 0;
-	for (a = NSVPRED(node); a; a = ANEXT(a))
-	{
-		e = AKANTE(a);
-		assert(ETARGET(e) == node);
-		change_edge_dst(e, ETARGET(e), node);
-		j++;
-	}
-	NINDEG(node) = j;
-	if (NSVPRED(node)) {
-		e = AKANTE(NSVPRED(node));
-		assert(NextPred(e) == NULL); /* что нет лишних дуг */
-	}
-	delete_adjlist(NSVPRED(node));
-	NSVPRED(node) = NULL;
-#else
-	NSUCC(node) = NSVSUCC(node);
-	NPRED(node) = NSVPRED(node);
-
-	/* recalculate INDEGREE and OUTDEGREE */
-	j = 0;
-	a = NSUCC(node);
-	while (a) { j++; a = ANEXT(a); }
-	NOUTDEG(node) = j;
-	j = 0;
-	a = NPRED(node);
-	while (a) { j++; a = ANEXT(a); }
-	NINDEG(node) = j;
-#endif
 
 	/* First we try to insert left first:
  	 *   -> Cl -> Cl -> A -> Cr -> Cr -> ...

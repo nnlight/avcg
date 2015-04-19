@@ -429,7 +429,6 @@ void VRGraph::LoadVcgPredEdgesForVcgNodeList( GNODE list)
 
 	GNODE	v;
 	GEDGE	e;
-	ADJEDGE li;
 	CONNECT c;
 	
 	for ( v = list; v; v = NNEXT(v) )
@@ -445,10 +444,8 @@ void VRGraph::LoadVcgPredEdgesForVcgNodeList( GNODE list)
 				LoadVcgEdge( e);
 			}
 		}
-		li = NPRED(v);
-		for ( li = NPRED(v); li; li = ANEXT(li) )
+		for ( e = FirstPred(v); e; e = NextPred(e) )
 		{
-			e  = AKANTE(li);
 			LoadVcgEdge( e);
 		}
 	}

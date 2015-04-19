@@ -143,6 +143,11 @@ void init_node_graph_fields_as_dead(GNODE v)
     NADJLAST(v,GD_SUCC) = DEAD_GEDGE;
     NNEXT(v) = DEAD_GNODE;
     NPREV(v) = DEAD_GNODE;
+
+    NSVPRED(v) = DEAD_GELIST;
+    NSVSUCC(v) = DEAD_GELIST;
+
+    NSUCC(v) = NPRED(v) = DEAD_GELIST;
 }
 
 void init_edge_graph_fields_as_dead(GEDGE e)
