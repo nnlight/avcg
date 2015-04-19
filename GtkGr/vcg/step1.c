@@ -2466,7 +2466,6 @@ static void inspect_edges(void)
 				check_edge(node, edge, i);
 			}
 		}
-		printf("level %d done (%d total)\n", i , maxdepth);
 	}
 	for (node = labellist; node; node = NNEXT(node))
 	{
