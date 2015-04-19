@@ -135,8 +135,6 @@ static void 	correct_xpos		_PP((GNODE v,int diff));
  * ----------------
  */
 
-static int mymaxoutdeg;		/* Maximal outdegree of nodes */
-
 /* array where we can temporary sort the nodes of one level.
  */
 
@@ -340,29 +338,16 @@ static void calc_degree(void)
 	GNODE v;
 	GNLIST li;
 	GEDGE e;
+	int mymaxoutdeg;
 
 	debugmessage("calc_degree","");
-
-	/* Check whether a node is shared */
 
 	mymaxoutdeg = 0;
 	for (i=0; i<= maxdepth+1; i++) {
 		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
 		{
-			v = GNNODE(li);
-			j = 0;
-			for (e = FirstPred(v); e; e = NextPred(e))
-			{
-				j++;
-			}
-			NINDEG(v) = j;
-			assert(j<=1);
-			j = 0;
-			for (e = FirstSucc(v); e; e = NextSucc(e))
-			{
-				j++;
-			}
-			NOUTDEG(v) = j;
+			assert(get_node_preds_num(v) <= 1);
+			j = get_node_succs_num(v);
 			if (j>mymaxoutdeg) mymaxoutdeg = j;
 		}
 	}
@@ -595,7 +580,6 @@ static void tree_layout(void)
 
 	/* Now the real tree layout */
 
-	mymaxoutdeg = 0;
 	for (i=0; i<= maxdepth+1; i++) {
 		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
 		{
@@ -628,6 +612,7 @@ static int find_position(GNODE v, int leftest_pos)
 	GNODE w, actl, actr, actn;
 	GNODE conn1, conn2, leftconn;
 	CONNECT c;
+	int outdeg = get_node_succs_num(v);
 
 	debugmessage("find_position","");
 
@@ -707,7 +692,7 @@ static int find_position(GNODE v, int leftest_pos)
 	if (xpos-NWIDTH(v)/2 < TACTX(layer[l])) 
 		xpos = TACTX(layer[l]) + NWIDTH(v)/2;
 
-	switch (NOUTDEG(v)) {
+	switch (outdeg) {
 	case 0:
 		break;
 	case 1:
@@ -746,7 +731,7 @@ static int find_position(GNODE v, int leftest_pos)
 		{
 			num += NWIDTH(ETARGET(e));
 		}
-		num += ((NOUTDEG(v)-1) * G_xspace);
+		num += ((outdeg-1) * G_xspace);
 		num -= NWIDTH(actl)/2;
 		num -= NWIDTH(actr)/2;
 
@@ -768,17 +753,17 @@ static int find_position(GNODE v, int leftest_pos)
 			if (l>spread_level) 
 				maxpos = find_position(actn,
 					minpos + (2*(i-1)*(xpos-minpos))/
-						(NOUTDEG(v)-1)); 
+						(outdeg-1)); 
 			else {
-				if (i<=(NOUTDEG(v)+1)/2) 
+				if (i<=(outdeg+1)/2) 
 					maxpos = find_position(actn,
 					   minpos + (2*(i-1)*(xpos-minpos))/
-						(NOUTDEG(v)-1)); 
+						(outdeg-1)); 
 				else
 					maxpos = find_position(actn, xpos);
 			}
 			if (l>spread_level) {
-				xpos = minpos + (NOUTDEG(v)-1)*(maxpos-minpos)/
+				xpos = minpos + (outdeg-1)*(maxpos-minpos)/
 						(2*(i-1));
 				if (xpos<leftest_pos) xpos = leftest_pos;
 			}
@@ -799,17 +784,17 @@ static int find_position(GNODE v, int leftest_pos)
 		if (l>spread_level) 
 			maxpos = find_position(actr,
 				minpos + (2*(i-1)*(xpos-minpos))/
-					(NOUTDEG(v)-1)); 
+					(outdeg-1)); 
 		else {
-			if (i<=(NOUTDEG(v)+1)/2) 
+			if (i<=(outdeg+1)/2) 
 				maxpos = find_position(actr,
 				   minpos + (2*(i-1)*(xpos-minpos))/
-					(NOUTDEG(v)-1)); 
+					(outdeg-1)); 
 			else
 				maxpos = find_position(actr, xpos);
 		}
 		if (l>spread_level) {
-			xpos = minpos + (NOUTDEG(v)-1)*(maxpos-minpos)/
+			xpos = minpos + (outdeg-1)*(maxpos-minpos)/
 					(2*(i-1));
 			if (xpos<leftest_pos) xpos = leftest_pos;
 		}

@@ -286,8 +286,8 @@ typedef struct gnode
 
 	long	dfsnum;			/* the dfs entry number      */
 
-	int	indegree;		/* number of incoming edges  */
-	int	outdegree;		/* number of outgoing edges  */
+	/*int	indegree;*/		/* number of incoming edges  */
+	/*int	outdegree;*/		/* number of outgoing edges  */
 
 	/* To calculate crossings, we need a pointer to the last instance
          * of the upper or lower completion lists. See step2.c

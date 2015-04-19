@@ -1204,8 +1204,6 @@ static void refresh_all_nodes(GNODE v)
 		NPOS(v) 	= -1;
 		NMARK(v)	= 0;
 		NREVERT(v)	= NOREVERT;
-		NINDEG(v)	= 0;
-		NOUTDEG(v)	= 0;
 		NDFS(v) 	= 0L;
 		NX(v) 		= 0L;
 		NY(v) 		= 0L;

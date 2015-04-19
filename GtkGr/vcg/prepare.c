@@ -230,12 +230,10 @@ static void calc_node_degree(GNODE v)
 {
 	int k;
 
-	k = get_node_preds_num(v);
-	NINDEG(v) = k;
+	k = get_node_succs_num(v);
 	if (k>maxoutdeg) maxoutdeg = k;
 
-	k = get_node_succs_num(v);
-	NOUTDEG(v) = k;
+	k = get_node_preds_num(v);
 	if (k>maxindeg) maxindeg = k;
 } /* calc_node_degree */
 
@@ -321,7 +319,7 @@ static void calc_node_anchor(GNODE v)
 
 static void sort_adjacencies(GNODE v)
 {
-        int i;
+        int i, len;
 	GEDGE e;
  
         debugmessage("sort_adjacencies","");
@@ -332,11 +330,12 @@ static void sort_adjacencies(GNODE v)
 	{
                 adjarray2[i++] = e;
         }
+	len = i;
 
-        qsort(adjarray2,NINDEG(v),sizeof(GEDGE),
+        qsort(adjarray2, len, sizeof(GEDGE),
 		(int (*) (const void *, const void *))compare_ppos);
 	for ( i = 0;
-		i < NINDEG(v);
+		i < len;
 		i++ )
 	{
 		e = adjarray2[i];
@@ -346,7 +345,7 @@ static void sort_adjacencies(GNODE v)
 			EADJPREV(e,GD_PRED) = NULL;
 			NADJFIRST(v,GD_PRED) = e;
 		}
-		if (i < NINDEG(v)-1) {
+		if (i < len-1) {
 			EADJNEXT(e,GD_PRED) = adjarray2[i+1];
 		} else {
 			EADJNEXT(e,GD_PRED) = NULL;
@@ -359,11 +358,12 @@ static void sort_adjacencies(GNODE v)
 	{
 		adjarray2[i++] = e;
 	}
+	len = i;
 
-        qsort(adjarray2,NOUTDEG(v),sizeof(GEDGE),
+        qsort(adjarray2, len, sizeof(GEDGE),
 		(int (*) (const void *, const void *))compare_spos);
 	for ( i = 0;
-		i < NOUTDEG(v);
+		i < len;
 		i++ )
 	{
 		e = adjarray2[i];
@@ -373,7 +373,7 @@ static void sort_adjacencies(GNODE v)
 			EADJPREV(e,GD_SUCC) = NULL;
 			NADJFIRST(v,GD_SUCC) = e;
 		}
-		if (i < NOUTDEG(v)-1) {
+		if (i < len-1) {
 			EADJNEXT(e,GD_SUCC) = adjarray2[i+1];
 		} else {
 			EADJNEXT(e,GD_SUCC) = NULL;

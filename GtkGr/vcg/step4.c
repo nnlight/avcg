@@ -2523,9 +2523,9 @@ void statistics(void)
 	GNODE v;
 	GEDGE e;
 	CONNECT c;
-	int maxdegree;
-	int maxindeg;
-	int maxoutdeg;
+	int degree;
+	int indeg;
+	int outdeg;
 
 	debugmessage("statistics","");
 
@@ -2548,15 +2548,15 @@ void statistics(void)
 			if (backward_connection1(c)) st_nr_vis_nearedges++; 
 			if (backward_connection2(c)) st_nr_vis_nearedges++; 
 		}
-		maxoutdeg = get_node_succs_num(v);
-		maxindeg = get_node_preds_num(v);
-		maxdegree = maxindeg + maxoutdeg;
+		outdeg = get_node_succs_num(v);
+		indeg = get_node_preds_num(v);
+		degree = indeg + outdeg;
 
-		st_nr_vis_edges += maxindeg;
+		st_nr_vis_edges += indeg;
 
-		if (maxdegree>st_max_degree) st_max_degree=maxdegree;
-		if (maxindeg >st_max_indeg)  st_max_indeg =maxindeg;
-		if (maxoutdeg>st_max_outdeg) st_max_outdeg=maxoutdeg;
+		if (degree>st_max_degree) st_max_degree=degree;
+		if (indeg >st_max_indeg)  st_max_indeg =indeg;
+		if (outdeg>st_max_outdeg) st_max_outdeg=outdeg;
 		st_nr_vis_nodes++;
 		v = NNEXT(v);
 	}
@@ -2567,15 +2567,15 @@ void statistics(void)
 			if (backward_connection1(c)) st_nr_vis_nearedges++; 
 			if (backward_connection2(c)) st_nr_vis_nearedges++; 
 		}
-		maxoutdeg = get_node_succs_num(v);
-		maxindeg = get_node_preds_num(v);
-		maxdegree = maxindeg + maxoutdeg;
+		outdeg = get_node_succs_num(v);
+		indeg = get_node_preds_num(v);
+		degree = indeg + outdeg;
 
-		st_nr_vis_edges += maxindeg;
+		st_nr_vis_edges += indeg;
 
-		if (maxdegree>st_max_degree) st_max_degree=maxdegree;
-		if (maxindeg >st_max_indeg)  st_max_indeg =maxindeg;
-		if (maxoutdeg>st_max_outdeg) st_max_outdeg=maxoutdeg;
+		if (degree>st_max_degree) st_max_degree=degree;
+		if (indeg >st_max_indeg)  st_max_indeg =indeg;
+		if (outdeg>st_max_outdeg) st_max_outdeg=outdeg;
 		st_nr_vis_labels++;
 		v = NNEXT(v);
 	}
@@ -2586,15 +2586,15 @@ void statistics(void)
 			if (backward_connection1(c)) st_nr_vis_nearedges++; 
 			if (backward_connection2(c)) st_nr_vis_nearedges++; 
 		}
-		maxoutdeg = get_node_succs_num(v);
-		maxindeg = get_node_preds_num(v);
-		maxdegree = maxindeg + maxoutdeg;
+		outdeg = get_node_succs_num(v);
+		indeg = get_node_preds_num(v);
+		degree = indeg + outdeg;
 
-		st_nr_vis_edges += maxindeg;
+		st_nr_vis_edges += indeg;
 
-		if (maxdegree>st_max_degree) st_max_degree=maxdegree;
-		if (maxindeg >st_max_indeg)  st_max_indeg =maxindeg;
-		if (maxoutdeg>st_max_outdeg) st_max_outdeg=maxoutdeg;
+		if (degree>st_max_degree) st_max_degree=degree;
+		if (indeg >st_max_indeg)  st_max_indeg =indeg;
+		if (outdeg>st_max_outdeg) st_max_outdeg=outdeg;
 		st_nr_vis_dummies++;
 		v = NNEXT(v);
 	}

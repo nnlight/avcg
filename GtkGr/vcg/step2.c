@@ -2365,20 +2365,24 @@ static int 	cycle_sort_array(int siz)
 static float succbary(GNODE node)
 {
 	int Sum;
+	int i;
 	GEDGE e;
 
 	assert(node);
 	debugmessage("succbary","");
 	/* Assertion: The NPOS-values are set before by level_to_array */
 
-	assert(NOUTDEG(node) != -2);
-	if (NOUTDEG(node)==0) return(0.0);
 	Sum = 0;
+	i = 0;
 	for (e = FirstSucc(node); e; e = NextSucc(e))
 	{
 		Sum += NPOS(ETARGET(e));
+		i++;
 	}
-	return ( ((float) Sum) / ((float) NOUTDEG(node)) );
+	if (i==0)
+		return 0.0;
+	else
+		return ((float) Sum) / ((float) i);
 }
 
 	
@@ -2389,20 +2393,24 @@ static float succbary(GNODE node)
 static float predbary(GNODE node)
 {
 	int Sum;
+	int i;
 	GEDGE e;
 
 	assert(node);
 	debugmessage("predbary","");
 	/* Assertion: The NPOS-values are set before by level_to_array */
 
-	assert(NINDEG(node) != -2);
-	if (NINDEG(node)==0) return(0.0);
 	Sum = 0;
+	i = 0;
 	for (e = FirstPred(node); e; e = NextPred(e))
 	{
 		Sum += NPOS(ESOURCE(e));
+		i++;
 	}
-	return ( ((float) Sum) / ((float) NINDEG(node)) );
+	if (i==0)
+		return 0.0;
+	else
+		return ((float) Sum) / ((float) i);
 }
 
 
@@ -2422,7 +2430,7 @@ static float predbary(GNODE node)
  */
 static float succmedian(GNODE node)
 {
-	int i, leftpart, rightpart;
+	int i, sum, leftpart, rightpart;
 	GEDGE e;
 
 	assert((node));
@@ -2431,22 +2439,17 @@ static float succmedian(GNODE node)
 	debugmessage("succmedian","");
 	/* Assertion: The NPOS-values are set before by level_to_array */
 
-	assert(NOUTDEG(node) != -2);
-	switch (NOUTDEG(node)) {
-	case 0: return(0.0);
-	case 1: return((float) NPOS(ETARGET(FirstSucc(node))));
-	case 2: 
-		e = FirstSucc(node);
-		i = NPOS(ETARGET(e));
-		e = NextSucc(e);
-		i += NPOS(ETARGET(e));
-		return ( ((float) i) / 2.0);
-	}
- 
 	i = 0;
 	for (e = FirstSucc(node); e; e = NextSucc(e))
 	{
 		save_array[i++] = ETARGET(e);
+	}
+	switch (i) {
+	case 0: return(0.0);
+	case 1: return((float) NPOS(save_array[0]));
+	case 2: 
+		sum = NPOS(save_array[0]) + NPOS(save_array[1]);
+		return ( ((float) sum) / 2.0);
 	}
 	quicksort_save_array(i);
 
@@ -2468,7 +2471,7 @@ static float succmedian(GNODE node)
  */
 static float predmedian(GNODE node)
 {
-	int i, leftpart, rightpart;
+	int i, sum, leftpart, rightpart;
 	GEDGE e;
 
 	assert((node));
@@ -2477,22 +2480,17 @@ static float predmedian(GNODE node)
 	debugmessage("predmedian","");
 	/* Assertion: The NPOS-values are set before by level_to_array */
 
-	assert(NINDEG(node) != -2);
-	switch (NINDEG(node)) {
-	case 0: return(0.0);
-	case 1: return((float) NPOS(ESOURCE(FirstPred(node))));
-	case 2: 
-		e = FirstPred(node);
-		i = NPOS(ESOURCE(e));
-		e = NextPred(e);
-		i += NPOS(ESOURCE(e));
-		return ( ((float) i) / 2.0);
-	}
- 
 	i = 0;
 	for (e = FirstPred(node); e; e = NextPred(e))
 	{
 		save_array[i++] = ESOURCE(e);
+	}
+	switch (i) {
+	case 0: return(0.0);
+	case 1: return((float) NPOS(save_array[0]));
+	case 2: 
+		sum = NPOS(save_array[0]) + NPOS(save_array[1]);
+		return ( ((float) sum) / 2.0);
 	}
 	quicksort_save_array(i);
 
@@ -2861,27 +2859,19 @@ static void revive_conn_edges(GNODE v, GNODE w, GNODE predw)
 		assert(FirstPred(w) == NULL);
 	}
 
-	j = 0;
 	for (a = sv_succs; a; a = ANEXT(a))
 	{
 		e = AKANTE(a);
 		assert(ESOURCE(e) == v);
 		change_edge_src(e, ESOURCE(e), w);
-		j++;
 	}
-	if (v!=w) { assert(NOUTDEG(w) == -2); }
-	NOUTDEG(w) = j;
 
-	j = 0;
 	for (a = sv_preds; a; a = ANEXT(a))
 	{
 		e = AKANTE(a);
 		assert(ETARGET(e) == v);
 		change_edge_dst(e, ETARGET(e), w);
-		j++;
 	}
-	if (v!=w) { assert(NINDEG(w) == -2); }
-	NINDEG(w) = j;
 
 	c = NCONNECT(w);
 	if (v==w) {

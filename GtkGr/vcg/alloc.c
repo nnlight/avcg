@@ -267,8 +267,6 @@ static GNODE internal_nodealloc(void)
 	NANCHORNODE(h) 	= 0; 
 	NBARY(h) 	= -1;
 	NDFS(h)      	= -1L; 
-	NINDEG(h)    	= 0;
-	NOUTDEG(h)	= 0;
 	NVPTR(h)	= NULL;
 	NCONNECT(h)  	= NULL;
 	NINTERN(h)	= NULL;

@@ -183,8 +183,8 @@ static GEDGE    create_edge(GNODE x, GNODE y,GEDGE e,int t);
  * ----------------
  */
 
-int	maxindeg;	/* maximal indegree  of a node */
-int	maxoutdeg;	/* maximal outdegree of a node */
+int  maxindeg;  /* maximal indegree  of a node (upper estimation actually) */
+int  maxoutdeg; /* maximal outdegree of a node (upper estimation actually) */
 
 DEPTH *layer = NULL;	       /* The table of layers     */
 int    maxdepth = 0;           /* Max. depth of layout    */
@@ -1693,7 +1693,7 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
 
 		calc_sc_component(&closed_scc_list);
 	}
-}
+} /* scc_traversal */
 
 
 /* Check whether a strongly connected component can be closed.
@@ -2313,7 +2313,7 @@ static void create_depth_lists(void)
  */
 static void complete_depth_lists(void)
 {
-	int     i;
+	int     i, k;
 	GNLIST  n, hl;
 	GNODE   node;
 	GEDGE   edge;
@@ -2367,26 +2367,11 @@ static void complete_depth_lists(void)
 			 * have its successor and all successors of
 			 * their direct neigbours. 
 			 */
-			if ( (!backward_connection)&&(NMARK(node)==0) ) {
-				for (edge = FirstSucc(node); edge; edge = NextSucc(edge))
-				{
-					NOUTDEG(node)++;
-					assert(NTIEFE(ETARGET(edge)) >= i);
-				}
-				for (edge = FirstPred(node); edge; edge = NextPred(edge))
-				{
-					NINDEG(node)++;
-				}
-			} else {
-				/* раньше для таких узлов тоже считалось, поэтому поставим
-				 * неестественное значение, чтобы чекать */
-				NOUTDEG(node) = -2;
-				NINDEG(node) = -2;
-			}
-			if (NOUTDEG(node) > maxoutdeg)
-				maxoutdeg = NOUTDEG(node);
-			if (NINDEG(node) > maxindeg)
-				maxindeg = NINDEG(node);
+			k = get_node_succs_num(node);
+			if (k>maxoutdeg) maxoutdeg = k;
+
+			k = get_node_preds_num(node);
+			if (k>maxindeg) maxindeg = k;
 		}
 	}
 } /* complete_depth_lists */
@@ -2481,6 +2466,7 @@ static void inspect_edges(void)
 				check_edge(node, edge, i);
 			}
 		}
+		printf("level %d done (%d total)\n", i , maxdepth);
 	}
 	for (node = labellist; node; node = NNEXT(node))
 	{
@@ -2947,7 +2933,6 @@ void db_output_adjacencies(void)
 	for (node = nodelist; node; node = NNEXT(node))
 	{
 		PRINTF("\n%s(%d)%p\n", NTITLE(node), NTIEFE(node),node);
-		PRINTF("(in:%d,out:%d)\n", NINDEG(node), NOUTDEG(node));
 		PRINTF("Succs:");
 		for (edge = FirstSucc(node); edge; edge = NextSucc(edge))
 		{
@@ -2962,7 +2947,6 @@ void db_output_adjacencies(void)
 	for (node = labellist; node; node = NNEXT(node))
 	{
 		PRINTF("\n%s(%d)%p\n", NTITLE(node), NTIEFE(node),node);
-		PRINTF("(in:%d,out:%d)\n", NINDEG(node), NOUTDEG(node));
 		PRINTF("Succs:");
 		for (edge = FirstSucc(node); edge; edge = NextSucc(edge))
 		{
@@ -2977,7 +2961,6 @@ void db_output_adjacencies(void)
 	for (node = dummylist; node; node = NNEXT(node))
 	{
 		PRINTF("\n%s(%d)%p\n", NTITLE(node), NTIEFE(node),node);
-		PRINTF("(in:%d,out:%d)\n", NINDEG(node), NOUTDEG(node));
 		PRINTF("Succs:");
 		for (edge = FirstSucc(node); edge; edge = NextSucc(edge))
 		{
