@@ -609,12 +609,6 @@ typedef struct adjedge
 
 #define	SOURCE(x)	(ESTART(AKANTE(x)))
 #define	TARGET(x)	(EEND(AKANTE(x)))
-#define	ESOURCEX(x)	(ESTARTX(AKANTE(x)))
-#define	ESOURCEY(x)	(ESTARTY(AKANTE(x)))
-#define ETARGETX(x)	(EENDX(AKANTE(x)))
-#define	ETARGETY(x)	(EENDY(AKANTE(x)))
-#define	NSOURTIEFE(x)	(NTIEFE(ESTART(AKANTE(x))))
-#define	NTARTIEFE(x)	(NTIEFE(EEND(AKANTE(x))))
 
 /*--------------------------------------------------------------------*/
 

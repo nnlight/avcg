@@ -182,6 +182,7 @@ void x11_followedge_line(int fx,int fy,int tx,int ty,int t,int c)
 #include "alloc.h"
 #include "drawstr.h"
 #include "drawlib.h"
+#include "graph.h"
 
 
 /*  Prototypes
@@ -2935,7 +2936,6 @@ void x11_followedge_arrow(GEDGE e)
 void x11_followedge_anchors(GEDGE e)
 {
 	GEDGE e1;
-	ADJEDGE a;
 	GNODE v;
 	int   h, w, x1, x2, yb, y1, y2, xx, d;
 	int   t, c;
@@ -2985,9 +2985,8 @@ void x11_followedge_anchors(GEDGE e)
                 x11_followedge_line(xx,y1,x2,y2,t,c);
 	}
 
-	a = NSUCC(EEND(e));
-	while (a) {
-		e1 = AKANTE(a);
+	for (e1 = FirstSucc(EEND(e)); e1; e1 = NextSucc(e1))
+	{
 		t  = (ETHICKNESS(e1)*G_stretch)/G_shrink + 3;
 		if ( t==0 )	t = 1;
 		c  = ECOLOR(e1);
@@ -3017,11 +3016,9 @@ void x11_followedge_anchors(GEDGE e)
 		default: xx = x1;
 		}
 		x11_followedge_line(xx,y1,x2,y2,t,c);
-		a = ANEXT(a);
 	}
-	a = NPRED(EEND(e));
-	while (a) {
-		e1 = AKANTE(a);
+	for (e1 = FirstPred(EEND(e)); e1; e1 = NextPred(e1))
+	{
 		t  = (ETHICKNESS(e1)*G_stretch)/G_shrink + 3;
 		if ( t==0 )	t = 1;
 		c  = ECOLOR(e1);
@@ -3051,7 +3048,6 @@ void x11_followedge_anchors(GEDGE e)
 		default: xx = x1;
 		}
 		x11_followedge_line(xx,y1,x2,y2,t,c);
-		a = ANEXT(a);
 	}
 }
 
@@ -3142,7 +3138,6 @@ void	gs_solidarrow(GEDGE e)
 static void draw_solidanchors(GEDGE e)
 {
 	GEDGE e1;
-	ADJEDGE a;
 	GNODE v;
 	int   h, w, x1, x2, yb, y1, y2, xx, d;
 	int   t, c;
@@ -3197,9 +3192,8 @@ static void draw_solidanchors(GEDGE e)
                 gs_mysolidline(xx,y1,x2,y2,t,c);
 	}
 
-	a = NSUCC(EEND(e));
-	while (a) {
-		e1 = AKANTE(a);
+	for (e1 = FirstSucc(EEND(e)); e1; e1 = NextSucc(e1))
+	{
 		t  = (ETHICKNESS(e1)*G_stretch)/G_shrink;
 		if ( t==0 )	t = 1;
 		c  = ECOLOR(e1);
@@ -3234,11 +3228,9 @@ static void draw_solidanchors(GEDGE e)
 		xx = gbl_x1;
 		y1 = gbl_y1;
 		gs_mysolidline(xx,y1,x2,y2,t,c);
-		a = ANEXT(a);
 	}
-	a = NPRED(EEND(e));
-	while (a) {
-		e1 = AKANTE(a);
+	for (e1 = FirstPred(EEND(e)); e1; e1 = NextPred(e1))
+	{
 		t  = (ETHICKNESS(e1)*G_stretch)/G_shrink;
 		if ( t==0 )	t = 1;
 		c  = ECOLOR(e1);
@@ -3273,7 +3265,6 @@ static void draw_solidanchors(GEDGE e)
 		xx = gbl_x2;
 		y2 = gbl_y2;
 		gs_mysolidline(xx,y1,x2,y2,t,c);
-		a = ANEXT(a);
 	}
 }
 
@@ -3544,7 +3535,6 @@ void	gs_dashedarrow(GEDGE e)
 static void draw_dashedanchors(GEDGE e)
 {
 	GEDGE e1;
-	ADJEDGE a;
 	GNODE v;
 	int   h, w, x1, x2, yb, y1, y2, xx, d;
 	int   t, c;
@@ -3599,9 +3589,8 @@ static void draw_dashedanchors(GEDGE e)
                 gs_mydashedline(xx,y1,x2,y2,t,c);
 	}
 
-	a = NSUCC(EEND(e));
-	while (a) {
-		e1 = AKANTE(a);
+	for (e1 = FirstSucc(EEND(e)); e1; e1 = NextSucc(e1))
+	{
 		t  = (ETHICKNESS(e1)*G_stretch)/G_shrink;
 		if ( t==0 )	t = 1;
 		c  = ECOLOR(e1);
@@ -3636,11 +3625,9 @@ static void draw_dashedanchors(GEDGE e)
 		xx = gbl_x1;
 		y1 = gbl_y1;
 		gs_mydashedline(xx,y1,x2,y2,t,c);
-		a = ANEXT(a);
 	}
-	a = NPRED(EEND(e));
-	while (a) {
-		e1 = AKANTE(a);
+	for (e1 = FirstPred(EEND(e)); e1; e1 = NextPred(e1))
+	{
 		t  = (ETHICKNESS(e1)*G_stretch)/G_shrink;
 		if ( t==0 )	t = 1;
 		c  = ECOLOR(e1);
@@ -3675,7 +3662,6 @@ static void draw_dashedanchors(GEDGE e)
 		xx = gbl_x2;
 		y1 = gbl_y2;
 		gs_mydashedline(xx,y1,x2,y2,t,c);
-		a = ANEXT(a);
 	}
 }
 
@@ -4261,7 +4247,6 @@ void	gs_dottedarrow(GEDGE e)
 static void draw_dottedanchors(GEDGE e)
 {
 	GEDGE e1;
-	ADJEDGE a;
 	GNODE v;
 	int   h, w, x1, x2, yb, y1, y2, xx, d;
 	int   t, c;
@@ -4317,9 +4302,8 @@ static void draw_dottedanchors(GEDGE e)
 	}
 
 
-	a = NSUCC(EEND(e));
-	while (a) {
-		e1 = AKANTE(a);
+	for (e1 = FirstSucc(EEND(e)); e1; e1 = NextSucc(e1))
+	{
 		t  = (ETHICKNESS(e1)*G_stretch)/G_shrink;
 		if ( t==0 )	t = 1;
 		c  = ECOLOR(e1);
@@ -4354,11 +4338,9 @@ static void draw_dottedanchors(GEDGE e)
 		xx = gbl_x1;
 		y1 = gbl_y1;
 		gs_mydottedline(xx,y1,x2,y2,t,c);
-		a = ANEXT(a);
 	}
-	a = NPRED(EEND(e));
-	while (a) {
-		e1 = AKANTE(a);
+	for (e1 = FirstPred(EEND(e)); e1; e1 = NextPred(e1))
+	{
 		t  = (ETHICKNESS(e1)*G_stretch)/G_shrink;
 		if ( t==0 )	t = 1;
 		c  = ECOLOR(e1);
@@ -4393,7 +4375,6 @@ static void draw_dottedanchors(GEDGE e)
 		xx = gbl_x2;
 		y1 = gbl_y2;
 		gs_mydottedline(xx,y1,x2,y2,t,c);
-		a = ANEXT(a);
 	}
 }
 
@@ -4867,9 +4848,8 @@ static void	gs_swdottedline(int x1,int y1,int x2,int y2,int t,int c)
 
 void    gs_anchornode(GNODE w)
 {
-	GEDGE e,e1;
+	GEDGE e,e1, edg;
 	GNODE v;
-	ADJEDGE a, ac;
 	int x1,x2,y1,y2;
 	int c,t,h,yb;
 	int conflict;
@@ -4935,24 +4915,22 @@ void    gs_anchornode(GNODE w)
                 }
 	}
 
-	a = NSUCC(w);
-	while (a) {
-		e1 = AKANTE(a);
+	for (e1 = FirstSucc(w); e1; e1 = NextSucc(e1))
+	{
 		t  = (ETHICKNESS(e1)*G_stretch)/G_shrink;
 		if ( t==0 )	t = 1;
 		c  = ECOLOR(e1);
 		if (!colored) c = BLACK;
 		y1 = yb + (-EANCHOR(e1)*16*mystretch)/myshrink;
-		x2 = ESTARTX(AKANTE(a)) * G_stretch/G_shrink;
-		y2 = ESTARTY(AKANTE(a)) * G_stretch/G_shrink;
+		x2 = ESTARTX(e1) * G_stretch/G_shrink;
+		y2 = ESTARTY(e1) * G_stretch/G_shrink;
 		if (manhatten_edges==1) {
 			conflict = 0;
-			ac = NPRED(w);
-			while (ac) {
-				if (  (ESTARTX(AKANTE(a)) == EENDX(AKANTE(ac)))
-				    &&(EANCHOR(AKANTE(a))>EANCHOR(AKANTE(ac))))
+			for (edg = FirstPred(w); edg; edg = NextPred(edg))
+			{
+				if (  (ESTARTX(e1) == EENDX(edg))
+				    &&(EANCHOR(e1)>EANCHOR(edg)))
 					conflict = 1;
-				ac = ANEXT(ac);
 			}
 			if (conflict) {
 				switch (ELSTYLE(e1)) {
@@ -4991,26 +4969,23 @@ void    gs_anchornode(GNODE w)
 			case UNVISIBLE: break;
                		}
 		}
-		a = ANEXT(a);
 	}
-	a = NPRED(w);
-	while (a) {
-		e1 = AKANTE(a);
+	for (e1 = FirstPred(w); e1; e1 = NextPred(e1))
+	{
 		t  = (ETHICKNESS(e1)*G_stretch)/G_shrink;
 		if ( t==0 )	t = 1;
 		c  = ECOLOR(e1);
 		if (!colored) c = BLACK;
 		y1 = yb + (-EANCHOR(e1)*16*mystretch)/myshrink;
-		x2 = EENDX(AKANTE(a)) * G_stretch/G_shrink;
-		y2 = EENDY(AKANTE(a)) * G_stretch/G_shrink;
+		x2 = EENDX(e1) * G_stretch/G_shrink;
+		y2 = EENDY(e1) * G_stretch/G_shrink;
 		if (manhatten_edges==1) {
 			conflict = 0;
-			ac = NSUCC(w);
-			while (ac) {
-				if (  (EENDX(AKANTE(a)) == ESTARTX(AKANTE(ac)))
-				    &&(EANCHOR(AKANTE(a))<EANCHOR(AKANTE(ac))))
+			for (edg = FirstSucc(w); edg; edg = NextSucc(edg))
+			{
+				if (  (EENDX(e1) == ESTARTX(edg))
+				    &&(EANCHOR(e1)<EANCHOR(edg)))
 					conflict = 1;
-				ac = ANEXT(ac);
 			}
 			if (conflict) {
 				switch (ELSTYLE(e1)) {
@@ -5049,7 +5024,6 @@ void    gs_anchornode(GNODE w)
 			case UNVISIBLE: break;
 			}
                 }
-		a = ANEXT(a);
 	}
 }
 
@@ -6218,7 +6192,6 @@ if (first) {
 static void draw_splineanchors(GEDGE e)
 {
 	GEDGE e1;
-	ADJEDGE a;
 	GNODE v;
 	int   h, w, x1, x2, yb, y1, y2, xx, d;
 	int   t, c, m;
@@ -6282,10 +6255,9 @@ static void draw_splineanchors(GEDGE e)
 		draw_spline(e1,0);
 	}
 
-	a = NSUCC(EEND(e));
-	while (a) {
+	for (e1 = FirstSucc(EEND(e)); e1; e1 = NextSucc(e1))
+	{
 		nr_points = 0;
-		e1 = AKANTE(a);
 		t  = (ETHICKNESS(e1)*G_stretch)/G_shrink;
 		if ( t==0 )	t = 1;
 		c  = ECOLOR(e1);
@@ -6326,12 +6298,10 @@ static void draw_splineanchors(GEDGE e)
 		ay[nr_points++]= ESTARTY(e1) * G_stretch/G_shrink; 
 		draw_start_part(ax[0],ay[0],ax[1],ay[1], c,t,m);
 		draw_spline(e1,0);
-		a = ANEXT(a);
 	}
-	a = NPRED(EEND(e));
-	while (a) {
+	for (e1 = FirstPred(EEND(e)); e1; e1 = NextPred(e1))
+	{
 		nr_points = 0;
-		e1 = AKANTE(a);
 		t  = (ETHICKNESS(e1)*G_stretch)/G_shrink;
 		if ( t==0 )	t = 1;
 		c  = ECOLOR(e1);
@@ -6372,7 +6342,6 @@ static void draw_splineanchors(GEDGE e)
 		ay[nr_points++]= EENDY(e1) * G_stretch/G_shrink; 
 		draw_start_part(ax[0],ay[0],ax[1],ay[1], c,t,m);
 		draw_spline(e1,0);
-		a = ANEXT(a);
 	}
 }
 
@@ -6402,21 +6371,21 @@ static GEDGE dummy_continue_edge(GNODE v, GEDGE e)
 		if (e2==e) e2=NULL; 
 	}
 	/* We have maximal 2 succs at dummy nodes */
-	if (NSUCC(v)) {
-		if (!e2) e2 = AKANTE(NSUCC(v));
+	if (FirstSucc(v)) {
+		if (!e2) e2 = FirstSucc(v);
 		if (e2==e) e2=NULL; 
 	}
-	if (NSUCC(v) && (ANEXT(NSUCC(v)))) {
-		if (!e2) e2 = AKANTE(ANEXT(NSUCC(v)));
+	if (FirstSucc(v) && NextSucc(FirstSucc(v))) {
+		if (!e2) e2 = NextSucc(FirstSucc(v));
 		if (e2==e) e2=NULL; 
 	}
 	/* We have maximal 2 preds at dummy nodes */
-	if (NPRED(v)) {
-		if (!e2) e2 = AKANTE(NPRED(v));
+	if (FirstPred(v)) {
+		if (!e2) e2 = FirstPred(v);
 		if (e2==e) e2=NULL; 
 	}
-	if (NPRED(v) && (ANEXT(NPRED(v)))) {
-		if (!e2) e2 = AKANTE(ANEXT(NPRED(v)));
+	if (FirstPred(v) && NextPred(FirstPred(v))) {
+		if (!e2) e2 = NextPred(FirstPred(v));
 		if (e2==e) e2=NULL; 
 	}
 	return(e2);
@@ -6668,7 +6637,6 @@ static void check_special_dummy(GNODE node,GNODE sn,int x1,int y1)
 static void check_border_points(GNODE node,int x1,int y1)
 {
 	int kx,ky;
-	ADJEDGE a;
 	GEDGE e;
 
 	debugmessage("check_border_points","");
@@ -6760,25 +6728,21 @@ static void check_border_points(GNODE node,int x1,int y1)
 		
 	}
 
-	a = NSUCC(node);
-	while (a) {
-		e = AKANTE(a);
+	for (e = FirstSucc(node); e; e = NextSucc(e))
+	{
 		if ((e)&&(ETBENDY(e)!=ESTARTY(e))) {	
 			kx = ETBENDX(e);
 			ky = ETBENDY(e);
 			check_spline_point(kx,ky,x1,y1);
 		}
-		a = ANEXT(a);
 	}
-	a = NPRED(node);
-	while (a) {
-		e = AKANTE(a);
+	for (e = FirstPred(node); e; e = NextPred(e))
+	{
 		if ((e)&&(EBBENDY(e)!=EENDY(e))) {	
 			kx = EBBENDX(e);
 			ky = EBBENDY(e);
 			check_spline_point(kx,ky,x1,y1);
 		}
-		a = ANEXT(a);
 	}
 
 }

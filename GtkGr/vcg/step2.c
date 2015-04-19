@@ -3052,15 +3052,9 @@ static void insert_left_right(int level,GNODE node)
 static void left_conn_list(GNODE v,GNODE w)
 {
 	GNLIST h;
-	ADJEDGE e;
 	CONNECT c;
 
 	debugmessage("left_conn_list","");
-
-	e = NSUCC(v);
-	while (e) { assert(SOURCE(e) == v); e = ANEXT(e); }
-	e = NPRED(v);
-	while (e) { assert(TARGET(e) == v); e = ANEXT(e); }
 
 	h = tmpnodelist_alloc();
 	GNNODE(h) = v;
@@ -3082,15 +3076,9 @@ static void left_conn_list(GNODE v,GNODE w)
 static void right_conn_list(GNODE v,GNODE w)
 {
 	GNLIST h;
-	ADJEDGE e;
 	CONNECT c;
 
 	debugmessage("right_conn_list","");
-
-	e = NSUCC(v);
-	while (e) { assert(SOURCE(e) == v); e = ANEXT(e); }
-	e = NPRED(v);
-	while (e) { assert(TARGET(e) == v); e = ANEXT(e); }
 
 	h = tmpnodelist_alloc();
 	GNNODE(h) = v;
