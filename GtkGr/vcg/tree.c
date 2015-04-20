@@ -337,7 +337,6 @@ static void calc_degree(void)
 	int i, j;
 	GNODE v;
 	GNLIST li;
-	GEDGE e;
 	int mymaxoutdeg;
 
 	debugmessage("calc_degree","");
@@ -346,6 +345,7 @@ static void calc_degree(void)
 	for (i=0; i<= maxdepth+1; i++) {
 		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
 		{
+			v = GNNODE(li);
 			assert(get_node_preds_num(v) <= 1);
 			j = get_node_succs_num(v);
 			if (j>mymaxoutdeg) mymaxoutdeg = j;
