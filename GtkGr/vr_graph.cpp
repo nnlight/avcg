@@ -359,7 +359,7 @@ void VRGraph::DrawEdgeLabel( DrawBuffer *draw_buffer, EdgeLabel *elabel)
 
 
 
-void VRGraph::LoadVcgEdge( GEDGE e)
+void VRGraph::LoadVcgEdge( GEDGE e, bool ignore_back_arrow)
 {
 	VREdge *edge = new VREdge( this);
 	edge->thickness_ = ETHICKNESS(e);
@@ -370,9 +370,15 @@ void VRGraph::LoadVcgEdge( GEDGE e)
 	edge->arrowstyle_[VRDIR_FORWARD] = (Arrowstyle_t)EARROWSTYLE(e);
 	edge->arrowcolor_[VRDIR_FORWARD] = (Color_t)EARROWCOL(e);
 	edge->arrowsize_[VRDIR_FORWARD] = EARROWSIZE(e);
-	edge->arrowstyle_[VRDIR_BACKWARD] = (Arrowstyle_t)EARROWBSTYLE(e);
-	edge->arrowcolor_[VRDIR_BACKWARD] = (Color_t)EARROWBCOL(e);
-	edge->arrowsize_[VRDIR_BACKWARD] = EARROWBSIZE(e);
+	if ( ignore_back_arrow ) {
+		edge->arrowstyle_[VRDIR_BACKWARD] = AS_NONE;
+		edge->arrowcolor_[VRDIR_BACKWARD] = BLACK;
+		edge->arrowsize_[VRDIR_BACKWARD] = 0;
+	} else {
+		edge->arrowstyle_[VRDIR_BACKWARD] = (Arrowstyle_t)EARROWBSTYLE(e);
+		edge->arrowcolor_[VRDIR_BACKWARD] = (Color_t)EARROWBCOL(e);
+		edge->arrowsize_[VRDIR_BACKWARD] = EARROWBSIZE(e);
+	}
 
 	int x1 = ESTARTX(e);
 	int y1 = ESTARTY(e);
@@ -449,7 +455,143 @@ void VRGraph::LoadVcgPredEdgesForVcgNodeList( GNODE list)
 			LoadVcgEdge( e);
 		}
 	}
-}
+} /* VRGraph::LoadVcgPredEdgesForVcgNodeList */
+
+int VRGraph::GetVcgNodeAnchorsFirstY(GNODE v)
+{
+	char *s;
+	int lines_num = 1;
+	int h = NHEIGHT(v);
+	int y;
+
+	for (s = NLABEL(v); *s; s++)
+	{
+		if (*s == '\n') lines_num++;
+	}
+	y = NY(v) + (h - lines_num*16)/2 - 10;
+	if (NSHAPE(v) == NS_TRIANGLE) {
+		y = y + h/4;
+	}
+	return y;
+	
+} /* VRGraph::GetVcgNodeAnchorsFirstY */
+
+int VRGraph::GetVcgNodeAnchorX( GNODE n, int y1)
+{
+	int x1 = NX(n) + NWIDTH(n);
+	int x2 = x1 + 1;
+	int myypos = NY(n);
+	int h = NHEIGHT(n);
+	int w = NWIDTH(n);
+	int d;
+	int xx;
+
+	switch (NSHAPE(n)) {
+	case RHOMB:
+		if (y1-myypos<h/2) d = ((h/2-y1+myypos)*w)/h;
+		else		   d = ((y1-myypos-h/2)*w)/h; 
+		if (x1<x2) xx = x1-d;
+		else	   xx = x1+d;
+		break;
+	case TRIANGLE:
+		d = ((h-y1+myypos)*w/2)/h;
+		if (x1<x2) xx = x1-d;
+		else	   xx = x1+d;
+		break;
+	case ELLIPSE:
+		d = (w+1)/2 - gstoint( sqrt( 
+					(double)(w*w)/4.0-(double)(w*w)/(double)(h*h)*
+					((double)h/2.0-y1+myypos) 
+					*((double)h/2.0-y1+myypos)));
+		if (x1<x2) xx = x1-d;
+		else	   xx = x1+d;
+		break;
+	default: xx = x1;
+	}
+	return xx;
+} /* VRGraph::GetVcgNodeAnchorX */
+
+extern int manhatten_edges;
+
+void VRGraph::LoadVcgEdgesForVcgAnchorNode( GNODE v)
+{
+	CONNECT c = NCONNECT(v);
+	GNODE	n = CTARGET(c);
+	GEDGE	e = CEDGE(c);
+	int x2 = EENDX(e);
+	int ybase = GetVcgNodeAnchorsFirstY(n);
+
+	for ( e = FirstSucc(v); e; e = NextSucc(e) )
+	{
+		LoadVcgEdge( e, true);
+
+		int y = ybase + -EANCHOR(e)*16;
+		int x1 = GetVcgNodeAnchorX( n, y);
+		int xlast = ESTARTX(e);
+		int ylast = ESTARTY(e);
+
+		VREdge *edge = new VREdge( this);
+		edge->thickness_ = ETHICKNESS(e);
+		if (edge->thickness_ == 0)
+			edge->thickness_ = 1;
+		edge->color_ = (Color_t)ECOLOR(e);
+		edge->linestyle_ = (Linestyle_t)ELSTYLE(e);
+		edge->arrowstyle_[VRDIR_FORWARD] = AS_NONE;
+		edge->arrowcolor_[VRDIR_FORWARD] = BLACK;
+		edge->arrowsize_[VRDIR_FORWARD] = 0;
+		edge->arrowstyle_[VRDIR_BACKWARD] = (Arrowstyle_t)EARROWBSTYLE(e);
+		edge->arrowcolor_[VRDIR_BACKWARD] = (Color_t)EARROWBCOL(e);
+		edge->arrowsize_[VRDIR_BACKWARD] = EARROWBSIZE(e);
+
+		edge->x_[0] = x1;
+		edge->y_[0] = y;
+		if (manhatten_edges) {
+			edge->x_[1] = xlast;
+			edge->y_[1] = y;
+		} else {
+			edge->x_[1] = x2;
+			edge->y_[1] = y;
+		}
+		edge->x_[2] = xlast;
+		edge->y_[2] = ylast;
+		edge->dots_ = 3;
+	}
+	// в оигинальной VCG (в gs_anchornode) еще входные дуги смотрелись...
+} /* VRGraph::LoadVcgEdgesForVcgAnchorNode */
+
+void VRGraph::LoadVcgEdgesForVcgNodeList( GNODE list)
+{
+	GNODE	v;
+	GEDGE	e;
+	CONNECT c;
+	
+	for ( v = list; v; v = NNEXT(v) )
+	{
+		if ( NANCHORNODE(v) )
+		{
+			LoadVcgEdgesForVcgAnchorNode( v);
+			continue;
+		}
+		c = NCONNECT(v);
+		if (c) {
+			if (backward_connection1(c)) {
+				e = CEDGE(c);
+				LoadVcgEdge( e);
+			}
+			if (backward_connection2(c)) {
+				e = CEDGE2(c);
+				LoadVcgEdge( e);
+			}
+		}
+		for ( e = FirstPred(v); e; e = NextPred(e) )
+		{
+			if ( NANCHORNODE(ESOURCE(e)) ) {
+				continue;
+			}
+			LoadVcgEdge( e);
+		}
+	}
+} /* VRGraph::LoadVcgEdgesForVcgNodeList */
 
 
 void VRGraph::LoadGDL()
@@ -486,20 +628,17 @@ void VRGraph::LoadGDL()
 		elabel.textcolor_ = (Color_t)NTCOLOR(v);
 		elabel_list_.push_back( elabel);
 	}
-	/*  Normal dummy nodes need not to be drawn, because they have no size. 
-	 *  Anchor nodes are drawn.
-	 */
-	/*for ( v = dummylist; v; v = NNEXT(v) )
-	{
-		if (!NANCHORNODE(v))
-			continue;
-		gs_anchornode(v);
-	}*/
 
 	/* дуги */
+#if 0
 	LoadVcgPredEdgesForVcgNodeList( nodelist);
 	LoadVcgPredEdgesForVcgNodeList( labellist);
 	LoadVcgPredEdgesForVcgNodeList( dummylist);
+#else
+	LoadVcgEdgesForVcgNodeList( nodelist);
+	LoadVcgEdgesForVcgNodeList( labellist);
+	LoadVcgEdgesForVcgNodeList( dummylist);
+#endif
 } /* VRGraph::LoadGDL */
 
 void VRGraph::SetupDrawBufferSetting( DrawBuffer *draw_buffer)

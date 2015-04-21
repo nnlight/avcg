@@ -120,8 +120,12 @@ public:
 	/* настройка DrawBuffer по установке цвета фона, доп. цветов, начальный скейлинг и положение видимой области и т.п. */
 	void SetupDrawBufferSetting( DrawBuffer *draw_buffer);
 private:
-	void LoadVcgEdge( GEDGE e);
+	void LoadVcgEdge( GEDGE e, bool ignore_back_arrow = false);
 	void LoadVcgPredEdgesForVcgNodeList( GNODE list);
+	int GetVcgNodeAnchorsFirstY(GNODE v);
+	int GetVcgNodeAnchorX( GNODE n, int y);
+	void LoadVcgEdgesForVcgAnchorNode( GNODE v);
+	void LoadVcgEdgesForVcgNodeList( GNODE list);
 
 	void DrawNodeText( DrawBuffer *draw_buffer, VRNode *node);
 	void DrawNode( DrawBuffer *draw_buffer, VRNode *node);
