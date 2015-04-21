@@ -1196,6 +1196,8 @@ CONNECT	connectalloc(GNODE node)
 	CEDGE(h)	= NULL;
 	CTARGET2(h)	= NULL;
 	CEDGE2(h)	= NULL;
+	CSVPRED(h)	= DEAD_GELIST;
+	CSVSUCC(h)	= DEAD_GELIST;
 	CINTERN(h) 	= connectlist;
 	connectlist	= h;
 	NCONNECT(node) 	= h;

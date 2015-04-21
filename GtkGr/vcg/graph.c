@@ -124,8 +124,8 @@ void init_node_graph_fields_as_dead(GNODE v)
     NNEXT(v) = DEAD_GNODE;
     NPREV(v) = DEAD_GNODE;
 
-    NSVPRED(v) = DEAD_GELIST;
-    NSVSUCC(v) = DEAD_GELIST;
+    /*NSVPRED(v) = DEAD_GELIST;
+    NSVSUCC(v) = DEAD_GELIST;*/
 }
 
 void init_edge_graph_fields_as_dead(GEDGE e)

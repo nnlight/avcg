@@ -2400,17 +2400,17 @@ static void complete_depth_lists(void)
 static void calc_connect_adjlists(GNODE v, GNODE w, GNODE predw)
 {
 	GEDGE edge, nxt_edge;
-	CONNECT c;
+	CONNECT c = NCONNECT(w);
 
-	debugmessage("calc_connect_adjlists","");
+	assert(c);
 
 	if (v!=w) NMARK(w) = 1;
 
 	/* save a copy of the actual adjacency lists */
-	assert(NSVSUCC(w) == DEAD_GELIST);
-	assert(NSVPRED(w) == DEAD_GELIST);
-	NSVSUCC(w) = save_node_adjlist(w, GD_SUCC);
-	NSVPRED(w) = save_node_adjlist(w, GD_PRED);
+	assert(CSVSUCC(c) == DEAD_GELIST);
+	assert(CSVPRED(c) == DEAD_GELIST);
+	CSVSUCC(c) = save_node_adjlist(w, GD_SUCC);
+	CSVPRED(c) = save_node_adjlist(w, GD_PRED);
 
 	for (edge = FirstSucc(w); edge; edge = nxt_edge)
 	{
@@ -2423,7 +2423,6 @@ static void calc_connect_adjlists(GNODE v, GNODE w, GNODE predw)
 		change_edge_dst(edge, w, v);
 	}
 
-	c = NCONNECT(w);
 	if (c && CTARGET(c) && (CTARGET(c)!=predw))
 		calc_connect_adjlists(v, CTARGET(c), w);
 	if (c && CTARGET2(c) && (CTARGET2(c)!=predw))

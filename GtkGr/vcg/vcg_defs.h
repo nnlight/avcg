@@ -124,14 +124,23 @@ typedef struct connect
 	struct gedge	*edge;          /* and its edge               */
 	struct gnode	*target2;       /* Second found target        */
 	struct gedge	*edge2;         /* and its edge               */
+
+	/* At connections we temporary change the adjacency lists.
+	 * Thus we store the original list in save fields.
+         */
+	struct	adjedge	*savepred;     	/* adjacency list: predecessors */
+	struct	adjedge	*savesucc;     	/* adjacency list: successors   */
+
 	struct connect	*internal_next; /* for memory allocation only */
 } *CONNECT;
 
-#define	CTARGET(x)	((x)->target)
-#define CEDGE(x)	((x)->edge)
-#define	CTARGET2(x)	((x)->target2)
-#define CEDGE2(x)	((x)->edge2)
-#define CINTERN(x)	((x)->internal_next)
+#define CTARGET(x)      ((x)->target)
+#define CEDGE(x)        ((x)->edge)
+#define CTARGET2(x)     ((x)->target2)
+#define CEDGE2(x)       ((x)->edge2)
+#define CSVPRED(x)      ((x)->savepred)
+#define CSVSUCC(x)      ((x)->savesucc)
+#define CINTERN(x)      ((x)->internal_next)
 
 #if VCG_USE_MACROS
 #define forward_connection1(c)  ((CEDGE(c))&& (EEND(CEDGE(c)) ==CTARGET(c)))
@@ -307,9 +316,8 @@ typedef struct gnode
 	/*struct	adjedge	*tmpadj;*/      	/* temporary adjacency list     */
 	/*struct	adjedge	*pred;*/	       	/* adjacency list: predecessors */
 	/*struct	adjedge	*succ;*/	       	/* adjacency list: successors   */
-	/* TODO: перенести эти поля в connection */
-	struct	adjedge	*savepred;     	/* adjacency list: predecessors */
-	struct	adjedge	*savesucc;     	/* adjacency list: successors   */
+	/*struct	adjedge	*savepred;*/     	/* adjacency list: predecessors */
+	/*struct	adjedge	*savesucc;*/     	/* adjacency list: successors   */
 	/*struct	gedge	*predleft;*/     	/* leftest predecessor          */
 	/*struct	gedge	*predright;*/    	/* rightest predecessor         */
 	/*struct	gedge	*succleft;*/	/* leftest successor		*/

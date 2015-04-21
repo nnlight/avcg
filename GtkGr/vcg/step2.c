@@ -2842,17 +2842,18 @@ static void revive_conn_edges(GNODE v, GNODE w, GNODE predw)
 {
 	ADJEDGE sv_succs, sv_preds, a;
 	GEDGE e;
-	CONNECT c;
-	int j;
+	CONNECT c = NCONNECT(w);
+
+	assert(c);
 
 	/* restore the adjacency lists of the connection 
 	 * Remind: The adjacency lists were destroyed in step1 in
     	 * calc_connect_adjlists.
 	 */
-	sv_succs = reverse_adjlist(NSVSUCC(w));
-	sv_preds = reverse_adjlist(NSVPRED(w));
-	NSVSUCC(w) = DEAD_GELIST;
-	NSVPRED(w) = DEAD_GELIST;
+	sv_succs = reverse_adjlist(CSVSUCC(c));
+	sv_preds = reverse_adjlist(CSVPRED(c));
+	CSVSUCC(c) = DEAD_GELIST;
+	CSVPRED(c) = DEAD_GELIST;
 
 	if (v!=w) {
 		assert(FirstSucc(w) == NULL);
@@ -2873,7 +2874,6 @@ static void revive_conn_edges(GNODE v, GNODE w, GNODE predw)
 		change_edge_dst(e, ETARGET(e), w);
 	}
 
-	c = NCONNECT(w);
 	if (v==w) {
 		if (forward_connection1(c)) revive_conn_edges(v, CTARGET(c), v);
 		if (forward_connection2(c)) revive_conn_edges(v, CTARGET2(c), v);
