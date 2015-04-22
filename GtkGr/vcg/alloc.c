@@ -161,6 +161,7 @@ void free_memory(void)
 	ParseFree();
 	node_refnum = 0L;	
 	reinit_all_lists();
+	graph_init();
 } /* free_memory */
 
 /**
@@ -224,6 +225,7 @@ static GNODE node_freelist = NULL;     /* list of free GNODE objects */
 static GNODE internal_nodealloc(void)
 {
 	GNODE   h;
+	int i;
 
 	debugmessage("internal_nodealloc","");
 	if (node_freelist) {
@@ -268,9 +270,12 @@ static GNODE internal_nodealloc(void)
 	NBARY(h) 	= -1;
 	NDFS(h)      	= -1L; 
 	NVPTR(h)	= NULL;
+	for (i = 0; i < TEMP_ATTR_COUNT; i++) NTEMPATTR(h,i) = DEAD_PTR;
+	for (i = 0; i < MARKER_COUNT; i++) NMARKERVAL(h,i) = 0;
 	NCONNECT(h)  	= NULL;
 	NINTERN(h)	= NULL;
 	init_node_graph_fields_as_dead(h);
+
 	return(h);
 }
 

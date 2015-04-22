@@ -29,6 +29,11 @@
 #include "vcg_defs.h"
 
 
+static unsigned alloced_temp_attr_mask;
+static unsigned alloced_marker_mask;
+static unsigned next_marker_val[MARKER_COUNT];
+
+
 #if !VCG_USE_MACROS
 int forward_connection1(CONNECT c) {
 	GEDGE e = CEDGE(c);
@@ -156,6 +161,116 @@ void check_node_no_adj_edges(GNODE v)
     assert(NADJFIRST(v,GD_SUCC) == NULL);
     assert(NADJLAST(v,GD_PRED) == NULL);
     assert(NADJLAST(v,GD_SUCC) == NULL);
+}
+
+void graph_init()
+{
+    int i;
+
+    alloced_temp_attr_mask = 0;
+    alloced_marker_mask = 0;
+    for (i = 0; i < MARKER_COUNT; i++) {
+        next_marker_val[i] = 1;
+    }
+}
+
+Tempattr_t new_temp_attr()
+{
+    int i;
+
+    for (i = 0; i < TEMP_ATTR_COUNT; i++) {
+        if ( (alloced_temp_attr_mask & (1 << i)) == 0 ) {
+            alloced_temp_attr_mask |= (1 << i);
+            return i;
+        }
+    }
+    assert(0);
+    return 0;
+}
+
+void free_temp_attr(Tempattr_t ta)
+{
+    assert(alloced_temp_attr_mask & (1 << ta));
+
+    alloced_temp_attr_mask &= ~(1 << ta);
+}
+
+void *get_node_temp_attr(GNODE v, Tempattr_t ta)
+{
+    assert(alloced_temp_attr_mask & (1 << ta));
+
+    return NTEMPATTR(v,ta);
+}
+
+void set_node_temp_attr(GNODE v, Tempattr_t ta, void *val)
+{
+    assert(alloced_temp_attr_mask & (1 << ta));
+
+    NTEMPATTR(v,ta) = val;
+}
+
+Marker_t new_marker()
+{
+    Marker_t marker = 0;
+    int i;
+
+    /* TODO: надо выбирать маркер с минмальным значением, если их больше 1 */
+    assert(MARKER_COUNT == 1);
+    for (i = 0; i < MARKER_COUNT; i++) {
+        if ( (alloced_marker_mask & (1 << i)) == 0 ) {
+            alloced_marker_mask |= (1 << i);
+            assert( i < (1u << MARKER_VAL_BITS) );
+            marker = (next_marker_val[i] << MARKER_IDX_BITS) | i;
+            next_marker_val[i]++;
+            assert( next_marker_val[i] < (1u << MARKER_VAL_BITS) );
+            return marker;
+        }
+    }
+    assert(0);
+    return marker;
+}
+
+void free_marker(Marker_t marker)
+{
+    unsigned idx = marker & MARKER_IDX_MASK;
+
+    assert(alloced_marker_mask & (1 << idx));
+
+    alloced_marker_mask &= ~(1 << idx);
+}
+
+int is_node_marked(GNODE v, Marker_t marker)
+{
+    unsigned idx = marker & MARKER_IDX_MASK;
+    unsigned val = marker >> MARKER_IDX_BITS;
+
+    assert(alloced_marker_mask & (1 << idx));
+
+    return NMARKERVAL(v,idx) == val;
+}
+
+int set_node_marker(GNODE v, Marker_t marker)
+{
+    unsigned idx = marker & MARKER_IDX_MASK;
+    unsigned val = marker >> MARKER_IDX_BITS;
+    int is_marked = NMARKERVAL(v,idx) == val;
+
+    assert(alloced_marker_mask & (1 << idx));
+
+    NMARKERVAL(v,idx) = val;
+    return is_marked;
+}
+
+int clear_node_marker(GNODE v, Marker_t marker)
+{
+    unsigned idx = marker & MARKER_IDX_MASK;
+    unsigned val = marker >> MARKER_IDX_BITS;
+    int is_marked = NMARKERVAL(v,idx) == val;
+
+    assert(alloced_marker_mask & (1 << idx));
+
+    NMARKERVAL(v,idx) = 0;
+    return is_marked;
 }
 
 static void link_node_edge(GNODE v, GEDGE e, Graphdir_t dir)

@@ -66,6 +66,18 @@ typedef enum Graphdir_t
 	GD_SUCC,  /* successor(s)  (list) */
 	GD_COUNT
 } Graphdir_t;
+
+typedef enum Tempattr_t {
+	/* values of temp attr should not be used directly */
+	TEMP_ATTR_COUNT = 1
+} Tempattr_t;
+
+#define MARKER_COUNT 1
+typedef unsigned Marker_t;
+#define MARKER_IDX_BITS  2
+#define MARKER_VAL_BITS  (sizeof(unsigned)*8 - MARKER_IDX_BITS)
+#define MARKER_IDX_MASK  ((1 << MARKER_IDX_BITS) - 1)
+
 /*--------------------------------------------------------------------*/
 
 /*  Auxiliary Structs
@@ -304,6 +316,9 @@ typedef struct gnode
 
 	struct 	dllist	*Vpointer; 	/* this crossing pointer        */
 
+	void *temp_attr[TEMP_ATTR_COUNT];
+	unsigned marker_val[MARKER_COUNT];
+
 	/* The graph is represented with adjacency lists. We have some
          * fast accesses to the leftest or rightedst prede/successor.
 	 * Further, at connections we temporary change the adjacency
@@ -312,7 +327,6 @@ typedef struct gnode
 	 * lists. Thus we use a pointer tmpadj to the actual position
 	 * in the adjacency list.
          */
-
 	/*struct	adjedge	*tmpadj;*/      	/* temporary adjacency list     */
 	/*struct	adjedge	*pred;*/	       	/* adjacency list: predecessors */
 	/*struct	adjedge	*succ;*/	       	/* adjacency list: successors   */
@@ -387,6 +401,8 @@ typedef struct gnode
 #define	NINDEG(x)	((x)->indegree)
 #define	NOUTDEG(x)	((x)->outdegree)
 #define	NVPTR(x)	((x)->Vpointer)
+#define NTEMPATTR(x,i)  ((x)->temp_attr[i])  /* for internal use */
+#define NMARKERVAL(x,i) ((x)->marker_val[i]) /* for internal use */
 #define	NTMPADJ(x)	((x)->tmpadj)
 #define	NPRED(x)	((x)->pred)
 #define NSUCC(x)	((x)->succ)
@@ -396,8 +412,8 @@ typedef struct gnode
 #define NPREDR(x)       LastPred(x)
 #define NSUCCL(x)       FirstSucc(x)
 #define NSUCCR(x)       LastSucc(x)
-#define NADJFIRST(x,di) ((x)->adjfirst[di])
-#define NADJLAST(x,dir) ((x)->adjlast[dir])
+#define NADJFIRST(x,di) ((x)->adjfirst[di])  /* for internal use */
+#define NADJLAST(x,dir) ((x)->adjlast[dir])  /* for internal use */
 #if VCG_USE_MACROS
 #define FirstPred(x)    NADJFIRST(x, GD_PRED)
 #define FirstSucc(x)    NADJFIRST(x, GD_SUCC)

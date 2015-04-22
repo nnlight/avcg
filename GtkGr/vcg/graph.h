@@ -42,6 +42,19 @@ void init_edge_graph_fields_as_dead(GEDGE e);
 void init_node_adj_fields(GNODE v);
 void check_node_no_adj_edges(GNODE v);
 
+void graph_init();
+
+Tempattr_t new_temp_attr();
+void free_temp_attr(Tempattr_t ta);
+void *get_node_temp_attr(GNODE v, Tempattr_t ta);
+void set_node_temp_attr(GNODE v, Tempattr_t ta, void *val);
+
+Marker_t new_marker();
+void free_marker(Marker_t marker);
+int is_node_marked(GNODE v, Marker_t marker);
+int set_node_marker(GNODE v, Marker_t marker);
+int clear_node_marker(GNODE v, Marker_t marker);
+
 void unlink_node_edges(GNODE v);
 void link_edge(GEDGE e);
 void unlink_edge(GEDGE e);
