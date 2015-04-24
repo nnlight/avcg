@@ -1704,45 +1704,45 @@ int yy_flex_debug = 1;
 
 static yyconst flex_int16_t yy_rule_linenum[355] =
     {   0,
-       50,   52,   54,   56,   58,   60,   62,   64,   66,   68,
-       70,   72,   74,   76,   78,   80,   82,   84,   86,   88,
-       90,   92,   94,   96,   98,  100,  102,  104,  106,  108,
-      110,  112,  114,  116,  118,  120,  122,  124,  126,  128,
-      130,  132,  134,  136,  138,  140,  142,  144,  146,  148,
-      150,  152,  154,  156,  158,  160,  162,  164,  166,  168,
-      170,  172,  174,  176,  178,  180,  182,  184,  186,  188,
-      190,  192,  194,  196,  198,  200,  202,  204,  206,  208,
-      210,  212,  214,  216,  218,  220,  222,  224,  226,  228,
-      230,  232,  234,  236,  238,  240,  242,  244,  246,  248,
+       50,   51,   52,   53,   54,   55,   56,   57,   58,   59,
+       60,   61,   62,   63,   64,   65,   66,   67,   68,   69,
+       70,   71,   72,   73,   74,   75,   76,   77,   78,   79,
+       80,   81,   82,   83,   84,   85,   86,   87,   88,   89,
+       90,   91,   92,   93,   94,   95,   96,   97,   98,   99,
+      100,  101,  102,  103,  104,  105,  106,  107,  108,  109,
+      110,  111,  112,  113,  114,  115,  116,  117,  118,  119,
+      120,  121,  122,  123,  124,  125,  126,  127,  128,  129,
+      130,  131,  132,  133,  134,  135,  136,  137,  138,  139,
+      140,  141,  142,  143,  144,  145,  146,  147,  148,  149,
 
-      250,  252,  254,  256,  258,  260,  262,  264,  266,  268,
-      270,  272,  274,  276,  278,  280,  282,  284,  286,  288,
-      290,  292,  294,  296,  298,  300,  302,  304,  306,  308,
-      310,  312,  314,  316,  318,  320,  322,  324,  326,  328,
-      330,  332,  334,  336,  338,  340,  342,  344,  346,  348,
-      350,  352,  354,  356,  358,  360,  362,  364,  366,  368,
-      370,  372,  374,  376,  378,  380,  382,  384,  386,  388,
-      390,  392,  394,  396,  398,  400,  402,  404,  406,  408,
-      410,  412,  414,  416,  418,  420,  422,  424,  426,  428,
-      430,  432,  434,  436,  438,  440,  442,  444,  446,  448,
+      150,  151,  152,  153,  154,  155,  156,  157,  158,  159,
+      160,  161,  162,  163,  164,  165,  166,  167,  168,  169,
+      170,  171,  172,  173,  174,  175,  176,  177,  178,  179,
+      180,  181,  182,  183,  184,  185,  186,  187,  188,  189,
+      190,  191,  192,  193,  194,  195,  196,  197,  198,  199,
+      200,  201,  202,  203,  204,  205,  206,  207,  208,  209,
+      210,  211,  212,  213,  214,  215,  216,  217,  218,  219,
+      220,  221,  222,  223,  224,  225,  226,  227,  228,  229,
+      230,  231,  232,  233,  234,  235,  236,  237,  238,  239,
+      240,  241,  242,  243,  244,  245,  246,  247,  248,  249,
 
-      450,  452,  454,  456,  458,  460,  462,  464,  466,  468,
-      470,  472,  474,  476,  478,  480,  482,  484,  486,  488,
-      490,  492,  494,  496,  498,  500,  502,  504,  506,  508,
-      510,  512,  514,  516,  518,  520,  522,  524,  526,  528,
-      530,  532,  534,  536,  538,  540,  542,  544,  546,  548,
-      550,  552,  554,  556,  558,  560,  562,  564,  566,  568,
-      570,  572,  574,  576,  578,  580,  582,  584,  586,  588,
-      590,  592,  594,  596,  598,  600,  602,  604,  606,  608,
-      610,  612,  614,  616,  618,  620,  622,  624,  626,  628,
-      630,  632,  634,  636,  638,  640,  642,  644,  646,  648,
+      250,  251,  252,  253,  254,  255,  256,  257,  258,  259,
+      260,  261,  262,  263,  264,  265,  266,  267,  268,  269,
+      270,  271,  272,  273,  274,  275,  276,  277,  278,  279,
+      280,  281,  282,  283,  284,  285,  286,  287,  288,  289,
+      290,  291,  292,  293,  294,  295,  296,  297,  298,  299,
+      300,  301,  302,  303,  304,  305,  306,  307,  308,  309,
+      310,  311,  312,  313,  314,  315,  316,  317,  318,  319,
+      320,  321,  322,  323,  324,  325,  326,  327,  328,  329,
+      330,  331,  332,  333,  334,  335,  336,  337,  338,  339,
+      340,  341,  342,  343,  344,  345,  346,  347,  348,  349,
 
-      650,  652,  654,  656,  658,  660,  662,  664,  666,  668,
-      670,  672,  674,  676,  678,  680,  682,  684,  686,  688,
-      690,  692,  694,  696,  698,  700,  702,  704,  706,  708,
-      710,  713,  715,  717,  720,  722,  724,  727,  731,  735,
-      739,  746,  748,  751,  753,  755,  757,  759,  761,  763,
-      765,  767,  769,  773
+      350,  351,  352,  353,  354,  355,  356,  357,  358,  359,
+      360,  361,  362,  363,  364,  365,  366,  367,  368,  369,
+      370,  371,  372,  373,  374,  375,  376,  377,  378,  379,
+      380,  382,  383,  384,  386,  387,  388,  390,  394,  398,
+      402,  408,  409,  411,  412,  413,  414,  415,  416,  417,
+      418,  419,  420,  422
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -2120,1793 +2120,1444 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ABOVE);               }
+{ return(LEXWORD_ABOVE);               }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ANCHORPOINTS);        }
+{ return(LEXWORD_ANCHORPOINTS);        }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ANCHORPOINTS);        }
+{ return(LEXWORD_ANCHORPOINTS);        }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ANCHOR);              }
+{ return(LEXWORD_ANCHOR);              }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_AQUAMARINE);          }
+{ return(LEXWORD_AQUAMARINE);          }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_AROUND);              }
+{ return(LEXWORD_AROUND);              }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ARROWMODE);           }
+{ return(LEXWORD_ARROWMODE);           }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ARROWMODE);           }
+{ return(LEXWORD_ARROWMODE);           }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ARROWHEIGHT);         }
+{ return(LEXWORD_ARROWHEIGHT);         }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ARROWHEIGHT);         }
+{ return(LEXWORD_ARROWHEIGHT);         }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ARROWWIDTH);          }
+{ return(LEXWORD_ARROWWIDTH);          }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ARROWWIDTH);          }
+{ return(LEXWORD_ARROWWIDTH);          }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ARROWCOLOR);          }
+{ return(LEXWORD_ARROWCOLOR);          }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ARROWCOLOR);          }
+{ return(LEXWORD_ARROWCOLOR);          }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ARROWSTYLE);          }
+{ return(LEXWORD_ARROWSTYLE);          }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ARROWSTYLE);          }
+{ return(LEXWORD_ARROWSTYLE);          }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ARROWSIZE);           }
+{ return(LEXWORD_ARROWSIZE);           }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ARROWSIZE);           }
+{ return(LEXWORD_ARROWSIZE);           }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BARROWCOLOR);         }
+{ return(LEXWORD_BARROWCOLOR);         }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BARROWCOLOR);         }
+{ return(LEXWORD_BARROWCOLOR);         }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BARROWCOLOR);         }
+{ return(LEXWORD_BARROWCOLOR);         }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BARROWSTYLE);         }
+{ return(LEXWORD_BARROWSTYLE);         }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BARROWSTYLE);         }
+{ return(LEXWORD_BARROWSTYLE);         }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BARROWSTYLE);         }
+{ return(LEXWORD_BARROWSTYLE);         }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BARROWSIZE);          }
+{ return(LEXWORD_BARROWSIZE);          }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BARROWSIZE);          }
+{ return(LEXWORD_BARROWSIZE);          }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BARROWSIZE);          }
+{ return(LEXWORD_BARROWSIZE);          }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BACKEDGE);            }
+{ return(LEXWORD_BACKEDGE);            }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BACKEDGE);            }
+{ return(LEXWORD_BACKEDGE);            }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BARYCENTER);          }
+{ return(LEXWORD_BARYCENTER);          }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BARYCENTER);          }
+{ return(LEXWORD_BARYCENTER);          }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BARY);                }
+{ return(LEXWORD_BARY);                }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BARYMEDIAN);          } 
+{ return(LEXWORD_BARYMEDIAN);          } 
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BEHIND);              }
+{ return(LEXWORD_BEHIND);              }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BELOW);               }
+{ return(LEXWORD_BELOW);               }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BLACK);               }
+{ return(LEXWORD_BLACK);               }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BLUE);                }
+{ return(LEXWORD_BLUE);                }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BMAX);                }
+{ return(LEXWORD_BMAX);                }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BORDERCOLOR);         }
+{ return(LEXWORD_BORDERCOLOR);         }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BORDERCOLOR);         }
+{ return(LEXWORD_BORDERCOLOR);         }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BORDERWIDTH);         }
+{ return(LEXWORD_BORDERWIDTH);         }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BORDERWIDTH);         }
+{ return(LEXWORD_BORDERWIDTH);         }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BOTTOM_MARGIN);       }
+{ return(LEXWORD_BOTTOM_MARGIN);       }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BOTTOM_MARGIN);       }
+{ return(LEXWORD_BOTTOM_MARGIN);       }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BOTTOM_TO_TOP);       }
+{ return(LEXWORD_BOTTOM_TO_TOP);       }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BOTTOM_TO_TOP);       }
+{ return(LEXWORD_BOTTOM_TO_TOP);       }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BOTTOM);              }
+{ return(LEXWORD_BOTTOM);              }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BOX);                 }
+{ return(LEXWORD_BOX);                 }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BENTNEAREDGE);        }
+{ return(LEXWORD_BENTNEAREDGE);        }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BENTNEAREDGE);        }
+{ return(LEXWORD_BENTNEAREDGE);        }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_BENTNEAREDGE);        }
+{ return(LEXWORD_BENTNEAREDGE);        }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CENTER);              }
+{ return(LEXWORD_CENTER);              }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CFISH);               }
+{ return(LEXWORD_CFISH);               }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CLASSNAME);           }
+{ return(LEXWORD_CLASSNAME);           }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CLASSNAME);           }
+{ return(LEXWORD_CLASSNAME);           }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CLASS);               }
+{ return(LEXWORD_CLASS);               }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CLUSTER);             }
+{ return(LEXWORD_CLUSTER);             }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CMIN);                }
+{ return(LEXWORD_CMIN);                }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CMAX);                }
+{ return(LEXWORD_CMAX);                }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_COLORENTRY);          }
+{ return(LEXWORD_COLORENTRY);          }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_COLORENTRY);          }
+{ return(LEXWORD_COLORENTRY);          }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_COLOR);               }
+{ return(LEXWORD_COLOR);               }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CONSTRAINTS);         }
+{ return(LEXWORD_CONSTRAINTS);         }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CONSTRAINT);          }
+{ return(LEXWORD_CONSTRAINT);          }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CONTINUOUS);          }
+{ return(LEXWORD_CONTINUOUS);          }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CROSSING_WEIGHT);     }
+{ return(LEXWORD_CROSSING_WEIGHT);     }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CROSSING_WEIGHT);     }
+{ return(LEXWORD_CROSSING_WEIGHT);     }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CROSSING_OPT);        }
+{ return(LEXWORD_CROSSING_OPT);        }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CROSSING_OPT);        }
+{ return(LEXWORD_CROSSING_OPT);        }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CROSSING_P2);         }
+{ return(LEXWORD_CROSSING_P2);         }
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CROSSING_P2);         }
+{ return(LEXWORD_CROSSING_P2);         }
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_CYAN);                }
+{ return(LEXWORD_CYAN);                }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DARKBLUE);            }
+{ return(LEXWORD_DARKBLUE);            }
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DARKCYAN);            }
+{ return(LEXWORD_DARKCYAN);            }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DARKGREEN);           }
+{ return(LEXWORD_DARKGREEN);           }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DARKGREY);            }
+{ return(LEXWORD_DARKGREY);            }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DARKGREY);            }
+{ return(LEXWORD_DARKGREY);            }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DARKMAGENTA);         }
+{ return(LEXWORD_DARKMAGENTA);         }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DARKRED);             }
+{ return(LEXWORD_DARKRED);             }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DARKYELLOW);          }
+{ return(LEXWORD_DARKYELLOW);          }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DASHED);              } 
+{ return(LEXWORD_DASHED);              } 
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DFS);   	       } 
+{ return(LEXWORD_DFS);   	       } 
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DFS);   	       } 
+{ return(LEXWORD_DFS);   	       } 
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DFS);   	       } 
+{ return(LEXWORD_DFS);   	       } 
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DIMENSION);           }
+{ return(LEXWORD_DIMENSION);           }
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DIRTY_EDGE_LABELS);   }
+{ return(LEXWORD_DIRTY_EDGE_LABELS);   }
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DIRTY_EDGE_LABELS);   }
+{ return(LEXWORD_DIRTY_EDGE_LABELS);   }
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DISPLAY_EDGE_LABELS); }
+{ return(LEXWORD_DISPLAY_EDGE_LABELS); }
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DISPLAY_EDGE_LABELS); }
+{ return(LEXWORD_DISPLAY_EDGE_LABELS); }
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_DOTTED);              }
+{ return(LEXWORD_DOTTED);              }
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_EDGE1);               }
+{ return(LEXWORD_EDGE1);               }
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_EDGE2);               }
+{ return(LEXWORD_EDGE2);               }
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_EDGES);               }
+{ return(LEXWORD_EDGES);               }
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ELLIPSE);             }
+{ return(LEXWORD_ELLIPSE);             }
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_EQUAL_COLUMN);        }
+{ return(LEXWORD_EQUAL_COLUMN);        }
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_EQUAL_COLUMN);        }
+{ return(LEXWORD_EQUAL_COLUMN);        }
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_EQUAL_POSITION);      }
+{ return(LEXWORD_EQUAL_POSITION);      }
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_EQUAL_POSITION);      }
+{ return(LEXWORD_EQUAL_POSITION);      }
 	YY_BREAK
 case 99:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_EQUAL_ROW);           }
+{ return(LEXWORD_EQUAL_ROW);           }
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_EQUAL_ROW);           }
+{ return(LEXWORD_EQUAL_ROW);           }
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_EQUAL);               }
+{ return(LEXWORD_EQUAL);               }
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_EVERY);               }
+{ return(LEXWORD_EVERY);               }
 	YY_BREAK
 case 103:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_FCFISH);              }
+{ return(LEXWORD_FCFISH);              }
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_FPFISH);              }
+{ return(LEXWORD_FPFISH);              }
 	YY_BREAK
 case 105:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_FIXED);               }
+{ return(LEXWORD_FIXED);               }
 	YY_BREAK
 case 106:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_FREE);                }
+{ return(LEXWORD_FREE);                }
 	YY_BREAK
 case 107:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_FINETUNING);          }
+{ return(LEXWORD_FINETUNING);          }
 	YY_BREAK
 case 108:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_FINETUNING);          }
+{ return(LEXWORD_FINETUNING);          }
 	YY_BREAK
 case 109:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_FOLDEDGE);            }
+{ return(LEXWORD_FOLDEDGE);            }
 	YY_BREAK
 case 110:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_FOLDEDGE);            }
+{ return(LEXWORD_FOLDEDGE);            }
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_FOLDNODE);            }
+{ return(LEXWORD_FOLDNODE);            }
 	YY_BREAK
 case 112:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_FOLDNODE);            }
+{ return(LEXWORD_FOLDNODE);            }
 	YY_BREAK
 case 113:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_FOLDING);             }
+{ return(LEXWORD_FOLDING);             }
 	YY_BREAK
 case 114:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_FONTNAME);            }
+{ return(LEXWORD_FONTNAME);            }
 	YY_BREAK
 case 115:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_FONTNAME);            }
+{ return(LEXWORD_FONTNAME);            }
 	YY_BREAK
 case 116:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_GOLD);                }
+{ return(LEXWORD_GOLD);                }
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_GRAPH);               }
+{ return(LEXWORD_GRAPH);               }
 	YY_BREAK
 case 118:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_GREATER);             }
+{ return(LEXWORD_GREATER);             }
 	YY_BREAK
 case 119:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_GREEN);               }
+{ return(LEXWORD_GREEN);               }
 	YY_BREAK
 case 120:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_GREY);                }
+{ return(LEXWORD_GREY);                }
 	YY_BREAK
 case 121:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_GREY);                }
+{ return(LEXWORD_GREY);                }
 	YY_BREAK
 case 122:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_HEIGHT);              }
+{ return(LEXWORD_HEIGHT);              }
 	YY_BREAK
 case 123:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_HIDESINGLES);         }
+{ return(LEXWORD_HIDESINGLES);         }
 	YY_BREAK
 case 124:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_HIDESINGLES);         }
+{ return(LEXWORD_HIDESINGLES);         }
 	YY_BREAK
 case 125:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_HIGH_MARGIN);         }
+{ return(LEXWORD_HIGH_MARGIN);         }
 	YY_BREAK
 case 126:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_HIGH_MARGIN);         }
+{ return(LEXWORD_HIGH_MARGIN);         }
 	YY_BREAK
 case 127:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_HIGH);		       }
+{ return(LEXWORD_HIGH);		       }
 	YY_BREAK
 case 128:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_HIDDEN);              }
+{ return(LEXWORD_HIDDEN);              }
 	YY_BREAK
 case 129:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_HORDER);              }
+{ return(LEXWORD_HORDER);              }
 	YY_BREAK
 case 130:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_HORDER);              }
+{ return(LEXWORD_HORDER);              }
 	YY_BREAK
 case 131:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ICONFILE);            }
+{ return(LEXWORD_ICONFILE);            }
 	YY_BREAK
 case 132:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ICONFILE);            }
+{ return(LEXWORD_ICONFILE);            }
 	YY_BREAK
 case 133:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ICONHEIGHT);          }
+{ return(LEXWORD_ICONHEIGHT);          }
 	YY_BREAK
 case 134:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ICONHEIGHT);          }
+{ return(LEXWORD_ICONHEIGHT);          }
 	YY_BREAK
 case 135:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ICONSTYLE);           }
+{ return(LEXWORD_ICONSTYLE);           }
 	YY_BREAK
 case 136:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ICONSTYLE);           }
+{ return(LEXWORD_ICONSTYLE);           }
 	YY_BREAK
 case 137:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ICONWIDTH);           }
+{ return(LEXWORD_ICONWIDTH);           }
 	YY_BREAK
 case 138:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ICONWIDTH);           }
+{ return(LEXWORD_ICONWIDTH);           }
 	YY_BREAK
 case 139:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_HIDESINGLES);         }
+{ return(LEXWORD_HIDESINGLES);         }
 	YY_BREAK
 case 140:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_HIDESINGLES);         }
+{ return(LEXWORD_HIDESINGLES);         }
 	YY_BREAK
 case 141:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_INCLUDE);             }
+{ return(LEXWORD_INCLUDE);             }
 	YY_BREAK
 case 142:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_INFONAME);            }
+{ return(LEXWORD_INFONAME);            }
 	YY_BREAK
 case 143:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_INFO1);               }
+{ return(LEXWORD_INFO1);               }
 	YY_BREAK
 case 144:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_INFO2);               }
+{ return(LEXWORD_INFO2);               }
 	YY_BREAK
 case 145:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_INFO3);               }
+{ return(LEXWORD_INFO3);               }
 	YY_BREAK
 case 146:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_INPUTFUNCTION);       }
+{ return(LEXWORD_INPUTFUNCTION);       }
 	YY_BREAK
 case 147:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_INPUTFUNCTION);       }
+{ return(LEXWORD_INPUTFUNCTION);       }
 	YY_BREAK
 case 148:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_INTERVAL);            }
+{ return(LEXWORD_INTERVAL);            }
 	YY_BREAK
 case 149:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_INVISIBLE);           }
+{ return(LEXWORD_INVISIBLE);           }
 	YY_BREAK
 case 150:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_IN_FRONT);            }
+{ return(LEXWORD_IN_FRONT);            }
 	YY_BREAK
 case 151:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ISI);                 }
+{ return(LEXWORD_ISI);                 }
 	YY_BREAK
 case 152:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_KHAKI);               }
+{ return(LEXWORD_KHAKI);               }
 	YY_BREAK
 case 153:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TEXTCOLOR);           }
+{ return(LEXWORD_TEXTCOLOR);           }
 	YY_BREAK
 case 154:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TEXTCOLOR);           }
+{ return(LEXWORD_TEXTCOLOR);           }
 	YY_BREAK
 case 155:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LABEL);               }
+{ return(LEXWORD_LABEL);               }
 	YY_BREAK
 case 156:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LATE_LABELS);         }
+{ return(LEXWORD_LATE_LABELS);         }
 	YY_BREAK
 case 157:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LATE_LABELS);         }
+{ return(LEXWORD_LATE_LABELS);         }
 	YY_BREAK
 case 158:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LAYOUTALGORITHM);     }
+{ return(LEXWORD_LAYOUTALGORITHM);     }
 	YY_BREAK
 case 159:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LAYOUTALGORITHM);     }
+{ return(LEXWORD_LAYOUTALGORITHM);     }
 	YY_BREAK
 case 160:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LAYOUTFREQUENCY);     }
+{ return(LEXWORD_LAYOUTFREQUENCY);     }
 	YY_BREAK
 case 161:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LAYOUTFREQUENCY);     }
+{ return(LEXWORD_LAYOUTFREQUENCY);     }
 	YY_BREAK
 case 162:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LAYOUTPARAMETER);     }
+{ return(LEXWORD_LAYOUTPARAMETER);     }
 	YY_BREAK
 case 163:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LAYOUTPARAMETER);     }
+{ return(LEXWORD_LAYOUTPARAMETER);     }
 	YY_BREAK
 case 164:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LAYOUTDOWNFACTOR);    }
+{ return(LEXWORD_LAYOUTDOWNFACTOR);    }
 	YY_BREAK
 case 165:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LAYOUTDOWNFACTOR);    }
+{ return(LEXWORD_LAYOUTDOWNFACTOR);    }
 	YY_BREAK
 case 166:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LAYOUTUPFACTOR);      }
+{ return(LEXWORD_LAYOUTUPFACTOR);      }
 	YY_BREAK
 case 167:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LAYOUTUPFACTOR);      }
+{ return(LEXWORD_LAYOUTUPFACTOR);      }
 	YY_BREAK
 case 168:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LAYOUTNEARFACTOR);    }
+{ return(LEXWORD_LAYOUTNEARFACTOR);    }
 	YY_BREAK
 case 169:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LAYOUTNEARFACTOR);    }
+{ return(LEXWORD_LAYOUTNEARFACTOR);    }
 	YY_BREAK
 case 170:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LAYOUTSPLINEFACTOR);  }
+{ return(LEXWORD_LAYOUTSPLINEFACTOR);  }
 	YY_BREAK
 case 171:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LAYOUTSPLINEFACTOR);  }
+{ return(LEXWORD_LAYOUTSPLINEFACTOR);  }
 	YY_BREAK
 case 172:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LEFT_JUSTIFY);        } 
+{ return(LEXWORD_LEFT_JUSTIFY);        } 
 	YY_BREAK
 case 173:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LEFT_JUSTIFY);        } 
+{ return(LEXWORD_LEFT_JUSTIFY);        } 
 	YY_BREAK
 case 174:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LEFT_MARGIN);         } 
+{ return(LEXWORD_LEFT_MARGIN);         } 
 	YY_BREAK
 case 175:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LEFT_MARGIN);         } 
+{ return(LEXWORD_LEFT_MARGIN);         } 
 	YY_BREAK
 case 176:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LEFT_NEIGHBOR);       }
+{ return(LEXWORD_LEFT_NEIGHBOR);       }
 	YY_BREAK
 case 177:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LEFT_NEIGHBOR);       }
+{ return(LEXWORD_LEFT_NEIGHBOR);       }
 	YY_BREAK
 case 178:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LEFT_TO_RIGHT);       } 
+{ return(LEXWORD_LEFT_TO_RIGHT);       } 
 	YY_BREAK
 case 179:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LEFT_TO_RIGHT);       } 
+{ return(LEXWORD_LEFT_TO_RIGHT);       } 
 	YY_BREAK
 case 180:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LEFT);                }
+{ return(LEXWORD_LEFT);                }
 	YY_BREAK
 case 181:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LEVEL);               }
+{ return(LEXWORD_LEVEL);               }
 	YY_BREAK
 case 182:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_VORDER);              }
+{ return(LEXWORD_VORDER);              }
 	YY_BREAK
 case 183:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_VORDER);              }
+{ return(LEXWORD_VORDER);              }
 	YY_BREAK
 case 184:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LIGHTBLUE);           }
+{ return(LEXWORD_LIGHTBLUE);           }
 	YY_BREAK
 case 185:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LIGHTCYAN);           }
+{ return(LEXWORD_LIGHTCYAN);           }
 	YY_BREAK
 case 186:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LIGHTGREEN);          }
+{ return(LEXWORD_LIGHTGREEN);          }
 	YY_BREAK
 case 187:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LIGHTGREY);           }
+{ return(LEXWORD_LIGHTGREY);           }
 	YY_BREAK
 case 188:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LIGHTGREY);           }
+{ return(LEXWORD_LIGHTGREY);           }
 	YY_BREAK
 case 189:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LIGHTMAGENTA);        }
+{ return(LEXWORD_LIGHTMAGENTA);        }
 	YY_BREAK
 case 190:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LIGHTRED);            }
+{ return(LEXWORD_LIGHTRED);            }
 	YY_BREAK
 case 191:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LIGHTYELLOW);         }
+{ return(LEXWORD_LIGHTYELLOW);         }
 	YY_BREAK
 case 192:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LILAC);               }
+{ return(LEXWORD_LILAC);               }
 	YY_BREAK
 case 193:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LIMIT);               } 
+{ return(LEXWORD_LIMIT);               } 
 	YY_BREAK
 case 194:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LINE);                } 
+{ return(LEXWORD_LINE);                } 
 	YY_BREAK
 case 195:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LINESTYLE);           } 
+{ return(LEXWORD_LINESTYLE);           } 
 	YY_BREAK
 case 196:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LINESTYLE);           } 
+{ return(LEXWORD_LINESTYLE);           } 
 	YY_BREAK
 case 197:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LOC);                 }
+{ return(LEXWORD_LOC);                 }
 	YY_BREAK
 case 198:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LOWER_NEIGHBOR);      }
+{ return(LEXWORD_LOWER_NEIGHBOR);      }
 	YY_BREAK
 case 199:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LOWER_NEIGHBOR);      }
+{ return(LEXWORD_LOWER_NEIGHBOR);      }
 	YY_BREAK
 case 200:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LOW_MARGIN);          } 
+{ return(LEXWORD_LOW_MARGIN);          } 
 	YY_BREAK
 case 201:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LOW_MARGIN);          } 
+{ return(LEXWORD_LOW_MARGIN);          } 
 	YY_BREAK
 case 202:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LOW);                 } 
+{ return(LEXWORD_LOW);                 } 
 	YY_BREAK
 case 203:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MAGENTA);             }
+{ return(LEXWORD_MAGENTA);             }
 	YY_BREAK
 case 204:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MANHATTEN);           } 
+{ return(LEXWORD_MANHATTEN);           } 
 	YY_BREAK
 case 205:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MANHATTEN);           } 
+{ return(LEXWORD_MANHATTEN);           } 
 	YY_BREAK
 case 206:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MANHATTEN);           } 
+{ return(LEXWORD_MANHATTEN);           } 
 	YY_BREAK
 case 207:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MANHATTEN);           } 
+{ return(LEXWORD_MANHATTEN);           } 
 	YY_BREAK
 case 208:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MANUAL);              } 
+{ return(LEXWORD_MANUAL);              } 
 	YY_BREAK
 case 209:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MAXDEPTHSLOW);        } 
+{ return(LEXWORD_MAXDEPTHSLOW);        } 
 	YY_BREAK
 case 210:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MAXDEPTH);            } 
+{ return(LEXWORD_MAXDEPTH);            } 
 	YY_BREAK
 case 211:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MAXDEGREE);           } 
+{ return(LEXWORD_MAXDEGREE);           } 
 	YY_BREAK
 case 212:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MAXINDEGREE);         } 
+{ return(LEXWORD_MAXINDEGREE);         } 
 	YY_BREAK
 case 213:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MAXOUTDEGREE);        } 
+{ return(LEXWORD_MAXOUTDEGREE);        } 
 	YY_BREAK
 case 214:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MEDIAN);              } 
+{ return(LEXWORD_MEDIAN);              } 
 	YY_BREAK
 case 215:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MEDIANBARY);          } 
+{ return(LEXWORD_MEDIANBARY);          } 
 	YY_BREAK
 case 216:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MINDEPTHSLOW);        } 
+{ return(LEXWORD_MINDEPTHSLOW);        } 
 	YY_BREAK
 case 217:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MINDEPTH);            } 
+{ return(LEXWORD_MINDEPTH);            } 
 	YY_BREAK
 case 218:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MINDEGREE);           } 
+{ return(LEXWORD_MINDEGREE);           } 
 	YY_BREAK
 case 219:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MININDEGREE);         } 
+{ return(LEXWORD_MININDEGREE);         } 
 	YY_BREAK
 case 220:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MINOUTDEGREE);        } 
+{ return(LEXWORD_MINOUTDEGREE);        } 
 	YY_BREAK
 case 221:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_MINBACK);             } 
+{ return(LEXWORD_MINBACK);             } 
 	YY_BREAK
 case 222:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_NAME);                } 
+{ return(LEXWORD_NAME);                } 
 	YY_BREAK
 case 223:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_NEAREDGE);            }
+{ return(LEXWORD_NEAREDGE);            }
 	YY_BREAK
 case 224:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_NEAREDGE);            }
+{ return(LEXWORD_NEAREDGE);            }
 	YY_BREAK
 case 225:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_NEIGHBORS);           } 
+{ return(LEXWORD_NEIGHBORS);           } 
 	YY_BREAK
 case 226:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_NEAREDGES);           }
+{ return(LEXWORD_NEAREDGES);           }
 	YY_BREAK
 case 227:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_NEAREDGES);           }
+{ return(LEXWORD_NEAREDGES);           }
 	YY_BREAK
 case 228:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_NONEAREDGES);         }
+{ return(LEXWORD_NONEAREDGES);         }
 	YY_BREAK
 case 229:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_NONEAREDGES);         }
+{ return(LEXWORD_NONEAREDGES);         }
 	YY_BREAK
 case 230:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_NONEAREDGES);         }
+{ return(LEXWORD_NONEAREDGES);         }
 	YY_BREAK
 case 231:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_NODE1);               }
+{ return(LEXWORD_NODE1);               }
 	YY_BREAK
 case 232:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_NODE2);               }
+{ return(LEXWORD_NODE2);               }
 	YY_BREAK
 case 233:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_NODES);               }
+{ return(LEXWORD_NODES);               }
 	YY_BREAK
 case 234:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_NODE_ALIGN);          }
+{ return(LEXWORD_NODE_ALIGN);          }
 	YY_BREAK
 case 235:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_NODE_ALIGN);          }
+{ return(LEXWORD_NODE_ALIGN);          }
 	YY_BREAK
 case 236:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_NONE);                }
+{ return(LEXWORD_NONE);                }
 	YY_BREAK
 case 237:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_NO);                  }
+{ return(LEXWORD_NO);                  }
 	YY_BREAK
 case 238:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ORANGE);              }
+{ return(LEXWORD_ORANGE);              }
 	YY_BREAK
 case 239:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ORCHID);              }
+{ return(LEXWORD_ORCHID);              }
 	YY_BREAK
 case 240:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_ORIENTATION);         } 
+{ return(LEXWORD_ORIENTATION);         } 
 	YY_BREAK
 case 241:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_OUTPUTFUNCTION);      }
+{ return(LEXWORD_OUTPUTFUNCTION);      }
 	YY_BREAK
 case 242:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_OUTPUTFUNCTION);      }
+{ return(LEXWORD_OUTPUTFUNCTION);      }
 	YY_BREAK
 case 243:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_PFISH);               }
+{ return(LEXWORD_PFISH);               }
 	YY_BREAK
 case 244:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_PINK);                }
+{ return(LEXWORD_PINK);                }
 	YY_BREAK
 case 245:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_PLANAR);              }
+{ return(LEXWORD_PLANAR);              }
 	YY_BREAK
 case 246:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_PMIN);                }
+{ return(LEXWORD_PMIN);                }
 	YY_BREAK
 case 247:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_PMAX);                }
+{ return(LEXWORD_PMAX);                }
 	YY_BREAK
 case 248:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_PORTSHARING);         } 
+{ return(LEXWORD_PORTSHARING);         } 
 	YY_BREAK
 case 249:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_PORTSHARING);         } 
+{ return(LEXWORD_PORTSHARING);         } 
 	YY_BREAK
 case 250:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_PRIORITYPHASE);       }
+{ return(LEXWORD_PRIORITYPHASE);       }
 	YY_BREAK
 case 251:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_PRIORITYPHASE);       }
+{ return(LEXWORD_PRIORITYPHASE);       }
 	YY_BREAK
 case 252:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_PRIORITY);            }
+{ return(LEXWORD_PRIORITY);            }
 	YY_BREAK
 case 253:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_PURPLE);              } 
+{ return(LEXWORD_PURPLE);              } 
 	YY_BREAK
 case 254:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_RANGE);               } 
+{ return(LEXWORD_RANGE);               } 
 	YY_BREAK
 case 255:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_RED);                 }
+{ return(LEXWORD_RED);                 }
 	YY_BREAK
 case 256:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_RHOMB);               }
+{ return(LEXWORD_RHOMB);               }
 	YY_BREAK
 case 257:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_RIGHT_JUSTIFY);       }
+{ return(LEXWORD_RIGHT_JUSTIFY);       }
 	YY_BREAK
 case 258:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_RIGHT_JUSTIFY);       }
+{ return(LEXWORD_RIGHT_JUSTIFY);       }
 	YY_BREAK
 case 259:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_RIGHT_MARGIN);        }
+{ return(LEXWORD_RIGHT_MARGIN);        }
 	YY_BREAK
 case 260:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_RIGHT_MARGIN);        }
+{ return(LEXWORD_RIGHT_MARGIN);        }
 	YY_BREAK
 case 261:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_RIGHT_NEIGHBOR);      }
+{ return(LEXWORD_RIGHT_NEIGHBOR);      }
 	YY_BREAK
 case 262:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_RIGHT_NEIGHBOR);      }
+{ return(LEXWORD_RIGHT_NEIGHBOR);      }
 	YY_BREAK
 case 263:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_RIGHT_TO_LEFT);       }
+{ return(LEXWORD_RIGHT_TO_LEFT);       }
 	YY_BREAK
 case 264:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_RIGHT_TO_LEFT);       }
+{ return(LEXWORD_RIGHT_TO_LEFT);       }
 	YY_BREAK
 case 265:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_RIGHT);               }
+{ return(LEXWORD_RIGHT);               }
 	YY_BREAK
 case 266:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_RMIN);                }
+{ return(LEXWORD_RMIN);                }
 	YY_BREAK
 case 267:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_RMAX);                }
+{ return(LEXWORD_RMAX);                }
 	YY_BREAK
 case 268:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_SCALING);             }
+{ return(LEXWORD_SCALING);             }
 	YY_BREAK
 case 269:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_SHAPE);               }
+{ return(LEXWORD_SHAPE);               }
 	YY_BREAK
 case 270:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_SHRINK);              }
+{ return(LEXWORD_SHRINK);              }
 	YY_BREAK
 case 271:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_SMAX);                }
+{ return(LEXWORD_SMAX);                }
 	YY_BREAK
 case 272:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_SMANHATTEN);          } 
+{ return(LEXWORD_SMANHATTEN);          } 
 	YY_BREAK
 case 273:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_SMANHATTEN);          } 
+{ return(LEXWORD_SMANHATTEN);          } 
 	YY_BREAK
 case 274:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_SMANHATTEN);          } 
+{ return(LEXWORD_SMANHATTEN);          } 
 	YY_BREAK
 case 275:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_SMANHATTEN);          } 
+{ return(LEXWORD_SMANHATTEN);          } 
 	YY_BREAK
 case 276:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_SIZE);                }
+{ return(LEXWORD_SIZE);                }
 	YY_BREAK
 case 277:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_SMALLER);             }
+{ return(LEXWORD_SMALLER);             }
 	YY_BREAK
 case 278:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_SOLID);               }
+{ return(LEXWORD_SOLID);               }
 	YY_BREAK
 case 279:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_SOURCENAME);          }
+{ return(LEXWORD_SOURCENAME);          }
 	YY_BREAK
 case 280:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_SOURCENAME);          }
+{ return(LEXWORD_SOURCENAME);          }
 	YY_BREAK
 case 281:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_SPLINES);             }
+{ return(LEXWORD_SPLINES);             }
 	YY_BREAK
 case 282:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LAYOUTSPLINEFACTOR);  }
+{ return(LEXWORD_LAYOUTSPLINEFACTOR);  }
 	YY_BREAK
 case 283:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_LAYOUTSPLINEFACTOR);  }
+{ return(LEXWORD_LAYOUTSPLINEFACTOR);  }
 	YY_BREAK
 case 284:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_SPREADLEVEL);         }
+{ return(LEXWORD_SPREADLEVEL);         }
 	YY_BREAK
 case 285:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_SPREADLEVEL);         }
+{ return(LEXWORD_SPREADLEVEL);         }
 	YY_BREAK
 case 286:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_STATUS);              }
+{ return(LEXWORD_STATUS);              }
 	YY_BREAK
 case 287:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_STRETCH);             }
+{ return(LEXWORD_STRETCH);             }
 	YY_BREAK
 case 288:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_STRAIGHTPHASE);       }
+{ return(LEXWORD_STRAIGHTPHASE);       }
 	YY_BREAK
 case 289:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_STRAIGHTPHASE);       }
+{ return(LEXWORD_STRAIGHTPHASE);       }
 	YY_BREAK
 case 290:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TARGETNAME);          }
+{ return(LEXWORD_TARGETNAME);          }
 	YY_BREAK
 case 291:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TARGETNAME);          }
+{ return(LEXWORD_TARGETNAME);          }
 	YY_BREAK
 case 292:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TEXTCOLOR);           }
+{ return(LEXWORD_TEXTCOLOR);           }
 	YY_BREAK
 case 293:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TEXTCOLOR);           }
+{ return(LEXWORD_TEXTCOLOR);           }
 	YY_BREAK
 case 294:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TEXTMODE);            }
+{ return(LEXWORD_TEXTMODE);            }
 	YY_BREAK
 case 295:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TEXTMODE);            }
+{ return(LEXWORD_TEXTMODE);            }
 	YY_BREAK
 case 296:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_THICKNESS);           }
+{ return(LEXWORD_THICKNESS);           }
 	YY_BREAK
 case 297:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TITLE);               } 
+{ return(LEXWORD_TITLE);               } 
 	YY_BREAK
 case 298:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TOPSORT);             }
+{ return(LEXWORD_TOPSORT);             }
 	YY_BREAK
 case 299:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TOPSORT);             }
+{ return(LEXWORD_TOPSORT);             }
 	YY_BREAK
 case 300:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TOP_MARGIN);          }
+{ return(LEXWORD_TOP_MARGIN);          }
 	YY_BREAK
 case 301:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TOP_MARGIN);          }
+{ return(LEXWORD_TOP_MARGIN);          }
 	YY_BREAK
 case 302:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TOP_TO_BOTTOM);       }
+{ return(LEXWORD_TOP_TO_BOTTOM);       }
 	YY_BREAK
 case 303:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TOP_TO_BOTTOM);       }
+{ return(LEXWORD_TOP_TO_BOTTOM);       }
 	YY_BREAK
 case 304:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TOP);                 } 
+{ return(LEXWORD_TOP);                 } 
 	YY_BREAK
 case 305:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TREE);                }
+{ return(LEXWORD_TREE);                }
 	YY_BREAK
 case 306:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TREEFACTOR);          }
+{ return(LEXWORD_TREEFACTOR);          }
 	YY_BREAK
 case 307:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TREEFACTOR);          }
+{ return(LEXWORD_TREEFACTOR);          }
 	YY_BREAK
 case 308:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TRIANGLE);            }
+{ return(LEXWORD_TRIANGLE);            }
 	YY_BREAK
 case 309:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TURQUOISE);           }
+{ return(LEXWORD_TURQUOISE);           }
 	YY_BREAK
 case 310:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TYPENAME);            }
+{ return(LEXWORD_TYPENAME);            }
 	YY_BREAK
 case 311:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_TYPENAME);            }
+{ return(LEXWORD_TYPENAME);            }
 	YY_BREAK
 case 312:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_UPPER_NEIGHBOR);      }
+{ return(LEXWORD_UPPER_NEIGHBOR);      }
 	YY_BREAK
 case 313:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_UPPER_NEIGHBOR);      }
+{ return(LEXWORD_UPPER_NEIGHBOR);      }
 	YY_BREAK
 case 314:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_VIEW);                }
+{ return(LEXWORD_VIEW);                }
 	YY_BREAK
 case 315:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_WHITE);               }
+{ return(LEXWORD_WHITE);               }
 	YY_BREAK
 case 316:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_WIDTH);               }
+{ return(LEXWORD_WIDTH);               }
 	YY_BREAK
 case 317:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_XBASE);               }
+{ return(LEXWORD_XBASE);               }
 	YY_BREAK
 case 318:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_XMAX);                }
+{ return(LEXWORD_XMAX);                }
 	YY_BREAK
 case 319:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_XRASTER);             }
+{ return(LEXWORD_XRASTER);             }
 	YY_BREAK
 case 320:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_XLRASTER);            }
+{ return(LEXWORD_XLRASTER);            }
 	YY_BREAK
 case 321:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_XSCROLLBAR);          }
+{ return(LEXWORD_XSCROLLBAR);          }
 	YY_BREAK
 case 322:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_XSPACE);              }
+{ return(LEXWORD_XSPACE);              }
 	YY_BREAK
 case 323:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_XLSPACE);             }
+{ return(LEXWORD_XLSPACE);             }
 	YY_BREAK
 case 324:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_YBASE);               }
+{ return(LEXWORD_YBASE);               }
 	YY_BREAK
 case 325:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_YELLOWGREEN);         }
+{ return(LEXWORD_YELLOWGREEN);         }
 	YY_BREAK
 case 326:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_YELLOW);              }
+{ return(LEXWORD_YELLOW);              }
 	YY_BREAK
 case 327:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_YES);                 }
+{ return(LEXWORD_YES);                 }
 	YY_BREAK
 case 328:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_YMAX);                }
+{ return(LEXWORD_YMAX);                }
 	YY_BREAK
 case 329:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_YRASTER);             }
+{ return(LEXWORD_YRASTER);             }
 	YY_BREAK
 case 330:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_YSCROLLBAR);          }
+{ return(LEXWORD_YSCROLLBAR);          }
 	YY_BREAK
 case 331:
 YY_RULE_SETUP
-{
-		 RETURN(LEXWORD_YSPACE);              }
+{ return(LEXWORD_YSPACE);              }
 	YY_BREAK
 case 332:
 /* rule 332 can match eol */
 YY_RULE_SETUP
-{
-		 line_directive(yytext);       }
+{ line_directive(yytext);       }
 	YY_BREAK
 case 333:
 /* rule 333 can match eol */
 YY_RULE_SETUP
-{
-		 line_directive(yytext);       }
+{ line_directive(yytext);       }
 	YY_BREAK
 case 334:
 /* rule 334 can match eol */
 YY_RULE_SETUP
-{
-		 /* ignore pragma directive */ }
+{ /* ignore pragma directive */ }
 	YY_BREAK
 case 335:
 YY_RULE_SETUP
-{
-					}
+{ }
 	YY_BREAK
 case 336:
 YY_RULE_SETUP
-{
-		 			}
+{ }
 	YY_BREAK
 case 337:
 /* rule 337 can match eol */
 YY_RULE_SETUP
-{
-					}
+{ }
 	YY_BREAK
 case 338:
 YY_RULE_SETUP
 {
-		 yylval.lnum = atol(yytext); 
-			  RETURN(LEX_INT); 
+				yylval.lnum = atol(yytext); 
+				return(LEX_INT); 
 			}
 	YY_BREAK
 case 339:
 YY_RULE_SETUP
 {
-		 yylval.lrealnum = atof(yytext); 
-			  RETURN(LEX_FLOAT); 
+				yylval.lrealnum = atof(yytext); 
+				return(LEX_FLOAT); 
 			}
 	YY_BREAK
 case 340:
 /* rule 340 can match eol */
 YY_RULE_SETUP
 {
-		 yylval.byte = yytext[1];
-               		  RETURN(LEX_CHAR);
+				yylval.byte = yytext[1];
+				return(LEX_CHAR);
                 	}
 	YY_BREAK
 case 341:
 /* rule 341 can match eol */
 YY_RULE_SETUP
 {
-		 yytext[strlen(yytext)-1] = '\0';
-			  escape_transl(&(yytext[1]));
-	                  yylval.lnum = HashInsert(&(yytext[1]));
-			  SKIPYYTEXT;
-                          RETURN(LEX_STRING);
+				yytext[strlen(yytext)-1] = '\0';
+				escape_transl(&(yytext[1]));
+				yylval.lnum = HashInsert(&(yytext[1]));
+				return(LEX_STRING);
                         }
 	YY_BREAK
 case 342:
 /* rule 342 can match eol */
 YY_RULE_SETUP
-{
-		 SKIPYYTEXT; }
+{ }
 	YY_BREAK
 case 343:
 YY_RULE_SETUP
-{
-		 SKIPYYTEXT; }
+{ }
 	YY_BREAK
 case 344:
 YY_RULE_SETUP
-{
-		 RETURN('{'); }
+{ return('{'); }
 	YY_BREAK
 case 345:
 YY_RULE_SETUP
-{
-		 RETURN('}'); }
+{ return('}'); }
 	YY_BREAK
 case 346:
 YY_RULE_SETUP
-{
-		 RETURN(':'); }
+{ return(':'); }
 	YY_BREAK
 case 347:
 YY_RULE_SETUP
-{
-		 RETURN('x'); }
+{ return('x'); }
 	YY_BREAK
 case 348:
 YY_RULE_SETUP
-{
-		 RETURN('y'); }
+{ return('y'); }
 	YY_BREAK
 case 349:
 YY_RULE_SETUP
-{
-		 RETURN('z'); }
+{ return('z'); }
 	YY_BREAK
 case 350:
 YY_RULE_SETUP
-{
-		 RETURN('*'); }
+{ return('*'); }
 	YY_BREAK
 case 351:
 YY_RULE_SETUP
-{
-		 RETURN('['); }
+{ return('['); }
 	YY_BREAK
 case 352:
 YY_RULE_SETUP
-{
-		 RETURN(']'); }
+{ return(']'); }
 	YY_BREAK
 case 353:
 YY_RULE_SETUP
-{
-		 RETURN('-'); }
+{ return('-'); }
 	YY_BREAK
 case 354:
 YY_RULE_SETUP
-{ 
-		 syntaxerror(yylloc.first_line, yylloc.first_column,
-			"scanner reads unexpected %c",yytext[0]);
-                 RETURN(' '); }
+{
+				syntaxerror(yylloc.first_line, yylloc.first_column,
+					"scanner reads unexpected %c",yytext[0]);
+				return(' ');
+			}
 	YY_BREAK
 case 355:
 YY_RULE_SETUP

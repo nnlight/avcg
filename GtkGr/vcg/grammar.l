@@ -47,733 +47,383 @@ PRAGMADIR       {WSPACE}#{WSPACE}"pragma".*\n
 %%
 
 
-"above"			{
-		 RETURN(LEXWORD_ABOVE);               }
-"anchor_points"		{
-		 RETURN(LEXWORD_ANCHORPOINTS);        }
-"anchorpoints"		{
-		 RETURN(LEXWORD_ANCHORPOINTS);        }
-"anchor"		{
-		 RETURN(LEXWORD_ANCHOR);              }
-"aquamarine"		{
-		 RETURN(LEXWORD_AQUAMARINE);          }
-"around"		{
-		 RETURN(LEXWORD_AROUND);              }
-"arrow_mode"		{
-		 RETURN(LEXWORD_ARROWMODE);           }
-"arrowmode"		{
-		 RETURN(LEXWORD_ARROWMODE);           }
-"arrow_height"		{
-		 RETURN(LEXWORD_ARROWHEIGHT);         }
-"arrowheight"		{
-		 RETURN(LEXWORD_ARROWHEIGHT);         }
-"arrow_width"		{
-		 RETURN(LEXWORD_ARROWWIDTH);          }
-"arrowwidth"		{
-		 RETURN(LEXWORD_ARROWWIDTH);          }
-"arrow_color"		{
-		 RETURN(LEXWORD_ARROWCOLOR);          }
-"arrowcolor"		{
-		 RETURN(LEXWORD_ARROWCOLOR);          }
-"arrow_style"		{
-		 RETURN(LEXWORD_ARROWSTYLE);          }
-"arrowstyle"		{
-		 RETURN(LEXWORD_ARROWSTYLE);          }
-"arrow_size"		{
-		 RETURN(LEXWORD_ARROWSIZE);           }
-"arrowsize"		{
-		 RETURN(LEXWORD_ARROWSIZE);           }
-"back_arrow_color"	{
-		 RETURN(LEXWORD_BARROWCOLOR);         }
-"backarrow_color"	{
-		 RETURN(LEXWORD_BARROWCOLOR);         }
-"backarrowcolor"	{
-		 RETURN(LEXWORD_BARROWCOLOR);         }
-"back_arrow_style"	{
-		 RETURN(LEXWORD_BARROWSTYLE);         }
-"backarrow_style"	{
-		 RETURN(LEXWORD_BARROWSTYLE);         }
-"backarrowstyle"	{
-		 RETURN(LEXWORD_BARROWSTYLE);         }
-"back_arrow_size"	{
-		 RETURN(LEXWORD_BARROWSIZE);          }
-"backarrow_size"	{
-		 RETURN(LEXWORD_BARROWSIZE);          }
-"backarrowsize"		{
-		 RETURN(LEXWORD_BARROWSIZE);          }
-"back_edge:"		{
-		 RETURN(LEXWORD_BACKEDGE);            }
-"backedge:"		{
-		 RETURN(LEXWORD_BACKEDGE);            }
-"bary_center"		{
-		 RETURN(LEXWORD_BARYCENTER);          }
-"barycenter"		{
-		 RETURN(LEXWORD_BARYCENTER);          }
-"bary"			{
-		 RETURN(LEXWORD_BARY);                }
-"barymedian"   	 	{
-		 RETURN(LEXWORD_BARYMEDIAN);          } 
-"behind"		{
-		 RETURN(LEXWORD_BEHIND);              }
-"below"			{
-		 RETURN(LEXWORD_BELOW);               }
-"black"			{
-		 RETURN(LEXWORD_BLACK);               }
-"blue"			{
-		 RETURN(LEXWORD_BLUE);                }
-"bmax"			{
-		 RETURN(LEXWORD_BMAX);                }
-"border_color"		{
-		 RETURN(LEXWORD_BORDERCOLOR);         }
-"bordercolor"		{
-		 RETURN(LEXWORD_BORDERCOLOR);         }
-"border_width"		{
-		 RETURN(LEXWORD_BORDERWIDTH);         }
-"borderwidth"		{
-		 RETURN(LEXWORD_BORDERWIDTH);         }
-"bottom_margin"		{
-		 RETURN(LEXWORD_BOTTOM_MARGIN);       }
-"bottommargin"		{
-		 RETURN(LEXWORD_BOTTOM_MARGIN);       }
-"bottomtotop"		{
-		 RETURN(LEXWORD_BOTTOM_TO_TOP);       }
-"bottom_to_top"		{
-		 RETURN(LEXWORD_BOTTOM_TO_TOP);       }
-"bottom"		{
-		 RETURN(LEXWORD_BOTTOM);              }
-"box"			{
-		 RETURN(LEXWORD_BOX);                 }
-"bent_near_edge:"	{
-		 RETURN(LEXWORD_BENTNEAREDGE);        }
-"bent_nearedge:"	{
-		 RETURN(LEXWORD_BENTNEAREDGE);        }
-"bentnearedge:"		{
-		 RETURN(LEXWORD_BENTNEAREDGE);        }
-"center"		{
-		 RETURN(LEXWORD_CENTER);              }
-"cfish"			{
-		 RETURN(LEXWORD_CFISH);               }
-"class_name"		{
-		 RETURN(LEXWORD_CLASSNAME);           }
-"classname"		{
-		 RETURN(LEXWORD_CLASSNAME);           }
-"class"			{
-		 RETURN(LEXWORD_CLASS);               }
-"cluster"		{
-		 RETURN(LEXWORD_CLUSTER);             }
-"cmin"			{
-		 RETURN(LEXWORD_CMIN);                }
-"cmax"			{
-		 RETURN(LEXWORD_CMAX);                }
-"color_entry"		{
-		 RETURN(LEXWORD_COLORENTRY);          }
-"colorentry"		{
-		 RETURN(LEXWORD_COLORENTRY);          }
-"color"			{
-		 RETURN(LEXWORD_COLOR);               }
-"constraints"		{
-		 RETURN(LEXWORD_CONSTRAINTS);         }
-"constraint:"		{
-		 RETURN(LEXWORD_CONSTRAINT);          }
-"continuous"		{
-		 RETURN(LEXWORD_CONTINUOUS);          }
-"crossing_weight"       {
-		 RETURN(LEXWORD_CROSSING_WEIGHT);     }
-"crossingweight"        {
-		 RETURN(LEXWORD_CROSSING_WEIGHT);     }
-"crossing_optimization" {
-		 RETURN(LEXWORD_CROSSING_OPT);        }
-"crossingoptimization"  {
-		 RETURN(LEXWORD_CROSSING_OPT);        }
-"crossing_phase2" 	{
-		 RETURN(LEXWORD_CROSSING_P2);         }
-"crossingphase2"  	{
-		 RETURN(LEXWORD_CROSSING_P2);         }
-"cyan"			{
-		 RETURN(LEXWORD_CYAN);                }
-"darkblue"		{
-		 RETURN(LEXWORD_DARKBLUE);            }
-"darkcyan"		{
-		 RETURN(LEXWORD_DARKCYAN);            }
-"darkgreen"		{
-		 RETURN(LEXWORD_DARKGREEN);           }
-"darkgray"		{
-		 RETURN(LEXWORD_DARKGREY);            }
-"darkgrey"		{
-		 RETURN(LEXWORD_DARKGREY);            }
-"darkmagenta"		{
-		 RETURN(LEXWORD_DARKMAGENTA);         }
-"darkred"		{
-		 RETURN(LEXWORD_DARKRED);             }
-"darkyellow"		{
-		 RETURN(LEXWORD_DARKYELLOW);          }
-"dashed"		{
-		 RETURN(LEXWORD_DASHED);              } 
-"depth_first_search"	{
-		 RETURN(LEXWORD_DFS);   	       } 
-"depthfirstsearch"	{
-		 RETURN(LEXWORD_DFS);   	       } 
-"dfs"			{
-		 RETURN(LEXWORD_DFS);   	       } 
-"dimension"		{
-		 RETURN(LEXWORD_DIMENSION);           }
-"dirtyedgelabels"	{
-		 RETURN(LEXWORD_DIRTY_EDGE_LABELS);   }
-"dirty_edge_labels"	{
-		 RETURN(LEXWORD_DIRTY_EDGE_LABELS);   }
-"displayedgelabels"	{
-		 RETURN(LEXWORD_DISPLAY_EDGE_LABELS); }
-"display_edge_labels"	{
-		 RETURN(LEXWORD_DISPLAY_EDGE_LABELS); }
-"dotted"		{
-		 RETURN(LEXWORD_DOTTED);              }
-"edge."			{
-		 RETURN(LEXWORD_EDGE1);               }
-"edge:"			{
-		 RETURN(LEXWORD_EDGE2);               }
-"edges"			{
-		 RETURN(LEXWORD_EDGES);               }
-"ellipse"		{
-		 RETURN(LEXWORD_ELLIPSE);             }
-"equalcolumn"		{
-		 RETURN(LEXWORD_EQUAL_COLUMN);        }
-"equal_column"		{
-		 RETURN(LEXWORD_EQUAL_COLUMN);        }
-"equalposition"		{
-		 RETURN(LEXWORD_EQUAL_POSITION);      }
-"equal_position"	{
-		 RETURN(LEXWORD_EQUAL_POSITION);      }
-"equalrow"		{
-		 RETURN(LEXWORD_EQUAL_ROW);           }
-"equal_row"		{
-		 RETURN(LEXWORD_EQUAL_ROW);           }
-"equal"			{
-		 RETURN(LEXWORD_EQUAL);               }
-"every"			{
-		 RETURN(LEXWORD_EVERY);               }
-"fcfish"		{
-		 RETURN(LEXWORD_FCFISH);              }
-"fpfish"		{
-		 RETURN(LEXWORD_FPFISH);              }
-"fixed"			{
-		 RETURN(LEXWORD_FIXED);               }
-"free"			{
-		 RETURN(LEXWORD_FREE);                }
-"fine_tuning"		{
-		 RETURN(LEXWORD_FINETUNING);          }
-"finetuning"		{
-		 RETURN(LEXWORD_FINETUNING);          }
-"fold_edge."		{
-		 RETURN(LEXWORD_FOLDEDGE);            }
-"foldedge."		{
-		 RETURN(LEXWORD_FOLDEDGE);            }
-"fold_node."		{
-		 RETURN(LEXWORD_FOLDNODE);            }
-"foldnode."		{
-		 RETURN(LEXWORD_FOLDNODE);            }
-"folding"		{
-		 RETURN(LEXWORD_FOLDING);             }
-"font_name"		{
-		 RETURN(LEXWORD_FONTNAME);            }
-"fontname"		{
-		 RETURN(LEXWORD_FONTNAME);            }
-"gold"			{
-		 RETURN(LEXWORD_GOLD);                }
-"graph:"		{
-		 RETURN(LEXWORD_GRAPH);               }
-"greater"		{
-		 RETURN(LEXWORD_GREATER);             }
-"green"			{
-		 RETURN(LEXWORD_GREEN);               }
-"gray"			{
-		 RETURN(LEXWORD_GREY);                }
-"grey"			{
-		 RETURN(LEXWORD_GREY);                }
-"height"		{
-		 RETURN(LEXWORD_HEIGHT);              }
-"hidesingles"		{
-		 RETURN(LEXWORD_HIDESINGLES);         }
-"hide_singles"		{
-		 RETURN(LEXWORD_HIDESINGLES);         }
-"highmargin"		{
-		 RETURN(LEXWORD_HIGH_MARGIN);         }
-"high_margin"		{
-		 RETURN(LEXWORD_HIGH_MARGIN);         }
-"high"			{
-		 RETURN(LEXWORD_HIGH);		       }
-"hidden"		{
-		 RETURN(LEXWORD_HIDDEN);              }
-"horizontalorder"	{
-		 RETURN(LEXWORD_HORDER);              }
-"horizontal_order"	{
-		 RETURN(LEXWORD_HORDER);              }
-"icon_file"		{
-		 RETURN(LEXWORD_ICONFILE);            }
-"iconfile"		{
-		 RETURN(LEXWORD_ICONFILE);            }
-"icon_height"		{
-		 RETURN(LEXWORD_ICONHEIGHT);          }
-"iconheight"		{
-		 RETURN(LEXWORD_ICONHEIGHT);          }
-"icon_style"		{
-		 RETURN(LEXWORD_ICONSTYLE);           }
-"iconstyle"		{
-		 RETURN(LEXWORD_ICONSTYLE);           }
-"icon_width"		{
-		 RETURN(LEXWORD_ICONWIDTH);           }
-"iconwidth"		{
-		 RETURN(LEXWORD_ICONWIDTH);           }
-"ignore_singles"	{
-		 RETURN(LEXWORD_HIDESINGLES);         }
-"ignoresingles"		{
-		 RETURN(LEXWORD_HIDESINGLES);         }
-"include"		{
-		 RETURN(LEXWORD_INCLUDE);             }
-"infoname"		{
-		 RETURN(LEXWORD_INFONAME);            }
-"info1"			{
-		 RETURN(LEXWORD_INFO1);               }
-"info2"			{
-		 RETURN(LEXWORD_INFO2);               }
-"info3"			{
-		 RETURN(LEXWORD_INFO3);               }
-"input_function"	{
-		 RETURN(LEXWORD_INPUTFUNCTION);       }
-"inputfunction"		{
-		 RETURN(LEXWORD_INPUTFUNCTION);       }
-"interval"		{
-		 RETURN(LEXWORD_INTERVAL);            }
-"invisible"		{
-		 RETURN(LEXWORD_INVISIBLE);           }
-"in_front"		{
-		 RETURN(LEXWORD_IN_FRONT);            }
-"isi"			{
-		 RETURN(LEXWORD_ISI);                 }
-"khaki"			{
-		 RETURN(LEXWORD_KHAKI);               }
-"label_color"		{
-		 RETURN(LEXWORD_TEXTCOLOR);           }
-"labelcolor"		{
-		 RETURN(LEXWORD_TEXTCOLOR);           }
-"label"			{
-		 RETURN(LEXWORD_LABEL);               }
-"lateedgelabels"     	{
-		 RETURN(LEXWORD_LATE_LABELS);         }
-"late_edge_labels"     	{
-		 RETURN(LEXWORD_LATE_LABELS);         }
-"layout_algorithm"	{
-		 RETURN(LEXWORD_LAYOUTALGORITHM);     }
-"layoutalgorithm"	{
-		 RETURN(LEXWORD_LAYOUTALGORITHM);     }
-"layout_frequency"	{
-		 RETURN(LEXWORD_LAYOUTFREQUENCY);     }
-"layoutfrequency"	{
-		 RETURN(LEXWORD_LAYOUTFREQUENCY);     }
-"layout_parameter"	{
-		 RETURN(LEXWORD_LAYOUTPARAMETER);     }
-"layoutparameter"	{
-		 RETURN(LEXWORD_LAYOUTPARAMETER);     }
-"layoutdownfactor"	{
-		 RETURN(LEXWORD_LAYOUTDOWNFACTOR);    }
-"layout_downfactor"	{
-		 RETURN(LEXWORD_LAYOUTDOWNFACTOR);    }
-"layoutupfactor"	{
-		 RETURN(LEXWORD_LAYOUTUPFACTOR);      }
-"layout_upfactor"	{
-		 RETURN(LEXWORD_LAYOUTUPFACTOR);      }
-"layoutnearfactor"	{
-		 RETURN(LEXWORD_LAYOUTNEARFACTOR);    }
-"layout_nearfactor"	{
-		 RETURN(LEXWORD_LAYOUTNEARFACTOR);    }
-"layoutsplinefactor"	{
-		 RETURN(LEXWORD_LAYOUTSPLINEFACTOR);  }
-"layout_splinefactor"	{
-		 RETURN(LEXWORD_LAYOUTSPLINEFACTOR);  }
-"leftjustify"		{
-		 RETURN(LEXWORD_LEFT_JUSTIFY);        } 
-"left_justify"		{
-		 RETURN(LEXWORD_LEFT_JUSTIFY);        } 
-"leftmargin"		{
-		 RETURN(LEXWORD_LEFT_MARGIN);         } 
-"left_margin"		{
-		 RETURN(LEXWORD_LEFT_MARGIN);         } 
-"leftneighbor"		{
-		 RETURN(LEXWORD_LEFT_NEIGHBOR);       }
-"left_neighbor"		{
-		 RETURN(LEXWORD_LEFT_NEIGHBOR);       }
-"lefttoright"		{
-		 RETURN(LEXWORD_LEFT_TO_RIGHT);       } 
-"left_to_right"		{
-		 RETURN(LEXWORD_LEFT_TO_RIGHT);       } 
-"left"			{
-		 RETURN(LEXWORD_LEFT);                }
-"level"			{
-		 RETURN(LEXWORD_LEVEL);               }
-"verticalorder"		{
-		 RETURN(LEXWORD_VORDER);              }
-"vertical_order"	{
-		 RETURN(LEXWORD_VORDER);              }
-"lightblue"		{
-		 RETURN(LEXWORD_LIGHTBLUE);           }
-"lightcyan"		{
-		 RETURN(LEXWORD_LIGHTCYAN);           }
-"lightgreen"		{
-		 RETURN(LEXWORD_LIGHTGREEN);          }
-"lightgray"		{
-		 RETURN(LEXWORD_LIGHTGREY);           }
-"lightgrey"		{
-		 RETURN(LEXWORD_LIGHTGREY);           }
-"lightmagenta"		{
-		 RETURN(LEXWORD_LIGHTMAGENTA);        }
-"lightred"		{
-		 RETURN(LEXWORD_LIGHTRED);            }
-"lightyellow"		{
-		 RETURN(LEXWORD_LIGHTYELLOW);         }
-"lilac"			{
-		 RETURN(LEXWORD_LILAC);               }
-"limit"			{
-		 RETURN(LEXWORD_LIMIT);               } 
-"line"			{
-		 RETURN(LEXWORD_LINE);                } 
-"line_style"		{
-		 RETURN(LEXWORD_LINESTYLE);           } 
-"linestyle"		{
-		 RETURN(LEXWORD_LINESTYLE);           } 
-"loc:"			{
-		 RETURN(LEXWORD_LOC);                 }
-"lowerneighbor"		{
-		 RETURN(LEXWORD_LOWER_NEIGHBOR);      }
-"lower_neighbor"	{
-		 RETURN(LEXWORD_LOWER_NEIGHBOR);      }
-"lowmargin"		{
-		 RETURN(LEXWORD_LOW_MARGIN);          } 
-"low_margin"		{
-		 RETURN(LEXWORD_LOW_MARGIN);          } 
-"low"			{
-		 RETURN(LEXWORD_LOW);                 } 
-"magenta"		{
-		 RETURN(LEXWORD_MAGENTA);             }
-"manhattenedges"	{
-		 RETURN(LEXWORD_MANHATTEN);           } 
-"manhattanedges"	{
-		 RETURN(LEXWORD_MANHATTEN);           } 
-"manhatten_edges"	{
-		 RETURN(LEXWORD_MANHATTEN);           } 
-"manhattan_edges"	{
-		 RETURN(LEXWORD_MANHATTEN);           } 
-"manual"		{
-		 RETURN(LEXWORD_MANUAL);              } 
-"maxdepthslow"		{
-		 RETURN(LEXWORD_MAXDEPTHSLOW);        } 
-"maxdepth"		{
-		 RETURN(LEXWORD_MAXDEPTH);            } 
-"maxdegree"		{
-		 RETURN(LEXWORD_MAXDEGREE);           } 
-"maxindegree"		{
-		 RETURN(LEXWORD_MAXINDEGREE);         } 
-"maxoutdegree"		{
-		 RETURN(LEXWORD_MAXOUTDEGREE);        } 
-"median"      	 	{
-		 RETURN(LEXWORD_MEDIAN);              } 
-"medianbary"   	 	{
-		 RETURN(LEXWORD_MEDIANBARY);          } 
-"mindepthslow"		{
-		 RETURN(LEXWORD_MINDEPTHSLOW);        } 
-"mindepth"		{
-		 RETURN(LEXWORD_MINDEPTH);            } 
-"mindegree"		{
-		 RETURN(LEXWORD_MINDEGREE);           } 
-"minindegree"		{
-		 RETURN(LEXWORD_MININDEGREE);         } 
-"minoutdegree"		{
-		 RETURN(LEXWORD_MINOUTDEGREE);        } 
-"minbackward"		{
-		 RETURN(LEXWORD_MINBACK);             } 
-"name"			{
-		 RETURN(LEXWORD_NAME);                } 
-"near_edge:"		{
-		 RETURN(LEXWORD_NEAREDGE);            }
-"nearedge:"		{
-		 RETURN(LEXWORD_NEAREDGE);            }
-"neighbors"		{
-		 RETURN(LEXWORD_NEIGHBORS);           } 
-"near_edges"		{
-		 RETURN(LEXWORD_NEAREDGES);           }
-"nearedges"		{
-		 RETURN(LEXWORD_NEAREDGES);           }
-"nonearedges"		{
-		 RETURN(LEXWORD_NONEAREDGES);         }
-"no_near_edges"		{
-		 RETURN(LEXWORD_NONEAREDGES);         }
-"no_nearedges"		{
-		 RETURN(LEXWORD_NONEAREDGES);         }
-"node."			{
-		 RETURN(LEXWORD_NODE1);               }
-"node:"			{
-		 RETURN(LEXWORD_NODE2);               }
-"nodes"			{
-		 RETURN(LEXWORD_NODES);               }
-"nodealignment"     	{
-		 RETURN(LEXWORD_NODE_ALIGN);          }
-"node_alignment"     	{
-		 RETURN(LEXWORD_NODE_ALIGN);          }
-"none"			{
-		 RETURN(LEXWORD_NONE);                }
-"no"			{
-		 RETURN(LEXWORD_NO);                  }
-"orange"		{
-		 RETURN(LEXWORD_ORANGE);              }
-"orchid"		{
-		 RETURN(LEXWORD_ORCHID);              }
-"orientation"		{
-		 RETURN(LEXWORD_ORIENTATION);         } 
-"output_function"	{
-		 RETURN(LEXWORD_OUTPUTFUNCTION);      }
-"outputfunction"	{
-		 RETURN(LEXWORD_OUTPUTFUNCTION);      }
-"pfish"			{
-		 RETURN(LEXWORD_PFISH);               }
-"pink"			{
-		 RETURN(LEXWORD_PINK);                }
-"planar"		{
-		 RETURN(LEXWORD_PLANAR);              }
-"pmin"			{
-		 RETURN(LEXWORD_PMIN);                }
-"pmax"			{
-		 RETURN(LEXWORD_PMAX);                }
-"portsharing"		{
-		 RETURN(LEXWORD_PORTSHARING);         } 
-"port_sharing"		{
-		 RETURN(LEXWORD_PORTSHARING);         } 
-"priorityphase"		{
-		 RETURN(LEXWORD_PRIORITYPHASE);       }
-"priority_phase"	{
-		 RETURN(LEXWORD_PRIORITYPHASE);       }
-"priority"		{
-		 RETURN(LEXWORD_PRIORITY);            }
-"purple"		{
-		 RETURN(LEXWORD_PURPLE);              } 
-"range"			{
-		 RETURN(LEXWORD_RANGE);               } 
-"red"			{
-		 RETURN(LEXWORD_RED);                 }
-"rhomb"			{
-		 RETURN(LEXWORD_RHOMB);               }
-"rightjustify"		{
-		 RETURN(LEXWORD_RIGHT_JUSTIFY);       }
-"right_justify"		{
-		 RETURN(LEXWORD_RIGHT_JUSTIFY);       }
-"rightmargin"		{
-		 RETURN(LEXWORD_RIGHT_MARGIN);        }
-"right_margin"		{
-		 RETURN(LEXWORD_RIGHT_MARGIN);        }
-"rightneighbor"		{
-		 RETURN(LEXWORD_RIGHT_NEIGHBOR);      }
-"right_neighbor"	{
-		 RETURN(LEXWORD_RIGHT_NEIGHBOR);      }
-"righttoleft"		{
-		 RETURN(LEXWORD_RIGHT_TO_LEFT);       }
-"right_to_left"		{
-		 RETURN(LEXWORD_RIGHT_TO_LEFT);       }
-"right"			{
-		 RETURN(LEXWORD_RIGHT);               }
-"rmin"			{
-		 RETURN(LEXWORD_RMIN);                }
-"rmax"			{
-		 RETURN(LEXWORD_RMAX);                }
-"scaling"		{
-		 RETURN(LEXWORD_SCALING);             }
-"shape"			{
-		 RETURN(LEXWORD_SHAPE);               }
-"shrink"		{
-		 RETURN(LEXWORD_SHRINK);              }
-"smax"			{
-		 RETURN(LEXWORD_SMAX);                }
-"smanhattenedges"	{
-		 RETURN(LEXWORD_SMANHATTEN);          } 
-"smanhattanedges"	{
-		 RETURN(LEXWORD_SMANHATTEN);          } 
-"smanhatten_edges"	{
-		 RETURN(LEXWORD_SMANHATTEN);          } 
-"smanhattan_edges"	{
-		 RETURN(LEXWORD_SMANHATTEN);          } 
-"size"			{
-		 RETURN(LEXWORD_SIZE);                }
-"smaller"		{
-		 RETURN(LEXWORD_SMALLER);             }
-"solid"			{
-		 RETURN(LEXWORD_SOLID);               }
-"source_name"		{
-		 RETURN(LEXWORD_SOURCENAME);          }
-"sourcename"		{
-		 RETURN(LEXWORD_SOURCENAME);          }
-"splines"		{
-		 RETURN(LEXWORD_SPLINES);             }
-"spline_factor"		{
-		 RETURN(LEXWORD_LAYOUTSPLINEFACTOR);  }
-"splinefactor"		{
-		 RETURN(LEXWORD_LAYOUTSPLINEFACTOR);  }
-"spread_level"		{
-		 RETURN(LEXWORD_SPREADLEVEL);         }
-"spreadlevel"		{
-		 RETURN(LEXWORD_SPREADLEVEL);         }
-"status"		{
-		 RETURN(LEXWORD_STATUS);              }
-"stretch"		{
-		 RETURN(LEXWORD_STRETCH);             }
-"straightphase"		{
-		 RETURN(LEXWORD_STRAIGHTPHASE);       }
-"straight_phase"	{
-		 RETURN(LEXWORD_STRAIGHTPHASE);       }
-"target_name"		{
-		 RETURN(LEXWORD_TARGETNAME);          }
-"targetname"		{
-		 RETURN(LEXWORD_TARGETNAME);          }
-"text_color"		{
-		 RETURN(LEXWORD_TEXTCOLOR);           }
-"textcolor"		{
-		 RETURN(LEXWORD_TEXTCOLOR);           }
-"text_mode"		{
-		 RETURN(LEXWORD_TEXTMODE);            }
-"textmode"		{
-		 RETURN(LEXWORD_TEXTMODE);            }
-"thickness"		{
-		 RETURN(LEXWORD_THICKNESS);           }
-"title"			{
-		 RETURN(LEXWORD_TITLE);               } 
-"top_sort"              {
-		 RETURN(LEXWORD_TOPSORT);             }
-"topsort"               {
-		 RETURN(LEXWORD_TOPSORT);             }
-"topmargin"		{
-		 RETURN(LEXWORD_TOP_MARGIN);          }
-"top_margin"		{
-		 RETURN(LEXWORD_TOP_MARGIN);          }
-"toptobottom"		{
-		 RETURN(LEXWORD_TOP_TO_BOTTOM);       }
-"top_to_bottom"		{
-		 RETURN(LEXWORD_TOP_TO_BOTTOM);       }
-"top"			{
-		 RETURN(LEXWORD_TOP);                 } 
-"tree"			{
-		 RETURN(LEXWORD_TREE);                }
-"tree_factor"		{
-		 RETURN(LEXWORD_TREEFACTOR);          }
-"treefactor"		{
-		 RETURN(LEXWORD_TREEFACTOR);          }
-"triangle"		{
-		 RETURN(LEXWORD_TRIANGLE);            }
-"turquoise"		{
-		 RETURN(LEXWORD_TURQUOISE);           }
-"type_name"		{
-		 RETURN(LEXWORD_TYPENAME);            }
-"typename"		{
-		 RETURN(LEXWORD_TYPENAME);            }
-"upperneighbor"		{
-		 RETURN(LEXWORD_UPPER_NEIGHBOR);      }
-"upper_neighbor"	{
-		 RETURN(LEXWORD_UPPER_NEIGHBOR);      }
-"view"			{
-		 RETURN(LEXWORD_VIEW);                }
-"white"			{
-		 RETURN(LEXWORD_WHITE);               }
-"width"			{
-		 RETURN(LEXWORD_WIDTH);               }
-"xbase"			{
-		 RETURN(LEXWORD_XBASE);               }
-"xmax"			{
-		 RETURN(LEXWORD_XMAX);                }
-"xraster"		{
-		 RETURN(LEXWORD_XRASTER);             }
-"xlraster"		{
-		 RETURN(LEXWORD_XLRASTER);            }
-"xscrollbar"		{
-		 RETURN(LEXWORD_XSCROLLBAR);          }
-"xspace"		{
-		 RETURN(LEXWORD_XSPACE);              }
-"xlspace"		{
-		 RETURN(LEXWORD_XLSPACE);             }
-"ybase"			{
-		 RETURN(LEXWORD_YBASE);               }
-"yellowgreen"		{
-		 RETURN(LEXWORD_YELLOWGREEN);         }
-"yellow"		{
-		 RETURN(LEXWORD_YELLOW);              }
-"yes"			{
-		 RETURN(LEXWORD_YES);                 }
-"ymax"			{
-		 RETURN(LEXWORD_YMAX);                }
-"yraster"		{
-		 RETURN(LEXWORD_YRASTER);             }
-"yscrollbar"		{
-		 RETURN(LEXWORD_YSCROLLBAR);          }
-"yspace"		{
-		 RETURN(LEXWORD_YSPACE);              }
+"above"			{ return(LEXWORD_ABOVE);               }
+"anchor_points"		{ return(LEXWORD_ANCHORPOINTS);        }
+"anchorpoints"		{ return(LEXWORD_ANCHORPOINTS);        }
+"anchor"		{ return(LEXWORD_ANCHOR);              }
+"aquamarine"		{ return(LEXWORD_AQUAMARINE);          }
+"around"		{ return(LEXWORD_AROUND);              }
+"arrow_mode"		{ return(LEXWORD_ARROWMODE);           }
+"arrowmode"		{ return(LEXWORD_ARROWMODE);           }
+"arrow_height"		{ return(LEXWORD_ARROWHEIGHT);         }
+"arrowheight"		{ return(LEXWORD_ARROWHEIGHT);         }
+"arrow_width"		{ return(LEXWORD_ARROWWIDTH);          }
+"arrowwidth"		{ return(LEXWORD_ARROWWIDTH);          }
+"arrow_color"		{ return(LEXWORD_ARROWCOLOR);          }
+"arrowcolor"		{ return(LEXWORD_ARROWCOLOR);          }
+"arrow_style"		{ return(LEXWORD_ARROWSTYLE);          }
+"arrowstyle"		{ return(LEXWORD_ARROWSTYLE);          }
+"arrow_size"		{ return(LEXWORD_ARROWSIZE);           }
+"arrowsize"		{ return(LEXWORD_ARROWSIZE);           }
+"back_arrow_color"	{ return(LEXWORD_BARROWCOLOR);         }
+"backarrow_color"	{ return(LEXWORD_BARROWCOLOR);         }
+"backarrowcolor"	{ return(LEXWORD_BARROWCOLOR);         }
+"back_arrow_style"	{ return(LEXWORD_BARROWSTYLE);         }
+"backarrow_style"	{ return(LEXWORD_BARROWSTYLE);         }
+"backarrowstyle"	{ return(LEXWORD_BARROWSTYLE);         }
+"back_arrow_size"	{ return(LEXWORD_BARROWSIZE);          }
+"backarrow_size"	{ return(LEXWORD_BARROWSIZE);          }
+"backarrowsize"		{ return(LEXWORD_BARROWSIZE);          }
+"back_edge:"		{ return(LEXWORD_BACKEDGE);            }
+"backedge:"		{ return(LEXWORD_BACKEDGE);            }
+"bary_center"		{ return(LEXWORD_BARYCENTER);          }
+"barycenter"		{ return(LEXWORD_BARYCENTER);          }
+"bary"			{ return(LEXWORD_BARY);                }
+"barymedian"   	 	{ return(LEXWORD_BARYMEDIAN);          } 
+"behind"		{ return(LEXWORD_BEHIND);              }
+"below"			{ return(LEXWORD_BELOW);               }
+"black"			{ return(LEXWORD_BLACK);               }
+"blue"			{ return(LEXWORD_BLUE);                }
+"bmax"			{ return(LEXWORD_BMAX);                }
+"border_color"		{ return(LEXWORD_BORDERCOLOR);         }
+"bordercolor"		{ return(LEXWORD_BORDERCOLOR);         }
+"border_width"		{ return(LEXWORD_BORDERWIDTH);         }
+"borderwidth"		{ return(LEXWORD_BORDERWIDTH);         }
+"bottom_margin"		{ return(LEXWORD_BOTTOM_MARGIN);       }
+"bottommargin"		{ return(LEXWORD_BOTTOM_MARGIN);       }
+"bottomtotop"		{ return(LEXWORD_BOTTOM_TO_TOP);       }
+"bottom_to_top"		{ return(LEXWORD_BOTTOM_TO_TOP);       }
+"bottom"		{ return(LEXWORD_BOTTOM);              }
+"box"			{ return(LEXWORD_BOX);                 }
+"bent_near_edge:"	{ return(LEXWORD_BENTNEAREDGE);        }
+"bent_nearedge:"	{ return(LEXWORD_BENTNEAREDGE);        }
+"bentnearedge:"		{ return(LEXWORD_BENTNEAREDGE);        }
+"center"		{ return(LEXWORD_CENTER);              }
+"cfish"			{ return(LEXWORD_CFISH);               }
+"class_name"		{ return(LEXWORD_CLASSNAME);           }
+"classname"		{ return(LEXWORD_CLASSNAME);           }
+"class"			{ return(LEXWORD_CLASS);               }
+"cluster"		{ return(LEXWORD_CLUSTER);             }
+"cmin"			{ return(LEXWORD_CMIN);                }
+"cmax"			{ return(LEXWORD_CMAX);                }
+"color_entry"		{ return(LEXWORD_COLORENTRY);          }
+"colorentry"		{ return(LEXWORD_COLORENTRY);          }
+"color"			{ return(LEXWORD_COLOR);               }
+"constraints"		{ return(LEXWORD_CONSTRAINTS);         }
+"constraint:"		{ return(LEXWORD_CONSTRAINT);          }
+"continuous"		{ return(LEXWORD_CONTINUOUS);          }
+"crossing_weight"       { return(LEXWORD_CROSSING_WEIGHT);     }
+"crossingweight"        { return(LEXWORD_CROSSING_WEIGHT);     }
+"crossing_optimization" { return(LEXWORD_CROSSING_OPT);        }
+"crossingoptimization"  { return(LEXWORD_CROSSING_OPT);        }
+"crossing_phase2" 	{ return(LEXWORD_CROSSING_P2);         }
+"crossingphase2"  	{ return(LEXWORD_CROSSING_P2);         }
+"cyan"			{ return(LEXWORD_CYAN);                }
+"darkblue"		{ return(LEXWORD_DARKBLUE);            }
+"darkcyan"		{ return(LEXWORD_DARKCYAN);            }
+"darkgreen"		{ return(LEXWORD_DARKGREEN);           }
+"darkgray"		{ return(LEXWORD_DARKGREY);            }
+"darkgrey"		{ return(LEXWORD_DARKGREY);            }
+"darkmagenta"		{ return(LEXWORD_DARKMAGENTA);         }
+"darkred"		{ return(LEXWORD_DARKRED);             }
+"darkyellow"		{ return(LEXWORD_DARKYELLOW);          }
+"dashed"		{ return(LEXWORD_DASHED);              } 
+"depth_first_search"	{ return(LEXWORD_DFS);   	       } 
+"depthfirstsearch"	{ return(LEXWORD_DFS);   	       } 
+"dfs"			{ return(LEXWORD_DFS);   	       } 
+"dimension"		{ return(LEXWORD_DIMENSION);           }
+"dirtyedgelabels"	{ return(LEXWORD_DIRTY_EDGE_LABELS);   }
+"dirty_edge_labels"	{ return(LEXWORD_DIRTY_EDGE_LABELS);   }
+"displayedgelabels"	{ return(LEXWORD_DISPLAY_EDGE_LABELS); }
+"display_edge_labels"	{ return(LEXWORD_DISPLAY_EDGE_LABELS); }
+"dotted"		{ return(LEXWORD_DOTTED);              }
+"edge."			{ return(LEXWORD_EDGE1);               }
+"edge:"			{ return(LEXWORD_EDGE2);               }
+"edges"			{ return(LEXWORD_EDGES);               }
+"ellipse"		{ return(LEXWORD_ELLIPSE);             }
+"equalcolumn"		{ return(LEXWORD_EQUAL_COLUMN);        }
+"equal_column"		{ return(LEXWORD_EQUAL_COLUMN);        }
+"equalposition"		{ return(LEXWORD_EQUAL_POSITION);      }
+"equal_position"	{ return(LEXWORD_EQUAL_POSITION);      }
+"equalrow"		{ return(LEXWORD_EQUAL_ROW);           }
+"equal_row"		{ return(LEXWORD_EQUAL_ROW);           }
+"equal"			{ return(LEXWORD_EQUAL);               }
+"every"			{ return(LEXWORD_EVERY);               }
+"fcfish"		{ return(LEXWORD_FCFISH);              }
+"fpfish"		{ return(LEXWORD_FPFISH);              }
+"fixed"			{ return(LEXWORD_FIXED);               }
+"free"			{ return(LEXWORD_FREE);                }
+"fine_tuning"		{ return(LEXWORD_FINETUNING);          }
+"finetuning"		{ return(LEXWORD_FINETUNING);          }
+"fold_edge."		{ return(LEXWORD_FOLDEDGE);            }
+"foldedge."		{ return(LEXWORD_FOLDEDGE);            }
+"fold_node."		{ return(LEXWORD_FOLDNODE);            }
+"foldnode."		{ return(LEXWORD_FOLDNODE);            }
+"folding"		{ return(LEXWORD_FOLDING);             }
+"font_name"		{ return(LEXWORD_FONTNAME);            }
+"fontname"		{ return(LEXWORD_FONTNAME);            }
+"gold"			{ return(LEXWORD_GOLD);                }
+"graph:"		{ return(LEXWORD_GRAPH);               }
+"greater"		{ return(LEXWORD_GREATER);             }
+"green"			{ return(LEXWORD_GREEN);               }
+"gray"			{ return(LEXWORD_GREY);                }
+"grey"			{ return(LEXWORD_GREY);                }
+"height"		{ return(LEXWORD_HEIGHT);              }
+"hidesingles"		{ return(LEXWORD_HIDESINGLES);         }
+"hide_singles"		{ return(LEXWORD_HIDESINGLES);         }
+"highmargin"		{ return(LEXWORD_HIGH_MARGIN);         }
+"high_margin"		{ return(LEXWORD_HIGH_MARGIN);         }
+"high"			{ return(LEXWORD_HIGH);		       }
+"hidden"		{ return(LEXWORD_HIDDEN);              }
+"horizontalorder"	{ return(LEXWORD_HORDER);              }
+"horizontal_order"	{ return(LEXWORD_HORDER);              }
+"icon_file"		{ return(LEXWORD_ICONFILE);            }
+"iconfile"		{ return(LEXWORD_ICONFILE);            }
+"icon_height"		{ return(LEXWORD_ICONHEIGHT);          }
+"iconheight"		{ return(LEXWORD_ICONHEIGHT);          }
+"icon_style"		{ return(LEXWORD_ICONSTYLE);           }
+"iconstyle"		{ return(LEXWORD_ICONSTYLE);           }
+"icon_width"		{ return(LEXWORD_ICONWIDTH);           }
+"iconwidth"		{ return(LEXWORD_ICONWIDTH);           }
+"ignore_singles"	{ return(LEXWORD_HIDESINGLES);         }
+"ignoresingles"		{ return(LEXWORD_HIDESINGLES);         }
+"include"		{ return(LEXWORD_INCLUDE);             }
+"infoname"		{ return(LEXWORD_INFONAME);            }
+"info1"			{ return(LEXWORD_INFO1);               }
+"info2"			{ return(LEXWORD_INFO2);               }
+"info3"			{ return(LEXWORD_INFO3);               }
+"input_function"	{ return(LEXWORD_INPUTFUNCTION);       }
+"inputfunction"		{ return(LEXWORD_INPUTFUNCTION);       }
+"interval"		{ return(LEXWORD_INTERVAL);            }
+"invisible"		{ return(LEXWORD_INVISIBLE);           }
+"in_front"		{ return(LEXWORD_IN_FRONT);            }
+"isi"			{ return(LEXWORD_ISI);                 }
+"khaki"			{ return(LEXWORD_KHAKI);               }
+"label_color"		{ return(LEXWORD_TEXTCOLOR);           }
+"labelcolor"		{ return(LEXWORD_TEXTCOLOR);           }
+"label"			{ return(LEXWORD_LABEL);               }
+"lateedgelabels"     	{ return(LEXWORD_LATE_LABELS);         }
+"late_edge_labels"     	{ return(LEXWORD_LATE_LABELS);         }
+"layout_algorithm"	{ return(LEXWORD_LAYOUTALGORITHM);     }
+"layoutalgorithm"	{ return(LEXWORD_LAYOUTALGORITHM);     }
+"layout_frequency"	{ return(LEXWORD_LAYOUTFREQUENCY);     }
+"layoutfrequency"	{ return(LEXWORD_LAYOUTFREQUENCY);     }
+"layout_parameter"	{ return(LEXWORD_LAYOUTPARAMETER);     }
+"layoutparameter"	{ return(LEXWORD_LAYOUTPARAMETER);     }
+"layoutdownfactor"	{ return(LEXWORD_LAYOUTDOWNFACTOR);    }
+"layout_downfactor"	{ return(LEXWORD_LAYOUTDOWNFACTOR);    }
+"layoutupfactor"	{ return(LEXWORD_LAYOUTUPFACTOR);      }
+"layout_upfactor"	{ return(LEXWORD_LAYOUTUPFACTOR);      }
+"layoutnearfactor"	{ return(LEXWORD_LAYOUTNEARFACTOR);    }
+"layout_nearfactor"	{ return(LEXWORD_LAYOUTNEARFACTOR);    }
+"layoutsplinefactor"	{ return(LEXWORD_LAYOUTSPLINEFACTOR);  }
+"layout_splinefactor"	{ return(LEXWORD_LAYOUTSPLINEFACTOR);  }
+"leftjustify"		{ return(LEXWORD_LEFT_JUSTIFY);        } 
+"left_justify"		{ return(LEXWORD_LEFT_JUSTIFY);        } 
+"leftmargin"		{ return(LEXWORD_LEFT_MARGIN);         } 
+"left_margin"		{ return(LEXWORD_LEFT_MARGIN);         } 
+"leftneighbor"		{ return(LEXWORD_LEFT_NEIGHBOR);       }
+"left_neighbor"		{ return(LEXWORD_LEFT_NEIGHBOR);       }
+"lefttoright"		{ return(LEXWORD_LEFT_TO_RIGHT);       } 
+"left_to_right"		{ return(LEXWORD_LEFT_TO_RIGHT);       } 
+"left"			{ return(LEXWORD_LEFT);                }
+"level"			{ return(LEXWORD_LEVEL);               }
+"verticalorder"		{ return(LEXWORD_VORDER);              }
+"vertical_order"	{ return(LEXWORD_VORDER);              }
+"lightblue"		{ return(LEXWORD_LIGHTBLUE);           }
+"lightcyan"		{ return(LEXWORD_LIGHTCYAN);           }
+"lightgreen"		{ return(LEXWORD_LIGHTGREEN);          }
+"lightgray"		{ return(LEXWORD_LIGHTGREY);           }
+"lightgrey"		{ return(LEXWORD_LIGHTGREY);           }
+"lightmagenta"		{ return(LEXWORD_LIGHTMAGENTA);        }
+"lightred"		{ return(LEXWORD_LIGHTRED);            }
+"lightyellow"		{ return(LEXWORD_LIGHTYELLOW);         }
+"lilac"			{ return(LEXWORD_LILAC);               }
+"limit"			{ return(LEXWORD_LIMIT);               } 
+"line"			{ return(LEXWORD_LINE);                } 
+"line_style"		{ return(LEXWORD_LINESTYLE);           } 
+"linestyle"		{ return(LEXWORD_LINESTYLE);           } 
+"loc:"			{ return(LEXWORD_LOC);                 }
+"lowerneighbor"		{ return(LEXWORD_LOWER_NEIGHBOR);      }
+"lower_neighbor"	{ return(LEXWORD_LOWER_NEIGHBOR);      }
+"lowmargin"		{ return(LEXWORD_LOW_MARGIN);          } 
+"low_margin"		{ return(LEXWORD_LOW_MARGIN);          } 
+"low"			{ return(LEXWORD_LOW);                 } 
+"magenta"		{ return(LEXWORD_MAGENTA);             }
+"manhattenedges"	{ return(LEXWORD_MANHATTEN);           } 
+"manhattanedges"	{ return(LEXWORD_MANHATTEN);           } 
+"manhatten_edges"	{ return(LEXWORD_MANHATTEN);           } 
+"manhattan_edges"	{ return(LEXWORD_MANHATTEN);           } 
+"manual"		{ return(LEXWORD_MANUAL);              } 
+"maxdepthslow"		{ return(LEXWORD_MAXDEPTHSLOW);        } 
+"maxdepth"		{ return(LEXWORD_MAXDEPTH);            } 
+"maxdegree"		{ return(LEXWORD_MAXDEGREE);           } 
+"maxindegree"		{ return(LEXWORD_MAXINDEGREE);         } 
+"maxoutdegree"		{ return(LEXWORD_MAXOUTDEGREE);        } 
+"median"      	 	{ return(LEXWORD_MEDIAN);              } 
+"medianbary"   	 	{ return(LEXWORD_MEDIANBARY);          } 
+"mindepthslow"		{ return(LEXWORD_MINDEPTHSLOW);        } 
+"mindepth"		{ return(LEXWORD_MINDEPTH);            } 
+"mindegree"		{ return(LEXWORD_MINDEGREE);           } 
+"minindegree"		{ return(LEXWORD_MININDEGREE);         } 
+"minoutdegree"		{ return(LEXWORD_MINOUTDEGREE);        } 
+"minbackward"		{ return(LEXWORD_MINBACK);             } 
+"name"			{ return(LEXWORD_NAME);                } 
+"near_edge:"		{ return(LEXWORD_NEAREDGE);            }
+"nearedge:"		{ return(LEXWORD_NEAREDGE);            }
+"neighbors"		{ return(LEXWORD_NEIGHBORS);           } 
+"near_edges"		{ return(LEXWORD_NEAREDGES);           }
+"nearedges"		{ return(LEXWORD_NEAREDGES);           }
+"nonearedges"		{ return(LEXWORD_NONEAREDGES);         }
+"no_near_edges"		{ return(LEXWORD_NONEAREDGES);         }
+"no_nearedges"		{ return(LEXWORD_NONEAREDGES);         }
+"node."			{ return(LEXWORD_NODE1);               }
+"node:"			{ return(LEXWORD_NODE2);               }
+"nodes"			{ return(LEXWORD_NODES);               }
+"nodealignment"     	{ return(LEXWORD_NODE_ALIGN);          }
+"node_alignment"     	{ return(LEXWORD_NODE_ALIGN);          }
+"none"			{ return(LEXWORD_NONE);                }
+"no"			{ return(LEXWORD_NO);                  }
+"orange"		{ return(LEXWORD_ORANGE);              }
+"orchid"		{ return(LEXWORD_ORCHID);              }
+"orientation"		{ return(LEXWORD_ORIENTATION);         } 
+"output_function"	{ return(LEXWORD_OUTPUTFUNCTION);      }
+"outputfunction"	{ return(LEXWORD_OUTPUTFUNCTION);      }
+"pfish"			{ return(LEXWORD_PFISH);               }
+"pink"			{ return(LEXWORD_PINK);                }
+"planar"		{ return(LEXWORD_PLANAR);              }
+"pmin"			{ return(LEXWORD_PMIN);                }
+"pmax"			{ return(LEXWORD_PMAX);                }
+"portsharing"		{ return(LEXWORD_PORTSHARING);         } 
+"port_sharing"		{ return(LEXWORD_PORTSHARING);         } 
+"priorityphase"		{ return(LEXWORD_PRIORITYPHASE);       }
+"priority_phase"	{ return(LEXWORD_PRIORITYPHASE);       }
+"priority"		{ return(LEXWORD_PRIORITY);            }
+"purple"		{ return(LEXWORD_PURPLE);              } 
+"range"			{ return(LEXWORD_RANGE);               } 
+"red"			{ return(LEXWORD_RED);                 }
+"rhomb"			{ return(LEXWORD_RHOMB);               }
+"rightjustify"		{ return(LEXWORD_RIGHT_JUSTIFY);       }
+"right_justify"		{ return(LEXWORD_RIGHT_JUSTIFY);       }
+"rightmargin"		{ return(LEXWORD_RIGHT_MARGIN);        }
+"right_margin"		{ return(LEXWORD_RIGHT_MARGIN);        }
+"rightneighbor"		{ return(LEXWORD_RIGHT_NEIGHBOR);      }
+"right_neighbor"	{ return(LEXWORD_RIGHT_NEIGHBOR);      }
+"righttoleft"		{ return(LEXWORD_RIGHT_TO_LEFT);       }
+"right_to_left"		{ return(LEXWORD_RIGHT_TO_LEFT);       }
+"right"			{ return(LEXWORD_RIGHT);               }
+"rmin"			{ return(LEXWORD_RMIN);                }
+"rmax"			{ return(LEXWORD_RMAX);                }
+"scaling"		{ return(LEXWORD_SCALING);             }
+"shape"			{ return(LEXWORD_SHAPE);               }
+"shrink"		{ return(LEXWORD_SHRINK);              }
+"smax"			{ return(LEXWORD_SMAX);                }
+"smanhattenedges"	{ return(LEXWORD_SMANHATTEN);          } 
+"smanhattanedges"	{ return(LEXWORD_SMANHATTEN);          } 
+"smanhatten_edges"	{ return(LEXWORD_SMANHATTEN);          } 
+"smanhattan_edges"	{ return(LEXWORD_SMANHATTEN);          } 
+"size"			{ return(LEXWORD_SIZE);                }
+"smaller"		{ return(LEXWORD_SMALLER);             }
+"solid"			{ return(LEXWORD_SOLID);               }
+"source_name"		{ return(LEXWORD_SOURCENAME);          }
+"sourcename"		{ return(LEXWORD_SOURCENAME);          }
+"splines"		{ return(LEXWORD_SPLINES);             }
+"spline_factor"		{ return(LEXWORD_LAYOUTSPLINEFACTOR);  }
+"splinefactor"		{ return(LEXWORD_LAYOUTSPLINEFACTOR);  }
+"spread_level"		{ return(LEXWORD_SPREADLEVEL);         }
+"spreadlevel"		{ return(LEXWORD_SPREADLEVEL);         }
+"status"		{ return(LEXWORD_STATUS);              }
+"stretch"		{ return(LEXWORD_STRETCH);             }
+"straightphase"		{ return(LEXWORD_STRAIGHTPHASE);       }
+"straight_phase"	{ return(LEXWORD_STRAIGHTPHASE);       }
+"target_name"		{ return(LEXWORD_TARGETNAME);          }
+"targetname"		{ return(LEXWORD_TARGETNAME);          }
+"text_color"		{ return(LEXWORD_TEXTCOLOR);           }
+"textcolor"		{ return(LEXWORD_TEXTCOLOR);           }
+"text_mode"		{ return(LEXWORD_TEXTMODE);            }
+"textmode"		{ return(LEXWORD_TEXTMODE);            }
+"thickness"		{ return(LEXWORD_THICKNESS);           }
+"title"			{ return(LEXWORD_TITLE);               } 
+"top_sort"              { return(LEXWORD_TOPSORT);             }
+"topsort"               { return(LEXWORD_TOPSORT);             }
+"topmargin"		{ return(LEXWORD_TOP_MARGIN);          }
+"top_margin"		{ return(LEXWORD_TOP_MARGIN);          }
+"toptobottom"		{ return(LEXWORD_TOP_TO_BOTTOM);       }
+"top_to_bottom"		{ return(LEXWORD_TOP_TO_BOTTOM);       }
+"top"			{ return(LEXWORD_TOP);                 } 
+"tree"			{ return(LEXWORD_TREE);                }
+"tree_factor"		{ return(LEXWORD_TREEFACTOR);          }
+"treefactor"		{ return(LEXWORD_TREEFACTOR);          }
+"triangle"		{ return(LEXWORD_TRIANGLE);            }
+"turquoise"		{ return(LEXWORD_TURQUOISE);           }
+"type_name"		{ return(LEXWORD_TYPENAME);            }
+"typename"		{ return(LEXWORD_TYPENAME);            }
+"upperneighbor"		{ return(LEXWORD_UPPER_NEIGHBOR);      }
+"upper_neighbor"	{ return(LEXWORD_UPPER_NEIGHBOR);      }
+"view"			{ return(LEXWORD_VIEW);                }
+"white"			{ return(LEXWORD_WHITE);               }
+"width"			{ return(LEXWORD_WIDTH);               }
+"xbase"			{ return(LEXWORD_XBASE);               }
+"xmax"			{ return(LEXWORD_XMAX);                }
+"xraster"		{ return(LEXWORD_XRASTER);             }
+"xlraster"		{ return(LEXWORD_XLRASTER);            }
+"xscrollbar"		{ return(LEXWORD_XSCROLLBAR);          }
+"xspace"		{ return(LEXWORD_XSPACE);              }
+"xlspace"		{ return(LEXWORD_XLSPACE);             }
+"ybase"			{ return(LEXWORD_YBASE);               }
+"yellowgreen"		{ return(LEXWORD_YELLOWGREEN);         }
+"yellow"		{ return(LEXWORD_YELLOW);              }
+"yes"			{ return(LEXWORD_YES);                 }
+"ymax"			{ return(LEXWORD_YMAX);                }
+"yraster"		{ return(LEXWORD_YRASTER);             }
+"yscrollbar"		{ return(LEXWORD_YSCROLLBAR);          }
+"yspace"		{ return(LEXWORD_YSPACE);              }
 
-{LINEDIR1}              {
-		 line_directive(yytext);       }
-{LINEDIR2}              {
-		 line_directive(yytext);       }
-{PRAGMADIR}             {
-		 /* ignore pragma directive */ }
+{LINEDIR1}              { line_directive(yytext);       }
+{LINEDIR2}              { line_directive(yytext);       }
+{PRAGMADIR}             { /* ignore pragma directive */ }
 
-[\f ]+			{
-					}
-[\t]			{
-		 			}
-[\n]			{
-					}
+[\f ]+			{ }
+[\t]			{ }
+[\n]			{ }
 
 {INT}			{
-		 yylval.lnum = atol(yytext); 
-			  RETURN(LEX_INT); 
+				yylval.lnum = atol(yytext); 
+				return(LEX_INT); 
 			}
 {REAL}			{
-		 yylval.lrealnum = atof(yytext); 
-			  RETURN(LEX_FLOAT); 
+				yylval.lrealnum = atof(yytext); 
+				return(LEX_FLOAT); 
 			}
 {CHAR}     	     	{
-		 yylval.byte = yytext[1];
-               		  RETURN(LEX_CHAR);
+				yylval.byte = yytext[1];
+				return(LEX_CHAR);
                 	}
 {STRING}                {
-		 yytext[strlen(yytext)-1] = '\0';
-			  escape_transl(&(yytext[1]));
-	                  yylval.lnum = HashInsert(&(yytext[1]));
-			  SKIPYYTEXT;
-                          RETURN(LEX_STRING);
+				yytext[strlen(yytext)-1] = '\0';
+				escape_transl(&(yytext[1]));
+				yylval.lnum = HashInsert(&(yytext[1]));
+				return(LEX_STRING);
                         }
-{COMM}			{
-		 SKIPYYTEXT; }
-{COMME}			{
-		 SKIPYYTEXT; }
+{COMM}			{ }
+{COMME}			{ }
 
-"{"			{
-		 RETURN('{'); }
-"}"			{
-		 RETURN('}'); }
-":"			{
-		 RETURN(':'); }
-"x"			{
-		 RETURN('x'); }
-"y"			{
-		 RETURN('y'); }
-"z"			{
-		 RETURN('z'); }
-"*"			{
-		 RETURN('*'); }
-"["			{
-		 RETURN('['); }
-"]"			{
-		 RETURN(']'); }
-"-"			{
-		 RETURN('-'); }
+"{"			{ return('{'); }
+"}"			{ return('}'); }
+":"			{ return(':'); }
+"x"			{ return('x'); }
+"y"			{ return('y'); }
+"z"			{ return('z'); }
+"*"			{ return('*'); }
+"["			{ return('['); }
+"]"			{ return(']'); }
+"-"			{ return('-'); }
 
-
-.              { 
-		 syntaxerror(yylloc.first_line, yylloc.first_column,
-			"scanner reads unexpected %c",yytext[0]);
-                 RETURN(' '); }
+.                       {
+				syntaxerror(yylloc.first_line, yylloc.first_column,
+					"scanner reads unexpected %c",yytext[0]);
+				return(' ');
+			}
 
 %%
 

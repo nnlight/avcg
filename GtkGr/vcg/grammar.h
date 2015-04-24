@@ -651,12 +651,6 @@ int   ConstructorArity(int i);
 #define COPY(x)   Copy(x)
 
 
-#define SKIPYYTEXT {}
-#define RETURN(x)  { return(x); }
-
-
-
-
 
 
 #endif  /* SCANPARSE_H */
