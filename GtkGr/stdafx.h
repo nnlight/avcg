@@ -73,6 +73,9 @@ typedef unsigned char byte;
 extern void
 replace( string &rStrText, const string &rcStrFind, const string &rcStrReplace);
 
+inline int round(double d) { return (int)(d + 0.5); }
+extern int calc_str_lines_num( const char *str);
+
 /** 
  * Фатальная ошибка, по которой приложение аварийно завершается.
  * Вызывается в случаях внутренних ошибок (вместо assert, если хочется, чтобы проверка

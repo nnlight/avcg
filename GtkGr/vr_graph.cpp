@@ -282,13 +282,13 @@ void VRGraph::DrawEdgeArrow( DrawBuffer *draw_buffer, VREdge *edge, VRDir_t dir)
 		/* поворачиваем на + 30 градусов и приводи длину */
 		double x2 = cos(M_PI/6) * d_x - sin(M_PI/6) * d_y;
 		double y2 = sin(M_PI/6) * d_x + cos(M_PI/6) * d_y;
-		int ix2 = x2 * edge->arrowsize_[dir] / len + edge->x_[nib_i];
-		int iy2 = y2 * edge->arrowsize_[dir] / len + edge->y_[nib_i];
+		int ix2 = round(x2 * edge->arrowsize_[dir] / len + edge->x_[nib_i]);
+		int iy2 = round(y2 * edge->arrowsize_[dir] / len + edge->y_[nib_i]);
 		/* поворачиваем на - 30 градусов и приводим длину */
 		double x3 = cos(-M_PI/6) * d_x - sin(-M_PI/6) * d_y;
 		double y3 = sin(-M_PI/6) * d_x + cos(-M_PI/6) * d_y;
-		int ix3 = x3 * edge->arrowsize_[dir] / len + edge->x_[nib_i];
-		int iy3 = y3 * edge->arrowsize_[dir] / len + edge->y_[nib_i];
+		int ix3 = round(x3 * edge->arrowsize_[dir] / len + edge->x_[nib_i]);
+		int iy3 = round(y3 * edge->arrowsize_[dir] / len + edge->y_[nib_i]);
 		/* рисуем */
 		if ( edge->arrowstyle_[dir] == AS_SOLID )
 		{
@@ -459,15 +459,10 @@ void VRGraph::LoadVcgPredEdgesForVcgNodeList( GNODE list)
 
 int VRGraph::GetVcgNodeAnchorsFirstY(GNODE v)
 {
-	char *s;
-	int lines_num = 1;
+	int lines_num = calc_str_lines_num( NLABEL(v));
 	int h = NHEIGHT(v);
 	int y;
 
-	for (s = NLABEL(v); *s; s++)
-	{
-		if (*s == '\n') lines_num++;
-	}
 	y = NY(v) + (h - lines_num*16)/2 - 10;
 	if (NSHAPE(v) == NS_TRIANGLE) {
 		y = y + h/4;
@@ -511,7 +506,7 @@ int VRGraph::GetVcgNodeAnchorX( GNODE n, int y1)
 	return xx;
 } /* VRGraph::GetVcgNodeAnchorX */
 
-extern int manhatten_edges;
+extern "C" int manhatten_edges;
 
 void VRGraph::LoadVcgEdgesForVcgAnchorNode( GNODE v)
 {

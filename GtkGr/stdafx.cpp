@@ -26,6 +26,18 @@ replace( string &rStrText, const string &rcStrFind, const string &rcStrReplace)
 	}
 }
 
+int calc_str_lines_num( const char *str)
+{
+    const char *s;
+    int lines_num = 1;
+
+    for (s = str; *s; s++)
+    {
+        if (*s == '\n') lines_num++;
+    }
+    return lines_num;
+}
+
 void InternalError()
 {
 	printf("FATAL ERROR: InternalError\n");
