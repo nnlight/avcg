@@ -282,13 +282,13 @@ void VRGraph::DrawEdgeArrow( DrawBuffer *draw_buffer, VREdge *edge, VRDir_t dir)
 		/* поворачиваем на + 30 градусов и приводи длину */
 		double x2 = cos(M_PI/6) * d_x - sin(M_PI/6) * d_y;
 		double y2 = sin(M_PI/6) * d_x + cos(M_PI/6) * d_y;
-		int ix2 = round(x2 * edge->arrowsize_[dir] / len + edge->x_[nib_i]);
-		int iy2 = round(y2 * edge->arrowsize_[dir] / len + edge->y_[nib_i]);
+		int ix2 = around(x2 * edge->arrowsize_[dir] / len + edge->x_[nib_i]);
+		int iy2 = around(y2 * edge->arrowsize_[dir] / len + edge->y_[nib_i]);
 		/* поворачиваем на - 30 градусов и приводим длину */
 		double x3 = cos(-M_PI/6) * d_x - sin(-M_PI/6) * d_y;
 		double y3 = sin(-M_PI/6) * d_x + cos(-M_PI/6) * d_y;
-		int ix3 = round(x3 * edge->arrowsize_[dir] / len + edge->x_[nib_i]);
-		int iy3 = round(y3 * edge->arrowsize_[dir] / len + edge->y_[nib_i]);
+		int ix3 = around(x3 * edge->arrowsize_[dir] / len + edge->x_[nib_i]);
+		int iy3 = around(y3 * edge->arrowsize_[dir] / len + edge->y_[nib_i]);
 		/* рисуем */
 		if ( edge->arrowstyle_[dir] == AS_SOLID )
 		{

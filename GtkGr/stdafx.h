@@ -73,7 +73,7 @@ typedef unsigned char byte;
 extern void
 replace( string &rStrText, const string &rcStrFind, const string &rcStrReplace);
 
-inline int round(double d) { return (int)(d + 0.5); }
+inline int around(double d) { return (int)(d + 0.5); }
 extern int calc_str_lines_num( const char *str);
 
 /** 
