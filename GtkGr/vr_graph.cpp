@@ -5,6 +5,7 @@
 
 extern "C" GEDGE revert_edge(GEDGE edge);
 extern "C" int manhatten_edges;
+static bool g_old_fashion_edges_loading = false;
 
 
 
@@ -482,7 +483,7 @@ void VRGraph::LoadVcgEdge( GEDGE e, bool ignore_back_arrow)
     return;
 } /* VRGraph::LoadVcgEdge */
 
-int VRGraph::GetVcgNodeAnchorsFirstY(GNODE v)
+int VRGraph::GetVcgNodeAnchorsFirstY( GNODE v)
 {
 	int lines_num = calc_str_lines_num( NLABEL(v));
 	int h = NHEIGHT(v);
@@ -495,10 +496,11 @@ int VRGraph::GetVcgNodeAnchorsFirstY(GNODE v)
 	return y;
 } /* VRGraph::GetVcgNodeAnchorsFirstY */
 
-int VRGraph::GetVcgNodeAnchorX( GNODE n, int y1)
+int VRGraph::GetVcgNodeAnchorX( GNODE n, int y1, GEDGE conn_e)
 {
-	int x1 = NX(n) + NWIDTH(n);
-	int x2 = x1 + 1;
+    // см. draw_solidanchors
+	int x1 = ESTARTX(conn_e);
+	int x2 = EENDX(conn_e);
 	int myypos = NY(n);
 	int h = NHEIGHT(n);
 	int w = NWIDTH(n);
@@ -514,8 +516,8 @@ int VRGraph::GetVcgNodeAnchorX( GNODE n, int y1)
 		break;
 	case TRIANGLE:
 		d = ((h-y1+myypos)*w/2)/h;
-		if (x1<x2) xx = x1-d;
-		else	   xx = x1+d;
+		if (x1<x2) xx = x1-d+w/4;
+		else	   xx = x1+d-w/4;
 		break;
 	case ELLIPSE:
 		d = (w+1)/2 - gstoint( sqrt( 
@@ -530,18 +532,19 @@ int VRGraph::GetVcgNodeAnchorX( GNODE n, int y1)
 	return xx;
 } /* VRGraph::GetVcgNodeAnchorX */
 
-void VRGraph::LoadVcgEdgesForVcgAnchorNode( GNODE v)
+void VRGraph::LoadVcgEdgesForVcgAnchorNode( GNODE v, Marker_t marker, Tempattr_t node_ta)
 {
     CONNECT c = NCONNECT(v);
     GNODE   n = CTARGET(c);
-    GEDGE   e = CEDGE(c);
-    int x2 = EENDX(e);
+    GEDGE   conn_e = CEDGE(c);
+    int x2 = EENDX(conn_e);
     int ybase = GetVcgNodeAnchorsFirstY(n);
+    GEDGE e;
 
 	for ( e = FirstSucc(v); e; e = NextSucc(e) )
 	{
 		int y = ybase + -EANCHOR(e)*16;
-		int x1 = GetVcgNodeAnchorX( n, y);
+		int x1 = GetVcgNodeAnchorX( n, y, conn_e);
 		int xlast = ESTARTX(e);
 		int ylast = ESTARTY(e);
 
@@ -561,8 +564,11 @@ void VRGraph::LoadVcgEdgesForVcgAnchorNode( GNODE v)
 		edge->y_.push_back( ylast);
 		edge->dots_ = 3;
 
-        // TODO: тут для нового варианта надо не еще одну дугу делать, а продолжать старую по цепочке
-        LoadVcgEdge( e, true);
+        if (g_old_fashion_edges_loading) {
+            LoadVcgEdge( e, true);
+        } else {
+            AddVcgEdgesChainToEdge( e, edge, marker, node_ta);
+        }
 	}
 	// в оигинальной VCG (в gs_anchornode) еще входные дуги смотрелись...
 } /* VRGraph::LoadVcgEdgesForVcgAnchorNode */
@@ -590,7 +596,7 @@ void VRGraph::LoadVcgEdgesForVcgNodeList( GNODE list)
 	{
 		if ( NANCHORNODE(v) )
 		{
-			LoadVcgEdgesForVcgAnchorNode( v);
+			LoadVcgEdgesForVcgAnchorNode( v, Marker_t(-1), Tempattr_t(-1));
 			continue;
 		}
 		c = NCONNECT(v);
@@ -687,10 +693,57 @@ void VRGraph::RevertBackVcgEdges(std::list<GEDGE> &rev_e)
     }
 } /* VRGraph::RevertBackVcgEdges */
 
+void VRGraph::AddVcgEdgesChainToEdge( GEDGE e, VREdge *edge, Marker_t marker, Tempattr_t node_ta)
+{
+    GEDGE next_e;
+    GNODE e_succ;
+
+    e_succ = ETARGET(e);
+    while ( !is_node_marked( e_succ, marker) )
+    {
+        edge->AddDotsFromVcgEdge( e);
+        assert( NextPred(FirstPred(e_succ)) == NULL );
+        assert( NextSucc(FirstSucc(e_succ)) == NULL );
+        next_e = FirstSucc(e_succ);
+        if ( EENDX(e) != ESTARTX(next_e)
+             || EENDY(e) != ESTARTY(next_e) )
+        {
+            // Продолжающая vcg-дуга начинается не с того места, где закончилась предыдущая.
+            // Значит соединительным узлом был label node. Делаем тут 2 VR-дуги.
+            bool is_found = false;
+            for (GNODE v = labellist; v; v = NNEXT(v))
+            {
+                if (e_succ == v) {
+                    is_found = true;
+                    break;
+                }
+            }
+            assert(is_found);
+            break;
+        }
+        e = next_e;
+        e_succ = ETARGET(e);
+    }
+    if ( is_node_marked( e_succ, marker) )
+    {
+        edge->AddDotsFromVcgEdge( e);
+        edge->SetArrowAttrsFromVcgEdge( VRDIR_FORWARD, e);
+    } else
+    {
+        // продолжаем в новой VR-дуге
+        VREdge *next_edge = new VREdge( this, next_e);
+        next_edge->x_.push_back( ESTARTX(next_e));
+        next_edge->y_.push_back( ESTARTY(next_e));
+        next_edge->dots_++;
+
+        AddVcgEdgesChainToEdge( next_e, next_edge, marker, node_ta);
+    }
+} /* VRGraph::AddVcgEdgesChainToEdge */
+
 void VRGraph::LoadVcgEdges( Marker_t marker, Tempattr_t node_ta)
 {
-    GNODE   v, succ_v;
-    GEDGE   e, succ_e;
+    GNODE   v;
+    GEDGE   e;
 
     for ( v = nodelist; v; v = NNEXT(v) )
     {
@@ -700,7 +753,7 @@ void VRGraph::LoadVcgEdges( Marker_t marker, Tempattr_t node_ta)
         {
             if ( NANCHORNODE(ETARGET(e)) )
             {
-                LoadVcgEdgesForVcgAnchorNode( ETARGET(e));
+                LoadVcgEdgesForVcgAnchorNode( ETARGET(e), marker, node_ta);
                 continue;
             }
             VREdge *edge = new VREdge( this, e);
@@ -708,29 +761,10 @@ void VRGraph::LoadVcgEdges( Marker_t marker, Tempattr_t node_ta)
             edge->x_.push_back( ESTARTX(e));
             edge->y_.push_back( ESTARTY(e));
             edge->dots_++;
-            //edge->AddDotsFromVcgEdge( e);
 
-            succ_e = e;
-            succ_v = ETARGET(e);
-            bool x = true;
-            while ( !is_node_marked( succ_v, marker) )
-            {
-                edge->AddDotsFromVcgEdge( succ_e);
-                assert( NextPred(FirstPred(succ_v)) == NULL );
-                assert( NextSucc(FirstSucc(succ_v)) == NULL );
-                //assert( get_node_succs_num( succ_v) <= 1 );
-                //if ( !FirstSucc(succ_v) ) { x = false; break; }
-                succ_e = FirstSucc(succ_v);
-                succ_v = ETARGET(succ_e);
-            }
-            if (x)
-            {
-            edge->AddDotsFromVcgEdge( succ_e);
-            edge->SetArrowAttrsFromVcgEdge( VRDIR_FORWARD, succ_e);
-            }
+            AddVcgEdgesChainToEdge( e, edge, marker, node_ta);
         }
     }
-
 } /* VRGraph::LoadVcgEdges */
 
 void VRGraph::LoadGDL()
@@ -743,8 +777,11 @@ void VRGraph::LoadGDL()
 	GNODE v;
 	for ( v = nodelist; v; v = NNEXT(v) )
 	{
-		if (NWIDTH(v) == 0)
-			continue;
+        if (NWIDTH(v) == 0) {
+            set_node_marker( v, marker);
+            set_node_temp_attr( v, node_ta, NULL);
+            continue;
+        }
 		VRNode *node = AddSizedNode( NX(v), NY(v), NWIDTH(v), NHEIGHT(v), NTITLE(v), NLABEL(v));
 		node->color_ = (Color_t)NCOLOR(v);
 		node->bcolor_ = (Color_t)NBCOLOR(v);
@@ -776,8 +813,7 @@ void VRGraph::LoadGDL()
 	}
 
 	/* дуги */
-    bool edges_loading_old_fashin = false;
-    if ( edges_loading_old_fashin )
+    if ( g_old_fashion_edges_loading )
     {
 	    LoadVcgEdgesForVcgNodeList( nodelist);
 	    LoadVcgEdgesForVcgNodeList( labellist);

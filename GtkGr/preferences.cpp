@@ -105,7 +105,7 @@ void Preferences::LoadFromFile()
 	m_FontFamily = GetKeyFileString( key_file, "General", "FontFamily", m_FontFamily);
 	m_PrintEvents = GetKeyFileBool( key_file, "Debug", "PrintEvents", m_PrintEvents);
 	m_PrintActions = GetKeyFileBool( key_file, "Debug", "PrintActions", m_PrintActions);
-	m_PrintActions = GetKeyFileBool( key_file, "Debug", "PrintTimes", m_PrintTimes);
+	m_PrintTimes = GetKeyFileBool( key_file, "Debug", "PrintTimes", m_PrintTimes);
 
 
 	g_key_file_free( key_file);
