@@ -14,7 +14,6 @@ class VRGraph;
 #define VRNODE_INFO_COUNT 3
 #define NODE_LABEL_MARGIN 3
 #define EDGE_LABEL_MARGIN 1
-#define XX_NEW 1
 
 /**
  * Узел
@@ -59,13 +58,8 @@ class VREdge : public GrEdge
 public:
 	//string label_;
     int dots_;
-#if XX_NEW
     vector<int> x_;
     vector<int> y_;
-#else
-    int x_[4];
-    int y_[4];
-#endif
 	Linestyle_t linestyle_;
 	int thickness_;
 	Color_t color_;
@@ -77,6 +71,8 @@ public:
 	VREdge( VRGraph *graph, GEDGE e);
 	~VREdge();
 	VREdge *GetNextSucc() { return static_cast<VREdge*>(GrGetNextSucc()); }
+    void SetArrowAttrsFromVcgEdge( VRDir_t dir, GEDGE e);
+    void AddDotsFromVcgEdge( GEDGE e);
 private:
 	VREdge( const VRNode &a);
 };
@@ -127,11 +123,14 @@ public:
 	void SetupDrawBufferSetting( DrawBuffer *draw_buffer);
 private:
 	void LoadVcgEdge( GEDGE e, bool ignore_back_arrow = false);
-	void LoadVcgPredEdgesForVcgNodeList( GNODE list);
 	int GetVcgNodeAnchorsFirstY(GNODE v);
 	int GetVcgNodeAnchorX( GNODE n, int y);
 	void LoadVcgEdgesForVcgAnchorNode( GNODE v);
 	void LoadVcgEdgesForVcgNodeList( GNODE list);
+    
+    void LinkVcgConnectEdgesForVcgNodeList( GNODE list);
+    void UnlinkVcgConnectEdgesForVcgNodeList( GNODE list);
+	void LoadVcgEdges( Marker_t marker, Tempattr_t node_ta);
 
 	void DrawNodeText( DrawBuffer *draw_buffer, VRNode *node);
 	void DrawNode( DrawBuffer *draw_buffer, VRNode *node);
