@@ -125,11 +125,12 @@ private:
 	void LoadVcgEdge( GEDGE e, bool ignore_back_arrow = false);
 	int GetVcgNodeAnchorsFirstY(GNODE v);
 	int GetVcgNodeAnchorX( GNODE n, int y);
-	void LoadVcgEdgesForVcgAnchorNode( GNODE v);
+    void LoadVcgEdgesForVcgAnchorNode( GNODE v);
 	void LoadVcgEdgesForVcgNodeList( GNODE list);
     
-    void LinkVcgConnectEdgesForVcgNodeList( GNODE list);
-    void UnlinkVcgConnectEdgesForVcgNodeList( GNODE list);
+    void LinkConnectEdgesAndRevertRevertedForVcgNodeList( GNODE list, std::list<GEDGE> &rev_e);
+    void UnlinkConnectEdgesForVcgNodeList( GNODE list);
+    void RevertBackVcgEdges(std::list<GEDGE> &rev_e);
 	void LoadVcgEdges( Marker_t marker, Tempattr_t node_ta);
 
 	void DrawNodeText( DrawBuffer *draw_buffer, VRNode *node);

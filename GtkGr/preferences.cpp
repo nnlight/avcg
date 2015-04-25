@@ -15,6 +15,7 @@ Preferences::Preferences(void)
 	, m_FontFamily( "monospace")
 	, m_PrintEvents( false)
 	, m_PrintActions( false)
+	, m_PrintTimes( false)
 {
 } /* Preferences::Preferences */
 
@@ -104,6 +105,7 @@ void Preferences::LoadFromFile()
 	m_FontFamily = GetKeyFileString( key_file, "General", "FontFamily", m_FontFamily);
 	m_PrintEvents = GetKeyFileBool( key_file, "Debug", "PrintEvents", m_PrintEvents);
 	m_PrintActions = GetKeyFileBool( key_file, "Debug", "PrintActions", m_PrintActions);
+	m_PrintActions = GetKeyFileBool( key_file, "Debug", "PrintTimes", m_PrintTimes);
 
 
 	g_key_file_free( key_file);
@@ -124,6 +126,7 @@ void Preferences::SaveToFile()
 	g_key_file_set_string( key_file, "General", "FontFamily", m_FontFamily.c_str());
 	g_key_file_set_boolean( key_file, "Debug", "PrintEvents", (gboolean)m_PrintEvents);
 	g_key_file_set_boolean( key_file, "Debug", "PrintActions", (gboolean)m_PrintActions);
+	g_key_file_set_boolean( key_file, "Debug", "PrintTimes", (gboolean)m_PrintTimes);
 
 	gsize key_file_data_length = 0;
 	const gchar *key_file_data = g_key_file_to_data( key_file, &key_file_data_length, NULL);

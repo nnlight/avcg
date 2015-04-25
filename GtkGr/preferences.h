@@ -20,6 +20,7 @@ private:
 	/* [Debug] */
 	bool m_PrintEvents;         /*! печатать ли приходящие события */
 	bool m_PrintActions;		/*! печать действий */
+    bool m_PrintTimes;          /*! печать некоторых времен */
 
 private:
 	int GetKeyFileInteger( GKeyFile *key_file, const gchar *group_name, const gchar *key,
@@ -41,6 +42,7 @@ public:
 	const string &GetFontFamily() { return m_FontFamily; };
 	bool DebugGetPrintEvents() { return m_PrintEvents; };
 	bool DebugGetPrintActions() { return m_PrintActions; };
+	bool DebugGetPrintTimes() { return m_PrintTimes; };
 
 	void LoadFromFile();
 	void SaveToFile();

@@ -1,6 +1,10 @@
 #include "vr_graph.h"
 #include <math.h>
 #include <iostream>
+#include "preferences.h"
+
+extern "C" GEDGE revert_edge(GEDGE edge);
+extern "C" int manhatten_edges;
 
 
 
@@ -526,8 +530,6 @@ int VRGraph::GetVcgNodeAnchorX( GNODE n, int y1)
 	return xx;
 } /* VRGraph::GetVcgNodeAnchorX */
 
-extern "C" int manhatten_edges;
-
 void VRGraph::LoadVcgEdgesForVcgAnchorNode( GNODE v)
 {
     CONNECT c = NCONNECT(v);
@@ -538,8 +540,6 @@ void VRGraph::LoadVcgEdgesForVcgAnchorNode( GNODE v)
 
 	for ( e = FirstSucc(v); e; e = NextSucc(e) )
 	{
-		LoadVcgEdge( e, true);
-
 		int y = ybase + -EANCHOR(e)*16;
 		int x1 = GetVcgNodeAnchorX( n, y);
 		int xlast = ESTARTX(e);
@@ -560,6 +560,9 @@ void VRGraph::LoadVcgEdgesForVcgAnchorNode( GNODE v)
 		edge->x_.push_back( xlast);
 		edge->y_.push_back( ylast);
 		edge->dots_ = 3;
+
+        // TODO: тут для нового варианта надо не еще одну дугу делать, а продолжать старую по цепочке
+        LoadVcgEdge( e, true);
 	}
 	// в оигинальной VCG (в gs_anchornode) еще входные дуги смотрелись...
 } /* VRGraph::LoadVcgEdgesForVcgAnchorNode */
@@ -611,10 +614,10 @@ void VRGraph::LoadVcgEdgesForVcgNodeList( GNODE list)
 	}
 } /* VRGraph::LoadVcgEdgesForVcgNodeList */
 
-void VRGraph::LinkVcgConnectEdgesForVcgNodeList( GNODE list)
+void VRGraph::LinkConnectEdgesAndRevertRevertedForVcgNodeList( GNODE list, std::list<GEDGE> &rev_e)
 {
     GNODE   v;
-    GEDGE   e;
+    GEDGE   e, nxt_e;
     CONNECT c;
 
     for ( v = list; v; v = NNEXT(v) )
@@ -624,16 +627,30 @@ void VRGraph::LinkVcgConnectEdgesForVcgNodeList( GNODE list)
             if (forward_connection1(c)) {
                 e = CEDGE(c);
                 link_edge(e);
+                assert(EKIND(e) != 'R');
             }
             if (forward_connection2(c)) {
                 e = CEDGE2(c);
                 link_edge(e);
+                assert(EKIND(e) != 'R');
+            }
+        }
+        for (e = FirstSucc(v); e; e = nxt_e)
+        {
+            nxt_e = NextSucc(e);
+            if (EKIND(e) == 'R') {
+                rev_e.push_back( e);
+                revert_edge(e);
+                std::swap( ESTARTX(e), EENDX(e));
+                std::swap( ESTARTY(e), EENDY(e));
+                std::swap( ETBENDX(e), EBBENDX(e));
+                std::swap( ETBENDY(e), EBBENDY(e));
             }
         }
     }
-} /* VRGraph::LinkVcgConnectEdgesForVcgNodeList */
+} /* VRGraph::LinkConnectEdgesAndRevertRevertedForVcgNodeList */
 
-void VRGraph::UnlinkVcgConnectEdgesForVcgNodeList( GNODE list)
+void VRGraph::UnlinkConnectEdgesForVcgNodeList( GNODE list)
 {
     GNODE   v;
     GEDGE   e;
@@ -653,7 +670,22 @@ void VRGraph::UnlinkVcgConnectEdgesForVcgNodeList( GNODE list)
             }
         }
     }
-} /* VRGraph::UnlinkVcgConnectEdgesForVcgNodeList */
+} /* VRGraph::UnlinkConnectEdgesForVcgNodeList */
+
+void VRGraph::RevertBackVcgEdges(std::list<GEDGE> &rev_e)
+{
+    std::list<GEDGE>::iterator it;
+
+    for ( it = rev_e.begin(); it != rev_e.end(); ++it )
+    {
+        GEDGE e = *it;
+        revert_edge(e);
+        std::swap( ESTARTX(e), EENDX(e));
+        std::swap( ESTARTY(e), EENDY(e));
+        std::swap( ETBENDX(e), EBBENDX(e));
+        std::swap( ETBENDY(e), EBBENDY(e));
+    }
+} /* VRGraph::RevertBackVcgEdges */
 
 void VRGraph::LoadVcgEdges( Marker_t marker, Tempattr_t node_ta)
 {
@@ -662,11 +694,15 @@ void VRGraph::LoadVcgEdges( Marker_t marker, Tempattr_t node_ta)
 
     for ( v = nodelist; v; v = NNEXT(v) )
     {
-        if ( !is_node_marked( v, marker) )
-            continue;
+        assert( is_node_marked( v, marker) );
 
         for ( e = FirstSucc(v); e; e = NextSucc(e) )
         {
+            if ( NANCHORNODE(ETARGET(e)) )
+            {
+                LoadVcgEdgesForVcgAnchorNode( ETARGET(e));
+                continue;
+            }
             VREdge *edge = new VREdge( this, e);
             edge->SetArrowAttrsFromVcgEdge( VRDIR_BACKWARD, e);
             edge->x_.push_back( ESTARTX(e));
@@ -681,9 +717,9 @@ void VRGraph::LoadVcgEdges( Marker_t marker, Tempattr_t node_ta)
             {
                 edge->AddDotsFromVcgEdge( succ_e);
                 assert( NextPred(FirstPred(succ_v)) == NULL );
-                //assert( NextSucc(FirstSucc(succ_v)) == NULL );
-                assert( get_node_succs_num( succ_v) <= 1 );
-                if ( !FirstSucc(succ_v) ) { x = false; break; }
+                assert( NextSucc(FirstSucc(succ_v)) == NULL );
+                //assert( get_node_succs_num( succ_v) <= 1 );
+                //if ( !FirstSucc(succ_v) ) { x = false; break; }
                 succ_e = FirstSucc(succ_v);
                 succ_v = ETARGET(succ_e);
             }
@@ -740,25 +776,31 @@ void VRGraph::LoadGDL()
 	}
 
 	/* дуги */
-    bool old_edges_loading = true;
-    if ( old_edges_loading )
+    bool edges_loading_old_fashin = false;
+    if ( edges_loading_old_fashin )
     {
 	    LoadVcgEdgesForVcgNodeList( nodelist);
 	    LoadVcgEdgesForVcgNodeList( labellist);
 	    LoadVcgEdgesForVcgNodeList( dummylist);
     } else
     {
-        LinkVcgConnectEdgesForVcgNodeList( nodelist);
-        LinkVcgConnectEdgesForVcgNodeList( labellist);
-        LinkVcgConnectEdgesForVcgNodeList( dummylist);
+        std::list<GEDGE> rev_edges;
+        LinkConnectEdgesAndRevertRevertedForVcgNodeList( nodelist, rev_edges);
+        LinkConnectEdgesAndRevertRevertedForVcgNodeList( labellist, rev_edges);
+        LinkConnectEdgesAndRevertRevertedForVcgNodeList( dummylist, rev_edges);
         LoadVcgEdges( marker, node_ta);
-        UnlinkVcgConnectEdgesForVcgNodeList( nodelist);
-        UnlinkVcgConnectEdgesForVcgNodeList( labellist);
-        UnlinkVcgConnectEdgesForVcgNodeList( dummylist);
+        UnlinkConnectEdgesForVcgNodeList( nodelist);
+        UnlinkConnectEdgesForVcgNodeList( labellist);
+        UnlinkConnectEdgesForVcgNodeList( dummylist);
+        RevertBackVcgEdges( rev_edges);
     }
     free_marker( marker);
     free_temp_attr( node_ta);
-    std::cout << "LoadGDL time " << double(clock() - t) / CLOCKS_PER_SEC << "sec  (" << g_timer_elapsed(g,NULL) << ")" << std::endl;
+    if (g_Preferences->DebugGetPrintTimes())
+    {
+        std::cout << "LoadGDL time " << double(clock() - t) / CLOCKS_PER_SEC << "sec"
+                  <<" (" << g_timer_elapsed(g,NULL) << ")" << std::endl;
+    }
     g_timer_destroy(g);
 } /* VRGraph::LoadGDL */
 

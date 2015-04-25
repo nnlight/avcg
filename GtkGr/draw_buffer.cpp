@@ -215,7 +215,7 @@ void DrawBuffer::ExposeDa( daint x,
                        width, height);
 	}
 	double copy_time = g_timer_elapsed( timer, NULL);
-	if (g_Preferences->DebugGetPrintEvents())
+	if (g_Preferences->DebugGetPrintTimes())
 	{
 		g_print(" times:draw=%f  copy=%f\n", draw_time, copy_time);
 	}
