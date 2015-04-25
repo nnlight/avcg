@@ -14,7 +14,7 @@ class VRGraph;
 #define VRNODE_INFO_COUNT 3
 #define NODE_LABEL_MARGIN 3
 #define EDGE_LABEL_MARGIN 1
-#define VREDGE_DOT_COUNT 4
+#define XX_NEW 1
 
 /**
  * Узел
@@ -57,10 +57,15 @@ enum VRDir_t
 class VREdge : public GrEdge
 {
 public:
-	string label_;
-	int dots_;
-	int x_[VREDGE_DOT_COUNT];
-	int y_[VREDGE_DOT_COUNT];
+	//string label_;
+    int dots_;
+#if XX_NEW
+    vector<int> x_;
+    vector<int> y_;
+#else
+    int x_[4];
+    int y_[4];
+#endif
 	Linestyle_t linestyle_;
 	int thickness_;
 	Color_t color_;
@@ -69,6 +74,7 @@ public:
 	Color_t arrowcolor_[VRDIR_LAST];
 public:
 	VREdge( VRGraph *graph);
+	VREdge( VRGraph *graph, GEDGE e);
 	~VREdge();
 	VREdge *GetNextSucc() { return static_cast<VREdge*>(GrGetNextSucc()); }
 private:

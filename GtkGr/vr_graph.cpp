@@ -1,5 +1,6 @@
 #include "vr_graph.h"
 #include <math.h>
+#include <iostream>
 
 
 
@@ -32,7 +33,7 @@ int VRNode::FindInfoNumBySubstring( const char *substring)
 
 VREdge::VREdge( VRGraph *graph)
 	: GrEdge( graph->GrGetDummyNode(), graph->GrGetDummyNode())
-    , label_()
+    //, label_()
 	, dots_(0)
 	, linestyle_(LS_SOLID)
 	, thickness_(2)
@@ -41,8 +42,34 @@ VREdge::VREdge( VRGraph *graph)
 	, arrowstyle_({AS_SOLID, AS_NONE})
 	, arrowcolor_({BLACK, BLACK})*/
 {
+#if XX_NEW
+    x_.reserve(4);
+    y_.reserve(4);
+#endif
 	arrowsize_[VRDIR_FORWARD] = 10;
 	arrowstyle_[VRDIR_FORWARD] = AS_SOLID;
+	arrowcolor_[VRDIR_FORWARD] = BLACK;
+	arrowsize_[VRDIR_BACKWARD] = 0;
+	arrowstyle_[VRDIR_BACKWARD] = AS_NONE;
+	arrowcolor_[VRDIR_BACKWARD] = BLACK;
+}
+
+VREdge::VREdge( VRGraph *graph, GEDGE e)
+    : GrEdge( graph->GrGetDummyNode(), graph->GrGetDummyNode())
+//    , label_()
+    , dots_(0)
+    , linestyle_((Linestyle_t)ELSTYLE(e))
+    , thickness_(ETHICKNESS(e))
+    , color_(BLACK)
+{
+#if XX_NEW
+    x_.reserve(4);
+    y_.reserve(4);
+#endif
+    if (thickness_ == 0)
+        thickness_ = 1;
+	arrowsize_[VRDIR_FORWARD] = 0;
+	arrowstyle_[VRDIR_FORWARD] = AS_NONE;
 	arrowcolor_[VRDIR_FORWARD] = BLACK;
 	arrowsize_[VRDIR_BACKWARD] = 0;
 	arrowstyle_[VRDIR_BACKWARD] = AS_NONE;
@@ -389,32 +416,54 @@ void VRGraph::LoadVcgEdge( GEDGE e, bool ignore_back_arrow)
 	int x4 = EBBENDX(e); // bottom bend, у конца
 	int y4 = EBBENDY(e);
 
-	int i = edge->dots_;
-	edge->x_[i] = x1;
-	edge->y_[i] = y1;
-	edge->dots_++;
+#if XX_NEW
+    edge->x_.push_back( x1);
+    edge->y_.push_back( y1);
+    edge->dots_++;
 
 	if ( !((y3==y1)&&(x3==x1)) ) 
 	{
-		i = edge->dots_;
-		edge->x_[i] = x3;
-		edge->y_[i] = y3;
+        edge->x_.push_back( x3);
+        edge->y_.push_back( y3);
 		edge->dots_++;
 	}
 	if ( !((y4==y2)&&(x4==x2)) ) 
 	{
-		i = edge->dots_;
-		edge->x_[i] = x4;
-		edge->y_[i] = y4;
+        edge->x_.push_back( x4);
+        edge->y_.push_back( y4);
 		edge->dots_++;
 	}
 
-	i = edge->dots_;
-	edge->x_[i] = x2;
-	edge->y_[i] = y2;
-	edge->dots_++;
-	assert( edge->dots_ <= VREDGE_DOT_COUNT );
-	return;
+    edge->x_.push_back( x2);
+    edge->y_.push_back( y2);
+    edge->dots_++;
+#else
+    int i = edge->dots_;
+    edge->x_[i] = x1;
+    edge->y_[i] = y1;
+    edge->dots_++;
+
+	if ( !((y3==y1)&&(x3==x1)) ) 
+	{
+        i = edge->dots_;
+        edge->x_[i] = x3;
+        edge->y_[i] = y3;
+		edge->dots_++;
+	}
+	if ( !((y4==y2)&&(x4==x2)) ) 
+	{
+        i = edge->dots_;
+        edge->x_[i] = x4;
+        edge->y_[i] = y4;
+		edge->dots_++;
+	}
+
+    i = edge->dots_;
+    edge->x_[i] = x2;
+    edge->y_[i] = y2;
+    edge->dots_++;
+#endif
+    return;
 } /* VRGraph::LoadVcgEdge */
 
 void VRGraph::LoadVcgPredEdgesForVcgNodeList( GNODE list)
@@ -591,6 +640,8 @@ void VRGraph::LoadVcgEdgesForVcgNodeList( GNODE list)
 
 void VRGraph::LoadGDL()
 {
+    clock_t t = clock();
+    GTimer *g = g_timer_new();
 	/* узлы */
 	GNODE v;
 	for ( v = nodelist; v; v = NNEXT(v) )
@@ -634,6 +685,8 @@ void VRGraph::LoadGDL()
 	LoadVcgEdgesForVcgNodeList( labellist);
 	LoadVcgEdgesForVcgNodeList( dummylist);
 #endif
+    std::cout << "LoadGDL time " << double(clock() - t) / CLOCKS_PER_SEC << "sec (" << g_timer_elapsed(g,NULL) << ")" << std::endl;
+    g_timer_destroy(g);
 } /* VRGraph::LoadGDL */
 
 void VRGraph::SetupDrawBufferSetting( DrawBuffer *draw_buffer)

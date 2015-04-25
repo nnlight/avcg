@@ -10,12 +10,15 @@
 #include <memory>
 #include <string>
 #include <list>
+#include <vector>
 #include <assert.h>
 #include <string.h>
 #include <math.h>
 
 //using namespace std;
 typedef std::string string;
+using std::vector;
+using std::pair;
 
 typedef unsigned char byte;
 

@@ -190,7 +190,6 @@ void DrawBuffer::ExposeDa( daint x,
 						   daint height)
 {
 	GTimer *timer = g_timer_new();
-	g_timer_start( timer);
 	if (m_IsNeedRedrawPixmap)
 	{
 		InitializePixmapToBackgroundColor( m_Pixmap,
@@ -220,6 +219,7 @@ void DrawBuffer::ExposeDa( daint x,
 	{
 		g_print(" times:draw=%f  copy=%f\n", draw_time, copy_time);
 	}
+    g_timer_destroy( timer);
 } /* DrawBuffer::ExposeDa */
 
 void DrawBuffer::Da2Vrg( daint da_x, daint da_y, vrgint &vrg_x, vrgint &vrg_y)
@@ -515,7 +515,7 @@ void DrawBuffer::SetLineWidth( vrgint line_width, Linestyle_t lstyle)
 	case LS_DASHED: pm_lstyle = GDK_LINE_DOUBLE_DASH; break;
 	default: assert( !"unknown linestyle" );
 	}
-	gdk_gc_set_line_attributes( m_GC, pm_line_width, pm_lstyle, GDK_CAP_BUTT, GDK_JOIN_MITER);
+	gdk_gc_set_line_attributes( m_GC, pm_line_width, /*GDK_LINE_SOLID*/pm_lstyle, GDK_CAP_BUTT, GDK_JOIN_MITER);
 }
 void DrawBuffer::DrawLine( vrgint x, vrgint y, vrgint endx, vrgint endy)
 {
@@ -690,7 +690,13 @@ void DrawBuffer::DrawText( vrgint x, vrgint y, const char *text)
 #else
 void DrawBuffer::DrawText( vrgint x, DrawTextPos_t x_pos, vrgint y, DrawTextPos_t y_pos, const char *text)
 {
-	int pm_x, pm_y;
+    if ( 16 * m_Scaling < 1. )
+    {
+        // 16 - высота шрифта в vrg-пикселях
+        return;
+    }
+
+    int pm_x, pm_y;
 	Vrg2Pm( x,y, pm_x, pm_y);
 
 	PangoLayout *layout;
