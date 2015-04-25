@@ -301,11 +301,15 @@ static void calc_node_anchor(GNODE v)
 		else if (NX(ESOURCE(e))>NX(ETARGET(e))+NWIDTH(ETARGET(e))) {
 			EWEIGHTS(e) = MININT;
 			EWEIGHTP(e) = MAXINT;
+			/* 'l' и 'r' не должны перетирать инфу о том, что дуга обращена */
+			assert(EART(e) != 'R');
 			EART(e) = 'l';
 		}
 		else if (NX(ESOURCE(e))+NWIDTH(ESOURCE(e))<NX(ETARGET(e))) {
 			EWEIGHTS(e) = MAXINT;
 			EWEIGHTP(e) = MININT;
+			/* 'l' и 'r' не должны перетирать инфу о том, что дуга обращена */
+			assert(EART(e) != 'R');
 			EART(e) = 'r';
 		}
 		else delete_adjedge(e); /* Edge is not drawable */
