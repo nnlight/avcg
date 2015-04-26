@@ -59,15 +59,19 @@ ui_key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data)
 
 	case GDK_Up:
 		db->MoveVisibleArea( -MOVE_PIXELS, AXIS_Y);
+        uic->UpdateStatusbar();
 		break;
 	case GDK_Down:
 		db->MoveVisibleArea( MOVE_PIXELS, AXIS_Y);
+        uic->UpdateStatusbar();
 		break;
 	case GDK_Left:
 		db->MoveVisibleArea( -MOVE_PIXELS, AXIS_X);
+        uic->UpdateStatusbar();
 		break;
 	case GDK_Right:
 		db->MoveVisibleArea( MOVE_PIXELS, AXIS_X);
+        uic->UpdateStatusbar();
 		break;
 
 	case GDK_p:
@@ -200,7 +204,7 @@ ui_da_mouse_button_release_cb( GtkWidget      *da,
 	int y = (int)event->y;
 	if (event->button == 3)
 	{
-		assert( uic->m_PickUped == true );
+		//assert( uic->m_PickUped == true );
 		uic->m_PickUped = false;
 		if (g_Preferences->DebugGetPrintEvents()) printf("x=%d  y=%d\n", x, y);
 	}
@@ -261,6 +265,8 @@ ui_da_mouse_motion_notify_cb( GtkWidget      *da,
    * can cope.
    */
 	gdk_window_get_pointer (event->window, &x, &y, &state);
+    uic->m_MousePos[AXIS_X] = x;
+    uic->m_MousePos[AXIS_Y] = y;
 
 	if (state & GDK_BUTTON1_MASK)
 		db->ButtonPress( x, y);
@@ -275,7 +281,9 @@ ui_da_mouse_motion_notify_cb( GtkWidget      *da,
 		db->MoveVisibleArea2d( delta);
 	}
 
-	return TRUE;  /* We've handled it, stop processing */
+    uic->UpdateStatusbar();
+	
+    return TRUE;  /* We've handled it, stop processing */
 } /* ui_da_mouse_motion_notify_cb */
 
 
@@ -489,11 +497,11 @@ static const gchar *ui_info =
 "<ui>"
 "  <menubar name='MenuBar'>"
 "    <menu action='FileMenu'>"
-"      <menuitem action='New'/>"
+//"      <menuitem action='New'/>"
 "      <menuitem action='Open'/>"
 "      <menuitem action='Reload'/>"
-"      <menuitem action='Save'/>"
-"      <menuitem action='SaveAs'/>"
+//"      <menuitem action='Save'/>"
+//"      <menuitem action='SaveAs'/>"
 "      <separator/>"
 "      <menuitem action='Quit'/>"
 "    </menu>"
@@ -604,6 +612,9 @@ UIController::UIController( const char *filename)
 	, m_Statusbar( NULL)
 	, m_PickUped( false)
 {
+    m_MousePos[AXIS_X] = 0;
+    m_MousePos[AXIS_Y] = 0;
+
 	GtkWidget *main_window;
 	GtkWidget *main_vbox;
 	GtkWidget *menubar;
@@ -709,6 +720,7 @@ void UIController::LoadGDLFile( const char *filename)
 void UIController::UpdateStatusbar()
 {
 	gchar *msg;
+    int vrg_x, vrg_y;
 
 	/* clear any previous message, 
 	 * underflow is allowed 
@@ -723,9 +735,12 @@ void UIController::UpdateStatusbar()
 		case MODE_VIEW_NODE_INFO3: mode_name = "info3"; break;
 		default: break;
 	}
-	msg = g_strdup_printf( "Current Scaling: %f  Mode: %s",
+    m_DrawBuffer->ConvertDa2Vrg( m_MousePos[AXIS_X], m_MousePos[AXIS_Y], vrg_x, vrg_y);
+	//msg = g_strdup_printf( "Current Scaling: %f  Mode: %s  x=%d y=%d  vrg_x=%d vrg_y=%d",
+    msg = g_strdup_printf( "Current Scaling: %f   Mode: %s   MousePos: (%d,%d)   vrg: (%d,%d)",
 							m_DrawBuffer->GetScaling(),
-							mode_name);
+							mode_name,
+                            m_MousePos[AXIS_X], m_MousePos[AXIS_Y], vrg_x, vrg_y);
 	gtk_statusbar_push( GTK_STATUSBAR( m_Statusbar), 0, msg);
 
 	g_free (msg);

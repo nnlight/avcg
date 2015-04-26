@@ -45,6 +45,7 @@ private:
 	GtkWidget *m_Statusbar;
 	bool m_PickUped; //!< признак того, что граф "схвачен" для перетаскивания
 	gint m_PickUpBase[AXIS_LAST];
+    gint m_MousePos[AXIS_LAST];
 public:
 	UIController( const char *filename = NULL);
 	~UIController(void);
