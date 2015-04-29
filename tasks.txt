@@ -1,7 +1,6 @@
 
-1) координаты в statusbar
-2) в файле есть начальный scaling - надо его подцеплять
-3) управляющие символы в лейблах (charset.vcg, colors.vcg, morecol.vcg)
+1) в файле есть начальный scaling - надо его подцеплять
+2) управляющие символы в лейблах (charset.vcg, colors.vcg, morecol.vcg)
 
 
 
