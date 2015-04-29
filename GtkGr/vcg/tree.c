@@ -23,14 +23,14 @@
 /************************************************************************
  * The situation here is the following:
  * -----------------------------------
- * We are still in the layout phase of the graph. The graph is in 
+ * We are still in the layout phase of the graph. The graph is in
  * adjacency list representation available, further it is partitioned
  * into layers that represent a proper hierarchy.
  * We want to calculate now the relative position of the nodes inside
  * the layers. We have:
  *
  *    1)  The array layer contains all visible nodes in the TSUCC lists.
- *        They are distributed at the layer[i] lists and connected by the 
+ *        They are distributed at the layer[i] lists and connected by the
  *        TSUCC list to allow to traverse the nodes of one layer[i].
  *        TANZ(layer[i])= 0.
  *        The hierarchy in layer is proper.
@@ -38,39 +38,39 @@
  *    3)  All pot. visible edges are in the lists edgelist or tmpedgelist.
  *        Visible edges can be detected by the EINVISIBLE flag (==0) in these
  *        lists. Note: invisible edges may also be in edgelist or tmpedgelist.
- *        An edge is visible iff 
- *		   a) it is used in the adjacency lists.
- *	  	or b) it is a direct neigbour edge in NCONNECT(v) for 
- *		      some node v.
+ *        An edge is visible iff
+ *         a) it is used in the adjacency lists.
+ *      or b) it is a direct neigbour edge in NCONNECT(v) for
+ *            some node v.
  *    4)  maxdepth+1 is the maximal layer !!! NOT maxdepth !!!
- *    5)  NTIEFE(node) is filled for all nodes. 
+ *    5)  NTIEFE(node) is filled for all nodes.
  *        NCONNECT(node) is filled for nodes that have direct neighbours
- *        in the layout. 
+ *        in the layout.
  *    7)  Reverted edges are marked with EART(e)='R'.
  *        Self loops don't anymore exist.
  *
  * The task here is to calculate the (x,y) coordinates of a tree
  * by a specialized layout algorithm.
- * Crossing reduction is not necessary, because the layout algoritm 
+ * Crossing reduction is not necessary, because the layout algoritm
  * implies no crossings.
  * After that, the layout must be prepared to enter step4_main, i.e.
  * the TPRED lists must be created, the nodes must be sorted according
  * to their position within the levels, etc.
  *
  * At the end, the situation is this:
- *    1)  The array layer contains all visible nodes. 
+ *    1)  The array layer contains all visible nodes.
  *        They are distributed at the layer[i] lists and connected by two
- *        lists TPRED and TSUCC to allow to traverse the nodes of one 
- *        layer[i] backwards and forwards. 
+ *        lists TPRED and TSUCC to allow to traverse the nodes of one
+ *        layer[i] backwards and forwards.
  *    2)  Note that the nodes reacheable via forward connections are now
- *	  in the TSUCC and TPRED lists, too.
- *	  TANZ(layer[i]) is the number of nodes in layer[i].
+ *    in the TSUCC and TPRED lists, too.
+ *    TANZ(layer[i]) is the number of nodes in layer[i].
  *    3)  The hierarchy in layer is proper.
  *    4)  nodelist, labellist and dummylist are not changed.
  *    5)  All pot. visible edges are in the lists edgelist or tmpedgelist,
- *	  same as before.
+ *    same as before.
  *    6)  maxindeg and maxoutdeg are upper estimations of NINDEG and
- *	  NOUTDEG of nodes.
+ *    NOUTDEG of nodes.
  *    7)  maxdepth+1 is the maximal layer !!! NOT maxdepth !!!
  *    8)  NTIEFE(node) is filled for all nodes. NINDEG and NOUTDEG are
  *        filled. Forward connections are not counted.
@@ -78,9 +78,9 @@
  *    9)  Reverted edges are marked with EART(e)='R'.
  *        Self loops don't anymore exist.
  *    10) NPOS(v) gives the horizontal position of a node inside the
- *	  layer. Adjacency edges are sorted according to these NPOS
- *	  values. The ordering inside a layer is such that the number
- *	  of cossings is 0.
+ *    layer. Adjacency edges are sorted according to these NPOS
+ *    values. The ordering inside a layer is such that the number
+ *    of cossings is 0.
  *    11) NSUCCL(v) and NSUCCR(v) are the leftest and rightest successor
  *        edge of v, and NPREDL(v) and NPREDR(v) the leftest and rightest
  *        predecessor edge.
@@ -92,7 +92,7 @@
  *
  * This file provides the following functions:
  * ------------------------------------------
- * tree_main		Main routine to produce the tree layout.
+ * tree_main        Main routine to produce the tree layout.
  *
  *
  ************************************************************************/
@@ -115,20 +115,20 @@
  * ----------
  */
 
-static int 	is_tree		_PP((void));
-static int 	is_shared	_PP((GNODE v));
-static void 	calc_degree	_PP((void));
-static void 	create_tpred_lists 	_PP((void));
-static void 	sort_tsucc_and_tpred 	_PP((void));
-static  int 	compare_xpos 	   	_PP((const GNODE *a, const GNODE *b));
+static int  is_tree     _PP((void));
+static int  is_shared   _PP((GNODE v));
+static void     calc_degree _PP((void));
+static void     create_tpred_lists  _PP((void));
+static void     sort_tsucc_and_tpred    _PP((void));
+static  int     compare_xpos        _PP((const GNODE *a, const GNODE *b));
 
-static void	tree_layout		_PP((void));
-static int 	find_position		_PP((GNODE v,int l));
+static void tree_layout     _PP((void));
+static int  find_position       _PP((GNODE v,int l));
 
-static void 	correct_position	_PP((GNODE conn,GNODE v));
-static int 	min_x_in_tree		_PP((GNODE v,GNODE conn));
-static int 	max_x_in_tree		_PP((GNODE v,int depth));
-static void 	correct_xpos		_PP((GNODE v,int diff));
+static void     correct_position    _PP((GNODE conn,GNODE v));
+static int  min_x_in_tree       _PP((GNODE v,GNODE conn));
+static int  max_x_in_tree       _PP((GNODE v,int depth));
+static void     correct_xpos        _PP((GNODE v,int diff));
 
 
 /* Global variables
@@ -138,7 +138,7 @@ static void 	correct_xpos		_PP((GNODE v,int diff));
 /* array where we can temporary sort the nodes of one level.
  */
 
-static GNODE  	*sort_array = NULL;
+static GNODE    *sort_array = NULL;
 
 /* Level where we start to spread the tree.
  */
@@ -163,77 +163,77 @@ static int tree_factor2;
 
 int tree_main(void)
 {
-	start_time();
-	debugmessage("tree_main","");
-	assert((layer));
+    start_time();
+    debugmessage("tree_main","");
+    assert((layer));
 
-	if (tree_factor<0) tree_factor = -tree_factor;
-	if (tree_factor>1.0) {
-		tree_factor1 = 10;
-		tree_factor2 = (int)(10.0/tree_factor);
-	}
-	else {
-		tree_factor1 = (int)(tree_factor*10.0);
-		tree_factor2 = 10;
-	}
-	if ((tree_factor1==0)||(tree_factor2==0)) {
-		tree_factor = 0.5;
-		tree_factor1 = 1;
-		tree_factor2 = 2;
-	}
+    if (tree_factor<0) tree_factor = -tree_factor;
+    if (tree_factor>1.0) {
+        tree_factor1 = 10;
+        tree_factor2 = (int)(10.0/tree_factor);
+    }
+    else {
+        tree_factor1 = (int)(tree_factor*10.0);
+        tree_factor2 = 10;
+    }
+    if ((tree_factor1==0)||(tree_factor2==0)) {
+        tree_factor = 0.5;
+        tree_factor1 = 1;
+        tree_factor2 = 2;
+    }
 
-	gs_wait_message('T');
+    gs_wait_message('T');
 
-	/* Check whether it is a forest of trees */
+    /* Check whether it is a forest of trees */
 
-	if (!is_tree()) {
-		stop_time("tree_main");
-		return(0);
-	}
+    if (!is_tree()) {
+        stop_time("tree_main");
+        return(0);
+    }
 
-	gs_wait_message('T');
+    gs_wait_message('T');
 
-	calc_degree();
+    calc_degree();
 
-	/* Create the TPRED lists 
-	 * This also initializes max_nodes_per_layer.
-	 */
+    /* Create the TPRED lists
+     * This also initializes max_nodes_per_layer.
+     */
 
-	create_tpred_lists();
+    create_tpred_lists();
 
-	/* Calculate width and height of the nodes
-	 */
+    /* Calculate width and height of the nodes
+     */
 
-	calc_all_node_sizes();
+    calc_all_node_sizes();
 
-	/* Allocate the sort_array and the tpred_connections.
-	 */
+    /* Allocate the sort_array and the tpred_connections.
+     */
 
-	alloc_levelshift();  /* This allocates tpred_connections. */
-	sort_array = (GNODE *)tpred_connection1;
+    alloc_levelshift();  /* This allocates tpred_connections. */
+    sort_array = (GNODE *)tpred_connection1;
 
-	/* Layout the tree */
+    /* Layout the tree */
 
-	tree_layout();
+    tree_layout();
 
-	/*  Order the nodes within the levels according to their
-	 *  X-coordinate. This initializes also NPOS. 
-	 */
+    /*  Order the nodes within the levels according to their
+     *  X-coordinate. This initializes also NPOS.
+     */
 
-	sort_tsucc_and_tpred();
+    sort_tsucc_and_tpred();
 
-	/*  Order the adjacency lists of the nodes and initialize
-	 *  NPREDL, NPREDR, NSUCCL, NSUCCR.
-	 */
+    /*  Order the adjacency lists of the nodes and initialize
+     *  NPREDL, NPREDR, NSUCCL, NSUCCR.
+     */
 
-	gs_wait_message('T');
-	sort_all_adjacencies();
-	calc_all_ports(1);
+    gs_wait_message('T');
+    sort_all_adjacencies();
+    calc_all_ports(1);
 
-	nr_crossings = 0;
+    nr_crossings = 0;
 
-	stop_time("tree_main");
-	return(TREE_LAYOUT);
+    stop_time("tree_main");
+    return(TREE_LAYOUT);
 } /* tree_main */
 
 
@@ -249,39 +249,39 @@ int tree_main(void)
  */
 static int is_tree(void)
 {
-	int i;
-	int result;
-	int fresh;
+    int i;
+    int result;
+    int fresh;
 
-	GNODE v;
-	GNLIST li;
-	CONNECT c;
+    GNODE v;
+    GNLIST li;
+    CONNECT c;
 
-	debugmessage("is_tree","");
+    debugmessage("is_tree","");
 
-	for (v = nodelist; v; v = NNEXT(v)) { NMARK(v) = 1; }
-	for (v = labellist; v; v = NNEXT(v)) { NMARK(v) = 1; }
-	for (v = dummylist; v; v = NNEXT(v)) { NMARK(v) = 1; }
+    for (v = nodelist; v; v = NNEXT(v)) { NMARK(v) = 1; }
+    for (v = labellist; v; v = NNEXT(v)) { NMARK(v) = 1; }
+    for (v = dummylist; v; v = NNEXT(v)) { NMARK(v) = 1; }
 
-	/* Check whether a node is shared */
+    /* Check whether a node is shared */
 
-	for (i=0; i<= maxdepth+1; i++) {
-		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
-		{
-			v = GNNODE(li);
-			fresh = NMARK(v);
-			c = NCONNECT(v);
-			if (c) {
-				if (backward_connection1(c)) fresh = 0;
-				if (backward_connection2(c)) fresh = 0;
-			}
-			result = 0;
-			if (fresh) result = is_shared(v);
-			if (result) return(0);
-		}
-	}
+    for (i=0; i<= maxdepth+1; i++) {
+        for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+        {
+            v = GNNODE(li);
+            fresh = NMARK(v);
+            c = NCONNECT(v);
+            if (c) {
+                if (backward_connection1(c)) fresh = 0;
+                if (backward_connection2(c)) fresh = 0;
+            }
+            result = 0;
+            if (fresh) result = is_shared(v);
+            if (result) return(0);
+        }
+    }
 
-	return(1);
+    return(1);
 }
 
 
@@ -291,40 +291,40 @@ static int is_tree(void)
  */
 static int is_shared(GNODE v)
 {
-	int i;
-	GEDGE e;
-	CONNECT c;
+    int i;
+    GEDGE e;
+    CONNECT c;
 
-	debugmessage("is_shared","");
+    debugmessage("is_shared","");
 
-	if (!NMARK(v)) return(1);
+    if (!NMARK(v)) return(1);
 
-	NMARK(v) = 0;
+    NMARK(v) = 0;
 
-	i = 0;
-	for (e = FirstPred(v); e; e = NextPred(e))
-	{
-		i++;
-	}
-	if (i>1) return(1);
+    i = 0;
+    for (e = FirstPred(v); e; e = NextPred(e))
+    {
+        i++;
+    }
+    if (i>1) return(1);
 
-	i = 0;
-	for (e = FirstSucc(v); e; e = NextSucc(e))
-	{
-		i++;
-		if (is_shared(ETARGET(e))) return(1);
-	}
+    i = 0;
+    for (e = FirstSucc(v); e; e = NextSucc(e))
+    {
+        i++;
+        if (is_shared(ETARGET(e))) return(1);
+    }
 
-	c = NCONNECT(v);
-	if (c) {
-		if (forward_connection1(c)) {
-			if (is_shared(EEND(CEDGE(c)))) return(1);
-		}
-		if (forward_connection2(c)) {
-			if (is_shared(EEND(CEDGE2(c)))) return(1);
-		}
-	}
-	return(0);
+    c = NCONNECT(v);
+    if (c) {
+        if (forward_connection1(c)) {
+            if (is_shared(EEND(CEDGE(c)))) return(1);
+        }
+        if (forward_connection2(c)) {
+            if (is_shared(EEND(CEDGE2(c)))) return(1);
+        }
+    }
+    return(0);
 }
 
 
@@ -334,25 +334,25 @@ static int is_shared(GNODE v)
 
 static void calc_degree(void)
 {
-	int i, j;
-	GNODE v;
-	GNLIST li;
-	int mymaxoutdeg;
+    int i, j;
+    GNODE v;
+    GNLIST li;
+    int mymaxoutdeg;
 
-	debugmessage("calc_degree","");
+    debugmessage("calc_degree","");
 
-	mymaxoutdeg = 0;
-	for (i=0; i<= maxdepth+1; i++) {
-		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
-		{
-			v = GNNODE(li);
-			assert(get_node_preds_num(v) <= 1);
-			j = get_node_succs_num(v);
-			if (j>mymaxoutdeg) mymaxoutdeg = j;
-		}
-	}
-	maxindeg = 1;
-	maxoutdeg = mymaxoutdeg;
+    mymaxoutdeg = 0;
+    for (i=0; i<= maxdepth+1; i++) {
+        for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+        {
+            v = GNNODE(li);
+            assert(get_node_preds_num(v) <= 1);
+            j = get_node_succs_num(v);
+            if (j>mymaxoutdeg) mymaxoutdeg = j;
+        }
+    }
+    maxindeg = 1;
+    maxoutdeg = mymaxoutdeg;
 }
 
 
@@ -362,26 +362,26 @@ static void calc_degree(void)
 
 static void create_tpred_lists(void)
 {
-	int i, k;
-	GNLIST h1, h2;
+    int i, k;
+    GNLIST h1, h2;
 
-	debugmessage("create_tpred_lists","");
+    debugmessage("create_tpred_lists","");
 
-	max_nodes_per_layer = 0;
-	for (i=0; i<=maxdepth+1; i++) {
-		TPRED(layer[i]) = NULL;
-		k = 0;
-		for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
-		{
-			k++;
-			h2 = tmpnodelist_alloc();
-			GNNEXT(h2) = TPRED(layer[i]);
-			TPRED(layer[i]) = h2;
-			GNNODE(h2) = GNNODE(h1);
-		}
-		TANZ(layer[i]) = k;
-		if (k>max_nodes_per_layer) max_nodes_per_layer = k;
-	}
+    max_nodes_per_layer = 0;
+    for (i=0; i<=maxdepth+1; i++) {
+        TPRED(layer[i]) = NULL;
+        k = 0;
+        for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
+        {
+            k++;
+            h2 = tmpnodelist_alloc();
+            GNNEXT(h2) = TPRED(layer[i]);
+            TPRED(layer[i]) = h2;
+            GNNODE(h2) = GNNODE(h1);
+        }
+        TANZ(layer[i]) = k;
+        if (k>max_nodes_per_layer) max_nodes_per_layer = k;
+    }
 }
 
 
@@ -389,55 +389,55 @@ static void create_tpred_lists(void)
 /*  Sort the layers according to the X-Postion                        */
 /*--------------------------------------------------------------------*/
 
-/* This initializes also NPOS. 
+/* This initializes also NPOS.
  */
 static void sort_tsucc_and_tpred(void)
 {
-	int i, k, max;
-	GNLIST h1;
+    int i, k, max;
+    GNLIST h1;
 
-	debugmessage("sort_tsucc_and_tpred","");
+    debugmessage("sort_tsucc_and_tpred","");
 
-	for (i=0; i<=maxdepth+1; i++) {
-		k = 0;
-		for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
-		{
-			sort_array[k++] = GNNODE(h1);
-		}
-		max = k;
+    for (i=0; i<=maxdepth+1; i++) {
+        k = 0;
+        for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
+        {
+            sort_array[k++] = GNNODE(h1);
+        }
+        max = k;
 
-		if (k) {
-			qsort(sort_array, k, sizeof(GNODE),
-				(int (*) (const void *, const void *))compare_xpos);
-		}
+        if (k) {
+            qsort(sort_array, k, sizeof(GNODE),
+                (int (*) (const void *, const void *))compare_xpos);
+        }
 
-		k = 0;
-		for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
-		{
-			NPOS(sort_array[k]) = k;
-			GNNODE(h1) = sort_array[k++];
-		}
-		assert((k==max));
-		k--;
-		for (h1 = TPRED(layer[i]); h1; h1 = GNNEXT(h1))
-		{
-			GNNODE(h1) = sort_array[k--];
-		}
-		assert((k== -1));
-	}
+        k = 0;
+        for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
+        {
+            NPOS(sort_array[k]) = k;
+            GNNODE(h1) = sort_array[k++];
+        }
+        assert((k==max));
+        k--;
+        for (h1 = TPRED(layer[i]); h1; h1 = GNNEXT(h1))
+        {
+            GNNODE(h1) = sort_array[k--];
+        }
+        assert((k== -1));
+    }
 } /* sort_tsucc_and_tpred */
 
 
 
-/*  Compare function for sorting according NX 
+/*  Compare function for sorting according NX
  *  -----------------------------------------
  *  returns 1 if NX(*a) > NX(*b), 0 if equal, -1 otherwise.
  */
 static int compare_xpos(const GNODE *a, const GNODE *b)
-{ 
-	if (NX(*a) > NX(*b)) return(1);
-	if (NX(*a) < NX(*b)) return(-1);
-	return(0);
+{
+    if (NX(*a) > NX(*b)) return(1);
+    if (NX(*a) < NX(*b)) return(-1);
+    return(0);
 }
 
 
@@ -450,59 +450,59 @@ static int compare_xpos(const GNODE *a, const GNODE *b)
  */
 void sort_all_adjacencies(void)
 {
-	int i;
-	GNLIST h1;
-	GEDGE e;
+    int i;
+    GNLIST h1;
+    GEDGE e;
 
-	debugmessage("sort_all_adjacencies","");
+    debugmessage("sort_all_adjacencies","");
 
-	for (i=0; i<=maxdepth+1; i++) {
+    for (i=0; i<=maxdepth+1; i++) {
 #if 0
-		if (i>0) {
-			for (h1 = TSUCC(layer[i-1]); h1; h1 = GNNEXT(h1))
-			{
-				NTMPADJ(GNNODE(h1)) = NSUCC(GNNODE(h1));
-			}
-		}
-		if (i<maxdepth+1) {
-			for (h1 = TSUCC(layer[i+1]); h1; h1 = GNNEXT(h1))
-			{
-				NTMPADJ(GNNODE(h1)) = NPRED(GNNODE(h1));
-			}
-		}
-		for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
-		{
-			a = NPRED(GNNODE(h1));
-			while (a) {
-				assert((NTMPADJ(SOURCE(a))));
-				AKANTE(NTMPADJ(SOURCE(a))) = AKANTE(a);
-				NTMPADJ(SOURCE(a)) = ANEXT(NTMPADJ(SOURCE(a)));
-				a = ANEXT(a);
-			}
-			a = NSUCC(GNNODE(h1));
-			while (a) {
-				assert((NTMPADJ(TARGET(a))));
-				AKANTE(NTMPADJ(TARGET(a))) = AKANTE(a);
-				NTMPADJ(TARGET(a)) = ANEXT(NTMPADJ(TARGET(a)));
-				a = ANEXT(a);
-			}
-		}
+        if (i>0) {
+            for (h1 = TSUCC(layer[i-1]); h1; h1 = GNNEXT(h1))
+            {
+                NTMPADJ(GNNODE(h1)) = NSUCC(GNNODE(h1));
+            }
+        }
+        if (i<maxdepth+1) {
+            for (h1 = TSUCC(layer[i+1]); h1; h1 = GNNEXT(h1))
+            {
+                NTMPADJ(GNNODE(h1)) = NPRED(GNNODE(h1));
+            }
+        }
+        for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
+        {
+            a = NPRED(GNNODE(h1));
+            while (a) {
+                assert((NTMPADJ(SOURCE(a))));
+                AKANTE(NTMPADJ(SOURCE(a))) = AKANTE(a);
+                NTMPADJ(SOURCE(a)) = ANEXT(NTMPADJ(SOURCE(a)));
+                a = ANEXT(a);
+            }
+            a = NSUCC(GNNODE(h1));
+            while (a) {
+                assert((NTMPADJ(TARGET(a))));
+                AKANTE(NTMPADJ(TARGET(a))) = AKANTE(a);
+                NTMPADJ(TARGET(a)) = ANEXT(NTMPADJ(TARGET(a)));
+                a = ANEXT(a);
+            }
+        }
 #else
-		for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
-		{
-			if (i == 0)          assert(!FirstPred(GNNODE(h1)));
-			if (i == maxdepth+1) assert(!FirstSucc(GNNODE(h1)));
-			for (e = FirstPred(GNNODE(h1)); e; e = NextPred(e))
-			{
-				relink_node_edge_as_last(ESOURCE(e), e, GD_SUCC);
-			}
-			for (e = FirstSucc(GNNODE(h1)); e; e = NextSucc(e))
-			{
-				relink_node_edge_as_last(ETARGET(e), e, GD_PRED);
-			}
-		}
+        for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
+        {
+            if (i == 0)          assert(!FirstPred(GNNODE(h1)));
+            if (i == maxdepth+1) assert(!FirstSucc(GNNODE(h1)));
+            for (e = FirstPred(GNNODE(h1)); e; e = NextPred(e))
+            {
+                relink_node_edge_as_last(ESOURCE(e), e, GD_SUCC);
+            }
+            for (e = FirstSucc(GNNODE(h1)); e; e = NextSucc(e))
+            {
+                relink_node_edge_as_last(ETARGET(e), e, GD_PRED);
+            }
+        }
 #endif
-	}
+    }
 } /* sort_all_adjacencies */
 
 
@@ -520,82 +520,82 @@ static int horder_warn; /* 1 if the horder-warning was already printed */
 
 static void tree_layout(void)
 {
-	int actypos;
-	int maxboxheight;
-	int i, fresh;
-	GNLIST li;
-	GNODE v;
-	CONNECT c;
+    int actypos;
+    int maxboxheight;
+    int i, fresh;
+    GNLIST li;
+    GNODE v;
+    CONNECT c;
 
-	debugmessage("tree_layout","");
+    debugmessage("tree_layout","");
 
-	horder_warn = 0;
+    horder_warn = 0;
 
-	/* First, check the layout factors */
+    /* First, check the layout factors */
 
-	if (G_yspace<5)  G_yspace=5;
-	if (G_xspace<5)  G_xspace=5;
-	if (G_dspace==0) {
-		if (G_spline) G_dspace = 4*G_xspace/5;
-		else          G_dspace = G_xspace/2;
-	}
-   
-	if (G_flat_factor<1)   G_flat_factor = 1;
-	if (G_flat_factor>100) G_flat_factor = 100;
-	
-	/* Now calculate the y positions */
+    if (G_yspace<5)  G_yspace=5;
+    if (G_xspace<5)  G_xspace=5;
+    if (G_dspace==0) {
+        if (G_spline) G_dspace = 4*G_xspace/5;
+        else          G_dspace = G_xspace/2;
+    }
 
-	actypos = yralign(G_ybase);
+    if (G_flat_factor<1)   G_flat_factor = 1;
+    if (G_flat_factor>100) G_flat_factor = 100;
 
-	for (i=0; i<=maxdepth+1; i++) {
-		TACTX(layer[i]) = G_xbase;
-		maxboxheight = 0;
-		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
-		{
-			NY(GNNODE(li))   = actypos;
-			if (maxboxheight < NHEIGHT(GNNODE(li)))
-				maxboxheight = NHEIGHT(GNNODE(li));
-		}	
-		if (G_yalign==AL_CENTER) {
-			for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
-			{
-				NY(GNNODE(li)) += (maxboxheight-
-						      NHEIGHT(GNNODE(li)))/2;
-			}
-		}
-		else if (G_yalign==AL_BOTTOM) {
-			for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
-			{
-				NY(GNNODE(li)) += (maxboxheight-
-						      NHEIGHT(GNNODE(li)));
-			}
-		}
-		actypos += (maxboxheight + G_yspace);
-		actypos = yralign(actypos);
-	}
+    /* Now calculate the y positions */
 
-	for (v = nodelist; v; v = NNEXT(v)) { NMARK(v) = 1; }
-	for (v = labellist; v; v = NNEXT(v)) { NMARK(v) = 1; }
-	for (v = dummylist; v; v = NNEXT(v)) { NMARK(v) = 1; }
+    actypos = yralign(G_ybase);
 
-	/* Now the real tree layout */
+    for (i=0; i<=maxdepth+1; i++) {
+        TACTX(layer[i]) = G_xbase;
+        maxboxheight = 0;
+        for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+        {
+            NY(GNNODE(li))   = actypos;
+            if (maxboxheight < NHEIGHT(GNNODE(li)))
+                maxboxheight = NHEIGHT(GNNODE(li));
+        }
+        if (G_yalign==AL_CENTER) {
+            for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+            {
+                NY(GNNODE(li)) += (maxboxheight-
+                              NHEIGHT(GNNODE(li)))/2;
+            }
+        }
+        else if (G_yalign==AL_BOTTOM) {
+            for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+            {
+                NY(GNNODE(li)) += (maxboxheight-
+                              NHEIGHT(GNNODE(li)));
+            }
+        }
+        actypos += (maxboxheight + G_yspace);
+        actypos = yralign(actypos);
+    }
 
-	for (i=0; i<= maxdepth+1; i++) {
-		for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
-		{
-			v = GNNODE(li);
-			fresh = NMARK(v);
-			c = NCONNECT(v);
-			if (c) {
-				if (backward_connection1(c)) fresh = 0;
-				if (backward_connection2(c)) fresh = 0;
-			}
-			if (fresh) {
-				gs_wait_message('T');
-				(void)find_position(v, G_xbase+NWIDTH(v)/2);
-			}
-		}
-	}
+    for (v = nodelist; v; v = NNEXT(v)) { NMARK(v) = 1; }
+    for (v = labellist; v; v = NNEXT(v)) { NMARK(v) = 1; }
+    for (v = dummylist; v; v = NNEXT(v)) { NMARK(v) = 1; }
+
+    /* Now the real tree layout */
+
+    for (i=0; i<= maxdepth+1; i++) {
+        for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+        {
+            v = GNNODE(li);
+            fresh = NMARK(v);
+            c = NCONNECT(v);
+            if (c) {
+                if (backward_connection1(c)) fresh = 0;
+                if (backward_connection2(c)) fresh = 0;
+            }
+            if (fresh) {
+                gs_wait_message('T');
+                (void)find_position(v, G_xbase+NWIDTH(v)/2);
+            }
+        }
+    }
 } /* tree_layout */
 
 
@@ -606,221 +606,221 @@ static void tree_layout(void)
  */
 static int find_position(GNODE v, int leftest_pos)
 {
-	int xpos, minpos, maxpos, l, num, i;
-	GEDGE e;
-	int minhorder, maxhorder;
-	GNODE w, actl, actr, actn;
-	GNODE conn1, conn2, leftconn;
-	CONNECT c;
-	int outdeg = get_node_succs_num(v);
+    int xpos, minpos, maxpos, l, num, i;
+    GEDGE e;
+    int minhorder, maxhorder;
+    GNODE w, actl, actr, actn;
+    GNODE conn1, conn2, leftconn;
+    CONNECT c;
+    int outdeg = get_node_succs_num(v);
 
-	debugmessage("find_position","");
+    debugmessage("find_position","");
 
-	if (leftest_pos<0) leftest_pos = 0;
-	if (!v) return(leftest_pos);
-	xpos = leftest_pos;
+    if (leftest_pos<0) leftest_pos = 0;
+    if (!v) return(leftest_pos);
+    xpos = leftest_pos;
 
-	NMARK(v) = 0;
-	if ((NHORDER(v)!= -1)&&(!horder_warn)) {
-		horder_warn = 1;
-		if (!silent) {
-			FPRINTF(stderr,"Note: On tree layout ");
-			FPRINTF(stderr,"the attribute `horizontal_order' ");
-			FPRINTF(stderr,"sorts only the child nodes\n");
-			FPRINTF(stderr,"of a node locally, ");
-			FPRINTF(stderr,"but not the whole layer.");
-			FPRINTF(stderr,"\n");
-		}
-	}
+    NMARK(v) = 0;
+    if ((NHORDER(v)!= -1)&&(!horder_warn)) {
+        horder_warn = 1;
+        if (!silent) {
+            FPRINTF(stderr,"Note: On tree layout ");
+            FPRINTF(stderr,"the attribute `horizontal_order' ");
+            FPRINTF(stderr,"sorts only the child nodes\n");
+            FPRINTF(stderr,"of a node locally, ");
+            FPRINTF(stderr,"but not the whole layer.");
+            FPRINTF(stderr,"\n");
+        }
+    }
 
-	l = NTIEFE(v);
+    l = NTIEFE(v);
 
-	conn1 = conn2 = 0;
-	c = NCONNECT(v);
-	if (c) {
-		if (forward_connection1(c)) { conn1 = EEND(CEDGE(c)); }
-		if (forward_connection2(c)) { conn2 = EEND(CEDGE2(c)); }
-	}
+    conn1 = conn2 = 0;
+    c = NCONNECT(v);
+    if (c) {
+        if (forward_connection1(c)) { conn1 = EEND(CEDGE(c)); }
+        if (forward_connection2(c)) { conn2 = EEND(CEDGE2(c)); }
+    }
 
 
-	if (conn1 && conn2) {
+    if (conn1 && conn2) {
 
-		if (NHORDER(conn1)== -1) { 
-			if (NHORDER(conn2)<NHORDER(v)) 
-				find_position(conn2, 
-				   xpos-NWIDTH(v)/2-NWIDTH(conn2)/2-G_xspace);
-			else    find_position(conn1, 
-				   xpos-NWIDTH(v)/2-NWIDTH(conn1)/2-G_xspace);
-		}
-		else if (NHORDER(conn1)==NHORDER(v)) {
-			if (NHORDER(conn2)<NHORDER(v)) 
-				find_position(conn2, 
-				   xpos-NWIDTH(v)/2-NWIDTH(conn2)/2-G_xspace);
-			else    find_position(conn1, 
-				   xpos-NWIDTH(v)/2-NWIDTH(conn1)/2-G_xspace);
-		}
-		else if (NHORDER(conn1)<NHORDER(v)) {
-			find_position(conn1, 
-				   xpos-NWIDTH(v)/2-NWIDTH(conn1)/2-G_xspace);
-		}
-		else {  if (NHORDER(conn2)<NHORDER(conn1)) 
-				find_position(conn2, 
-				   xpos-NWIDTH(v)/2-NWIDTH(conn2)/2-G_xspace);
-			else    find_position(conn1, 
-				   xpos-NWIDTH(v)/2-NWIDTH(conn1)/2-G_xspace);
-		}	
+        if (NHORDER(conn1)== -1) {
+            if (NHORDER(conn2)<NHORDER(v))
+                find_position(conn2,
+                   xpos-NWIDTH(v)/2-NWIDTH(conn2)/2-G_xspace);
+            else    find_position(conn1,
+                   xpos-NWIDTH(v)/2-NWIDTH(conn1)/2-G_xspace);
+        }
+        else if (NHORDER(conn1)==NHORDER(v)) {
+            if (NHORDER(conn2)<NHORDER(v))
+                find_position(conn2,
+                   xpos-NWIDTH(v)/2-NWIDTH(conn2)/2-G_xspace);
+            else    find_position(conn1,
+                   xpos-NWIDTH(v)/2-NWIDTH(conn1)/2-G_xspace);
+        }
+        else if (NHORDER(conn1)<NHORDER(v)) {
+            find_position(conn1,
+                   xpos-NWIDTH(v)/2-NWIDTH(conn1)/2-G_xspace);
+        }
+        else {  if (NHORDER(conn2)<NHORDER(conn1))
+                find_position(conn2,
+                   xpos-NWIDTH(v)/2-NWIDTH(conn2)/2-G_xspace);
+            else    find_position(conn1,
+                   xpos-NWIDTH(v)/2-NWIDTH(conn1)/2-G_xspace);
+        }
 
-	}
-	else if (conn1) {
-		if (NHORDER(conn1)!= -1) {
-			if (NHORDER(conn1)<NHORDER(v)) {
-				find_position(conn1,
-				   xpos-NWIDTH(v)/2-NWIDTH(conn1)/2-G_xspace);
-			}
-		}
-	}
-	else if (conn2) {
-		if (NHORDER(conn2)!= -1) {
-			if (NHORDER(conn2)<NHORDER(v)) {
-				find_position(conn2, 
-				   xpos-NWIDTH(v)/2-NWIDTH(conn2)/2-G_xspace);
-			}
-		}
-	}
+    }
+    else if (conn1) {
+        if (NHORDER(conn1)!= -1) {
+            if (NHORDER(conn1)<NHORDER(v)) {
+                find_position(conn1,
+                   xpos-NWIDTH(v)/2-NWIDTH(conn1)/2-G_xspace);
+            }
+        }
+    }
+    else if (conn2) {
+        if (NHORDER(conn2)!= -1) {
+            if (NHORDER(conn2)<NHORDER(v)) {
+                find_position(conn2,
+                   xpos-NWIDTH(v)/2-NWIDTH(conn2)/2-G_xspace);
+            }
+        }
+    }
 
-	xpos = leftest_pos;
-	if (xpos-NWIDTH(v)/2 < TACTX(layer[l])) 
-		xpos = TACTX(layer[l]) + NWIDTH(v)/2;
+    xpos = leftest_pos;
+    if (xpos-NWIDTH(v)/2 < TACTX(layer[l]))
+        xpos = TACTX(layer[l]) + NWIDTH(v)/2;
 
-	switch (outdeg) {
-	case 0:
-		break;
-	case 1:
-		e = FirstSucc(v);
-		assert(e);
-		minpos = find_position(ETARGET(e), xpos);
-		xpos = minpos;
-		break;
-	default:
-		actl = NULL; 
-		minhorder = MAXINT;
-		for (e = FirstSucc(v); e; e = NextSucc(e))
-		{
-			w = ETARGET(e);
-			if (NHORDER(w)<minhorder) {
-				minhorder = NHORDER(w);
-				actl = w;
-			}
-		}
+    switch (outdeg) {
+    case 0:
+        break;
+    case 1:
+        e = FirstSucc(v);
+        assert(e);
+        minpos = find_position(ETARGET(e), xpos);
+        xpos = minpos;
+        break;
+    default:
+        actl = NULL;
+        minhorder = MAXINT;
+        for (e = FirstSucc(v); e; e = NextSucc(e))
+        {
+            w = ETARGET(e);
+            if (NHORDER(w)<minhorder) {
+                minhorder = NHORDER(w);
+                actl = w;
+            }
+        }
 
-		actr = NULL; 
-		maxhorder = MININT;
-		for (e = FirstSucc(v); e; e = NextSucc(e))
-		{
-			w = ETARGET(e);
-			if ((w!=actl) && (NHORDER(w)>maxhorder)) {
-				maxhorder = NHORDER(w);
-				actr = w;
-			}
-		}
+        actr = NULL;
+        maxhorder = MININT;
+        for (e = FirstSucc(v); e; e = NextSucc(e))
+        {
+            w = ETARGET(e);
+            if ((w!=actl) && (NHORDER(w)>maxhorder)) {
+                maxhorder = NHORDER(w);
+                actr = w;
+            }
+        }
 
-		assert((actl)&&(actr)&&(actl!=actr));
-		
-		num = 0;
-		for (e = FirstSucc(v); e; e = NextSucc(e))
-		{
-			num += NWIDTH(ETARGET(e));
-		}
-		num += ((outdeg-1) * G_xspace);
-		num -= NWIDTH(actl)/2;
-		num -= NWIDTH(actr)/2;
+        assert((actl)&&(actr)&&(actl!=actr));
 
-		minpos = find_position(actl, xpos - (num*tree_factor1)/tree_factor2); 
+        num = 0;
+        for (e = FirstSucc(v); e; e = NextSucc(e))
+        {
+            num += NWIDTH(ETARGET(e));
+        }
+        num += ((outdeg-1) * G_xspace);
+        num -= NWIDTH(actl)/2;
+        num -= NWIDTH(actr)/2;
 
-		actn = NULL;
-		minhorder = MAXINT;
-		for (e = FirstSucc(v); e; e = NextSucc(e))
-		{
-			w = ETARGET(e);
-			if ((w!=actr) && (NMARK(w)) && (NHORDER(w)<minhorder)) {
-				minhorder = NHORDER(w);
-				actn = w;
-			}
-		}
+        minpos = find_position(actl, xpos - (num*tree_factor1)/tree_factor2);
 
-		i = 2;
-		while (actn) {
-			if (l>spread_level) 
-				maxpos = find_position(actn,
-					minpos + (2*(i-1)*(xpos-minpos))/
-						(outdeg-1)); 
-			else {
-				if (i<=(outdeg+1)/2) 
-					maxpos = find_position(actn,
-					   minpos + (2*(i-1)*(xpos-minpos))/
-						(outdeg-1)); 
-				else
-					maxpos = find_position(actn, xpos);
-			}
-			if (l>spread_level) {
-				xpos = minpos + (outdeg-1)*(maxpos-minpos)/
-						(2*(i-1));
-				if (xpos<leftest_pos) xpos = leftest_pos;
-			}
-			i++;
-			actn = NULL;
-			minhorder = MAXINT;
-			for (e = FirstSucc(v); e; e = NextSucc(e))
-			{
-				w = ETARGET(e);
-				if (   (w!=actr) && (NMARK(w)) 
-				    && (NHORDER(w)<minhorder)) {
-					minhorder = NHORDER(w);
-					actn = w;
-				}
-			}
+        actn = NULL;
+        minhorder = MAXINT;
+        for (e = FirstSucc(v); e; e = NextSucc(e))
+        {
+            w = ETARGET(e);
+            if ((w!=actr) && (NMARK(w)) && (NHORDER(w)<minhorder)) {
+                minhorder = NHORDER(w);
+                actn = w;
+            }
+        }
 
-		}
-		if (l>spread_level) 
-			maxpos = find_position(actr,
-				minpos + (2*(i-1)*(xpos-minpos))/
-					(outdeg-1)); 
-		else {
-			if (i<=(outdeg+1)/2) 
-				maxpos = find_position(actr,
-				   minpos + (2*(i-1)*(xpos-minpos))/
-					(outdeg-1)); 
-			else
-				maxpos = find_position(actr, xpos);
-		}
-		if (l>spread_level) {
-			xpos = minpos + (outdeg-1)*(maxpos-minpos)/
-					(2*(i-1));
-			if (xpos<leftest_pos) xpos = leftest_pos;
-		}
-		
-		xpos = (minpos+maxpos)/2;
-		if (xpos-NWIDTH(v)/2 < TACTX(layer[l])) 
-			xpos = TACTX(layer[l]) + NWIDTH(v)/2;
-	}
+        i = 2;
+        while (actn) {
+            if (l>spread_level)
+                maxpos = find_position(actn,
+                    minpos + (2*(i-1)*(xpos-minpos))/
+                        (outdeg-1));
+            else {
+                if (i<=(outdeg+1)/2)
+                    maxpos = find_position(actn,
+                       minpos + (2*(i-1)*(xpos-minpos))/
+                        (outdeg-1));
+                else
+                    maxpos = find_position(actn, xpos);
+            }
+            if (l>spread_level) {
+                xpos = minpos + (outdeg-1)*(maxpos-minpos)/
+                        (2*(i-1));
+                if (xpos<leftest_pos) xpos = leftest_pos;
+            }
+            i++;
+            actn = NULL;
+            minhorder = MAXINT;
+            for (e = FirstSucc(v); e; e = NextSucc(e))
+            {
+                w = ETARGET(e);
+                if (   (w!=actr) && (NMARK(w))
+                    && (NHORDER(w)<minhorder)) {
+                    minhorder = NHORDER(w);
+                    actn = w;
+                }
+            }
 
-	NX(v) = xpos - NWIDTH(v)/2;
+        }
+        if (l>spread_level)
+            maxpos = find_position(actr,
+                minpos + (2*(i-1)*(xpos-minpos))/
+                    (outdeg-1));
+        else {
+            if (i<=(outdeg+1)/2)
+                maxpos = find_position(actr,
+                   minpos + (2*(i-1)*(xpos-minpos))/
+                    (outdeg-1));
+            else
+                maxpos = find_position(actr, xpos);
+        }
+        if (l>spread_level) {
+            xpos = minpos + (outdeg-1)*(maxpos-minpos)/
+                    (2*(i-1));
+            if (xpos<leftest_pos) xpos = leftest_pos;
+        }
 
-	if ((NWIDTH(v)==0) && (NHEIGHT(v)==0))
-		NX(v) = dxralign(NX(v)+NWIDTH(v)/2) - NWIDTH(v)/2;
-	else	NX(v) = xralign(NX(v) +NWIDTH(v)/2) - NWIDTH(v)/2;
-	TACTX(layer[l]) = NX(v) + NWIDTH(v) + G_xspace;
+        xpos = (minpos+maxpos)/2;
+        if (xpos-NWIDTH(v)/2 < TACTX(layer[l]))
+            xpos = TACTX(layer[l]) + NWIDTH(v)/2;
+    }
 
-	leftconn = 0;
-	if (conn1 && (!NMARK(conn1))) leftconn = conn1;
-	if (conn2 && (!NMARK(conn2))) leftconn = conn2;
+    NX(v) = xpos - NWIDTH(v)/2;
 
-	if (conn1 && (NMARK(conn1))) (void)find_position(conn1,TACTX(layer[l]));
-	if (conn2 && (NMARK(conn2))) (void)find_position(conn2,TACTX(layer[l]));
+    if ((NWIDTH(v)==0) && (NHEIGHT(v)==0))
+        NX(v) = dxralign(NX(v)+NWIDTH(v)/2) - NWIDTH(v)/2;
+    else    NX(v) = xralign(NX(v) +NWIDTH(v)/2) - NWIDTH(v)/2;
+    TACTX(layer[l]) = NX(v) + NWIDTH(v) + G_xspace;
 
-	if (leftconn) correct_position(leftconn,v);
+    leftconn = 0;
+    if (conn1 && (!NMARK(conn1))) leftconn = conn1;
+    if (conn2 && (!NMARK(conn2))) leftconn = conn2;
 
-	return(xpos);	
+    if (conn1 && (NMARK(conn1))) (void)find_position(conn1,TACTX(layer[l]));
+    if (conn2 && (NMARK(conn2))) (void)find_position(conn2,TACTX(layer[l]));
+
+    if (leftconn) correct_position(leftconn,v);
+
+    return(xpos);
 } /* find_position */
 
 
@@ -838,19 +838,19 @@ static int find_position(GNODE v, int leftest_pos)
 
 static void correct_position(GNODE conn, GNODE v)
 {
-	int i, depth, diff;
-	debugmessage("correct_position","");
+    int i, depth, diff;
+    debugmessage("correct_position","");
 
-	gs_wait_message('T');
-	assert((NX(v)>NX(conn)));
-	for (i=0; i<=maxdepth+1; i++) 
-		TMINX(layer[i]) = MAXINT; 
+    gs_wait_message('T');
+    assert((NX(v)>NX(conn)));
+    for (i=0; i<=maxdepth+1; i++)
+        TMINX(layer[i]) = MAXINT;
 
-	depth = min_x_in_tree(v, conn);
+    depth = min_x_in_tree(v, conn);
 
-	diff  = max_x_in_tree(conn, depth);
+    diff  = max_x_in_tree(conn, depth);
 
-	if (diff-G_xspace>0) correct_xpos(conn, xlalign(diff-G_xspace));
+    if (diff-G_xspace>0) correct_xpos(conn, xlalign(diff-G_xspace));
 }
 
 
@@ -862,35 +862,35 @@ static void correct_position(GNODE conn, GNODE v)
  */
 static int min_x_in_tree(GNODE v, GNODE conn)
 {
-	int maxlevel, l, h;
-	GEDGE e;
-	CONNECT c;
+    int maxlevel, l, h;
+    GEDGE e;
+    CONNECT c;
 
-	debugmessage("min_x_in_tree","");
+    debugmessage("min_x_in_tree","");
 
-	if (v==conn) return(0);
+    if (v==conn) return(0);
 
-	maxlevel = l = NTIEFE(v);
-	if (NX(v) < TMINX(layer[l])) TMINX(layer[l]) = NX(v);
+    maxlevel = l = NTIEFE(v);
+    if (NX(v) < TMINX(layer[l])) TMINX(layer[l]) = NX(v);
 
-	for (e = FirstSucc(v); e; e = NextSucc(e))
-	{
-		h = min_x_in_tree(ETARGET(e), conn);
-		if (h>maxlevel) maxlevel = h;	
-	}
+    for (e = FirstSucc(v); e; e = NextSucc(e))
+    {
+        h = min_x_in_tree(ETARGET(e), conn);
+        if (h>maxlevel) maxlevel = h;
+    }
 
-	c = NCONNECT(v);
-	if (c) {
-		if (forward_connection1(c)) {
-			h = min_x_in_tree(EEND(CEDGE(c)), conn);
-			if (h>maxlevel) maxlevel = h;
-		}
-		if (forward_connection2(c)) {
-			h = min_x_in_tree(EEND(CEDGE2(c)), conn);
-			if (h>maxlevel) maxlevel = h;
-		}
-	}
-	return(maxlevel);
+    c = NCONNECT(v);
+    if (c) {
+        if (forward_connection1(c)) {
+            h = min_x_in_tree(EEND(CEDGE(c)), conn);
+            if (h>maxlevel) maxlevel = h;
+        }
+        if (forward_connection2(c)) {
+            h = min_x_in_tree(EEND(CEDGE2(c)), conn);
+            if (h>maxlevel) maxlevel = h;
+        }
+    }
+    return(maxlevel);
 }
 
 
@@ -903,34 +903,34 @@ static int min_x_in_tree(GNODE v, GNODE conn)
  */
 static int max_x_in_tree(GNODE v, int depth)
 {
-	int mindiff, l, h;
-	GEDGE e;
-	CONNECT c;
+    int mindiff, l, h;
+    GEDGE e;
+    CONNECT c;
 
-	debugmessage("max_x_in_tree","");
+    debugmessage("max_x_in_tree","");
 
-	l = NTIEFE(v);
-	if (l>depth) return(0);
-	mindiff = TMINX(layer[l]) - NX(v) - NWIDTH(v);
+    l = NTIEFE(v);
+    if (l>depth) return(0);
+    mindiff = TMINX(layer[l]) - NX(v) - NWIDTH(v);
 
-	for (e = FirstSucc(v); e; e = NextSucc(e))
-	{
-		h = max_x_in_tree(ETARGET(e), depth);
-		if (h<mindiff) mindiff = h;
-	}
+    for (e = FirstSucc(v); e; e = NextSucc(e))
+    {
+        h = max_x_in_tree(ETARGET(e), depth);
+        if (h<mindiff) mindiff = h;
+    }
 
-	c = NCONNECT(v);
-	if (c) {
-		if (forward_connection1(c)) {
-			h = max_x_in_tree(EEND(CEDGE(c)), depth);
-			if (h<mindiff) mindiff = h;
-		}
-		if (forward_connection2(c)) {
-			h = max_x_in_tree(EEND(CEDGE2(c)), depth);
-			if (h<mindiff) mindiff = h;
-		}
-	}
-	return(mindiff);
+    c = NCONNECT(v);
+    if (c) {
+        if (forward_connection1(c)) {
+            h = max_x_in_tree(EEND(CEDGE(c)), depth);
+            if (h<mindiff) mindiff = h;
+        }
+        if (forward_connection2(c)) {
+            h = max_x_in_tree(EEND(CEDGE2(c)), depth);
+            if (h<mindiff) mindiff = h;
+        }
+    }
+    return(mindiff);
 }
 
 
@@ -939,26 +939,26 @@ static int max_x_in_tree(GNODE v, int depth)
  */
 static void correct_xpos(GNODE v, int diff)
 {
-	GEDGE e;
-	CONNECT c;
+    GEDGE e;
+    CONNECT c;
 
-	debugmessage("correc_xpos","");
+    debugmessage("correc_xpos","");
 
-	NX(v) += diff;
+    NX(v) += diff;
 
-	for (e = FirstSucc(v); e; e = NextSucc(e))
-	{
-		correct_xpos(ETARGET(e), diff);
-	}
+    for (e = FirstSucc(v); e; e = NextSucc(e))
+    {
+        correct_xpos(ETARGET(e), diff);
+    }
 
-	c = NCONNECT(v);
-	if (c) {
-		if (forward_connection1(c)) {
-			correct_xpos(EEND(CEDGE(c)), diff);
-		}
-		if (forward_connection2(c)) {
-			correct_xpos(EEND(CEDGE2(c)), diff);
-		}
-	}
+    c = NCONNECT(v);
+    if (c) {
+        if (forward_connection1(c)) {
+            correct_xpos(EEND(CEDGE(c)), diff);
+        }
+        if (forward_connection2(c)) {
+            correct_xpos(EEND(CEDGE2(c)), diff);
+        }
+    }
 }
 

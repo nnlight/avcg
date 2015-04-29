@@ -7,7 +7,7 @@
 /*   version:      1.00.00                                            */
 /*   creation:     17.9.1993                                          */
 /*   author:       I. Lemke  (...-Version 0.99.99)                    */
-/*                 G. Sander (Version 1.00.00-...)                    */  
+/*                 G. Sander (Version 1.00.00-...)                    */
 /*                 Universitaet des Saarlandes, 66041 Saarbruecken    */
 /*                 ESPRIT Project #5399 Compare                       */
 /*   description:  Folding and Unfolding of the graph                 */
@@ -18,9 +18,9 @@
 
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium 
+ *                               the Compare Consortium
  *
- *  This program and documentation is free software; you can redistribute 
+ *  This program and documentation is free software; you can redistribute
  *  it under the terms of the  GNU General Public License as published by
  *  the  Free Software Foundation;  either version 2  of the License,  or
  *  (at your option) any later version.
@@ -53,33 +53,33 @@
  * ----------------
  */
 
-extern GNLIST  	f_subgraphs;
-extern GNLIST  	uf_subgraphs;
-extern GNLIST  	foldstops;
-extern GNLIST  	foldstart; 
-extern GNLIST  	ufoldstart;
-extern int     	*hide_class;
+extern GNLIST   f_subgraphs;
+extern GNLIST   uf_subgraphs;
+extern GNLIST   foldstops;
+extern GNLIST   foldstart;
+extern GNLIST   ufoldstart;
+extern int      *hide_class;
 
 /* Prototypes
  * ----------
  */
 
-void	folding		 _PP((void));
+void    folding      _PP((void));
 
-void 	clear_folding_keepers _PP(());
-void 	add_sgfoldstart	      _PP((GNODE v));
-void 	add_sgunfoldstart     _PP((GNODE v));
-void 	add_foldstart	      _PP((GNODE v));
-void 	add_unfoldstart	      _PP((GNODE v));
-void 	add_foldstop	      _PP((GNODE v));
+void    clear_folding_keepers _PP(());
+void    add_sgfoldstart       _PP((GNODE v));
+void    add_sgunfoldstart     _PP((GNODE v));
+void    add_foldstart         _PP((GNODE v));
+void    add_unfoldstart       _PP((GNODE v));
+void    add_foldstop          _PP((GNODE v));
 
-void    create_adjedge	 _PP((GEDGE edge));
-void    delete_adjedge	 _PP((GEDGE edge));
-void	clear_hide_class _PP((void));
+void    create_adjedge   _PP((GEDGE edge));
+void    delete_adjedge   _PP((GEDGE edge));
+void    clear_hide_class _PP((void));
 GNODE    create_labelnode     _PP((GEDGE e));
 
 
 /*--------------------------------------------------------------------*/
 
-#endif /* FOLDING_H */ 
+#endif /* FOLDING_H */
 

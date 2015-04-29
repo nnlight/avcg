@@ -29,7 +29,7 @@
  */
 
 #ifndef GLOBALS_H
-#define	GLOBALS_H
+#define GLOBALS_H
 
 /*------------- Please change according to your configuration --------*/
 
@@ -115,7 +115,7 @@
 
 /* Prototype support */
 
-#define	_PP(x) x
+#define _PP(x) x
 
 
 /* Debugging messages */

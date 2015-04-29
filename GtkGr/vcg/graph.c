@@ -36,32 +36,32 @@ static unsigned next_marker_val[MARKER_COUNT];
 
 #if !VCG_USE_MACROS
 int forward_connection1(CONNECT c) {
-	GEDGE e = CEDGE(c);
-	if (e) {
-		assert(CTARGET(c) == ESTART(e) || CTARGET(c) == EEND(e));
-	}
-	return ((CEDGE(c))&& (EEND(CEDGE(c)) ==CTARGET(c)));
+    GEDGE e = CEDGE(c);
+    if (e) {
+        assert(CTARGET(c) == ESTART(e) || CTARGET(c) == EEND(e));
+    }
+    return ((CEDGE(c))&& (EEND(CEDGE(c)) ==CTARGET(c)));
 }
 int forward_connection2(CONNECT c) {
-	GEDGE e = CEDGE2(c);
-	if (e) {
-		assert(CTARGET2(c) == ESTART(e) || CTARGET2(c) == EEND(e));
-	}
-	return ((CEDGE2(c))&&(EEND(CEDGE2(c))==CTARGET2(c)));
+    GEDGE e = CEDGE2(c);
+    if (e) {
+        assert(CTARGET2(c) == ESTART(e) || CTARGET2(c) == EEND(e));
+    }
+    return ((CEDGE2(c))&&(EEND(CEDGE2(c))==CTARGET2(c)));
 }
 int backward_connection1(CONNECT c) {
-	GEDGE e = CEDGE(c);
-	if (e) {
-		assert(CTARGET(c) == ESTART(e) || CTARGET(c) == EEND(e));
-	}
-	return ((CEDGE(c))&& (EEND(CEDGE(c)) !=CTARGET(c)));
+    GEDGE e = CEDGE(c);
+    if (e) {
+        assert(CTARGET(c) == ESTART(e) || CTARGET(c) == EEND(e));
+    }
+    return ((CEDGE(c))&& (EEND(CEDGE(c)) !=CTARGET(c)));
 }
 int backward_connection2(CONNECT c) {
-	GEDGE e = CEDGE2(c);
-	if (e) {
-		assert(CTARGET2(c) == ESTART(e) || CTARGET2(c) == EEND(e));
-	}
-	return ((CEDGE2(c))&&(EEND(CEDGE2(c))!=CTARGET2(c)));
+    GEDGE e = CEDGE2(c);
+    if (e) {
+        assert(CTARGET2(c) == ESTART(e) || CTARGET2(c) == EEND(e));
+    }
+    return ((CEDGE2(c))&&(EEND(CEDGE2(c))!=CTARGET2(c)));
 }
 #endif /* !VCG_USE_MACROS */
 
@@ -294,7 +294,7 @@ static void link_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
     else                  NADJLAST(v,dir) = e;
     NADJFIRST(v,dir) = e;
 #else
-	/* добавляем в начало списка дуг (в направлении dir) */
+    /* добавляем в начало списка дуг (в направлении dir) */
     if (first)
     {
         EADJPREV(first, dir) = e;
@@ -327,7 +327,7 @@ static void link_node_edge_as_last(GNODE v, GEDGE e, Graphdir_t dir)
     assert(NADJFIRST(v, dir) != DEAD_GEDGE);
     assert(NADJLAST(v, dir) != DEAD_GEDGE);
 
-	/* добавляем в конец списка дуг (в направлении dir) */
+    /* добавляем в конец списка дуг (в направлении dir) */
     if (last)
     {
         EADJNEXT(last, dir) = e;
@@ -366,22 +366,22 @@ static void unlink_node_edge(GNODE v, GEDGE e, Graphdir_t dir)
     if (EADJNEXT(e, dir)) EADJPREV(EADJNEXT(e, dir),dir) = EADJPREV(e, dir);
     else                  NADJLAST(v, dir) = EADJPREV(e, dir);
 #else
-	if (prev)
-	{
+    if (prev)
+    {
         EADJNEXT(prev, dir) = next;
-	} else
-	{
+    } else
+    {
         assert(NADJFIRST(v, dir) == e);
         NADJFIRST(v, dir) = next;
-	}
-	if (next)
-	{
+    }
+    if (next)
+    {
         EADJPREV(next, dir) = prev;
-	} else
-	{
+    } else
+    {
         assert(NADJLAST(v, dir) == e);
         NADJLAST(v, dir) = prev;
-	}
+    }
 #endif
 
     EADJPREV(e, dir) = DEAD_GEDGE;
@@ -551,14 +551,14 @@ void delete_adjlist(ADJEDGE list)
 
 void print_node_succs(GNODE v)
 {
-	GEDGE e;
+    GEDGE e;
 
-	printf("===========\n");
-	for (e = FirstSucc(v); e; e = NextSucc(e))
-	{
-		printf("(%s) -> (%s)\n", NTITLE(ESOURCE(e)), NTITLE(ETARGET(e)));
-	}
-	printf("============\n");
+    printf("===========\n");
+    for (e = FirstSucc(v); e; e = NextSucc(e))
+    {
+        printf("(%s) -> (%s)\n", NTITLE(ESOURCE(e)), NTITLE(ETARGET(e)));
+    }
+    printf("============\n");
 }
 
 int get_node_succs_num(GNODE v)

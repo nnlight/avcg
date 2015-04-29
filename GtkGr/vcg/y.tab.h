@@ -518,7 +518,7 @@
 typedef union YYSTYPE
 {
 
- 
+
 	unsigned char      byte;
 	short int          snum;
 	unsigned short int usnum;

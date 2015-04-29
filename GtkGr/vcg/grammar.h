@@ -99,9 +99,9 @@ extern int yylex();
 #endif /* Y_TAB_H */
 
 
-/*------------*/ 
-/* Prototypes */ 
-/*------------*/ 
+/*------------*/
+/* Prototypes */
+/*------------*/
 
 char * ParseMalloc(int x);
 void ParseFree(void);
@@ -121,7 +121,7 @@ yysyntaxtree Revert(yysyntaxtree list);
 const char *ConstructorName(int i);
 int   ConstructorArity(int i);
 
- 
+
 /*-- end of standard tree construction interface ---------------------*/
 
 

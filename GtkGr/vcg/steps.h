@@ -1,5 +1,5 @@
 /* SCCS-info %W% %E% */
- 
+
 /*--------------------------------------------------------------------*/
 /*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
@@ -9,7 +9,7 @@
 /*   version:      1.00.00                                            */
 /*   creation:     10.4.1993                                          */
 /*   author:       I. Lemke  (...-Version 0.99.99)                    */
-/*                 G. Sander (Version 1.00.00-...)                    */  
+/*                 G. Sander (Version 1.00.00-...)                    */
 /*                 Universitaet des Saarlandes, 66041 Saarbruecken    */
 /*                 ESPRIT Project #5399 Compare                       */
 /*   description:  Readin and Layout steps                            */
@@ -22,9 +22,9 @@
 
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium 
+ *                               the Compare Consortium
  *
- *  This program and documentation is free software; you can redistribute 
+ *  This program and documentation is free software; you can redistribute
  *  it under the terms of the  GNU General Public License as published by
  *  the  Free Software Foundation;  either version 2  of the License,  or
  *  (at your option) any later version.
@@ -62,8 +62,8 @@
  *
  */
 
-#ifndef STEPS_H 
-#define STEPS_H 
+#ifndef STEPS_H
+#define STEPS_H
 
 /*--------------------------------------------------------------------*/
 
@@ -81,10 +81,10 @@ extern struct gnode foldnode;
 extern struct gedge foldedge;
 
 /* from step1.c */
-extern 	int     maxindeg;
-extern 	int     maxoutdeg; 
-extern	DEPTH 	*layer; 	/* This is an array ! */
-extern	int    	maxdepth;  
+extern  int     maxindeg;
+extern  int     maxoutdeg;
+extern  DEPTH   *layer;     /* This is an array ! */
+extern  int     maxdepth;
 
 /* from step2.c */
 extern int     max_nodes_per_layer;
@@ -119,37 +119,37 @@ extern double tree_factor;
  */
 
 /* from step0.c */
-void 	step0_main 		_PP((void));
-GNODE   search_visible_node	_PP((char *title));
-GNODE 	lookup_hashnode   	_PP((char *title));
+void    step0_main      _PP((void));
+GNODE   search_visible_node _PP((char *title));
+GNODE   lookup_hashnode     _PP((char *title));
 
 
 /* from step1.c */
 void    step1_main              _PP((void));
 GEDGE   revert_edge(GEDGE edge);
-void	calc_number_reversions _PP((void));
+void    calc_number_reversions _PP((void));
 void    prepare_back_edges     _PP((void));
 void    insert_anchor_edges     _PP((void));
-#ifdef DEBUG 
+#ifdef DEBUG
 void    db_output_graph         _PP((void));
 void    db_output_adjacencies   _PP((void));
-void	db_output_adjacency	_PP((GNODE node, int f));
-void    db_output_layer		_PP((void));
-void    db_output_vcglayer	_PP((char *fn));
-#endif 
+void    db_output_adjacency _PP((GNODE node, int f));
+void    db_output_layer     _PP((void));
+void    db_output_vcglayer  _PP((char *fn));
+#endif
 
 /* from step2.c */
 void    step2_main              _PP((void));
 #ifdef DEBUG
-void    db_output_all_layers  	_PP((void));
-void    db_output_tmp_layer	_PP((int i));
-int 	db_check_proper     	_PP((GNODE v,int level));
+void    db_output_all_layers    _PP((void));
+void    db_output_tmp_layer _PP((int i));
+int     db_check_proper         _PP((GNODE v,int level));
 #endif
 
 /* from step3.c */
 void    step3_main              _PP((void));
 void    calc_all_node_sizes     _PP((void));
-void 	alloc_levelshift	_PP((void));
+void    alloc_levelshift    _PP((void));
 
 
 /* from step4.c */
@@ -158,15 +158,15 @@ void    calc_all_ports          _PP((int xya));
 void    calc_node_ports         _PP((GNODE v, int xya));
 void    calc_edge_xy            _PP((GNODE v));
 void    calc_edgearrow          _PP((GNODE v));
-void 	calc_max_xy_pos		_PP((void));
-void	statistics		_PP((void));
+void    calc_max_xy_pos     _PP((void));
+void    statistics      _PP((void));
 
 /* from tree.c */
-int	tree_main		_PP((void));
+int tree_main       _PP((void));
 void sort_all_adjacencies();
 
 /* from prepare.c */
-void 	prepare_nodes		_PP((void));
+void    prepare_nodes       _PP((void));
 void    calc_node_size          _PP((GNODE v));
 
 /*--------------------------------------------------------------------*/

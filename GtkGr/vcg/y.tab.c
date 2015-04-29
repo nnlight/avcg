@@ -88,7 +88,7 @@ extern char *yytext;
                  x); \
     }
 #endif
- 
+
 
 #ifndef yylocate
 #define yylocate(x) (&(x))
@@ -604,7 +604,7 @@ extern char *yytext;
 typedef union YYSTYPE
 {
 
- 
+
 	unsigned char      byte;
 	short int          snum;
 	unsigned short int usnum;
@@ -4898,7 +4898,7 @@ int parse()
 
 	return (nr_errors);
 } /* parse */
- 
+
 
 
 

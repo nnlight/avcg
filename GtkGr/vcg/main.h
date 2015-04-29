@@ -18,9 +18,9 @@
 
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium 
+ *                               the Compare Consortium
  *
- *  This program and documentation is free software; you can redistribute 
+ *  This program and documentation is free software; you can redistribute
  *  it under the terms of the  GNU General Public License as published by
  *  the  Free Software Foundation;  either version 2  of the License,  or
  *  (at your option) any later version.
@@ -60,7 +60,7 @@ void gs_wait_message(int c);
 extern void Fatal_error(char *x, char *y);
 
 /*--------------------------------------------------------------------*/
- 
+
 #endif /* MAIN_H */
 
 

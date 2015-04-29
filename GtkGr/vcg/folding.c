@@ -27,7 +27,7 @@
  * graphlist contains the list of all invisible subgraph summary nodes.
  * nodelist  contains the list of all visible nodes.
  * edgelist  contains the list of all edges, visible or not.
- * temporary nodes and edges are given free, 
+ * temporary nodes and edges are given free,
  * i.e. tmpnodelist = tmpedgelist = NULL.
  * invis_nodes contains all nodes that are invisible because of a previous
  * edge class hiding.
@@ -35,31 +35,31 @@
  * hidden, because the adjacency lists still not exist (e.g. they are removed
  * just before folding).
  *
- * Note again (see also alloc.h): 
+ * Note again (see also alloc.h):
  *   Folded graphs have a summary node in nodelist and all nodes of this
  *   graphs outside nodelist.
  *   Unfolded graphs have the nodes in nodelist and the summary node in
  *   graphlist.
- *	NSGRAPH(r) is the list of nodes of subgraph r
- *	NROOT(n) = r if n is node of subgraph r
+ *  NSGRAPH(r) is the list of nodes of subgraph r
+ *  NROOT(n) = r if n is node of subgraph r
  *   Folded regions have a summary node in nodelist, and all nodes of
  *   this region outside nodelist.
- *	NREGREPL(r) is the start node of the region which has the summary 
- *		    node r.
- *	NREGION(r)  is the list of nodes of region r (except the start node)
- *	NREGROOT(n) = r if n is invisible and node of region r
+ *  NREGREPL(r) is the start node of the region which has the summary
+ *          node r.
+ *  NREGION(r)  is the list of nodes of region r (except the start node)
+ *  NREGROOT(n) = r if n is invisible and node of region r
  *
  * The task of the driver function `folding' is now to create the correct
  * adjacency lists by respecting new graph/region foldings or unfoldings
  * and hidden edge classes.
  *
  * The `folding keepers' are storages to remark which nodes must be folded
- * or unfolded. The function folding folds with respect to the folding 
+ * or unfolded. The function folding folds with respect to the folding
  * keepers. After that, it reinitializes the folding keepers.
  * The folding keepers DO NOT indicate which subgraphs or regions ARE
  * ACTUALLY FOLDED ! They indicate which actions must be done next.
  * The management of the array hide_class is different. It is initialized
- * once before reading the specification, and changed incrementally by 
+ * once before reading the specification, and changed incrementally by
  * actions. At every time point, it indicates which edge classes ARE hidden.
  *
  * After folding, the following invariants hold:
@@ -68,30 +68,30 @@
  *     More exactly: all visible nodes originated directly by the
  *     specification are in the nodelist, and all visible edge label nodes
  *     are in the labellist.
- *  3) All nodes from the nodelist that are invisible because of 
+ *  3) All nodes from the nodelist that are invisible because of
  *     edge class hiding are in the list invis_nodes.
- *  4) All potentially visible edges are in the lists edgelist or tmpedgelist. 
+ *  4) All potentially visible edges are in the lists edgelist or tmpedgelist.
  *     Visible edges can be detected by the EINVISIBLE flag (==0) in these
  *     lists. Note: invisible edges may also be in edgelist or tmpedgelist.
  *     Except the INVISIBLE flag, the edgelist IS NEVER CHANGED !!!
  *  5) An edge is visible iff it is used in the adjacency lists. For some
  *     edges, we create substeds; then, the substed is visible but the original
  *     edge is not visible.
- *  6) The locFlag is 1, if all visible nodes have positions (x,y).  
- * 
+ *  6) The locFlag is 1, if all visible nodes have positions (x,y).
+ *
  *
  * This file provides the following functions:
  * ------------------------------------------
- * add_sgfoldstart	add a start point to the subgraph folding keepers
- * add_foldstart	add a start point to the region folding keepers
- * add_foldstop 	add a stop point to the region folding keepers
- * clear_hide_class	reinitialize hide_class[] (the array indicating which
- *			edge classes are hidden)
- * folding		do all foldings and create the adjacency lists
- * create_adjedge	insert an edge into the adjacency lists of its source
- *			and target node.
- * delete_adjedge	delete an adjacency edge from source and target,
- *			i.e. make the edge invisible.
+ * add_sgfoldstart  add a start point to the subgraph folding keepers
+ * add_foldstart    add a start point to the region folding keepers
+ * add_foldstop     add a stop point to the region folding keepers
+ * clear_hide_class reinitialize hide_class[] (the array indicating which
+ *          edge classes are hidden)
+ * folding      do all foldings and create the adjacency lists
+ * create_adjedge   insert an edge into the adjacency lists of its source
+ *          and target node.
+ * delete_adjedge   delete an adjacency edge from source and target,
+ *          i.e. make the edge invisible.
  ************************************************************************/
 
 #include <stdio.h>
@@ -111,40 +111,40 @@
  * ----------
  */
 
-static void 	revert_subgraph  _PP((GNODE v));  
-static int	foldstop_reached _PP((GNODE v));
+static void     revert_subgraph  _PP((GNODE v));
+static int  foldstop_reached _PP((GNODE v));
 
-static void	delete_node	_PP((GNODE v,int k));
-static void	insert_node	_PP((GNODE v,int k));
+static void delete_node _PP((GNODE v,int k));
+static void insert_node _PP((GNODE v,int k));
 
-static void	delete_sgnodes	_PP((GNODE u));
-static void	fold_sg 	_PP((GNODE u));
-static void	unfold_sg	_PP((GNODE u));
- 
-static void	refresh_all_nodes	_PP((GNODE v));
-static void	refresh 		_PP((void));
-static void 	sort_all_nodes		_PP((void));
-static int      compare_ndfs		_PP((const GNODE *a,const GNODE *b));
+static void delete_sgnodes  _PP((GNODE u));
+static void fold_sg     _PP((GNODE u));
+static void unfold_sg   _PP((GNODE u));
 
-static long	no_dfs			_PP((GNODE n));
-static long	no_indeg		_PP((GNODE n));
-static long	no_outdeg		_PP((GNODE n));
-static long	no_degree		_PP((GNODE n));
+static void refresh_all_nodes   _PP((GNODE v));
+static void refresh         _PP((void));
+static void     sort_all_nodes      _PP((void));
+static int      compare_ndfs        _PP((const GNODE *a,const GNODE *b));
 
-static void	create_adjacencies	_PP((void));
-static void	create_lab_adjacencies	_PP((void));
-static void	adapt_labelpos		_PP((GNODE v,GEDGE e));
-static GNODE	search_visible		_PP((GNODE v));
-static GEDGE	substed_edge		_PP((GEDGE e));
+static long no_dfs          _PP((GNODE n));
+static long no_indeg        _PP((GNODE n));
+static long no_outdeg       _PP((GNODE n));
+static long no_degree       _PP((GNODE n));
 
-static void	unfold_region	_PP((GNODE n));
-static void	fold_region	_PP((GNODE n, int k));
-static void	recursive_fold	_PP((GNODE v, GNODE n, int k));
+static void create_adjacencies  _PP((void));
+static void create_lab_adjacencies  _PP((void));
+static void adapt_labelpos      _PP((GNODE v,GEDGE e));
+static GNODE    search_visible      _PP((GNODE v));
+static GEDGE    substed_edge        _PP((GEDGE e));
 
-static void	hide_edge_classes _PP((void));
+static void unfold_region   _PP((GNODE n));
+static void fold_region _PP((GNODE n, int k));
+static void recursive_fold  _PP((GNODE v, GNODE n, int k));
 
-static void	summarize_edges    _PP((void));
-static void 	split_double_edges _PP((void));
+static void hide_edge_classes _PP((void));
+
+static void summarize_edges    _PP((void));
+static void     split_double_edges _PP((void));
 
 #ifdef DEBUG
 static void db_print_somenode_list(GNODE w,GNODE wend);
@@ -152,18 +152,18 @@ static void db_print_somenode_list(GNODE w,GNODE wend);
 
 
 /*--------------------------------------------------------------------*/
-/*  Management of folding keepers				      */
+/*  Management of folding keepers                     */
 /*--------------------------------------------------------------------*/
 
 /* Global variables
  * ----------------
  */
 
-GNLIST	f_subgraphs; /* List of subgraph nodes to folding		   */
-GNLIST  uf_subgraphs;/* Node where subgraph unfolding starts		   */
-GNLIST	foldstops;   /* List of nodes where a fold region operation stops  */
-GNLIST	foldstart;   /* List of nodes where a fold region operation starts */
-GNLIST  ufoldstart;  /* Node where region unfolding starts		   */
+GNLIST  f_subgraphs; /* List of subgraph nodes to folding          */
+GNLIST  uf_subgraphs;/* Node where subgraph unfolding starts           */
+GNLIST  foldstops;   /* List of nodes where a fold region operation stops  */
+GNLIST  foldstart;   /* List of nodes where a fold region operation starts */
+GNLIST  ufoldstart;  /* Node where region unfolding starts         */
 
 
 /*   Fold starters and stoppers
@@ -177,26 +177,26 @@ GNLIST  ufoldstart;  /* Node where region unfolding starts		   */
  */
 void clear_folding_keepers(void)
 {
-	GNLIST l;
+    GNLIST l;
 
-	/* Set folding keeper to NOREVERT */
-	for (l = f_subgraphs; l; l = GNNEXT(l))
-	{
-		NREVERT(GNNODE(l)) = NOREVERT;
-		revert_subgraph(GNNODE(l));
-	}
+    /* Set folding keeper to NOREVERT */
+    for (l = f_subgraphs; l; l = GNNEXT(l))
+    {
+        NREVERT(GNNODE(l)) = NOREVERT;
+        revert_subgraph(GNNODE(l));
+    }
 
-	for (l = uf_subgraphs; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
-	for (l = foldstops; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
-	for (l = foldstart; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
-	for (l = ufoldstart; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
+    for (l = uf_subgraphs; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
+    for (l = foldstops; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
+    for (l = foldstart; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
+    for (l = ufoldstart; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
 
-	free_foldnodelists();
-	ufoldstart  = NULL;
-	foldstart   = NULL;
-	foldstops   = NULL;
-	f_subgraphs = NULL;
-	uf_subgraphs= NULL;
+    free_foldnodelists();
+    ufoldstart  = NULL;
+    foldstart   = NULL;
+    foldstops   = NULL;
+    f_subgraphs = NULL;
+    uf_subgraphs= NULL;
 }
 
 
@@ -208,28 +208,28 @@ void clear_folding_keepers(void)
 
 void add_sgfoldstart(GNODE v)
 {
-	GNLIST	l,*lp;
+    GNLIST  l,*lp;
 
-	if (!v) return;
-	debugmessage("add_sgfoldstart",(NTITLE(v)?NTITLE(v):"(null)"));
-	if (NREVERT(v)==AREVERT) { /* delete it from sgfoldstart */
-		NREVERT(v) = NOREVERT;
-		l  = f_subgraphs;
-		lp = &f_subgraphs;
-		while (l) { 
-			if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
-			lp = &GNNEXT(l);
-			l  = GNNEXT(l);
-		}
-		revert_subgraph(v);
-		return;
-	}
-	NREVERT(v) = AREVERT;
-	l = foldnodelist_alloc();
-	GNNODE(l) = v;
-	GNNEXT(l) = f_subgraphs;
-	f_subgraphs = l;
-	revert_subgraph(v);
+    if (!v) return;
+    debugmessage("add_sgfoldstart",(NTITLE(v)?NTITLE(v):"(null)"));
+    if (NREVERT(v)==AREVERT) { /* delete it from sgfoldstart */
+        NREVERT(v) = NOREVERT;
+        l  = f_subgraphs;
+        lp = &f_subgraphs;
+        while (l) {
+            if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
+            lp = &GNNEXT(l);
+            l  = GNNEXT(l);
+        }
+        revert_subgraph(v);
+        return;
+    }
+    NREVERT(v) = AREVERT;
+    l = foldnodelist_alloc();
+    GNNODE(l) = v;
+    GNNEXT(l) = f_subgraphs;
+    f_subgraphs = l;
+    revert_subgraph(v);
 }
 
 /* Revert subgraph
@@ -241,23 +241,23 @@ void add_sgfoldstart(GNODE v)
 static void revert_subgraph(GNODE v)
 {
         GNODE w;
-	GNLIST l;
+    GNLIST l;
         int rev;
 
-	debugmessage("revert_subgraph",(NTITLE(v)?NTITLE(v):"(null)"));
+    debugmessage("revert_subgraph",(NTITLE(v)?NTITLE(v):"(null)"));
         rev = NREVERT(v);
         l = NSGRAPH(v);
- 
+
         while (l) {
                 w = GNNODE(l);
                 NREVERT(w) = rev;
-		if (NSGRAPH(w)) {
-			revert_subgraph(w);
-		}
+        if (NSGRAPH(w)) {
+            revert_subgraph(w);
+        }
                 l = GNNEXT(l);
         }
 }
- 
+
 
 /*   Add unfold subgraph starter
  *   ---------------------------
@@ -266,26 +266,26 @@ static void revert_subgraph(GNODE v)
 
 void add_sgunfoldstart(GNODE v)
 {
-	GNLIST	l,*lp;
+    GNLIST  l,*lp;
 
-	if (!v) return;
-	debugmessage("add_sgunfoldstart",(NTITLE(v)?NTITLE(v):"(null)"));
-	if (NREVERT(v)==AREVERT) { /* delete it from uf_subgraphs */
-		NREVERT(v) = NOREVERT;
-		l  = uf_subgraphs;
-		lp = &uf_subgraphs;
-		while (l) { 
-			if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
-			lp = &GNNEXT(l);
-			l  = GNNEXT(l);
-		}
-		return;
-	}
-	NREVERT(v) = AREVERT;
-	l = foldnodelist_alloc();
-	GNNODE(l) = v;
-	GNNEXT(l) = uf_subgraphs;
-	uf_subgraphs = l;
+    if (!v) return;
+    debugmessage("add_sgunfoldstart",(NTITLE(v)?NTITLE(v):"(null)"));
+    if (NREVERT(v)==AREVERT) { /* delete it from uf_subgraphs */
+        NREVERT(v) = NOREVERT;
+        l  = uf_subgraphs;
+        lp = &uf_subgraphs;
+        while (l) {
+            if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
+            lp = &GNNEXT(l);
+            l  = GNNEXT(l);
+        }
+        return;
+    }
+    NREVERT(v) = AREVERT;
+    l = foldnodelist_alloc();
+    GNNODE(l) = v;
+    GNNEXT(l) = uf_subgraphs;
+    uf_subgraphs = l;
 }
 
 
@@ -296,28 +296,28 @@ void add_sgunfoldstart(GNODE v)
 
 void add_foldstart(GNODE v)
 {
-	GNLIST	l,*lp;
+    GNLIST  l,*lp;
 
-	if (!v) return;
-	debugmessage("add_foldstart",(NTITLE(v)?NTITLE(v):"(null)"));
+    if (!v) return;
+    debugmessage("add_foldstart",(NTITLE(v)?NTITLE(v):"(null)"));
 
-	if (NREVERT(v)==BREVERT) { /* delete it from foldstart */
-		NREVERT(v) = NOREVERT;
-		l  = foldstart;
-		lp = &foldstart;
-		while (l) { 
-			if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
-			lp = &GNNEXT(l);
-			l  = GNNEXT(l);
-		}
-		return;
-	}
-	if (NREVERT(v)==AREVERT) return; 
-	NREVERT(v) = BREVERT;
-	l = foldnodelist_alloc();
-	GNNODE(l) = v;
-	GNNEXT(l) = foldstart;
-	foldstart = l;
+    if (NREVERT(v)==BREVERT) { /* delete it from foldstart */
+        NREVERT(v) = NOREVERT;
+        l  = foldstart;
+        lp = &foldstart;
+        while (l) {
+            if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
+            lp = &GNNEXT(l);
+            l  = GNNEXT(l);
+        }
+        return;
+    }
+    if (NREVERT(v)==AREVERT) return;
+    NREVERT(v) = BREVERT;
+    l = foldnodelist_alloc();
+    GNNODE(l) = v;
+    GNNEXT(l) = foldstart;
+    foldstart = l;
 }
 
 /*   Add unfold region starter
@@ -327,26 +327,26 @@ void add_foldstart(GNODE v)
 
 void add_unfoldstart(GNODE v)
 {
-	GNLIST	l,*lp;
+    GNLIST  l,*lp;
 
-	if (!v) return;
-	debugmessage("add_unfoldstart",(NTITLE(v)?NTITLE(v):"(null)"));
-	if (NREVERT(v)==AREVERT) { /* delete it from ufoldstart */
-		NREVERT(v) = NOREVERT;
-		l  = ufoldstart;
-		lp = &ufoldstart;
-		while (l) { 
-			if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
-			lp = &GNNEXT(l);
-			l  = GNNEXT(l);
-		}
-		return;
-	}
-	NREVERT(v) = AREVERT;
-	l = foldnodelist_alloc();
-	GNNODE(l) = v;
-	GNNEXT(l) = ufoldstart;
-	ufoldstart = l;
+    if (!v) return;
+    debugmessage("add_unfoldstart",(NTITLE(v)?NTITLE(v):"(null)"));
+    if (NREVERT(v)==AREVERT) { /* delete it from ufoldstart */
+        NREVERT(v) = NOREVERT;
+        l  = ufoldstart;
+        lp = &ufoldstart;
+        while (l) {
+            if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
+            lp = &GNNEXT(l);
+            l  = GNNEXT(l);
+        }
+        return;
+    }
+    NREVERT(v) = AREVERT;
+    l = foldnodelist_alloc();
+    GNNODE(l) = v;
+    GNNEXT(l) = ufoldstart;
+    ufoldstart = l;
 }
 
 
@@ -357,26 +357,26 @@ void add_unfoldstart(GNODE v)
 
 void add_foldstop(GNODE v)
 {
-	GNLIST	l,*lp;
+    GNLIST  l,*lp;
 
-	if (!v) return;
-	debugmessage("add_foldstop",(NTITLE(v)?NTITLE(v):"(null)"));
-	if (NREVERT(v)==AREVERT) { /* delete it from foldstops */
-		NREVERT(v) = NOREVERT;
-		l  = foldstops;
-		lp = &foldstops;
-		while (l) { 
-			if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
-			lp = &GNNEXT(l);
-			l  = GNNEXT(l);
-		}
-		return;
-	}
-	NREVERT(v) = AREVERT;
-	l = foldnodelist_alloc();
-	GNNODE(l) = v;
-	GNNEXT(l) = foldstops;
-	foldstops = l;
+    if (!v) return;
+    debugmessage("add_foldstop",(NTITLE(v)?NTITLE(v):"(null)"));
+    if (NREVERT(v)==AREVERT) { /* delete it from foldstops */
+        NREVERT(v) = NOREVERT;
+        l  = foldstops;
+        lp = &foldstops;
+        while (l) {
+            if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
+            lp = &GNNEXT(l);
+            l  = GNNEXT(l);
+        }
+        return;
+    }
+    NREVERT(v) = AREVERT;
+    l = foldnodelist_alloc();
+    GNNODE(l) = v;
+    GNNEXT(l) = foldstops;
+    foldstops = l;
 }
 
 
@@ -384,23 +384,23 @@ void add_foldstop(GNODE v)
  *   ------------------
  *   Returns 1 if v is in the list foldstops, i.e. if v is a fold stopper.
  */
- 
+
 static int foldstop_reached(GNODE v)
 {
-	GNLIST	l;
+    GNLIST  l;
 
-	if (!v) return(1);
-	debugmessage("foldstop_reached",(NTITLE(v)?NTITLE(v):"(null)"));
-	for (l = foldstops; l; l = GNNEXT(l))
-	{
-		if (GNNODE(l) == v) return(1);
-	}
-	return(0);
+    if (!v) return(1);
+    debugmessage("foldstop_reached",(NTITLE(v)?NTITLE(v):"(null)"));
+    for (l = foldstops; l; l = GNNEXT(l))
+    {
+        if (GNNODE(l) == v) return(1);
+    }
+    return(0);
 }
 
 
 /*--------------------------------------------------------------------*/
-/*  Folding and creation of adjacency lists			      */
+/*  Folding and creation of adjacency lists               */
 /*--------------------------------------------------------------------*/
 
 /*  Defines
@@ -408,18 +408,18 @@ static int foldstop_reached(GNODE v)
  *  To have the possibility to revert foldings, or to find
  *  appropritate substitution node, we must notate why a node
  *  is invisible. Thus we set the INVISIBLE flag:
- *	0   ->	 the node is visible
- *	1   ->	 the node is a unfolded subgraph
- *	2   ->	 the node is part of a folded subgraph
- *	3   ->	 the node is part of a folded region
- *	4   ->	 the node is invisible because it is only reacheable 
- *		 by hidden edge classes
+ *  0   ->   the node is visible
+ *  1   ->   the node is a unfolded subgraph
+ *  2   ->   the node is part of a folded subgraph
+ *  3   ->   the node is part of a folded region
+ *  4   ->   the node is invisible because it is only reacheable
+ *       by hidden edge classes
  */
 
 #define UNFOLDED_SGRAPH 1
-#define FOLDED_SGNODE	2
-#define FOLDED_RGNODE	3
-#define HIDDEN_CNODE	4
+#define FOLDED_SGNODE   2
+#define FOLDED_RGNODE   3
+#define HIDDEN_CNODE    4
 
 
 /*   Folding main driver
@@ -433,7 +433,7 @@ static int foldstop_reached(GNODE v)
  *   lists, thus this is done later.
  *   Note that there is no operation `unhide edge class' because
  *   adjacency lists are always created new which automatically respects
- *   only those edges that are unhidden. 
+ *   only those edges that are unhidden.
  *   At last, we check whether all visible nodes have (x,y) locations,
  *   and set the locFlag according.
  *
@@ -441,149 +441,149 @@ static int foldstop_reached(GNODE v)
  *   or by menu interaction.
  */
 
-void	folding(void)
+void    folding(void)
 {
-	GNODE	v,vn;
-	GNLIST	l;
-	int	rclass;
+    GNODE   v,vn;
+    GNLIST  l;
+    int rclass;
 
-	debugmessage("folding","");
+    debugmessage("folding","");
 
-	assert((labellist == NULL));
-	assert((tmpnodelist == NULL));
-	assert((tmpedgelist == NULL));
+    assert((labellist == NULL));
+    assert((tmpnodelist == NULL));
+    assert((tmpedgelist == NULL));
 
-	if (G_displayel==NO) edge_label_phase=0;
-	if (G_dirtyel==YES)  edge_label_phase=0;
+    if (G_displayel==NO) edge_label_phase=0;
+    if (G_dirtyel==YES)  edge_label_phase=0;
 
-	/* 1) make all node that are invisible because of edge classes 
-	 *    visible 
-	 */
+    /* 1) make all node that are invisible because of edge classes
+     *    visible
+     */
 
-	gs_wait_message('f');
-	for (v = invis_nodes; v; v = vn)
-	{
-		vn = NNEXT(v);
-		insert_node(v, HIDDEN_CNODE);
-	}
-	invis_nodes = NULL;
-
-
-	/* 2) subgraph folding */
-
-	for (l = f_subgraphs; l; l = GNNEXT(l))
-	{
-		fold_sg(GNNODE(l));
-	}
-
-	/* 3) subgraph unfolding */
-
-	for (l = uf_subgraphs; l; l = GNNEXT(l))
-	{
-		unfold_sg(GNNODE(l));
-	}
-
-	/* 4) Unfold region (independent of the class) */
-
-	for (l = ufoldstart; l; l = GNNEXT(l))
-	{
-		unfold_region(GNNODE(l));
-	}
-
-	/* 5) refresh the situation: initialize indegree of nodes,
-	 *    visibility flag of edges etc. Clear adjacency lists.
-	 */
-
-	gs_wait_message('f');
-	refresh();
-
-	/* 6) Construct adjacency lists first time */
-
-	create_adjacencies();
-	hide_edge_classes();
-
-	/* 7) Fold region: fold first the lower then the higher classes */
+    gs_wait_message('f');
+    for (v = invis_nodes; v; v = vn)
+    {
+        vn = NNEXT(v);
+        insert_node(v, HIDDEN_CNODE);
+    }
+    invis_nodes = NULL;
 
 
-	for (rclass=0; rclass<17; rclass++) {
-		for (l = foldstart; l; l = GNNEXT(l))
-		{
-			if (GNNODE(l) && (NFOLDING(GNNODE(l))==rclass))
-				fold_region(GNNODE(l), rclass);
-		}
-	}
+    /* 2) subgraph folding */
 
-	/* 8) If labels necessary, create labels */
+    for (l = f_subgraphs; l; l = GNNEXT(l))
+    {
+        fold_sg(GNNODE(l));
+    }
 
-	refresh();
-	if ((G_displayel==YES) && (G_dirtyel==NO) && (edge_label_phase==0)) 
-		create_lab_adjacencies();
-	else 	create_adjacencies();
+    /* 3) subgraph unfolding */
 
-	/* 9) Hide edge classes */
+    for (l = uf_subgraphs; l; l = GNNEXT(l))
+    {
+        unfold_sg(GNNODE(l));
+    }
 
-	gs_wait_message('f');
-	hide_edge_classes();
+    /* 4) Unfold region (independent of the class) */
 
+    for (l = ufoldstart; l; l = GNNEXT(l))
+    {
+        unfold_region(GNNODE(l));
+    }
 
-	/* For stable layout: sort nodelist */
-	sort_all_nodes(); 
+    /* 5) refresh the situation: initialize indegree of nodes,
+     *    visibility flag of edges etc. Clear adjacency lists.
+     */
 
-	/* 10) check whether all nodes have already locations 
-	 *     and transfer the specified locations.
-	 */
+    gs_wait_message('f');
+    refresh();
 
-	locFlag = 1;
-	v = nodelist;
-	while (v && locFlag) {
-		if ((NSX(v)==0L) && (NSY(v)==0L)) locFlag=0;
-		NX(v) = NSX(v);
-		NY(v) = NSY(v);
-		v = NNEXT(v);
-	}
+    /* 6) Construct adjacency lists first time */
 
-	/* 11) If labels, we calculate edge positions without labels.
- 	 */
+    create_adjacencies();
+    hide_edge_classes();
 
-	if (locFlag && (G_displayel==YES)) {
-		free_tmpnodes();
-		refresh();
-		create_adjacencies();
-		gs_wait_message('f');
-		hide_edge_classes();
-		v = nodelist;
-		while (v) {
-			NX(v) = NSX(v);
-			NY(v) = NSY(v);
-			v = NNEXT(v);
-		}
-	}
-
-	/* 12) If necessary, remove double edges from the adjacency
-	 *     lists.
-	 */
-	
-	gs_wait_message('f');
-	if (summarize_double_edges) summarize_edges();
+    /* 7) Fold region: fold first the lower then the higher classes */
 
 
-	/* 13) Otherwise split edges which are doubled, such that they
-	 *     can be recognized better.
-	 */
+    for (rclass=0; rclass<17; rclass++) {
+        for (l = foldstart; l; l = GNNEXT(l))
+        {
+            if (GNNODE(l) && (NFOLDING(GNNODE(l))==rclass))
+                fold_region(GNNODE(l), rclass);
+        }
+    }
 
-	if ((!locFlag) && (!summarize_double_edges))
-		split_double_edges();
+    /* 8) If labels necessary, create labels */
 
-	/* 14) Reinit the folding keepers to get a clean situation
-	 *     for the next folding.
-	 */
+    refresh();
+    if ((G_displayel==YES) && (G_dirtyel==NO) && (edge_label_phase==0))
+        create_lab_adjacencies();
+    else    create_adjacencies();
 
-	clear_folding_keepers();
+    /* 9) Hide edge classes */
+
+    gs_wait_message('f');
+    hide_edge_classes();
+
+
+    /* For stable layout: sort nodelist */
+    sort_all_nodes();
+
+    /* 10) check whether all nodes have already locations
+     *     and transfer the specified locations.
+     */
+
+    locFlag = 1;
+    v = nodelist;
+    while (v && locFlag) {
+        if ((NSX(v)==0L) && (NSY(v)==0L)) locFlag=0;
+        NX(v) = NSX(v);
+        NY(v) = NSY(v);
+        v = NNEXT(v);
+    }
+
+    /* 11) If labels, we calculate edge positions without labels.
+     */
+
+    if (locFlag && (G_displayel==YES)) {
+        free_tmpnodes();
+        refresh();
+        create_adjacencies();
+        gs_wait_message('f');
+        hide_edge_classes();
+        v = nodelist;
+        while (v) {
+            NX(v) = NSX(v);
+            NY(v) = NSY(v);
+            v = NNEXT(v);
+        }
+    }
+
+    /* 12) If necessary, remove double edges from the adjacency
+     *     lists.
+     */
+
+    gs_wait_message('f');
+    if (summarize_double_edges) summarize_edges();
+
+
+    /* 13) Otherwise split edges which are doubled, such that they
+     *     can be recognized better.
+     */
+
+    if ((!locFlag) && (!summarize_double_edges))
+        split_double_edges();
+
+    /* 14) Reinit the folding keepers to get a clean situation
+     *     for the next folding.
+     */
+
+    clear_folding_keepers();
 } /* folding */
 
 
 /*--------------------------------------------------------------------*/
-/*  Folding primitives						      */
+/*  Folding primitives                            */
 /*--------------------------------------------------------------------*/
 
 /*   Insertion and deletion at the node list
@@ -593,16 +593,16 @@ void	folding(void)
  *   With this method, `fold subgraph' and `unfold subgraph' and
  *   `unfold region' can be implemented.
  *   To have the possibility to revert such foldings, or to find
- *   appropritate substitution node (see substed_edge), we must notate 
+ *   appropritate substitution node (see substed_edge), we must notate
  *   why a node is invisible. Thus we set the INVISIBLE flag:
- *	0   ->	 the node is visible
- *	1   ->	 the node is a unfolded subgraph
- *	2   ->	 the node is part of a folded subgraph
- *	3   ->	 the node is part of a folded region
- *	4   ->	 the node is invisible because it is only reacheable 
- *		 by hidden edge classes
- *   See above the defines of 
- *	UNFOLDED_SGRAPH, FOLDED_SGNODE, FOLDED_RGNODE, HIDDEN_CNODE 
+ *  0   ->   the node is visible
+ *  1   ->   the node is a unfolded subgraph
+ *  2   ->   the node is part of a folded subgraph
+ *  3   ->   the node is part of a folded region
+ *  4   ->   the node is invisible because it is only reacheable
+ *       by hidden edge classes
+ *   See above the defines of
+ *  UNFOLDED_SGRAPH, FOLDED_SGNODE, FOLDED_RGNODE, HIDDEN_CNODE
  */
 
 
@@ -614,19 +614,19 @@ void	folding(void)
  */
 static void delete_node(GNODE v, int k)
 {
-	assert((v));
-	assert((k!=0));
-	debugmessage("delete_node",(NTITLE(v)?NTITLE(v):"(null)"));
-	if (!NINLIST(v)) return;
-	NINLIST(v) = 0;
-	NINVISIBLE(v) = k;
-	del_node_from_dl_list(v,nodelist,nodelistend);
-	if (NSGRAPH(v)) { /* a subgraph comes back into the graph list */
-		if (k==UNFOLDED_SGRAPH) {
-			ins_node_in_dl_list(v,graphlist,graphlistend);
-		}
-	}
-	nodeanz--;
+    assert((v));
+    assert((k!=0));
+    debugmessage("delete_node",(NTITLE(v)?NTITLE(v):"(null)"));
+    if (!NINLIST(v)) return;
+    NINLIST(v) = 0;
+    NINVISIBLE(v) = k;
+    del_node_from_dl_list(v,nodelist,nodelistend);
+    if (NSGRAPH(v)) { /* a subgraph comes back into the graph list */
+        if (k==UNFOLDED_SGRAPH) {
+            ins_node_in_dl_list(v,graphlist,graphlistend);
+        }
+    }
+    nodeanz--;
 
 }
 
@@ -640,25 +640,25 @@ static void delete_node(GNODE v, int k)
  */
 static void insert_node(GNODE v, int k)
 {
-	assert((v));
-	assert((k!=0));
-	debugmessage("insert_node",(NTITLE(v)?NTITLE(v):"(null)"));
-	if (NINLIST(v)) return;
-	if (NINVISIBLE(v)!=k) return;
-	NINLIST(v) = 1;
-	NINVISIBLE(v) = 0;
-	if (NSGRAPH(v)) { /* a subgraph must be removed from the graph list */
-		if (k==UNFOLDED_SGRAPH) {
-			del_node_from_dl_list(v,graphlist,graphlistend);
-		}
-	}
-	ins_node_in_dl_list(v,nodelist,nodelistend);
-	nodeanz++;
+    assert((v));
+    assert((k!=0));
+    debugmessage("insert_node",(NTITLE(v)?NTITLE(v):"(null)"));
+    if (NINLIST(v)) return;
+    if (NINVISIBLE(v)!=k) return;
+    NINLIST(v) = 1;
+    NINVISIBLE(v) = 0;
+    if (NSGRAPH(v)) { /* a subgraph must be removed from the graph list */
+        if (k==UNFOLDED_SGRAPH) {
+            del_node_from_dl_list(v,graphlist,graphlistend);
+        }
+    }
+    ins_node_in_dl_list(v,nodelist,nodelistend);
+    nodeanz++;
 }
 
 
 /*--------------------------------------------------------------------*/
-/*  Folding of subgraphs					      */
+/*  Folding of subgraphs                          */
 /*--------------------------------------------------------------------*/
 
 /*  Delete all nodes of a subgraph from the nodelist
@@ -667,17 +667,17 @@ static void insert_node(GNODE v, int k)
  */
 static void delete_sgnodes(GNODE u)
 {
-	GNODE	v;
-	GNLIST	l;
+    GNODE   v;
+    GNLIST  l;
 
-	debugmessage("delete_sgnodes",(NTITLE(u)?NTITLE(u):"(null)"));
-	for (l = NSGRAPH(u); l; l = GNNEXT(l))
-	{
-		v = GNNODE(l);
-		delete_node(v, FOLDED_SGNODE);
-		if (NSGRAPH(v))
-			delete_sgnodes(v);
-	}
+    debugmessage("delete_sgnodes",(NTITLE(u)?NTITLE(u):"(null)"));
+    for (l = NSGRAPH(u); l; l = GNNEXT(l))
+    {
+        v = GNNODE(l);
+        delete_node(v, FOLDED_SGNODE);
+        if (NSGRAPH(v))
+            delete_sgnodes(v);
+    }
 }
 
 
@@ -689,11 +689,11 @@ static void delete_sgnodes(GNODE u)
  */
 static void fold_sg(GNODE u)
 {
-	if (!u) return;
-	debugmessage("fold_sg",(NTITLE(u)?NTITLE(u):"(null)"));
+    if (!u) return;
+    debugmessage("fold_sg",(NTITLE(u)?NTITLE(u):"(null)"));
 
-	delete_sgnodes(u);
-	insert_node(u, UNFOLDED_SGRAPH);
+    delete_sgnodes(u);
+    insert_node(u, UNFOLDED_SGRAPH);
 }
 
 
@@ -705,32 +705,32 @@ static void fold_sg(GNODE u)
  */
 static void unfold_sg(GNODE u)
 {
-	GNODE	v;
-	GNLIST	l;
+    GNODE   v;
+    GNLIST  l;
 
-	if (!u) return;
-	debugmessage("unfold_sg",(NTITLE(u)?NTITLE(u):"(null)"));
+    if (!u) return;
+    debugmessage("unfold_sg",(NTITLE(u)?NTITLE(u):"(null)"));
 
-	for (l = NSGRAPH(u); l; l = GNNEXT(l))
-	{
-		v = GNNODE(l);
-		insert_node(v, FOLDED_SGNODE);
+    for (l = NSGRAPH(u); l; l = GNNEXT(l))
+    {
+        v = GNNODE(l);
+        insert_node(v, FOLDED_SGNODE);
 
-		/* If v was an unfolded subgraph before the folding,
-		 * it was before not visible, thus it is not inserted,
-		 * since the insert reason FOLDED_SGNODE is not the
-		 * delete reason UNFOLDED_SG. Then we have to unfold its
-		 * subnodes, too.
-		 */
-		if (NSGRAPH(v) && (NINVISIBLE(v)==UNFOLDED_SGRAPH)) 
-			unfold_sg(v);
-	}
-	delete_node(u, UNFOLDED_SGRAPH);
+        /* If v was an unfolded subgraph before the folding,
+         * it was before not visible, thus it is not inserted,
+         * since the insert reason FOLDED_SGNODE is not the
+         * delete reason UNFOLDED_SG. Then we have to unfold its
+         * subnodes, too.
+         */
+        if (NSGRAPH(v) && (NINVISIBLE(v)==UNFOLDED_SGRAPH))
+            unfold_sg(v);
+    }
+    delete_node(u, UNFOLDED_SGRAPH);
 }
 
 
 /*--------------------------------------------------------------------*/
-/*  Folding of regions						      */
+/*  Folding of regions                            */
 /*--------------------------------------------------------------------*/
 
 /*   Note that region operations are not inverse implemented, even
@@ -750,153 +750,153 @@ static void unfold_sg(GNODE u)
 
 /*   Fold Region
  *   -----------
- *   Starting from a node n, all nodes and edges reacheable by 
+ *   Starting from a node n, all nodes and edges reacheable by
  *   edges of class <= k are folded.
  *   Before, the adjacency lists were created.
  */
 static void fold_region(GNODE n, int k)
 {
-	GEDGE   e, nxt_e;
-	GNODE   h;
+    GEDGE   e, nxt_e;
+    GNODE   h;
 
 
-	assert((n));
-	debugmessage("fold_region",(NTITLE(n)?NTITLE(n):"(null)"));
+    assert((n));
+    debugmessage("fold_region",(NTITLE(n)?NTITLE(n):"(null)"));
 
-	/* First, we create a stable replacement node, that stores 
-	 * all information of the node. Then we use the start node
-	 * as summary node, because the start node is part of the 
-	 * right graph.
-	 */
+    /* First, we create a stable replacement node, that stores
+     * all information of the node. Then we use the start node
+     * as summary node, because the start node is part of the
+     * right graph.
+     */
 
-	h = nodealloc(n);
-	NTITLE(h)   = NTITLE(n);
-	NROOT(h)    = NROOT(n);
-	NREGREPL(h) = NREGREPL(n);
-	NREGION(h)  = NREGION(n);
-	NREGROOT(h) = NREGROOT(n);
+    h = nodealloc(n);
+    NTITLE(h)   = NTITLE(n);
+    NROOT(h)    = NROOT(n);
+    NREGREPL(h) = NREGREPL(n);
+    NREGION(h)  = NREGION(n);
+    NREGROOT(h) = NREGROOT(n);
 
-	NSX(n) = NSY(n) = 0L;   /* Locations are not inherited ! */ 
+    NSX(n) = NSY(n) = 0L;   /* Locations are not inherited ! */
 
-	NWIDTH(n) = NHEIGHT(n) = -1; /* Sizes are not inherited */
+    NWIDTH(n) = NHEIGHT(n) = -1; /* Sizes are not inherited */
 
-	delete_node(h, FOLDED_RGNODE);	      /* h is invisible */ 
+    delete_node(h, FOLDED_RGNODE);        /* h is invisible */
 
-	/* Now: h has the purpose of n, and n is the summary node 
-	 * Now we change the properties of the summary nodes according
-	 * to the defaults.
-	 */
+    /* Now: h has the purpose of n, and n is the summary node
+     * Now we change the properties of the summary nodes according
+     * to the defaults.
+     */
 
-	inherit_foldnode_attributes(&foldnode, n);
+    inherit_foldnode_attributes(&foldnode, n);
 
-	NREGREPL(n) = h;
-	NREGION(n)  = NULL;   /* here we collect the nodes of this region */
+    NREGREPL(n) = h;
+    NREGION(n)  = NULL;   /* here we collect the nodes of this region */
 
-	/* Fold the nodes recursively */
-	for (e = FirstSucc(n); e; e = nxt_e)
-	{
-		nxt_e = NextSucc(e);
-		if ( ECLASS(e) <= k ) {
-			if ( !foldstop_reached(EEND(e)) ) {
-				EINVISIBLE(e) = 1;
-				recursive_fold(EEND(e),n,k);
-			}
-		}
-	}
+    /* Fold the nodes recursively */
+    for (e = FirstSucc(n); e; e = nxt_e)
+    {
+        nxt_e = NextSucc(e);
+        if ( ECLASS(e) <= k ) {
+            if ( !foldstop_reached(EEND(e)) ) {
+                EINVISIBLE(e) = 1;
+                recursive_fold(EEND(e),n,k);
+            }
+        }
+    }
 } /* fold_region */
 
 /*  Recursive fold region
  *  ---------------------
- *  This is an auxiliary function of fold_region. 
+ *  This is an auxiliary function of fold_region.
  *  It folds the region of class <=k starting at v. The summary node
  *  of the region is n. It makes the nodes of the region invisible,
  *  and calculates substitutions for edges.
  *  The function is a little bit inefficient if we have cross edges
  *  inside the folded region, because these might be substituted
- *  and the substed will be later removed. 
+ *  and the substed will be later removed.
  */
 static void recursive_fold(GNODE v, GNODE n, int k)
 {
-	GEDGE   e, ee, nxt_e;
-	GNLIST  l;
+    GEDGE   e, ee, nxt_e;
+    GNLIST  l;
 
-	assert((v));
-	assert((n));
-	debugmessage("recursive_fold",(NTITLE(v)?NTITLE(v):"(null)"));
+    assert((v));
+    assert((n));
+    debugmessage("recursive_fold",(NTITLE(v)?NTITLE(v):"(null)"));
 
-	/* Check of cycle: both checks means the same */
-	if ( !NINLIST(v) ) return;
-	if ( NREGROOT(v) == n )  return;
+    /* Check of cycle: both checks means the same */
+    if ( !NINLIST(v) ) return;
+    if ( NREGROOT(v) == n )  return;
 
-	/* Check of cycle: this is the node we started folding */
-	if ( v == n )            return;
+    /* Check of cycle: this is the node we started folding */
+    if ( v == n )            return;
 
-	/* Add v to the region list of n */
-	NREGROOT(v) = n;
-	l = nodelist_alloc(v);
-	if ( !NREGION(n) ) {
-		GNNEXT(l)  = NULL;
-		NREGION(n) = l;
-	}
-	else {	GNNEXT(l)  = NREGION(n);
-		NREGION(n) = l;
-	}
-	delete_node(v,FOLDED_RGNODE);
+    /* Add v to the region list of n */
+    NREGROOT(v) = n;
+    l = nodelist_alloc(v);
+    if ( !NREGION(n) ) {
+        GNNEXT(l)  = NULL;
+        NREGION(n) = l;
+    }
+    else {  GNNEXT(l)  = NREGION(n);
+        NREGION(n) = l;
+    }
+    delete_node(v,FOLDED_RGNODE);
 
-	/* Go into the recursion */
-	for (e = FirstSucc(v); e; e = nxt_e)
-	{
-		nxt_e = NextSucc(e);
-		if ( ECLASS(e) <= k ) {
-			if ( !foldstop_reached(EEND(e)) ) {
-				EINVISIBLE(e) = 1;
-				recursive_fold(EEND(e),n,k);
-			}
-		}
-	}
+    /* Go into the recursion */
+    for (e = FirstSucc(v); e; e = nxt_e)
+    {
+        nxt_e = NextSucc(e);
+        if ( ECLASS(e) <= k ) {
+            if ( !foldstop_reached(EEND(e)) ) {
+                EINVISIBLE(e) = 1;
+                recursive_fold(EEND(e),n,k);
+            }
+        }
+    }
 
-	/* Substitute the predecessor edges of v */
-	for (e = FirstPred(v); e; e = nxt_e)
-	{
-		nxt_e = NextPred(e);
-		ee = substed_edge(e);
-		if (ee!=e) {
-			/* Edge e invisible or substituted: 
-			 * Remove edge e from adjacency list of the source. 
-			 */
-			delete_adjedge(e);
-			/* and insert new edge, but avoid self loops at
-			 * the region node. 
-			 */
-			assert((!ee)||(EEND(ee)==n));
-			if (ee && (ESTART(ee)!=n)) create_adjedge(ee);
-		}
-	}
-	
-	/* Substitute the successor edges of v */
-	for (e = FirstSucc(v); e; e = nxt_e)
-	{
-		nxt_e = NextSucc(e);
-		ee = substed_edge(e);
-		if (ee!=e) {
-			/* Edge e invisible or substituted: 
-			 * Remove edge e from adjacency list of the source. 
-			 */
-			delete_adjedge(e);
-			/* and insert new edge, but avoid self loops at
-			 * the region node.
-			 */
-			assert((!ee)||(ESTART(ee)==n));
-			if (ee && (EEND(ee)!=n)) create_adjedge(ee);
-		}
-	}
+    /* Substitute the predecessor edges of v */
+    for (e = FirstPred(v); e; e = nxt_e)
+    {
+        nxt_e = NextPred(e);
+        ee = substed_edge(e);
+        if (ee!=e) {
+            /* Edge e invisible or substituted:
+             * Remove edge e from adjacency list of the source.
+             */
+            delete_adjedge(e);
+            /* and insert new edge, but avoid self loops at
+             * the region node.
+             */
+            assert((!ee)||(EEND(ee)==n));
+            if (ee && (ESTART(ee)!=n)) create_adjedge(ee);
+        }
+    }
 
-	/* nnlight - my watching checks */
-	assert(FirstPred(v) == NULL);
-	assert(FirstSucc(v) == NULL);
-	
-	/*NPRED(v) = NSUCC(v) = NULL;*/  /* because v is invisible */
-	unlink_node_edges(v);
+    /* Substitute the successor edges of v */
+    for (e = FirstSucc(v); e; e = nxt_e)
+    {
+        nxt_e = NextSucc(e);
+        ee = substed_edge(e);
+        if (ee!=e) {
+            /* Edge e invisible or substituted:
+             * Remove edge e from adjacency list of the source.
+             */
+            delete_adjedge(e);
+            /* and insert new edge, but avoid self loops at
+             * the region node.
+             */
+            assert((!ee)||(ESTART(ee)==n));
+            if (ee && (EEND(ee)!=n)) create_adjedge(ee);
+        }
+    }
+
+    /* nnlight - my watching checks */
+    assert(FirstPred(v) == NULL);
+    assert(FirstSucc(v) == NULL);
+
+    /*NPRED(v) = NSUCC(v) = NULL;*/  /* because v is invisible */
+    unlink_node_edges(v);
 } /* recursive_fold */
 
 
@@ -907,57 +907,57 @@ static void recursive_fold(GNODE v, GNODE n, int k)
  */
 static void unfold_region(GNODE n)
 {
-	GNLIST  l, startl;
-	GNODE   h;
+    GNLIST  l, startl;
+    GNODE   h;
 
-	assert((n));
-	debugmessage("unfold_region",(NTITLE(n)?NTITLE(n):"(null)"));
+    assert((n));
+    debugmessage("unfold_region",(NTITLE(n)?NTITLE(n):"(null)"));
 
-	if (NREGREPL(n)==NULL) return; /* it was no region */
+    if (NREGREPL(n)==NULL) return; /* it was no region */
 
-	h = NREGREPL(n);
-	startl = l = NREGION(n);
+    h = NREGREPL(n);
+    startl = l = NREGION(n);
 
-	/* Make n again a normal node, i.e. restore the attributes from h. */
+    /* Make n again a normal node, i.e. restore the attributes from h. */
 
-	NLABEL(n)    = NLABEL(h);
-	NTEXTMODE(n) = NTEXTMODE(h); 
-	NWIDTH(n)    = NWIDTH(h);
-	NHEIGHT(n)   = NHEIGHT(h); 
-	NBORDERW(n)  = NBORDERW(h);
-	NSX(n)	     = NSX(h);		
-	NSY(n)	     = NSY(h);	       
-	NFOLDING(n)  = NFOLDING(h); 
-	NCOLOR(n)    = NCOLOR(h); 
-	NTCOLOR(n)   = NTCOLOR(h); 
-	NBCOLOR(n)   = NBCOLOR(h);  
-	NSHRINK(n)   = NSHRINK(h);  
-	NSTRETCH(n)  = NSTRETCH(h);
-	NINFO1(n)    = NINFO1(h);
-	NINFO2(n)    = NINFO2(h);
-	NINFO3(n)    = NINFO3(h);
-	NLEVEL(n)    = NLEVEL(h);
-	NSHAPE(n)    = NSHAPE(h);
-	NHORDER(n)   = NHORDER(h);
-	NROOT(n)     = NROOT(h);
-	NREGREPL(n)  = NREGREPL(h);
-	NREGION(n)   = NREGION(h);
-	NREGROOT(n)  = NREGROOT(h);
+    NLABEL(n)    = NLABEL(h);
+    NTEXTMODE(n) = NTEXTMODE(h);
+    NWIDTH(n)    = NWIDTH(h);
+    NHEIGHT(n)   = NHEIGHT(h);
+    NBORDERW(n)  = NBORDERW(h);
+    NSX(n)       = NSX(h);
+    NSY(n)       = NSY(h);
+    NFOLDING(n)  = NFOLDING(h);
+    NCOLOR(n)    = NCOLOR(h);
+    NTCOLOR(n)   = NTCOLOR(h);
+    NBCOLOR(n)   = NBCOLOR(h);
+    NSHRINK(n)   = NSHRINK(h);
+    NSTRETCH(n)  = NSTRETCH(h);
+    NINFO1(n)    = NINFO1(h);
+    NINFO2(n)    = NINFO2(h);
+    NINFO3(n)    = NINFO3(h);
+    NLEVEL(n)    = NLEVEL(h);
+    NSHAPE(n)    = NSHAPE(h);
+    NHORDER(n)   = NHORDER(h);
+    NROOT(n)     = NROOT(h);
+    NREGREPL(n)  = NREGREPL(h);
+    NREGION(n)   = NREGION(h);
+    NREGROOT(n)  = NREGROOT(h);
 
-	free_node(h);	      /* give h free */ 
+    free_node(h);         /* give h free */
 
-	while (l) {
-		h = GNNODE(l);
-		NREGROOT(h) = NULL;
-		insert_node(h, FOLDED_RGNODE);
-		l = GNNEXT(l);
-	}
+    while (l) {
+        h = GNNODE(l);
+        NREGROOT(h) = NULL;
+        insert_node(h, FOLDED_RGNODE);
+        l = GNNEXT(l);
+    }
 
-	free_regionnodelist(startl); /* give the region cons cells free */
+    free_regionnodelist(startl); /* give the region cons cells free */
 } /* unfold_region */
 
 /*--------------------------------------------------------------------*/
-/*  Hiding of edges						      */
+/*  Hiding of edges                           */
 /*--------------------------------------------------------------------*/
 
 /*   Management of Edge Classes
@@ -965,25 +965,25 @@ static void unfold_region(GNODE n)
  *   The hidden edge classes i have hide_class[i]=1.
  *   The nodes from the nodelist that are hidden are pushed into
  *   the list invis_nodes.
- *   At the beginning of the layout process, these nodes are 
+ *   At the beginning of the layout process, these nodes are
  *   repushed into the nodelist.
  */
 
-int 	*hide_class=NULL; 	/* table which edge classes are hidden*/
+int     *hide_class=NULL;   /* table which edge classes are hidden*/
 
 
 /*  Initialization
- *  -------------- 
+ *  --------------
  *  All classes are visible, no class is hidden.
  */
 
-void	clear_hide_class(void)
+void    clear_hide_class(void)
 {
-	int	i;
+    int i;
 
-	debugmessage("clear_hide_class","");
-	if (!hide_class) return;
-	for (i=0;i<max_nr_classes;i++) hide_class[i] = 0;
+    debugmessage("clear_hide_class","");
+    if (!hide_class) return;
+    for (i=0;i<max_nr_classes;i++) hide_class[i] = 0;
 }
 
 
@@ -993,26 +993,26 @@ void	clear_hide_class(void)
  *  and push it into the list invis_nodes.
  *  We collect the temporary hidden nodes that come not to invis_nodes
  *  into the list tmpinvis_nodes. This list is only internally used
- *  in hide_edge_classes. 
+ *  in hide_edge_classes.
  */
 
 static GNODE tmpinvis_nodes;
 
-static void	hide_node(GNODE v)
+static void hide_node(GNODE v)
 {
-	debugmessage("hide_node","");
+    debugmessage("hide_node","");
 
-	/* remove node from the node list */
-	if (!NINLIST(v)) {
-		del_node_from_dl_list(v,labellist,labellistend); 
-		NNEXT(v) = tmpinvis_nodes;
-		tmpinvis_nodes = v;
-	} 
-	else {
-		delete_node(v,HIDDEN_CNODE);
-		NNEXT(v) = invis_nodes;
-		invis_nodes = v;
-	}
+    /* remove node from the node list */
+    if (!NINLIST(v)) {
+        del_node_from_dl_list(v,labellist,labellistend);
+        NNEXT(v) = tmpinvis_nodes;
+        tmpinvis_nodes = v;
+    }
+    else {
+        delete_node(v,HIDDEN_CNODE);
+        NNEXT(v) = invis_nodes;
+        invis_nodes = v;
+    }
 }
 
 
@@ -1021,114 +1021,114 @@ static void	hide_node(GNODE v)
  */
 static void hide_edge_classes(void)
 {
-	GEDGE h, nxt_h;
-	GNODE v, w;
-	int   allhidden;
+    GEDGE h, nxt_h;
+    GNODE v, w;
+    int   allhidden;
 
-	debugmessage("hide_edge_classes","");
-	tmpinvis_nodes = NULL;
-	for (v = nodelist; v; v = w)
-	{
-		w = NNEXT(v);
-		if (FirstPred(v) || FirstSucc(v)) {
-			allhidden = 1;
-			for (h = FirstPred(v);
-			     h && allhidden;
-			     h = NextPred(h))
-			{
-				assert(ECLASS(h)>0);
-				if (!hide_class[ECLASS(h)-1]) allhidden=0; 
-			}
-			for (h = FirstSucc(v);
-			     h && allhidden;
-			     h = NextSucc(h))
-			{
-				assert(ECLASS(h)>0);
-				if (!hide_class[ECLASS(h)-1]) allhidden=0; 
-			}
-			if (allhidden) hide_node(v);
-		}
-		else { if (hide_single_nodes) hide_node(v); }
-	}
-	for (v = labellist; v; v= w)
-	{
-		w = NNEXT(v);
-		if (FirstPred(v) || FirstSucc(v)) {
-			allhidden = 1;
-			for (h = FirstPred(v);
-			     h && allhidden;
-			     h = NextPred(h))
-			{
-				assert(ECLASS(h)>0);
-				if (!hide_class[ECLASS(h)-1]) allhidden=0; 
-			}
-			for (h = FirstSucc(v);
-			     h && allhidden;
-			     h = NextSucc(h))
-			{
-				assert(ECLASS(h)>0);
-				if (!hide_class[ECLASS(h)-1]) allhidden=0; 
-			}
-			if (allhidden) hide_node(v);
-		}
-		else { if (hide_single_nodes) hide_node(v); }
-	}
-	/* I assume that the following is not anymore necessary: (work in ccmir.vcg) */
-	for (v = invis_nodes; v; v = NNEXT(v))
-	{
-		/* delete all outgoing edges */
-		for (h = FirstSucc(v); h; h = nxt_h)
-		{
-			nxt_h = NextSucc(h);
-			if (!EINVISIBLE(h)) delete_adjedge(h);
-			EINVISIBLE(h) = 1;
-		}
-	}
-	/* I assume that the following is not anymore necessary:
-	 * It may be that the edge of a labeled node is not hidden
-	 * because of the class, but because it is the successor of a 
-	 * hidden node. Then the label is useless because its edge
-	 * is deleted. We delete now the label, too.
-	 */
-	for (v = labellist; v; v = w)
-	{
-		w = NNEXT(v);
-		assert(FirstPred(v));
-		if (!FirstPred(v)) hide_node(v);
-	}
-	/* I assume that the following is not anymore necessary: */
-	for (v = tmpinvis_nodes; v; v = NNEXT(v))
-	{
-		/* delete all outgoing edges */
-		for (h = FirstSucc(v); h; h = nxt_h)
-		{
-			nxt_h = NextSucc(h);
-			if (!EINVISIBLE(h)) delete_adjedge(h);
-			EINVISIBLE(h) = 1;
-		}
-	}		
-		
-	for (h = edgelist; h; h = ENEXT(h))
-	{
-		assert(ECLASS(h)>0);
-		if (hide_class[ECLASS(h)-1]) {
-			if (!EINVISIBLE(h)) delete_adjedge(h);
-			EINVISIBLE(h) = 1;
-		}
-	}
-	for (h = tmpedgelist; h; h = ENEXT(h))
-	{
-		assert(ECLASS(h)>0);
-		if (hide_class[ECLASS(h)-1]) {
-			if (!EINVISIBLE(h)) delete_adjedge(h);
-			EINVISIBLE(h) = 1;
-		}
-	}
+    debugmessage("hide_edge_classes","");
+    tmpinvis_nodes = NULL;
+    for (v = nodelist; v; v = w)
+    {
+        w = NNEXT(v);
+        if (FirstPred(v) || FirstSucc(v)) {
+            allhidden = 1;
+            for (h = FirstPred(v);
+                 h && allhidden;
+                 h = NextPred(h))
+            {
+                assert(ECLASS(h)>0);
+                if (!hide_class[ECLASS(h)-1]) allhidden=0;
+            }
+            for (h = FirstSucc(v);
+                 h && allhidden;
+                 h = NextSucc(h))
+            {
+                assert(ECLASS(h)>0);
+                if (!hide_class[ECLASS(h)-1]) allhidden=0;
+            }
+            if (allhidden) hide_node(v);
+        }
+        else { if (hide_single_nodes) hide_node(v); }
+    }
+    for (v = labellist; v; v= w)
+    {
+        w = NNEXT(v);
+        if (FirstPred(v) || FirstSucc(v)) {
+            allhidden = 1;
+            for (h = FirstPred(v);
+                 h && allhidden;
+                 h = NextPred(h))
+            {
+                assert(ECLASS(h)>0);
+                if (!hide_class[ECLASS(h)-1]) allhidden=0;
+            }
+            for (h = FirstSucc(v);
+                 h && allhidden;
+                 h = NextSucc(h))
+            {
+                assert(ECLASS(h)>0);
+                if (!hide_class[ECLASS(h)-1]) allhidden=0;
+            }
+            if (allhidden) hide_node(v);
+        }
+        else { if (hide_single_nodes) hide_node(v); }
+    }
+    /* I assume that the following is not anymore necessary: (work in ccmir.vcg) */
+    for (v = invis_nodes; v; v = NNEXT(v))
+    {
+        /* delete all outgoing edges */
+        for (h = FirstSucc(v); h; h = nxt_h)
+        {
+            nxt_h = NextSucc(h);
+            if (!EINVISIBLE(h)) delete_adjedge(h);
+            EINVISIBLE(h) = 1;
+        }
+    }
+    /* I assume that the following is not anymore necessary:
+     * It may be that the edge of a labeled node is not hidden
+     * because of the class, but because it is the successor of a
+     * hidden node. Then the label is useless because its edge
+     * is deleted. We delete now the label, too.
+     */
+    for (v = labellist; v; v = w)
+    {
+        w = NNEXT(v);
+        assert(FirstPred(v));
+        if (!FirstPred(v)) hide_node(v);
+    }
+    /* I assume that the following is not anymore necessary: */
+    for (v = tmpinvis_nodes; v; v = NNEXT(v))
+    {
+        /* delete all outgoing edges */
+        for (h = FirstSucc(v); h; h = nxt_h)
+        {
+            nxt_h = NextSucc(h);
+            if (!EINVISIBLE(h)) delete_adjedge(h);
+            EINVISIBLE(h) = 1;
+        }
+    }
+
+    for (h = edgelist; h; h = ENEXT(h))
+    {
+        assert(ECLASS(h)>0);
+        if (hide_class[ECLASS(h)-1]) {
+            if (!EINVISIBLE(h)) delete_adjedge(h);
+            EINVISIBLE(h) = 1;
+        }
+    }
+    for (h = tmpedgelist; h; h = ENEXT(h))
+    {
+        assert(ECLASS(h)>0);
+        if (hide_class[ECLASS(h)-1]) {
+            if (!EINVISIBLE(h)) delete_adjedge(h);
+            EINVISIBLE(h) = 1;
+        }
+    }
 } /* hide_edge_classes */
 
 
 /*--------------------------------------------------------------------*/
-/*  Refresh the situation					      */
+/*  Refresh the situation                         */
 /*--------------------------------------------------------------------*/
 
 /*   Refresh the whole graph
@@ -1142,50 +1142,50 @@ static void hide_edge_classes(void)
  *   of adjacency lists.
  */
 
-static void	refresh(void)
+static void refresh(void)
 {
-	GNODE	v;
-	GEDGE	e;
-	char 	hh;
+    GNODE   v;
+    GEDGE   e;
+    char    hh;
 
-	debugmessage("refresh","");
+    debugmessage("refresh","");
 
-	assert((labellist    == NULL));
-	assert((labellistend == NULL));
-	assert((tmpnodelist == NULL));
+    assert((labellist    == NULL));
+    assert((labellistend == NULL));
+    assert((tmpnodelist == NULL));
 
-	/* Clear layout attributes of all nodes */
+    /* Clear layout attributes of all nodes */
 
-	refresh_all_nodes(nodelist);
-	refresh_all_nodes(graphlist);
-	refresh_all_nodes(invis_nodes);
+    refresh_all_nodes(nodelist);
+    refresh_all_nodes(graphlist);
+    refresh_all_nodes(invis_nodes);
 
-	dummyanz  = 0;	/* no dummy nodes available  */
+    dummyanz  = 0;  /* no dummy nodes available  */
 
-	/* Revert reverted edges and make them visible */
+    /* Revert reverted edges and make them visible */
 
-	for (e = edgelist; e; e = ENEXT(e))
-	{
-		if (EART(e) == 'R') {
-			v	  = ESTART(e);
-			ESTART(e) = EEND(e);
-			EEND(e)   = v;
-        		hh = EARROWSIZE(e);
-   		        EARROWSIZE(e)  = EARROWBSIZE(e);
-        		EARROWBSIZE(e) = hh;
-        		hh = EARROWCOL(e);
-        		EARROWCOL(e)  = EARROWBCOL(e);
-        		EARROWBCOL(e) = hh;
-        		hh = EARROWSTYLE(e);
-        		EARROWSTYLE(e)  = EARROWBSTYLE(e);
-        		EARROWBSTYLE(e) = hh;
-		}
-		EART(e) 	= 'U';
-		ELNODE(e) 	= NULL;
-		EINVISIBLE(e)	= 0;
-		EORI(e) 	= NO_ORI;
-		EORI2(e)	= NO_ORI;
-	}
+    for (e = edgelist; e; e = ENEXT(e))
+    {
+        if (EART(e) == 'R') {
+            v     = ESTART(e);
+            ESTART(e) = EEND(e);
+            EEND(e)   = v;
+                hh = EARROWSIZE(e);
+                EARROWSIZE(e)  = EARROWBSIZE(e);
+                EARROWBSIZE(e) = hh;
+                hh = EARROWCOL(e);
+                EARROWCOL(e)  = EARROWBCOL(e);
+                EARROWBCOL(e) = hh;
+                hh = EARROWSTYLE(e);
+                EARROWSTYLE(e)  = EARROWBSTYLE(e);
+                EARROWBSTYLE(e) = hh;
+        }
+        EART(e)     = 'U';
+        ELNODE(e)   = NULL;
+        EINVISIBLE(e)   = 0;
+        EORI(e)     = NO_ORI;
+        EORI2(e)    = NO_ORI;
+    }
 }
 
 
@@ -1197,62 +1197,62 @@ static void	refresh(void)
  */
 static void refresh_all_nodes(GNODE v)
 {
-	debugmessage("refresh_all_nodes","");
-	for ( ; v; v = NNEXT(v))
-	{
-		NTIEFE(v)	= -1;
-		NPOS(v) 	= -1;
-		NMARK(v)	= 0;
-		NREVERT(v)	= NOREVERT;
-		NDFS(v) 	= 0L;
-		NX(v) 		= 0L;
-		NY(v) 		= 0L;
-		NCONNECT(v)	= NULL;
-		unlink_node_edges(v);
-		/*init_node_adj_fields(v);*/
-	}
+    debugmessage("refresh_all_nodes","");
+    for ( ; v; v = NNEXT(v))
+    {
+        NTIEFE(v)   = -1;
+        NPOS(v)     = -1;
+        NMARK(v)    = 0;
+        NREVERT(v)  = NOREVERT;
+        NDFS(v)     = 0L;
+        NX(v)       = 0L;
+        NY(v)       = 0L;
+        NCONNECT(v) = NULL;
+        unlink_node_edges(v);
+        /*init_node_adj_fields(v);*/
+    }
 }
 
 /*  Sort all nodes
  *  --------------
- *  We sort the nodes according to the a criterium. Because the ordering 
+ *  We sort the nodes according to the a criterium. Because the ordering
  *  influences the layout, this increases the stability of the layout,
  *  i.e. after folding of a small subpart, the layout of the large
  *  graph part does not change arbitrary.
  *
  *  The criterium is the following:
- *  
+ *
  *  layout_flag = 0, 1, 2, 3   -> we use the NREFNUM of the nodes.
- *  layout_flag = 4            -> we use the reverse dfs-depth starting 
- *				  at that node
- *  layout_flag = 5            -> we use the dfs-depth starting 
- *				  at that node
+ *  layout_flag = 4            -> we use the reverse dfs-depth starting
+ *                at that node
+ *  layout_flag = 5            -> we use the dfs-depth starting
+ *                at that node
  *  layout_flag = 6            -> we use the indegree of that node.
  *  layout_flag = 7            -> we use the reverse indegree of that node.
  *  layout_flag = 8            -> we use the outdegree of that node.
  *  layout_flag = 9            -> we use the reverse outdegree of that node.
  *  layout_flag = 10           -> we use the degree of that node.
  *  layout_flag = 11           -> we use the reverse degree of that node.
- */ 
+ */
 
 static GNODE *node_sort_array = NULL;
 static int    noso_size = 0;
 
 static void sort_all_nodes(void)
 {
-	GNODE v, w;
-	int   i,max;
+    GNODE v, w;
+    int   i,max;
 
 
-	/* In order to reach stability, we first sort the nodes
-	 * according to their refnum.
-	 */
+    /* In order to reach stability, we first sort the nodes
+     * according to their refnum.
+     */
 
-	i = 0;
-	for (v = nodelist; v; v = NNEXT(v)) { i++; NDFS(v) = NREFNUM(v); }
-	
-	max = i;
-	if (max < 2) return;
+    i = 0;
+    for (v = nodelist; v; v = NNEXT(v)) { i++; NDFS(v) = NREFNUM(v); }
+
+    max = i;
+    if (max < 2) return;
         if (max+2 > noso_size) {
                 if (node_sort_array) free(node_sort_array);
                 node_sort_array = (GNODE *)libc_malloc((max+2)*sizeof(GNODE));
@@ -1262,107 +1262,107 @@ static void sort_all_nodes(void)
                         (max+2)*sizeof(GNODE));
 #endif
         }
-	i = 0;
-	for (v = nodelist; v; v = NNEXT(v)) { node_sort_array[i++] = v; }
+    i = 0;
+    for (v = nodelist; v; v = NNEXT(v)) { node_sort_array[i++] = v; }
 
-	qsort(node_sort_array,max,sizeof(GNODE),
-		(int (*) (const void *, const void *))compare_ndfs);
+    qsort(node_sort_array,max,sizeof(GNODE),
+        (int (*) (const void *, const void *))compare_ndfs);
 
-	/* Now check whether the 10 % time limit is exceeded */
+    /* Now check whether the 10 % time limit is exceeded */
 
-	if (G_timelimit>0) { 
-		if (test_timelimit(10)) {
-			layout_flag = 1;
-			gs_wait_message('t');
-		}
-	}
-	
+    if (G_timelimit>0) {
+        if (test_timelimit(10)) {
+            layout_flag = 1;
+            gs_wait_message('t');
+        }
+    }
 
-	/* Now, we sort according to a second criterium, e.g. degree, etc.
-	 */
 
-	switch (layout_flag) {
-	case 4: for (v = nodelist; v; v = NNEXT(v))
-		{
-			if (G_timelimit>0) { 
-				if (test_timelimit(15)) {
-					gs_wait_message('t');
-					layout_flag = 1;
-					break; 
-				}
-			}
-			for (w = nodelist; w; w = NNEXT(w)) { NMARK(w) = 0; }
-			NDFS(v) =  - no_dfs(v); 
-		}
-		break;
-	case 5: for (v = nodelist; v; v = NNEXT(v))
-		{
-			if (G_timelimit>0) { 
-				if (test_timelimit(15)) {
-					gs_wait_message('t');
-					layout_flag = 1;
-					break; 
-				}
-			}
-			for (w = nodelist; w; w = NNEXT(w)) { NMARK(w) = 0; }
-			NDFS(v) =  no_dfs(v); 
-		}
-		break;
-	case 6: while (v) { 
-			NDFS(v) =  no_indeg(v); 
-			v = NNEXT(v); 
-		}
-		break;
-	case 7: while (v) { 
-			NDFS(v) =  - no_indeg(v); 
-			v = NNEXT(v); 
-		}
-		break;
-	case 8: while (v) { 
-			NDFS(v) =  no_outdeg(v); 
-			v = NNEXT(v); 
-		}
-		break;
-	case 9: while (v) { 
-			NDFS(v) =  - no_outdeg(v); 
-			v = NNEXT(v); 
-		}
-		break;
-	case 10:
-		while (v) { 
-			NDFS(v) =  no_degree(v); 
-			v = NNEXT(v); 
-		}
-		break;
-	case 11:
-		while (v) { 
-			NDFS(v) =  - no_degree(v); 
-			v = NNEXT(v); 
-		}
-		break;
-	}
-	
-	switch (layout_flag) {
-	case 4: case 5: case 6: case 7: case 8:
-	case 9: case 10: case 11:
+    /* Now, we sort according to a second criterium, e.g. degree, etc.
+     */
 
-		qsort(node_sort_array,max,sizeof(GNODE),
-			(int (*) (const void *, const void *))compare_ndfs);
+    switch (layout_flag) {
+    case 4: for (v = nodelist; v; v = NNEXT(v))
+        {
+            if (G_timelimit>0) {
+                if (test_timelimit(15)) {
+                    gs_wait_message('t');
+                    layout_flag = 1;
+                    break;
+                }
+            }
+            for (w = nodelist; w; w = NNEXT(w)) { NMARK(w) = 0; }
+            NDFS(v) =  - no_dfs(v);
+        }
+        break;
+    case 5: for (v = nodelist; v; v = NNEXT(v))
+        {
+            if (G_timelimit>0) {
+                if (test_timelimit(15)) {
+                    gs_wait_message('t');
+                    layout_flag = 1;
+                    break;
+                }
+            }
+            for (w = nodelist; w; w = NNEXT(w)) { NMARK(w) = 0; }
+            NDFS(v) =  no_dfs(v);
+        }
+        break;
+    case 6: while (v) {
+            NDFS(v) =  no_indeg(v);
+            v = NNEXT(v);
+        }
+        break;
+    case 7: while (v) {
+            NDFS(v) =  - no_indeg(v);
+            v = NNEXT(v);
+        }
+        break;
+    case 8: while (v) {
+            NDFS(v) =  no_outdeg(v);
+            v = NNEXT(v);
+        }
+        break;
+    case 9: while (v) {
+            NDFS(v) =  - no_outdeg(v);
+            v = NNEXT(v);
+        }
+        break;
+    case 10:
+        while (v) {
+            NDFS(v) =  no_degree(v);
+            v = NNEXT(v);
+        }
+        break;
+    case 11:
+        while (v) {
+            NDFS(v) =  - no_degree(v);
+            v = NNEXT(v);
+        }
+        break;
+    }
 
-	}
+    switch (layout_flag) {
+    case 4: case 5: case 6: case 7: case 8:
+    case 9: case 10: case 11:
 
-	for (i=1; i<max-1; i++) {
-		NNEXT(node_sort_array[i]) = node_sort_array[i+1];
-		NBEFORE(node_sort_array[i]) = node_sort_array[i-1];
-	}
-	NNEXT(node_sort_array[0])       = node_sort_array[1];
-	NBEFORE(node_sort_array[0])     = NULL;
-	NNEXT(node_sort_array[max-1])   = NULL;
-	NBEFORE(node_sort_array[max-1]) = node_sort_array[max-2];
-	nodelist    = node_sort_array[0];
-	nodelistend = node_sort_array[max-1];
+        qsort(node_sort_array,max,sizeof(GNODE),
+            (int (*) (const void *, const void *))compare_ndfs);
 
-	for (v = nodelist; v; v = NNEXT(v)) { NDFS(v) = 0L; NMARK(v) = 0; }
+    }
+
+    for (i=1; i<max-1; i++) {
+        NNEXT(node_sort_array[i]) = node_sort_array[i+1];
+        NBEFORE(node_sort_array[i]) = node_sort_array[i-1];
+    }
+    NNEXT(node_sort_array[0])       = node_sort_array[1];
+    NBEFORE(node_sort_array[0])     = NULL;
+    NNEXT(node_sort_array[max-1])   = NULL;
+    NBEFORE(node_sort_array[max-1]) = node_sort_array[max-2];
+    nodelist    = node_sort_array[0];
+    nodelistend = node_sort_array[max-1];
+
+    for (v = nodelist; v; v = NNEXT(v)) { NDFS(v) = 0L; NMARK(v) = 0; }
 }
 
 
@@ -1370,7 +1370,7 @@ static void sort_all_nodes(void)
  *  -------------------------------------------------
  *  returns 1 if NDFS(*a) > NDFS(*b), 0 if equal, -1 otherwise.
  */
- 
+
 static int      compare_ndfs(const GNODE *a,const GNODE *b)
 {
         if (NDFS(*a) > NDFS(*b))                return(1);
@@ -1381,8 +1381,8 @@ static int      compare_ndfs(const GNODE *a,const GNODE *b)
 
 /*  Set the dfs value of a node
  *  ---------------------------
- *  The idea is that we look for the maximal depth of the dfs spanning 
- *  tree starting at that node. 
+ *  The idea is that we look for the maximal depth of the dfs spanning
+ *  tree starting at that node.
  *  If we later sort the nodes according to the negative dfs value,
  *  The first nodes are the nodes that create a maximal depth layout,
  *  because their dfs value is maximal.
@@ -1391,18 +1391,18 @@ static int      compare_ndfs(const GNODE *a,const GNODE *b)
  */
 static long no_dfs(GNODE n)
 {
-	GEDGE edge;
-	long res, z;
+    GEDGE edge;
+    long res, z;
 
-	if (NMARK(n)) return 0L;
-	NMARK(n) = 1;
-	res = 0L;
-	for (edge = FirstSucc(n); edge; edge = NextSucc(edge))
-	{
-		z = no_dfs(ETARGET(edge)) + 1L;
-		if (z>res)  res = z;
-	}
-	return res;
+    if (NMARK(n)) return 0L;
+    NMARK(n) = 1;
+    res = 0L;
+    for (edge = FirstSucc(n); edge; edge = NextSucc(edge))
+    {
+        z = no_dfs(ETARGET(edge)) + 1L;
+        if (z>res)  res = z;
+    }
+    return res;
 }
 
 
@@ -1411,14 +1411,14 @@ static long no_dfs(GNODE n)
  */
 static long no_indeg(GNODE n)
 {
-	GEDGE edge;
-	long res = 0;
+    GEDGE edge;
+    long res = 0;
 
-	for (edge = FirstPred(n); edge; edge = NextPred(edge))
-	{
-		res++;
-	}
-	return res;
+    for (edge = FirstPred(n); edge; edge = NextPred(edge))
+    {
+        res++;
+    }
+    return res;
 }
 
 /* Calculate the outdegree of a node
@@ -1426,14 +1426,14 @@ static long no_indeg(GNODE n)
  */
 static long no_outdeg(GNODE n)
 {
-	GEDGE edge;
-	long res = 0;
+    GEDGE edge;
+    long res = 0;
 
-	for (edge = FirstSucc(n); edge; edge = NextSucc(edge))
-	{
-		res++;
-	}
-	return res;
+    for (edge = FirstSucc(n); edge; edge = NextSucc(edge))
+    {
+        res++;
+    }
+    return res;
 }
 
 /* Calculate the degree of a node
@@ -1441,12 +1441,12 @@ static long no_outdeg(GNODE n)
  */
 static long no_degree(GNODE n)
 {
-	return no_indeg(n) + no_outdeg(n);
+    return no_indeg(n) + no_outdeg(n);
 }
 
 
 /*--------------------------------------------------------------------*/
-/*  Creation and management of adjacency lists			      */
+/*  Creation and management of adjacency lists                */
 /*--------------------------------------------------------------------*/
 
 /*  Primitives
@@ -1459,10 +1459,10 @@ static long no_degree(GNODE n)
  *   i.e. insert an edge into the adjacency lists of its source and
  *   target node.
  */
-void	create_adjedge(GEDGE edge)
+void    create_adjedge(GEDGE edge)
 {
-	link_edge(edge);
-	EINVISIBLE(edge) = 0;
+    link_edge(edge);
+    EINVISIBLE(edge) = 0;
 }
 
 /*   Delete an adjacency
@@ -1471,103 +1471,103 @@ void	create_adjedge(GEDGE edge)
  *   and target node.
  */
 
-void	delete_adjedge(GEDGE edge)
+void    delete_adjedge(GEDGE edge)
 {
-	unlink_edge(edge);
-	EINVISIBLE(edge) = 1;
+    unlink_edge(edge);
+    EINVISIBLE(edge) = 1;
 }
 
 
- 
+
 /*   Create an label node
  *   --------------------
  *   For adjacencies with labels, we create label nodes and auxiliary
- *   edges between the label:	s -> label -> t.
+ *   edges between the label:   s -> label -> t.
  *   This simplifies the layout, because edge labels can be dealed
  *   as nodes.
  *   The new temporary node is inserted into the label list.
  */
 
-GNODE	create_labelnode(GEDGE e)
+GNODE   create_labelnode(GEDGE e)
 {
-	GNODE	v;
+    GNODE   v;
 
-	debugmessage("create_labelnode","");
-	v = tmpnodealloc(CENTER,-1,-1,0,-1,
-			G_color,ELABELCOL(e),ELABELCOL(e),1,1,-1);
-	NSX(v) = (NSX(ESTART(e))+NSX(EEND(e)))/2L; 
-	NSY(v) = (NSY(ESTART(e))+NSY(EEND(e)))/2L; 
-	NTITLE(v)   = "";
-	NLABEL(v)   = ELABEL(e);
-	NSTRETCH(v) = 1;
-	NSHRINK(v)  = 1;
-	adapt_labelpos(v,e);
-	ins_node_in_dl_list(v,labellist,labellistend); 
-	EINVISIBLE(e)=1;
-	ELNODE(e) = v;
-	return(v);
+    debugmessage("create_labelnode","");
+    v = tmpnodealloc(CENTER,-1,-1,0,-1,
+            G_color,ELABELCOL(e),ELABELCOL(e),1,1,-1);
+    NSX(v) = (NSX(ESTART(e))+NSX(EEND(e)))/2L;
+    NSY(v) = (NSY(ESTART(e))+NSY(EEND(e)))/2L;
+    NTITLE(v)   = "";
+    NLABEL(v)   = ELABEL(e);
+    NSTRETCH(v) = 1;
+    NSHRINK(v)  = 1;
+    adapt_labelpos(v,e);
+    ins_node_in_dl_list(v,labellist,labellistend);
+    EINVISIBLE(e)=1;
+    ELNODE(e) = v;
+    return(v);
 }
 
 /*   Calculate the string size of an label
  *   -------------------------------------
  *   and adapt the coordinates of v. The coordinates of labels derived
  *   from nodes that have no coordinates may be wrong; but in this
- *   case, all positions are recalculated anyway. 
+ *   case, all positions are recalculated anyway.
  */
 static void adapt_labelpos(GNODE v, GEDGE e)
 {
-	char *ss;
+    char *ss;
 int gs_stringw =8;
 int gs_stringh =16;
-	assert((v));
-	ss = NLABEL(v);
-	if (!ss) return;
-	if (NSHRINK(v)==0) NSHRINK(v) = 1;
-/*TODO	gs_setshrink(NSTRETCH(v),NSHRINK(v));*/
-/*TODO	gs_calcstringsize(ss);*/
-/*TODO	gs_stringw += (ETHICKNESS(e)/2+1);
-	gs_stringh += (ETHICKNESS(e)/2+1);*/
-	NWIDTH(v)  = gs_stringw; 
-	NHEIGHT(v) = gs_stringh; 
-/*TODO	NSX(v) = NSX(v) - (long)(gs_stringw/2);
-	NSY(v) = NSY(v) - (long)(gs_stringh/2);*/
+    assert((v));
+    ss = NLABEL(v);
+    if (!ss) return;
+    if (NSHRINK(v)==0) NSHRINK(v) = 1;
+/*TODO  gs_setshrink(NSTRETCH(v),NSHRINK(v));*/
+/*TODO  gs_calcstringsize(ss);*/
+/*TODO  gs_stringw += (ETHICKNESS(e)/2+1);
+    gs_stringh += (ETHICKNESS(e)/2+1);*/
+    NWIDTH(v)  = gs_stringw;
+    NHEIGHT(v) = gs_stringh;
+/*TODO  NSX(v) = NSX(v) - (long)(gs_stringw/2);
+    NSY(v) = NSY(v) - (long)(gs_stringh/2);*/
 }
 
 
-/*   Search visible node 
+/*   Search visible node
  *   -------------------
- *   given a node v of a subgraph or region nest, look for the 
+ *   given a node v of a subgraph or region nest, look for the
  *   innerst subgraph summary node or region node that is visible.
  *   Return NULL if no such node exists.
  *   The Search is driven by the reason why v is unvisible.
  */
 
-static GNODE	search_visible(GNODE v)
+static GNODE    search_visible(GNODE v)
 {
-	GNODE w;
+    GNODE w;
 
-	debugmessage("search_visible","");
+    debugmessage("search_visible","");
 
-	/* Dangerous: I'm not sure that this terminates always */
+    /* Dangerous: I'm not sure that this terminates always */
 
-	if (!v) return(NULL);
-	if (NINLIST(v)) return(v);
-	switch (NINVISIBLE(v)) {
-		case UNFOLDED_SGRAPH: 
-			w = v;	
-			while (NINVISIBLE(w)==UNFOLDED_SGRAPH) {
-				w = GNNODE(NSGRAPH(v));
-			}
-			if (NINVISIBLE(w)==FOLDED_SGNODE)
-				return(search_visible(NROOT(v)));
-			else	return(search_visible(GNNODE(NSGRAPH(v))));
-		case FOLDED_SGNODE:
-			return(search_visible(NROOT(v)));
-		case FOLDED_RGNODE:
-			return(search_visible(NREGROOT(v)));
-	}
-	return(NULL);
-}	
+    if (!v) return(NULL);
+    if (NINLIST(v)) return(v);
+    switch (NINVISIBLE(v)) {
+        case UNFOLDED_SGRAPH:
+            w = v;
+            while (NINVISIBLE(w)==UNFOLDED_SGRAPH) {
+                w = GNNODE(NSGRAPH(v));
+            }
+            if (NINVISIBLE(w)==FOLDED_SGNODE)
+                return(search_visible(NROOT(v)));
+            else    return(search_visible(GNNODE(NSGRAPH(v))));
+        case FOLDED_SGNODE:
+            return(search_visible(NROOT(v)));
+        case FOLDED_RGNODE:
+            return(search_visible(NREGROOT(v)));
+    }
+    return(NULL);
+}
 
 
 /*   Check substitution of edges
@@ -1576,83 +1576,83 @@ static GNODE	search_visible(GNODE v)
  *   be replaced by edges to the summary node.
  *   As side effect, the invisibility flag of the edge is set, if the
  *   edge is invisible.
- *   This function returns e,			if e must be drawn, 
- *			   a substitution edge, if e is from a visible node
- *						to an invisible aubgraph node
- *			   NULL,		if e is invisible.
+ *   This function returns e,           if e must be drawn,
+ *             a substitution edge, if e is from a visible node
+ *                      to an invisible aubgraph node
+ *             NULL,        if e is invisible.
  *
  *   Note the situation we expect: edgelist contains all stable edge,
- *   independent of visible or not. 
+ *   independent of visible or not.
  *   tmpedgelist contains the temporary edges that may be additionally
  *   visible.
  *   Subgraph folding/unfolding was done before, and region folding
  *   and edge hiding is done after that !
  */
-	
-static GEDGE	substed_edge(GEDGE e)
+
+static GEDGE    substed_edge(GEDGE e)
 {
-	GNODE	s,t,ss,tt;
-	GEDGE	h;
+    GNODE   s,t,ss,tt;
+    GEDGE   h;
 
-	assert((e));
-	debugmessage("substed_edge","");
+    assert((e));
+    debugmessage("substed_edge","");
 
-	/* We assume: e is in edgelist !!! */
+    /* We assume: e is in edgelist !!! */
 
-	if (EINVISIBLE(e)) return(NULL);
-	s = ESTART(e);
-	t = EEND(e);
-	if ( NINLIST(s) && NINLIST(t) ) return(e);  /* edge must be drawn */
-	EINVISIBLE(e) = 1;
+    if (EINVISIBLE(e)) return(NULL);
+    s = ESTART(e);
+    t = EEND(e);
+    if ( NINLIST(s) && NINLIST(t) ) return(e);  /* edge must be drawn */
+    EINVISIBLE(e) = 1;
 
-	ss = search_visible(s);
-	tt = search_visible(t);
+    ss = search_visible(s);
+    tt = search_visible(t);
 
-	/* We never want to have an edge from a folded region/subgraph to 
-	 * the region/subgraph summary node. This would create unnecessary
- 	 * self loops.
-	 */
-	if (((ss!=s)||(tt!=t))&&(ss==tt)) return(NULL);
+    /* We never want to have an edge from a folded region/subgraph to
+     * the region/subgraph summary node. This would create unnecessary
+     * self loops.
+     */
+    if (((ss!=s)||(tt!=t))&&(ss==tt)) return(NULL);
 
-	/*  It may really happen that s or t are ZERO, e.g. if there are 
-	 *  invisible subgraphs that are not folded but don't contain nodes.
-	 */
-	if ( !ss || !tt ) return(NULL);
+    /*  It may really happen that s or t are ZERO, e.g. if there are
+     *  invisible subgraphs that are not folded but don't contain nodes.
+     */
+    if ( !ss || !tt ) return(NULL);
 
-	/*  Look whether we have already a substitution between s and t.
-	 *  Before the first call, we assume that tmpedgelist is NULL.
-	 */
+    /*  Look whether we have already a substitution between s and t.
+     *  Before the first call, we assume that tmpedgelist is NULL.
+     */
 
-	for (h = tmpedgelist; h; h = ENEXT(h))
-	{
-		if ((ESTART(h)==ss) && (EEND(h)==tt)) return(h);
-	}	
+    for (h = tmpedgelist; h; h = ENEXT(h))
+    {
+        if ((ESTART(h)==ss) && (EEND(h)==tt)) return(h);
+    }
 
-	/*  HERE IS THE POSSIBLE ENTRY POINT TO GIVE THE EDGES TO FOLDED
-	 *  SUBGRAPHS A SPECIAL ATTRIBUTE
-	 */ 
+    /*  HERE IS THE POSSIBLE ENTRY POINT TO GIVE THE EDGES TO FOLDED
+     *  SUBGRAPHS A SPECIAL ATTRIBUTE
+     */
 
-	h = tmpedgealloc(
-		ELSTYLE(e),
-		ETHICKNESS(e),
-		ECLASS(e),
-		EPRIO(e),
-		ECOLOR(e),
-		ELABELCOL(e),
-		EARROWSIZE(e),
-		EARROWBSIZE(e),
-		EARROWSTYLE(e),
-		EARROWBSTYLE(e),
-		EARROWCOL(e),
-		EARROWBCOL(e),
-		EHORDER(e));
-	if (s==ss) EANCHOR(h) = EANCHOR(e);
+    h = tmpedgealloc(
+        ELSTYLE(e),
+        ETHICKNESS(e),
+        ECLASS(e),
+        EPRIO(e),
+        ECOLOR(e),
+        ELABELCOL(e),
+        EARROWSIZE(e),
+        EARROWBSIZE(e),
+        EARROWSTYLE(e),
+        EARROWBSTYLE(e),
+        EARROWCOL(e),
+        EARROWBCOL(e),
+        EHORDER(e));
+    if (s==ss) EANCHOR(h) = EANCHOR(e);
 
-	inherit_foldedge_attributes(&foldedge, h);
-	
-	ESTART(h)	= ss;
-	EEND(h) 	= tt;
-	return(h);
+    inherit_foldedge_attributes(&foldedge, h);
+
+    ESTART(h)   = ss;
+    EEND(h)     = tt;
+    return(h);
 }
 
 
@@ -1664,14 +1664,14 @@ static GEDGE	substed_edge(GEDGE e)
  */
 static void create_adjacencies(void)
 {
-	GEDGE edge, e;
+    GEDGE edge, e;
 
-	debugmessage("create_adjacencies","");
-	for (edge = edgelist; edge; edge = ENEXT(edge))
-	{
-		e = substed_edge(edge);
-		if (e) create_adjedge(e);
-	}
+    debugmessage("create_adjacencies","");
+    for (edge = edgelist; edge; edge = ENEXT(edge))
+    {
+        e = substed_edge(edge);
+        if (e) create_adjedge(e);
+    }
 }
 
 
@@ -1689,57 +1689,57 @@ static void create_adjacencies(void)
 
 static void create_lab_adjacencies(void)
 {
-	GEDGE	edge, e, e1, e2;
-	GNODE	v;
+    GEDGE   edge, e, e1, e2;
+    GNODE   v;
 
-	debugmessage("create_lab_adjacencies","");
-	for (edge = edgelist; edge; edge = ENEXT(edge))
-	{
-		e = substed_edge(edge);
-		if (e) {
-			if ( ELABEL(e) ) {
-				v = create_labelnode(e);
-				e1 = tmpedgealloc(
-						ELSTYLE(e),
-						ETHICKNESS(e),
-						ECLASS(e),
-						EPRIO(e),
-						ECOLOR(e),
-						ELABELCOL(e),
-						0,
-						EARROWBSIZE(e),
-						ASNONE,
-						EARROWBSTYLE(e),
-						EARROWCOL(e),
-						EARROWBCOL(e),
-						EHORDER(e));
-				EANCHOR(e1) = EANCHOR(e);
-				ESTART(e1)	= ESTART(e);
-				EEND(e1)	= v;
-				ELABEL(e1)	= NULL;
-				create_adjedge(e1);
-				e2 = tmpedgealloc(
-						ELSTYLE(e),
-						ETHICKNESS(e),
-						ECLASS(e),
-						EPRIO(e),
-						ECOLOR(e),
-						ELABELCOL(e),
-						EARROWSIZE(e),
-						0,
-						EARROWSTYLE(e),
-						ASNONE,
-						EARROWCOL(e),
-						EARROWBCOL(e),
-						EHORDER(e));
-				ESTART(e2)	= v;
-				EEND(e2)	= EEND(e);
-				ELABEL(e2)	= NULL;
-				create_adjedge(e2);
-			}
-			else create_adjedge(e);
-		}
-	}
+    debugmessage("create_lab_adjacencies","");
+    for (edge = edgelist; edge; edge = ENEXT(edge))
+    {
+        e = substed_edge(edge);
+        if (e) {
+            if ( ELABEL(e) ) {
+                v = create_labelnode(e);
+                e1 = tmpedgealloc(
+                        ELSTYLE(e),
+                        ETHICKNESS(e),
+                        ECLASS(e),
+                        EPRIO(e),
+                        ECOLOR(e),
+                        ELABELCOL(e),
+                        0,
+                        EARROWBSIZE(e),
+                        ASNONE,
+                        EARROWBSTYLE(e),
+                        EARROWCOL(e),
+                        EARROWBCOL(e),
+                        EHORDER(e));
+                EANCHOR(e1) = EANCHOR(e);
+                ESTART(e1)  = ESTART(e);
+                EEND(e1)    = v;
+                ELABEL(e1)  = NULL;
+                create_adjedge(e1);
+                e2 = tmpedgealloc(
+                        ELSTYLE(e),
+                        ETHICKNESS(e),
+                        ECLASS(e),
+                        EPRIO(e),
+                        ECOLOR(e),
+                        ELABELCOL(e),
+                        EARROWSIZE(e),
+                        0,
+                        EARROWSTYLE(e),
+                        ASNONE,
+                        EARROWCOL(e),
+                        EARROWBCOL(e),
+                        EHORDER(e));
+                ESTART(e2)  = v;
+                EEND(e2)    = EEND(e);
+                ELABEL(e2)  = NULL;
+                create_adjedge(e2);
+            }
+            else create_adjedge(e);
+        }
+    }
 }
 
 /*--------------------------------------------------------------------*/
@@ -1750,55 +1750,55 @@ static void create_lab_adjacencies(void)
  * to the same other node. To avoid to layout such situations,
  * we delete all duplicates. This happens only for edges without
  * labels.
- * But note that this function is very slow and may be cubic in 
+ * But note that this function is very slow and may be cubic in
  * complexity. Thus it is optional.
  */
 static void summarize_edges(void)
 {
-	GNODE v;
-	GEDGE e1, nxt_e1, e2;
-	int found, ide;
+    GNODE v;
+    GEDGE e1, nxt_e1, e2;
+    int found, ide;
 
-	for (v = nodelist; v; v = NNEXT(v))
-	{
-		for (e1 = FirstSucc(v); e1; e1 = nxt_e1)
-		{
-			nxt_e1 = NextSucc(e1);
-			found = 0;
-			for (e2 = FirstSucc(v); e2; e2 = NextSucc(e2))
-			{
-				if (e2 == e1)
-					continue;
-				ide = 1;
-				if (ESTART(e1)      != ESTART(e2))       ide=0;
-				if (EEND(e1)        != EEND(e2))         ide=0;
-				if (ELSTYLE(e1)     != ELSTYLE(e2))      ide=0;
-				if (ETHICKNESS(e1)  >  ETHICKNESS(e2))   ide=0;
-				if (EPRIO(e1)       >  EPRIO(e2))        ide=0;
-				if (EHORDER(e1)     != EHORDER(e2))      ide=0;
-				if (ECLASS(e1)      != ECLASS(e2))       ide=0;
-				if (ECOLOR(e1)      != ECOLOR(e2))       ide=0;
-				if (EARROWSIZE(e1)  != EARROWSIZE(e2))   ide=0;
-				if (EARROWBSIZE(e1) != EARROWBSIZE(e2))  ide=0;
-				if (EARROWSTYLE(e1) != EARROWSTYLE(e2))  ide=0;
-				if (EARROWBSTYLE(e1)!= EARROWBSTYLE(e2)) ide=0;
-				if (EARROWCOL(e1)   != EARROWCOL(e2))    ide=0;
-				if (EARROWBCOL(e1)  != EARROWBCOL(e2))   ide=0;
-				if (EANCHOR(e1)     != EANCHOR(e2))      ide=0;
+    for (v = nodelist; v; v = NNEXT(v))
+    {
+        for (e1 = FirstSucc(v); e1; e1 = nxt_e1)
+        {
+            nxt_e1 = NextSucc(e1);
+            found = 0;
+            for (e2 = FirstSucc(v); e2; e2 = NextSucc(e2))
+            {
+                if (e2 == e1)
+                    continue;
+                ide = 1;
+                if (ESTART(e1)      != ESTART(e2))       ide=0;
+                if (EEND(e1)        != EEND(e2))         ide=0;
+                if (ELSTYLE(e1)     != ELSTYLE(e2))      ide=0;
+                if (ETHICKNESS(e1)  >  ETHICKNESS(e2))   ide=0;
+                if (EPRIO(e1)       >  EPRIO(e2))        ide=0;
+                if (EHORDER(e1)     != EHORDER(e2))      ide=0;
+                if (ECLASS(e1)      != ECLASS(e2))       ide=0;
+                if (ECOLOR(e1)      != ECOLOR(e2))       ide=0;
+                if (EARROWSIZE(e1)  != EARROWSIZE(e2))   ide=0;
+                if (EARROWBSIZE(e1) != EARROWBSIZE(e2))  ide=0;
+                if (EARROWSTYLE(e1) != EARROWSTYLE(e2))  ide=0;
+                if (EARROWBSTYLE(e1)!= EARROWBSTYLE(e2)) ide=0;
+                if (EARROWCOL(e1)   != EARROWCOL(e2))    ide=0;
+                if (EARROWBCOL(e1)  != EARROWBCOL(e2))   ide=0;
+                if (EANCHOR(e1)     != EANCHOR(e2))      ide=0;
 
-				if (ide) {
-					found++; break;
-				}
-			}
-			if (found) delete_adjedge(e1);
-		}
-	}
+                if (ide) {
+                    found++; break;
+                }
+            }
+            if (found) delete_adjedge(e1);
+        }
+    }
 #ifdef CHECK_ASSERTIONS
-	for (v = labellist; v; v = NNEXT(v))
-	{
-		/* only one edge !!! */
-		assert(NextSucc(FirstSucc(v)) == NULL);
-	}
+    for (v = labellist; v; v = NNEXT(v))
+    {
+        /* only one edge !!! */
+        assert(NextSucc(FirstSucc(v)) == NULL);
+    }
 #endif
 } /* summarize_edges */
 
@@ -1818,75 +1818,75 @@ static void summarize_edges(void)
  *                                      \   ^
  *                                       \_/
  *
- * Note: self loops are not split since we have a special treatment 
+ * Note: self loops are not split since we have a special treatment
  * of self loops.
  */
 static void split_double_edges(void)
 {
-	GNODE v, w;
-	GEDGE e, nxt_e, c, e1, e2;
-	int found;
+    GNODE v, w;
+    GEDGE e, nxt_e, c, e1, e2;
+    int found;
 
-	for (v = nodelist; v; v = NNEXT(v))
-	{
-		for (e = FirstSucc(v); e; e = nxt_e)
-		{
-			nxt_e = NextSucc(e);
-			if (ETARGET(e) == ESOURCE(e)) {
-				continue;       /* selfloop */
-			}
-			found = 0;
-			for (c = FirstSucc(v); c; c = NextSucc(c))
-			{
-				if ((c!=e)&&(ETARGET(c)==ETARGET(e))) {
-					found++; break;
-				}
-			}
-			if (found) {
-				w = create_labelnode(e);
-				NLABEL(w) = "";
-				NWIDTH(w) = NHEIGHT(w) = 0;
-				e1 = tmpedgealloc(
-						ELSTYLE(e),
-						ETHICKNESS(e),
-						ECLASS(e),
-						EPRIO(e),
-						ECOLOR(e),
-						ELABELCOL(e),
-						0,
-						EARROWBSIZE(e),
-						ASNONE,
-						EARROWBSTYLE(e),
-						EARROWCOL(e),
-						EARROWBCOL(e),
-						EHORDER(e));
-				EANCHOR(e1) = EANCHOR(e);
-				ESTART(e1)	= v;
-				EEND(e1)	= w;
-				ELABEL(e1)	= ELABEL(e);
-				create_adjedge(e1);
-				e2 = tmpedgealloc(
-						ELSTYLE(e),
-						ETHICKNESS(e),
-						ECLASS(e),
-						EPRIO(e),
-						ECOLOR(e),
-						ELABELCOL(e),
-						EARROWSIZE(e),
-						0,
-						EARROWSTYLE(e),
-						ASNONE,
-						EARROWCOL(e),
-						EARROWBCOL(e),
-						EHORDER(e));
-				ESTART(e2)	= w;
-				EEND(e2)	= EEND(e);
-				ELABEL(e2)	= NULL;
-				create_adjedge(e2);
-				delete_adjedge(e);
-			}
-		}
-	}
+    for (v = nodelist; v; v = NNEXT(v))
+    {
+        for (e = FirstSucc(v); e; e = nxt_e)
+        {
+            nxt_e = NextSucc(e);
+            if (ETARGET(e) == ESOURCE(e)) {
+                continue;       /* selfloop */
+            }
+            found = 0;
+            for (c = FirstSucc(v); c; c = NextSucc(c))
+            {
+                if ((c!=e)&&(ETARGET(c)==ETARGET(e))) {
+                    found++; break;
+                }
+            }
+            if (found) {
+                w = create_labelnode(e);
+                NLABEL(w) = "";
+                NWIDTH(w) = NHEIGHT(w) = 0;
+                e1 = tmpedgealloc(
+                        ELSTYLE(e),
+                        ETHICKNESS(e),
+                        ECLASS(e),
+                        EPRIO(e),
+                        ECOLOR(e),
+                        ELABELCOL(e),
+                        0,
+                        EARROWBSIZE(e),
+                        ASNONE,
+                        EARROWBSTYLE(e),
+                        EARROWCOL(e),
+                        EARROWBCOL(e),
+                        EHORDER(e));
+                EANCHOR(e1) = EANCHOR(e);
+                ESTART(e1)  = v;
+                EEND(e1)    = w;
+                ELABEL(e1)  = ELABEL(e);
+                create_adjedge(e1);
+                e2 = tmpedgealloc(
+                        ELSTYLE(e),
+                        ETHICKNESS(e),
+                        ECLASS(e),
+                        EPRIO(e),
+                        ECOLOR(e),
+                        ELABELCOL(e),
+                        EARROWSIZE(e),
+                        0,
+                        EARROWSTYLE(e),
+                        ASNONE,
+                        EARROWCOL(e),
+                        EARROWBCOL(e),
+                        EHORDER(e));
+                ESTART(e2)  = w;
+                EEND(e2)    = EEND(e);
+                ELABEL(e2)  = NULL;
+                create_adjedge(e2);
+                delete_adjedge(e);
+            }
+        }
+    }
 } /* split_double_edges */
 
 
@@ -1895,7 +1895,7 @@ static void split_double_edges(void)
 
 #ifdef DEBUG
 
-/* Debugging function: print a double linked nodelist 
+/* Debugging function: print a double linked nodelist
  * --------------------------------------------------
  * w is startnode, wend is endnode. We print maximal
  * DB_MAXNODES nodes to avoid to come into an infinite
@@ -1906,18 +1906,18 @@ static void split_double_edges(void)
 
 static void db_print_somenode_list(GNODE w,GNODE wend)
 {
-	GNODE v; int i;
+    GNODE v; int i;
 
-	i = 0;
-	PRINTF("Addresses Startnode %p Endnode %p\n",w,wend);
-	for (v = w; v; v = NNEXT(v))
-	{
-		i++; if (i>DB_MAXNODES) break;
-		PRINTF("Address %p:%s [%d]    (Address next: %p)\n",
-			v, NTITLE(v)?NTITLE(v):"(null)", NINVISIBLE(v),
-			NNEXT(v));
-	}
+    i = 0;
+    PRINTF("Addresses Startnode %p Endnode %p\n",w,wend);
+    for (v = w; v; v = NNEXT(v))
+    {
+        i++; if (i>DB_MAXNODES) break;
+        PRINTF("Address %p:%s [%d]    (Address next: %p)\n",
+            v, NTITLE(v)?NTITLE(v):"(null)", NINVISIBLE(v),
+            NNEXT(v));
+    }
 }
-#endif 
+#endif
 
 

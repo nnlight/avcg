@@ -45,7 +45,7 @@ struct _MwDuckClass
 
 GType          mw_duck_get_type        (void);
 GtkWidget*     mw_duck_new             (void);
-void	       mw_duck_clear           (MwDuck *duck);
+void           mw_duck_clear           (MwDuck *duck);
 
 
 G_END_DECLS

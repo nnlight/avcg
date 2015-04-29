@@ -9,7 +9,7 @@
 /*   version:      1.00.00                                            */
 /*   creation:     11.11.93                                           */
 /*   author:       I. Lemke  (...-Version 0.99.99)                    */
-/*                 G. Sander (Version 1.00.00-...)                    */  
+/*                 G. Sander (Version 1.00.00-...)                    */
 /*                 Universitaet des Saarlandes, 66041 Saarbruecken    */
 /*                 ESPRIT Project #5399 Compare                       */
 /*   description:  Time measurement for debugging/profiling           */
@@ -23,9 +23,9 @@
 
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium 
+ *                               the Compare Consortium
  *
- *  This program and documentation is free software; you can redistribute 
+ *  This program and documentation is free software; you can redistribute
  *  it under the terms of the  GNU General Public License as published by
  *  the  Free Software Foundation;  either version 2  of the License,  or
  *  (at your option) any later version.
@@ -84,10 +84,10 @@
 #else
 
 /************************************************************************
- *	Time measurement for debugging. 
- *	This works with Sun Os 4.2.1 on Sparcstations. I don't know
- *	whether it works anywhere else.
- *	No further comments: THIS UGLY FILE IS ONLY FOR ME !!! (GS)
+ *  Time measurement for debugging.
+ *  This works with Sun Os 4.2.1 on Sparcstations. I don't know
+ *  whether it works anywhere else.
+ *  No further comments: THIS UGLY FILE IS ONLY FOR ME !!! (GS)
  ************************************************************************/
 
 
@@ -109,10 +109,10 @@ static unsigned long start_usermycsec;
 struct timeval  tpstart;
 struct timezone tzpstart;
 
-static void start_time	_PP((void));
+static void start_time  _PP((void));
 
-extern int  getrusage	 _PP((int x,struct rusage *r));
-#ifdef __cplusplus 
+extern int  getrusage    _PP((int x,struct rusage *r));
+#ifdef __cplusplus
 #define  gettimeofday(a,b)  (0)
 #else
 extern int  gettimeofday _PP((struct timeval *tp, struct timezone *tzp));
@@ -121,15 +121,15 @@ extern int  gettimeofday _PP((struct timeval *tp, struct timezone *tzp));
 
 static void start_time(void)
 {
-	struct rusage r;
+    struct rusage r;
 
-	getrusage(RUSAGE_SELF,&r);
+    getrusage(RUSAGE_SELF,&r);
 
-	start_syssec     = r.ru_stime.tv_sec;
-	start_sysmycsec  = r.ru_stime.tv_usec;
-	start_usersec    = r.ru_utime.tv_sec;
-	start_usermycsec = r.ru_utime.tv_usec;
-	gettimeofday(&tpstart,&tzpstart);
+    start_syssec     = r.ru_stime.tv_sec;
+    start_sysmycsec  = r.ru_stime.tv_usec;
+    start_usersec    = r.ru_utime.tv_sec;
+    start_usermycsec = r.ru_utime.tv_usec;
+    gettimeofday(&tpstart,&tzpstart);
 }
 
 static unsigned long stop_syssec;
@@ -139,37 +139,37 @@ static unsigned long stop_usermycsec;
 struct timeval  tpend;
 struct timezone tzpend;
 
-static void stop_time	_PP((char *x));
+static void stop_time   _PP((char *x));
 
 static void stop_time(char *x)
 {
-	struct rusage r;
-	unsigned long sec;
-	long int usec;
+    struct rusage r;
+    unsigned long sec;
+    long int usec;
 
-	gettimeofday(&tpend,&tzpend);
-	getrusage(RUSAGE_SELF,&r);
+    gettimeofday(&tpend,&tzpend);
+    getrusage(RUSAGE_SELF,&r);
 
-	stop_syssec     = r.ru_stime.tv_sec;
-	stop_sysmycsec  = r.ru_stime.tv_usec;
-	stop_usersec    = r.ru_utime.tv_sec;
-	stop_usermycsec = r.ru_utime.tv_usec;
+    stop_syssec     = r.ru_stime.tv_sec;
+    stop_sysmycsec  = r.ru_stime.tv_usec;
+    stop_usersec    = r.ru_utime.tv_sec;
+    stop_usermycsec = r.ru_utime.tv_usec;
 
-	sec = stop_usersec - start_usersec;
-	usec = stop_usermycsec - start_usermycsec;
-	if (usec<0) { sec--; usec += 1000000; }
-	(void)printf( "%s:\n",x);
-	(void)printf( "Time: User: %ld.%03ld sec ",
-		sec, usec/1000);
-	sec = stop_syssec - start_syssec;
-	usec = stop_sysmycsec - start_sysmycsec;
-	if (usec<0) { sec--; usec += 1000000; }
-	(void)printf( "System: %ld.%03ld sec ",
-		sec, usec/1000);
-	sec = tpend.tv_sec-tpstart.tv_sec;	
-	usec = tpend.tv_usec-tpstart.tv_usec;	
-	if (usec<0) { sec--; usec += 1000000; }
-	(void)printf( "Real: %ld.%03ld sec\n",sec,usec/1000);
+    sec = stop_usersec - start_usersec;
+    usec = stop_usermycsec - start_usermycsec;
+    if (usec<0) { sec--; usec += 1000000; }
+    (void)printf( "%s:\n",x);
+    (void)printf( "Time: User: %ld.%03ld sec ",
+        sec, usec/1000);
+    sec = stop_syssec - start_syssec;
+    usec = stop_sysmycsec - start_sysmycsec;
+    if (usec<0) { sec--; usec += 1000000; }
+    (void)printf( "System: %ld.%03ld sec ",
+        sec, usec/1000);
+    sec = tpend.tv_sec-tpstart.tv_sec;
+    usec = tpend.tv_usec-tpstart.tv_usec;
+    if (usec<0) { sec--; usec += 1000000; }
+    (void)printf( "Real: %ld.%03ld sec\n",sec,usec/1000);
 }
 
 #endif /* CHECK_TIMING */

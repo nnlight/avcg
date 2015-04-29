@@ -2248,7 +2248,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-{ return(LEXWORD_BARYMEDIAN);          } 
+{ return(LEXWORD_BARYMEDIAN);          }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
@@ -2440,19 +2440,19 @@ YY_RULE_SETUP
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-{ return(LEXWORD_DASHED);              } 
+{ return(LEXWORD_DASHED);              }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-{ return(LEXWORD_DFS);   	       } 
+{ return(LEXWORD_DFS);                 }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-{ return(LEXWORD_DFS);   	       } 
+{ return(LEXWORD_DFS);                 }
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-{ return(LEXWORD_DFS);   	       } 
+{ return(LEXWORD_DFS);                 }
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
@@ -2624,7 +2624,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 127:
 YY_RULE_SETUP
-{ return(LEXWORD_HIGH);		       }
+{ return(LEXWORD_HIGH);                }
 	YY_BREAK
 case 128:
 YY_RULE_SETUP
@@ -2804,19 +2804,19 @@ YY_RULE_SETUP
 	YY_BREAK
 case 172:
 YY_RULE_SETUP
-{ return(LEXWORD_LEFT_JUSTIFY);        } 
+{ return(LEXWORD_LEFT_JUSTIFY);        }
 	YY_BREAK
 case 173:
 YY_RULE_SETUP
-{ return(LEXWORD_LEFT_JUSTIFY);        } 
+{ return(LEXWORD_LEFT_JUSTIFY);        }
 	YY_BREAK
 case 174:
 YY_RULE_SETUP
-{ return(LEXWORD_LEFT_MARGIN);         } 
+{ return(LEXWORD_LEFT_MARGIN);         }
 	YY_BREAK
 case 175:
 YY_RULE_SETUP
-{ return(LEXWORD_LEFT_MARGIN);         } 
+{ return(LEXWORD_LEFT_MARGIN);         }
 	YY_BREAK
 case 176:
 YY_RULE_SETUP
@@ -2828,11 +2828,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 178:
 YY_RULE_SETUP
-{ return(LEXWORD_LEFT_TO_RIGHT);       } 
+{ return(LEXWORD_LEFT_TO_RIGHT);       }
 	YY_BREAK
 case 179:
 YY_RULE_SETUP
-{ return(LEXWORD_LEFT_TO_RIGHT);       } 
+{ return(LEXWORD_LEFT_TO_RIGHT);       }
 	YY_BREAK
 case 180:
 YY_RULE_SETUP
@@ -2888,19 +2888,19 @@ YY_RULE_SETUP
 	YY_BREAK
 case 193:
 YY_RULE_SETUP
-{ return(LEXWORD_LIMIT);               } 
+{ return(LEXWORD_LIMIT);               }
 	YY_BREAK
 case 194:
 YY_RULE_SETUP
-{ return(LEXWORD_LINE);                } 
+{ return(LEXWORD_LINE);                }
 	YY_BREAK
 case 195:
 YY_RULE_SETUP
-{ return(LEXWORD_LINESTYLE);           } 
+{ return(LEXWORD_LINESTYLE);           }
 	YY_BREAK
 case 196:
 YY_RULE_SETUP
-{ return(LEXWORD_LINESTYLE);           } 
+{ return(LEXWORD_LINESTYLE);           }
 	YY_BREAK
 case 197:
 YY_RULE_SETUP
@@ -2916,15 +2916,15 @@ YY_RULE_SETUP
 	YY_BREAK
 case 200:
 YY_RULE_SETUP
-{ return(LEXWORD_LOW_MARGIN);          } 
+{ return(LEXWORD_LOW_MARGIN);          }
 	YY_BREAK
 case 201:
 YY_RULE_SETUP
-{ return(LEXWORD_LOW_MARGIN);          } 
+{ return(LEXWORD_LOW_MARGIN);          }
 	YY_BREAK
 case 202:
 YY_RULE_SETUP
-{ return(LEXWORD_LOW);                 } 
+{ return(LEXWORD_LOW);                 }
 	YY_BREAK
 case 203:
 YY_RULE_SETUP
@@ -2932,79 +2932,79 @@ YY_RULE_SETUP
 	YY_BREAK
 case 204:
 YY_RULE_SETUP
-{ return(LEXWORD_MANHATTEN);           } 
+{ return(LEXWORD_MANHATTEN);           }
 	YY_BREAK
 case 205:
 YY_RULE_SETUP
-{ return(LEXWORD_MANHATTEN);           } 
+{ return(LEXWORD_MANHATTEN);           }
 	YY_BREAK
 case 206:
 YY_RULE_SETUP
-{ return(LEXWORD_MANHATTEN);           } 
+{ return(LEXWORD_MANHATTEN);           }
 	YY_BREAK
 case 207:
 YY_RULE_SETUP
-{ return(LEXWORD_MANHATTEN);           } 
+{ return(LEXWORD_MANHATTEN);           }
 	YY_BREAK
 case 208:
 YY_RULE_SETUP
-{ return(LEXWORD_MANUAL);              } 
+{ return(LEXWORD_MANUAL);              }
 	YY_BREAK
 case 209:
 YY_RULE_SETUP
-{ return(LEXWORD_MAXDEPTHSLOW);        } 
+{ return(LEXWORD_MAXDEPTHSLOW);        }
 	YY_BREAK
 case 210:
 YY_RULE_SETUP
-{ return(LEXWORD_MAXDEPTH);            } 
+{ return(LEXWORD_MAXDEPTH);            }
 	YY_BREAK
 case 211:
 YY_RULE_SETUP
-{ return(LEXWORD_MAXDEGREE);           } 
+{ return(LEXWORD_MAXDEGREE);           }
 	YY_BREAK
 case 212:
 YY_RULE_SETUP
-{ return(LEXWORD_MAXINDEGREE);         } 
+{ return(LEXWORD_MAXINDEGREE);         }
 	YY_BREAK
 case 213:
 YY_RULE_SETUP
-{ return(LEXWORD_MAXOUTDEGREE);        } 
+{ return(LEXWORD_MAXOUTDEGREE);        }
 	YY_BREAK
 case 214:
 YY_RULE_SETUP
-{ return(LEXWORD_MEDIAN);              } 
+{ return(LEXWORD_MEDIAN);              }
 	YY_BREAK
 case 215:
 YY_RULE_SETUP
-{ return(LEXWORD_MEDIANBARY);          } 
+{ return(LEXWORD_MEDIANBARY);          }
 	YY_BREAK
 case 216:
 YY_RULE_SETUP
-{ return(LEXWORD_MINDEPTHSLOW);        } 
+{ return(LEXWORD_MINDEPTHSLOW);        }
 	YY_BREAK
 case 217:
 YY_RULE_SETUP
-{ return(LEXWORD_MINDEPTH);            } 
+{ return(LEXWORD_MINDEPTH);            }
 	YY_BREAK
 case 218:
 YY_RULE_SETUP
-{ return(LEXWORD_MINDEGREE);           } 
+{ return(LEXWORD_MINDEGREE);           }
 	YY_BREAK
 case 219:
 YY_RULE_SETUP
-{ return(LEXWORD_MININDEGREE);         } 
+{ return(LEXWORD_MININDEGREE);         }
 	YY_BREAK
 case 220:
 YY_RULE_SETUP
-{ return(LEXWORD_MINOUTDEGREE);        } 
+{ return(LEXWORD_MINOUTDEGREE);        }
 	YY_BREAK
 case 221:
 YY_RULE_SETUP
-{ return(LEXWORD_MINBACK);             } 
+{ return(LEXWORD_MINBACK);             }
 	YY_BREAK
 case 222:
 YY_RULE_SETUP
-{ return(LEXWORD_NAME);                } 
+{ return(LEXWORD_NAME);                }
 	YY_BREAK
 case 223:
 YY_RULE_SETUP
@@ -3016,7 +3016,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 225:
 YY_RULE_SETUP
-{ return(LEXWORD_NEIGHBORS);           } 
+{ return(LEXWORD_NEIGHBORS);           }
 	YY_BREAK
 case 226:
 YY_RULE_SETUP
@@ -3076,7 +3076,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 240:
 YY_RULE_SETUP
-{ return(LEXWORD_ORIENTATION);         } 
+{ return(LEXWORD_ORIENTATION);         }
 	YY_BREAK
 case 241:
 YY_RULE_SETUP
@@ -3108,11 +3108,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 248:
 YY_RULE_SETUP
-{ return(LEXWORD_PORTSHARING);         } 
+{ return(LEXWORD_PORTSHARING);         }
 	YY_BREAK
 case 249:
 YY_RULE_SETUP
-{ return(LEXWORD_PORTSHARING);         } 
+{ return(LEXWORD_PORTSHARING);         }
 	YY_BREAK
 case 250:
 YY_RULE_SETUP
@@ -3128,11 +3128,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 253:
 YY_RULE_SETUP
-{ return(LEXWORD_PURPLE);              } 
+{ return(LEXWORD_PURPLE);              }
 	YY_BREAK
 case 254:
 YY_RULE_SETUP
-{ return(LEXWORD_RANGE);               } 
+{ return(LEXWORD_RANGE);               }
 	YY_BREAK
 case 255:
 YY_RULE_SETUP
@@ -3204,19 +3204,19 @@ YY_RULE_SETUP
 	YY_BREAK
 case 272:
 YY_RULE_SETUP
-{ return(LEXWORD_SMANHATTEN);          } 
+{ return(LEXWORD_SMANHATTEN);          }
 	YY_BREAK
 case 273:
 YY_RULE_SETUP
-{ return(LEXWORD_SMANHATTEN);          } 
+{ return(LEXWORD_SMANHATTEN);          }
 	YY_BREAK
 case 274:
 YY_RULE_SETUP
-{ return(LEXWORD_SMANHATTEN);          } 
+{ return(LEXWORD_SMANHATTEN);          }
 	YY_BREAK
 case 275:
 YY_RULE_SETUP
-{ return(LEXWORD_SMANHATTEN);          } 
+{ return(LEXWORD_SMANHATTEN);          }
 	YY_BREAK
 case 276:
 YY_RULE_SETUP
@@ -3304,7 +3304,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 297:
 YY_RULE_SETUP
-{ return(LEXWORD_TITLE);               } 
+{ return(LEXWORD_TITLE);               }
 	YY_BREAK
 case 298:
 YY_RULE_SETUP
@@ -3332,7 +3332,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 304:
 YY_RULE_SETUP
-{ return(LEXWORD_TOP);                 } 
+{ return(LEXWORD_TOP);                 }
 	YY_BREAK
 case 305:
 YY_RULE_SETUP
@@ -3473,33 +3473,33 @@ YY_RULE_SETUP
 case 338:
 YY_RULE_SETUP
 {
-				yylval.lnum = atol(yytext); 
-				return(LEX_INT); 
-			}
+                                yylval.lnum = atol(yytext);
+                                return(LEX_INT);
+                        }
 	YY_BREAK
 case 339:
 YY_RULE_SETUP
 {
-				yylval.lrealnum = atof(yytext); 
-				return(LEX_FLOAT); 
-			}
+                                yylval.lrealnum = atof(yytext);
+                                return(LEX_FLOAT);
+                        }
 	YY_BREAK
 case 340:
 /* rule 340 can match eol */
 YY_RULE_SETUP
 {
-				yylval.byte = yytext[1];
-				return(LEX_CHAR);
-                	}
+                                yylval.byte = yytext[1];
+                                return(LEX_CHAR);
+                        }
 	YY_BREAK
 case 341:
 /* rule 341 can match eol */
 YY_RULE_SETUP
 {
-				yytext[strlen(yytext)-1] = '\0';
-				escape_transl(&(yytext[1]));
-				yylval.lnum = HashInsert(&(yytext[1]));
-				return(LEX_STRING);
+                                yytext[strlen(yytext)-1] = '\0';
+                                escape_transl(&(yytext[1]));
+                                yylval.lnum = HashInsert(&(yytext[1]));
+                                return(LEX_STRING);
                         }
 	YY_BREAK
 case 342:
@@ -3554,10 +3554,10 @@ YY_RULE_SETUP
 case 354:
 YY_RULE_SETUP
 {
-				syntaxerror(yylloc.first_line, yylloc.first_column,
-					"scanner reads unexpected %c",yytext[0]);
-				return(' ');
-			}
+                                syntaxerror(yylloc.first_line, yylloc.first_column,
+                                        "scanner reads unexpected %c",yytext[0]);
+                                return(' ');
+                        }
 	YY_BREAK
 case 355:
 YY_RULE_SETUP
@@ -4703,14 +4703,14 @@ void yyfree (void * ptr )
 
 void init_lex( FILE *f, const char *fname)
 {
-	yyin = f;
-	line_nr = 1;
-	pos_nr = 1;
-	strncpy( filename, fname, FILENAME_BUF_SIZE-1);
+        yyin = f;
+        line_nr = 1;
+        pos_nr = 1;
+        strncpy( filename, fname, FILENAME_BUF_SIZE-1);
 
-	/* Turn yy_flex_debug on if you want to debug the scanner */
-	yy_flex_debug = 0;
+        /* Turn yy_flex_debug on if you want to debug the scanner */
+        yy_flex_debug = 0;
 
-	/*yy_init = 0;*/
+        /*yy_init = 0;*/
 } /* init_lex */
 

@@ -18,9 +18,9 @@
 
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium 
+ *                               the Compare Consortium
  *
- *  This program and documentation is free software; you can redistribute 
+ *  This program and documentation is free software; you can redistribute
  *  it under the terms of the  GNU General Public License as published by
  *  the  Free Software Foundation;  either version 2  of the License,  or
  *  (at your option) any later version.
@@ -76,9 +76,9 @@ extern int max_straighttune;
 extern int max_edgebendings;
 extern int manhatten_edges;
 extern int one_line_manhatten;
-extern int layout_downfactor; 
-extern int layout_upfactor; 
-extern int layout_nearfactor; 
+extern int layout_downfactor;
+extern int layout_upfactor;
+extern int layout_nearfactor;
 
 extern int G_spline;
 extern int G_flat_factor;
@@ -138,7 +138,7 @@ extern int     fold_barrowc;
 extern int     fold_arrsty;
 extern int     fold_barrsty;
 
-extern int 	max_eprio;
+extern int  max_eprio;
 
 extern int  info_name_available;
 extern char *info_names[3];
@@ -154,15 +154,15 @@ extern int locFlag;
  *  ----------
  */
 
-int  scanOptions		(int argc, char *argv[]);
-void print_basic_help	(void);
-void print_help			(void);
+int  scanOptions        (int argc, char *argv[]);
+void print_basic_help   (void);
+void print_help         (void);
 
 void initOptions();
 
 
 /*--------------------------------------------------------------------*/
- 
+
 #endif /* OPTIONS_H */
 
 

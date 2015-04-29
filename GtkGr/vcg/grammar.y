@@ -28,7 +28,7 @@ extern char *yytext;
                  x); \
     }
 #endif
- 
+
 
 #ifndef yylocate
 #define yylocate(x) (&(x))
@@ -39,7 +39,7 @@ extern char *yytext;
 
 
 /*--------------------------------------------------------------------*/
-/* Tokens from scanner                                                */ 
+/* Tokens from scanner                                                */
 /*--------------------------------------------------------------------*/
 
 %token LEXWORD_ABOVE
@@ -283,7 +283,7 @@ extern char *yytext;
 /*                  YYSTYPE definition                         */
 /*-------------------------------------------------------------*/
 
-%union { 
+%union {
 	unsigned char      byte;
 	short int          snum;
 	unsigned short int usnum;
@@ -352,7 +352,7 @@ extern char *yytext;
 %type <lrealnum> LEX_FLOAT
 
 
-%start graph 
+%start graph
 
 
 %{
@@ -362,16 +362,16 @@ extern char *yytext;
 %%
 
 
-graph		: LEXWORD_GRAPH '{' graph_entry_list '}'		
+graph		: LEXWORD_GRAPH '{' graph_entry_list '}'
 					{
 		 $$ = REVERT($3); Syntax_Tree = $$; }
 		;
 
 
-graph_entry_list: graph_entry_list graph_entry			
+graph_entry_list: graph_entry_list graph_entry
 					{
 		 $$ = T_graph_entry($2,$1,yylocate(@1));   }
-		| graph_entry					
+		| graph_entry
 					{
 		 $$ = T_graph_entry($1,NULL,yylocate(@1)); }
 		;
@@ -404,31 +404,31 @@ graph_entry	: graph_attribute	{
 		;
 
 
-graph_attribute	: LEXWORD_TITLE ':' str_const	
+graph_attribute	: LEXWORD_TITLE ':' str_const
 					{
 		 $$ = T_title($3,yylocate(@1));              }
-		| LEXWORD_LABEL ':' str_const	
+		| LEXWORD_LABEL ':' str_const
 					{
 		 $$ = T_label($3,yylocate(@1));              }
-		| LEXWORD_INFO1 ':' str_const	
+		| LEXWORD_INFO1 ':' str_const
 					{
 		 $$ = T_info1($3,yylocate(@1));              }
-		| LEXWORD_INFO2 ':' str_const	
+		| LEXWORD_INFO2 ':' str_const
 					{
 		 $$ = T_info2($3,yylocate(@1));              }
-		| LEXWORD_INFO3 ':' str_const	
+		| LEXWORD_INFO3 ':' str_const
 					{
 		 $$ = T_info3($3,yylocate(@1));              }
-		| LEXWORD_COLOR ':' enum_color 
+		| LEXWORD_COLOR ':' enum_color
 					{
 		 $$ = T_color($3,yylocate(@1));              }
-		| LEXWORD_TEXTCOLOR ':'enum_color 
+		| LEXWORD_TEXTCOLOR ':'enum_color
 					{
-		 $$ = T_textcolor($3,yylocate(@1));          } 
-                | LEXWORD_BORDERCOLOR ':'enum_color 
+		 $$ = T_textcolor($3,yylocate(@1));          }
+                | LEXWORD_BORDERCOLOR ':'enum_color
 					{
 		 $$ = T_colorborder($3,yylocate(@1));        }
-                | LEXWORD_WIDTH ':' int_const 
+                | LEXWORD_WIDTH ':' int_const
 					{
 		 $$ = T_width($3,yylocate(@1));              }
                 | LEXWORD_HEIGHT ':' int_const
@@ -443,11 +443,11 @@ graph_attribute	: LEXWORD_TITLE ':' str_const
 		 $$ = T_ydef($3,yylocate(@1));               }
 		| LEXWORD_LOC '{' 'x' ':' int_const 'y' ':' int_const '}'
 					{
-		 $$ = T_loc($5,$8,yylocate(@1));       }        
+		 $$ = T_loc($5,$8,yylocate(@1));       }
 		| LEXWORD_FOLDING ':' int_const
 					{
 		 $$ = T_folding($3,yylocate(@1));            }
-		| LEXWORD_SCALING ':' float_const	
+		| LEXWORD_SCALING ':' float_const
 					{
 		 $$ = T_scaling($3,yylocate(@1));            }
 		| LEXWORD_SHRINK ':' int_const
@@ -456,35 +456,35 @@ graph_attribute	: LEXWORD_TITLE ':' str_const
 		| LEXWORD_STRETCH ':' int_const
 					{
 		 $$ = T_stretch($3,yylocate(@1));            }
-		| LEXWORD_TEXTMODE ':' enum_textmode		
+		| LEXWORD_TEXTMODE ':' enum_textmode
 					{
-		 $$ = T_textmode($3,yylocate(@1));           } 
+		 $$ = T_textmode($3,yylocate(@1));           }
 		| LEXWORD_SHAPE ':' enum_shape
 					{
-		 $$ = T_shape($3,yylocate(@1));    	       }        
-                | LEXWORD_LEVEL ':' int_const 
+		 $$ = T_shape($3,yylocate(@1));    	       }
+                | LEXWORD_LEVEL ':' int_const
 					{
 		 $$ = T_level($3,yylocate(@1));              }
-                | LEXWORD_VORDER ':' int_const 
+                | LEXWORD_VORDER ':' int_const
 					{
 		 $$ = T_level($3,yylocate(@1));              }
-                | LEXWORD_HORDER ':' int_const 
+                | LEXWORD_HORDER ':' int_const
 					{
 		 $$ = T_horizontal_order($3,yylocate(@1));   }
-                | LEXWORD_STATUS ':' enum_status			
+                | LEXWORD_STATUS ':' enum_status
 					{
 		 $$ = T_status($3,yylocate(@1));             }
 
-                | LEXWORD_XMAX ':' int_const	
+                | LEXWORD_XMAX ':' int_const
 					{
 		 $$ = T_xmax($3,yylocate(@1));               }
-                | LEXWORD_YMAX ':' int_const	
+                | LEXWORD_YMAX ':' int_const
 					{
 		 $$ = T_ymax($3,yylocate(@1));               }
-                | LEXWORD_XBASE ':' int_const	
+                | LEXWORD_XBASE ':' int_const
 					{
 		 $$ = T_xbase($3,yylocate(@1));              }
-                | LEXWORD_YBASE ':' int_const	
+                | LEXWORD_YBASE ':' int_const
 					{
 		 $$ = T_ybase($3,yylocate(@1));              }
                 | LEXWORD_XSPACE ':' int_const
@@ -511,29 +511,29 @@ graph_attribute	: LEXWORD_TITLE ':' str_const
 		| LEXWORD_HIDDEN ':' int_const
 					{
 		 $$ = T_hidden($3,yylocate(@1)); 	       }
-		| LEXWORD_CLASSNAME int_const ':' str_const	
+		| LEXWORD_CLASSNAME int_const ':' str_const
 					{
 		 $$ = T_classname($2,$4,yylocate(@1));       }
-		| LEXWORD_INFONAME int_const ':' str_const	
+		| LEXWORD_INFONAME int_const ':' str_const
 					{
 		 $$ = T_infoname($2,$4,yylocate(@1));        }
-                | LEXWORD_COLORENTRY int_const ':' int_const int_const int_const 
+                | LEXWORD_COLORENTRY int_const ':' int_const int_const int_const
 					{
 		 $$ = T_colentry($2,$4,$5,$6,yylocate(@1));   }
 
-                | LEXWORD_LAYOUTALGORITHM ':' enum_layoutalgorithm	
+                | LEXWORD_LAYOUTALGORITHM ':' enum_layoutalgorithm
 					{
 		 $$ = T_layoutalgorithm($3,yylocate(@1));    }
-		| LEXWORD_LAYOUTFREQUENCY ':' enum_layoutfrequency	
+		| LEXWORD_LAYOUTFREQUENCY ':' enum_layoutfrequency
 					{
 		 $$ = T_layoutfrequency($3,yylocate(@1));    }
-                | LEXWORD_LAYOUTDOWNFACTOR ':' int_const 
+                | LEXWORD_LAYOUTDOWNFACTOR ':' int_const
 					{
 		 $$ = T_downfactor($3,yylocate(@1));         }
-                | LEXWORD_LAYOUTUPFACTOR ':' int_const 
+                | LEXWORD_LAYOUTUPFACTOR ':' int_const
 					{
 		 $$ = T_upfactor($3,yylocate(@1));           }
-                | LEXWORD_LAYOUTNEARFACTOR ':' int_const 
+                | LEXWORD_LAYOUTNEARFACTOR ':' int_const
 					{
 		 $$ = T_nearfactor($3,yylocate(@1));         }
                 | LEXWORD_LAYOUTSPLINEFACTOR ':' int_const
@@ -549,22 +549,22 @@ graph_attribute	: LEXWORD_TITLE ':' str_const
                 | LEXWORD_DIRTY_EDGE_LABELS ':' enum_yes_no
 					{
 		 $$ = T_dirty_edge_label($3,yylocate(@1));   }
-		| LEXWORD_FINETUNING ':' enum_yes_no 
+		| LEXWORD_FINETUNING ':' enum_yes_no
 				 	{
 		 $$ = T_finetuning($3,yylocate(@1));	       }
-                | LEXWORD_HIDESINGLES  ':' enum_yes_no 
+                | LEXWORD_HIDESINGLES  ':' enum_yes_no
 					{
 		 $$ = T_hidesingles($3,yylocate(@1));        }
-		| LEXWORD_STRAIGHTPHASE ':'  enum_yes_no 
+		| LEXWORD_STRAIGHTPHASE ':'  enum_yes_no
 				 	{
 		 $$ = T_straightphase($3,yylocate(@1));	       }
-		| LEXWORD_PRIORITYPHASE ':'  enum_yes_no 
+		| LEXWORD_PRIORITYPHASE ':'  enum_yes_no
 				 	{
 		 $$ = T_priophase($3,yylocate(@1));	       }
-		| LEXWORD_MANHATTEN ':'  enum_yes_no 
+		| LEXWORD_MANHATTEN ':'  enum_yes_no
 				 	{
 		 $$ = T_manhatten($3,yylocate(@1));	       }
-		| LEXWORD_SMANHATTEN ':'  enum_yes_no 
+		| LEXWORD_SMANHATTEN ':'  enum_yes_no
 				 	{
 		 $$ = T_smanhatten($3,yylocate(@1));	       }
 		| LEXWORD_NONEAREDGES	{
@@ -572,10 +572,10 @@ graph_attribute	: LEXWORD_TITLE ':' str_const
 		| LEXWORD_NEAREDGES ':' LEXWORD_NO
 					{
 		 $$ = T_nonearedges(yylocate(@1));	       }
-		| LEXWORD_NEAREDGES ':' LEXWORD_YES 
+		| LEXWORD_NEAREDGES ':' LEXWORD_YES
 					{
 		 $$ = T_dummy(yylocate(@1));	     	       }
-                | LEXWORD_ORIENTATION ':' enum_orientation		
+                | LEXWORD_ORIENTATION ':' enum_orientation
 					{
 		 $$ = T_orientation($3,yylocate(@1));        }
                 | LEXWORD_NODE_ALIGN ':' enum_node_align
@@ -588,80 +588,80 @@ graph_attribute	: LEXWORD_TITLE ':' str_const
 					{
 		 $$ = T_arrow_mode($3,yylocate(@1));         }
 
-                | LEXWORD_SPREADLEVEL ':' int_const  
+                | LEXWORD_SPREADLEVEL ':' int_const
 					{
 		 $$ = T_spreadlevel($3,yylocate(@1));        }
-                | LEXWORD_TREEFACTOR ':' float_const  
+                | LEXWORD_TREEFACTOR ':' float_const
 					{
 		 $$ = T_treefactor($3,yylocate(@1));         }
 
-                | LEXWORD_CROSSING_P2 ':' enum_yes_no 
+                | LEXWORD_CROSSING_P2 ':' enum_yes_no
 					{
 		 $$ = T_crossing_phase2($3,yylocate(@1));    }
-                | LEXWORD_CROSSING_OPT ':' enum_yes_no 
+                | LEXWORD_CROSSING_OPT ':' enum_yes_no
 					{
 		 $$ = T_crossing_opt($3,yylocate(@1));       }
-                | LEXWORD_CROSSING_WEIGHT ':' enum_cross_weight 
+                | LEXWORD_CROSSING_WEIGHT ':' enum_cross_weight
 					{
 		 $$ = T_crossing_weight($3,yylocate(@1));    }
 
-                | LEXWORD_VIEW ':'  enum_view 
+                | LEXWORD_VIEW ':'  enum_view
 					{
 		 $$ = T_view_method($3,yylocate(@1));       	}
-                | LEXWORD_EDGES ':' enum_yes_no 
+                | LEXWORD_EDGES ':' enum_yes_no
 					{
 		 $$ = T_view_edges($3,yylocate(@1));       	}
-                | LEXWORD_NODES ':' enum_yes_no 
+                | LEXWORD_NODES ':' enum_yes_no
 					{
 		 $$ = T_view_nodes($3,yylocate(@1));       	}
-		| LEXWORD_SPLINES ':'    enum_yes_no 
+		| LEXWORD_SPLINES ':'    enum_yes_no
 				 	{
 		 $$ = T_view_splines($3,yylocate(@1));  	}
 
-                | LEXWORD_BMAX ':' int_const 
+                | LEXWORD_BMAX ':' int_const
 					{
 		 $$ = T_bend_max($3,yylocate(@1));   		}
-                | LEXWORD_CMAX ':' int_const 
+                | LEXWORD_CMAX ':' int_const
 					{
 		 $$ = T_cross_max($3,yylocate(@1));  		}
-                | LEXWORD_CMIN ':' int_const 
+                | LEXWORD_CMIN ':' int_const
 					{
 		 $$ = T_cross_min($3,yylocate(@1));  		}
-                | LEXWORD_PMAX ':' int_const 
+                | LEXWORD_PMAX ':' int_const
 					{
 		 $$ = T_pendel_max($3,yylocate(@1)); 		}
-                | LEXWORD_PMIN ':' int_const 
+                | LEXWORD_PMIN ':' int_const
 					{
 		 $$ = T_pendel_min($3,yylocate(@1));  	}
-                | LEXWORD_RMAX ':' int_const 
+                | LEXWORD_RMAX ':' int_const
 					{
 		 $$ = T_rubber_max($3,yylocate(@1)); 		}
-                | LEXWORD_RMIN ':' int_const 
+                | LEXWORD_RMIN ':' int_const
 					{
 		 $$ = T_rubber_min($3,yylocate(@1));  	}
-                | LEXWORD_SMAX ':' int_const 
+                | LEXWORD_SMAX ':' int_const
 					{
 		 $$ = T_straight_max($3,yylocate(@1)); 	}
 
-                | LEXWORD_TYPENAME ':' str_const	
+                | LEXWORD_TYPENAME ':' str_const
 					{
 		 $$ = T_typename($3,yylocate(@1));           }
                 | LEXWORD_INCLUDE ':' str_const
 			 		{
 		 $$ = T_include($3,yylocate(@1));            }
-		| LEXWORD_LAYOUTPARAMETER ':' array_value	
+		| LEXWORD_LAYOUTPARAMETER ':' array_value
 					{
 		 $$ = T_layoutparameter($3,yylocate(@1));    }
-		| LEXWORD_TOPSORT ':' enum_topsort	
+		| LEXWORD_TOPSORT ':' enum_topsort
 					{
 		 $$ = T_topsort($3,yylocate(@1));            }
                 | LEXWORD_INPUTFUNCTION ':' str_const
 					{
 		 $$ = T_inputfunction($3,yylocate(@1));      }
-                | LEXWORD_OUTPUTFUNCTION ':' str_const 
+                | LEXWORD_OUTPUTFUNCTION ':' str_const
 					{
 		 $$ = T_outputfunction($3,yylocate(@1));     }
-                | LEXWORD_XSCROLLBAR ':' int_const	
+                | LEXWORD_XSCROLLBAR ':' int_const
 					{
 		 $$ = T_xscrollbar($3,yylocate(@1));         }
                 | LEXWORD_YSCROLLBAR ':' int_const
@@ -671,76 +671,76 @@ graph_attribute	: LEXWORD_TITLE ':' str_const
 
 
 enum_color	: LEXWORD_AQUAMARINE	{
-		 $$ = T_aquamarine(yylocate(@1));   }      
+		 $$ = T_aquamarine(yylocate(@1));   }
 		| LEXWORD_BLACK		{
-		 $$ = T_black(yylocate(@1));        }      
+		 $$ = T_black(yylocate(@1));        }
 		| LEXWORD_BLUE		{
-		 $$ = T_blue(yylocate(@1));         }      
+		 $$ = T_blue(yylocate(@1));         }
 		| LEXWORD_CYAN		{
-		 $$ = T_cyan(yylocate(@1));         }      
+		 $$ = T_cyan(yylocate(@1));         }
 		| LEXWORD_DARKBLUE	{
-		 $$ = T_darkblue(yylocate(@1));     }      
+		 $$ = T_darkblue(yylocate(@1));     }
 		| LEXWORD_DARKCYAN	{
-		 $$ = T_darkcyan(yylocate(@1));     }      
+		 $$ = T_darkcyan(yylocate(@1));     }
 		| LEXWORD_DARKGREEN	{
-		 $$ = T_darkgreen(yylocate(@1));    }      
+		 $$ = T_darkgreen(yylocate(@1));    }
 		| LEXWORD_DARKGREY	{
-		 $$ = T_darkgrey(yylocate(@1));     }      
+		 $$ = T_darkgrey(yylocate(@1));     }
 		| LEXWORD_DARKMAGENTA	{
-		 $$ = T_darkmagenta(yylocate(@1));  }    
+		 $$ = T_darkmagenta(yylocate(@1));  }
 		| LEXWORD_DARKRED	{
-		 $$ = T_darkred(yylocate(@1));      }      
+		 $$ = T_darkred(yylocate(@1));      }
 		| LEXWORD_DARKYELLOW	{
-		 $$ = T_darkyellow(yylocate(@1));   }      
+		 $$ = T_darkyellow(yylocate(@1));   }
 		| LEXWORD_GOLD		{
-		 $$ = T_gold(yylocate(@1));         }      
+		 $$ = T_gold(yylocate(@1));         }
 		| LEXWORD_GREEN		{
-		 $$ = T_green(yylocate(@1));        }      
+		 $$ = T_green(yylocate(@1));        }
 		| LEXWORD_KHAKI		{
-		 $$ = T_khaki(yylocate(@1));        }      
+		 $$ = T_khaki(yylocate(@1));        }
 		| LEXWORD_LIGHTBLUE	{
-		 $$ = T_lightblue(yylocate(@1));    }      
+		 $$ = T_lightblue(yylocate(@1));    }
 		| LEXWORD_LIGHTCYAN	{
-		 $$ = T_lightcyan(yylocate(@1));    }      
+		 $$ = T_lightcyan(yylocate(@1));    }
 		| LEXWORD_LIGHTGREEN	{
-		 $$ = T_lightgreen(yylocate(@1));   }      
+		 $$ = T_lightgreen(yylocate(@1));   }
 		| LEXWORD_LIGHTGREY	{
-		 $$ = T_lightgrey(yylocate(@1));    }      
+		 $$ = T_lightgrey(yylocate(@1));    }
 		| LEXWORD_LIGHTMAGENTA	{
-		 $$ = T_lightmagenta(yylocate(@1)); }    
+		 $$ = T_lightmagenta(yylocate(@1)); }
 		| LEXWORD_LIGHTRED	{
-		 $$ = T_lightred(yylocate(@1));     }      
+		 $$ = T_lightred(yylocate(@1));     }
 		| LEXWORD_LIGHTYELLOW	{
-		 $$ = T_lightyellow(yylocate(@1));  }    
+		 $$ = T_lightyellow(yylocate(@1));  }
 		| LEXWORD_LILAC		{
-		 $$ = T_lilac(yylocate(@1));        }      
+		 $$ = T_lilac(yylocate(@1));        }
 		| LEXWORD_MAGENTA	{
-		 $$ = T_magenta(yylocate(@1));      }      
+		 $$ = T_magenta(yylocate(@1));      }
 		| LEXWORD_ORANGE	{
-		 $$ = T_orange(yylocate(@1));       }      
+		 $$ = T_orange(yylocate(@1));       }
 		| LEXWORD_ORCHID	{
-		 $$ = T_orchid(yylocate(@1));       }      
+		 $$ = T_orchid(yylocate(@1));       }
 		| LEXWORD_PINK		{
-		 $$ = T_pink(yylocate(@1));         }      
+		 $$ = T_pink(yylocate(@1));         }
 		| LEXWORD_PURPLE	{
-		 $$ = T_purple(yylocate(@1));       }      
+		 $$ = T_purple(yylocate(@1));       }
 		| LEXWORD_RED		{
-		 $$ = T_red(yylocate(@1));          }      
+		 $$ = T_red(yylocate(@1));          }
 		| LEXWORD_TURQUOISE	{
-		 $$ = T_turquoise(yylocate(@1));    }      
+		 $$ = T_turquoise(yylocate(@1));    }
 		| LEXWORD_WHITE		{
-		 $$ = T_white(yylocate(@1));        }      
+		 $$ = T_white(yylocate(@1));        }
 		| LEXWORD_YELLOW	{
-		 $$ = T_yellow(yylocate(@1));       }      
+		 $$ = T_yellow(yylocate(@1));       }
 		| LEXWORD_YELLOWGREEN	{
-		 $$ = T_yellowgreen(yylocate(@1));  }   
+		 $$ = T_yellowgreen(yylocate(@1));  }
                 | int_const 		{
 		 $$ = T_colindex($1,yylocate(@1));   }
 		;
 
 
 enum_topsort	: LEXWORD_HIGH		{
-		 $$ = T_high(yylocate(@1)); 	       } 
+		 $$ = T_high(yylocate(@1)); 	       }
 		| LEXWORD_LOW 		{
 		 $$ = T_low(yylocate(@1));          }
 		;
@@ -757,7 +757,7 @@ enum_orientation: LEXWORD_TOP_TO_BOTTOM	{
 		;
 
 
-enum_layoutalgorithm: 
+enum_layoutalgorithm:
 		  LEXWORD_BARYCENTER 	{
 		 $$ = T_barycenter(yylocate(@1));    }
 		| LEXWORD_ISI 		{
@@ -796,7 +796,7 @@ enum_layoutalgorithm:
 		;
 
 
-enum_layoutfrequency: 
+enum_layoutfrequency:
 		  LEXWORD_EVERY 	{
 		 $$ = T_every(yylocate(@1)); 	}
 		| LEXWORD_MANUAL 	{
@@ -820,7 +820,7 @@ enum_yes_no	: LEXWORD_YES 		{
 		;
 
 enum_cross_weight : LEXWORD_BARY	{
-		 $$ = T_bary(yylocate(@1)); 	       } 
+		 $$ = T_bary(yylocate(@1)); 	       }
 		  | LEXWORD_MEDIAN	{
 		 $$ = T_median(yylocate(@1));       }
 		  | LEXWORD_BARYMEDIAN	{
@@ -845,170 +845,170 @@ enum_arrow_mode	: LEXWORD_FIXED		{
 		 $$ = T_free(yylocate(@1));          }
 		;
 
-foldnode_defaults: LEXWORD_FOLDNODE node_attribute 	
+foldnode_defaults: LEXWORD_FOLDNODE node_attribute
 					{
 		 $$ = $2;              }
 		;
 
-foldedge_defaults: LEXWORD_FOLDEDGE edge_attribute 	
+foldedge_defaults: LEXWORD_FOLDEDGE edge_attribute
 					{
 		 $$ = $2;              }
 		;
 
-node_defaults	: LEXWORD_NODE1 node_attribute 	
+node_defaults	: LEXWORD_NODE1 node_attribute
 					{
 		 $$ = $2;              }
 		;
 
-edge_defaults   : LEXWORD_EDGE1 edge_attribute  
+edge_defaults   : LEXWORD_EDGE1 edge_attribute
 					{
 		 $$ = $2;              }
                 ;
 
 
-node		: LEXWORD_NODE2 '{' node_attribute_list '}'	
+node		: LEXWORD_NODE2 '{' node_attribute_list '}'
 					{
 		 $$ = REVERT($3); }
 		;
 
-	
-node_attribute_list: node_attribute_list node_attribute		
+
+node_attribute_list: node_attribute_list node_attribute
 					{
 		 $$ = T_node_attribute($2,$1,yylocate(@1));   }
-		   | node_attribute				
+		   | node_attribute
 					{
 		 $$ = T_node_attribute($1,NULL,yylocate(@1)); }
 		   ;
 
 
-edge            : LEXWORD_EDGE2 '{' edge_attribute_list '}'        
+edge            : LEXWORD_EDGE2 '{' edge_attribute_list '}'
 					{
-		 $$ = REVERT($3); }  
-                ; 
+		 $$ = REVERT($3); }
+                ;
 
 nearedge	: LEXWORD_NEAREDGE '{' edge_attribute_list '}'
 					{
-		 $$ = REVERT($3); }  
-                ; 
+		 $$ = REVERT($3); }
+                ;
 
 bentnearedge	: LEXWORD_BENTNEAREDGE '{' edge_attribute_list '}'
 					{
-		 $$ = REVERT($3); }  
-                ; 
+		 $$ = REVERT($3); }
+                ;
 
 backedge	: LEXWORD_BACKEDGE '{' edge_attribute_list '}'
 					{
-		 $$ = REVERT($3); }  
-                ; 
+		 $$ = REVERT($3); }
+                ;
 
-         
-edge_attribute_list: edge_attribute_list edge_attribute     
+
+edge_attribute_list: edge_attribute_list edge_attribute
 		    			{
 		 $$ = T_edge_attribute($2,$1,yylocate(@1));   }
-                   | edge_attribute                             
+                   | edge_attribute
 					{
 		 $$ = T_edge_attribute($1,NULL,yylocate(@1)); }
-                   ; 
+                   ;
 
 
-constraint 	: LEXWORD_CONSTRAINT '{' constraint_attribute_list '}'	
+constraint 	: LEXWORD_CONSTRAINT '{' constraint_attribute_list '}'
 					{
-		 $$ = REVERT($3); }  
-                ; 
-        
- 
-constraint_attribute_list: 
-		  constraint_attribute_list constraint_attribute  	
+		 $$ = REVERT($3); }
+                ;
+
+
+constraint_attribute_list:
+		  constraint_attribute_list constraint_attribute
 					{
 		 $$ = T_constraint_attribute($2,$1,yylocate(@1));   }
-                | constraint_attribute     		     	
+                | constraint_attribute
 					{
 		 $$ = T_constraint_attribute($1,NULL,yylocate(@1)); }
-                   ; 
+                   ;
 
 
-node_attribute	: LEXWORD_TITLE ':' str_const	
+node_attribute	: LEXWORD_TITLE ':' str_const
 					{
-		 $$ = T_title($3,yylocate(@1));        }        
-		| LEXWORD_LABEL ':' str_const	
+		 $$ = T_title($3,yylocate(@1));        }
+		| LEXWORD_LABEL ':' str_const
 					{
-		 $$ = T_label($3,yylocate(@1));        }        
-		| LEXWORD_INFO1 ':' str_const	
+		 $$ = T_label($3,yylocate(@1));        }
+		| LEXWORD_INFO1 ':' str_const
 					{
-		 $$ = T_info1($3,yylocate(@1));        }        
-		| LEXWORD_INFO2 ':' str_const	
+		 $$ = T_info1($3,yylocate(@1));        }
+		| LEXWORD_INFO2 ':' str_const
 					{
-		 $$ = T_info2($3,yylocate(@1));        }        
-		| LEXWORD_INFO3 ':' str_const	
+		 $$ = T_info2($3,yylocate(@1));        }
+		| LEXWORD_INFO3 ':' str_const
 					{
-		 $$ = T_info3($3,yylocate(@1));        }        
+		 $$ = T_info3($3,yylocate(@1));        }
                 | LEXWORD_FONTNAME ':' str_const
 					{
-		 $$ = T_fontname($3,yylocate(@1));     }        
+		 $$ = T_fontname($3,yylocate(@1));     }
                 | LEXWORD_COLOR ':' enum_color
 					{
-		 $$ = T_color($3,yylocate(@1));        }        
-		| LEXWORD_TEXTCOLOR ':'enum_color 
+		 $$ = T_color($3,yylocate(@1));        }
+		| LEXWORD_TEXTCOLOR ':'enum_color
 					{
-		 $$ = T_textcolor($3,yylocate(@1));    }        
-                | LEXWORD_BORDERCOLOR ':'enum_color 
+		 $$ = T_textcolor($3,yylocate(@1));    }
+                | LEXWORD_BORDERCOLOR ':'enum_color
 					{
-		 $$ = T_bordercolor($3,yylocate(@1));  }        
-                | LEXWORD_ICONFILE ':' str_const	
+		 $$ = T_bordercolor($3,yylocate(@1));  }
+                | LEXWORD_ICONFILE ':' str_const
 					{
-		 $$ = T_iconfile($3,yylocate(@1));     }        
+		 $$ = T_iconfile($3,yylocate(@1));     }
                 | LEXWORD_ANCHORPOINTS ':' str_const
 					{
-		 $$ = T_anchorpoints($3,yylocate(@1)); }        
-                | LEXWORD_TYPENAME ':' str_const	
+		 $$ = T_anchorpoints($3,yylocate(@1)); }
+                | LEXWORD_TYPENAME ':' str_const
 					{
-		 $$ = T_typename($3,yylocate(@1));     }        
-		| LEXWORD_WIDTH ':' int_const	
+		 $$ = T_typename($3,yylocate(@1));     }
+		| LEXWORD_WIDTH ':' int_const
 					{
-		 $$ = T_width($3,yylocate(@1));        }        
-		| LEXWORD_HEIGHT ':' int_const	
+		 $$ = T_width($3,yylocate(@1));        }
+		| LEXWORD_HEIGHT ':' int_const
 					{
-		 $$ = T_height($3,yylocate(@1));       }        
+		 $$ = T_height($3,yylocate(@1));       }
                 | LEXWORD_BORDERWIDTH ':' int_const
 					{
-		 $$ = T_borderwidth($3,yylocate(@1));  }        
+		 $$ = T_borderwidth($3,yylocate(@1));  }
 		| LEXWORD_LOC '{' 'x' ':' int_const 'y' ':' int_const '}'
 					{
-		 $$ = T_loc($5,$8,yylocate(@1));       }        
+		 $$ = T_loc($5,$8,yylocate(@1));       }
 		| LEXWORD_FOLDING ':' int_const
 					{
-		 $$ = T_folding($3,yylocate(@1));      }        
-		| LEXWORD_SCALING ':' float_const	
+		 $$ = T_folding($3,yylocate(@1));      }
+		| LEXWORD_SCALING ':' float_const
 					{
 		 $$ = T_scaling($3,yylocate(@1));            }
-		| LEXWORD_SHRINK ':' int_const	
+		| LEXWORD_SHRINK ':' int_const
 					{
-		 $$ = T_shrink($3,yylocate(@1));       }        
+		 $$ = T_shrink($3,yylocate(@1));       }
 		| LEXWORD_STRETCH ':' int_const
 					{
-		 $$ = T_stretch($3,yylocate(@1));      }        
-                | LEXWORD_ICONWIDTH ':' int_const	
+		 $$ = T_stretch($3,yylocate(@1));      }
+                | LEXWORD_ICONWIDTH ':' int_const
 					{
-		 $$ = T_iconwidth($3,yylocate(@1));    }        
+		 $$ = T_iconwidth($3,yylocate(@1));    }
                 | LEXWORD_ICONHEIGHT ':' int_const
 					{
-		 $$ = T_iconheight($3,yylocate(@1));   }        
-		| LEXWORD_TEXTMODE ':' enum_textmode		
+		 $$ = T_iconheight($3,yylocate(@1));   }
+		| LEXWORD_TEXTMODE ':' enum_textmode
 					{
-		 $$ = T_textmode($3,yylocate(@1));     }         
-		| LEXWORD_ICONSTYLE ':' enum_iconstyle		
+		 $$ = T_textmode($3,yylocate(@1));     }
+		| LEXWORD_ICONSTYLE ':' enum_iconstyle
 					{
-		 $$ = T_iconstyle($3,yylocate(@1));    }        
+		 $$ = T_iconstyle($3,yylocate(@1));    }
 		| LEXWORD_SHAPE ':' enum_shape
 					{
-		 $$ = T_shape($3,yylocate(@1));    	 }        
-                | LEXWORD_LEVEL ':' int_const 
+		 $$ = T_shape($3,yylocate(@1));    	 }
+                | LEXWORD_LEVEL ':' int_const
 					{
 		 $$ = T_level($3,yylocate(@1));        }
-                | LEXWORD_VORDER ':' int_const 
+                | LEXWORD_VORDER ':' int_const
 					{
 		 $$ = T_level($3,yylocate(@1));            }
-                | LEXWORD_HORDER ':' int_const 
+                | LEXWORD_HORDER ':' int_const
 					{
 		 $$ = T_horizontal_order($3,yylocate(@1)); }
 		;
@@ -1050,173 +1050,173 @@ enum_iconstyle	: LEXWORD_BOTTOM	{
 
 edge_attribute  : LEXWORD_SOURCENAME ':' str_const
 					{
-		 $$ = T_sourcename($3,yylocate(@1));    }        
-		| LEXWORD_TARGETNAME ':' str_const 
+		 $$ = T_sourcename($3,yylocate(@1));    }
+		| LEXWORD_TARGETNAME ':' str_const
 					{
-		 $$ = T_targetname($3,yylocate(@1));    }       
-                | LEXWORD_LABEL ':' str_const	
+		 $$ = T_targetname($3,yylocate(@1));    }
+                | LEXWORD_LABEL ':' str_const
 					{
-		 $$ = T_label($3,yylocate(@1));         }       
-		| LEXWORD_TEXTCOLOR ':'enum_color 
+		 $$ = T_label($3,yylocate(@1));         }
+		| LEXWORD_TEXTCOLOR ':'enum_color
 					{
-		 $$ = T_textcolor($3,yylocate(@1));          } 
+		 $$ = T_textcolor($3,yylocate(@1));          }
                 | LEXWORD_FONTNAME ':' str_const
 					{
-		 $$ = T_fontname($3,yylocate(@1));      }       
+		 $$ = T_fontname($3,yylocate(@1));      }
                 | LEXWORD_COLOR ':' enum_color
 					{
-		 $$ = T_color($3,yylocate(@1));         }       
+		 $$ = T_color($3,yylocate(@1));         }
                 | LEXWORD_TYPENAME ':' str_const
 					{
-		 $$ = T_typename($3,yylocate(@1));      }       
+		 $$ = T_typename($3,yylocate(@1));      }
 		| LEXWORD_THICKNESS ':' int_const
 					{
-		 $$ = T_thickness($3,yylocate(@1));     }       
-		| LEXWORD_CLASS ':' int_const	
+		 $$ = T_thickness($3,yylocate(@1));     }
+		| LEXWORD_CLASS ':' int_const
 					{
-		 $$ = T_class($3,yylocate(@1));         }       
+		 $$ = T_class($3,yylocate(@1));         }
 		| LEXWORD_PRIORITY ':' int_const
 					{
-		 $$ = T_priority($3,yylocate(@1));      }       
+		 $$ = T_priority($3,yylocate(@1));      }
 		| LEXWORD_ARROWWIDTH ':' int_const
 					{
-		 $$ = T_arrowwidth($3,yylocate(@1));    }       
+		 $$ = T_arrowwidth($3,yylocate(@1));    }
                 | LEXWORD_ARROWHEIGHT ':' int_const
 					{
-		 $$ = T_arrowheight($3,yylocate(@1));   }       
+		 $$ = T_arrowheight($3,yylocate(@1));   }
                 | LEXWORD_ARROWCOLOR ':' enum_color
 					{
-		 $$ = T_arrowcolor($3,yylocate(@1));    }       
+		 $$ = T_arrowcolor($3,yylocate(@1));    }
                 | LEXWORD_BARROWCOLOR ':' enum_color
 					{
-		 $$ = T_barrowcolor($3,yylocate(@1));    }       
+		 $$ = T_barrowcolor($3,yylocate(@1));    }
 		| LEXWORD_ARROWSIZE ':' int_const
 					{
-		 $$ = T_arrowsize($3,yylocate(@1));     }       
+		 $$ = T_arrowsize($3,yylocate(@1));     }
 		| LEXWORD_BARROWSIZE ':' int_const
 					{
-		 $$ = T_barrowsize($3,yylocate(@1));     }       
-		| LEXWORD_ARROWSTYLE ':' enum_arrowstyle		
+		 $$ = T_barrowsize($3,yylocate(@1));     }
+		| LEXWORD_ARROWSTYLE ':' enum_arrowstyle
 					{
-		 $$ = T_arrowstyle($3,yylocate(@1));    }       
-		| LEXWORD_BARROWSTYLE ':' enum_arrowstyle		
+		 $$ = T_arrowstyle($3,yylocate(@1));    }
+		| LEXWORD_BARROWSTYLE ':' enum_arrowstyle
 					{
-		 $$ = T_barrowstyle($3,yylocate(@1));    }       
-		| LEXWORD_LINESTYLE ':' enum_linestyle		
+		 $$ = T_barrowstyle($3,yylocate(@1));    }
+		| LEXWORD_LINESTYLE ':' enum_linestyle
 					{
-		 $$ = T_linestyle($3,yylocate(@1));     }       
+		 $$ = T_linestyle($3,yylocate(@1));     }
 		| LEXWORD_ANCHOR ':' int_const
 					{
 		 $$ = T_anchor($3,yylocate(@1));        }
-                | LEXWORD_HORDER ':' int_const 
+                | LEXWORD_HORDER ':' int_const
 					{
 		 $$ = T_horizontal_order($3,yylocate(@1)); }
-		; 
+		;
 
 
 enum_linestyle	: LEXWORD_CONTINUOUS 	{
 		 $$ = T_continuous(yylocate(@1)); }
 		| LEXWORD_SOLID 	{
-		 $$ = T_continuous(yylocate(@1)); }      
+		 $$ = T_continuous(yylocate(@1)); }
 		| LEXWORD_DOTTED 	{
 		 $$ = T_dotted(yylocate(@1));     }
 		| LEXWORD_DASHED 	{
 		 $$ = T_dashed(yylocate(@1));     }
 		| LEXWORD_INVISIBLE     {
-		 $$ = T_invisible(yylocate(@1));  } 
+		 $$ = T_invisible(yylocate(@1));  }
 		;
 
 
 enum_arrowstyle	: LEXWORD_NONE 		{
-		 $$ = T_none(yylocate(@1));      }      
+		 $$ = T_none(yylocate(@1));      }
 		| LEXWORD_LINE 		{
-		 $$ = T_line(yylocate(@1));      }      
+		 $$ = T_line(yylocate(@1));      }
 		| LEXWORD_SOLID 	{
-		 $$ = T_solid(yylocate(@1));     }      
+		 $$ = T_solid(yylocate(@1));     }
 		;
 
-constraint_attribute  : LEXWORD_TITLE ':' str_const 
+constraint_attribute  : LEXWORD_TITLE ':' str_const
 					{
-		 $$ = T_title($3,yylocate(@1));     }       
+		 $$ = T_title($3,yylocate(@1));     }
 		| LEXWORD_PRIORITY ':' int_const
 					{
-		 $$ = T_priority($3,yylocate(@1));  }       
-		| LEXWORD_SIZE ':' int_const	
+		 $$ = T_priority($3,yylocate(@1));  }
+		| LEXWORD_SIZE ':' int_const
 					{
-		 $$ = T_size($3,yylocate(@1));      }       
-		| LEXWORD_NODES ':' '{' string_array '}'	
+		 $$ = T_size($3,yylocate(@1));      }
+		| LEXWORD_NODES ':' '{' string_array '}'
 					{
-		 $$ = T_nodes($4,yylocate(@1));     }       
-		| LEXWORD_INTERVAL ':' array_value	
+		 $$ = T_nodes($4,yylocate(@1));     }
+		| LEXWORD_INTERVAL ':' array_value
 					{
-		 $$ = T_interval($3,yylocate(@1));  }       
-		| LEXWORD_NAME ':' enum_name			
+		 $$ = T_interval($3,yylocate(@1));  }
+		| LEXWORD_NAME ':' enum_name
 					{
-		 $$ = T_name($3,yylocate(@1));      }       
-		| LEXWORD_DIMENSION ':' enum_dimension		
+		 $$ = T_name($3,yylocate(@1));      }
+		| LEXWORD_DIMENSION ':' enum_dimension
 					{
-		 $$ = T_dimension($3,yylocate(@1)); }       
-		; 
+		 $$ = T_dimension($3,yylocate(@1)); }
+		;
 
 string_array	: string_array str_const
 					{
-		 $$ = T_string_array($1,$2,yylocate(@1));    }       
+		 $$ = T_string_array($1,$2,yylocate(@1));    }
 		| str_const		{
-		 $$ = T_string_array(NULL,$1,yylocate(@1));  }       
+		 $$ = T_string_array(NULL,$1,yylocate(@1));  }
 		;
 
 enum_name	: LEXWORD_EQUAL 	{
-		 $$ = T_equal(yylocate(@1));            }      
+		 $$ = T_equal(yylocate(@1));            }
 		| LEXWORD_SMALLER 	{
-		 $$ = T_smaller(yylocate(@1));          }      
+		 $$ = T_smaller(yylocate(@1));          }
 		| LEXWORD_GREATER 	{
-		 $$ = T_greater(yylocate(@1));          }      
+		 $$ = T_greater(yylocate(@1));          }
 		| LEXWORD_NEIGHBORS 	{
-		 $$ = T_neighbors(yylocate(@1));        }      
+		 $$ = T_neighbors(yylocate(@1));        }
 		| LEXWORD_LOW_MARGIN 	{
-		 $$ = T_low_margin(yylocate(@1));       }      
+		 $$ = T_low_margin(yylocate(@1));       }
 		| LEXWORD_HIGH_MARGIN 	{
-		 $$ = T_high_margin(yylocate(@1));      }      
+		 $$ = T_high_margin(yylocate(@1));      }
 		| LEXWORD_RANGE 	{
-		 $$ = T_xrange(yylocate(@1));           }      
+		 $$ = T_xrange(yylocate(@1));           }
 		| LEXWORD_CLUSTER 	{
-		 $$ = T_cluster(yylocate(@1));          }      
+		 $$ = T_cluster(yylocate(@1));          }
 		| LEXWORD_LIMIT 	{
-		 $$ = T_limit(yylocate(@1));            }      
+		 $$ = T_limit(yylocate(@1));            }
 		| LEXWORD_ABOVE 	{
-		 $$ = T_above(yylocate(@1));            }      
+		 $$ = T_above(yylocate(@1));            }
 		| LEXWORD_BELOW	 	{
-		 $$ = T_below(yylocate(@1));            }      
+		 $$ = T_below(yylocate(@1));            }
 		| LEXWORD_LEFT 		{
-		 $$ = T_left(yylocate(@1));             }      
+		 $$ = T_left(yylocate(@1));             }
 		| LEXWORD_RIGHT 	{
-		 $$ = T_right(yylocate(@1));            }      
+		 $$ = T_right(yylocate(@1));            }
 		| LEXWORD_IN_FRONT 	{
-		 $$ = T_in_font(yylocate(@1));          }      
+		 $$ = T_in_font(yylocate(@1));          }
 		| LEXWORD_BEHIND 	{
-		 $$ = T_behind(yylocate(@1));           }      
+		 $$ = T_behind(yylocate(@1));           }
 		| LEXWORD_EQUAL_POSITION{
-		 $$ = T_equal_position(yylocate(@1));   }      
+		 $$ = T_equal_position(yylocate(@1));   }
 		| LEXWORD_EQUAL_ROW 	{
-		 $$ = T_equal_row(yylocate(@1));        }      
+		 $$ = T_equal_row(yylocate(@1));        }
 		| LEXWORD_EQUAL_COLUMN 	{
-		 $$ = T_equal_column(yylocate(@1));     }      
+		 $$ = T_equal_column(yylocate(@1));     }
 		| LEXWORD_TOP_MARGIN 	{
-		 $$ = T_top_margin(yylocate(@1));       }      
+		 $$ = T_top_margin(yylocate(@1));       }
 		| LEXWORD_BOTTOM_MARGIN {
-		 $$ = T_bottom_margin(yylocate(@1));    }      
+		 $$ = T_bottom_margin(yylocate(@1));    }
 		| LEXWORD_LEFT_MARGIN 	{
-		 $$ = T_left_margin(yylocate(@1));      }      
+		 $$ = T_left_margin(yylocate(@1));      }
 		| LEXWORD_RIGHT_MARGIN 	{
-		 $$ = T_right_margin(yylocate(@1));     }      
+		 $$ = T_right_margin(yylocate(@1));     }
 		| LEXWORD_UPPER_NEIGHBOR{
-		 $$ = T_upper_neighbor(yylocate(@1));   }      
+		 $$ = T_upper_neighbor(yylocate(@1));   }
 		| LEXWORD_LOWER_NEIGHBOR{
-		 $$ = T_lower_neighbor(yylocate(@1));   }      
+		 $$ = T_lower_neighbor(yylocate(@1));   }
 		| LEXWORD_LEFT_NEIGHBOR {
-		 $$ = T_left_neighbor(yylocate(@1));    }      
+		 $$ = T_left_neighbor(yylocate(@1));    }
 		| LEXWORD_RIGHT_NEIGHBOR{
-		 $$ = T_right_neighbor(yylocate(@1));   }      
+		 $$ = T_right_neighbor(yylocate(@1));   }
 		;
 
 enum_dimension	: 'x' 			{
@@ -1228,13 +1228,13 @@ enum_dimension	: 'x' 			{
 		;
 
 attribute_value	: LEX_INT       	{
-		 $$ = T_integer($1,yylocate(@1)); }  
+		 $$ = T_integer($1,yylocate(@1)); }
 		| LEX_FLOAT         	{
 		 $$ = T_float($1,yylocate(@1));   }
 		| LEX_CHAR          	{
-		 $$ = T_char($1,yylocate(@1));    } 
+		 $$ = T_char($1,yylocate(@1));    }
 		| LEX_STRING   		{
-		 $$ = T_string($1,yylocate(@1));  } 
+		 $$ = T_string($1,yylocate(@1));  }
 		| array_value		{
 		 $$ = $1; }
 		;
@@ -1253,18 +1253,18 @@ index_value_list: index_value_list index_value
 
 index_value	: attribute_value 	{
 		 $$ = $1;           }
-		| index ':' attribute_value			
+		| index ':' attribute_value
 					{
 		 $$ = T_index($1,$3,yylocate(@1)); }
-		| range ':' attribute_value			
+		| range ':' attribute_value
 					{
 		 $$ = T_range($1,$3,yylocate(@1)); }
-		| '*' ':' attribute_value			
+		| '*' ':' attribute_value
 					{
 		 $$ = T_stern($3,yylocate(@1));    }
 		;
 
-range		: '[' int_const '-' int_const ']'	
+range		: '[' int_const '-' int_const ']'
 					{
 		 $$ = T_range($2,$4,yylocate(@1)); }
 		;
@@ -1306,7 +1306,7 @@ int parse()
 
 	return (nr_errors);
 } /* parse */
- 
+
 
 
 

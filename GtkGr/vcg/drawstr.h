@@ -1,20 +1,20 @@
 /* SCCS-info %W% %E% */
 
 /*--------------------------------------------------------------------*/
-/*								      */
-/*		VCG : Visualization of Compiler Graphs		      */ 
-/*		--------------------------------------		      */ 
-/*								      */
-/*   file:	   drawstr.h					      */
-/*   version:	   1.00.00					      */
-/*   creation:	   31.1.95					      */
-/*   author:	   I. Lemke  (...-Version 0.99.99)		      */ 
-/*		   G. Sander (Version 1.00.00-...)		      */ 
-/*		   Universitaet des Saarlandes, 66041 Saarbruecken    */
-/*		   ESPRIT Project #5399 Compare 		      */ 
-/*   description:  Library of String Drawing Routines                 */ 
-/*   status:	   in work					      */
-/*								      */
+/*                                    */
+/*      VCG : Visualization of Compiler Graphs            */
+/*      --------------------------------------            */
+/*                                    */
+/*   file:     drawstr.h                          */
+/*   version:      1.00.00                        */
+/*   creation:     31.1.95                        */
+/*   author:       I. Lemke  (...-Version 0.99.99)            */
+/*         G. Sander (Version 1.00.00-...)            */
+/*         Universitaet des Saarlandes, 66041 Saarbruecken    */
+/*         ESPRIT Project #5399 Compare               */
+/*   description:  Library of String Drawing Routines                 */
+/*   status:       in work                        */
+/*                                    */
 /*--------------------------------------------------------------------*/
 
 /* $Id: drawstr.h,v 1.1 1995/02/08 11:11:14 sander Exp $ */
@@ -22,9 +22,9 @@
 
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium 
+ *                               the Compare Consortium
  *
- *  This program and documentation is free software; you can redistribute 
+ *  This program and documentation is free software; you can redistribute
  *  it under the terms of the  GNU General Public License as published by
  *  the  Free Software Foundation;  either version 2  of the License,  or
  *  (at your option) any later version.
@@ -43,7 +43,7 @@
  */
 
 
-/* 
+/*
  * $Log: drawstr.h,v $
  * Revision 1.1  1995/02/08  11:11:14  sander
  * Initial revision
@@ -55,7 +55,7 @@
 
 /*--------------------------------------------------------------------*/
 
-/* See drawstr.h for explanation 
+/* See drawstr.h for explanation
  * -----------------------------
  */
 
@@ -69,18 +69,18 @@ extern int myxpos;
 extern int myypos;
 extern int gs_stlimit;
 extern int gs_shlimit;
-extern int gs_stringw; 
-extern int gs_stringh; 
+extern int gs_stringw;
+extern int gs_stringh;
 
 
 /*  Prototypes
- *  ---------- 
+ *  ----------
  */
 
-void gs_printstr	_PP((char *s, int c));
+void gs_printstr    _PP((char *s, int c));
 void gs_calcstringsize  _PP((char *s));
-void gs_setto		_PP((int x,int y));
-void gs_setshrink	_PP((int a,int b));
+void gs_setto       _PP((int x,int y));
+void gs_setshrink   _PP((int a,int b));
 
 /*--------------------------------------------------------------------*/
 

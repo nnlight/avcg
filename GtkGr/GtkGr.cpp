@@ -26,27 +26,27 @@
 
 int main(int argc, char *argv[])
 {
-	char *filename = NULL;
-	if (argc > 1)
-	{
-		filename = argv[1];
-		vcg_ParseFile( filename);
-	}
-	
-	// Иннициализация GTK;
-	//gtk_init(&iDummy,NULL) ;
-	gtk_init(&argc,/*(char***)*/&argv) ;
+    char *filename = NULL;
+    if (argc > 1)
+    {
+        filename = argv[1];
+        vcg_ParseFile( filename);
+    }
 
-	// Загружаем настройки
-	g_Preferences = new Preferences();
-	g_Preferences->LoadFromFile();
-	// строим GUI
-	std::auto_ptr<UIController> uic( new UIController( filename));
+    // Иннициализация GTK;
+    //gtk_init(&iDummy,NULL) ;
+    gtk_init(&argc,/*(char***)*/&argv) ;
 
-	// запускаем цикл обработки сообщений
-	uic->MainLoop();
+    // Загружаем настройки
+    g_Preferences = new Preferences();
+    g_Preferences->LoadFromFile();
+    // строим GUI
+    std::auto_ptr<UIController> uic( new UIController( filename));
 
-	return 0;
+    // запускаем цикл обработки сообщений
+    uic->MainLoop();
+
+    return 0;
 } /* main */
 
 
