@@ -118,7 +118,7 @@ public:
     void HandleInfoBoxPress( DrawBuffer *draw_buffer, int x, int y, int info_num);
 
     /* загрузка графа из vcg */
-    void LoadGDL();
+    void LoadVcgGraph();
     /* настройка DrawBuffer по установке цвета фона, доп. цветов, начальный скейлинг и положение видимой области и т.п. */
     void SetupDrawBufferSetting( DrawBuffer *draw_buffer);
 private:

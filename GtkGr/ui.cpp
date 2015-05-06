@@ -651,7 +651,7 @@ UIController::UIController( const char *filename)
     m_VRGraph.reset( new VRGraph());
     if (filename)
     {
-        m_VRGraph->LoadGDL();
+        m_VRGraph->LoadVcgGraph();
         m_CurrentFilename = filename;
         gtk_window_set_title( GTK_WINDOW(main_window), filename);
     }
@@ -711,7 +711,7 @@ void UIController::LoadGDLFile( const char *filename)
     /* удаляем старый граф (если есть)*/
     m_VRGraph.reset( NULL);
     m_VRGraph.reset( new VRGraph());
-    m_VRGraph->LoadGDL();
+    m_VRGraph->LoadVcgGraph();
     m_DrawBuffer->SetVRGraphRef( m_VRGraph.get());
     m_CurrentFilename = filename;
     gtk_window_set_title( GTK_WINDOW(m_MainWindow), filename);

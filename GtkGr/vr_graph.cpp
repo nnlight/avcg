@@ -767,7 +767,7 @@ void VRGraph::LoadVcgEdges( Marker_t marker, Tempattr_t node_ta)
     }
 } /* VRGraph::LoadVcgEdges */
 
-void VRGraph::LoadGDL()
+void VRGraph::LoadVcgGraph()
 {
     clock_t t = clock();
     GTimer *g = g_timer_new();
@@ -834,17 +834,17 @@ void VRGraph::LoadGDL()
     free_temp_attr( node_ta);
     if (g_Preferences->DebugGetPrintTimes())
     {
-        std::cout << "LoadGDL time " << double(clock() - t) / CLOCKS_PER_SEC << "sec"
+        std::cout << "LoadVcgGraph time " << double(clock() - t) / CLOCKS_PER_SEC << "sec"
                   <<" (" << g_timer_elapsed(g,NULL) << ")" << std::endl;
     }
     g_timer_destroy(g);
-} /* VRGraph::LoadGDL */
+} /* VRGraph::LoadVcgGraph */
 
 void VRGraph::SetupDrawBufferSetting( DrawBuffer *draw_buffer)
 {
     if (vcg_GetCmapSize())
     {
-        /* если LoadGDL() еще не вызывали, то в vcg colormap еще не инициализирована,
+        /* если LoadVcgGraph() еще не вызывали, то в vcg colormap еще не инициализирована,
          * в этом случае будем пользоваться только базовыми цветами */
         draw_buffer->InitColormap( vcg_GetCmapSize(), vcg_GetCmapRed(), vcg_GetCmapGreen(), vcg_GetCmapBlue());
     }
