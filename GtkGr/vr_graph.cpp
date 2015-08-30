@@ -43,6 +43,7 @@ VREdge::VREdge( VRGraph *graph)
     , linestyle_(LS_SOLID)
     , thickness_(2)
     , color_(BLACK)
+    , is_endpoints_corrected_(false)
 {
     x_.reserve(4);
     y_.reserve(4);
@@ -61,6 +62,7 @@ VREdge::VREdge( VRGraph *graph, GEDGE e)
     , linestyle_((Linestyle_t)ELSTYLE(e))
     , thickness_(ETHICKNESS(e))
     , color_((Color_t)ECOLOR(e))
+    , is_endpoints_corrected_(false)
 {
     x_.reserve(4);
     y_.reserve(4);
@@ -345,6 +347,39 @@ void VRGraph::DrawNode( DrawBuffer *draw_buffer, VRNode *node)
     return;
 } /* VRGraph::DrawNode */
 
+// скорректировать конечные точки дуги, чтобы при рисовании, линии не выпирали из-за стрелок
+void VRGraph::CorrectEdgeEndpointDot( VREdge *edge, VRDir_t dir)
+{
+    int nib_i, foot_i;
+    if ( dir == VRDIR_FORWARD )
+    {
+        nib_i = edge->dots_ - 1;
+        foot_i = nib_i - 1;
+        assert( foot_i >= 0);
+    } else
+    {
+        nib_i = 0;
+        foot_i = 1;
+        assert( 1 < edge->dots_);
+    }
+    /* сохраняем оригинальную координату по факту вызова данного метода */
+    edge->saved_endpoint_x_[dir] = edge->x_[nib_i];
+    edge->saved_endpoint_y_[dir] = edge->y_[nib_i];
+    if ( edge->arrowstyle_[dir] != AS_NONE
+         && edge->arrowsize_[dir] > edge->thickness_ )
+    {
+        /* отодвигаем крайную точку на 1 ширину линии */
+        double d_x = edge->x_[foot_i] - edge->x_[nib_i];
+        double d_y = edge->y_[foot_i] - edge->y_[nib_i];
+        double len = sqrt(d_x*d_x + d_y*d_y);
+        double corr_len = 1. * edge->thickness_;
+        int corr_x = around(edge->x_[nib_i] + (d_x / len) * corr_len);
+        int corr_y = around(edge->y_[nib_i] + (d_y / len) * corr_len);
+        edge->x_[nib_i] = corr_x;
+        edge->y_[nib_i] = corr_y;
+    }
+} /* VRGraph::CorrectEdgeEndpointDot */
+
 void VRGraph::DrawEdgeArrow( DrawBuffer *draw_buffer, VREdge *edge, VRDir_t dir)
 {
     int nib_i, foot_i;
@@ -366,43 +401,52 @@ void VRGraph::DrawEdgeArrow( DrawBuffer *draw_buffer, VREdge *edge, VRDir_t dir)
         draw_buffer->SetLineWidth( 1);
         draw_buffer->SetCurrentColor( edge->arrowcolor_[dir]);
         /* рисуем стрелку, является равносторонним треугольником со стороной edge->arrowsize_ */
-        double d_x = edge->x_[foot_i] - edge->x_[nib_i];
-        double d_y = edge->y_[foot_i] - edge->y_[nib_i];
+        double nib_x = /*edge->x_[nib_i]*/edge->saved_endpoint_x_[dir];
+        double nib_y = /*edge->y_[nib_i]*/edge->saved_endpoint_y_[dir];
+        double d_x = edge->x_[foot_i] - nib_x;
+        double d_y = edge->y_[foot_i] - nib_y;
         double len = sqrt(d_x*d_x + d_y*d_y);
         /* поворачиваем на + 30 градусов и приводи длину */
         double x2 = cos(M_PI/6) * d_x - sin(M_PI/6) * d_y;
         double y2 = sin(M_PI/6) * d_x + cos(M_PI/6) * d_y;
-        int ix2 = around(x2 * edge->arrowsize_[dir] / len + edge->x_[nib_i]);
-        int iy2 = around(y2 * edge->arrowsize_[dir] / len + edge->y_[nib_i]);
+        int ix2 = around(x2 * edge->arrowsize_[dir] / len + nib_x);
+        int iy2 = around(y2 * edge->arrowsize_[dir] / len + nib_y);
         /* поворачиваем на - 30 градусов и приводим длину */
         double x3 = cos(-M_PI/6) * d_x - sin(-M_PI/6) * d_y;
         double y3 = sin(-M_PI/6) * d_x + cos(-M_PI/6) * d_y;
-        int ix3 = around(x3 * edge->arrowsize_[dir] / len + edge->x_[nib_i]);
-        int iy3 = around(y3 * edge->arrowsize_[dir] / len + edge->y_[nib_i]);
+        int ix3 = around(x3 * edge->arrowsize_[dir] / len + nib_x);
+        int iy3 = around(y3 * edge->arrowsize_[dir] / len + nib_y);
         /* рисуем */
         if ( edge->arrowstyle_[dir] == AS_SOLID )
         {
-            draw_buffer->DrawTriangle( edge->x_[nib_i], edge->y_[nib_i],
-                    ix2, iy2,
-                    ix3, iy3,
-                    true);
+            draw_buffer->DrawTriangle( nib_x, nib_y,
+                                       ix2, iy2,
+                                       ix3, iy3,
+                                       true);
         } else
         {
             assert( edge->arrowstyle_[dir] == AS_LINE );
-            draw_buffer->DrawLine( edge->x_[nib_i], edge->y_[nib_i], ix2, iy2);
-            draw_buffer->DrawLine( edge->x_[nib_i], edge->y_[nib_i], ix3, iy3);
+            draw_buffer->DrawLine( nib_x, nib_y, ix2, iy2);
+            draw_buffer->DrawLine( nib_x, nib_y, ix3, iy3);
         }
     }
 } /* VRGraph::DrawEdgeArrow */
 
 void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
 {
-    if (edge->linestyle_ == LS_UNVISIBLE)
+    if ( edge->linestyle_ == LS_UNVISIBLE
+         || edge->dots_ < 2 )
     {
         return;
     }
     draw_buffer->SetLineWidth( edge->thickness_, edge->linestyle_);
     draw_buffer->SetCurrentColor( edge->color_);
+    if ( !edge->is_endpoints_corrected_ )
+    {
+        CorrectEdgeEndpointDot( edge, VRDIR_FORWARD);
+        CorrectEdgeEndpointDot( edge, VRDIR_BACKWARD);
+        edge->is_endpoints_corrected_ = true;
+    }
 #if 1
     draw_buffer->DrawLines( edge->x_, edge->y_, edge->dots_);
 #else
@@ -412,11 +456,8 @@ void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
                                edge->x_[i], edge->y_[i]);
     }
 #endif
-    if ( edge->dots_ >= 2 )
-    {
-        DrawEdgeArrow( draw_buffer, edge, VRDIR_FORWARD);
-        DrawEdgeArrow( draw_buffer, edge, VRDIR_BACKWARD);
-    }
+    DrawEdgeArrow( draw_buffer, edge, VRDIR_FORWARD);
+    DrawEdgeArrow( draw_buffer, edge, VRDIR_BACKWARD);
 } /* VRGraph::DrawEdge */
 
 void VRGraph::DrawInfoBox( DrawBuffer *draw_buffer, VRInfoBox *ibox)

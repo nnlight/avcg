@@ -66,6 +66,9 @@ public:
     int arrowsize_[VRDIR_LAST];
     Arrowstyle_t arrowstyle_[VRDIR_LAST];
     Color_t arrowcolor_[VRDIR_LAST];
+    bool is_endpoints_corrected_;
+    double saved_endpoint_x_[VRDIR_LAST];
+    double saved_endpoint_y_[VRDIR_LAST];
 public:
     VREdge( VRGraph *graph);
     VREdge( VRGraph *graph, GEDGE e);
@@ -137,6 +140,7 @@ private:
 
     void DrawNodeText( DrawBuffer *draw_buffer, VRNode *node);
     void DrawNode( DrawBuffer *draw_buffer, VRNode *node);
+    void CorrectEdgeEndpointDot( VREdge *edge, VRDir_t dir);
     void DrawEdgeArrow( DrawBuffer *draw_buffer, VREdge *edge, VRDir_t dir);
     void DrawEdge( DrawBuffer *draw_buffer, VREdge *edge);
     void DrawInfoBox( DrawBuffer *draw_buffer, VRInfoBox *ibox);
