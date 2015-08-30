@@ -93,6 +93,13 @@ void VREdge::SetArrowAttrsFromVcgEdge( VRDir_t dir, GEDGE e)
     }
 }
 
+void VREdge::AddDot( int x, int y)
+{
+    x_.push_back( x);
+    y_.push_back( y);
+    dots_++;
+} /* VREdge::AddDot */
+
 void VREdge::AddDotsFromVcgEdge( GEDGE e)
 {
     assert( dots_ >= 1 );
@@ -353,7 +360,6 @@ void VRGraph::DrawEdgeArrow( DrawBuffer *draw_buffer, VREdge *edge, VRDir_t dir)
         assert( 1 < edge->dots_);
     }
     if ( edge->arrowstyle_[dir] != AS_NONE
-         && edge->arrowstyle_[dir] != AS_NONESPEC
          && edge->arrowsize_[dir] > edge->thickness_ )
     {
 
@@ -732,9 +738,7 @@ void VRGraph::AddVcgEdgesChainToEdge( GEDGE e, VREdge *edge, Marker_t marker, Te
     {
         // продолжаем в новой VR-дуге
         VREdge *next_edge = new VREdge( this, next_e);
-        next_edge->x_.push_back( ESTARTX(next_e));
-        next_edge->y_.push_back( ESTARTY(next_e));
-        next_edge->dots_++;
+        next_edge->AddDot( ESTARTX(next_e), ESTARTY(next_e));
 
         AddVcgEdgesChainToEdge( next_e, next_edge, marker, node_ta);
     }
@@ -758,9 +762,7 @@ void VRGraph::LoadVcgEdges( Marker_t marker, Tempattr_t node_ta)
             }
             VREdge *edge = new VREdge( this, e);
             edge->SetArrowAttrsFromVcgEdge( VRDIR_BACKWARD, e);
-            edge->x_.push_back( ESTARTX(e));
-            edge->y_.push_back( ESTARTY(e));
-            edge->dots_++;
+            edge->AddDot( ESTARTX(e), ESTARTY(e));
 
             AddVcgEdgesChainToEdge( e, edge, marker, node_ta);
         }

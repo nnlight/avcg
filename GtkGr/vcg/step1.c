@@ -488,7 +488,7 @@ static void prepare_anchoredge(GEDGE edge)
             ELABELCOL(edge),    /* not used later */
             0,
             EARROWBSIZE(edge),  /* not used later */
-            ASNONE,
+            AS_NONE,
             EARROWBSTYLE(edge),     /* not used later */
             EARROWCOL(edge),    /* not used later */
             EARROWBCOL(edge),   /* not used later */
@@ -2689,18 +2689,20 @@ static GEDGE create_edge(GNODE start, GNODE end, GEDGE edge, int arrow)
     EEND(h)   = end;
 
     switch (arrow) {
-    case 0: EARROWSTYLE(h) = ASNONE;
+    case 0:
+        EARROWSTYLE(h) = AS_NONE;
         EARROWSIZE(h)  = 0;
         ELABEL(h)      = NULL;
         break;
-    case 1: EARROWBSTYLE(h) = ASNONE;
+    case 1:
+        EARROWBSTYLE(h) = AS_NONE;
         EARROWBSIZE(h)  = 0;
         ELABEL(h)       = NULL;
         break;
-    case 2: EARROWSTYLE(h)  = ASNONE;
+    case 2:
+        EARROWSTYLE(h)  = AS_NONE;
         EARROWSIZE(h)   = 0;
-        ELABEL(h)       = NULL;
-            EARROWBSTYLE(h) = ASNONE;
+        EARROWBSTYLE(h) = AS_NONE;
         EARROWBSIZE(h)  = 0;
         ELABEL(h)       = NULL;
         break;

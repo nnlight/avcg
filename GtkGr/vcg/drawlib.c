@@ -2757,8 +2757,7 @@ static void draw_arrowhead(GEDGE e, int flag)
     if (!colored) c = BLACK;
 
     okay = 1;
-    if (m==ASNONE) okay = 0;
-    if (m==ASNONESPEC) okay = 0;
+    if (m==AS_NONE) okay = 0;
     if (flag) { if (!NANCHORNODE(EEND(e))) okay = 0; }
     else if (NANCHORNODE(EEND(e))) okay = 0;
 
@@ -2810,8 +2809,7 @@ static void draw_arrowhead(GEDGE e, int flag)
     if (!colored) c = BLACK;
 
     okay = 1;
-    if (m==ASNONE) okay = 0;
-    if (m==ASNONESPEC) okay = 0;
+    if (m==AS_NONE) okay = 0;
     if (flag) { if (!NANCHORNODE(ESTART(e))) okay = 0; }
     else if (NANCHORNODE(ESTART(e))) okay = 0;
 
@@ -5191,7 +5189,7 @@ static void gs_freearrowpoint(int x1, int y1, int x2, int y2,
     rx2 = x1 + s1 * (ax + bx)/ 300;
     ry2 = y1 + s2 * (ay - by)/ 300;
 
-    if (mode==ASLINE) {
+    if (mode==AS_LINE) {
         ax = gbl_x1; ay = gbl_y1; bx = gbl_x2; by = gbl_y2;
         gs_mysolidline(rx1,ry1,x1,y1,t,color);
         gs_mysolidline(rx2,ry2,x1,y1,t,color);
@@ -5249,7 +5247,7 @@ static void gs_n_arrowpoint(int x,int y,int size,int color,int mode,int t)
     if ((x<V_xmin)||(x>=V_xmax)) return;
     if ((y<V_ymin)||(y>=V_ymax)) return;
 
-    if (mode==ASLINE) {
+    if (mode==AS_LINE) {
         i = 7*size/10 - 1;
         ax = gbl_x1; ay = gbl_y1; bx = gbl_x2; by = gbl_y2;
         gs_mysolidline(x-i,y+i,x,y,t,color);
@@ -5282,7 +5280,7 @@ static void gs_ne_arrowpoint(int x,int y,int size,int color,int mode,int t)
 
     if ((x<V_xmin)||(x>=V_xmax)) return;
     if ((y<V_ymin)||(y>=V_ymax)) return;
-    if (mode==ASLINE) {
+    if (mode==AS_LINE) {
         i = size - 1;
         ax = gbl_x1; ay = gbl_y1; bx = gbl_x2; by = gbl_y2;
         gs_mysolidline(x-i,y,x,y,t,color);
@@ -5314,7 +5312,7 @@ static void gs_nw_arrowpoint(int x,int y,int size,int color,int mode,int t)
 
     if ((x<V_xmin)||(x>=V_xmax)) return;
     if ((y<V_ymin)||(y>=V_ymax)) return;
-    if (mode==ASLINE) {
+    if (mode==AS_LINE) {
         i = size - 1;
         ax = gbl_x1; ay = gbl_y1; bx = gbl_x2; by = gbl_y2;
         gs_mysolidline(x+i,y,x,y,t,color);
@@ -5346,7 +5344,7 @@ static void gs_s_arrowpoint(int x,int y,int size,int color,int mode,int t)
 
     if ((x<V_xmin)||(x>=V_xmax)) return;
     if ((y<V_ymin)||(y>=V_ymax)) return;
-    if (mode==ASLINE) {
+    if (mode==AS_LINE) {
         i = 7*size/10 - 1;
         ax = gbl_x1; ay = gbl_y1; bx = gbl_x2; by = gbl_y2;
         gs_mysolidline(x-i,y-i,x,y,t,color);
@@ -5379,7 +5377,7 @@ static void gs_se_arrowpoint(int x,int y,int size,int color,int mode,int t)
 
     if ((x<V_xmin)||(x>=V_xmax)) return;
     if ((y<V_ymin)||(y>=V_ymax)) return;
-    if (mode==ASLINE) {
+    if (mode==AS_LINE) {
         i = size - 1;
         ax = gbl_x1; ay = gbl_y1; bx = gbl_x2; by = gbl_y2;
         gs_mysolidline(x-i,y,x,y,t,color);
@@ -5411,7 +5409,7 @@ static void gs_sw_arrowpoint(int x,int y,int size,int color,int mode,int t)
 
     if ((x<V_xmin)||(x>=V_xmax)) return;
     if ((y<V_ymin)||(y>=V_ymax)) return;
-    if (mode==ASLINE) {
+    if (mode==AS_LINE) {
         i = size - 1;
         ax = gbl_x1; ay = gbl_y1; bx = gbl_x2; by = gbl_y2;
         gs_mysolidline(x+i,y,x,y,t,color);
@@ -5443,7 +5441,7 @@ static void gs_e_arrowpoint(int x,int y,int size,int color,int mode,int t)
 
     if ((x<V_xmin)||(x>=V_xmax)) return;
     if ((y<V_ymin)||(y>=V_ymax)) return;
-    if (mode==ASLINE) {
+    if (mode==AS_LINE) {
         i = 7*size/10 - 1;
         ax = gbl_x1; ay = gbl_y1; bx = gbl_x2; by = gbl_y2;
         gs_mysolidline(x-i,y-i,x,y,t,color);
@@ -5476,7 +5474,7 @@ static void gs_w_arrowpoint(int x,int y,int size,int color,int mode,int t)
 
     if ((x<V_xmin)||(x>=V_xmax)) return;
     if ((y<V_ymin)||(y>=V_ymax)) return;
-    if (mode==ASLINE) {
+    if (mode==AS_LINE) {
         i = 7*size/10 - 1;
         ax = gbl_x1; ay = gbl_y1; bx = gbl_x2; by = gbl_y2;
         gs_mysolidline(x+i,y-i,x,y,t,color);

@@ -59,10 +59,9 @@ enum Linestyle_t
 
 enum Arrowstyle_t
 {
-    AS_NONE     = 0,
-    AS_SOLID    = 1,
-    AS_LINE     = 2,
-    AS_NONESPEC = 3
+    AS_NONE  = 0,
+    AS_SOLID = 1,
+    AS_LINE  = 2
 };
 
 enum Nodeshape_t
@@ -89,12 +88,6 @@ enum Textmode_t
 #define DOTTED     LS_DOTTED
 #define DASHED     LS_DASHED
 #define UNVISIBLE  LS_UNVISIBLE
-
-/* Arrowstyles */
-#define ASNONE     AS_NONE
-#define ASSOLID    AS_SOLID
-#define ASLINE     AS_LINE
-#define ASNONESPEC AS_NONESPEC
 
 /* Shapes */
 #define BOX        NS_BOX

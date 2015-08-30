@@ -72,6 +72,7 @@ public:
     ~VREdge();
     VREdge *GetNextSucc() { return static_cast<VREdge*>(GrGetNextSucc()); }
     void SetArrowAttrsFromVcgEdge( VRDir_t dir, GEDGE e);
+    void AddDot( int x, int y);
     void AddDotsFromVcgEdge( GEDGE e);
 private:
     VREdge( const VRNode &a);

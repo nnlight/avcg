@@ -867,10 +867,10 @@ void edgedefaults(GEDGE edge)
     ECOLOR(edge)        = BLACK;
     ELABELCOL(edge)     = BLACK;
     EARROWSIZE(edge)    = 10;
-    EARROWSTYLE(edge)   = ASSOLID;
+    EARROWSTYLE(edge)   = AS_SOLID;
     EARROWCOL(edge)     = BLACK;
     EARROWBSIZE(edge)   = 0;
-    EARROWBSTYLE(edge)  = ASNONESPEC;
+    EARROWBSTYLE(edge)  = AS_NONE;
     EARROWBCOL(edge)    = BLACK;
 
     init_edge_graph_fields_as_dead(edge);
@@ -985,7 +985,7 @@ GEDGE   tmpedgealloc(
     EHORDER(h)  = horder;
     ECOLOR(h)   = ecolor;
     ELABELCOL(h)    = elcol;
-    EARROWSTYLE(h)  = ASSOLID;
+    EARROWSTYLE(h)  = AS_SOLID;
     EARROWCOL(h)    = ecolor;
     EARROWSIZE(h)   = arrows;
     EARROWSTYLE(h)  = arrowsty;

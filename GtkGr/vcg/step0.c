@@ -1507,17 +1507,17 @@ static void one_edge_attribute(
         break;
     case T_Co_arrowstyle:
         switch(tag(son1(node2))) {
-        case T_Co_none:  EARROWSTYLE(e) = ASNONESPEC; break;
-        case T_Co_line:  EARROWSTYLE(e) = ASLINE;     break;
-        case T_Co_solid: EARROWSTYLE(e) = ASSOLID;    break;
+        case T_Co_none:  EARROWSTYLE(e) = AS_NONE;  break;
+        case T_Co_line:  EARROWSTYLE(e) = AS_LINE;  break;
+        case T_Co_solid: EARROWSTYLE(e) = AS_SOLID; break;
         default: assert((0));
         }
         break;
     case T_Co_barrowstyle:
         switch(tag(son1(node2))) {
-        case T_Co_none:  EARROWBSTYLE(e) = ASNONESPEC; break;
-        case T_Co_line:  EARROWBSTYLE(e) = ASLINE;     break;
-        case T_Co_solid: EARROWBSTYLE(e) = ASSOLID;    break;
+        case T_Co_none:  EARROWBSTYLE(e) = AS_NONE;  break;
+        case T_Co_line:  EARROWBSTYLE(e) = AS_LINE;  break;
+        case T_Co_solid: EARROWBSTYLE(e) = AS_SOLID; break;
         default: assert((0));
         }
         break;
