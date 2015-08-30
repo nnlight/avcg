@@ -403,11 +403,15 @@ void VRGraph::DrawEdge( DrawBuffer *draw_buffer, VREdge *edge)
     }
     draw_buffer->SetLineWidth( edge->thickness_, edge->linestyle_);
     draw_buffer->SetCurrentColor( edge->color_);
+#if 1
+    draw_buffer->DrawLines( edge->x_, edge->y_, edge->dots_);
+#else
     for ( int i = 1; i < edge->dots_; i++ )
     {
         draw_buffer->DrawLine( edge->x_[i-1], edge->y_[i-1],
                                edge->x_[i], edge->y_[i]);
     }
+#endif
     if ( edge->dots_ >= 2 )
     {
         DrawEdgeArrow( draw_buffer, edge, VRDIR_FORWARD);

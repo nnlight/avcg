@@ -65,6 +65,7 @@ private:
     int m_AllocedColors;             /*!< кол-во выделенных цветов (pixel field имеет смысл)*/
     Color_t m_BackgroundColor;       /*!< цвет фона */
     Color_t m_CurrentColor;          /*!< текущий (foreground) цвет */
+    vector<GdkPoint> m_TmpPoints;    /*!< вспомогательный буффер для DrawLines */
 public:
     DrawBuffer( GtkWidget *drawing_area);
     /* не предназначен для иcпользования в качестве базового класса */
@@ -98,6 +99,7 @@ public:
     void SetCurrentColor( Color_t c);
     void SetLineWidth( vrgint line_width, Linestyle_t lstyle = LS_SOLID);
     void DrawLine( vrgint x, vrgint y, vrgint endx, vrgint endy);
+    void DrawLines( const vector<vrgint> &x, const vector<vrgint> &y, int n_points);
     void DrawRectangle( vrgint x, vrgint y, vrgint width, vrgint height, bool filled);
     void DrawTriangle( vrgint x1, vrgint y1, vrgint x2, vrgint y2, vrgint x3, vrgint y3, bool filled);
     void DrawRhomb( vrgint x, vrgint y, vrgint width, vrgint height, bool filled);

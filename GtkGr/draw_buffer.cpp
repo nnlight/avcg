@@ -526,6 +526,19 @@ void DrawBuffer::DrawLine( vrgint x, vrgint y, vrgint endx, vrgint endy)
 
     gdk_draw_line( m_Pixmap, m_GC, pm_x, pm_y, pm_endx, pm_endy);
 }
+void DrawBuffer::DrawLines( const vector<vrgint> &x, const vector<vrgint> &y, int n_points)
+{
+    if ( n_points > m_TmpPoints.size())
+    {
+        m_TmpPoints.resize( n_points);
+    }
+    for ( int i = 0; i < n_points; i++ )
+    {
+        Vrg2Pm( x[i], y[i], m_TmpPoints[i].x, m_TmpPoints[i].y);
+    }
+
+    gdk_draw_lines( m_Pixmap, m_GC, &m_TmpPoints[0], n_points);
+}
 void DrawBuffer::DrawRectangle( vrgint x, vrgint y, vrgint width, vrgint height, bool filled)
 {
     gboolean pm_filled = filled ? TRUE : FALSE;
