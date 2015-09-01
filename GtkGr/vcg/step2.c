@@ -290,7 +290,7 @@ void step2_main(void)
     assert((layer));
 
 
-        /* Allocate tmp_layer and copy layer into tmp_layer.
+    /* Allocate tmp_layer and copy layer into tmp_layer.
      * Calculate max_nodes_per_layer.
      */
 
@@ -309,7 +309,7 @@ void step2_main(void)
         size_of_sortarray = max_nodes_per_layer+2;
 #ifdef DEBUG
         PRINTF("Sizeof tables `sort_array',`save_array': %d Bytes\n",
-            (max_nodes_per_layer+2)*sizeof(GNODE));
+                (max_nodes_per_layer+2)*sizeof(GNODE));
 #endif
     }
 
@@ -346,22 +346,22 @@ void step2_main(void)
     init_barycentering();
     old_nr_crossings = -1;
     nr_bary_iterations = 0;
-        while (nr_crossings != old_nr_crossings) {
+    while (nr_crossings != old_nr_crossings) {
         if (nr_bary_iterations>=max_baryiterations) {
-                        gs_wait_message('t');
+            gs_wait_message('t');
             break;
         }
-            if (G_timelimit>0)
-                    if (test_timelimit(60)) {
-                            gs_wait_message('t');
+        if (G_timelimit>0)
+            if (test_timelimit(60)) {
+                gs_wait_message('t');
                 break;
-                }
+            }
         old_nr_crossings = nr_crossings;
-                barycentering();
+        barycentering();
         nr_bary_iterations++;
         if (nr_bary_iterations<min_baryiterations)
             nr_crossings = old_nr_crossings+1;
-        }
+    }
 
 #ifdef CHECK_CROSSING
     PRINTF("After barycentering: nr_crossings %d \n",nr_crossings);
@@ -450,7 +450,7 @@ static void create_tmp_layer(void)
         size_of_tlayer = maxdepth+2;
 #ifdef DEBUG
         PRINTF("Sizeof table `tmp_layer': %d Bytes\n",
-            (maxdepth+2)*sizeof(struct depth_entry));
+                (maxdepth+2)*sizeof(struct depth_entry));
 #endif
     }
 
@@ -466,7 +466,7 @@ static void create_tmp_layer(void)
          * max_nodes_per_layer, we use TSUCC.
          */
         j = 0;
-                for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
+        for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
         {
             j++;
         }
@@ -477,7 +477,7 @@ static void create_tmp_layer(void)
          * TPRED(tmp_layer) is not needed for barycentering.
          */
         j = 0;
-                for (h1 = TPRED(layer[i]); h1; h1 = GNNEXT(h1))
+        for (h1 = TPRED(layer[i]); h1; h1 = GNNEXT(h1))
         {
             j++;
             h2 = tmpnodelist_alloc();
@@ -496,7 +496,7 @@ static void create_tmp_layer(void)
          * Now we adapt the TSUCC-fields of layer in the same way.
          */
         TSUCC(layer[i]) = NULL;
-                for (h1 = TPRED(layer[i]); h1; h1 = GNNEXT(h1))
+        for (h1 = TPRED(layer[i]); h1; h1 = GNNEXT(h1))
         {
             h2 = tmpnodelist_alloc();
             GNNEXT(h2) = TSUCC(layer[i]);
@@ -589,7 +589,7 @@ static void tree_horizontal_order(void)
                 if (EWEIGHTS(e)) {
                     node = ETARGET(e);
                     NBARY(node) = (double)(NPOS(GNNODE(li)))
-                         + NBARY(node)/maxbary;
+                        + NBARY(node)/maxbary;
                 }
             }
         }
@@ -597,7 +597,7 @@ static void tree_horizontal_order(void)
         quicksort_sort_array(TANZ(layer[i]));
 
         /* Copy sort_array -> tmp_layer */
-            array_to_level(i);
+        array_to_level(i);
     }
 
     /* Unmark all nodes again */
@@ -731,7 +731,7 @@ static void unmerge_connected_parts(void)
         }
         quicksort_sort_array(TANZ(layer[i]));
         /* Copy sort_array -> tmp_layer */
-            array_to_level(i);
+        array_to_level(i);
     }
 
     /* layer = tmp_layer */
@@ -854,8 +854,8 @@ static int layer_crossing(int level)
     assert((upper_list==NULL));
     assert((level>=0));
     assert((level<=maxdepth));  /* we access to level+1
-                     * and tmp_layer[maxdepth+1] exists
-                     */
+                                 * and tmp_layer[maxdepth+1] exists
+                                 */
 
 #if 0
     /* Later, we need to traverse the adjacency lists in the order
@@ -1052,9 +1052,9 @@ static void finish_upper(GNODE v)
     DLLIST n, m;
     int k1;     /* number occurences of v in upper_list */
     int k2;     /* number of nodes!=v in upper_list that*/
-            /* precede an occurence of v            */
+                /* precede an occurence of v            */
     int k3;     /* number of edges that start before v  */
-            /* to nonfinished nodes.        */
+                /* to nonfinished nodes.        */
     debugmessage("finish_upper","");
     assert((v));
     k1 = k2 = k3 = 0;
@@ -1100,9 +1100,9 @@ static void finish_lower(GNODE v)
     DLLIST n,m;
     int k1;     /* number occurences of v in lower_list */
     int k2;     /* number of nodes!=v in lower_list that*/
-            /* precede an occurence of v            */
+                /* precede an occurence of v            */
     int k3;     /* number of edges that start before v  */
-            /* to nonfinished nodes.        */
+                /* to nonfinished nodes.        */
     debugmessage("finish_lower","");
     assert((v));
     k1 = k2 = k3 = 0;
@@ -1396,10 +1396,10 @@ static void local_crossing_optimization(int nearedges)
 
     if (!local_unwind) return;
     if (G_timelimit>0)
-                if (test_timelimit(60)) {
-                    gs_wait_message('t');
+        if (test_timelimit(60)) {
+            gs_wait_message('t');
             return;
-            }
+        }
     gs_wait_message('l');
     for (i=0; i<=maxdepth+1; i++)
         while (level_crossing_optimization(i, nearedges));
@@ -1591,10 +1591,10 @@ static void local_unwind_crossings(void)
     debugmessage("local_unwind_crossings","");
 
     if (G_timelimit>0)
-                if (test_timelimit(60)) {
-                    gs_wait_message('t');
+        if (test_timelimit(60)) {
+            gs_wait_message('t');
             return;
-            }
+        }
     gs_wait_message('l');
     prepare_positions();
     for (v = nodelist; v; v = NNEXT(v))
@@ -1683,56 +1683,56 @@ static void barycentering(void)
     tmp_startlevel = alt_startlevel = 0;
     changed = 1;
     while (phase1_allowed && changed) {
-        nr_bary_iterations++;
+        nr_bary_iteratins++;
         if (nr_crossings==0) return; /* is already optimal */
         if (nr_bary_iterations>=max_baryiterations) {
-                        gs_wait_message('t');
+            gs_wait_message('t');
             break;
         }
-            if (G_timelimit>0)
-                    if (test_timelimit(60)) {
-                            gs_wait_message('t');
+        if (G_timelimit>0)
+            if (test_timelimit(60)) {
+                gs_wait_message('t');
                 break;
-                }
+            }
         changed = 0;
-            Phase1_down();
-            cross = graph_crossings();
-            alt = 0;
-            if (  (cross < nr_crossings)
-            ||(nr_bary_iterations<min_baryiterations)) {
+        Phase1_down();
+        cross = graph_crossings();
+        alt = 0;
+        if ( (cross < nr_crossings)
+                ||(nr_bary_iterations<min_baryiterations)) {
             tmp_layer_is_better();
         }
-            else if (have_alternative) {
-                    copy_layer_to_tmp_layer();
-                    Phase1_down();
-                    cross = graph_crossings();
-                    if      (cross < nr_crossings)     { tmp_layer_is_better(); }
-                    else if (cross > nr_crossings)     { tmp_layer_is_worser(); }
-                    else  /* cross == nr_crossings */  alt = 1;
+        else if (have_alternative) {
+            copy_layer_to_tmp_layer();
+            Phase1_down();
+            cross = graph_crossings();
+            if      (cross < nr_crossings)     { tmp_layer_is_better(); }
+            else if (cross > nr_crossings)     { tmp_layer_is_worser(); }
+            else  /* cross == nr_crossings */  alt = 1;
         }
-        else if     (cross == nr_crossings)        alt = 1;
-            else      /*(cross > nr_crossings) */      { tmp_layer_is_worser(); }
+        else if (cross == nr_crossings)        alt = 1;
+        else      /*(cross > nr_crossings) */      { tmp_layer_is_worser(); }
         have_alternative = alt;
 
         if (nr_crossings==0) return;
 
-            Phase1_up();
-            cross = graph_crossings();
-            alt = 0;
-            if (  (cross < nr_crossings)
-            ||(nr_bary_iterations<min_baryiterations)) {
+        Phase1_up();
+        cross = graph_crossings();
+        alt = 0;
+        if (  (cross < nr_crossings)
+                ||(nr_bary_iterations<min_baryiterations)) {
             tmp_layer_is_better();
         }
-            else if (have_alternative) {
-                    copy_layer_to_tmp_layer();
-                    Phase1_up();
-                    cross = graph_crossings();
-                    if      (cross < nr_crossings)     { tmp_layer_is_better(); }
-                    else if (cross > nr_crossings)     { tmp_layer_is_worser(); }
-                    else  /* cross == nr_crossings */  alt = 1;
+        else if (have_alternative) {
+            copy_layer_to_tmp_layer();
+            Phase1_up();
+            cross = graph_crossings();
+            if      (cross < nr_crossings)     { tmp_layer_is_better(); }
+            else if (cross > nr_crossings)     { tmp_layer_is_worser(); }
+            else  /* cross == nr_crossings */  alt = 1;
         }
         else if     (cross == nr_crossings)        alt = 1;
-            else      /*(cross > nr_crossings) */      { tmp_layer_is_worser(); }
+        else      /*(cross > nr_crossings) */      { tmp_layer_is_worser(); }
         have_alternative = alt;
     }
 
@@ -1746,35 +1746,35 @@ static void barycentering(void)
     while (changed) {
         nr_bary_iterations++;
         if (nr_bary_iterations>=max_baryiterations) {
-                        gs_wait_message('t');
+            gs_wait_message('t');
             break;
         }
-            if (G_timelimit>0)
-                    if (test_timelimit(60)) {
-                            gs_wait_message('t');
+        if (G_timelimit>0)
+            if (test_timelimit(60)) {
+                gs_wait_message('t');
                 break;
-                }
+            }
         changed = 0;
         phase2_startlevel = tmp_startlevel;
-            Phase2_down();
+        Phase2_down();
         tmp_startlevel = phase2_startlevel;
         if (tmp_startlevel > maxdepth) tmp_startlevel = 0;
-            cross = graph_crossings();
-            alt = 0;
-            if (cross < nr_crossings) { tmp_layer_is_better(); }
-            else if (have_alternative) {
-                    copy_layer_to_tmp_layer();
+        cross = graph_crossings();
+        alt = 0;
+        if (cross < nr_crossings) { tmp_layer_is_better(); }
+        else if (have_alternative) {
+            copy_layer_to_tmp_layer();
             phase2_startlevel = tmp_startlevel = alt_startlevel;
-                    Phase2_down();
+            Phase2_down();
             tmp_startlevel = phase2_startlevel;
             if (tmp_startlevel > maxdepth) tmp_startlevel = 0;
-                    cross = graph_crossings();
-                    if      (cross < nr_crossings)     { tmp_layer_is_better(); }
-                    else if (cross > nr_crossings)     { tmp_layer_is_worser(); }
-                    else  /* cross == nr_crossings */  alt = 1;
+            cross = graph_crossings();
+            if      (cross < nr_crossings)     { tmp_layer_is_better(); }
+            else if (cross > nr_crossings)     { tmp_layer_is_worser(); }
+            else  /* cross == nr_crossings */  alt = 1;
         }
         else if     (cross == nr_crossings)        alt = 1;
-            else      /*(cross > nr_crossings) */      { tmp_layer_is_worser(); }
+        else      /*(cross > nr_crossings) */      { tmp_layer_is_worser(); }
         have_alternative = alt;
         if (nr_crossings==0) return;
     }
@@ -1785,35 +1785,35 @@ static void barycentering(void)
     while (changed) {
         nr_bary_iterations++;
         if (nr_bary_iterations>=max_baryiterations) {
-                        gs_wait_message('t');
+            gs_wait_message('t');
             break;
         }
-            if (G_timelimit>0)
-                    if (test_timelimit(60)) {
-                            gs_wait_message('t');
+        if (G_timelimit>0)
+            if (test_timelimit(60)) {
+                gs_wait_message('t');
                 break;
-                }
+            }
         changed = 0;
         phase2_startlevel = tmp_startlevel;
-            Phase2_up();
+        Phase2_up();
         tmp_startlevel = phase2_startlevel;
         if (tmp_startlevel < 0) tmp_startlevel = maxdepth;
-            cross = graph_crossings();
-            alt = 0;
-            if (cross < nr_crossings) { tmp_layer_is_better(); }
-            else if (have_alternative) {
-                    copy_layer_to_tmp_layer();
+        cross = graph_crossings();
+        alt = 0;
+        if (cross < nr_crossings) { tmp_layer_is_better(); }
+        else if (have_alternative) {
+            copy_layer_to_tmp_layer();
             phase2_startlevel = tmp_startlevel = alt_startlevel;
-                    Phase2_up();
+            Phase2_up();
             tmp_startlevel = phase2_startlevel;
             if (tmp_startlevel < 0) tmp_startlevel = maxdepth;
-                    cross = graph_crossings();
-                    if      (cross < nr_crossings)     { tmp_layer_is_better(); }
-                    else if (cross > nr_crossings)     { tmp_layer_is_worser(); }
-                    else  /* cross == nr_crossings */  alt = 1;
+            cross = graph_crossings();
+            if      (cross < nr_crossings)     { tmp_layer_is_better(); }
+            else if (cross > nr_crossings)     { tmp_layer_is_worser(); }
+            else  /* cross == nr_crossings */  alt = 1;
         }
         else if     (cross == nr_crossings)        alt = 1;
-            else      /*(cross > nr_crossings) */      { tmp_layer_is_worser(); }
+        else      /*(cross > nr_crossings) */      { tmp_layer_is_worser(); }
         have_alternative = alt;
         if (nr_crossings==0) return;
     }
@@ -1837,13 +1837,13 @@ static void barycentering(void)
 
 static void    Phase1_down(void)
 {
-        int     i;
+    int     i;
 
     debugmessage("Phase1_down","");
     gs_wait_message('b');
-        for (i=0; i<=maxdepth; i++) (void)resort_down_layer(i);
+    for (i=0; i<=maxdepth; i++) (void)resort_down_layer(i);
 #ifdef CHECK_CROSSING
-        i = graph_crossings();
+    i = graph_crossings();
     calc_all_layers_crossings();
     assert((i==graph_crossings()));
     PRINTF("Phase1_down: nr_crossings old: %d new: %d\n",nr_crossings,i);
@@ -1859,13 +1859,13 @@ static void    Phase1_down(void)
 
 static void    Phase1_up(void)
 {
-        int     i;
+    int     i;
 
     debugmessage("Phase1_up","");
     gs_wait_message('b');
-        for (i=maxdepth; i>=0; i--) (void)resort_up_layer(i);
+    for (i=maxdepth; i>=0; i--) (void)resort_up_layer(i);
 #ifdef CHECK_CROSSING
-        i = graph_crossings();
+    i = graph_crossings();
     calc_all_layers_crossings();
     assert((i==graph_crossings()));
     PRINTF("Phase1_up: nr_crossings old: %d new: %d\n",nr_crossings,i);
@@ -1893,43 +1893,43 @@ static int     resort_down_layer(int i)
     assert((i<=maxdepth));   /* we access to maxdepth+1 which exists */
     /* Assertion: TCROSS(tmp_layer[i]) is correctly initialized */
 
-        level_to_array(i+1,'d');
+    level_to_array(i+1,'d');
     switch (crossing_heuristics) {
-    case 0: for (j=0; j<TANZ(layer[i+1]); j++)
-            NBARY(sort_array[j]) = predbary(sort_array[j]);
-        break;
-    case 1: for (j=0; j<TANZ(layer[i+1]); j++)
-            NBARY(sort_array[j]) = predmedian(sort_array[j]);
-        break;
-    case 2: for (j=0; j<TANZ(layer[i+1]); j++)
-            NBARY(sort_array[j]) = predbary(sort_array[j])
-                + predmedian(sort_array[j])/10000.0;
-        break;
-    case 3: for (j=0; j<TANZ(layer[i+1]); j++)
-            NBARY(sort_array[j]) = predmedian(sort_array[j])
-                + predbary(sort_array[j])/10000.0;
-        break;
+        case 0: for (j=0; j<TANZ(layer[i+1]); j++)
+                    NBARY(sort_array[j]) = predbary(sort_array[j]);
+                break;
+        case 1: for (j=0; j<TANZ(layer[i+1]); j++)
+                    NBARY(sort_array[j]) = predmedian(sort_array[j]);
+                break;
+        case 2: for (j=0; j<TANZ(layer[i+1]); j++)
+                    NBARY(sort_array[j]) = predbary(sort_array[j])
+                        + predmedian(sort_array[j])/10000.0;
+                break;
+        case 3: for (j=0; j<TANZ(layer[i+1]); j++)
+                    NBARY(sort_array[j]) = predmedian(sort_array[j])
+                        + predbary(sort_array[j])/10000.0;
+                break;
     }
     quicksort_sort_array(TANZ(layer[i+1]));
 
     save_level(i+1);    /* save old level temporary */
 
-        array_to_level(i+1);
+    array_to_level(i+1);
     if (TRESNEEDED(layer[i+1])) apply_horder(i+1);
 
     c = layer_crossing(i);
 
-        if (c <= TCROSS(tmp_layer[i])) {
+    if (c <= TCROSS(tmp_layer[i])) {
         /* the new level+1 is better than the old one */
 
         TCROSS(tmp_layer[i]) = c;
         if (i<maxdepth) TCROSS(tmp_layer[i+1])= layer_crossing(i+1);
-                return(1);
-        }
+        return(1);
+    }
     /* the old level+1 is better than the new one. Thus restore it. */
 
     restore_level(i+1);
-        return(0);
+    return(0);
 }
 
 /*  Resort a layer according to the succbary-values
@@ -1952,43 +1952,43 @@ static int     resort_up_layer(int i)
     assert((i<=maxdepth));   /* we access to maxdepth+1 which exists */
     /* Assertion: TCROSS(tmp_layer[i]) is correctly initialized */
 
-        level_to_array(i,'u');
+    level_to_array(i,'u');
     switch (crossing_heuristics) {
-    case 0: for (j=0; j<TANZ(layer[i]); j++)
-            NBARY(sort_array[j]) = succbary(sort_array[j]);
-        break;
-    case 1: for (j=0; j<TANZ(layer[i]); j++)
-            NBARY(sort_array[j]) = succmedian(sort_array[j]);
-        break;
-    case 2: for (j=0; j<TANZ(layer[i]); j++)
-            NBARY(sort_array[j]) = succbary(sort_array[j])
-                + succmedian(sort_array[j])/10000.0;
-        break;
-    case 3: for (j=0; j<TANZ(layer[i]); j++)
-            NBARY(sort_array[j]) = succmedian(sort_array[j])
-                + succbary(sort_array[j])/10000.0;
-        break;
+        case 0: for (j=0; j<TANZ(layer[i]); j++)
+                    NBARY(sort_array[j]) = succbary(sort_array[j]);
+                break;
+        case 1: for (j=0; j<TANZ(layer[i]); j++)
+                    NBARY(sort_array[j]) = succmedian(sort_array[j]);
+                break;
+        case 2: for (j=0; j<TANZ(layer[i]); j++)
+                    NBARY(sort_array[j]) = succbary(sort_array[j])
+                        + succmedian(sort_array[j])/10000.0;
+                break;
+        case 3: for (j=0; j<TANZ(layer[i]); j++)
+                    NBARY(sort_array[j]) = succmedian(sort_array[j])
+                        + succbary(sort_array[j])/10000.0;
+                break;
     }
     quicksort_sort_array(TANZ(layer[i]));
 
     save_level(i);      /* save old level temporary */
 
-        array_to_level(i);
+    array_to_level(i);
     if (TRESNEEDED(layer[i])) apply_horder(i);
 
     c = layer_crossing(i);
 
-        if (c <= TCROSS(tmp_layer[i])) {
+    if (c <= TCROSS(tmp_layer[i])) {
         /* the new level is better than the old one */
 
         TCROSS(tmp_layer[i]) = c;
         if (i>0) TCROSS(tmp_layer[i-1])= layer_crossing(i-1);
-                return(1);
-        }
+        return(1);
+    }
     /* the old level is better than the new one. Thus restore it. */
 
     restore_level(i);
-        return(0);
+    return(0);
 }
 
 
@@ -2019,49 +2019,94 @@ static int     resort_up_layer(int i)
 
 static void    Phase2_down(void)
 {
-        int     i,j;
+    int     i,j;
     int     cross;
 
     debugmessage("Phase2_down","");
 
     gs_wait_message('B');
     if (phase2_startlevel <= maxdepth)
-            for (i=phase2_startlevel; i<=maxdepth; i++) {
+        for (i=phase2_startlevel; i<=maxdepth; i++) {
 
             if (G_timelimit>0)
-                    if (test_timelimit(60)) {
-                            gs_wait_message('t');
-                break;
+                if (test_timelimit(60)) {
+                    gs_wait_message('t');
+                    break;
                 }
             level_to_array(i,'u');
-        switch (crossing_heuristics) {
-        case 0: for (j=0; j<TANZ(layer[i]); j++)
-                 NBARY(sort_array[j]) = succbary(sort_array[j]);
-            break;
-        case 1: for (j=0; j<TANZ(layer[i]); j++)
-                 NBARY(sort_array[j]) = succmedian(sort_array[j]);
-            break;
-        case 2: for (j=0; j<TANZ(layer[i]); j++)
-                NBARY(sort_array[j]) = succbary(sort_array[j])
-                    + succmedian(sort_array[j])/10000.0;
-            break;
-        case 3: for (j=0; j<TANZ(layer[i]); j++)
-                NBARY(sort_array[j]) = succmedian(sort_array[j])
-                    + succbary(sort_array[j])/10000.0;
-            break;
-        }
-        quicksort_sort_array(TANZ(layer[i]));
-                if (cycle_sort_array(TANZ(layer[i]))) {
+            switch (crossing_heuristics) {
+                case 0: for (j=0; j<TANZ(layer[i]); j++)
+                            NBARY(sort_array[j]) = succbary(sort_array[j]);
+                        break;
+                case 1: for (j=0; j<TANZ(layer[i]); j++)
+                            NBARY(sort_array[j]) = succmedian(sort_array[j]);
+                        break;
+                case 2: for (j=0; j<TANZ(layer[i]); j++)
+                            NBARY(sort_array[j]) = succbary(sort_array[j])
+                                + succmedian(sort_array[j])/10000.0;
+                        break;
+                case 3: for (j=0; j<TANZ(layer[i]); j++)
+                            NBARY(sort_array[j]) = succmedian(sort_array[j])
+                                + succbary(sort_array[j])/10000.0;
+                        break;
+            }
+            quicksort_sort_array(TANZ(layer[i]));
+            if (cycle_sort_array(TANZ(layer[i]))) {
                 array_to_level(i);
-            if (TRESNEEDED(layer[i])) apply_horder(i);
+                if (TRESNEEDED(layer[i])) apply_horder(i);
 
-            if (i>0) TCROSS(tmp_layer[i-1]) = layer_crossing(i-1);
-            if (i<=maxdepth) TCROSS(tmp_layer[i]) = layer_crossing(i);
-                        resort_up_down_layer(i);
+                if (i>0) TCROSS(tmp_layer[i-1]) = layer_crossing(i-1);
+                if (i<=maxdepth) TCROSS(tmp_layer[i]) = layer_crossing(i);
+                resort_up_down_layer(i);
                 cross = graph_crossings();
                 if (cross < nr_crossings) {
 #ifdef CHECK_CROSSING
                     j = graph_crossings();
+                    calc_all_layers_crossings();
+                    assert((j==graph_crossings()));
+                    PRINTF("Phase2_down: nr_crossings old: %d new: %d\n",nr_crossings,j);
+#endif
+                    phase2_startlevel = i+1;
+                    return;
+                }
+            }
+        }
+    for (i=0; (i<phase2_startlevel) && (i<=maxdepth); i++) {
+
+        if (G_timelimit>0)
+            if (test_timelimit(60)) {
+                gs_wait_message('t');
+                break;
+            }
+        level_to_array(i,'u');
+        switch (crossing_heuristics) {
+            case 0: for (j=0; j<TANZ(layer[i]); j++)
+                        NBARY(sort_array[j]) = predbary(sort_array[j]);
+                    break;
+            case 1: for (j=0; j<TANZ(layer[i]); j++)
+                        NBARY(sort_array[j]) = predmedian(sort_array[j]);
+                    break;
+            case 2: for (j=0; j<TANZ(layer[i]); j++)
+                        NBARY(sort_array[j]) = predbary(sort_array[j])
+                            + predmedian(sort_array[j])/10000.0;
+                    break;
+            case 3: for (j=0; j<TANZ(layer[i]); j++)
+                        NBARY(sort_array[j]) = predmedian(sort_array[j])
+                            + predbary(sort_array[j])/10000.0;
+                    break;
+        }
+        quicksort_sort_array(TANZ(layer[i]));
+        if (cycle_sort_array(TANZ(layer[i]))) {
+            array_to_level(i);
+            if (TRESNEEDED(layer[i])) apply_horder(i);
+
+            if (i>0) TCROSS(tmp_layer[i-1]) = layer_crossing(i-1);
+            if (i<=maxdepth) TCROSS(tmp_layer[i]) = layer_crossing(i);
+            resort_up_down_layer(i);
+            cross = graph_crossings();
+            if (cross < nr_crossings) {
+#ifdef CHECK_CROSSING
+                j = graph_crossings();
                 calc_all_layers_crossings();
                 assert((j==graph_crossings()));
                 PRINTF("Phase2_down: nr_crossings old: %d new: %d\n",nr_crossings,j);
@@ -2069,55 +2114,10 @@ static void    Phase2_down(void)
                 phase2_startlevel = i+1;
                 return;
             }
-                }
         }
-        for (i=0; (i<phase2_startlevel) && (i<=maxdepth); i++) {
-
-            if (G_timelimit>0)
-                    if (test_timelimit(60)) {
-                            gs_wait_message('t');
-                break;
-                }
-            level_to_array(i,'u');
-        switch (crossing_heuristics) {
-        case 0: for (j=0; j<TANZ(layer[i]); j++)
-                 NBARY(sort_array[j]) = predbary(sort_array[j]);
-            break;
-        case 1: for (j=0; j<TANZ(layer[i]); j++)
-                 NBARY(sort_array[j]) = predmedian(sort_array[j]);
-            break;
-        case 2: for (j=0; j<TANZ(layer[i]); j++)
-                NBARY(sort_array[j]) = predbary(sort_array[j])
-                    + predmedian(sort_array[j])/10000.0;
-            break;
-        case 3: for (j=0; j<TANZ(layer[i]); j++)
-                NBARY(sort_array[j]) = predmedian(sort_array[j])
-                    + predbary(sort_array[j])/10000.0;
-            break;
-        }
-        quicksort_sort_array(TANZ(layer[i]));
-                if (cycle_sort_array(TANZ(layer[i]))) {
-                array_to_level(i);
-            if (TRESNEEDED(layer[i])) apply_horder(i);
-
-            if (i>0) TCROSS(tmp_layer[i-1]) = layer_crossing(i-1);
-            if (i<=maxdepth) TCROSS(tmp_layer[i]) = layer_crossing(i);
-                        resort_up_down_layer(i);
-                cross = graph_crossings();
-                if (cross < nr_crossings) {
+    }
 #ifdef CHECK_CROSSING
-                    j = graph_crossings();
-                calc_all_layers_crossings();
-                assert((j==graph_crossings()));
-                PRINTF("Phase2_down: nr_crossings old: %d new: %d\n",nr_crossings,j);
-#endif
-                phase2_startlevel = i+1;
-                return;
-            }
-                }
-        }
-#ifdef CHECK_CROSSING
-        i = graph_crossings();
+    i = graph_crossings();
     calc_all_layers_crossings();
     assert((i==graph_crossings()));
     PRINTF("Phase2_down: nr_crossings old: %d new: %d\n",nr_crossings,i);
@@ -2134,94 +2134,94 @@ static void    Phase2_down(void)
 
 static void    Phase2_up(void)
 {
-        int     i,j;
+    int     i,j;
     int     cross;
 
     debugmessage("Phase2_up","");
 
     gs_wait_message('B');
     if (phase2_startlevel > 0)
-            for (i=phase2_startlevel; i>0; i--) {
+        for (i=phase2_startlevel; i>0; i--) {
 
             if (G_timelimit>0)
-                    if (test_timelimit(60)) {
-                            gs_wait_message('t');
-                break;
+                if (test_timelimit(60)) {
+                    gs_wait_message('t');
+                    break;
                 }
             level_to_array(i,'d');
-        switch (crossing_heuristics) {
-        case 0: for (j=0; j<TANZ(layer[i]); j++)
-                 NBARY(sort_array[j]) = predbary(sort_array[j]);
-            break;
-        case 1: for (j=0; j<TANZ(layer[i]); j++)
-                 NBARY(sort_array[j]) = predmedian(sort_array[j]);
-            break;
-        case 2: for (j=0; j<TANZ(layer[i]); j++)
-                NBARY(sort_array[j]) = predbary(sort_array[j])
-                    + predmedian(sort_array[j])/10000.0;
-            break;
-        case 3: for (j=0; j<TANZ(layer[i]); j++)
-                NBARY(sort_array[j]) = succmedian(sort_array[j])
-                    + predbary(sort_array[j])/10000.0;
-            break;
-        }
-        quicksort_sort_array(TANZ(layer[i]));
-                if (cycle_sort_array(TANZ(layer[i]))) {
+            switch (crossing_heuristics) {
+                case 0: for (j=0; j<TANZ(layer[i]); j++)
+                            NBARY(sort_array[j]) = predbary(sort_array[j]);
+                        break;
+                case 1: for (j=0; j<TANZ(layer[i]); j++)
+                            NBARY(sort_array[j]) = predmedian(sort_array[j]);
+                        break;
+                case 2: for (j=0; j<TANZ(layer[i]); j++)
+                            NBARY(sort_array[j]) = predbary(sort_array[j])
+                                + predmedian(sort_array[j])/10000.0;
+                        break;
+                case 3: for (j=0; j<TANZ(layer[i]); j++)
+                            NBARY(sort_array[j]) = succmedian(sort_array[j])
+                                + predbary(sort_array[j])/10000.0;
+                        break;
+            }
+            quicksort_sort_array(TANZ(layer[i]));
+            if (cycle_sort_array(TANZ(layer[i]))) {
                 array_to_level(i);
-            if (TRESNEEDED(layer[i])) apply_horder(i);
+                if (TRESNEEDED(layer[i])) apply_horder(i);
 
-            if (i>0) TCROSS(tmp_layer[i-1]) = layer_crossing(i-1);
-            if (i<=maxdepth) TCROSS(tmp_layer[i]) = layer_crossing(i);
-                        resort_down_up_layer(i);
+                if (i>0) TCROSS(tmp_layer[i-1]) = layer_crossing(i-1);
+                if (i<=maxdepth) TCROSS(tmp_layer[i]) = layer_crossing(i);
+                resort_down_up_layer(i);
                 cross = graph_crossings();
                 if (cross < nr_crossings) {
 #ifdef CHECK_CROSSING
                     j = graph_crossings();
-                calc_all_layers_crossings();
-                assert((j==graph_crossings()));
-                PRINTF("Phase2_up: nr_crossings old: %d new: %d\n",nr_crossings,j);
+                    calc_all_layers_crossings();
+                    assert((j==graph_crossings()));
+                    PRINTF("Phase2_up: nr_crossings old: %d new: %d\n",nr_crossings,j);
 #endif
-                phase2_startlevel = i-1;
-                return;
+                    phase2_startlevel = i-1;
+                    return;
+                }
             }
-                }
         }
-        for (i=maxdepth+1; (i>phase2_startlevel) && (i>0); i--) {
+    for (i=maxdepth+1; (i>phase2_startlevel) && (i>0); i--) {
 
-            if (G_timelimit>0)
-                    if (test_timelimit(60)) {
-                            gs_wait_message('t');
+        if (G_timelimit>0)
+            if (test_timelimit(60)) {
+                gs_wait_message('t');
                 break;
-                }
-            level_to_array(i,'d');
+            }
+        level_to_array(i,'d');
         switch (crossing_heuristics) {
-        case 0: for (j=0; j<TANZ(layer[i]); j++)
-                 NBARY(sort_array[j]) = predbary(sort_array[j]);
-            break;
-        case 1: for (j=0; j<TANZ(layer[i]); j++)
-                 NBARY(sort_array[j]) = predmedian(sort_array[j]);
-            break;
-        case 2: for (j=0; j<TANZ(layer[i]); j++)
-                NBARY(sort_array[j]) = predbary(sort_array[j])
-                    + predmedian(sort_array[j])/10000.0;
-            break;
-        case 3: for (j=0; j<TANZ(layer[i]); j++)
-                NBARY(sort_array[j]) = predmedian(sort_array[j])
-                    + predbary(sort_array[j])/10000.0;
-            break;
+            case 0: for (j=0; j<TANZ(layer[i]); j++)
+                        NBARY(sort_array[j]) = predbary(sort_array[j]);
+                    break;
+            case 1: for (j=0; j<TANZ(layer[i]); j++)
+                        NBARY(sort_array[j]) = predmedian(sort_array[j]);
+                    break;
+            case 2: for (j=0; j<TANZ(layer[i]); j++)
+                        NBARY(sort_array[j]) = predbary(sort_array[j])
+                            + predmedian(sort_array[j])/10000.0;
+                    break;
+            case 3: for (j=0; j<TANZ(layer[i]); j++)
+                        NBARY(sort_array[j]) = predmedian(sort_array[j])
+                            + predbary(sort_array[j])/10000.0;
+                    break;
         }
         quicksort_sort_array(TANZ(layer[i]));
-                if (cycle_sort_array(TANZ(layer[i]))) {
-                array_to_level(i);
+        if (cycle_sort_array(TANZ(layer[i]))) {
+            array_to_level(i);
             if (TRESNEEDED(layer[i])) apply_horder(i);
 
             if (i>0) TCROSS(tmp_layer[i-1])= layer_crossing(i-1);
             if (i<=maxdepth) TCROSS(tmp_layer[i]) = layer_crossing(i);
-                        resort_down_up_layer(i);
-                cross = graph_crossings();
-                if (cross < nr_crossings) {
+            resort_down_up_layer(i);
+            cross = graph_crossings();
+            if (cross < nr_crossings) {
 #ifdef CHECK_CROSSING
-                    j = graph_crossings();
+                j = graph_crossings();
                 calc_all_layers_crossings();
                 assert((j==graph_crossings()));
                 PRINTF("Phase2_up: nr_crossings old: %d new: %d\n",nr_crossings,j);
@@ -2229,10 +2229,10 @@ static void    Phase2_up(void)
                 phase2_startlevel = i-1;
                 return;
             }
-                }
         }
+    }
 #ifdef CHECK_CROSSING
-        i = graph_crossings();
+    i = graph_crossings();
     calc_all_layers_crossings();
     assert((i==graph_crossings()));
     PRINTF("Phase2_up: nr_crossings old: %d new: %d\n",nr_crossings,i);
@@ -2259,13 +2259,13 @@ static void resort_up_down_layer(int level)
 
     change = 1;
     if (level>0) {
-            for (i=level-1;i>=0; i--) {
+        for (i=level-1;i>=0; i--) {
             change = resort_up_layer(i);
             if (!change) break;
         }
     }
     if (level<=maxdepth) {
-            for (i=level; i<=maxdepth; i++) {
+        for (i=level; i<=maxdepth; i++) {
             change = resort_down_layer(i);
             if (!change) break;
         }
@@ -2292,13 +2292,13 @@ static void resort_down_up_layer(int level)
 
     change = 1;
     if (level<=maxdepth) {
-            for (i=level; i<=maxdepth; i++) {
+        for (i=level; i<=maxdepth; i++) {
             change = resort_down_layer(i);
             if (!change) break;
         }
     }
     if (level>0) {
-            for (i=level-1;i>=0; i--) {
+        for (i=level-1;i>=0; i--) {
             change = resort_up_layer(i);
             if (!change) break;
         }
@@ -2518,7 +2518,7 @@ static float predmedian(GNODE node)
 
 static int  compare_bary(const GNODE *a, const GNODE *b)
 {
-        if ((NBARY(*a)==0.0) || (NBARY(*b)==0.0)) return(0);
+    if ((NBARY(*a)==0.0) || (NBARY(*b)==0.0)) return(0);
     if (NBARY(*a) > NBARY(*b))            return(1);
     if (NBARY(*a) < NBARY(*b))            return(-1);
     return(0);
@@ -2573,27 +2573,27 @@ static void     myqsort(int l, int r)
         rand_num = (rand_num + 10891) % MAXINT;
         exchange(sort_array[l],sort_array[j]);
     }
-        v=sort_array[l]; i=l; j=r+1;
+    v=sort_array[l]; i=l; j=r+1;
     if (NBARY(v)==0.0) j=l+k/2;
     else {
         while (i<j) {
-                    do j--; while (  (NBARY(sort_array[j])!=0.0)
-                           &&(NBARY(sort_array[j])>NBARY(v)));
+            do j--; while (  (NBARY(sort_array[j])!=0.0)
+                    &&(NBARY(sort_array[j])>NBARY(v)));
             /*
              * j loops maximal until l, because then:
              * NBARY(sort_array[j])==NBARY(v)
              */
-                    do i++; while ((i<=j)&&(NBARY(sort_array[i])!=0.0)
-                           &&(NBARY(sort_array[i])<NBARY(v)));
+            do i++; while ((i<=j)&&(NBARY(sort_array[i])!=0.0)
+                    &&(NBARY(sort_array[i])<NBARY(v)));
             /*
              * i loops maximal until r, because j<=r holds now
              */
             if (i<j) exchange(sort_array[j],sort_array[i]);
-            };
+        };
     }
     exchange(sort_array[l],sort_array[j]);
-        if (l<j-1) myqsort(l,j-1);
-        if (j+1<r) myqsort(j+1,r);
+    if (l<j-1) myqsort(l,j-1);
+    if (j+1<r) myqsort(j+1,r);
 }
 
 #endif /* OWN_QUICKSORT */
@@ -2848,7 +2848,7 @@ static void revive_conn_edges(GNODE v, GNODE w, GNODE predw)
 
     /* restore the adjacency lists of the connection
      * Remind: The adjacency lists were destroyed in step1 in
-         * calc_connect_adjlists.
+     * calc_connect_adjlists.
      */
     sv_succs = reverse_adjlist(CSVSUCC(c));
     sv_preds = reverse_adjlist(CSVPRED(c));
@@ -2893,8 +2893,8 @@ static void revive_conn_edges(GNODE v, GNODE w, GNODE predw)
             assert(FirstPred(v) == NULL);
         }
     } else {
-            if (c && CTARGET(c) && (CTARGET(c)!=predw))   revive_conn_edges(v, CTARGET(c), w);
-            if (c && CTARGET2(c) && (CTARGET2(c)!=predw)) revive_conn_edges(v, CTARGET2(c), w);
+        if (c && CTARGET(c) && (CTARGET(c)!=predw))   revive_conn_edges(v, CTARGET(c), w);
+        if (c && CTARGET2(c) && (CTARGET2(c)!=predw)) revive_conn_edges(v, CTARGET2(c), w);
     }
     delete_adjlist(sv_succs);
     delete_adjlist(sv_preds);
@@ -3035,7 +3035,7 @@ static void insert_left_right(int level,GNODE node)
     /* and recalculate TANZ */
 
     j = 0;
-        for (hl = TSUCC(tmp_layer[level]); hl; hl = GNNEXT(hl))
+    for (hl = TSUCC(tmp_layer[level]); hl; hl = GNNEXT(hl))
     {
         j++;
     }
@@ -3063,8 +3063,8 @@ static void left_conn_list(GNODE v,GNODE w)
     if (!leftlistend) leftlistend = h;
 
     c = NCONNECT(v);
-        if (c && CTARGET(c) && (CTARGET(c)!=w))   left_conn_list(CTARGET(c), v);
-        if (c && CTARGET2(c) && (CTARGET2(c)!=w)) left_conn_list(CTARGET2(c), v);
+    if (c && CTARGET(c) && (CTARGET(c)!=w))   left_conn_list(CTARGET(c), v);
+    if (c && CTARGET2(c) && (CTARGET2(c)!=w)) left_conn_list(CTARGET2(c), v);
 }
 
 /* Calculate right_list
@@ -3088,8 +3088,8 @@ static void right_conn_list(GNODE v,GNODE w)
     if (!rightlist) rightlist = h;
 
     c = NCONNECT(v);
-        if (c && CTARGET(c) && (CTARGET(c)!=w))   right_conn_list(CTARGET(c), v);
-        if (c && CTARGET2(c) && (CTARGET2(c)!=w)) right_conn_list(CTARGET2(c), v);
+    if (c && CTARGET(c) && (CTARGET(c)!=w))   right_conn_list(CTARGET(c), v);
+    if (c && CTARGET2(c) && (CTARGET2(c)!=w)) right_conn_list(CTARGET2(c), v);
 }
 
 
@@ -3173,31 +3173,31 @@ void    db_output_all_layers(void)
 
 void    db_output_tmp_layer(int i)
 {
-        GNLIST li;
+    GNLIST li;
     GEDGE e;
 
-        PRINTF("layer[%d]: ", i);
-        for (li = TSUCC(tmp_layer[i]); li; li = GNNEXT(li))
+    PRINTF("layer[%d]: ", i);
+    for (li = TSUCC(tmp_layer[i]); li; li = GNNEXT(li))
     {
         if (NTITLE(GNNODE(li))[0])
-                    PRINTF("%s[", NTITLE(GNNODE(li)));
+            PRINTF("%s[", NTITLE(GNNODE(li)));
         else    PRINTF("?[");
         for (e = FirstPred(GNNODE(li)); e; e = NextPred(e))
         {
-                    if (NTITLE(ESOURCE(e))[0])
+            if (NTITLE(ESOURCE(e))[0])
                 PRINTF("%s,", NTITLE(ESOURCE(e)));
             else    PRINTF("?,");
         }
         PRINTF("][");
         for (e = FirstSucc(GNNODE(li)); e; e = NextSucc(e))
         {
-                    if (NTITLE(ETARGET(e))[0])
-                        PRINTF("%s,", NTITLE(ETARGET(e)));
+            if (NTITLE(ETARGET(e))[0])
+                PRINTF("%s,", NTITLE(ETARGET(e)));
             else    PRINTF("?,");
         }
         PRINTF("]");
         PRINTF("b(%f)p(%d) ",NBARY(GNNODE(li)),NPOS(GNNODE(li)));
-        }
+    }
     PRINTF("\n");
 }
 
@@ -3218,7 +3218,7 @@ int db_check_proper(GNODE v, int level)
     GEDGE e;
 
     if (NTITLE(v)[0])
-                title = NTITLE(v);
+        title = NTITLE(v);
     else    title = "?";
     t = NTIEFE(v);
     if (level!=t)
@@ -3234,19 +3234,19 @@ int db_check_proper(GNODE v, int level)
             break;
         }
         if (NTITLE(ESOURCE(e))[0])
-                    st = NTITLE(ESOURCE(e));
+            st = NTITLE(ESOURCE(e));
         else    st = "?";
         if (NTITLE(ETARGET(e))[0])
-                    tt = NTITLE(ETARGET(e));
+            tt = NTITLE(ETARGET(e));
         else    tt = "?";
         if (ESOURCE(e)!=v) {
             PRINTF("Succedge (%s,%s) at %s wrong source\n",
-                st,tt,title);
+                    st,tt,title);
             break;
         }
         if (NTIEFE(ETARGET(e))!=t+1) {
             PRINTF("Succedge (%s,%s) depth %d (%d expected)\n",
-                st,tt,NTIEFE(ETARGET(e)),t+1);
+                    st,tt,NTIEFE(ETARGET(e)),t+1);
             break;
         }
     }
@@ -3261,19 +3261,19 @@ int db_check_proper(GNODE v, int level)
             break;
         }
         if (NTITLE(ESOURCE(e))[0])
-                    st = NTITLE(ESOURCE(e));
+            st = NTITLE(ESOURCE(e));
         else    st = "?";
         if (NTITLE(ETARGET(e))[0])
-                    tt = NTITLE(ETARGET(e));
+            tt = NTITLE(ETARGET(e));
         else    tt = "?";
         if (ETARGET(e)!=v) {
             PRINTF("Prededge (%s,%s) at %s wrong target\n",
-                st,tt,title);
+                    st,tt,title);
             break;
         }
         if (NTIEFE(ESOURCE(e))!=t-1) {
             PRINTF("Succedge (%s,%s) depth %d (%d expected)\n",
-                st,tt,NTIEFE(ESOURCE(e)),t-1);
+                    st,tt,NTIEFE(ESOURCE(e)),t-1);
             break;
         }
     }
