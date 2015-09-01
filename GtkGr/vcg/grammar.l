@@ -385,6 +385,7 @@ PRAGMADIR       {WSPACE}#{WSPACE}"pragma".*\n
 
 [\f ]+                  { }
 [\t]                    { }
+[\r]                    { }
 [\n]                    { }
 
 {INT}                   {
