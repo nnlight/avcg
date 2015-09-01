@@ -1683,7 +1683,7 @@ static void barycentering(void)
     tmp_startlevel = alt_startlevel = 0;
     changed = 1;
     while (phase1_allowed && changed) {
-        nr_bary_iteratins++;
+        nr_bary_iterations++;
         if (nr_crossings==0) return; /* is already optimal */
         if (nr_bary_iterations>=max_baryiterations) {
             gs_wait_message('t');
