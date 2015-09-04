@@ -213,6 +213,8 @@ static float    succbary          _PP((GNODE node));
 static float    predbary          _PP((GNODE node));
 static float    succmedian        _PP((GNODE node));
 static float    predmedian        _PP((GNODE node));
+static void calc_layer_succbary(int i);
+static void calc_layer_predbary(int i);
 static void level_to_array        _PP((int i,int dir));
 static void array_to_level        _PP((int i));
 static void     save_level                _PP((int i));
@@ -1797,7 +1799,7 @@ static void barycentering(void)
         phase2_startlevel = tmp_startlevel;
         Phase2_up();
         tmp_startlevel = phase2_startlevel;
-        if (tmp_startlevel < 0) tmp_startlevel = maxdepth;
+        if (tmp_startlevel <= 0) tmp_startlevel = maxdepth+1;
         cross = graph_crossings();
         alt = 0;
         if (cross < nr_crossings) { tmp_layer_is_better(); }
@@ -1894,22 +1896,7 @@ static int     resort_down_layer(int i)
     /* Assertion: TCROSS(tmp_layer[i]) is correctly initialized */
 
     level_to_array(i+1,'d');
-    switch (crossing_heuristics) {
-        case 0: for (j=0; j<TANZ(layer[i+1]); j++)
-                    NBARY(sort_array[j]) = predbary(sort_array[j]);
-                break;
-        case 1: for (j=0; j<TANZ(layer[i+1]); j++)
-                    NBARY(sort_array[j]) = predmedian(sort_array[j]);
-                break;
-        case 2: for (j=0; j<TANZ(layer[i+1]); j++)
-                    NBARY(sort_array[j]) = predbary(sort_array[j])
-                        + predmedian(sort_array[j])/10000.0;
-                break;
-        case 3: for (j=0; j<TANZ(layer[i+1]); j++)
-                    NBARY(sort_array[j]) = predmedian(sort_array[j])
-                        + predbary(sort_array[j])/10000.0;
-                break;
-    }
+    calc_layer_predbary(i+1);
     quicksort_sort_array(TANZ(layer[i+1]));
 
     save_level(i+1);    /* save old level temporary */
@@ -1953,22 +1940,7 @@ static int     resort_up_layer(int i)
     /* Assertion: TCROSS(tmp_layer[i]) is correctly initialized */
 
     level_to_array(i,'u');
-    switch (crossing_heuristics) {
-        case 0: for (j=0; j<TANZ(layer[i]); j++)
-                    NBARY(sort_array[j]) = succbary(sort_array[j]);
-                break;
-        case 1: for (j=0; j<TANZ(layer[i]); j++)
-                    NBARY(sort_array[j]) = succmedian(sort_array[j]);
-                break;
-        case 2: for (j=0; j<TANZ(layer[i]); j++)
-                    NBARY(sort_array[j]) = succbary(sort_array[j])
-                        + succmedian(sort_array[j])/10000.0;
-                break;
-        case 3: for (j=0; j<TANZ(layer[i]); j++)
-                    NBARY(sort_array[j]) = succmedian(sort_array[j])
-                        + succbary(sort_array[j])/10000.0;
-                break;
-    }
+    calc_layer_succbary(i);
     quicksort_sort_array(TANZ(layer[i]));
 
     save_level(i);      /* save old level temporary */
@@ -2025,52 +1997,36 @@ static void    Phase2_down(void)
     debugmessage("Phase2_down","");
 
     gs_wait_message('B');
-    if (phase2_startlevel <= maxdepth)
-        for (i=phase2_startlevel; i<=maxdepth; i++) {
+    for (i=phase2_startlevel; i<=maxdepth; i++) {
 
-            if (G_timelimit>0)
-                if (test_timelimit(60)) {
-                    gs_wait_message('t');
-                    break;
-                }
-            level_to_array(i,'u');
-            switch (crossing_heuristics) {
-                case 0: for (j=0; j<TANZ(layer[i]); j++)
-                            NBARY(sort_array[j]) = succbary(sort_array[j]);
-                        break;
-                case 1: for (j=0; j<TANZ(layer[i]); j++)
-                            NBARY(sort_array[j]) = succmedian(sort_array[j]);
-                        break;
-                case 2: for (j=0; j<TANZ(layer[i]); j++)
-                            NBARY(sort_array[j]) = succbary(sort_array[j])
-                                + succmedian(sort_array[j])/10000.0;
-                        break;
-                case 3: for (j=0; j<TANZ(layer[i]); j++)
-                            NBARY(sort_array[j]) = succmedian(sort_array[j])
-                                + succbary(sort_array[j])/10000.0;
-                        break;
+        if (G_timelimit>0)
+            if (test_timelimit(60)) {
+                gs_wait_message('t');
+                break;
             }
-            quicksort_sort_array(TANZ(layer[i]));
-            if (cycle_sort_array(TANZ(layer[i]))) {
-                array_to_level(i);
-                if (TRESNEEDED(layer[i])) apply_horder(i);
+        level_to_array(i,'u');
+        calc_layer_succbary(i);
+        quicksort_sort_array(TANZ(layer[i]));
+        if (cycle_sort_array(TANZ(layer[i]))) {
+            array_to_level(i);
+            if (TRESNEEDED(layer[i])) apply_horder(i);
 
-                if (i>0) TCROSS(tmp_layer[i-1]) = layer_crossing(i-1);
-                if (i<=maxdepth) TCROSS(tmp_layer[i]) = layer_crossing(i);
-                resort_up_down_layer(i);
-                cross = graph_crossings();
-                if (cross < nr_crossings) {
+            if (i>0) TCROSS(tmp_layer[i-1]) = layer_crossing(i-1);
+            if (i<=maxdepth) TCROSS(tmp_layer[i]) = layer_crossing(i);
+            resort_up_down_layer(i);
+            cross = graph_crossings();
+            if (cross < nr_crossings) {
 #ifdef CHECK_CROSSING
-                    j = graph_crossings();
-                    calc_all_layers_crossings();
-                    assert((j==graph_crossings()));
-                    PRINTF("Phase2_down: nr_crossings old: %d new: %d\n",nr_crossings,j);
+                j = graph_crossings();
+                calc_all_layers_crossings();
+                assert((j==graph_crossings()));
+                PRINTF("Phase2_down: nr_crossings old: %d new: %d\n",nr_crossings,j);
 #endif
-                    phase2_startlevel = i+1;
-                    return;
-                }
+                phase2_startlevel = i+1;
+                return;
             }
         }
+    }
     for (i=0; (i<phase2_startlevel) && (i<=maxdepth); i++) {
 
         if (G_timelimit>0)
@@ -2079,22 +2035,7 @@ static void    Phase2_down(void)
                 break;
             }
         level_to_array(i,'u');
-        switch (crossing_heuristics) {
-            case 0: for (j=0; j<TANZ(layer[i]); j++)
-                        NBARY(sort_array[j]) = predbary(sort_array[j]);
-                    break;
-            case 1: for (j=0; j<TANZ(layer[i]); j++)
-                        NBARY(sort_array[j]) = predmedian(sort_array[j]);
-                    break;
-            case 2: for (j=0; j<TANZ(layer[i]); j++)
-                        NBARY(sort_array[j]) = predbary(sort_array[j])
-                            + predmedian(sort_array[j])/10000.0;
-                    break;
-            case 3: for (j=0; j<TANZ(layer[i]); j++)
-                        NBARY(sort_array[j]) = predmedian(sort_array[j])
-                            + predbary(sort_array[j])/10000.0;
-                    break;
-        }
+        calc_layer_succbary(i);
         quicksort_sort_array(TANZ(layer[i]));
         if (cycle_sort_array(TANZ(layer[i]))) {
             array_to_level(i);
@@ -2140,52 +2081,36 @@ static void    Phase2_up(void)
     debugmessage("Phase2_up","");
 
     gs_wait_message('B');
-    if (phase2_startlevel > 0)
-        for (i=phase2_startlevel; i>0; i--) {
+    for (i=phase2_startlevel; i>0; i--) {
 
-            if (G_timelimit>0)
-                if (test_timelimit(60)) {
-                    gs_wait_message('t');
-                    break;
-                }
-            level_to_array(i,'d');
-            switch (crossing_heuristics) {
-                case 0: for (j=0; j<TANZ(layer[i]); j++)
-                            NBARY(sort_array[j]) = predbary(sort_array[j]);
-                        break;
-                case 1: for (j=0; j<TANZ(layer[i]); j++)
-                            NBARY(sort_array[j]) = predmedian(sort_array[j]);
-                        break;
-                case 2: for (j=0; j<TANZ(layer[i]); j++)
-                            NBARY(sort_array[j]) = predbary(sort_array[j])
-                                + predmedian(sort_array[j])/10000.0;
-                        break;
-                case 3: for (j=0; j<TANZ(layer[i]); j++)
-                            NBARY(sort_array[j]) = succmedian(sort_array[j])
-                                + predbary(sort_array[j])/10000.0;
-                        break;
+        if (G_timelimit>0)
+            if (test_timelimit(60)) {
+                gs_wait_message('t');
+                break;
             }
-            quicksort_sort_array(TANZ(layer[i]));
-            if (cycle_sort_array(TANZ(layer[i]))) {
-                array_to_level(i);
-                if (TRESNEEDED(layer[i])) apply_horder(i);
+        level_to_array(i,'d');
+        calc_layer_predbary(i);
+        quicksort_sort_array(TANZ(layer[i]));
+        if (cycle_sort_array(TANZ(layer[i]))) {
+            array_to_level(i);
+            if (TRESNEEDED(layer[i])) apply_horder(i);
 
-                if (i>0) TCROSS(tmp_layer[i-1]) = layer_crossing(i-1);
-                if (i<=maxdepth) TCROSS(tmp_layer[i]) = layer_crossing(i);
-                resort_down_up_layer(i);
-                cross = graph_crossings();
-                if (cross < nr_crossings) {
+            if (i>0) TCROSS(tmp_layer[i-1]) = layer_crossing(i-1);
+            if (i<=maxdepth) TCROSS(tmp_layer[i]) = layer_crossing(i);
+            resort_down_up_layer(i);
+            cross = graph_crossings();
+            if (cross < nr_crossings) {
 #ifdef CHECK_CROSSING
-                    j = graph_crossings();
-                    calc_all_layers_crossings();
-                    assert((j==graph_crossings()));
-                    PRINTF("Phase2_up: nr_crossings old: %d new: %d\n",nr_crossings,j);
+                j = graph_crossings();
+                calc_all_layers_crossings();
+                assert((j==graph_crossings()));
+                PRINTF("Phase2_up: nr_crossings old: %d new: %d\n",nr_crossings,j);
 #endif
-                    phase2_startlevel = i-1;
-                    return;
-                }
+                phase2_startlevel = i-1;
+                return;
             }
         }
+    }
     for (i=maxdepth+1; (i>phase2_startlevel) && (i>0); i--) {
 
         if (G_timelimit>0)
@@ -2194,22 +2119,7 @@ static void    Phase2_up(void)
                 break;
             }
         level_to_array(i,'d');
-        switch (crossing_heuristics) {
-            case 0: for (j=0; j<TANZ(layer[i]); j++)
-                        NBARY(sort_array[j]) = predbary(sort_array[j]);
-                    break;
-            case 1: for (j=0; j<TANZ(layer[i]); j++)
-                        NBARY(sort_array[j]) = predmedian(sort_array[j]);
-                    break;
-            case 2: for (j=0; j<TANZ(layer[i]); j++)
-                        NBARY(sort_array[j]) = predbary(sort_array[j])
-                            + predmedian(sort_array[j])/10000.0;
-                    break;
-            case 3: for (j=0; j<TANZ(layer[i]); j++)
-                        NBARY(sort_array[j]) = predmedian(sort_array[j])
-                            + predbary(sort_array[j])/10000.0;
-                    break;
-        }
+        calc_layer_predbary(i);
         quicksort_sort_array(TANZ(layer[i]));
         if (cycle_sort_array(TANZ(layer[i]))) {
             array_to_level(i);
@@ -2249,26 +2159,19 @@ static void    Phase2_up(void)
  *  traverse the layers upwards and resort until nothing
  *  changes anymore.
  */
-
 static void resort_up_down_layer(int level)
 {
     int change;
     int i;
 
-    debugmessage("resort_up_down","");
-
-    change = 1;
-    if (level>0) {
-        for (i=level-1;i>=0; i--) {
-            change = resort_up_layer(i);
-            if (!change) break;
-        }
+    for (i=level-1; i>=0; i--) {
+        change = resort_up_layer(i);
+        if (!change) break;
     }
-    if (level<=maxdepth) {
-        for (i=level; i<=maxdepth; i++) {
-            change = resort_down_layer(i);
-            if (!change) break;
-        }
+
+    for (i=level; i<=maxdepth; i++) {
+        change = resort_down_layer(i);
+        if (!change) break;
     }
 }
 
@@ -2282,26 +2185,19 @@ static void resort_up_down_layer(int level)
  *  traverse the layers upwards and resort until nothing
  *  changes anymore.
  */
-
 static void resort_down_up_layer(int level)
 {
     int change;
     int i;
 
-    debugmessage("resort_down_up","");
-
-    change = 1;
-    if (level<=maxdepth) {
-        for (i=level; i<=maxdepth; i++) {
-            change = resort_down_layer(i);
-            if (!change) break;
-        }
+    for (i=level; i<=maxdepth; i++) {
+        change = resort_down_layer(i);
+        if (!change) break;
     }
-    if (level>0) {
-        for (i=level-1;i>=0; i--) {
-            change = resort_up_layer(i);
-            if (!change) break;
-        }
+
+    for (i=level-1; i>=0; i--) {
+        change = resort_up_layer(i);
+        if (!change) break;
     }
 }
 
@@ -2354,7 +2250,7 @@ static int  cycle_sort_array(int siz)
     }
 
     return(!original_sit);
-}
+} /* cycle_sort_array */
 
 
 
@@ -2412,7 +2308,6 @@ static float predbary(GNODE node)
     else
         return ((float) Sum) / ((float) i);
 }
-
 
 
 /*  Succmedian-Value of a node
@@ -2504,6 +2399,61 @@ static float predmedian(GNODE node)
           / ((float) (leftpart+rightpart)) );
 }
 
+/*
+ * Вычислить Succbary-Value для узлов одного уровня.
+ * Note: Initializing NPOS-values and sort_array should be done by level_to_array before.
+ */
+static void calc_layer_succbary(int i)
+{
+    int j;
+
+    assert(i<=maxdepth);
+
+    switch (crossing_heuristics) {
+        case 0: for (j=0; j<TANZ(layer[i]); j++)
+                    NBARY(sort_array[j]) = succbary(sort_array[j]);
+                break;
+        case 1: for (j=0; j<TANZ(layer[i]); j++)
+                    NBARY(sort_array[j]) = succmedian(sort_array[j]);
+                break;
+        case 2: for (j=0; j<TANZ(layer[i]); j++)
+                    NBARY(sort_array[j]) = succbary(sort_array[j])
+                                           + succmedian(sort_array[j])/10000.0;
+                break;
+        case 3: for (j=0; j<TANZ(layer[i]); j++)
+                    NBARY(sort_array[j]) = succmedian(sort_array[j])
+                                           + succbary(sort_array[j])/10000.0;
+                break;
+    }
+}
+
+/*
+ * Вычислить Predbary-Value для узлов одного уровня.
+ * Note: Initializing NPOS-values and sort_array should be done by level_to_array before.
+ */
+static void calc_layer_predbary(int i)
+{
+    int j;
+
+    assert(i>0);
+
+    switch (crossing_heuristics) {
+        case 0: for (j=0; j<TANZ(layer[i]); j++)
+                    NBARY(sort_array[j]) = predbary(sort_array[j]);
+                break;
+        case 1: for (j=0; j<TANZ(layer[i]); j++)
+                    NBARY(sort_array[j]) = predmedian(sort_array[j]);
+                break;
+        case 2: for (j=0; j<TANZ(layer[i]); j++)
+                    NBARY(sort_array[j]) = predbary(sort_array[j])
+                                           + predmedian(sort_array[j])/10000.0;
+                break;
+        case 3: for (j=0; j<TANZ(layer[i]); j++)
+                    NBARY(sort_array[j]) = predmedian(sort_array[j])
+                                           + predbary(sort_array[j])/10000.0;
+                break;
+    }
+}
 
 
 /*  Compare function for sorting according barycenters
