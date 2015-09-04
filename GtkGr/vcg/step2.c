@@ -2518,7 +2518,7 @@ static float predmedian(GNODE node)
 
 static int  compare_bary(const GNODE *a, const GNODE *b)
 {
-    if ((NBARY(*a)==0.0) || (NBARY(*b)==0.0)) return(0);
+    /*if ((NBARY(*a)==0.0) || (NBARY(*b)==0.0)) return(0);*/
     if (NBARY(*a) > NBARY(*b))            return(1);
     if (NBARY(*a) < NBARY(*b))            return(-1);
     return(0);
