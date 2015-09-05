@@ -244,6 +244,11 @@ void step3_main(void)
 
     alloc_levelshift();
 
+    if (maxdepth > 400) {
+        /* затычка для ускорения лэйаутинга больших графов */
+        max_mediumshifts = 10;
+        max_centershifts = 10;
+    }
 
     /* Shift nodes of an edge by a medium measure, to become a
      * not too dense situation. We do until the leftest and
