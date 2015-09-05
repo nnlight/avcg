@@ -242,15 +242,15 @@ void calc_all_ports(int xypos_avail)
     for (v = nodelist; v; v = NNEXT(v))
     {
         calc_node_ports(v, xypos_avail);
-        }
+    }
     for (v = labellist; v; v = NNEXT(v))
     {
         calc_node_ports(v, xypos_avail);
-        }
+    }
     for (v = dummylist; v; v = NNEXT(v))
     {
         calc_node_ports(v, xypos_avail);
-        }
+    }
 }
 
 

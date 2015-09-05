@@ -2767,9 +2767,9 @@ static void insert_connects_in_layer(void)
             forward_conn = 0;
             if (c) {
                 if (forward_connection1(c))
-                                        forward_conn = 1;
-                                if (forward_connection2(c))
-                                        forward_conn = 1;
+                    forward_conn = 1;
+                if (forward_connection2(c))
+                    forward_conn = 1;
             }
             if (forward_conn&&(NMARK(GNNODE(hl))==0)) {
                 changed = 1;
@@ -2779,8 +2779,8 @@ static void insert_connects_in_layer(void)
         if (changed) {
             if (i<=maxdepth)
                 TCROSS(tmp_layer[i]) = layer_crossing(i);
-                for (j=i; j<=maxdepth; j++)
-                    (void)resort_down_layer(j);
+            for (j=i; j<=maxdepth; j++)
+                (void)resort_down_layer(j);
         }
     }
 } /* insert_connects_in_layer */

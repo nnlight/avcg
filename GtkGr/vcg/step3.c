@@ -224,9 +224,9 @@ void step3_main(void)
     }
 #endif
 
-        /* First we calculate how many up-down ports a node has, and how
-         * the edges are scheduled among these ports. See step 4.
-         */
+    /* First we calculate how many up-down ports a node has, and how
+     * the edges are scheduled among these ports. See step 4.
+     */
 
     calc_all_ports(0);
 
@@ -887,20 +887,23 @@ static void traverse_and_search_mindist(GNODE v)
         li = GNNEXT(li);
         if (li) {
             TACTX(layer[level]) = NX(v) - G_xspace
-                - NX(GNNODE(li)) - NWIDTH(GNNODE(li));
+                                  - NX(GNNODE(li)) - NWIDTH(GNNODE(li));
         }
-        else TACTX(layer[level]) = NX(v) - G_xbase;
+        else
+            TACTX(layer[level]) = NX(v) - G_xbase;
     }
     c = NCONNECT(v);
     if (c) {
         if (CTARGET(c)) {
-            if (NX(CTARGET(c))>NX(v)) weight = 1;
+            if (NX(CTARGET(c))>NX(v))
+                 weight = 1;
             else weight = EPRIO(CEDGE(c)) * layout_nearfactor;
             if (weight!=0)
                 traverse_and_search_mindist(CTARGET(c));
         }
         if (CTARGET2(c)) {
-            if (NX(CTARGET2(c))>NX(v)) weight = 1;
+            if (NX(CTARGET2(c))>NX(v))
+                 weight = 1;
             else weight = EPRIO(CEDGE2(c)) * layout_nearfactor;
             if (weight!=0)
                 traverse_and_search_mindist(CTARGET2(c));
@@ -985,21 +988,23 @@ static void iterate_dump_mediumshifts(void)
 
         dumpfactor = 1;
 
-        if ((!changed)&&(count>=min_mediumshifts)) break;
+        if ((!changed)&&(count>=min_mediumshifts))
+            break;
         if (count>=max_mediumshifts) {
             gs_wait_message('t');
             break;
         }
-            if (G_timelimit>0)
-                    if (test_timelimit(85)) {
-                            gs_wait_message('t');
-                            break;
-                    }
+        if (G_timelimit>0)
+            if (test_timelimit(85)) {
+                gs_wait_message('t');
+                break;
+            }
 
         if (count>=min_mediumshifts) {
             if (!changed_nw_sum()) {
                 tryout--;
-                if (tryout==0) break;
+                if (tryout==0)
+                    break;
             }
             else tryout = 2;
         }
@@ -1248,7 +1253,8 @@ static int nwsdump_mediumshift(int i, int dir)
     for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
     {
         levelshift[j] = nws(GNNODE(li));
-        if ((sign<0) && (levelshift[j]>=0)) levelweight[j]=1;
+        if ((sign<0) && (levelshift[j]>=0))
+             levelweight[j]=1;
         else levelweight[j]= MAXINT;
         if (levelshift[j]<0) sign = -1; else sign = 1;
         j++;
@@ -1308,7 +1314,8 @@ static int nwpdump_mediumshift(int i, int dir)
     for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
     {
         levelshift[j] = nwp(GNNODE(li));
-        if ((sign<0) && (levelshift[j]>=0)) levelweight[j]=1;
+        if ((sign<0) && (levelshift[j]>=0))
+             levelweight[j]=1;
         else levelweight[j]= MAXINT;
         if (levelshift[j]<0) sign = -1; else sign = 1;
         j++;
@@ -1344,6 +1351,7 @@ static int nwdump_mediumshift(int i, int dir)
     int j;
     int     sign;
     GNODE lnode, node, rnode;
+    int is_rnode;
 
     debugmessage("nwdump_mediumshift","");
 
@@ -1356,25 +1364,31 @@ static int nwdump_mediumshift(int i, int dir)
     j = 0;
     sign = 1;
     lnode = NULL;
+    is_rnode = 0;
     for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
     {
         node = GNNODE(li);
         if (NWIDTH(node)==0) {
-            rnode = NULL;
-            for (li1 = GNNEXT(li); li1; li1 = GNNEXT(li1))
-            {
-                if (NWIDTH(GNNODE(li1))!=0) {
-                    rnode = GNNODE(li1);
-                    break;
+            if (!is_rnode) {
+                rnode = NULL;
+                for (li1 = GNNEXT(li); li1; li1 = GNNEXT(li1))
+                {
+                    if (NWIDTH(GNNODE(li1))!=0) {
+                        rnode = GNNODE(li1);
+                        break;
+                    }
                 }
+                is_rnode = 1;
             }
             levelshift[j] = nwbend(node,lnode,rnode);
         }
         else {
             levelshift[j] = nw(node);
             lnode = node;
+            is_rnode = 0;
         }
-        if ((sign<0) && (levelshift[j]>=0)) levelweight[j]=1;
+        if ((sign<0) && (levelshift[j]>=0))
+             levelweight[j]=1;
         else levelweight[j]= MAXINT;
         if (levelshift[j]<0) sign = -1; else sign = 1;
         j++;
@@ -1393,7 +1407,7 @@ static int nwdump_mediumshift(int i, int dir)
 
 
 #define touching(v,w)  (  (NX(v)+NWIDTH(v)+G_xspace >= NX(w)) \
-                ||(NX(w)-NX(v)-NWIDTH(v)<=2*G_xraster))
+                        ||(NX(w)-NX(v)-NWIDTH(v)<=2*G_xraster))
 
 
 static int summarize_dumpshift(int i, int dir)
@@ -2427,7 +2441,7 @@ static int do_leftshifts(int i)
     changed = 0;
     for (j=0; j<TANZ(layer[i]); j++) {
         if (levelweight[j]) diff = levelshift[j]/levelweight[j];
-        else diff = 0;
+        else                diff = 0;
         node  = slayer_array[j];
         if (diff<0) {
             oldx = NX(node);
@@ -2479,7 +2493,7 @@ static int do_rightshifts(int i)
     changed = 0;
     for (j=TANZ(layer[i])-1; j>=0; j--) {
         if (levelweight[j]) diff = levelshift[j]/levelweight[j];
-        else diff = 0;
+        else                diff = 0;
         node  = slayer_array[j];
         if (diff>0) {
             oldx = NX(node);
