@@ -1740,6 +1740,7 @@ static void barycentering(void)
 
     if (nr_crossings==0) return; /* is already optimal */
     if (skip_baryphase2) return;
+    if (maxdepth > 400) return; /* phase2 is too lengthy on tall graphs */
 
     phase1_allowed   = 0;
 
