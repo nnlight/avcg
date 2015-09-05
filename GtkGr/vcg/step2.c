@@ -42,9 +42,9 @@
  *        Visible edges can be detected by the EINVISIBLE flag (==0) in these
  *        lists. Note: invisible edges may also be in edgelist or tmpedgelist.
  *        An edge is visible iff
- *         a) it is used in the adjacency lists.
- *      or b) it is a direct neigbour edge in NCONNECT(v) for
- *            some node v.
+ *                 a) it is used in the adjacency lists.
+ *              or b) it is a direct neigbour edge in NCONNECT(v) for
+ *                    some node v.
  *    4)  maxindeg and maxoutdeg are the maximal indegree (number of
  *        incoming edges) and maximal outdegree (number of outgoing
  *        edges) occuring at visible nodes. Forward connections are
@@ -52,7 +52,7 @@
  *    5)  maxdepth+1 is the maximal layer !!! NOT maxdepth !!!
  *    6)  NTIEFE(node) is filled for all nodes. NINDEG and NOUTDEG are
  *        filled. Forward connections are not counted. But  NINDEG and
- *    NOUTDEG are also filled at nodes that have forward connections.
+ *        NOUTDEG are also filled at nodes that have forward connections.
  *        NCONNECT(node) is filled for nodes that have direct neighbours
  *        in the layout. The edges in NCONNECT are not anymore in the
  *        adjacency lists, but still visible. The forward connection nodes
@@ -85,27 +85,27 @@
  *        lists TPRED and TSUCC to allow to traverse the nodes of one
  *        layer[i] backwards and forwards.
  *    2)  Note that the nodes reacheable via forward connections are now
- *    in the TSUCC and TPRED lists, too.
- *    TANZ(layer[i]) and NINDEG(node) and NOUTDEG(node) are adapted
- *    to this situation. The connection edge still do not count.
+ *        in the TSUCC and TPRED lists, too.
+ *        TANZ(layer[i]) and NINDEG(node) and NOUTDEG(node) are adapted
+ *        to this situation. The connection edge still do not count.
  *    3)  The hierarchy in layer is proper.
  *    4)  nodelist, labellist and dummylist are not changed.
  *    5)  All pot. visible edges are in the lists edgelist or tmpedgelist,
- *    same as before.
+ *        same as before.
  *    6)  maxindeg and maxoutdeg are not changed. By inserting nodes
- *    reacheable by connections, the maximal indegree and outdegree
- *    may shrink, thus maxindeg and maxoutdeg are upper estimations.
+ *        reacheable by connections, the maximal indegree and outdegree
+ *        may shrink, thus maxindeg and maxoutdeg are upper estimations.
  *    7)  maxdepth+1 is the maximal layer !!! NOT maxdepth !!!
  *    8)  NTIEFE(node) is filled for all nodes. NINDEG and NOUTDEG are
  *        filled. Forward connections are not counted.
  *        NCONNECT(node) is filled as before.
- *    See point 2 !!!
+ *        See point 2 !!!
  *    9)  Reverted edges are marked with EART(e)='R'.
  *        Self loops don't anymore exist.
  *    10) NPOS(v) gives the horizontal position of a node inside the
- *    layer. Adjacency edges are sorted according to these NPOS
- *    values. The ordering inside a layer is such that the number
- *    of cossings is small (but may be not optimal).
+ *        layer. Adjacency edges are sorted according to these NPOS
+ *        values. The ordering inside a layer is such that the number
+ *        of cossings is small (but may be not optimal).
  *    11) NSUCCL(v) and NSUCCR(v) are the leftest and rightest successor
  *        edge of v, and NPREDL(v) and NPREDR(v) the leftest and rightest
  *        predecessor edge.
@@ -2400,7 +2400,7 @@ static float predmedian(GNODE node)
           / ((float) (leftpart+rightpart)) );
 }
 
-/*
+/**
  * Вычислить Succbary-Value для узлов одного уровня.
  * Note: Initializing NPOS-values and sort_array should be done by level_to_array before.
  */
@@ -2428,7 +2428,7 @@ static void calc_layer_succbary(int i)
     }
 }
 
-/*
+/**
  * Вычислить Predbary-Value для узлов одного уровня.
  * Note: Initializing NPOS-values and sort_array should be done by level_to_array before.
  */

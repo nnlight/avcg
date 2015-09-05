@@ -30,39 +30,39 @@
  * We want to calculate now the co-ordinated of the nodes.
  * We have:
  *    1)  The array layer contains all visible nodes.
- *    They are distributed at the layer[i] lists and connected by two
- *    lists TPRED and TSUCC to allow to traverse the nodes of one
- *    layer[i] backwards and forwards.
+ *        They are distributed at the layer[i] lists and connected by two
+ *        lists TPRED and TSUCC to allow to traverse the nodes of one
+ *        layer[i] backwards and forwards.
  *    2)  Note that the nodes reacheable via forward connections are now
- *    in the TSUCC and TPRED lists, too.
- *    TANZ(layer[i]) is the number of nodes in layer[i].
+ *        in the TSUCC and TPRED lists, too.
+ *        TANZ(layer[i]) is the number of nodes in layer[i].
  *    3)  The hierarchy in layer is proper.
  *    4)  Further, all visible nodes are in nodelist, labellist and dummylist.
  *    5)  All pot. visible edges are in the lists edgelist or tmpedgelist,
- *    Visible edges can be detected by the EINVISIBLE flag (==0) in these
- *    lists. Note: invisible edges may also be in edgelist or tmpedgelist.
- *    An edge is visible iff
- *         a) it is used in the adjacency lists.
- *      or b) it is a direct neigbour edge in NCONNECT(v) for
- *            some node v.
+ *        Visible edges can be detected by the EINVISIBLE flag (==0) in these
+ *        lists. Note: invisible edges may also be in edgelist or tmpedgelist.
+ *        An edge is visible iff
+ *                 a) it is used in the adjacency lists.
+ *              or b) it is a direct neigbour edge in NCONNECT(v) for
+ *                    some node v.
  *    6)  maxindeg and maxoutdeg are upper estimations of NINDEG and
- *    NOUTDEG of nodes.
+ *        NOUTDEG of nodes.
  *    7)  maxdepth+1 is the maximal layer !!! NOT maxdepth !!!
  *    8)  NTIEFE(node) is filled for all nodes. NINDEG and NOUTDEG are
- *    filled. Forward connections are not counted.
- *    NCONNECT(node) is filled for nodes that have direct neighbours
- *    in the layout. The edges in NCONNECT are not anymore in the
- *    adjacency lists, but still visible.
- *    See point 2 !!!
+ *        filled. Forward connections are not counted.
+ *        NCONNECT(node) is filled for nodes that have direct neighbours
+ *        in the layout. The edges in NCONNECT are not anymore in the
+ *        adjacency lists, but still visible.
+ *        See point 2 !!!
  *    9)  Reverted edges are marked with EART(e)='R'.
- *    Self loops don't anymore exist.
+ *        Self loops don't anymore exist.
  *    10) NPOS(v) gives the horizontal position of a node inside the
- *    layer. Adjacency edges are sorted according to these NPOS
- *    values. The ordering inside a layer is such that the number
- *    of cossings is small (but may be not optimal).
+ *        layer. Adjacency edges are sorted according to these NPOS
+ *        values. The ordering inside a layer is such that the number
+ *        of cossings is small (but may be not optimal).
  *    11) NSUCCL(v) and NSUCCR(v) are the leftest and rightest successor
- *    edge of v, and NPREDL(v) and NPREDR(v) the leftest and rightest
- *    predecessor edge.
+ *        edge of v, and NPREDL(v) and NPREDR(v) the leftest and rightest
+ *        predecessor edge.
  *
  * To calculate the y-coordinates, we must simply look which level
  * the node belongs to. All nodes of one level have the same y-coordinates.
@@ -76,9 +76,9 @@
  * After this, we have the following situation:
  *    1-11) same as before
  *    12)   All nodes have filled NX, NY, NWIDTH and NHEIGHT such that
- *      they do not overlap. NX and NY are absolutely. NWIDTH and
- *      NHEIGHT are stretched or shrinked according to the local
- *      factors at the nodes.
+ *          they do not overlap. NX and NY are absolutely. NWIDTH and
+ *          NHEIGHT are stretched or shrinked according to the local
+ *          factors at the nodes.
  *
  * This file provides the following functions:
  * ------------------------------------------
@@ -454,15 +454,13 @@ static void init_xy_coordinates(void)
         if (G_yalign==AL_CENTER) {
             for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
             {
-                NY(GNNODE(li)) += (maxboxheight-
-                              NHEIGHT(GNNODE(li)))/2;
+                NY(GNNODE(li)) += (maxboxheight-NHEIGHT(GNNODE(li)))/2;
             }
         }
         else if (G_yalign==AL_BOTTOM) {
             for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
             {
-                NY(GNNODE(li)) += (maxboxheight-
-                              NHEIGHT(GNNODE(li)));
+                NY(GNNODE(li)) += (maxboxheight-NHEIGHT(GNNODE(li)));
             }
         }
         actypos += (maxboxheight + G_yspace);
@@ -480,10 +478,10 @@ static void init_xy_coordinates(void)
  *  This moves the layers independently, such that the layers are
  *  centered at the y-axis. The result is symmetrical.
  *  Something like this (Example)
- *  A B C
+ *      A B C
  *    D E F G H    (the x==0 axis goes though B, F and L)
- *   I J
- *  K L M
+ *       I J
+ *      K L M
  */
 static void center_layout(void)
 {
@@ -928,11 +926,11 @@ static void traverse_and_search_mindist(GNODE v)
  * node of the most lower and most upper level are moved into useful
  * positions:
  * Example:
- *        ABC        A   B  C
+ *        ABC            A   B  C
  *      DEFGHIJK         DEFGHIJK
- *        LMNO    =>      L M N O
- *       PQRSTU       PQR STU
- *         VW          V   W
+ *        LMNO     =>     L M N O
+ *       PQRSTU           PQR STU
+ *         VW              V   W
  *
  * We use the positions of the leftest and rightest node of the levels
  * as stop criterium of the iteration. The x-position of the leftest nodes
@@ -1210,11 +1208,11 @@ static int is_prio_pnode(GNODE v)
  *  nws > 0 => shift to the right, nws < 0 => shift to the left
  *  The return value is 1, if something has changed.
  *
- *  Example:   nws=5             nws=0
- *        N            N (shifted 5 pixels to the right)
- *        |\         ==>       /\
- *      ews=0 | \ ews=10       ews=-5 /  \ ews=5
- *        X  Y           X    Y
+ *  Example:   nws=5                     nws=0
+ *                N                        N (shifted 5 pixels to the right)
+ *                |\         ==>           /\
+ *          ews=0 | \ ews=10       ews=-5 /  \ ews=5
+ *                X  Y                   X    Y
  *
  *  The difference to nws_mediumshift is, that we respect neighbor constraints.
  *  If a neighbour block must be shifted by n pixels, then we shift the nodes
@@ -1269,12 +1267,12 @@ static int nwsdump_mediumshift(int i, int dir)
  *  nwp > 0 => shift to the right, nwp < 0 => shift to the left
  *  The return value is 1, if something has changed.
  *
- *  Example:      X  Y             X      Y
- *        |  /          \    /
- *        | /        ==>   ewp=-5\  /ewp=5
- *      ewp=0 |/ewp=10        \/
- *        N           N   (shifted 5 pixels to the right)
- *      nwp=5           nwp=0
+ *  Example:      X  Y                 X      Y
+ *                |  /                  \    /
+ *                | /        ==>   ewp=-5\  /ewp=5
+ *          ewp=0 |/ewp=10                \/
+ *                N                       N   (shifted 5 pixels to the right)
+ *              nwp=5                   nwp=0
  *
  *  The difference to nws_mediumshift is, that we respect neighbor constraints.
  *  If a neighbour block must be shifted by n pixels, then we shift the nodes
@@ -1367,7 +1365,8 @@ static int nwdump_mediumshift(int i, int dir)
             }
             levelshift[j] = nwbend(node,lnode,rnode);
         }
-        else {  levelshift[j] = nw(node);
+        else {
+            levelshift[j] = nw(node);
             lnode = node;
         }
         if ((sign<0) && (levelshift[j]>=0)) levelweight[j]=1;
@@ -1805,11 +1804,11 @@ static void straight_line_tuning(void)
             gs_wait_message('t');
             return;
         }
-            if (G_timelimit>0)
-                    if (test_timelimit(90)) {
-                            gs_wait_message('t');
-                            return;
-                    }
+        if (G_timelimit>0)
+            if (test_timelimit(90)) {
+                gs_wait_message('t');
+                return;
+            }
         changed = 0;
         for (i=0; i<=maxdepth+1; i++) {
             for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
@@ -1856,7 +1855,7 @@ static int do_straight_line(GNODE v)
     sminx = smaxx = sx = tx = NX(v) + NWIDTH(v)/2;
     sw = tw = minw = maxw = v;
     w = v;
-    while (w && (is_fullprio_node(w))) {
+    while (w && is_fullprio_node(w)) {
         TACTX(layer[NTIEFE(w)]) = NX(w);
         sw = w;
         sx = NX(w) + NWIDTH(w)/2;
@@ -1865,7 +1864,7 @@ static int do_straight_line(GNODE v)
         w = get_pred(w);
     }
     w = v;
-    while (w && (is_fullprio_node(w))) {
+    while (w && is_fullprio_node(w)) {
         TACTX(layer[NTIEFE(w)]) = NX(w);
         tw = w;
         tx = NX(w) + NWIDTH(w)/2;
@@ -1884,7 +1883,7 @@ static int do_straight_line(GNODE v)
     if (possible) {
         allzero = 1;
         w = sw;
-        while (w && (is_fullprio_node(w))) {
+        while (w && is_fullprio_node(w)) {
             diff = sx - NX(w) - NWIDTH(w)/2;
             h2 = NX(w)+diff;
             if (diff < 0) {
@@ -1904,7 +1903,7 @@ static int do_straight_line(GNODE v)
             w = get_pred(w);
         }
         w = sw;
-        while (w && (is_fullprio_node(w))) {
+        while (w && is_fullprio_node(w)) {
             diff = sx - NX(w) - NWIDTH(w)/2;
             h2 = NX(w)+diff;
             if (diff < 0) {
@@ -1935,7 +1934,7 @@ static int do_straight_line(GNODE v)
     if (possible) {
         allzero = 1;
         w = tw;
-        while (w && (is_fullprio_node(w))) {
+        while (w && is_fullprio_node(w)) {
             diff = tx - NX(w) - NWIDTH(w)/2;
             h2 = NX(w)+diff;
             if (diff < 0) {
@@ -1955,7 +1954,7 @@ static int do_straight_line(GNODE v)
             w = get_pred(w);
         }
         w = tw;
-        while (w && (is_fullprio_node(w))) {
+        while (w && is_fullprio_node(w)) {
             diff = tx - NX(w) - NWIDTH(w)/2;
             h2 = NX(w)+diff;
             if (diff < 0) {
@@ -1986,7 +1985,7 @@ static int do_straight_line(GNODE v)
     if (possible) {
         allzero = 1;
         w = minw;
-        while (w && (is_fullprio_node(w))) {
+        while (w && is_fullprio_node(w)) {
             diff = sminx - NX(w) - NWIDTH(w)/2;
             h2 = NX(w)+diff;
             if (diff < 0) {
@@ -2006,7 +2005,7 @@ static int do_straight_line(GNODE v)
             w = get_pred(w);
         }
         w = minw;
-        while (w && (is_fullprio_node(w))) {
+        while (w && is_fullprio_node(w)) {
             diff = sminx - NX(w) - NWIDTH(w)/2;
             h2 = NX(w)+diff;
             if (diff < 0) {
@@ -2036,7 +2035,7 @@ static int do_straight_line(GNODE v)
     if (possible) {
         allzero = 1;
         w = maxw;
-        while (w && (is_fullprio_node(w))) {
+        while (w && is_fullprio_node(w)) {
             diff = smaxx - NX(w) - NWIDTH(w)/2;
             h2 = NX(w)+diff;
             if (diff < 0) {
@@ -2056,7 +2055,7 @@ static int do_straight_line(GNODE v)
             w = get_pred(w);
         }
         w = maxw;
-        while (w && (is_fullprio_node(w))) {
+        while (w && is_fullprio_node(w)) {
             diff = smaxx - NX(w) - NWIDTH(w)/2;
             h2 = NX(w)+diff;
             if (diff < 0) {
@@ -2100,12 +2099,12 @@ static int do_straight_line(GNODE v)
 
     changed = 0;
     w = v;
-    while (w && (is_fullprio_node(w))) {
+    while (w && is_fullprio_node(w)) {
         if (TACTX(layer[NTIEFE(w)]) != NX(w)) changed = 1;
         w = get_pred(w);
     }
     w = v;
-    while (w && (is_fullprio_node(w))) {
+    while (w && is_fullprio_node(w)) {
         if (TACTX(layer[NTIEFE(w)]) != NX(w)) changed = 1;
         w = get_succ(w);
     }
@@ -2126,7 +2125,7 @@ static int full_straight_possible(GNODE sw, int sxpos, int dir)
 
     sxpos_possible = 1;
     w = sw;
-    while (w && (is_fullprio_node(w))) {
+    while (w && is_fullprio_node(w)) {
         if (!sxpos_possible) break;
         diff = sxpos - NX(w) - NWIDTH(w)/2;
         h2 = NX(w)+diff;
@@ -2139,23 +2138,25 @@ static int full_straight_possible(GNODE sw, int sxpos, int dir)
         assert((li));
         li = GNNEXT(li);
         if (diff < 0) {
-            if (li) {  nw = GNNODE(li);
+            if (li) {
+                nw = GNNODE(li);
                 if ((NWIDTH(w)==0)||(NWIDTH(nw)==0))
-                    h1 = NX(nw) + NWIDTH(nw) + G_dspace;
-                else    h1 = NX(nw) + NWIDTH(nw) + G_xspace;
+                     h1 = NX(nw) + NWIDTH(nw) + G_dspace;
+                else h1 = NX(nw) + NWIDTH(nw) + G_xspace;
                 if (NWIDTH(w)==0)
-                         h2 = dxlalign(h2+NWIDTH(w)/2)-NWIDTH(w)/2;
+                     h2 = dxlalign(h2+NWIDTH(w)/2)-NWIDTH(w)/2;
                 else h2 = xlalign( h2+NWIDTH(w)/2)-NWIDTH(w)/2;
                 if (h2<h1) sxpos_possible = 0;
             }
         }
         else if (diff > 0) {
-            if (li) {  nw = GNNODE(li);
+            if (li) {
+                nw = GNNODE(li);
                 if ((NWIDTH(w)==0)||(NWIDTH(nw)==0))
-                    h1 = NX(nw) - G_dspace - NWIDTH(w);
-                else    h1 = NX(nw) - G_xspace - NWIDTH(w);
+                     h1 = NX(nw) - G_dspace - NWIDTH(w);
+                else h1 = NX(nw) - G_xspace - NWIDTH(w);
                 if (NWIDTH(w)==0)
-                         h2 = dxralign(h2+NWIDTH(w)/2)-NWIDTH(w)/2;
+                     h2 = dxralign(h2+NWIDTH(w)/2)-NWIDTH(w)/2;
                 else h2 = xralign( h2+NWIDTH(w)/2)-NWIDTH(w)/2;
                 if (h2>h1) sxpos_possible = 0;
             }
@@ -2182,12 +2183,12 @@ static void straight_part(GNODE sw, int sxpos, int dir)
 
     sxpos_possible = 1;
     w = sw;
-    while (w && (is_fullprio_node(w))) {
+    while (w && is_fullprio_node(w)) {
         if (!sxpos_possible) break;
         diff = sxpos - NX(w) - NWIDTH(w)/2;
         h2 = NX(w)+diff;
-        if (diff < 0)   li = TPRED(layer[NTIEFE(w)]);
-        else        li = TSUCC(layer[NTIEFE(w)]);
+        if (diff < 0) li = TPRED(layer[NTIEFE(w)]);
+        else          li = TSUCC(layer[NTIEFE(w)]);
         while (li) {
             if (GNNODE(li)==w) break;
             li = GNNEXT(li);
@@ -2199,10 +2200,11 @@ static void straight_part(GNODE sw, int sxpos, int dir)
                  h2 = dxlalign(h2);
             else h2 = xlalign( h2+NWIDTH(w)/2)-NWIDTH(w)/2;
             if (!li) { NX(w) = h2; }
-            else {  nw = GNNODE(li);
+            else {
+                nw = GNNODE(li);
                 if ((NWIDTH(w)==0)||(NWIDTH(nw)==0))
-                    h1 = NX(nw) + NWIDTH(nw) + G_dspace;
-                else    h1 = NX(nw) + NWIDTH(nw) + G_xspace;
+                     h1 = NX(nw) + NWIDTH(nw) + G_dspace;
+                else h1 = NX(nw) + NWIDTH(nw) + G_xspace;
                 if (h2>=h1) { NX(w) = h2; }
                 else sxpos_possible = 0;
             }
@@ -2212,10 +2214,11 @@ static void straight_part(GNODE sw, int sxpos, int dir)
                  h2 = dxralign(h2);
             else h2 = xralign( h2+NWIDTH(w)/2)-NWIDTH(w)/2;
             if (!li) { NX(w) = h2;  }
-            else {  nw = GNNODE(li);
+            else {
+                nw = GNNODE(li);
                 if ((NWIDTH(w)==0)||(NWIDTH(nw)==0))
-                    h1 = NX(nw) - G_dspace - NWIDTH(w);
-                else    h1 = NX(nw) - G_xspace - NWIDTH(w);
+                     h1 = NX(nw) - G_dspace - NWIDTH(w);
+                else h1 = NX(nw) - G_xspace - NWIDTH(w);
                 if (h2<=h1) { NX(w) = h2; }
                 else sxpos_possible = 0;
             }
@@ -2263,11 +2266,11 @@ static void iterate_centershifts(void)
             gs_wait_message('t');
             break;
         }
-            if (G_timelimit>0)
-                    if (test_timelimit(90)) {
-                            gs_wait_message('t');
-                            break;
-                    }
+        if (G_timelimit>0)
+            if (test_timelimit(90)) {
+                gs_wait_message('t');
+                break;
+            }
         for (i=0; i<=maxdepth+1; i++) center_layer(i);
         for (i=maxdepth+1; i>=0; i--) center_layer(i);
 
@@ -2329,13 +2332,13 @@ static int center_weight(void)
  *  ------------------------------------------
  *  We try to shift the nodes by the nw-value itself.
  *  Example:
- *         A  B       A    B
+ *     A  B       A    B
  *      \ |        \  /
  *       \|         \/
- *        N    =>       N  (shifted to the left)
+ *        N    =>   N  (shifted to the left)
  *       /|         /\
  *      / |        /  \
- *         C  D       C    D
+ *     C  D       C    D
  */
 
 static int center_layer(int i)
@@ -2369,7 +2372,8 @@ static int center_layer(int i)
             }
             levelshift[j] = nwbend(node,lnode,rnode);
         }
-        else {  levelshift[j] = nw(node);
+        else {
+            levelshift[j] = nw(node);
             lnode = node;
         }
         dir += levelshift[j];
@@ -2419,24 +2423,23 @@ static int do_leftshifts(int i)
             NX(node) = oldx + diff;
             if (lnode) {
                 if ((NWIDTH(node)==0)||(NWIDTH(lnode)==0)) {
-                        if (NX(node)<NX(lnode)
-                        +NWIDTH(lnode)+G_dspace)
+                    if (NX(node)<NX(lnode)
+                            +NWIDTH(lnode)+G_dspace)
                         NX(node) = NX(lnode)
-                             +NWIDTH(lnode)+G_dspace;
+                            +NWIDTH(lnode)+G_dspace;
                 }
                 else {
-                        if (NX(node)<NX(lnode)
-                        +NWIDTH(lnode)+G_xspace)
+                    if (NX(node)<NX(lnode)
+                            +NWIDTH(lnode)+G_xspace)
                         NX(node) = NX(lnode)
                             +NWIDTH(lnode)+G_xspace;
                 }
             }
 
             if ((NWIDTH(node)==0)&&(NHEIGHT(node)==0))
-                    NX(node) = dxralign(NX(node)+NWIDTH(node)/2)
-                        -NWIDTH(node)/2;
-            else    NX(node) =  xralign(NX(node)+NWIDTH(node)/2)
-                        -NWIDTH(node)/2;
+                NX(node) = dxralign(NX(node)+NWIDTH(node)/2) - NWIDTH(node)/2;
+            else
+                NX(node) =  xralign(NX(node)+NWIDTH(node)/2) - NWIDTH(node)/2;
             if (NX(node)<oldx) changed = 1;
         }
         lnode = node;
@@ -2472,23 +2475,22 @@ static int do_rightshifts(int i)
             NX(node) = oldx + diff;
             if (rnode) {
                 if ((NWIDTH(node)==0)||(NWIDTH(rnode)==0)) {
-                        if (NX(node)+NWIDTH(node)+G_dspace
-                        >NX(rnode))
+                    if (NX(node)+NWIDTH(node)+G_dspace
+                            >NX(rnode))
                         NX(node) = NX(rnode)
-                              -NWIDTH(node)-G_dspace;
+                            -NWIDTH(node)-G_dspace;
                 }
                 else {
-                        if (NX(node)+NWIDTH(node)+G_xspace
-                        >NX(rnode))
+                    if (NX(node)+NWIDTH(node)+G_xspace
+                            >NX(rnode))
                         NX(node) = NX(rnode)
                             -NWIDTH(node)-G_xspace;
                 }
             }
             if ((NWIDTH(node)==0)&&(NHEIGHT(node)==0))
-                    NX(node) = dxlalign(NX(node)+NWIDTH(node)/2)
-                        -NWIDTH(node)/2;
-            else    NX(node) =  xlalign(NX(node)+NWIDTH(node)/2)
-                        -NWIDTH(node)/2;
+                NX(node) = dxlalign(NX(node)+NWIDTH(node)/2) - NWIDTH(node)/2;
+            else
+                NX(node) =  xlalign(NX(node)+NWIDTH(node)/2) - NWIDTH(node)/2;
             if (NX(node)>oldx) changed = 1;
         }
         rnode = node;
@@ -2505,9 +2507,9 @@ static int do_rightshifts(int i)
 /* Edge wights ews and ewp
  * -----------------------
  *    Examples:
- *    /  here is ews<0     \  here is ews>0
- *   /   and     ewp>0  \ and     ewp<0
- *     |/_          _\|
+ *        /  here is ews<0     \  here is ews>0
+ *       /   and     ewp>0      \ and     ewp<0
+ *     |/_                      _\|
  */
 
 static int ews(GEDGE edge)
@@ -2568,21 +2570,19 @@ static int nws(GNODE node)
         if (CTARGET(c)) {
             if (NX(CTARGET(c))<NX(node))
                 weight -= (EPRIO(CEDGE(c))*layout_nearfactor *
-                         (NX(node) - (NX(CTARGET(c))
-                        +NWIDTH(CTARGET(c))+G_xspace)));
-            else    weight += (EPRIO(CEDGE(c))*layout_nearfactor *
-                         (NX(CTARGET(c)) - (NX(node)
-                        +NWIDTH(node)+G_xspace)));
+                         (NX(node) - (NX(CTARGET(c))+NWIDTH(CTARGET(c))+G_xspace)));
+            else
+                weight += (EPRIO(CEDGE(c))*layout_nearfactor *
+                         (NX(CTARGET(c)) - (NX(node)+NWIDTH(node)+G_xspace)));
             nr_edges += (EPRIO(CEDGE(c))*layout_nearfactor);
         }
         if (CTARGET2(c)) {
             if (NX(CTARGET2(c))<NX(node))
                 weight -= (EPRIO(CEDGE2(c))*layout_nearfactor *
-                        (NX(node) - (NX(CTARGET2(c))
-                           +NWIDTH(CTARGET2(c))+G_xspace)));
-            else    weight += (EPRIO(CEDGE2(c))*layout_nearfactor *
-                        (NX(CTARGET2(c)) - (NX(node)
-                        +NWIDTH(node)+G_xspace)));
+                        (NX(node) - (NX(CTARGET2(c))+NWIDTH(CTARGET2(c))+G_xspace)));
+            else
+                weight += (EPRIO(CEDGE2(c))*layout_nearfactor *
+                        (NX(CTARGET2(c)) - (NX(node)+NWIDTH(node)+G_xspace)));
             nr_edges += (EPRIO(CEDGE2(c))*layout_nearfactor);
         }
     }
@@ -2613,21 +2613,19 @@ static int nwp(GNODE node)
         if (CTARGET(c)) {
             if (NX(CTARGET(c))<NX(node))
                 weight -= (EPRIO(CEDGE(c))*layout_nearfactor *
-                         (NX(node) - (NX(CTARGET(c))
-                        +NWIDTH(CTARGET(c))+G_xspace)));
-            else    weight += (EPRIO(CEDGE(c))*layout_nearfactor *
-                         (NX(CTARGET(c)) - (NX(node)
-                        +NWIDTH(node)+G_xspace)));
+                         (NX(node) - (NX(CTARGET(c))+NWIDTH(CTARGET(c))+G_xspace)));
+            else
+                weight += (EPRIO(CEDGE(c))*layout_nearfactor *
+                         (NX(CTARGET(c)) - (NX(node)+NWIDTH(node)+G_xspace)));
             nr_edges += (EPRIO(CEDGE(c))*layout_nearfactor);
         }
         if (CTARGET2(c)) {
             if (NX(CTARGET2(c))<NX(node))
                 weight -= (EPRIO(CEDGE2(c))*layout_nearfactor *
-                        (NX(node) - (NX(CTARGET2(c))
-                           +NWIDTH(CTARGET2(c))+G_xspace)));
-            else    weight += (EPRIO(CEDGE2(c))*layout_nearfactor *
-                        (NX(CTARGET2(c)) - (NX(node)
-                        +NWIDTH(node)+G_xspace)));
+                        (NX(node) - (NX(CTARGET2(c))+NWIDTH(CTARGET2(c))+G_xspace)));
+            else
+                weight += (EPRIO(CEDGE2(c))*layout_nearfactor *
+                        (NX(CTARGET2(c)) - (NX(node)+NWIDTH(node)+G_xspace)));
             nr_edges += (EPRIO(CEDGE2(c))*layout_nearfactor);
         }
     }
@@ -2671,11 +2669,12 @@ static int nw(GNODE node)
 
     weight = 0;
     nr_edges = 0;
-    if (   (layout_downfactor==1)&&(layout_upfactor==1)
-        && FirstSucc(node) && (NextSucc(FirstSucc(node))==NULL)
-        && FirstPred(node) && (NextPred(FirstPred(node))==NULL)
-        && (EPRIO(FirstSucc(node))==EPRIO(FirstPred(node)))
-        && NCONNECT(node)==NULL) {
+    if ( (layout_downfactor==1)&&(layout_upfactor==1)
+         && FirstSucc(node) && (NextSucc(FirstSucc(node))==NULL)
+         && FirstPred(node) && (NextPred(FirstPred(node))==NULL)
+         && EPRIO(FirstSucc(node))==EPRIO(FirstPred(node))
+         && NCONNECT(node)==NULL )
+    {
         edge = FirstPred(node);
         v    = ESTART(edge);
         p1 = NX(node)+(NWIDTH(node)*EWEIGHTP(edge)/(NWEIGHTP(node)+1));
@@ -2698,14 +2697,12 @@ static int nw(GNODE node)
 
     for (edge = FirstSucc(node); edge; edge = NextSucc(edge))
     {
-        weight += (ews(edge)*EPRIO(edge)
-                *layout_downfactor);
+        weight += (ews(edge)*EPRIO(edge)*layout_downfactor);
         nr_edges += (EPRIO(edge)*layout_downfactor);
     }
     for (edge = FirstPred(node); edge; edge = NextPred(edge))
     {
-        weight += (ewp(edge)*EPRIO(edge)
-                *layout_upfactor);
+        weight += (ewp(edge)*EPRIO(edge)*layout_upfactor);
         nr_edges += (EPRIO(edge)*layout_upfactor);
     }
     c = NCONNECT(node);
@@ -2713,21 +2710,19 @@ static int nw(GNODE node)
         if (CTARGET(c)) {
             if (NX(CTARGET(c))<NX(node))
                 weight -= (EPRIO(CEDGE(c))*layout_nearfactor *
-                         (NX(node) - (NX(CTARGET(c))
-                        +NWIDTH(CTARGET(c))+G_xspace)));
-            else    weight += (EPRIO(CEDGE(c))*layout_nearfactor *
-                         (NX(CTARGET(c)) - (NX(node)
-                        +NWIDTH(node)+G_xspace)));
+                         (NX(node) - (NX(CTARGET(c))+NWIDTH(CTARGET(c))+G_xspace)));
+            else
+                weight += (EPRIO(CEDGE(c))*layout_nearfactor *
+                         (NX(CTARGET(c)) - (NX(node)+NWIDTH(node)+G_xspace)));
             nr_edges += (EPRIO(CEDGE(c))*layout_nearfactor);
         }
         if (CTARGET2(c)) {
             if (NX(CTARGET2(c))<NX(node))
                 weight -= (EPRIO(CEDGE2(c))*layout_nearfactor *
-                        (NX(node) - (NX(CTARGET2(c))
-                           +NWIDTH(CTARGET2(c))+G_xspace)));
-            else    weight += (EPRIO(CEDGE2(c))*layout_nearfactor *
-                        (NX(CTARGET2(c)) - (NX(node)
-                        +NWIDTH(node)+G_xspace)));
+                        (NX(node) - (NX(CTARGET2(c))+NWIDTH(CTARGET2(c))+G_xspace)));
+            else
+                weight += (EPRIO(CEDGE2(c))*layout_nearfactor *
+                        (NX(CTARGET2(c)) - (NX(node)+NWIDTH(node)+G_xspace)));
             nr_edges += (EPRIO(CEDGE2(c))*layout_nearfactor);
         }
     }
