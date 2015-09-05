@@ -2348,6 +2348,7 @@ static int center_layer(int i)
     int changed;
     int dir;
     GNODE   lnode, node, rnode;
+    int is_rnode;
 
     debugmessage("center_layer","");
 
@@ -2358,23 +2359,28 @@ static int center_layer(int i)
     j = 0;
     dir = 0;
     lnode = NULL;
+    is_rnode = 0;
     for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
     {
         node = GNNODE(li);
         if (NWIDTH(node)==0) {
-            rnode = NULL;
-            for (li1 = GNNEXT(li); li1; li1 = GNNEXT(li1))
-            {
-                if (NWIDTH(GNNODE(li1))!=0) {
-                    rnode = GNNODE(li1);
-                    break;
+            if (!is_rnode) {
+                rnode = NULL;
+                for (li1 = GNNEXT(li); li1; li1 = GNNEXT(li1))
+                {
+                    if (NWIDTH(GNNODE(li1))!=0) {
+                        rnode = GNNODE(li1);
+                        break;
+                    }
                 }
+                is_rnode = 1;
             }
             levelshift[j] = nwbend(node,lnode,rnode);
         }
         else {
             levelshift[j] = nw(node);
             lnode = node;
+            is_rnode = 0;
         }
         dir += levelshift[j];
         levelweight[j++]= 1;
