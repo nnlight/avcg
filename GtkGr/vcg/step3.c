@@ -2672,30 +2672,33 @@ static int nw(GNODE node)
     GEDGE   edge;
     GNODE   v;
     CONNECT c;
+    GEDGE pred_edge = FirstPred(node);
+    GEDGE succ_edge = FirstSucc(node);
 
     weight = 0;
     nr_edges = 0;
     if ( (layout_downfactor==1)&&(layout_upfactor==1)
-         && FirstSucc(node) && (NextSucc(FirstSucc(node))==NULL)
-         && FirstPred(node) && (NextPred(FirstPred(node))==NULL)
-         && EPRIO(FirstSucc(node))==EPRIO(FirstPred(node))
+         && succ_edge && !NextSucc(succ_edge)
+         && pred_edge && !NextPred(pred_edge)
+         && EPRIO(succ_edge)==EPRIO(pred_edge)
          && NCONNECT(node)==NULL )
     {
-        edge = FirstPred(node);
+        edge = pred_edge;
         v    = ESTART(edge);
         p1 = NX(node)+(NWIDTH(node)*EWEIGHTP(edge)/(NWEIGHTP(node)+1));
         p2 = NX(v) + (NWIDTH(v)*EWEIGHTS(edge)/(NWEIGHTS(v)+1));
         dx1 = p1 - p2;
 
-        edge = FirstSucc(node);
+        edge = succ_edge;
         v    = EEND(edge);
         p1 = NX(node)+(NWIDTH(node)*EWEIGHTS(edge)/(NWEIGHTS(node)+1));
         p2 = NX(v) + (NWIDTH(v)*EWEIGHTP(edge)/(NWEIGHTP(v)+1));
         dx2 = p2 - p1;
+
         p1  = NY(node)+NHEIGHT(node)/2;
-        p2  = NY(ESOURCE(FirstPred(node)))+NHEIGHT(ESOURCE(FirstPred(node)))/2;
+        p2  = NY(ESOURCE(pred_edge))+NHEIGHT(ESOURCE(pred_edge))/2;
         dy1 = p1 - p2;
-        p2  = NY(ETARGET(FirstSucc(node)))+NHEIGHT(ETARGET(FirstSucc(node)))/2;
+        p2  = NY(ETARGET(succ_edge))+NHEIGHT(ETARGET(succ_edge))/2;
         dy2 = p2 - p1;
         weight = (dx2*dy1-dx1*dy2)/(dy1+dy2);
         return(weight);
