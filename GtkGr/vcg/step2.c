@@ -2779,8 +2779,12 @@ static void insert_connects_in_layer(void)
         if (changed) {
             if (i<=maxdepth)
                 TCROSS(tmp_layer[i]) = layer_crossing(i);
-            for (j=i; j<=maxdepth; j++)
-                (void)resort_down_layer(j);
+            if (maxdepth > 400) {
+                /*затычка, для больших графов не делаем такую квадратичную коррекцию */
+            } else {
+                for (j=i; j<=maxdepth; j++)
+                    (void)resort_down_layer(j);
+            }
         }
     }
 } /* insert_connects_in_layer */
