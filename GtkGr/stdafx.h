@@ -76,8 +76,17 @@ typedef unsigned char byte;
 extern void
 replace( string &rStrText, const string &rcStrFind, const string &rcStrReplace);
 
-inline int around(double d) { return (int)(d + 0.5); }
+static inline int around(double d) { return (int)(d + 0.5); }
 extern int calc_str_lines_num( const char *str);
+
+template <typename T>
+static inline T min3( T v1, T v2, T v3) { return std::min( v1, std::min( v2, v3)); }
+template <typename T>
+static inline T max3( T v1, T v2, T v3) { return std::max( v1, std::max( v2, v3)); }
+template <typename T>
+static inline T min4( T v1, T v2, T v3, T v4) { return std::min( std::min( v1, v2), std::min( v3, v4)); }
+template <typename T>
+static inline T max4( T v1, T v2, T v3, T v4) { return std::max( std::max( v1, v2), std::max( v3, v4)); }
 
 /**
  * Фатальная ошибка, по которой приложение аварийно завершается.

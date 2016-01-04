@@ -524,11 +524,17 @@ void DrawBuffer::DrawLine( vrgint x, vrgint y, vrgint endx, vrgint endy)
     Vrg2Pm( x,y, pm_x, pm_y);
     Vrg2Pm( endx, endy, pm_endx, pm_endy);
 
+    if ( !IsBBoxIntersectsPm( std::min( pm_x, pm_endx),
+                              std::min( pm_y, pm_endy),
+                              std::max( pm_x, pm_endx),
+                              std::max( pm_y, pm_endy)) )
+        return;
+
     gdk_draw_line( m_Pixmap, m_GC, pm_x, pm_y, pm_endx, pm_endy);
 }
 void DrawBuffer::DrawLines( const vector<vrgint> &x, const vector<vrgint> &y, int n_points)
 {
-    if ( n_points > m_TmpPoints.size())
+    if ( n_points > (int)m_TmpPoints.size() )
     {
         m_TmpPoints.resize( n_points);
     }
@@ -537,7 +543,29 @@ void DrawBuffer::DrawLines( const vector<vrgint> &x, const vector<vrgint> &y, in
         Vrg2Pm( x[i], y[i], m_TmpPoints[i].x, m_TmpPoints[i].y);
     }
 
-    gdk_draw_lines( m_Pixmap, m_GC, &m_TmpPoints[0], n_points);
+    int pending_idx = -1;
+    for ( int i = 0; i < n_points - 1; i++ )
+    {
+        if ( IsBBoxIntersectsPm( std::min(m_TmpPoints[i].x, m_TmpPoints[i+1].x),
+                                 std::min(m_TmpPoints[i].y, m_TmpPoints[i+1].y),
+                                 std::max(m_TmpPoints[i].x, m_TmpPoints[i+1].x),
+                                 std::max(m_TmpPoints[i].y, m_TmpPoints[i+1].y)) )
+        {
+            if ( pending_idx == -1 )
+                pending_idx = i;
+        } else
+        {
+            if ( pending_idx != -1 )
+            {
+                gdk_draw_lines( m_Pixmap, m_GC, &m_TmpPoints[pending_idx], i - pending_idx + 1);
+            }
+            pending_idx = -1;
+        }
+    }
+    if ( pending_idx != -1 )
+    {
+        gdk_draw_lines( m_Pixmap, m_GC, &m_TmpPoints[pending_idx], n_points - pending_idx);
+    }
 }
 void DrawBuffer::DrawRectangle( vrgint x, vrgint y, vrgint width, vrgint height, bool filled)
 {
@@ -546,6 +574,9 @@ void DrawBuffer::DrawRectangle( vrgint x, vrgint y, vrgint width, vrgint height,
     Vrg2Pm( x,y, pm_x, pm_y);
     int pm_width = width * m_Scaling;
     int pm_height = height * m_Scaling;
+
+    if ( !IsBBoxIntersectsPm( pm_x, pm_y, pm_x + pm_width, pm_y + pm_height) )
+        return;
 
     gdk_draw_rectangle( m_Pixmap, m_GC, pm_filled,
                         pm_x, pm_y,
@@ -559,6 +590,12 @@ void DrawBuffer::DrawTriangle( vrgint x1, vrgint y1, vrgint x2, vrgint y2, vrgin
     Vrg2Pm( x2, y2, pm_p[1].x, pm_p[1].y);
     Vrg2Pm( x3, y3, pm_p[2].x, pm_p[2].y);
 
+    if ( !IsBBoxIntersectsPm( min3( pm_p[0].x, pm_p[1].x, pm_p[2].x),
+                              min3( pm_p[0].y, pm_p[1].y, pm_p[2].y),
+                              max3( pm_p[0].x, pm_p[1].x, pm_p[2].x),
+                              max3( pm_p[0].y, pm_p[1].y, pm_p[2].y)) )
+        return;
+
     gdk_draw_polygon( m_Pixmap, m_GC, pm_filled,
                       pm_p, 3);
 }
@@ -571,6 +608,12 @@ void DrawBuffer::DrawRhomb( vrgint x, vrgint y, vrgint width, vrgint height, boo
     Vrg2Pm( x + width / 2, y + height, pm_p[2].x, pm_p[2].y);
     Vrg2Pm( x, y + height / 2,         pm_p[3].x, pm_p[3].y);
 
+    if ( !IsBBoxIntersectsPm( min4( pm_p[0].x, pm_p[1].x, pm_p[2].x, pm_p[3].x),
+                              min4( pm_p[0].y, pm_p[1].y, pm_p[2].y, pm_p[3].y),
+                              max4( pm_p[0].x, pm_p[1].x, pm_p[2].x, pm_p[3].x),
+                              max4( pm_p[0].y, pm_p[1].y, pm_p[2].y, pm_p[3].y)) )
+        return;
+
     gdk_draw_polygon( m_Pixmap, m_GC, pm_filled,
                       pm_p, 4);
 }
@@ -581,6 +624,9 @@ void DrawBuffer::DrawEllipse( vrgint x, vrgint y, vrgint width, vrgint height, b
     Vrg2Pm( x,y, pm_x, pm_y);
     int pm_width = width * m_Scaling;
     int pm_height = height * m_Scaling;
+
+    if ( !IsBBoxIntersectsPm( pm_x, pm_y, pm_x + pm_width, pm_y + pm_height) )
+        return;
 
     gdk_draw_arc( m_Pixmap, m_GC, pm_filled,
                   pm_x, pm_y,
@@ -736,6 +782,10 @@ void DrawBuffer::DrawText( vrgint x, DrawTextPos_t x_pos, vrgint y, DrawTextPos_
 
     int pm_width, pm_height;
     pango_layout_get_pixel_size( layout, &pm_width, &pm_height);
+
+    if ( !IsBBoxIntersectsPm( pm_x, pm_y, pm_x + pm_width, pm_y + pm_height) )
+        return;
+
     switch (x_pos)
     {
     case DTP_CENTER: pm_x = pm_x - pm_width / 2; break;

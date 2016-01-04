@@ -140,6 +140,30 @@ private:
     void CreatePixmap( int width, int height);
     bool DeletePixmap();
     void InspectVisibleArea( bool force_pixmap_repos = false);
+
+    static const int kPmMargin = 1000;  /*!< запас при подсчете пересечения с pixmap'ом */
+    bool IsPointInPm( int pm_x, int pm_y)
+    {
+        return pm_x >= -kPmMargin && pm_x < m_PixmapDims[AXIS_X] + kPmMargin &&
+               pm_y >= -kPmMargin && pm_y < m_PixmapDims[AXIS_Y] + kPmMargin;
+    }
+    bool IsBBoxIntersectsPm( int pm_min_x, int pm_min_y, int pm_max_x, int pm_max_y)
+    { 
+        bool res = pm_max_x >= -kPmMargin && pm_min_x < m_PixmapDims[AXIS_X] + kPmMargin &&
+                   pm_max_y >= -kPmMargin && pm_min_y < m_PixmapDims[AXIS_Y] + kPmMargin;
+        if ( res == true )
+        {
+            /* в X-протоколе координаты передаются в 16-битных целых */
+            static const int x11_max_val = (1 << 15) - 1;
+            static const int x11_min_val = -(1 << 15);
+            if ( pm_max_x > x11_max_val || pm_max_y > x11_max_val ||
+                 pm_min_x < x11_min_val || pm_min_y < x11_min_val )
+            {
+                printf("bad situation: BBox intersects pm but too large for x11\n");
+            }
+        }
+        return res;
+    }
 };
 
 
