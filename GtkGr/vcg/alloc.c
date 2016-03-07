@@ -81,8 +81,6 @@
  * dllist_free      gives one DLLIST-cons cell free.
  *
  * free_all_lists   gives all temporary memory free.
- * reinit_all_lists     reinitialize all memory lists. This is done if the
- *          memory is given free: all lists are set to NULL.
  ***************************************************************************/
 
 
@@ -109,12 +107,13 @@
  * ----------
  */
 
-static GNODE internal_nodealloc _PP((void));
-static void free_nodelists  _PP((void));
-static GEDGE internal_edgealloc _PP((void));
-static void free_tmpedges   _PP((void));
-static void free_edgelists  _PP((void));
-static void free_connect    _PP((void));
+static GNODE internal_nodealloc();
+static void free_nodelists();
+static GEDGE internal_edgealloc();
+static void free_tmpedges();
+static void free_edgelists();
+static void free_connect();
+static void reinit_all_lists();
 
 /*--------------------------------------------------------------------*/
 /* Memory allocation                                                  */
@@ -1326,7 +1325,7 @@ void free_all_lists(void)
 /*  Reinitialization of all struct keeping lists
  *  --------------------------------------------
  */
-void reinit_all_lists(void)
+static void reinit_all_lists(void)
 {
     ufoldstart   = NULL;
     foldstart    = NULL;

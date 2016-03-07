@@ -551,11 +551,10 @@ void    folding(void)
         create_adjacencies();
         gs_wait_message('f');
         hide_edge_classes();
-        v = nodelist;
-        while (v) {
+        for (v = nodelist; v; v = NNEXT(v))
+        {
             NX(v) = NSX(v);
             NY(v) = NSY(v);
-            v = NNEXT(v);
         }
     }
 

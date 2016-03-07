@@ -97,7 +97,6 @@ void    dllist_free _PP((DLLIST x));
 void    dllist_free_all _PP((DLLIST x));
 
 void    free_all_lists   _PP((void));
-void    reinit_all_lists _PP((void));
 
 /*--------------------------------------------------------------------*/
 

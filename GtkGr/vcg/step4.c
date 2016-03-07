@@ -456,21 +456,18 @@ static void calc_all_edge_xy(void)
 
     debugmessage("calc_all_edge_xy","");
 
-    v = nodelist;
-        while (v) {
+    for (v = nodelist; v; v = NNEXT(v))
+    {
         calc_edge_xy(v);
-                v = NNEXT(v);
-        }
-        v = labellist;
-        while (v) {
+    }
+    for (v = labellist; v; v = NNEXT(v))
+    {
         calc_edge_xy(v);
-                v = NNEXT(v);
-        }
-        v = dummylist;
-        while (v) {
+    }
+    for (v = dummylist; v; v = NNEXT(v))
+    {
         calc_edge_xy(v);
-                v = NNEXT(v);
-        }
+    }
 }
 
 /*  Calculate coordinates of all edges that start at node v
@@ -1987,21 +1984,18 @@ static void calc_all_edgearrows(void)
 
     debugmessage("calc_all_edgearrows","");
 
-    v = nodelist;
-        while (v) {
+    for (v = nodelist; v; v = NNEXT(v))
+    {
         calc_edgearrow(v);
-                v = NNEXT(v);
-        }
-    v = labellist;
-        while (v) {
+    }
+    for (v = labellist; v; v = NNEXT(v))
+    {
         calc_edgearrow(v);
-                v = NNEXT(v);
-        }
-    v = dummylist;
-        while (v) {
+    }
+    for (v = dummylist; v; v = NNEXT(v))
+    {
         calc_edgearrow(v);
-                v = NNEXT(v);
-        }
+    }
 }
 
 
@@ -2289,7 +2283,8 @@ static void flip_all_nodes(GNODE v)
     GEDGE e;
 
     debugmessage("flip_all_nodes","");
-    while (v) {
+    for ( ; v; v = NNEXT(v))
+    {
         h     = NX(v);
         NX(v) = NY(v);
         NY(v) = h;
@@ -2306,7 +2301,6 @@ static void flip_all_nodes(GNODE v)
         {
             flip_edge(e);
         }
-        v = NNEXT(v);
     }
 }
 
@@ -2471,29 +2465,26 @@ void calc_max_xy_pos(void)
     maximal_xpos = 0;
     maximal_ypos = 0;
 
-    v = nodelist;
-    while (v) {
+    for (v = nodelist; v; v = NNEXT(v))
+    {
         if (NX(v)+NWIDTH(v)>maximal_xpos)
             maximal_xpos = NX(v)+NWIDTH(v);
         if (NY(v)+NHEIGHT(v)>maximal_ypos)
             maximal_ypos = NY(v)+NHEIGHT(v);
-        v = NNEXT(v);
     }
-    v = labellist;
-    while (v) {
+    for (v = labellist; v; v = NNEXT(v))
+    {
         if (NX(v)+NWIDTH(v)>maximal_xpos)
             maximal_xpos = NX(v)+NWIDTH(v);
         if (NY(v)+NHEIGHT(v)>maximal_ypos)
             maximal_ypos = NY(v)+NHEIGHT(v);
-        v = NNEXT(v);
     }
-    v = dummylist;
-    while (v) {
+    for (v = dummylist; v; v = NNEXT(v))
+    {
         if (NX(v)+NWIDTH(v)>maximal_xpos)
             maximal_xpos = NX(v)+NWIDTH(v);
         if (NY(v)+NHEIGHT(v)>maximal_ypos)
             maximal_ypos = NY(v)+NHEIGHT(v);
-        v = NNEXT(v);
     }
     maximal_xpos += G_xbase;
     maximal_ypos += G_ybase;
@@ -2541,8 +2532,8 @@ void statistics(void)
     st_max_outdeg       = 0;
     st_max_degree       = 0;
 
-    v = nodelist;
-    while (v) {
+    for (v = nodelist; v; v = NNEXT(v))
+    {
         c = NCONNECT(v);
         if (c) {
             if (backward_connection1(c)) st_nr_vis_nearedges++;
@@ -2558,10 +2549,9 @@ void statistics(void)
         if (indeg >st_max_indeg)  st_max_indeg =indeg;
         if (outdeg>st_max_outdeg) st_max_outdeg=outdeg;
         st_nr_vis_nodes++;
-        v = NNEXT(v);
     }
-    v = labellist;
-    while (v) {
+    for (v = labellist; v; v = NNEXT(v))
+    {
         c = NCONNECT(v);
         if (c) {
             if (backward_connection1(c)) st_nr_vis_nearedges++;
@@ -2577,10 +2567,9 @@ void statistics(void)
         if (indeg >st_max_indeg)  st_max_indeg =indeg;
         if (outdeg>st_max_outdeg) st_max_outdeg=outdeg;
         st_nr_vis_labels++;
-        v = NNEXT(v);
     }
-    v = dummylist;
-    while (v) {
+    for (v = dummylist; v; v = NNEXT(v))
+    {
         c = NCONNECT(v);
         if (c) {
             if (backward_connection1(c)) st_nr_vis_nearedges++;
@@ -2596,22 +2585,18 @@ void statistics(void)
         if (indeg >st_max_indeg)  st_max_indeg =indeg;
         if (outdeg>st_max_outdeg) st_max_outdeg=outdeg;
         st_nr_vis_dummies++;
-        v = NNEXT(v);
     }
-    v = invis_nodes;
-    while (v) {
+    for (v = invis_nodes; v; v = NNEXT(v))
+    {
         st_nr_invis_nodes++;
-        v = NNEXT(v);
     }
-    v = graphlist;
-    while (v) {
+    for (v = graphlist; v; v = NNEXT(v))
+    {
         st_nr_invis_graphs++;
-        v = NNEXT(v);
     }
-    e = edgelist;
-    while (e) {
+    for (e = edgelist; e; e = ENEXT(e))
+    {
         if (EINVISIBLE(e)) st_nr_invis_edges++;
-        e = ENEXT(e);
     }
 
     /* Further we have nr_crossings and maximal_xpos and maximal_ypos */
