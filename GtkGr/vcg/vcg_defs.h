@@ -700,8 +700,6 @@ typedef struct dllist
  * ----------------
  */
 
-extern int nodeanz;
-extern int dummyanz;
 extern GNODE nodelist;
 extern GNODE nodelistend;
 extern GNODE tmpnodelist;
@@ -711,7 +709,6 @@ extern GNODE invis_nodes;
 extern GNODE labellist;
 extern GNODE labellistend;
 extern GNODE dummylist;
-extern int edgeanz;
 extern GEDGE edgelist;
 extern GEDGE edgelistend;
 extern GEDGE tmpedgelist;

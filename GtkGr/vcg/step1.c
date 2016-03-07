@@ -2740,14 +2740,13 @@ static GNODE create_dummy(int t)
     NNEXT(v)        = dummylist;
     if (dummylist) NBEFORE(dummylist) = v;
     dummylist       = v;
-    dummyanz++;
 
     /* if t appropriate, insert dummy node into the layer[t] */
     if (t<0) return(v);
     hl = tmpnodelist_alloc();
     GNNEXT(hl) = TSUCC(layer[t]);
     TSUCC(layer[t]) = hl;
-        GNNODE(hl) = v;
+    GNNODE(hl) = v;
     return(v);
 }
 

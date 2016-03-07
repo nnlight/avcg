@@ -625,7 +625,6 @@ static void delete_node(GNODE v, int k)
             ins_node_in_dl_list(v,graphlist,graphlistend);
         }
     }
-    nodeanz--;
 
 }
 
@@ -652,7 +651,6 @@ static void insert_node(GNODE v, int k)
         }
     }
     ins_node_in_dl_list(v,nodelist,nodelistend);
-    nodeanz++;
 }
 
 
@@ -1158,8 +1156,6 @@ static void refresh(void)
     refresh_all_nodes(nodelist);
     refresh_all_nodes(graphlist);
     refresh_all_nodes(invis_nodes);
-
-    dummyanz  = 0;  /* no dummy nodes available  */
 
     /* Revert reverted edges and make them visible */
 

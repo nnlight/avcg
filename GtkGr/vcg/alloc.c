@@ -123,12 +123,6 @@ static void reinit_all_lists();
  *  ======================
  */
 
-#ifdef DEBUG
-static long act_alloc_size  = 0;
-static long act_alloc_edges = 0;
-static long act_alloc_nodes = 0;
-#endif
-
 static long node_refnum = 0L;   /* reference counter for REFNUM of nodes */
 
 
@@ -137,12 +131,7 @@ static long node_refnum = 0L;   /* reference counter for REFNUM of nodes */
  */
 char *myalloc(int x)
 {
-    debugmessage("myalloc. Nr. of Bytes:",itoa(x));
-#ifdef DEBUG
-    act_alloc_size += x;
-    PRINTF("Alloc Summary: %ld Bytes allocated\n",act_alloc_size);
-#endif
-    return(ParseMalloc(x));
+    return ParseMalloc(x);
 } /* myalloc */
 
 /**
@@ -150,12 +139,6 @@ char *myalloc(int x)
  */
 void free_memory(void)
 {
-    debugmessage("free_memory","");
-#ifdef DEBUG
-    act_alloc_size  = 0;
-    act_alloc_nodes = 0;
-    act_alloc_edges = 0;
-#endif
     FreeHash();
     ParseFree();
     node_refnum = 0L;
@@ -194,10 +177,6 @@ void *libc_malloc(int size)
  *  Free GNODE objects are collected into the node_freelist.
  */
 
-int nodeanz   = 0;             /* Number of nodes in nodelist         */
-int dummyanz  = 0;             /* Number of dummy nodes (not labels)  */
-
-
 GNODE nodelist     = NULL;     /* List of all real nodes as specified */
 GNODE nodelistend  = NULL;     /* End of this list                    */
 GNODE graphlist    = NULL;     /* List of all subgraphs as specified  */
@@ -233,10 +212,6 @@ static GNODE internal_nodealloc(void)
     }
     else {
         h = (GNODE) myalloc(sizeof(struct gnode));
-#ifdef DEBUG
-        act_alloc_nodes++;
-        PRINTF("Alloc Summary: %ld GNODEs allocated\n",act_alloc_nodes);
-#endif
     }
 
     NREFNUM(h)  = node_refnum++;
@@ -296,7 +271,6 @@ GNODE nodealloc(GNODE refnode)
     copy_nodeattributes(refnode, h);
     ins_node_in_dl_list(h,nodelist,nodelistend);
     init_node_adj_fields(h);
-    nodeanz++;
     return(h);
 }
 
@@ -480,20 +454,20 @@ GNODE   tmpnodealloc(
     h = internal_nodealloc();
 
     NHORDER(h)  = horder;
-        NTEXTMODE(h)    = textm;
+    NTEXTMODE(h)    = textm;
     NSTATE(h)       = 0;
-        NWIDTH(h)       = width;
-        NHEIGHT(h)      = height;
-        NBORDERW(h)     = borderw;
-        NFOLDING(h)     = fold;
-        NCOLOR(h)       = color;
-        NTCOLOR(h)      = textc;
-        NBCOLOR(h)      = borderc;
-        NSHRINK(h)      = shrink;
-        NSTRETCH(h)     = stretch;
-        NINLIST(h)      = 0;
-        NINVISIBLE(h)   = 1;
-        NDFS(h)         = 0L;
+    NWIDTH(h)       = width;
+    NHEIGHT(h)      = height;
+    NBORDERW(h)     = borderw;
+    NFOLDING(h)     = fold;
+    NCOLOR(h)       = color;
+    NTCOLOR(h)      = textc;
+    NBCOLOR(h)      = borderc;
+    NSHRINK(h)      = shrink;
+    NSTRETCH(h)     = stretch;
+    NINLIST(h)      = 0;
+    NINVISIBLE(h)   = 1;
+    NDFS(h)         = 0L;
 
     NINTERN(h)   = tmpnodelist;
     tmpnodelist  = h;
@@ -772,8 +746,6 @@ void free_regionnodelist(GNLIST r)
  *  Free GEDGE objects are collected into the node_freelist.
  */
 
-int edgeanz = 0;               /* Number of edges in edgelist         */
-
 GEDGE edgelist     = NULL;     /* List of all real edges as specified */
 GEDGE edgelistend  = NULL;     /* End of this list                    */
 
@@ -798,10 +770,6 @@ static GEDGE internal_edgealloc(void)
     }
     else {
         h = (GEDGE) myalloc(sizeof(struct gedge));
-#ifdef DEBUG
-        act_alloc_edges++;
-        PRINTF("Alloc Summary: %ld GEDGEs allocated\n",act_alloc_edges);
-#endif
     }
 
     ESTART(h)       = NULL;
@@ -844,7 +812,6 @@ GEDGE edgealloc(GEDGE refedge)
     h = internal_edgealloc();
     copy_edgeattributes(refedge, h);
     ins_edge_in_dl_list(h, edgelist, edgelistend);
-    edgeanz++;
     return(h);
 }
 
@@ -1337,8 +1304,6 @@ static void reinit_all_lists(void)
     labellistend = NULL;
     dummylist    = NULL;
 
-    nodeanz          = 0;
-    dummyanz         = 0;
     nodelist         = NULL;
     nodelistend      = NULL;
     graphlist        = NULL;
@@ -1349,7 +1314,6 @@ static void reinit_all_lists(void)
     tmpnconslist     = NULL;
     ncons_freelist   = NULL;
 
-    edgeanz          = 0;
     edgelist         = NULL;
     edgelistend      = NULL;
     tmpedgelist      = NULL;
