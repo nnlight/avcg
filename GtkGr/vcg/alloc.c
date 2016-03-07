@@ -94,14 +94,6 @@
 #include "folding.h"
 #include "graph.h"
 
-#undef DEBUG
-#undef debugmessage
-#ifdef DEBUG
-#define debugmessage(a,b) {FPRINTF(stderr,"Debug: %s %s\n",a,b);}
-#else
-#define debugmessage(a,b) /**/
-#endif
-
 
 /* Prototypes
  * ----------
@@ -205,7 +197,6 @@ static GNODE internal_nodealloc(void)
     GNODE   h;
     int i;
 
-    debugmessage("internal_nodealloc","");
     if (node_freelist) {
         h = node_freelist;
         node_freelist = NINTERN(node_freelist);
@@ -214,40 +205,40 @@ static GNODE internal_nodealloc(void)
         h = (GNODE) myalloc(sizeof(struct gnode));
     }
 
-    NREFNUM(h)  = node_refnum++;
-    NTITLE(h)   = NULL;
-    NLABEL(h)   = NULL;
-    NINFO1(h)   = NULL;
-    NINFO2(h)   = NULL;
-    NINFO3(h)   = NULL;
-    NLEVEL(h)   = -1;
-    NSHAPE(h)   = 0;
-    NHORDER(h)  = -1;
+    NREFNUM(h)      = node_refnum++;
+    NTITLE(h)       = NULL;
+    NLABEL(h)       = NULL;
+    NINFO1(h)       = NULL;
+    NINFO2(h)       = NULL;
+    NINFO3(h)       = NULL;
+    NLEVEL(h)       = -1;
+    NSHAPE(h)       = 0;
+    NHORDER(h)      = -1;
     NSX(h)          = 0L;
     NSY(h)          = 0L;
     NX(h)           = 0L;
     NY(h)           = 0L;
-    NSGRAPH(h)  = NULL;
-    NROOT(h)    = NULL;
-    NREGREPL(h) = NULL;
-    NREGION(h)  = NULL;
-    NREGROOT(h) = NULL;
-    NINLIST(h)  = 1;
+    NSGRAPH(h)      = NULL;
+    NROOT(h)        = NULL;
+    NREGREPL(h)     = NULL;
+    NREGION(h)      = NULL;
+    NREGROOT(h)     = NULL;
+    NINLIST(h)      = 1;
     NINVISIBLE(h)   = 0;
     NTIEFE(h)       = -1;
     NPOS(h)         = -1;
     NWEIGHTS(h)     = 0L;
-    NWEIGHTP(h) = 0L;
+    NWEIGHTP(h)     = 0L;
     NMARK(h)        = 0;
     NREVERT(h)      = 0;
     NANCHORNODE(h)  = 0;
-    NBARY(h)    = -1;
+    NBARY(h)        = -1;
     NDFS(h)         = -1L;
-    NVPTR(h)    = NULL;
+    NVPTR(h)        = NULL;
     for (i = 0; i < TEMP_ATTR_COUNT; i++) NTEMPATTR(h,i) = DEAD_PTR;
     for (i = 0; i < MARKER_COUNT; i++) NMARKERVAL(h,i) = 0;
     NCONNECT(h)     = NULL;
-    NINTERN(h)  = NULL;
+    NINTERN(h)      = NULL;
     init_node_graph_fields_as_dead(h);
 
     return(h);
@@ -266,7 +257,6 @@ GNODE nodealloc(GNODE refnode)
 {
     GNODE h;
 
-    debugmessage("nodealloc","");
     h = internal_nodealloc();
     copy_nodeattributes(refnode, h);
     ins_node_in_dl_list(h,nodelist,nodelistend);
@@ -280,8 +270,6 @@ GNODE nodealloc(GNODE refnode)
 
 void nodedefaults(GNODE node)
 {
-    debugmessage("nodedefaults","");
-
     NTITLE(node)    = G_title;
     NLABEL(node)    = NULL;
     NLEVEL(node)    = -1;
@@ -290,8 +278,8 @@ void nodedefaults(GNODE node)
     NINFO1(node)    = "";
     NINFO2(node)    = "";
     NINFO3(node)    = "";
-    NSX(node)   = 0L;
-    NSY(node)   = 0L;
+    NSX(node)       = 0L;
+    NSY(node)       = 0L;
     NTEXTMODE(node) = CENTER;
     NSTATE(node)    = 0;
     NWIDTH(node)    = -1;
@@ -313,8 +301,6 @@ void nodedefaults(GNODE node)
  */
 void foldnodedefaults(GNODE node)
 {
-    debugmessage("foldnodedefaults","");
-
     NTITLE(node)    = NULL;
     NLABEL(node)    = NULL;
     NLEVEL(node)    = -1;
@@ -323,8 +309,8 @@ void foldnodedefaults(GNODE node)
     NINFO1(node)    = NULL;
     NINFO2(node)    = NULL;
     NINFO3(node)    = NULL;
-    NSX(node)   = 0L;
-    NSY(node)   = 0L;
+    NSX(node)       = 0L;
+    NSY(node)       = 0L;
     NTEXTMODE(node) = -1;
     NSTATE(node)    = -1;
     NWIDTH(node)    = -1;
@@ -347,23 +333,21 @@ void foldnodedefaults(GNODE node)
 
 void inherit_foldnode_attributes(GNODE fn, GNODE y)
 {
-    debugmessage("inherit_foldnode_attributes","");
-
     /* NTITLE not needed */
     /* NFOLDING not needed */
-    if (NLABEL(fn))     NLABEL(y)   = NLABEL(fn);
+    if (NLABEL(fn))         NLABEL(y)   = NLABEL(fn);
     if (NLEVEL(fn)!= -1)    NLEVEL(y)   = NLEVEL(fn);
     if (NSHAPE(fn)!= -1)    NSHAPE(y)   = NSHAPE(fn);
     if (NHORDER(fn)!= -1)   NHORDER(y)  = NHORDER(fn);
-    if (NINFO1(fn))     NINFO1(y)   = NINFO1(fn);
-    if (NINFO2(fn))     NINFO2(y)   = NINFO2(fn);
-    if (NINFO3(fn))     NINFO3(y)   = NINFO3(fn);
-    if (NSX(fn)!= -1L)  NSX(y)      = NSX(fn);
-    if (NSY(fn)!= -1L)  NSY(y)      = NSY(fn);
-    if (NTEXTMODE(fn)!= -1) NTEXTMODE(y)    = NTEXTMODE(fn);
-    if (NSTATE(fn)!= -1)    NSTATE(y)       = NSTATE(fn);
+    if (NINFO1(fn))         NINFO1(y)   = NINFO1(fn);
+    if (NINFO2(fn))         NINFO2(y)   = NINFO2(fn);
+    if (NINFO3(fn))         NINFO3(y)   = NINFO3(fn);
+    if (NSX(fn)!= -1L)      NSX(y)      = NSX(fn);
+    if (NSY(fn)!= -1L)      NSY(y)      = NSY(fn);
+    if (NTEXTMODE(fn)!= -1) NTEXTMODE(y)= NTEXTMODE(fn);
+    if (NSTATE(fn)!= -1)    NSTATE(y)   = NSTATE(fn);
     if (NWIDTH(fn)!= -1)    NWIDTH(y)   = NWIDTH(fn);
-    if (NHEIGHT(fn)!= -1)   NHEIGHT(y)      = NHEIGHT(fn);
+    if (NHEIGHT(fn)!= -1)   NHEIGHT(y)  = NHEIGHT(fn);
     if (NBORDERW(fn)!= -1)  NBORDERW(y) = NBORDERW(fn);
     if (NCOLOR(fn)!= -1)    NCOLOR(y)   = NCOLOR(fn);
     if (NTCOLOR(fn)!= -1)   NTCOLOR(y)  = NTCOLOR(fn);
@@ -389,10 +373,10 @@ void copy_nodeattributes(GNODE x, GNODE y)
     NINFO3(y)   = NINFO3(x);
     NSX(y)      = NSX(x);
     NSY(y)      = NSY(x);
-    NTEXTMODE(y)    = NTEXTMODE(x);
-    NSTATE(y)       = NSTATE(x);
-    NWIDTH(y)       = NWIDTH(x);
-    NHEIGHT(y)      = NHEIGHT(x);
+    NTEXTMODE(y)= NTEXTMODE(x);
+    NSTATE(y)   = NSTATE(x);
+    NWIDTH(y)   = NWIDTH(x);
+    NHEIGHT(y)  = NHEIGHT(x);
     NBORDERW(y) = NBORDERW(x);
     NFOLDING(y) = NFOLDING(x);
     NCOLOR(y)   = NCOLOR(x);
@@ -415,13 +399,12 @@ GNODE graphalloc(GNODE refnode)
 {
     GNODE   h;
 
-    debugmessage("graphalloc","");
     h = internal_nodealloc();
     copy_nodeattributes(refnode, h);
-    NFOLDING(h) = -1;
-    NINLIST(h)  = 0;
-    NINVISIBLE(h)   = 1;
-    NDFS(h)     = 0L;
+    NFOLDING(h)   = -1;
+    NINLIST(h)    = 0;
+    NINVISIBLE(h) = 1;
+    NDFS(h)       = 0L;
 
     ins_node_in_dl_list(h,graphlist,graphlistend);
     init_node_adj_fields(h);
@@ -436,7 +419,7 @@ GNODE graphalloc(GNODE refnode)
  */
 
 GNODE   tmpnodealloc(
-    int     textm,
+    int textm,
     int width,
     int height,
     int borderw,
@@ -444,16 +427,15 @@ GNODE   tmpnodealloc(
     int color,
     int textc,
     int borderc,
-    int     shrink,
+    int shrink,
     int stretch,
     int horder)
 {
     GNODE   h;
 
-    debugmessage("tmpnodealloc","");
     h = internal_nodealloc();
 
-    NHORDER(h)  = horder;
+    NHORDER(h)      = horder;
     NTEXTMODE(h)    = textm;
     NSTATE(h)       = 0;
     NWIDTH(h)       = width;
@@ -484,7 +466,6 @@ void free_tmpnodes(void)
 {
     GNODE   h;
 
-    debugmessage("free_tmpnodes","");
     h = tmpnodelist;
     if (h) {
         while (NINTERN(h)) h = NINTERN(h);
@@ -511,7 +492,6 @@ void free_tmpnodes(void)
 
 void free_node(GNODE h)
 {
-    debugmessage("free_node","");
     check_node_no_adj_edges(h);
     NINTERN(h) = node_freelist;
     node_freelist = h;
@@ -527,7 +507,7 @@ void free_node(GNODE h)
 GNODE   search_xy_node(long x,long y)
 {
     GNODE   v;
-    int width, height;
+    int     width, height;
     long    xpos, ypos;
 
     for (v = nodelist; v; v = NNEXT(v))
@@ -537,7 +517,7 @@ GNODE   search_xy_node(long x,long y)
         width = (NWIDTH(v)*G_stretch)/G_shrink;
         height = (NHEIGHT(v)*G_stretch)/G_shrink;
         if ( (xpos <= x) && (x <= xpos+width) &&
-                 (ypos <= y) && (y <= ypos+height) )
+             (ypos <= y) && (y <= ypos+height) )
                 return(v);      /* node found */
     }
     return NULL;        /* no node found */
@@ -559,7 +539,7 @@ void check_graph_consistency(void)
         if (NSGRAPH(v)==NULL) {
             if (!silent) {
                 FPRINTF(stderr,"\nWarning: Graph %s",
-                    (NTITLE(v)?NTITLE(v):""));
+                        (NTITLE(v)?NTITLE(v):""));
                 FPRINTF(stderr," has no nodes.");
                 FPRINTF(stderr," I add a node !\n");
             }
@@ -604,7 +584,6 @@ GNLIST nodelist_alloc(GNODE v)
 {
     GNLIST  h;
 
-    debugmessage("nodelist_alloc","");
     h = (GNLIST)myalloc(sizeof(struct gnlist));
     GNINTERN(h) = NULL;
     GNNODE(h)   = v;
@@ -624,12 +603,12 @@ GNLIST  tmpnodelist_alloc(void)
 {
     GNLIST  h;
 
-    debugmessage("tmpnodelist_alloc","");
     if (ncons_freelist) {
         h = ncons_freelist;
         ncons_freelist = GNINTERN(ncons_freelist);
     }
-    else    h = (GNLIST)myalloc(sizeof(struct gnlist));
+    else
+        h = (GNLIST)myalloc(sizeof(struct gnlist));
     GNINTERN(h) = tmpnconslist;
     GNNODE(h)   = NULL;
     GNNEXT(h)   = NULL;
@@ -652,12 +631,12 @@ GNLIST  foldnodelist_alloc(void)
 {
     GNLIST  h;
 
-    debugmessage("foldnodelist_alloc","");
     if (ncons_freelist) {
         h = ncons_freelist;
         ncons_freelist = GNINTERN(ncons_freelist);
     }
-    else    h = (GNLIST)myalloc(sizeof(struct gnlist));
+    else
+        h = (GNLIST)myalloc(sizeof(struct gnlist));
     GNINTERN(h) = foldnconslist;
     GNNODE(h)   = NULL;
     GNNEXT(h)   = NULL;
@@ -675,7 +654,6 @@ static void free_nodelists(void)
     GNLIST  h;
 
     /* все из tmpnconslist переносим в ncons_freelist */
-    debugmessage("free_nodelists","");
     h = tmpnconslist;
     if (h) {
         while(GNINTERN(h)) h = GNINTERN(h);
@@ -694,7 +672,6 @@ void free_foldnodelists(void)
     GNLIST  h;
 
     /* все из foldnconslist переносим в ncons_freelist */
-    debugmessage("free_foldnodelists","");
     h = foldnconslist;
     if (h) {
         while (GNINTERN(h)) h = GNINTERN(h);
@@ -715,7 +692,6 @@ void free_regionnodelist(GNLIST r)
     GNLIST  h;
 
     /* все из r переносим в ncons_freelist, r не нулим */
-    debugmessage("free_regionnodelists","");
     h = r;
     if (h) {
         while(GNINTERN(h)) h = GNINTERN(h);
@@ -763,7 +739,6 @@ static GEDGE internal_edgealloc(void)
 {
     GEDGE   h;
 
-    debugmessage("internal_edgealloc","");
     if (edge_freelist) {
         h = edge_freelist;
         edge_freelist = ENEXT(edge_freelist);
@@ -782,13 +757,13 @@ static GEDGE internal_edgealloc(void)
     EBBENDY(h)      = 0;
     EENDX(h)        = 0;
     EENDY(h)        = 0;
-    EORI(h)     = NO_ORI;
-    EORI2(h)    = NO_ORI;
-    ELABEL(h)   = NULL;
+    EORI(h)         = NO_ORI;
+    EORI2(h)        = NO_ORI;
+    ELABEL(h)       = NULL;
     ELABELCOL(h)    = BLACK;
     EART(h)         = 'U';
     ELNODE(h)       = NULL;
-    EANCHOR(h)  = 0;
+    EANCHOR(h)      = 0;
     EINVISIBLE(h)   = 0;
     EWEIGHTS(h)     = 0;
     EWEIGHTP(h)     = 0;
@@ -808,7 +783,6 @@ GEDGE edgealloc(GEDGE refedge)
 {
     GEDGE   h;
 
-    debugmessage("edgealloc","");
     h = internal_edgealloc();
     copy_edgeattributes(refedge, h);
     ins_edge_in_dl_list(h, edgelist, edgelistend);
@@ -822,13 +796,11 @@ GEDGE edgealloc(GEDGE refedge)
 
 void edgedefaults(GEDGE edge)
 {
-    debugmessage("edgedefaults","");
-
     ELABEL(edge)        = NULL;
     ELSTYLE(edge)       = SOLID;
     ETHICKNESS(edge)    = 2;
     ECLASS(edge)        = 1;
-    EPRIO(edge)     = 1;
+    EPRIO(edge)         = 1;
     EHORDER(edge)       = -1;
     ECOLOR(edge)        = BLACK;
     ELABELCOL(edge)     = BLACK;
@@ -848,13 +820,11 @@ void edgedefaults(GEDGE edge)
  */
 void foldedgedefaults(GEDGE edge)
 {
-    debugmessage("foldedgedefaults","");
-
     ELABEL(edge)        = "...";
     ELSTYLE(edge)       = -1;
     ETHICKNESS(edge)    = 4;
     ECLASS(edge)        = -1;
-    EPRIO(edge)     = -1;
+    EPRIO(edge)         = -1;
     EHORDER(edge)       = -1;
     ECOLOR(edge)        = -1;
     ELABELCOL(edge)     = -1;
@@ -875,9 +845,7 @@ void foldedgedefaults(GEDGE edge)
 
 void inherit_foldedge_attributes(GEDGE fn, GEDGE y)
 {
-    debugmessage("inherit_foldedge_attributes","");
-
-    if (ELABEL(fn))        ELABEL(y)       = ELABEL(fn);
+    if (ELABEL(fn))            ELABEL(y)       = ELABEL(fn);
     if (ELSTYLE(fn)     != -1) ELSTYLE(y)      = ELSTYLE(fn);
     if (ETHICKNESS(fn)  != -1) ETHICKNESS(y)   = ETHICKNESS(fn);
     if (ECLASS(fn)      != -1) ECLASS(y)       = ECLASS(fn);
@@ -900,13 +868,13 @@ void inherit_foldedge_attributes(GEDGE fn, GEDGE y)
 
 void copy_edgeattributes(GEDGE x, GEDGE y)
 {
-    ELABEL(y)   = ELABEL(x);
+    ELABEL(y)       = ELABEL(x);
     ELSTYLE(y)      = ELSTYLE(x);
     ETHICKNESS(y)   = ETHICKNESS(x);
-    ECLASS(y)   = ECLASS(x);
-    EPRIO(y)    = EPRIO(x);
-    EHORDER(y)  = EHORDER(x);
-    ECOLOR(y)   = ECOLOR(x);
+    ECLASS(y)       = ECLASS(x);
+    EPRIO(y)        = EPRIO(x);
+    EHORDER(y)      = EHORDER(x);
+    ECOLOR(y)       = ECOLOR(x);
     ELABELCOL(y)    = ELABELCOL(x);
     EARROWSIZE(y)   = EARROWSIZE(x);
     EARROWSTYLE(y)  = EARROWSTYLE(x);
@@ -941,15 +909,14 @@ GEDGE   tmpedgealloc(
 {
     GEDGE   h;
 
-    debugmessage("tmpedgealloc","");
     h = internal_edgealloc();
 
     ELSTYLE(h)      = lstyle;
     ETHICKNESS(h)   = thick;
-    ECLASS(h)   = xclass;
-    EPRIO(h)    = prio;
-    EHORDER(h)  = horder;
-    ECOLOR(h)   = ecolor;
+    ECLASS(h)       = xclass;
+    EPRIO(h)        = prio;
+    EHORDER(h)      = horder;
+    ECOLOR(h)       = ecolor;
     ELABELCOL(h)    = elcol;
     EARROWSTYLE(h)  = AS_SOLID;
     EARROWCOL(h)    = ecolor;
@@ -975,7 +942,6 @@ static void free_tmpedges(void)
 {
     GEDGE   h;
 
-    debugmessage("free_tmpedges","");
     h = tmpedgelist;
     if (h) {
         while (ENEXT(h)) h = ENEXT(h);
@@ -1027,12 +993,12 @@ void near_edge_insert(GEDGE e)
 {
     ADJEDGE h;
 
-    debugmessage("near_edge_insert","");
     if (econs_freelist) {
         h = econs_freelist;
         econs_freelist = AINTERN(econs_freelist);
     }
-    else    h = (ADJEDGE)myalloc(sizeof(struct adjedge));
+    else
+        h = (ADJEDGE)myalloc(sizeof(struct adjedge));
     AKANTE(h) = e;
     ANEXT(h) = AINTERN(h) = near_edge_list;
     near_edge_list = h;
@@ -1049,12 +1015,12 @@ void bentnear_edge_insert(GEDGE e)
 {
     ADJEDGE h;
 
-    debugmessage("bentnear_edge_insert","");
     if (econs_freelist) {
         h = econs_freelist;
         econs_freelist = AINTERN(econs_freelist);
     }
-    else    h = (ADJEDGE)myalloc(sizeof(struct adjedge));
+    else
+        h = (ADJEDGE)myalloc(sizeof(struct adjedge));
     AKANTE(h) = e;
     ANEXT(h) = AINTERN(h) = bent_near_edge_list;
     bent_near_edge_list = h;
@@ -1072,12 +1038,12 @@ void back_edge_insert(GEDGE e)
 {
     ADJEDGE h;
 
-    debugmessage("back_edge_insert","");
     if (econs_freelist) {
         h = econs_freelist;
         econs_freelist = AINTERN(econs_freelist);
     }
-    else    h = (ADJEDGE)myalloc(sizeof(struct adjedge));
+    else
+        h = (ADJEDGE)myalloc(sizeof(struct adjedge));
     AKANTE(h) = e;
     ANEXT(h) = AINTERN(h) = back_edge_list;
     back_edge_list = h;
@@ -1095,12 +1061,12 @@ ADJEDGE edgelist_alloc(void)
 {
     ADJEDGE h;
 
-    debugmessage("edgelist_alloc","");
     if (econs_freelist) {
         h = econs_freelist;
         econs_freelist = AINTERN(econs_freelist);
     }
-    else    h = (ADJEDGE)myalloc(sizeof(struct adjedge));
+    else
+        h = (ADJEDGE)myalloc(sizeof(struct adjedge));
     AINTERN(h) = tmpeconslist;
     tmpeconslist = h;
     return(h);
@@ -1115,7 +1081,6 @@ static void free_edgelists(void)
 {
     ADJEDGE h;
 
-    debugmessage("free_edgelists","");
     h = tmpeconslist;
     if (h) {
         while(AINTERN(h)) h = AINTERN(h);
@@ -1157,12 +1122,12 @@ CONNECT connectalloc(GNODE node)
 {
     CONNECT h;
 
-    debugmessage("connectalloc","");
     if (connect_freelist) {
         h = connect_freelist;
         connect_freelist = CINTERN(connect_freelist);
     }
-    else    h = (CONNECT)myalloc(sizeof(struct connect));
+    else
+        h = (CONNECT)myalloc(sizeof(struct connect));
     CTARGET(h)  = NULL;
     CEDGE(h)    = NULL;
     CTARGET2(h) = NULL;
@@ -1184,7 +1149,6 @@ static void free_connect(void)
 {
     CONNECT h;
 
-    debugmessage("free_connect","");
     h = connectlist;
     if (h) {
         while(CINTERN(h)) h = CINTERN(h);
@@ -1226,12 +1190,12 @@ DLLIST  dllist_alloc(GNODE node, DLLIST pred)
 {
     DLLIST  h;
 
-    debugmessage("dllist_alloc","");
     if (dllist_freelist) {
         h = dllist_freelist;
         dllist_freelist = DSUCC(dllist_freelist);
     }
-    else    h = (DLLIST)myalloc(sizeof(struct dllist));
+    else
+        h = (DLLIST)myalloc(sizeof(struct dllist));
     DNODE(h) = node;
     DPRED(h) = pred;
     DSUCC(h) = NULL;
@@ -1248,9 +1212,8 @@ DLLIST  dllist_alloc(GNODE node, DLLIST pred)
 
 void    dllist_free(DLLIST x)
 {
-    debugmessage("dllist_free","");
-        DSUCC(x) = dllist_freelist;
-        dllist_freelist = x;
+    DSUCC(x) = dllist_freelist;
+    dllist_freelist = x;
 }
 
 
@@ -1262,12 +1225,11 @@ void    dllist_free_all(DLLIST x)
 {
     DLLIST h;
 
-    debugmessage("dllist_free","");
     if (x) {
         h = x;
         while (DSUCC(h)) h = DSUCC(h);
-            DSUCC(h) = dllist_freelist;
-            dllist_freelist = x;
+        DSUCC(h) = dllist_freelist;
+        dllist_freelist = x;
     }
 }
 

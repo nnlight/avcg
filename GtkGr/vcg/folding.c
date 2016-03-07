@@ -1165,15 +1165,15 @@ static void refresh(void)
             v     = ESTART(e);
             ESTART(e) = EEND(e);
             EEND(e)   = v;
-                hh = EARROWSIZE(e);
-                EARROWSIZE(e)  = EARROWBSIZE(e);
-                EARROWBSIZE(e) = hh;
-                hh = EARROWCOL(e);
-                EARROWCOL(e)  = EARROWBCOL(e);
-                EARROWBCOL(e) = hh;
-                hh = EARROWSTYLE(e);
-                EARROWSTYLE(e)  = EARROWBSTYLE(e);
-                EARROWBSTYLE(e) = hh;
+            hh = EARROWSIZE(e);
+            EARROWSIZE(e)  = EARROWBSIZE(e);
+            EARROWBSIZE(e) = hh;
+            hh = EARROWCOL(e);
+            EARROWCOL(e)  = EARROWBCOL(e);
+            EARROWBCOL(e) = hh;
+            hh = EARROWSTYLE(e);
+            EARROWSTYLE(e)  = EARROWBSTYLE(e);
+            EARROWBSTYLE(e) = hh;
         }
         EART(e)     = 'U';
         ELNODE(e)   = NULL;

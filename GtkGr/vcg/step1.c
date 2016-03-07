@@ -604,7 +604,8 @@ static void insert_bent_near_edges(void)
         else if (!invisible) {
             if (G_displayel==YES)
                 v = create_labelnode(edge1);
-            else {  v = create_dummy(-1);
+            else {
+                v = create_dummy(-1);
                 NINVISIBLE(v) = 0;
             }
             NLEVEL(v) = NLEVEL(ESOURCE(edge1));
