@@ -85,6 +85,11 @@ ui_key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data)
         gdk_set_show_events( FALSE);
         break;
 
+    case GDK_t:
+        printf("T key pressed\n");
+        uic->RelayoutVcgGraph();
+        break;
+
     default:
         break;
     }
@@ -709,13 +714,24 @@ void UIController::LoadGDLFile( const char *filename)
     vcg_ParseFile( filename);
 
     /* удаляем старый граф (если есть)*/
-    m_VRGraph.reset( NULL);
     m_VRGraph.reset( new VRGraph());
     m_VRGraph->LoadVcgGraph();
     m_DrawBuffer->SetVRGraphRef( m_VRGraph.get());
     m_CurrentFilename = filename;
     gtk_window_set_title( GTK_WINDOW(m_MainWindow), filename);
 } /* UIController::LoadGDLFile */
+
+void UIController::RelayoutVcgGraph()
+{
+    assert( !m_CurrentFilename.empty() );
+
+    vcg_Relayout();
+
+    /* удаляем старый граф (если есть)*/
+    m_VRGraph.reset( new VRGraph());
+    m_VRGraph->LoadVcgGraph();
+    m_DrawBuffer->SetVRGraphRef( m_VRGraph.get());
+}
 
 void UIController::UpdateStatusbar()
 {

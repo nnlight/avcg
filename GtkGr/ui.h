@@ -56,6 +56,8 @@ public:
     /* загрузка GDL-файла */
     void LoadGDLFile( const char *filename);
 
+    void RelayoutVcgGraph();
+
 
 private:
     GtkWidget *ConstrMenubar( GtkWidget *main_window);

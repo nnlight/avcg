@@ -127,10 +127,10 @@ void prepare_nodes(void)
     for (v = nodelist; v; v = NNEXT(v)) { calc_node_size(v); }
     for (v = labellist; v; v = NNEXT(v)) { calc_node_size(v); }
 
-        /* prepare back edges, i.e. revert all back edges initially
-         */
+    /* prepare back edges, i.e. revert all back edges initially
+     */
 
-        prepare_back_edges();
+    prepare_back_edges();
 
     /*  insert anchor edges: we blindly set the anchor node
      *  G_xspace pixels right or left of the anchored node.

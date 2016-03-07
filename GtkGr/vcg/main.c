@@ -122,11 +122,11 @@ static void visualize_part(void)
 
     /* Init of the default values */
 
-        G_title         = myalloc(256);
+    G_title         = myalloc(256);
     strcpy( G_title, "G_title");
-    G_title[255] = 0;
-        G_x             = -1L;
-        G_y             = -1L;
+    G_title[255]    = 0;
+    G_x             = -1L;
+    G_y             = -1L;
 
     /* Check the output device */
 #if 0
@@ -140,19 +140,19 @@ static void visualize_part(void)
     G_width_set  = 0;   /* because they are not set by */
     G_height_set = 0;   /* the specification           */
     if (!G_xymax_final) G_xmax = G_width+10;
-        if (!G_xymax_final) G_ymax = G_height+10;
-        G_xbase         = 5;
-        G_ybase         = 5;
-        G_dspace        = 0;
-        G_xspace        = 20;
-        G_yspace        = 70;
-        G_orientation   = TOP_TO_BOTTOM;
-        G_folding       = 0;
-        G_color         = WHITE;
-        G_displayel     = NO;
-        G_dirtyel       = NO;
-        G_shrink        = 1;
-        G_stretch       = 1;
+    if (!G_xymax_final) G_ymax = G_height+10;
+    G_xbase         = 5;
+    G_ybase         = 5;
+    G_dspace        = 0;
+    G_xspace        = 20;
+    G_yspace        = 70;
+    G_orientation   = TOP_TO_BOTTOM;
+    G_folding       = 0;
+    G_color         = WHITE;
+    G_displayel     = NO;
+    G_dirtyel       = NO;
+    G_shrink        = 1;
+    G_stretch       = 1;
     G_yalign        = AL_CENTER;
     G_portsharing   = YES;
     G_arrowmode     = AMFIXED;
@@ -175,10 +175,10 @@ static void visualize_part(void)
     /* Set drawing area */
 
     G_xymax_final = 1;
-        V_xmin = V_xmin_initial;
-        V_xmax = V_xmin + (long)G_xmax;
-        V_ymin = V_ymin_initial;
-        V_ymax = V_ymin + (long)G_ymax;
+    V_xmin = V_xmin_initial;
+    V_xmax = V_xmin + (long)G_xmax;
+    V_ymin = V_ymin_initial;
+    V_ymax = V_ymin + (long)G_ymax;
 
     relayout();
 } /* visualize_part */
@@ -192,13 +192,13 @@ static void visualize_part(void)
 static void relayout(void)
 {
     debugmessage("relayout","");
-        start_time();
+    start_time();
 
     free_all_lists();
-        folding();
-        stop_time("folding");
+    folding();
+    stop_time("folding");
 
-        if (!locFlag) {
+    if (!locFlag) {
 
         if (min_mediumshifts>max_mediumshifts)
             max_mediumshifts = min_mediumshifts;
@@ -210,7 +210,7 @@ static void relayout(void)
         if ((manhatten_edges==1)&&(prio_phase==0)) prio_phase = 1;
         if ((prio_phase==1)&&(straight_phase==0)) straight_phase = 1;
         if ((prio_phase==0)&&(straight_phase==1)) prio_phase = 1;
-        if (prio_phase==1)     {
+        if (prio_phase==1) {
             min_centershifts = 0;
             max_centershifts = 0;
         }
@@ -222,16 +222,16 @@ static void relayout(void)
 
         /* Calculate new layout */
 
-                step1_main();
+        step1_main();
 
         /* step1_main calls tree_main, if TREE_LAYOUT.
          */
 
         if (layout_flag != TREE_LAYOUT) {
-                    step2_main();
-                    step3_main();
+            step2_main();
+            step3_main();
         }
-            step4_main();
+        step4_main();
     }
     else {
         /* Prepare given layout: calculate co-ordinate of edges
@@ -313,6 +313,15 @@ void vcg_ParseFile( const char *filename)
     fclose(f);
     return;
 } /* vcg_ParseFile */
+
+void vcg_Relayout()
+{
+#if 0
+    visualize_part();
+#else
+    relayout();
+#endif
+}
 
 
 Color_t vcg_GetBgColor()

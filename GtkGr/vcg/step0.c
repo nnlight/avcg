@@ -257,17 +257,17 @@ void step0_main(void)
 
     /* Analyze the syntax tree: the values given here are the
      * default values.
-         */
+     */
 
     subg_bit    = 0;    /* We are outside the top graph       */
     nodedefaults(&defaultnode);
-        node_analyse(
+    node_analyse(
           Syntax_Tree,  /* syntax tree node       */
-          NULL,     /* root node              */
+          NULL,         /* root node              */
           &defaultnode);
 
     edgedefaults(&defaultedge);
-        edge_analyse(
+    edge_analyse(
           Syntax_Tree,  /* syntax tree node       */
           &defaultedge);
 
