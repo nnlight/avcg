@@ -65,9 +65,6 @@ void    init_folding_keepers_globals();
 void    clear_folding_keepers();
 void    add_sgfoldstart       (GNODE v);
 void    add_sgunfoldstart     (GNODE v);
-void    add_foldstart         (GNODE v);
-void    add_unfoldstart       (GNODE v);
-void    add_foldstop          (GNODE v);
 
 void    create_adjedge   (GEDGE edge);
 void    delete_adjedge   (GEDGE edge);

@@ -220,9 +220,6 @@ static GNODE internal_nodealloc(void)
     NY(h)           = 0L;
     NSGRAPH(h)      = NULL;
     NROOT(h)        = NULL;
-    NREGREPL(h)     = NULL;
-    NREGION(h)      = NULL;
-    NREGROOT(h)     = NULL;
     NINLIST(h)      = 1;
     NINVISIBLE(h)   = 0;
     NTIEFE(h)       = -1;
@@ -423,7 +420,6 @@ GNODE   tmpnodealloc(
     int width,
     int height,
     int borderw,
-    int fold,
     int color,
     int textc,
     int borderc,
@@ -441,7 +437,7 @@ GNODE   tmpnodealloc(
     NWIDTH(h)       = width;
     NHEIGHT(h)      = height;
     NBORDERW(h)     = borderw;
-    NFOLDING(h)     = fold;
+    NFOLDING(h)     = -1;
     NCOLOR(h)       = color;
     NTCOLOR(h)      = textc;
     NBCOLOR(h)      = borderc;

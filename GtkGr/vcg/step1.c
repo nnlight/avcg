@@ -2733,7 +2733,7 @@ static GNODE create_dummy(int t)
     debugmessage("create_dummy","");
     assert((t<=maxdepth+1));
 
-    v = tmpnodealloc(CENTER,-1,-1,0,-1,G_color,G_color,G_color,1,1,-1);
+    v = tmpnodealloc(CENTER,-1,-1,0,G_color,G_color,G_color,1,1,-1);
     NTITLE(v)   = "";
     NLABEL(v)   = "";
     NTIEFE(v)   = t;

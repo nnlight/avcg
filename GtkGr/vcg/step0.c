@@ -1177,6 +1177,7 @@ static void graph_attributes(
 
     /* For the folding keepers */
 
+#if 0
     if (NFOLDING(v)==0) {
         /* for the initial folding: we must recognize the
          * foldstoppers.
@@ -1184,8 +1185,8 @@ static void graph_attributes(
         NFOLDING(v) = -1;
         add_foldstop(v);
     }
-    if (NSTATE(v)>0) NFOLDING(v)=1;
-    if (NFOLDING(v)>0) {
+#endif
+    if (NSTATE(v)>0 || NFOLDING(v)>0) {
         /* and the subgraph fold starters */
         add_sgfoldstart(v);
     }
@@ -1235,7 +1236,11 @@ static void node_attributes(
     if (NLABEL(v)==NULL) NLABEL(v) = NTITLE(v);
 
     /* For the folding keepers */
-
+#if 1
+    if (NFOLDING(v)>=0 && !silent) {
+        FPRINTF(stderr,"Folding attribute for nodes currently not implemented !\n");
+    }
+#else
     if (NFOLDING(v)==0) {
         /* for the initial folding: we must recognize the
          * foldstoppers.
@@ -1247,6 +1252,8 @@ static void node_attributes(
         /* and the fold starters */
         add_foldstart(v);
     }
+#endif
+
     check_node(node,v);  /* check node and init into to hashtable */
 } /* node_attributes */
 
@@ -1368,7 +1375,7 @@ static void one_node_attribute(
             break;
         default:
             if (silent) break;
-            FPRINTF(stderr,"Line %d: node attribute %s ",
+            FPRINTF(stderr,"Line %d: attribute %s ",
                     xfirst_line(node2),ConstructorName(tag(node2)));
             FPRINTF(stderr,"currently not implemented !\n");
     }

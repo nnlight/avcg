@@ -253,14 +253,8 @@ typedef struct gnode
     int level;
     int nhorder;
 
-    /* These attributes are on summary nodes (graphs,regions) */
-
-    struct  gnlist  *subgraph;   /* List of subgraphs       */
+    struct  gnlist  *subgraph;   /* List of subgraph nodes  */
     struct  gnode   *root;       /* Root of graph           */
-    struct  gnode   *regionrepl; /* Replacement node for    */
-                     /* roots of regions        */
-    struct  gnlist  *region;     /* List of nodes in region */
-    struct  gnode   *regroot;    /* Root of region          */
 
     /* These are the locations used for the layout */
 
@@ -378,9 +372,6 @@ typedef struct gnode
 #define NHORDER(x)      ((x)->nhorder)
 #define NSGRAPH(x)      ((x)->subgraph)
 #define NROOT(x)        ((x)->root)
-#define NREGREPL(x)     ((x)->regionrepl)
-#define NREGION(x)      ((x)->region)
-#define NREGROOT(x)     ((x)->regroot)
 #define NNEXT(x)        ((x)->next)
 #define NBEFORE(x)      ((x)->before)
 #define NPREV(x)        ((x)->before)

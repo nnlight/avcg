@@ -65,7 +65,7 @@ void  foldnodedefaults  _PP((GNODE node));
 void  inherit_foldnode_attributes   _PP((GNODE fn, GNODE y));
 void  copy_nodeattributes       _PP((GNODE fn, GNODE y));
 
-GNODE tmpnodealloc  _PP((int textm,int width,int height,int borderw,int fold,int color,int textc,int borderc, int shrink,int stretch,int horder));
+GNODE tmpnodealloc(int textm,int width,int height,int borderw,int color,int textc,int borderc, int shrink,int stretch,int horder);
 void    free_node   _PP((GNODE v));
 void    free_tmpnodes   _PP((void));
 GNODE   search_xy_node  _PP((long x,long y));

@@ -44,10 +44,6 @@
  *  NROOT(n) = r if n is node of subgraph r
  *   Folded regions have a summary node in nodelist, and all nodes of
  *   this region outside nodelist.
- *  NREGREPL(r) is the start node of the region which has the summary
- *          node r.
- *  NREGION(r)  is the list of nodes of region r (except the start node)
- *  NREGROOT(n) = r if n is invisible and node of region r
  *
  * The task of the driver function `folding' is now to create the correct
  * adjacency lists by respecting new graph/region foldings or unfoldings
@@ -112,7 +108,6 @@
  */
 
 static void     revert_subgraph  _PP((GNODE v));
-static int  foldstop_reached _PP((GNODE v));
 
 static void delete_node _PP((GNODE v,int k));
 static void insert_node _PP((GNODE v,int k));
@@ -137,7 +132,6 @@ static void adapt_labelpos      _PP((GNODE v,GEDGE e));
 static GNODE    search_visible      _PP((GNODE v));
 static GEDGE    substed_edge        _PP((GEDGE e));
 
-static void unfold_region   _PP((GNODE n));
 static void fold_region _PP((GNODE n, int k));
 static void recursive_fold  _PP((GNODE v, GNODE n, int k));
 
@@ -152,7 +146,7 @@ static void db_print_somenode_list(GNODE w,GNODE wend);
 
 
 /*--------------------------------------------------------------------*/
-/*  Management of folding keepers                     */
+/*  Management of folding keepers                                     */
 /*--------------------------------------------------------------------*/
 
 /* Global variables
@@ -161,9 +155,6 @@ static void db_print_somenode_list(GNODE w,GNODE wend);
 
 static GNLIST f_subgraphs; /* List of subgraph nodes to folding          */
 static GNLIST uf_subgraphs;/* Node where subgraph unfolding starts           */
-static GNLIST foldstops;   /* List of nodes where a fold region operation stops  */
-static GNLIST foldstart;   /* List of nodes where a fold region operation starts */
-static GNLIST ufoldstart;  /* Node where region unfolding starts         */
 
 
 static void foldnodelist_add(GNLIST *lp, GNODE v)
@@ -187,9 +178,6 @@ static void foldnodelist_remove(GNLIST *lp, GNODE v)
 
 void init_folding_keepers_globals()
 {
-    ufoldstart  = NULL;
-    foldstart   = NULL;
-    foldstops   = NULL;
     f_subgraphs = NULL;
     uf_subgraphs= NULL;
 }
@@ -215,9 +203,6 @@ void clear_folding_keepers(void)
     }
 
     for (l = uf_subgraphs; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
-    for (l = foldstops; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
-    for (l = foldstart; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
-    for (l = ufoldstart; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
 
     free_foldnodelists();
     init_folding_keepers_globals();
@@ -286,77 +271,8 @@ void add_sgunfoldstart(GNODE v)
 }
 
 
-/*   Add fold region starter
- *   -----------------------
- *   Add a new fold region starter v to the list foldstarters.
- */
-void add_foldstart(GNODE v)
-{
-    if (!v) return;
-
-    if (NREVERT(v)==BREVERT) { /* delete it from foldstart */
-        NREVERT(v) = NOREVERT;
-        foldnodelist_remove(&foldstart, v);
-        return;
-    }
-    if (NREVERT(v)==AREVERT) return;
-    NREVERT(v) = BREVERT;
-    foldnodelist_add(&foldstart, v);
-}
-
-/*   Add unfold region starter
- *   -------------------------
- *   Add a new unfold region starter v to the list foldstarters.
- */
-void add_unfoldstart(GNODE v)
-{
-    if (!v) return;
-    if (NREVERT(v)==AREVERT) { /* delete it from ufoldstart */
-        NREVERT(v) = NOREVERT;
-        foldnodelist_remove(&ufoldstart, v);
-        return;
-    }
-    NREVERT(v) = AREVERT;
-    foldnodelist_add(&ufoldstart, v);
-}
-
-
-/*   Add fold region stopper
- *   -----------------------
- *   Add a new fold region stopper v to the list foldstops.
- */
-void add_foldstop(GNODE v)
-{
-    if (!v) return;
-    if (NREVERT(v)==AREVERT) { /* delete it from foldstops */
-        NREVERT(v) = NOREVERT;
-        foldnodelist_remove(&foldstops, v);
-        return;
-    }
-    NREVERT(v) = AREVERT;
-    foldnodelist_add(&foldstops, v);
-}
-
-
-/*   Check fold stopper
- *   ------------------
- *   Returns 1 if v is in the list foldstops, i.e. if v is a fold stopper.
- */
-static int foldstop_reached(GNODE v)
-{
-    GNLIST  l;
-
-    if (!v) return(1);
-    for (l = foldstops; l; l = GNNEXT(l))
-    {
-        if (GNNODE(l) == v) return(1);
-    }
-    return(0);
-}
-
-
 /*--------------------------------------------------------------------*/
-/*  Folding and creation of adjacency lists               */
+/*  Folding and creation of adjacency lists                           */
 /*--------------------------------------------------------------------*/
 
 /*  Defines
@@ -440,11 +356,7 @@ void    folding(void)
     }
 
     /* 4) Unfold region (independent of the class) */
-
-    for (l = ufoldstart; l; l = GNNEXT(l))
-    {
-        unfold_region(GNNODE(l));
-    }
+    /* Deleted */
 
     /* 5) refresh the situation: initialize indegree of nodes,
      *    visibility flag of edges etc. Clear adjacency lists.
@@ -459,15 +371,8 @@ void    folding(void)
     hide_edge_classes();
 
     /* 7) Fold region: fold first the lower then the higher classes */
+    /* Deleted */
 
-
-    for (rclass=0; rclass<17; rclass++) {
-        for (l = foldstart; l; l = GNNEXT(l))
-        {
-            if (GNNODE(l) && (NFOLDING(GNNODE(l))==rclass))
-                fold_region(GNNODE(l), rclass);
-        }
-    }
 
     /* 8) If labels necessary, create labels */
 
@@ -539,7 +444,7 @@ void    folding(void)
 
 
 /*--------------------------------------------------------------------*/
-/*  Folding primitives                            */
+/*  Folding primitives                                                */
 /*--------------------------------------------------------------------*/
 
 /*   Insertion and deletion at the node list
@@ -612,7 +517,7 @@ static void insert_node(GNODE v, int k)
 
 
 /*--------------------------------------------------------------------*/
-/*  Folding of subgraphs                          */
+/*  Folding of subgraphs                                              */
 /*--------------------------------------------------------------------*/
 
 /*  Delete all nodes of a subgraph from the nodelist
@@ -684,237 +589,7 @@ static void unfold_sg(GNODE u)
 
 
 /*--------------------------------------------------------------------*/
-/*  Folding of regions                            */
-/*--------------------------------------------------------------------*/
-
-/*   Note that region operations are not inverse implemented, even
- *   if the effect is inverse.
- *   The reason is, that unfolding is done BEFORE the adjacency lists
- *   exist, but folding can only be done AFTER the adjacency lists exist.
- *   Firther we use a dirty trick here: instead of creating a summary
- *   node of the region, we use the start node of the region as summary
- *   node. This has the advantage that the summary node is in the correct
- *   subgraph, and that we have no problems with the hashtable to
- *   search node title. An auxiliary node is created as REGREPL, to contain
- *   the information of the originally start node. This must be done
- *   because the originally start node could be a summary node of a
- *   previous region folding.
- */
-
-
-/*   Fold Region
- *   -----------
- *   Starting from a node n, all nodes and edges reacheable by
- *   edges of class <= k are folded.
- *   Before, the adjacency lists were created.
- */
-static void fold_region(GNODE n, int k)
-{
-    GEDGE   e, nxt_e;
-    GNODE   h;
-
-
-    assert((n));
-    debugmessage("fold_region",(NTITLE(n)?NTITLE(n):"(null)"));
-
-    /* First, we create a stable replacement node, that stores
-     * all information of the node. Then we use the start node
-     * as summary node, because the start node is part of the
-     * right graph.
-     */
-
-    h = nodealloc(n);
-    NTITLE(h)   = NTITLE(n);
-    NROOT(h)    = NROOT(n);
-    NREGREPL(h) = NREGREPL(n);
-    NREGION(h)  = NREGION(n);
-    NREGROOT(h) = NREGROOT(n);
-
-    NSX(n) = NSY(n) = 0L;   /* Locations are not inherited ! */
-
-    NWIDTH(n) = NHEIGHT(n) = -1; /* Sizes are not inherited */
-
-    delete_node(h, FOLDED_RGNODE);        /* h is invisible */
-
-    /* Now: h has the purpose of n, and n is the summary node
-     * Now we change the properties of the summary nodes according
-     * to the defaults.
-     */
-
-    inherit_foldnode_attributes(&foldnode, n);
-
-    NREGREPL(n) = h;
-    NREGION(n)  = NULL;   /* here we collect the nodes of this region */
-
-    /* Fold the nodes recursively */
-    for (e = FirstSucc(n); e; e = nxt_e)
-    {
-        nxt_e = NextSucc(e);
-        if ( ECLASS(e) <= k ) {
-            if ( !foldstop_reached(EEND(e)) ) {
-                EINVISIBLE(e) = 1;
-                recursive_fold(EEND(e),n,k);
-            }
-        }
-    }
-} /* fold_region */
-
-/*  Recursive fold region
- *  ---------------------
- *  This is an auxiliary function of fold_region.
- *  It folds the region of class <=k starting at v. The summary node
- *  of the region is n. It makes the nodes of the region invisible,
- *  and calculates substitutions for edges.
- *  The function is a little bit inefficient if we have cross edges
- *  inside the folded region, because these might be substituted
- *  and the substed will be later removed.
- */
-static void recursive_fold(GNODE v, GNODE n, int k)
-{
-    GEDGE   e, ee, nxt_e;
-    GNLIST  l;
-
-    assert((v));
-    assert((n));
-    debugmessage("recursive_fold",(NTITLE(v)?NTITLE(v):"(null)"));
-
-    /* Check of cycle: both checks means the same */
-    if ( !NINLIST(v) ) return;
-    if ( NREGROOT(v) == n )  return;
-
-    /* Check of cycle: this is the node we started folding */
-    if ( v == n )            return;
-
-    /* Add v to the region list of n */
-    NREGROOT(v) = n;
-    l = nodelist_alloc(v);
-    if ( !NREGION(n) ) {
-        GNNEXT(l)  = NULL;
-        NREGION(n) = l;
-    }
-    else {
-        GNNEXT(l)  = NREGION(n);
-        NREGION(n) = l;
-    }
-    delete_node(v,FOLDED_RGNODE);
-
-    /* Go into the recursion */
-    for (e = FirstSucc(v); e; e = nxt_e)
-    {
-        nxt_e = NextSucc(e);
-        if ( ECLASS(e) <= k ) {
-            if ( !foldstop_reached(EEND(e)) ) {
-                EINVISIBLE(e) = 1;
-                recursive_fold(EEND(e),n,k);
-            }
-        }
-    }
-
-    /* Substitute the predecessor edges of v */
-    for (e = FirstPred(v); e; e = nxt_e)
-    {
-        nxt_e = NextPred(e);
-        ee = substed_edge(e);
-        if (ee!=e) {
-            /* Edge e invisible or substituted:
-             * Remove edge e from adjacency list of the source.
-             */
-            delete_adjedge(e);
-            /* and insert new edge, but avoid self loops at
-             * the region node.
-             */
-            assert((!ee)||(EEND(ee)==n));
-            if (ee && (ESTART(ee)!=n))
-                create_adjedge(ee);
-        }
-    }
-
-    /* Substitute the successor edges of v */
-    for (e = FirstSucc(v); e; e = nxt_e)
-    {
-        nxt_e = NextSucc(e);
-        ee = substed_edge(e);
-        if (ee!=e) {
-            /* Edge e invisible or substituted:
-             * Remove edge e from adjacency list of the source.
-             */
-            delete_adjedge(e);
-            /* and insert new edge, but avoid self loops at
-             * the region node.
-             */
-            assert((!ee)||(ESTART(ee)==n));
-            if (ee && (EEND(ee)!=n))
-                create_adjedge(ee);
-        }
-    }
-
-    /* nnlight - my watching checks */
-    assert(FirstPred(v) == NULL);
-    assert(FirstSucc(v) == NULL);
-
-    /*NPRED(v) = NSUCC(v) = NULL;*/  /* because v is invisible */
-    unlink_node_edges(v);
-} /* recursive_fold */
-
-
-/*   Unfold Region
- *   -------------
- *   Different than "fold region", this is done BEFORE the adjacency
- *   lists exist. Unfold the region that has summary node n.
- */
-static void unfold_region(GNODE n)
-{
-    GNLIST  l, startl;
-    GNODE   h;
-
-    assert((n));
-    debugmessage("unfold_region",(NTITLE(n)?NTITLE(n):"(null)"));
-
-    if (NREGREPL(n)==NULL) return; /* it was no region */
-
-    h = NREGREPL(n);
-    startl = l = NREGION(n);
-
-    /* Make n again a normal node, i.e. restore the attributes from h. */
-
-    NLABEL(n)    = NLABEL(h);
-    NTEXTMODE(n) = NTEXTMODE(h);
-    NWIDTH(n)    = NWIDTH(h);
-    NHEIGHT(n)   = NHEIGHT(h);
-    NBORDERW(n)  = NBORDERW(h);
-    NSX(n)       = NSX(h);
-    NSY(n)       = NSY(h);
-    NFOLDING(n)  = NFOLDING(h);
-    NCOLOR(n)    = NCOLOR(h);
-    NTCOLOR(n)   = NTCOLOR(h);
-    NBCOLOR(n)   = NBCOLOR(h);
-    NSHRINK(n)   = NSHRINK(h);
-    NSTRETCH(n)  = NSTRETCH(h);
-    NINFO1(n)    = NINFO1(h);
-    NINFO2(n)    = NINFO2(h);
-    NINFO3(n)    = NINFO3(h);
-    NLEVEL(n)    = NLEVEL(h);
-    NSHAPE(n)    = NSHAPE(h);
-    NHORDER(n)   = NHORDER(h);
-    NROOT(n)     = NROOT(h);
-    NREGREPL(n)  = NREGREPL(h);
-    NREGION(n)   = NREGION(h);
-    NREGROOT(n)  = NREGROOT(h);
-
-    free_node(h);         /* give h free */
-
-    while (l) {
-        h = GNNODE(l);
-        NREGROOT(h) = NULL;
-        insert_node(h, FOLDED_RGNODE);
-        l = GNNEXT(l);
-    }
-
-    free_regionnodelist(startl); /* give the region cons cells free */
-} /* unfold_region */
-
-/*--------------------------------------------------------------------*/
-/*  Hiding of edges                           */
+/*  Hiding of edges                                                   */
 /*--------------------------------------------------------------------*/
 
 /*   Management of Edge Classes
@@ -1318,7 +993,7 @@ static void sort_all_nodes(void)
     nodelistend = node_sort_array[max-1];
 
     for (v = nodelist; v; v = NNEXT(v)) { NDFS(v) = 0L; NMARK(v) = 0; }
-}
+} /* sort_all_nodes */
 
 
 /*  Compare function for sorting according dfs values
@@ -1448,7 +1123,7 @@ GNODE   create_labelnode(GEDGE e)
     GNODE   v;
 
     debugmessage("create_labelnode","");
-    v = tmpnodealloc(CENTER,-1,-1,0,-1,
+    v = tmpnodealloc(CENTER,-1,-1,0,
             G_color,ELABELCOL(e),ELABELCOL(e),1,1,-1);
     NSX(v) = (NSX(ESTART(e))+NSX(EEND(e)))/2L;
     NSY(v) = (NSY(ESTART(e))+NSY(EEND(e)))/2L;
@@ -1520,7 +1195,7 @@ static GNODE    search_visible(GNODE v)
         case FOLDED_SGNODE:
             return(search_visible(NROOT(v)));
         case FOLDED_RGNODE:
-            return(search_visible(NREGROOT(v)));
+            assert(0);
     }
     return(NULL);
 }
