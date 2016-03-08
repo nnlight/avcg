@@ -1256,11 +1256,8 @@ void free_all_lists(void)
  */
 static void reinit_all_lists(void)
 {
-    ufoldstart   = NULL;
-    foldstart    = NULL;
-    foldstops    = NULL;
-    f_subgraphs  = NULL;
-    uf_subgraphs = NULL;
+    init_folding_keepers_globals();
+
     invis_nodes  = NULL;
     labellist    = NULL;
     labellistend = NULL;

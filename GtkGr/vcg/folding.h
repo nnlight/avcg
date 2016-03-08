@@ -53,30 +53,26 @@
  * ----------------
  */
 
-extern GNLIST   f_subgraphs;
-extern GNLIST   uf_subgraphs;
-extern GNLIST   foldstops;
-extern GNLIST   foldstart;
-extern GNLIST   ufoldstart;
 extern int      *hide_class;
 
 /* Prototypes
  * ----------
  */
 
-void    folding      _PP((void));
+void    folding(void);
 
-void    clear_folding_keepers _PP(());
-void    add_sgfoldstart       _PP((GNODE v));
-void    add_sgunfoldstart     _PP((GNODE v));
-void    add_foldstart         _PP((GNODE v));
-void    add_unfoldstart       _PP((GNODE v));
-void    add_foldstop          _PP((GNODE v));
+void    init_folding_keepers_globals();
+void    clear_folding_keepers();
+void    add_sgfoldstart       (GNODE v);
+void    add_sgunfoldstart     (GNODE v);
+void    add_foldstart         (GNODE v);
+void    add_unfoldstart       (GNODE v);
+void    add_foldstop          (GNODE v);
 
-void    create_adjedge   _PP((GEDGE edge));
-void    delete_adjedge   _PP((GEDGE edge));
-void    clear_hide_class _PP((void));
-GNODE    create_labelnode     _PP((GEDGE e));
+void    create_adjedge   (GEDGE edge);
+void    delete_adjedge   (GEDGE edge);
+void    clear_hide_class (void);
+GNODE   create_labelnode (GEDGE e);
 
 
 /*--------------------------------------------------------------------*/

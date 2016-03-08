@@ -159,14 +159,14 @@ static void db_print_somenode_list(GNODE w,GNODE wend);
  * ----------------
  */
 
-GNLIST  f_subgraphs; /* List of subgraph nodes to folding          */
-GNLIST  uf_subgraphs;/* Node where subgraph unfolding starts           */
-GNLIST  foldstops;   /* List of nodes where a fold region operation stops  */
-GNLIST  foldstart;   /* List of nodes where a fold region operation starts */
-GNLIST  ufoldstart;  /* Node where region unfolding starts         */
+static GNLIST f_subgraphs; /* List of subgraph nodes to folding          */
+static GNLIST uf_subgraphs;/* Node where subgraph unfolding starts           */
+static GNLIST foldstops;   /* List of nodes where a fold region operation stops  */
+static GNLIST foldstart;   /* List of nodes where a fold region operation starts */
+static GNLIST ufoldstart;  /* Node where region unfolding starts         */
 
 
-void foldnodelist_add(GNLIST *lp, GNODE v)
+static void foldnodelist_add(GNLIST *lp, GNODE v)
 {
     GNLIST l = foldnodelist_alloc();
     GNNODE(l) = v;
@@ -174,7 +174,7 @@ void foldnodelist_add(GNLIST *lp, GNODE v)
     *lp = l;
 }
 
-void foldnodelist_remove(GNLIST *lp, GNODE v)
+static void foldnodelist_remove(GNLIST *lp, GNODE v)
 {
     GNLIST l = *lp;
 
@@ -183,6 +183,15 @@ void foldnodelist_remove(GNLIST *lp, GNODE v)
         lp = &GNNEXT(l);
         l  = GNNEXT(l);
     }
+}
+
+void init_folding_keepers_globals()
+{
+    ufoldstart  = NULL;
+    foldstart   = NULL;
+    foldstops   = NULL;
+    f_subgraphs = NULL;
+    uf_subgraphs= NULL;
 }
 
 /*   Fold starters and stoppers
@@ -211,11 +220,7 @@ void clear_folding_keepers(void)
     for (l = ufoldstart; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
 
     free_foldnodelists();
-    ufoldstart  = NULL;
-    foldstart   = NULL;
-    foldstops   = NULL;
-    f_subgraphs = NULL;
-    uf_subgraphs= NULL;
+    init_folding_keepers_globals();
 }
 
 
