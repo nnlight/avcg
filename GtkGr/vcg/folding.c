@@ -474,7 +474,8 @@ void    folding(void)
     refresh();
     if ((G_displayel==YES) && (G_dirtyel==NO) && (edge_label_phase==0))
         create_lab_adjacencies();
-    else    create_adjacencies();
+    else
+        create_adjacencies();
 
     /* 9) Hide edge classes */
 
@@ -791,7 +792,8 @@ static void recursive_fold(GNODE v, GNODE n, int k)
         GNNEXT(l)  = NULL;
         NREGION(n) = l;
     }
-    else {  GNNEXT(l)  = NREGION(n);
+    else {
+        GNNEXT(l)  = NREGION(n);
         NREGION(n) = l;
     }
     delete_node(v,FOLDED_RGNODE);
@@ -822,7 +824,8 @@ static void recursive_fold(GNODE v, GNODE n, int k)
              * the region node.
              */
             assert((!ee)||(EEND(ee)==n));
-            if (ee && (ESTART(ee)!=n)) create_adjedge(ee);
+            if (ee && (ESTART(ee)!=n))
+                create_adjedge(ee);
         }
     }
 
@@ -840,7 +843,8 @@ static void recursive_fold(GNODE v, GNODE n, int k)
              * the region node.
              */
             assert((!ee)||(ESTART(ee)==n));
-            if (ee && (EEND(ee)!=n)) create_adjedge(ee);
+            if (ee && (EEND(ee)!=n))
+                create_adjedge(ee);
         }
     }
 
