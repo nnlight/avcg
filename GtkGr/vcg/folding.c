@@ -672,7 +672,7 @@ static void unfold_sg(GNODE u)
         /* If v was an unfolded subgraph before the folding,
          * it was before not visible, thus it is not inserted,
          * since the insert reason FOLDED_SGNODE is not the
-         * delete reason UNFOLDED_SG. Then we have to unfold its
+         * delete reason UNFOLDED_SGRAPH. Then we have to unfold its
          * subnodes, too.
          */
         if (NSGRAPH(v) && (NINVISIBLE(v)==UNFOLDED_SGRAPH))
