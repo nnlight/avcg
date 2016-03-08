@@ -166,6 +166,25 @@ GNLIST  foldstart;   /* List of nodes where a fold region operation starts */
 GNLIST  ufoldstart;  /* Node where region unfolding starts         */
 
 
+void foldnodelist_add(GNLIST *lp, GNODE v)
+{
+    GNLIST l = foldnodelist_alloc();
+    GNNODE(l) = v;
+    GNNEXT(l) = *lp;
+    *lp = l;
+}
+
+void foldnodelist_remove(GNLIST *lp, GNODE v)
+{
+    GNLIST l = *lp;
+
+    while (l) {
+        if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
+        lp = &GNNEXT(l);
+        l  = GNNEXT(l);
+    }
+}
+
 /*   Fold starters and stoppers
  *   ==========================
  *   Region fold starter are halfreverted, region fold stopper or
@@ -205,30 +224,17 @@ void clear_folding_keepers(void)
  *   Add a new fold subgraph starter v to the list foldstart.
  *   Note: v is the root node of the graph.
  */
-
 void add_sgfoldstart(GNODE v)
 {
-    GNLIST  l,*lp;
-
     if (!v) return;
-    debugmessage("add_sgfoldstart",(NTITLE(v)?NTITLE(v):"(null)"));
     if (NREVERT(v)==AREVERT) { /* delete it from sgfoldstart */
         NREVERT(v) = NOREVERT;
-        l  = f_subgraphs;
-        lp = &f_subgraphs;
-        while (l) {
-            if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
-            lp = &GNNEXT(l);
-            l  = GNNEXT(l);
-        }
+        foldnodelist_remove(&f_subgraphs, v);
         revert_subgraph(v);
         return;
     }
     NREVERT(v) = AREVERT;
-    l = foldnodelist_alloc();
-    GNNODE(l) = v;
-    GNNEXT(l) = f_subgraphs;
-    f_subgraphs = l;
+    foldnodelist_add(&f_subgraphs, v);
     revert_subgraph(v);
 }
 
@@ -240,22 +246,21 @@ void add_sgfoldstart(GNODE v)
  */
 static void revert_subgraph(GNODE v)
 {
-        GNODE w;
+    GNODE w;
     GNLIST l;
-        int rev;
+    int rev;
 
     debugmessage("revert_subgraph",(NTITLE(v)?NTITLE(v):"(null)"));
-        rev = NREVERT(v);
-        l = NSGRAPH(v);
+    rev = NREVERT(v);
 
-        while (l) {
-                w = GNNODE(l);
-                NREVERT(w) = rev;
+    for (l = NSGRAPH(v); l; l = GNNEXT(l))
+    {
+        w = GNNODE(l);
+        NREVERT(w) = rev;
         if (NSGRAPH(w)) {
             revert_subgraph(w);
         }
-                l = GNNEXT(l);
-        }
+    }
 }
 
 
@@ -263,29 +268,16 @@ static void revert_subgraph(GNODE v)
  *   ---------------------------
  *   Add a new unfold subgraph starter v to the list foldstart.
  */
-
 void add_sgunfoldstart(GNODE v)
 {
-    GNLIST  l,*lp;
-
     if (!v) return;
-    debugmessage("add_sgunfoldstart",(NTITLE(v)?NTITLE(v):"(null)"));
     if (NREVERT(v)==AREVERT) { /* delete it from uf_subgraphs */
         NREVERT(v) = NOREVERT;
-        l  = uf_subgraphs;
-        lp = &uf_subgraphs;
-        while (l) {
-            if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
-            lp = &GNNEXT(l);
-            l  = GNNEXT(l);
-        }
+        foldnodelist_remove(&uf_subgraphs, v);
         return;
     }
     NREVERT(v) = AREVERT;
-    l = foldnodelist_alloc();
-    GNNODE(l) = v;
-    GNNEXT(l) = uf_subgraphs;
-    uf_subgraphs = l;
+    foldnodelist_add(&uf_subgraphs, v);
 }
 
 
@@ -293,60 +285,34 @@ void add_sgunfoldstart(GNODE v)
  *   -----------------------
  *   Add a new fold region starter v to the list foldstarters.
  */
-
 void add_foldstart(GNODE v)
 {
-    GNLIST  l,*lp;
-
     if (!v) return;
-    debugmessage("add_foldstart",(NTITLE(v)?NTITLE(v):"(null)"));
 
     if (NREVERT(v)==BREVERT) { /* delete it from foldstart */
         NREVERT(v) = NOREVERT;
-        l  = foldstart;
-        lp = &foldstart;
-        while (l) {
-            if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
-            lp = &GNNEXT(l);
-            l  = GNNEXT(l);
-        }
+        foldnodelist_remove(&foldstart, v);
         return;
     }
     if (NREVERT(v)==AREVERT) return;
     NREVERT(v) = BREVERT;
-    l = foldnodelist_alloc();
-    GNNODE(l) = v;
-    GNNEXT(l) = foldstart;
-    foldstart = l;
+    foldnodelist_add(&foldstart, v);
 }
 
 /*   Add unfold region starter
  *   -------------------------
  *   Add a new unfold region starter v to the list foldstarters.
  */
-
 void add_unfoldstart(GNODE v)
 {
-    GNLIST  l,*lp;
-
     if (!v) return;
-    debugmessage("add_unfoldstart",(NTITLE(v)?NTITLE(v):"(null)"));
     if (NREVERT(v)==AREVERT) { /* delete it from ufoldstart */
         NREVERT(v) = NOREVERT;
-        l  = ufoldstart;
-        lp = &ufoldstart;
-        while (l) {
-            if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
-            lp = &GNNEXT(l);
-            l  = GNNEXT(l);
-        }
+        foldnodelist_remove(&ufoldstart, v);
         return;
     }
     NREVERT(v) = AREVERT;
-    l = foldnodelist_alloc();
-    GNNODE(l) = v;
-    GNNEXT(l) = ufoldstart;
-    ufoldstart = l;
+    foldnodelist_add(&ufoldstart, v);
 }
 
 
@@ -354,29 +320,16 @@ void add_unfoldstart(GNODE v)
  *   -----------------------
  *   Add a new fold region stopper v to the list foldstops.
  */
-
 void add_foldstop(GNODE v)
 {
-    GNLIST  l,*lp;
-
     if (!v) return;
-    debugmessage("add_foldstop",(NTITLE(v)?NTITLE(v):"(null)"));
     if (NREVERT(v)==AREVERT) { /* delete it from foldstops */
         NREVERT(v) = NOREVERT;
-        l  = foldstops;
-        lp = &foldstops;
-        while (l) {
-            if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
-            lp = &GNNEXT(l);
-            l  = GNNEXT(l);
-        }
+        foldnodelist_remove(&foldstops, v);
         return;
     }
     NREVERT(v) = AREVERT;
-    l = foldnodelist_alloc();
-    GNNODE(l) = v;
-    GNNEXT(l) = foldstops;
-    foldstops = l;
+    foldnodelist_add(&foldstops, v);
 }
 
 
@@ -384,13 +337,11 @@ void add_foldstop(GNODE v)
  *   ------------------
  *   Returns 1 if v is in the list foldstops, i.e. if v is a fold stopper.
  */
-
 static int foldstop_reached(GNODE v)
 {
     GNLIST  l;
 
     if (!v) return(1);
-    debugmessage("foldstop_reached",(NTITLE(v)?NTITLE(v):"(null)"));
     for (l = foldstops; l; l = GNNEXT(l))
     {
         if (GNNODE(l) == v) return(1);
@@ -1551,11 +1502,12 @@ static GNODE    search_visible(GNODE v)
         case UNFOLDED_SGRAPH:
             w = v;
             while (NINVISIBLE(w)==UNFOLDED_SGRAPH) {
-                w = GNNODE(NSGRAPH(v));
+                w = GNNODE(NSGRAPH(v));             /* WTF */
             }
             if (NINVISIBLE(w)==FOLDED_SGNODE)
-                return(search_visible(NROOT(v)));
-            else    return(search_visible(GNNODE(NSGRAPH(v))));
+                return(search_visible(NROOT(v)));   /* WTF */
+            else
+                return(search_visible(GNNODE(NSGRAPH(v))));
         case FOLDED_SGNODE:
             return(search_visible(NROOT(v)));
         case FOLDED_RGNODE:

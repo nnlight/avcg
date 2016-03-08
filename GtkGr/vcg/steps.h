@@ -120,7 +120,6 @@ extern double tree_factor;
 
 /* from step0.c */
 void    step0_main      _PP((void));
-GNODE   search_visible_node _PP((char *title));
 GNODE   lookup_hashnode     _PP((char *title));
 
 

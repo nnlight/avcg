@@ -1,41 +1,24 @@
 /*--------------------------------------------------------------------*/
-/*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
-/*              --------------------------------------                */
-/*                                                                    */
-/*   file:         step0.c                                            */
-/*   version:      1.00.00                                            */
-/*   creation:     10.4.1993                                          */
-/*   author:       I. Lemke  (...-Version 0.99.99)                    */
-/*                 G. Sander (Version 1.00.00-...)                    */
-/*                 Universitaet des Saarlandes, 66041 Saarbruecken    */
-/*                 ESPRIT Project #5399 Compare                       */
-/*   description:  analysis phase of syntax trees                     */
-/*   status:       in work                                            */
-/*                                                                    */
 /*--------------------------------------------------------------------*/
-
-
 /*
- *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
- *                               the Compare Consortium
+ * Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
+ *                             the Compare Consortium
+ * Copyright (C) 2016 Nikita S <nnlight@gmail.com>
  *
- *  This program and documentation is free software; you can redistribute
- *  it under the terms of the  GNU General Public License as published by
- *  the  Free Software Foundation;  either version 2  of the License,  or
- *  (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  This  program  is  distributed  in  the hope that it will be useful,
- *  but  WITHOUT ANY WARRANTY;  without  even  the  implied  warranty of
- *  MERCHANTABILITY  or  FITNESS  FOR  A  PARTICULAR  PURPOSE.  See  the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- *  You  should  have  received a copy of the GNU General Public License
- *  along  with  this  program;  if  not,  write  to  the  Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
-
-
 
 /************************************************************************
  * The situation here is the following:
@@ -73,20 +56,18 @@
  * This file provides the following functions:
  * ------------------------------------------
  * step0_main       main routine of step0: walk through the syntax
- *          tree, collect attributes and creates the internal
- *                      representation of the graph to be visualized.
+ *                  tree, collect attributes and creates the internal
+ *                  representation of the graph to be visualized.
  * foldnode     an auxiliary node that contains all attributes
- *          of folded nodes.
+ *              of folded nodes.
  * foldedge     an auxiliary edge that contains all attributes
- *          of folded edges.
+ *              of folded edges.
  *
  * A hashtable is used to store all existing nodes.
  * act_hash_size    is the size of the hashtable.
  * lookup_hashnode      returns a node of a given title. The node must
  *                      be derived directly from the specification, i.e.
  *                      no dummy node. The node need not to be visible.
- * search_visible_node  returns a node of a given title, but only if it
- *          is visible. Similar to lookup_hashnode.
  ***********************************************************************/
 
 #include <stdio.h>
@@ -223,7 +204,7 @@ void step0_main(void)
 
     if (max_nr_classes>128) {
         FPRINTF(stderr,"\nWarning: you use %d edge classes !\n",
-            max_nr_classes);
+                max_nr_classes);
         FPRINTF(stderr,"This may produce a segmentation fault on some systems.\n");
         FPRINTF(stderr,"Please do not use more than 128 classes.\n");
     }
@@ -262,14 +243,14 @@ void step0_main(void)
     subg_bit    = 0;    /* We are outside the top graph       */
     nodedefaults(&defaultnode);
     node_analyse(
-          Syntax_Tree,  /* syntax tree node       */
-          NULL,         /* root node              */
-          &defaultnode);
+            Syntax_Tree,  /* syntax tree node       */
+            NULL,         /* root node              */
+            &defaultnode);
 
     edgedefaults(&defaultedge);
     edge_analyse(
-          Syntax_Tree,  /* syntax tree node       */
-          &defaultedge);
+            Syntax_Tree,  /* syntax tree node       */
+            &defaultedge);
 
     /* For debugging only */
 
@@ -345,12 +326,12 @@ static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
     GNODE   v;
     GNLIST  l;
     int     invis;
-    GNLIST  rootend;    /* end of the actual node list */
-    int     rootshrink; /* shrink factor of the root   */
+    GNLIST  rootend;        /* end of the actual node list */
+    int     rootshrink;     /* shrink factor of the root   */
     int     rootstretch;    /* stretch factor of the root  */
     int     h;
     int     borderc_set;    /* Flag, whether the default border color */
-                /* was set explicitely                    */
+                            /* was set explicitely                    */
 
     debugmessage("node_analyse","");
 
@@ -366,7 +347,8 @@ static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
         rootshrink  = (NSHRINK(root)>0  ? NSHRINK(root) : 1);
         rootstretch = (NSTRETCH(root)>0 ? NSTRETCH(root): 1);
     }
-    else    rootshrink = rootstretch = 1;
+    else
+        rootshrink = rootstretch = 1;
 
     /* traverse iteratively the syntax tree:
      * on graph entries, we create a graph summary node, fetch the
@@ -376,10 +358,10 @@ static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
      *  values of the whole graph and set the graph attributes
      *  G_x, G_y, etc.
      * on node default attributes, we change the attributes of the
-     *      defaultnode. The attributes of each new node are inherited
+     *  defaultnode. The attributes of each new node are inherited
      *  from the default node.
      * on foldnode attributes, we change the attributes of the
-     *      foldnode. The attributes of each folded summary region
+     *  foldnode. The attributes of each folded summary region
      *  node are inherited from the foldnode.
      *
      * Nodes come into the hashtable after fetching all its attributes.
@@ -392,28 +374,28 @@ static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
     while ( node && (tag(node) == T_Co_graph_entry) ) {
         node1 = son1(node);
         assert(node1);
-            switch (tag(node1)) {
-        case T_Co_graph:
-            v = graphalloc(&defaultnode);
+        switch (tag(node1)) {
+            case T_Co_graph:
+                v = graphalloc(&defaultnode);
 
-            add_to_nodelist_of_root(v);
+                add_to_nodelist_of_root(v);
 
-            graph_attributes(son1(node1),v,rootshrink,rootstretch);
-            subg_bit++;
-            node_analyse(son1(node1),v,&defaultnode);
-            subg_bit--;
-            break;
+                graph_attributes(son1(node1),v,rootshrink,rootstretch);
+                subg_bit++;
+                node_analyse(son1(node1),v,&defaultnode);
+                subg_bit--;
+                break;
 
-        case T_Co_graph_attribute:
+            case T_Co_graph_attribute:
 
-            /* This is only used for the top level graph */
+                /* This is only used for the top level graph */
 
-            node2 = son1(node1);
-            assert((node2));
-            switch(tag(node2)) {
+                node2 = son1(node1);
+                assert((node2));
+                switch(tag(node2)) {
                     case T_Co_title:
-                if (!subg_bit) G_title = SDecode(son1(node2));
-                            break;
+                        if (!subg_bit) G_title = SDecode(son1(node2));
+                        break;
                     case T_Co_label:
                     case T_Co_info1:
                     case T_Co_info2:
@@ -426,482 +408,481 @@ static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
                     case T_Co_borderwidth:
                     case T_Co_textcolor:
                     case T_Co_bordercolor:
-                            break;
+                        break;
                     case T_Co_xdef:
-                            if (!subg_bit)  G_x = FETCHNUM();
-                            break;
+                        if (!subg_bit)  G_x = FETCHNUM();
+                        break;
                     case T_Co_ydef:
-                            if (!subg_bit)  G_y = FETCHNUM();
-                            break;
+                        if (!subg_bit)  G_y = FETCHNUM();
+                        break;
                     case T_Co_width:
-                            if (!subg_bit)  {
-                    G_width  = (int)FETCHNUM();
-                    if (G_width <= 0) G_width = 100;
-                    G_width_set = 1;
-                }
-                            break;
+                        if (!subg_bit)  {
+                            G_width  = (int)FETCHNUM();
+                            if (G_width <= 0) G_width = 100;
+                            G_width_set = 1;
+                        }
+                        break;
                     case T_Co_height:
-                            if (!subg_bit) {
-                    G_height = (int)FETCHNUM();
-                    if (G_height <= 0) G_height = 100;
-                    G_height_set = 1;
-                }
-                            break;
-            case T_Co_xmax:
-                if (!subg_bit) {
-                    if (!G_xymax_final)
-                        G_xmax = (int)FETCHNUM();
-                    if (G_xmax <= 200) G_xmax = 200;
-                    if (G_xmax > (2*ScreenWidth))
-                        G_xmax = 2*ScreenWidth;
-                    if (G_width>G_xmax) {
-                        G_width = G_xmax;
-                        G_width_set = 1;
-                    }
-                }
-                break;
-            case T_Co_ymax:
-                if (!subg_bit) {
-                    if (!G_xymax_final)
-                        G_ymax = (int)FETCHNUM();
-                    if (G_ymax <= 200) G_ymax = 200;
-                    if (G_ymax > (2*ScreenHeight))
-                        G_ymax = 2*ScreenHeight;
-                    if (G_height>G_ymax) {
-                        G_height = G_ymax;
-                        G_height_set = 1;
-                    }
-                }
-                break;
-            case T_Co_infoname:
-                if (!subg_bit) {
-                    h = (int)FETCHNUM();
-                    if ((h>0)&&(h<=3)) {
-                        info_name_available = 1;
-                        info_names[h-1] =
-                            SDecode(son2(node2));
-                    }
-                }
-                            break;
-            case T_Co_classname:
-                if (!subg_bit) {
-                    h = (int)FETCHNUM();
-                    if ((h>0)&&(h<=max_nr_classes)) {
-                        class_name_available = 1;
-                        class_names[h-1] =
-                            SDecode(son2(node2));
-                    }
-                }
-                            break;
+                        if (!subg_bit) {
+                            G_height = (int)FETCHNUM();
+                            if (G_height <= 0) G_height = 100;
+                            G_height_set = 1;
+                        }
+                        break;
+                    case T_Co_xmax:
+                        if (!subg_bit) {
+                            if (!G_xymax_final)
+                                G_xmax = (int)FETCHNUM();
+                            if (G_xmax <= 200) G_xmax = 200;
+                            if (G_xmax > (2*ScreenWidth))
+                                G_xmax = 2*ScreenWidth;
+                            if (G_width>G_xmax) {
+                                G_width = G_xmax;
+                                G_width_set = 1;
+                            }
+                        }
+                        break;
+                    case T_Co_ymax:
+                        if (!subg_bit) {
+                            if (!G_xymax_final)
+                                G_ymax = (int)FETCHNUM();
+                            if (G_ymax <= 200) G_ymax = 200;
+                            if (G_ymax > (2*ScreenHeight))
+                                G_ymax = 2*ScreenHeight;
+                            if (G_height>G_ymax) {
+                                G_height = G_ymax;
+                                G_height_set = 1;
+                            }
+                        }
+                        break;
+                    case T_Co_infoname:
+                        if (!subg_bit) {
+                            h = (int)FETCHNUM();
+                            if ((h>0)&&(h<=3)) {
+                                info_name_available = 1;
+                                info_names[h-1] =
+                                    SDecode(son2(node2));
+                            }
+                        }
+                        break;
+                    case T_Co_classname:
+                        if (!subg_bit) {
+                            h = (int)FETCHNUM();
+                            if ((h>0)&&(h<=max_nr_classes)) {
+                                class_name_available = 1;
+                                class_names[h-1] =
+                                    SDecode(son2(node2));
+                            }
+                        }
+                        break;
                     case T_Co_xbase:
-                            if (!subg_bit)  G_xbase = (int)FETCHNUM();
-                            break;
+                        if (!subg_bit)  G_xbase = (int)FETCHNUM();
+                        break;
                     case T_Co_ybase:
-                            if (!subg_bit)  G_ybase = (int)FETCHNUM();
-                            break;
+                        if (!subg_bit)  G_ybase = (int)FETCHNUM();
+                        break;
                     case T_Co_xspace:
-                            if (!subg_bit)  G_xspace= (int)FETCHNUM();
-                            break;
+                        if (!subg_bit)  G_xspace= (int)FETCHNUM();
+                        break;
                     case T_Co_xlspace:
-                            if (!subg_bit)  G_dspace= (int)FETCHNUM();
-                            break;
+                        if (!subg_bit)  G_dspace= (int)FETCHNUM();
+                        break;
                     case T_Co_yspace:
-                            if (!subg_bit)  G_yspace= (int)FETCHNUM();
-                            break;
+                        if (!subg_bit)  G_yspace= (int)FETCHNUM();
+                        break;
                     case T_Co_xraster:
-                            if (!subg_bit)  G_xraster= (int)FETCHNUM();
-                            break;
+                        if (!subg_bit)  G_xraster= (int)FETCHNUM();
+                        break;
                     case T_Co_xlraster:
-                            if (!subg_bit)  G_dxraster= (int)FETCHNUM();
-                            break;
+                        if (!subg_bit)  G_dxraster= (int)FETCHNUM();
+                        break;
                     case T_Co_yraster:
-                            if (!subg_bit)  G_yraster= (int)FETCHNUM();
-                            break;
-            case T_Co_splinefactor:
-                            if (!subg_bit)  G_flat_factor= (int)FETCHNUM();
-                            break;
-            case T_Co_downfactor:
-                            if (!subg_bit)  layout_downfactor= (int)FETCHNUM();
-                            break;
-            case T_Co_upfactor:
-                            if (!subg_bit)  layout_upfactor= (int)FETCHNUM();
-                            break;
-            case T_Co_nearfactor:
-                            if (!subg_bit)  layout_nearfactor= (int)FETCHNUM();
-                            break;
-            case T_Co_bend_max:
-                            if (!subg_bit)  max_edgebendings= (int)FETCHNUM();
-                            break;
-            case T_Co_cross_min:
-                            if (!subg_bit)  min_baryiterations= (int)FETCHNUM();
-                            break;
-            case T_Co_cross_max:
-                            if (!subg_bit)  max_baryiterations= (int)FETCHNUM();
-                            break;
-            case T_Co_pendel_min:
-                            if (!subg_bit)  min_mediumshifts= (int)FETCHNUM();
-                            break;
-            case T_Co_pendel_max:
-                            if (!subg_bit)  max_mediumshifts= (int)FETCHNUM();
-                            break;
-            case T_Co_rubber_min:
-                            if (!subg_bit)  min_centershifts= (int)FETCHNUM();
-                            break;
-            case T_Co_rubber_max:
-                            if (!subg_bit)  max_centershifts= (int)FETCHNUM();
-                            break;
-            case T_Co_straight_max:
-                            if (!subg_bit)  max_straighttune= (int)FETCHNUM();
-                            break;
+                        if (!subg_bit)  G_yraster= (int)FETCHNUM();
+                        break;
+                    case T_Co_splinefactor:
+                        if (!subg_bit)  G_flat_factor= (int)FETCHNUM();
+                        break;
+                    case T_Co_downfactor:
+                        if (!subg_bit)  layout_downfactor= (int)FETCHNUM();
+                        break;
+                    case T_Co_upfactor:
+                        if (!subg_bit)  layout_upfactor= (int)FETCHNUM();
+                        break;
+                    case T_Co_nearfactor:
+                        if (!subg_bit)  layout_nearfactor= (int)FETCHNUM();
+                        break;
+                    case T_Co_bend_max:
+                        if (!subg_bit)  max_edgebendings= (int)FETCHNUM();
+                        break;
+                    case T_Co_cross_min:
+                        if (!subg_bit)  min_baryiterations= (int)FETCHNUM();
+                        break;
+                    case T_Co_cross_max:
+                        if (!subg_bit)  max_baryiterations= (int)FETCHNUM();
+                        break;
+                    case T_Co_pendel_min:
+                        if (!subg_bit)  min_mediumshifts= (int)FETCHNUM();
+                        break;
+                    case T_Co_pendel_max:
+                        if (!subg_bit)  max_mediumshifts= (int)FETCHNUM();
+                        break;
+                    case T_Co_rubber_min:
+                        if (!subg_bit)  min_centershifts= (int)FETCHNUM();
+                        break;
+                    case T_Co_rubber_max:
+                        if (!subg_bit)  max_centershifts= (int)FETCHNUM();
+                        break;
+                    case T_Co_straight_max:
+                        if (!subg_bit)  max_straighttune= (int)FETCHNUM();
+                        break;
                     case T_Co_node_alignment:
-                if (!subg_bit) {
-                                switch(tag(son1(node2))) {
-                                        case T_Co_top:
-                        G_yalign = AL_TOP;
-                        break;
-                                        case T_Co_bottom:
-                        G_yalign = AL_BOTTOM;
-                        break;
-                                        case T_Co_center:
-                        G_yalign = AL_CENTER;
-                        break;
-                                        default:
-                        assert((0));
-                    }
+                        if (!subg_bit) {
+                            switch(tag(son1(node2))) {
+                                case T_Co_top:
+                                    G_yalign = AL_TOP;
+                                    break;
+                                case T_Co_bottom:
+                                    G_yalign = AL_BOTTOM;
+                                    break;
+                                case T_Co_center:
+                                    G_yalign = AL_CENTER;
+                                    break;
+                                default:
+                                    assert((0));
                             }
-                            break;
+                        }
+                        break;
                     case T_Co_orientation:
-                if (!subg_bit) {
-                                switch(tag(son1(node2))) {
-                                        case T_Co_top_to_bottom:
-                                            G_orientation = TOP_TO_BOTTOM;
-                                            break;
-                                        case T_Co_left_to_right:
-                                            G_orientation = LEFT_TO_RIGHT;
-                                            break;
-                                        case T_Co_right_to_left:
-                                            G_orientation = RIGHT_TO_LEFT;
-                                            break;
-                                        case T_Co_bottom_to_top:
-                                            G_orientation = BOTTOM_TO_TOP;
-                                            break;
-                                        default:
-                        assert((0));
-                    }
+                        if (!subg_bit) {
+                            switch(tag(son1(node2))) {
+                                case T_Co_top_to_bottom:
+                                    G_orientation = TOP_TO_BOTTOM;
+                                    break;
+                                case T_Co_left_to_right:
+                                    G_orientation = LEFT_TO_RIGHT;
+                                    break;
+                                case T_Co_right_to_left:
+                                    G_orientation = RIGHT_TO_LEFT;
+                                    break;
+                                case T_Co_bottom_to_top:
+                                    G_orientation = BOTTOM_TO_TOP;
+                                    break;
+                                default:
+                                    assert((0));
                             }
-                            break;
+                        }
+                        break;
                     case T_Co_port_sharing:
-                if (!subg_bit)
-                                        G_portsharing = get_yesno(son1(node2));
-                            break;
+                        if (!subg_bit)
+                            G_portsharing = get_yesno(son1(node2));
+                        break;
                     case T_Co_arrow_mode:
-                if (!subg_bit) {
-                                switch(tag(son1(node2))) {
-                                        case T_Co_fixed:
-                                            G_arrowmode = AMFIXED;
-                                            break;
-                                        case T_Co_free:
-                                            G_arrowmode = AMFREE;
-                                            break;
-                                        default:
-                        assert((0));
-                    }
-                }
-                            break;
-            case T_Co_color:
-                if (!subg_bit)
-                    G_color = get_color(son1(node2));
-                break;
-            case T_Co_folding:
-                if (!subg_bit){
-                    SYERR(node2,
-                "attribute `folding' at top level graph");
-                }
-                break;
-            case T_Co_status:
-                if (!subg_bit){
-                    SYERR(node2,
-                "attribute `status' at top level graph");
-                }
-                break;
-            case T_Co_hidden:
-                invis = (int)FETCHNUM()-1;
-                if (!subg_bit) {
-                    if ((0<=invis) && (invis<max_nr_classes))
-                                            hide_class[invis] = 1;
-                    else SYERR(node2,
-                     "attribute `hidden' out of range (1-max_nr_classes)");
-                }
-                break;
+                        if (!subg_bit) {
+                            switch(tag(son1(node2))) {
+                                case T_Co_fixed:
+                                    G_arrowmode = AMFIXED;
+                                    break;
+                                case T_Co_free:
+                                    G_arrowmode = AMFREE;
+                                    break;
+                                default:
+                                    assert((0));
+                            }
+                        }
+                        break;
+                    case T_Co_color:
+                        if (!subg_bit)
+                            G_color = get_color(son1(node2));
+                        break;
+                    case T_Co_folding:
+                        if (!subg_bit){
+                            SYERR(node2, "attribute `folding' at top level graph");
+                        }
+                        break;
+                    case T_Co_status:
+                        if (!subg_bit){
+                            SYERR(node2,
+                                    "attribute `status' at top level graph");
+                        }
+                        break;
+                    case T_Co_hidden:
+                        invis = (int)FETCHNUM()-1;
+                        if (!subg_bit) {
+                            if ((0<=invis) && (invis<max_nr_classes))
+                                hide_class[invis] = 1;
+                            else SYERR(node2,
+                                    "attribute `hidden' out of range (1-max_nr_classes)");
+                        }
+                        break;
                     case T_Co_late_edge_label:
-                if (!subg_bit)
-                                        edge_label_phase = get_yesno(son1(node2));
-                            break;
+                        if (!subg_bit)
+                            edge_label_phase = get_yesno(son1(node2));
+                        break;
                     case T_Co_display_edge_label:
-                if (!subg_bit)
-                                        G_displayel = get_yesno(son1(node2));
-                            break;
+                        if (!subg_bit)
+                            G_displayel = get_yesno(son1(node2));
+                        break;
                     case T_Co_dirty_edge_label:
-                if (!subg_bit) {
-                                        G_dirtyel = get_yesno(son1(node2));
-                    if (G_dirtyel==YES) G_displayel = YES;
-                }
-                            break;
+                        if (!subg_bit) {
+                            G_dirtyel = get_yesno(son1(node2));
+                            if (G_dirtyel==YES) G_displayel = YES;
+                        }
+                        break;
                     case T_Co_finetuning:
-                if (!subg_bit)
-                                        fine_tune_layout = get_yesno(son1(node2));
-                            break;
+                        if (!subg_bit)
+                            fine_tune_layout = get_yesno(son1(node2));
+                        break;
                     case T_Co_crossing_phase2:
-                if (!subg_bit)
-                                        skip_baryphase2 = 1-get_yesno(son1(node2));
-                            break;
+                        if (!subg_bit)
+                            skip_baryphase2 = 1-get_yesno(son1(node2));
+                        break;
                     case T_Co_crossing_opt:
-                if (!subg_bit)
-                                        local_unwind = get_yesno(son1(node2));
-                            break;
+                        if (!subg_bit)
+                            local_unwind = get_yesno(son1(node2));
+                        break;
                     case T_Co_crossing_weight:
-                if (!subg_bit) {
-                                switch(tag(son1(node2))) {
-                                        case T_Co_bary:
-                                            crossing_heuristics = 0;
+                        if (!subg_bit) {
+                            switch(tag(son1(node2))) {
+                                case T_Co_bary:
+                                    crossing_heuristics = 0;
+                                    break;
+                                case T_Co_median:
+                                    crossing_heuristics = 1;
+                                    break;
+                                case T_Co_barymedian:
+                                    crossing_heuristics = 2;
+                                    break;
+                                case T_Co_medianbary:
+                                    crossing_heuristics = 3;
+                                    break;
+                                default:
+                                    assert((0));
+                            }
+                        }
                         break;
-                        case T_Co_median:
-                                            crossing_heuristics = 1;
-                                            break;
-                        case T_Co_barymedian:
-                                            crossing_heuristics = 2;
-                                            break;
-                        case T_Co_medianbary:
-                                            crossing_heuristics = 3;
-                                            break;
-                                        default:
-                        assert((0));
-                                }
-                }
-                            break;
                     case T_Co_manhatten:
-                if (!subg_bit)
-                                        manhatten_edges = 2-get_yesno(son1(node2));
-                            break;
+                        if (!subg_bit)
+                            manhatten_edges = 2-get_yesno(son1(node2));
+                        break;
                     case T_Co_smanhatten:
-                if (!subg_bit)
-                                        one_line_manhatten = 2-get_yesno(son1(node2));
-                            break;
+                        if (!subg_bit)
+                            one_line_manhatten = 2-get_yesno(son1(node2));
+                        break;
                     case T_Co_straightphase:
-                if (!subg_bit)
-                                        straight_phase = 2-get_yesno(son1(node2));
-                            break;
+                        if (!subg_bit)
+                            straight_phase = 2-get_yesno(son1(node2));
+                        break;
                     case T_Co_priophase:
-                if (!subg_bit)
-                                        prio_phase = 2-get_yesno(son1(node2));
-                            break;
+                        if (!subg_bit)
+                            prio_phase = 2-get_yesno(son1(node2));
+                        break;
                     case T_Co_hidesingles:
-                if (!subg_bit)
-                                        hide_single_nodes = get_yesno(son1(node2));
-                            break;
+                        if (!subg_bit)
+                            hide_single_nodes = get_yesno(son1(node2));
+                        break;
                     case T_Co_view_nodes:
-                if (!subg_bit)
-                                        supress_nodes = 1-get_yesno(son1(node2));
-                            break;
+                        if (!subg_bit)
+                            supress_nodes = 1-get_yesno(son1(node2));
+                        break;
                     case T_Co_view_edges:
-                if (!subg_bit)
-                                        supress_edges = 1-get_yesno(son1(node2));
-                            break;
+                        if (!subg_bit)
+                            supress_edges = 1-get_yesno(son1(node2));
+                        break;
                     case T_Co_view_splines:
-                if (!subg_bit)
-                                        G_spline = get_yesno(son1(node2));
-                            break;
-/*TODO                  case T_Co_view_method:
-                if (!subg_bit) {
-                                switch(tag(son1(node2))) {
-                                        case T_Co_cfish:
-                                            fisheye_view = CSCF_VIEW;
+                        if (!subg_bit)
+                            G_spline = get_yesno(son1(node2));
                         break;
-                                        case T_Co_pfish:
-                                            fisheye_view = PSCF_VIEW;
+                        /*TODO                  case T_Co_view_method:
+                          if (!subg_bit) {
+                          switch(tag(son1(node2))) {
+                          case T_Co_cfish:
+                          fisheye_view = CSCF_VIEW;
+                          break;
+                          case T_Co_pfish:
+                          fisheye_view = PSCF_VIEW;
+                          break;
+                          case T_Co_fcfish:
+                          fisheye_view = FCSCF_VIEW;
+                          break;
+                          case T_Co_fpfish:
+                          fisheye_view = FPSCF_VIEW;
+                          break;
+                          default:
+                          assert((0));
+                          }
+                          }
+                          break;*/
+                    case T_Co_dummy  :
                         break;
-                                        case T_Co_fcfish:
-                                            fisheye_view = FCSCF_VIEW;
+                    case T_Co_nonearedges  :
+                        if (!subg_bit) {
+                            near_edge_layout = 0;
+                        }
                         break;
-                                        case T_Co_fpfish:
-                                            fisheye_view = FPSCF_VIEW;
-                        break;
-                                        default:
-                        assert((0));
-                                }
-                }
-                            break;*/
-            case T_Co_dummy  :
-                break;
-            case T_Co_nonearedges  :
-                if (!subg_bit) {
-                    near_edge_layout = 0;
-                }
-                break;
                     case T_Co_colentry:
-                {   int idx, rd, bl, gr;
+                        {   int idx, rd, bl, gr;
 
-                    idx = (int)get_lnum(son1(node2));
-                    rd  = (int)get_lnum(son2(node2));
-                    gr  = (int)get_lnum(son3(node2));
-                    bl  = (int)get_lnum(son4(node2));
-                    if (idx>=CMAPSIZE-1) {
-                        SYERR(node2,"Only 254 color entries allowed");
-                    }
-                    /*if (idx < BASECMAPSIZE) {
-                        SYERR(node2,"Use 32+ indexies for user defined colorentry");
-                    }*/
-                    if (idx+1 > G_cmap_size) G_cmap_size = idx+1;
-                    G_redmap[  idx] = rd;
-                    G_bluemap[ idx] = bl;
-                    G_greenmap[idx] = gr;
-                }
-                break;
+                            idx = (int)get_lnum(son1(node2));
+                            rd  = (int)get_lnum(son2(node2));
+                            gr  = (int)get_lnum(son3(node2));
+                            bl  = (int)get_lnum(son4(node2));
+                            if (idx>=CMAPSIZE-1) {
+                                SYERR(node2,"Only 254 color entries allowed");
+                            }
+                            /*if (idx < BASECMAPSIZE) {
+                              SYERR(node2,"Use 32+ indexies for user defined colorentry");
+                              }*/
+                            if (idx+1 > G_cmap_size) G_cmap_size = idx+1;
+                            G_redmap[  idx] = rd;
+                            G_bluemap[ idx] = bl;
+                            G_greenmap[idx] = gr;
+                        }
+                        break;
                     case T_Co_scaling:
-                if (!subg_bit) {
-                    double hhx;
+                        if (!subg_bit) {
+                            double hhx;
 
-                                hhx = FETCHFLOAT();
-                    if (hhx<0) hhx= -hhx;
-                    if (hhx>1.0) {
-                        G_stretch = 100;
-                        G_shrink = (int)(100.0/hhx);
-                    }
-                    else {
-                        G_stretch = (int)(hhx*100.0);
-                        G_shrink = 100;
-                    }
-                    G_shrink = rootshrink*G_shrink;
-                    G_stretch= rootstretch*G_stretch;
-                    if (G_shrink == 0) G_shrink = 1;
-                    if (G_stretch == 0) G_stretch = 1;
-                }
-                            break;
+                            hhx = FETCHFLOAT();
+                            if (hhx<0) hhx= -hhx;
+                            if (hhx>1.0) {
+                                G_stretch = 100;
+                                G_shrink = (int)(100.0/hhx);
+                            }
+                            else {
+                                G_stretch = (int)(hhx*100.0);
+                                G_shrink = 100;
+                            }
+                            G_shrink = rootshrink*G_shrink;
+                            G_stretch= rootstretch*G_stretch;
+                            if (G_shrink == 0) G_shrink = 1;
+                            if (G_stretch == 0) G_stretch = 1;
+                        }
+                        break;
                     case T_Co_shrink:
-                if (!subg_bit) {
-                                G_shrink = rootshrink * (int)FETCHNUM();
-                    if (G_shrink <= 0) G_shrink = 1;
-                }
-                            break;
+                        if (!subg_bit) {
+                            G_shrink = rootshrink * (int)FETCHNUM();
+                            if (G_shrink <= 0) G_shrink = 1;
+                        }
+                        break;
                     case T_Co_stretch:
-                if (!subg_bit) {
-                    G_stretch = rootstretch * (int)FETCHNUM();
-                    if (G_stretch <= 0) G_stretch = 1;
-                }
-                            break;
+                        if (!subg_bit) {
+                            G_stretch = rootstretch * (int)FETCHNUM();
+                            if (G_stretch <= 0) G_stretch = 1;
+                        }
+                        break;
                     case T_Co_spreadlevel:
-                if (!subg_bit) {
-                    spread_level = (int)FETCHNUM();
-                }
-                            break;
+                        if (!subg_bit) {
+                            spread_level = (int)FETCHNUM();
+                        }
+                        break;
                     case T_Co_treefactor:
-                if (!subg_bit) {
-                    tree_factor = FETCHFLOAT();
+                        if (!subg_bit) {
+                            tree_factor = FETCHFLOAT();
+                        }
+                        break;
+                    case T_Co_layoutalgorithm:
+                        if (!subg_bit) {
+                            assert((son1(node2)));
+                            switch (tag(son1(node2))) {
+                                case T_Co_maxdepth :
+                                    layout_flag = 1;
+                                    break;
+                                case T_Co_mindepth :
+                                    layout_flag = 2;
+                                    break;
+                                case T_Co_minbackwards :
+                                    layout_flag = 3;
+                                    break;
+                                case T_Co_maxdepthslow :
+                                    layout_flag = 4;
+                                    break;
+                                case T_Co_mindepthslow :
+                                    layout_flag = 5;
+                                    break;
+                                case T_Co_maxdegree :
+                                    layout_flag = 11;
+                                    break;
+                                case T_Co_mindegree :
+                                    layout_flag = 10;
+                                    break;
+                                case T_Co_maxindegree :
+                                    layout_flag = 7;
+                                    break;
+                                case T_Co_minindegree :
+                                    layout_flag = 6;
+                                    break;
+                                case T_Co_maxoutdegree :
+                                    layout_flag = 9;
+                                    break;
+                                case T_Co_minoutdegree :
+                                    layout_flag = 8;
+                                    break;
+                                case T_Co_tree :
+                                    layout_flag = TREE_LAYOUT;
+                                    break;
+                                case T_Co_depthfirst :
+                                    layout_flag = 12;
+                                    break;
+                            }
+                        }
+                        break;
+
+                    default:
+                        if (silent) break;
+                        FPRINTF(stderr,"Line %d: (sub)graph attribute %s ",
+                                xfirst_line(node2),ConstructorName(tag(node2)));
+                        FPRINTF(stderr,"currently not implemented !\n");
                 }
-                            break;
-            case T_Co_layoutalgorithm:
-                if (!subg_bit) {
-                    assert((son1(node2)));
-                    switch (tag(son1(node2))) {
-                    case T_Co_maxdepth :
-                        layout_flag = 1;
-                        break;
-                    case T_Co_mindepth :
-                        layout_flag = 2;
-                        break;
-                    case T_Co_minbackwards :
-                        layout_flag = 3;
-                        break;
-                    case T_Co_maxdepthslow :
-                        layout_flag = 4;
-                        break;
-                    case T_Co_mindepthslow :
-                        layout_flag = 5;
-                        break;
-                    case T_Co_maxdegree :
-                        layout_flag = 11;
-                        break;
-                    case T_Co_mindegree :
-                        layout_flag = 10;
-                        break;
-                    case T_Co_maxindegree :
-                        layout_flag = 7;
-                        break;
-                    case T_Co_minindegree :
-                        layout_flag = 6;
-                        break;
-                    case T_Co_maxoutdegree :
-                        layout_flag = 9;
-                        break;
-                    case T_Co_minoutdegree :
-                        layout_flag = 8;
-                        break;
-                    case T_Co_tree :
-                        layout_flag = TREE_LAYOUT;
-                        break;
-                    case T_Co_depthfirst :
-                        layout_flag = 12;
-                        break;
-                    }
+                break;
+
+                /*---------------- end of T_Co_graph_attribute ----------------*/
+
+            case T_Co_foldnode_defaults:
+                if (subg_bit) {
+                    SYERR(node2,"folding defaults  allowed only on top level");
+                    break;
                 }
-                            break;
+                node2 = son1(node1);
+                assert((node2));
 
-            default:
-                if (silent) break;
-                FPRINTF(stderr,"Line %d: attribute %s ",
-                    xfirst_line(node2),ConstructorName(tag(node2)));
-                FPRINTF(stderr,"currently not implemented !\n");
-            }
-            break;
+                switch(tag(node2)) {
+                    case T_Co_title:
+                        SYERR(node2,"foldnode.title not allowed");
+                        break;
+                    case T_Co_folding:
+                        SYERR(node2,"foldnode.fold not allowed");
+                        break;
+                }
+                one_node_attribute(node2,&foldnode,
+                        rootshrink,rootstretch, &fold_borderc_set);
 
-        /*---------------- end of T_Co_graph_attribute ----------------*/
-
-        case T_Co_foldnode_defaults:
-            if (subg_bit) {
-                SYERR(node2,"folding defaults  allowed only on top level");
                 break;
-            }
-            node2 = son1(node1);
-            assert((node2));
 
-            switch(tag(node2)) {
-            case T_Co_title:
-                SYERR(node2,"foldnode.title not allowed");
+                /*---------------- end of T_Co_foldnode_defaults -----------------*/
+
+            case T_Co_node_defaults:
+                node2 = son1(node1);
+                assert((node2));
+
+                switch(tag(node2)) {
+                    case T_Co_title:
+                        SYERR(node2,"node.title not allowed");
+                        break;
+                }
+                one_node_attribute(node2,&defaultnode,
+                        rootshrink,rootstretch, &borderc_set);
+
                 break;
-            case T_Co_folding:
-                SYERR(node2,"foldnode.fold not allowed");
+
+                /*---------------- end of T_Co_node_defaults ------------------*/
+
+            case T_Co_node:
+                v = nodealloc(&defaultnode);
+                add_to_nodelist_of_root(v);
+                node_attributes(son1(node1),v,rootshrink,rootstretch);
                 break;
-            }
-            one_node_attribute(node2,&foldnode,
-                rootshrink,rootstretch, &fold_borderc_set);
 
-            break;
-
-        /*---------------- end of T_Co_foldnode_defaults -----------------*/
-
-        case T_Co_node_defaults:
-            node2 = son1(node1);
-            assert((node2));
-
-            switch(tag(node2)) {
-            case T_Co_title:
-                SYERR(node2,"node.title not allowed");
-                break;
-            }
-            one_node_attribute(node2,&defaultnode,
-                rootshrink,rootstretch, &borderc_set);
-
-            break;
-
-        /*---------------- end of T_Co_node_defaults ------------------*/
-
-        case T_Co_node:
-            v = nodealloc(&defaultnode);
-            add_to_nodelist_of_root(v);
-            node_attributes(son1(node1),v,rootshrink,rootstretch);
-            break;
-
-        /*---------------- end of T_Co_node ---------------------------*/
+                /*---------------- end of T_Co_node ---------------------------*/
 
         }
         node = son2(node);
@@ -928,8 +909,8 @@ static void edge_analyse(yysyntaxtree node, GEDGE defedge)
     struct gedge defaultedge;
     GEDGE e;
     int elcol_set, arrowc_set, barrowc_set;
-                    /* Flags, whether the default edge label color */
-            /* etc. were set explicitely                   */
+    /* Flags, whether the default edge label color */
+    /* etc. were set explicitely                   */
 
     debugmessage("edge_analyse","");
 
@@ -958,111 +939,111 @@ static void edge_analyse(yysyntaxtree node, GEDGE defedge)
     while ( node && (tag(node) == T_Co_graph_entry) ) {
         node1 = son1(node);
         assert(node1);
-            switch (tag(node1)) {
-        case T_Co_graph:
-            subg_bit++;
-            edge_analyse(son1(node1), &defaultedge);
-            subg_bit--;
-            break;
-
-        /*---------------- end of T_Co_node_defaults ------------------*/
-
-        case T_Co_foldedge_defaults:
-            if (subg_bit) {
-                SYERR(node2,"folding defaults  allowed only on top level");
+        switch (tag(node1)) {
+            case T_Co_graph:
+                subg_bit++;
+                edge_analyse(son1(node1), &defaultedge);
+                subg_bit--;
                 break;
-            }
-            node2 = son1(node1);
-            assert((node2));
 
-            switch(tag(node2)) {
-            case T_Co_sourcename:
-            case T_Co_targetname:
-                SYERR(node2,"foldedge.sourcename and foldedge.targetname not allowed");
+                /*---------------- end of T_Co_node_defaults ------------------*/
+
+            case T_Co_foldedge_defaults:
+                if (subg_bit) {
+                    SYERR(node2,"folding defaults  allowed only on top level");
+                    break;
+                }
+                node2 = son1(node1);
+                assert((node2));
+
+                switch(tag(node2)) {
+                    case T_Co_sourcename:
+                    case T_Co_targetname:
+                        SYERR(node2,"foldedge.sourcename and foldedge.targetname not allowed");
+                        break;
+                    case T_Co_anchor:
+                        SYERR(node2,"foldedge.anchor not allowed");
+                        break;
+                }
+
+                one_edge_attribute(node2, &foldedge, &fold_elcol_set,
+                        &fold_arrowc_set, &fold_barrowc_set);
+
+                break;  /* T_Co_foldedge_defaults */
+
+                /*---------------- end of T_Co_foldedge_defaults --------------*/
+
+            case T_Co_edge_defaults:
+                node2 = son1(node1);
+                assert((node2));
+                switch(tag(node2)) {
+                    case T_Co_sourcename:
+                    case T_Co_targetname:
+                        SYERR(node2,"edge.sourcename and edge.targetname not allowed");
+                        break;
+                    case T_Co_anchor:
+                        SYERR(node2,"edge.anchor not allowed");
+                        break;
+                }
+                one_edge_attribute(node2, &defaultedge, &elcol_set,
+                        &arrowc_set, &barrowc_set);
+
+                break;  /* T_Co_edge_defaults */
+
+                /*---------------- end of T_Co_edge_defaults ------------------*/
+
+            case T_Co_edge:
+                e = edgealloc(&defaultedge);
+                edge_attributes(son1(node1),e);
                 break;
-            case T_Co_anchor:
-                SYERR(node2,"foldedge.anchor not allowed");
+
+                /*---------------- end of T_Co_edge ---------------------------*/
+            case T_Co_near_edge:
+                e = edgealloc(&defaultedge);
+                edge_attributes(son1(node1),e);
+                if (ESTART(e)==EEND(e)) {
+                    if (silent) break;
+                    FPRINTF(stderr,"Line %d: self loop near edge neighbouring ignored !\n",
+                            xfirst_line(node2));
+                }
+                else if (EANCHOR(e)) {
+                    if (silent) break;
+                    FPRINTF(stderr,"Line %d: near edge with anchorpoint neighbouring ignored !\n",
+                            xfirst_line(node2));
+                }
+                else if (ELABEL(e)) {
+                    if (silent) break;
+                    FPRINTF(stderr,"Line %d: near edge with label ignored !\n",
+                            xfirst_line(node2));
+                }
+                else near_edge_insert(e);
                 break;
-            }
 
-            one_edge_attribute(node2, &foldedge, &fold_elcol_set,
-                &fold_arrowc_set, &fold_barrowc_set);
-
-            break;  /* T_Co_foldedge_defaults */
-
-        /*---------------- end of T_Co_foldedge_defaults --------------*/
-
-        case T_Co_edge_defaults:
-            node2 = son1(node1);
-            assert((node2));
-            switch(tag(node2)) {
-            case T_Co_sourcename:
-            case T_Co_targetname:
-                SYERR(node2,"edge.sourcename and edge.targetname not allowed");
+                /*---------------- end of T_Co_near_edge ----------------------*/
+            case T_Co_bent_near_edge:
+                e = edgealloc(&defaultedge);
+                edge_attributes(son1(node1),e);
+                if (ESTART(e)==EEND(e)) {
+                    if (silent) break;
+                    FPRINTF(stderr,"Line %d: self loop near edge neighbouring ignored !\n",
+                            xfirst_line(node2));
+                }
+                else if (EANCHOR(e)) {
+                    if (silent) break;
+                    FPRINTF(stderr,"Line %d: near edge with anchorpoint neighbouring ignored !\n",
+                            xfirst_line(node2));
+                }
+                else bentnear_edge_insert(e);
                 break;
-            case T_Co_anchor:
-                SYERR(node2,"edge.anchor not allowed");
+
+                /*---------------- end of T_Co_near_edge ----------------------*/
+            case T_Co_back_edge:
+                e = edgealloc(&defaultedge);
+                edge_attributes(son1(node1),e);
+                back_edge_insert(e);
                 break;
-            }
-            one_edge_attribute(node2, &defaultedge, &elcol_set,
-                &arrowc_set, &barrowc_set);
 
-            break;  /* T_Co_edge_defaults */
-
-        /*---------------- end of T_Co_edge_defaults ------------------*/
-
-        case T_Co_edge:
-            e = edgealloc(&defaultedge);
-            edge_attributes(son1(node1),e);
-            break;
-
-        /*---------------- end of T_Co_edge ---------------------------*/
-        case T_Co_near_edge:
-            e = edgealloc(&defaultedge);
-            edge_attributes(son1(node1),e);
-            if (ESTART(e)==EEND(e)) {
-                if (silent) break;
-                FPRINTF(stderr,"Line %d: self loop near edge neighbouring ignored !\n",
-                    xfirst_line(node2));
-            }
-            else if (EANCHOR(e)) {
-                if (silent) break;
-                FPRINTF(stderr,"Line %d: near edge with anchorpoint neighbouring ignored !\n",
-                    xfirst_line(node2));
-            }
-            else if (ELABEL(e)) {
-                if (silent) break;
-                FPRINTF(stderr,"Line %d: near edge with label ignored !\n",
-                    xfirst_line(node2));
-            }
-            else near_edge_insert(e);
-            break;
-
-        /*---------------- end of T_Co_near_edge ----------------------*/
-        case T_Co_bent_near_edge:
-            e = edgealloc(&defaultedge);
-            edge_attributes(son1(node1),e);
-            if (ESTART(e)==EEND(e)) {
-                if (silent) break;
-                FPRINTF(stderr,"Line %d: self loop near edge neighbouring ignored !\n",
-                    xfirst_line(node2));
-            }
-            else if (EANCHOR(e)) {
-                if (silent) break;
-                FPRINTF(stderr,"Line %d: near edge with anchorpoint neighbouring ignored !\n",
-                    xfirst_line(node2));
-            }
-            else bentnear_edge_insert(e);
-            break;
-
-        /*---------------- end of T_Co_near_edge ----------------------*/
-        case T_Co_back_edge:
-            e = edgealloc(&defaultedge);
-            edge_attributes(son1(node1),e);
-            back_edge_insert(e);
-            break;
-
-        /*---------------- end of T_Co_back_edge ----------------------*/
+                /*---------------- end of T_Co_back_edge ----------------------*/
         }
         node = son2(node);
     } /* while */
@@ -1104,54 +1085,54 @@ static void graph_attributes(
         node2 = son1(node1);
         assert(node2);
         switch(tag(node2)) {
-        case T_Co_graph_attribute:
-            node2 = son1(node2);
-            assert(node2);
-            one_node_attribute(node2,v,
-                rootshrink,rootstretch,&borderc_set);
+            case T_Co_graph_attribute:
+                node2 = son1(node2);
+                assert(node2);
+                one_node_attribute(node2,v,
+                        rootshrink,rootstretch,&borderc_set);
 
-            switch(tag(node2)) {
-            case T_Co_status:
-                switch(tag(son1(node2))) {
-                case T_Co_black: NSTATE(v) = 2; break;
-                case T_Co_grey:  NSTATE(v) = 1; break;
-                case T_Co_white: NSTATE(v) = 0; break;
-                default: assert((0));
-                }
-                break;
-            case T_Co_infoname:
-            case T_Co_classname:
-            case T_Co_xmax:
-            case T_Co_ymax:
-            case T_Co_xbase:
-            case T_Co_ybase:
-            case T_Co_xspace:
-            case T_Co_xlspace:
-            case T_Co_yspace:
-            case T_Co_xraster:
-            case T_Co_xlraster:
-            case T_Co_yraster:
-            case T_Co_orientation:
-            case T_Co_node_alignment:
+                switch(tag(node2)) {
+                    case T_Co_status:
+                        switch(tag(son1(node2))) {
+                            case T_Co_black: NSTATE(v) = 2; break;
+                            case T_Co_grey:  NSTATE(v) = 1; break;
+                            case T_Co_white: NSTATE(v) = 0; break;
+                            default: assert((0));
+                        }
+                        break;
+                    case T_Co_infoname:
+                    case T_Co_classname:
+                    case T_Co_xmax:
+                    case T_Co_ymax:
+                    case T_Co_xbase:
+                    case T_Co_ybase:
+                    case T_Co_xspace:
+                    case T_Co_xlspace:
+                    case T_Co_yspace:
+                    case T_Co_xraster:
+                    case T_Co_xlraster:
+                    case T_Co_yraster:
+                    case T_Co_orientation:
+                    case T_Co_node_alignment:
                     case T_Co_port_sharing:
                     case T_Co_arrow_mode:
-            case T_Co_hidden:
-            case T_Co_late_edge_label:
-            case T_Co_display_edge_label:
-            case T_Co_dirty_edge_label:
+                    case T_Co_hidden:
+                    case T_Co_late_edge_label:
+                    case T_Co_display_edge_label:
+                    case T_Co_dirty_edge_label:
                     case T_Co_hidesingles:
                     case T_Co_straightphase:
                     case T_Co_priophase:
                     case T_Co_smanhatten:
                     case T_Co_manhatten:
-            case T_Co_bend_max:
-            case T_Co_cross_min:
-            case T_Co_cross_max:
-            case T_Co_pendel_min:
-            case T_Co_pendel_max:
-            case T_Co_rubber_min:
-            case T_Co_rubber_max:
-            case T_Co_straight_max:
+                    case T_Co_bend_max:
+                    case T_Co_cross_min:
+                    case T_Co_cross_max:
+                    case T_Co_pendel_min:
+                    case T_Co_pendel_max:
+                    case T_Co_rubber_min:
+                    case T_Co_rubber_max:
+                    case T_Co_straight_max:
                     case T_Co_view_edges:
                     case T_Co_view_nodes:
                     case T_Co_view_splines:
@@ -1159,33 +1140,33 @@ static void graph_attributes(
                     case T_Co_finetuning:
                     case T_Co_crossing_opt:
                     case T_Co_crossing_weight:
-            case T_Co_nonearedges:
-            case T_Co_dummy:
+                    case T_Co_nonearedges:
+                    case T_Co_dummy:
                     case T_Co_colentry:
-            case T_Co_layoutalgorithm:
-            case T_Co_splinefactor:
-            case T_Co_downfactor:
-            case T_Co_upfactor:
-            case T_Co_nearfactor:
+                    case T_Co_layoutalgorithm:
+                    case T_Co_splinefactor:
+                    case T_Co_downfactor:
+                    case T_Co_upfactor:
+                    case T_Co_nearfactor:
                     case T_Co_treefactor:
                     case T_Co_spreadlevel:
-                if (subg_bit!=0) {
-                    SYERR(node2,"attribute allowed only on top level");
+                        if (subg_bit!=0) {
+                            SYERR(node2,"attribute allowed only on top level");
+                        }
+                        break;
+                    default:
+                        one_node_attribute(node2,v,
+                                rootshrink,rootstretch,&borderc_set);
                 }
                 break;
-            default:
-                one_node_attribute(node2,v,
-                    rootshrink,rootstretch,&borderc_set);
-            }
-            break;
-        case T_Co_constraint:
-            if (silent) break;
-            FPRINTF(stderr,"Line %d: constraint ",
-                xfirst_line(node2));
-            FPRINTF(stderr,"currently not implemented !\n");
+            case T_Co_constraint:
+                if (silent) break;
+                FPRINTF(stderr,"Line %d: constraint ",
+                        xfirst_line(node2));
+                FPRINTF(stderr,"currently not implemented !\n");
         }
         node1 = son2(node1);
-        }
+    } /* while */
 
     /* The default title inherit mechanism */
 
@@ -1244,7 +1225,7 @@ static void node_attributes(
         one_node_attribute(node2,v,rootshrink,rootstretch,&borderc_set);
 
         node1 = son2(node1);
-        }
+    }
 
     /* The default title inherit mechanism */
 
@@ -1286,108 +1267,108 @@ static void one_node_attribute(
     assert((node2));
 
     switch(tag(node2)) {
-    case T_Co_title:
-        NTITLE(v) = SDecode(son1(node2));
+        case T_Co_title:
+            NTITLE(v) = SDecode(son1(node2));
             break;
-    case T_Co_label:
-        NLABEL(v) = SDecode(son1(node2));
-        break;
-    case T_Co_info1:
-        NINFO1(v) = SDecode(son1(node2));
-        break;
-    case T_Co_info2:
-        NINFO2(v) = SDecode(son1(node2));
-        break;
-    case T_Co_info3:
-        NINFO3(v) = SDecode(son1(node2));
-        break;
-    case T_Co_level:
-        NLEVEL(v) = (int)FETCHNUM();
-        break;
-    case T_Co_shape:
-        switch(tag(son1(node2))) {
+        case T_Co_label:
+            NLABEL(v) = SDecode(son1(node2));
+            break;
+        case T_Co_info1:
+            NINFO1(v) = SDecode(son1(node2));
+            break;
+        case T_Co_info2:
+            NINFO2(v) = SDecode(son1(node2));
+            break;
+        case T_Co_info3:
+            NINFO3(v) = SDecode(son1(node2));
+            break;
+        case T_Co_level:
+            NLEVEL(v) = (int)FETCHNUM();
+            break;
+        case T_Co_shape:
+            switch(tag(son1(node2))) {
                 case T_Co_box:      NSHAPE(v) = BOX;      break;
                 case T_Co_rhomb:    NSHAPE(v) = RHOMB;    break;
                 case T_Co_ellipse:  NSHAPE(v) = ELLIPSE;  break;
                 case T_Co_triangle: NSHAPE(v) = TRIANGLE; break;
-        }
-        break;
-    case T_Co_horizontal_order:
-        NHORDER(v) = (int)FETCHNUM();
-        break;
-    case T_Co_textmode:
-        switch(tag(son1(node2))) {
-        case T_Co_center:        NTEXTMODE(v) = CENTER; break;
-        case T_Co_left_justify:  NTEXTMODE(v) = LEFT;   break;
-        case T_Co_right_justify: NTEXTMODE(v) = RIGHT;  break;
             }
-        break;
-    case T_Co_width:
-        NWIDTH(v) = (int)FETCHNUM();
-        break;
-    case T_Co_height:
-        NHEIGHT(v) = (int)FETCHNUM();
-        break;
-    case T_Co_borderwidth:
-        NBORDERW(v) = (int)FETCHNUM();
-        break;
-    case T_Co_loc:
-        NSX(v) = get_lnum(son1(node2));
-        NSY(v) = get_lnum(son2(node2));
-        break;
-    case T_Co_xdef:
-        NSX(v) = FETCHNUM();
-        break;
-    case T_Co_ydef:
-        NSY(v) = FETCHNUM();
-        break;
-    case T_Co_folding:
-        NFOLDING(v) = (int)FETCHNUM();
-        break;
-    case T_Co_color:
-        NCOLOR(v) = get_color(son1(node2));
-        break;
-    case T_Co_textcolor:
-        NTCOLOR(v) = get_color(son1(node2));
-        if (!(*borderc_set))
+            break;
+        case T_Co_horizontal_order:
+            NHORDER(v) = (int)FETCHNUM();
+            break;
+        case T_Co_textmode:
+            switch(tag(son1(node2))) {
+                case T_Co_center:        NTEXTMODE(v) = CENTER; break;
+                case T_Co_left_justify:  NTEXTMODE(v) = LEFT;   break;
+                case T_Co_right_justify: NTEXTMODE(v) = RIGHT;  break;
+            }
+            break;
+        case T_Co_width:
+            NWIDTH(v) = (int)FETCHNUM();
+            break;
+        case T_Co_height:
+            NHEIGHT(v) = (int)FETCHNUM();
+            break;
+        case T_Co_borderwidth:
+            NBORDERW(v) = (int)FETCHNUM();
+            break;
+        case T_Co_loc:
+            NSX(v) = get_lnum(son1(node2));
+            NSY(v) = get_lnum(son2(node2));
+            break;
+        case T_Co_xdef:
+            NSX(v) = FETCHNUM();
+            break;
+        case T_Co_ydef:
+            NSY(v) = FETCHNUM();
+            break;
+        case T_Co_folding:
+            NFOLDING(v) = (int)FETCHNUM();
+            break;
+        case T_Co_color:
+            NCOLOR(v) = get_color(son1(node2));
+            break;
+        case T_Co_textcolor:
+            NTCOLOR(v) = get_color(son1(node2));
+            if (!(*borderc_set))
+                NBCOLOR(v) = get_color(son1(node2));
+            break;
+        case T_Co_bordercolor:
             NBCOLOR(v) = get_color(son1(node2));
-        break;
-    case T_Co_bordercolor:
-        NBCOLOR(v) = get_color(son1(node2));
-        *borderc_set = 1;
-        break;
-                case T_Co_scaling:
-        {
-            double hhx;
+            *borderc_set = 1;
+            break;
+        case T_Co_scaling:
+            {
+                double hhx;
 
-                        hhx = FETCHFLOAT();
-            if (hhx<0) hhx= -hhx;
-            if (hhx>1.0) {
-                NSTRETCH(v) = 100;
-                NSHRINK(v) = (int)(100.0/hhx);
+                hhx = FETCHFLOAT();
+                if (hhx<0) hhx= -hhx;
+                if (hhx>1.0) {
+                    NSTRETCH(v) = 100;
+                    NSHRINK(v) = (int)(100.0/hhx);
+                }
+                else {
+                    NSTRETCH(v) = (int)(hhx*100.0);
+                    NSHRINK(v) = 100;
+                }
+                NSHRINK(v) = rootshrink*NSHRINK(v);
+                NSTRETCH(v)= rootstretch*NSTRETCH(v);
+                if (NSHRINK(v)==0)  NSHRINK(v) = 1;
+                if (NSTRETCH(v)==0) NSTRETCH(v) = 1;
             }
-            else {
-                NSTRETCH(v) = (int)(hhx*100.0);
-                NSHRINK(v) = 100;
-            }
-            NSHRINK(v) = rootshrink*NSHRINK(v);
-            NSTRETCH(v)= rootstretch*NSTRETCH(v);
-            if (NSHRINK(v)==0)  NSHRINK(v) = 1;
-            if (NSTRETCH(v)==0) NSTRETCH(v) = 1;
-        }
-    case T_Co_shrink:
-        NSHRINK(v) = rootshrink * (int)FETCHNUM();
-        if (NSHRINK(v) == 0) NSHRINK(v) = 1;
-        break;
-    case T_Co_stretch:
-        NSTRETCH(v) = rootstretch * (int)FETCHNUM();
-        if (NSTRETCH(v) == 0) NSTRETCH(v) = 1;
-        break;
-    default:
-        if (silent) break;
-        FPRINTF(stderr,"Line %d: attribute %s ",
-            xfirst_line(node2),ConstructorName(tag(node2)));
-        FPRINTF(stderr,"currently not implemented !\n");
+        case T_Co_shrink:
+            NSHRINK(v) = rootshrink * (int)FETCHNUM();
+            if (NSHRINK(v) == 0) NSHRINK(v) = 1;
+            break;
+        case T_Co_stretch:
+            NSTRETCH(v) = rootstretch * (int)FETCHNUM();
+            if (NSTRETCH(v) == 0) NSTRETCH(v) = 1;
+            break;
+        default:
+            if (silent) break;
+            FPRINTF(stderr,"Line %d: node attribute %s ",
+                    xfirst_line(node2),ConstructorName(tag(node2)));
+            FPRINTF(stderr,"currently not implemented !\n");
     }
 } /* one_node_attribute */
 
@@ -1416,7 +1397,7 @@ static void edge_attributes(yysyntaxtree node, GEDGE e)
     barrowc_set = 0;
     node1 = node;
     while ( node1 && (tag(node1)==T_Co_edge_attribute) ) {
-            node2 = son1(node1);
+        node2 = son1(node1);
         assert(node2);
         one_edge_attribute(node2,e,&elcol_set,&arrowc_set,&barrowc_set);
 
@@ -1446,90 +1427,90 @@ static void one_edge_attribute(
     assert((node2));
 
     switch(tag(node2)) {
-    case T_Co_sourcename:
-        ESTART(e) = search_node(node2,SDecode(son1(node2)));
-        break;
-    case T_Co_targetname:
-        EEND(e)   = search_node(node2,SDecode(son1(node2)));
-        break;
-    case T_Co_linestyle:
-        switch(tag(son1(node2))) {
+        case T_Co_sourcename:
+            ESTART(e) = search_node(node2,SDecode(son1(node2)));
+            break;
+        case T_Co_targetname:
+            EEND(e)   = search_node(node2,SDecode(son1(node2)));
+            break;
+        case T_Co_linestyle:
+            switch(tag(son1(node2))) {
                 case T_Co_continuous: ELSTYLE(e) = SOLID;     break;
                 case T_Co_dotted:     ELSTYLE(e) = DOTTED;    break;
                 case T_Co_dashed:     ELSTYLE(e) = DASHED;    break;
-        case T_Co_invisible:  ELSTYLE(e) = UNVISIBLE; break;
-        default: assert((0));
-                }
-        break;
-    case T_Co_label:
-        ELABEL(e) = SDecode(son1(node2));
-        break;
-    case T_Co_thickness:
-        ETHICKNESS(e) = (int)FETCHNUM();
-        break;
-    case T_Co_class:
-        ECLASS(e)     = (int)FETCHNUM();
-        if (ECLASS(e)<=0) ECLASS(e) = 1;
-        break;
-    case T_Co_priority:
-        EPRIO(e)     = (int)FETCHNUM();
-        if (EPRIO(e)<=0) EPRIO(e) = 1;
-        break;
-    case T_Co_color:
-        ECOLOR(e) = get_color(son1(node2));
-        if (!(*elcol_set))
+                case T_Co_invisible:  ELSTYLE(e) = UNVISIBLE; break;
+                default: assert((0));
+            }
+            break;
+        case T_Co_label:
+            ELABEL(e) = SDecode(son1(node2));
+            break;
+        case T_Co_thickness:
+            ETHICKNESS(e) = (int)FETCHNUM();
+            break;
+        case T_Co_class:
+            ECLASS(e)     = (int)FETCHNUM();
+            if (ECLASS(e)<=0) ECLASS(e) = 1;
+            break;
+        case T_Co_priority:
+            EPRIO(e)     = (int)FETCHNUM();
+            if (EPRIO(e)<=0) EPRIO(e) = 1;
+            break;
+        case T_Co_color:
+            ECOLOR(e) = get_color(son1(node2));
+            if (!(*elcol_set))
+                ELABELCOL(e) = get_color(son1(node2));
+            if (!(*arrowc_set))
+                EARROWCOL(e) = get_color(son1(node2));
+            if (!(*barrowc_set))
+                EARROWBCOL(e) = get_color(son1(node2));
+            break;
+        case T_Co_textcolor:
             ELABELCOL(e) = get_color(son1(node2));
-        if (!(*arrowc_set))
-            EARROWCOL(e) = get_color(son1(node2));
-        if (!(*barrowc_set))
-            EARROWBCOL(e) = get_color(son1(node2));
-        break;
-    case T_Co_textcolor:
-        ELABELCOL(e) = get_color(son1(node2));
-        *elcol_set = 1;
-        break;
+            *elcol_set = 1;
+            break;
         case T_Co_horizontal_order:
-        EHORDER(e) = (int)FETCHNUM();
-        break;
-    case T_Co_arrowsize:
-        EARROWSIZE(e) = (int)FETCHNUM();
-        break;
-    case T_Co_barrowsize:
-        EARROWBSIZE(e) = (int)FETCHNUM();
-        break;
-    case T_Co_arrowcolor:
-        EARROWCOL(e) = get_color(son1(node2));
-        *arrowc_set = 1;
-        break;
-    case T_Co_barrowcolor:
-        EARROWBCOL(e) = get_color(son1(node2));
-        *barrowc_set = 1;
-        break;
-    case T_Co_arrowstyle:
-        switch(tag(son1(node2))) {
-        case T_Co_none:  EARROWSTYLE(e) = AS_NONE;  break;
-        case T_Co_line:  EARROWSTYLE(e) = AS_LINE;  break;
-        case T_Co_solid: EARROWSTYLE(e) = AS_SOLID; break;
-        default: assert((0));
-        }
-        break;
-    case T_Co_barrowstyle:
-        switch(tag(son1(node2))) {
-        case T_Co_none:  EARROWBSTYLE(e) = AS_NONE;  break;
-        case T_Co_line:  EARROWBSTYLE(e) = AS_LINE;  break;
-        case T_Co_solid: EARROWBSTYLE(e) = AS_SOLID; break;
-        default: assert((0));
-        }
-        break;
-    case T_Co_anchor:
-        EANCHOR(e) = (int)FETCHNUM();
-        if ((EANCHOR(e)<=0)||(EANCHOR(e)>=63))
-            SYERR(node2,"Illegal anchorpoint");
-        break;
-    default:
-        FPRINTF(stderr,"Line %d: attribute %s ",
-            xfirst_line(node2),ConstructorName(tag(node2)));
-        FPRINTF(stderr,"currently not implemented !\n");
+            EHORDER(e) = (int)FETCHNUM();
+            break;
+        case T_Co_arrowsize:
+            EARROWSIZE(e) = (int)FETCHNUM();
+            break;
+        case T_Co_barrowsize:
+            EARROWBSIZE(e) = (int)FETCHNUM();
+            break;
+        case T_Co_arrowcolor:
+            EARROWCOL(e) = get_color(son1(node2));
+            *arrowc_set = 1;
+            break;
+        case T_Co_barrowcolor:
+            EARROWBCOL(e) = get_color(son1(node2));
+            *barrowc_set = 1;
+            break;
+        case T_Co_arrowstyle:
+            switch(tag(son1(node2))) {
+                case T_Co_none:  EARROWSTYLE(e) = AS_NONE;  break;
+                case T_Co_line:  EARROWSTYLE(e) = AS_LINE;  break;
+                case T_Co_solid: EARROWSTYLE(e) = AS_SOLID; break;
+                default: assert((0));
+            }
+            break;
+        case T_Co_barrowstyle:
+            switch(tag(son1(node2))) {
+                case T_Co_none:  EARROWBSTYLE(e) = AS_NONE;  break;
+                case T_Co_line:  EARROWBSTYLE(e) = AS_LINE;  break;
+                case T_Co_solid: EARROWBSTYLE(e) = AS_SOLID; break;
+                default: assert((0));
+            }
+            break;
+        case T_Co_anchor:
+            EANCHOR(e) = (int)FETCHNUM();
+            if ((EANCHOR(e)<=0)||(EANCHOR(e)>=63))
+                SYERR(node2,"Illegal anchorpoint");
+            break;
+        default:
+            FPRINTF(stderr,"Line %d: edge attribute %s ",
+                    xfirst_line(node2),ConstructorName(tag(node2)));
+            FPRINTF(stderr,"currently not implemented !\n");
     }
 } /* one_edge_attribute */
 
@@ -1548,76 +1529,76 @@ static int get_color(yysyntaxtree node)
 
     debugmessage("get_color","");
     switch(tag(node)) {
-    case T_Co_black:
-        return(BLACK);
-    case T_Co_blue:
-        return(BLUE);
-    case T_Co_red:
-        return(RED);
-    case T_Co_green:
-        return(GREEN);
-    case T_Co_yellow:
-        return(YELLOW);
-    case T_Co_magenta:
-        return(MAGENTA);
-    case T_Co_cyan:
-        return(CYAN);
-    case T_Co_white:
-        return(WHITE);
-    case T_Co_darkgrey:
-        return(DARKGREY);
-    case T_Co_darkblue:
-        return(DARKBLUE);
-    case T_Co_darkred:
-        return(DARKRED);
-    case T_Co_darkgreen:
-        return(DARKGREEN);
-    case T_Co_darkyellow:
-        return(DARKYELLOW);
-    case T_Co_darkmagenta:
-        return(DARKMAGENTA);
-    case T_Co_darkcyan:
-        return(DARKCYAN);
-    case T_Co_gold:
-        return(GOLD);
-    case T_Co_lightgrey:
-        return(LIGHTGREY);
-    case T_Co_lightblue:
-        return(LIGHTBLUE);
-    case T_Co_lightred:
-        return(LIGHTRED);
-    case T_Co_lightgreen:
-        return(LIGHTGREEN);
-    case T_Co_lightyellow:
-        return(LIGHTYELLOW);
-    case T_Co_lightmagenta:
-        return(LIGHTMAGENTA);
-    case T_Co_lightcyan:
-        return(LIGHTCYAN);
-    case T_Co_lilac:
-        return(LILAC);
-    case T_Co_turquoise:
-        return(TURQUOISE);
-    case T_Co_aquamarine:
-        return(AQUAMARINE);
-    case T_Co_khaki:
-        return(KHAKI);
-    case T_Co_purple:
-        return(PURPLE);
-    case T_Co_yellowgreen:
-        return(YELLOWGREEN);
-    case T_Co_pink:
-        return(PINK);
-    case T_Co_orange:
-        return(ORANGE);
-    case T_Co_orchid:
-        return(ORCHID);
+        case T_Co_black:
+            return(BLACK);
+        case T_Co_blue:
+            return(BLUE);
+        case T_Co_red:
+            return(RED);
+        case T_Co_green:
+            return(GREEN);
+        case T_Co_yellow:
+            return(YELLOW);
+        case T_Co_magenta:
+            return(MAGENTA);
+        case T_Co_cyan:
+            return(CYAN);
+        case T_Co_white:
+            return(WHITE);
+        case T_Co_darkgrey:
+            return(DARKGREY);
+        case T_Co_darkblue:
+            return(DARKBLUE);
+        case T_Co_darkred:
+            return(DARKRED);
+        case T_Co_darkgreen:
+            return(DARKGREEN);
+        case T_Co_darkyellow:
+            return(DARKYELLOW);
+        case T_Co_darkmagenta:
+            return(DARKMAGENTA);
+        case T_Co_darkcyan:
+            return(DARKCYAN);
+        case T_Co_gold:
+            return(GOLD);
+        case T_Co_lightgrey:
+            return(LIGHTGREY);
+        case T_Co_lightblue:
+            return(LIGHTBLUE);
+        case T_Co_lightred:
+            return(LIGHTRED);
+        case T_Co_lightgreen:
+            return(LIGHTGREEN);
+        case T_Co_lightyellow:
+            return(LIGHTYELLOW);
+        case T_Co_lightmagenta:
+            return(LIGHTMAGENTA);
+        case T_Co_lightcyan:
+            return(LIGHTCYAN);
+        case T_Co_lilac:
+            return(LILAC);
+        case T_Co_turquoise:
+            return(TURQUOISE);
+        case T_Co_aquamarine:
+            return(AQUAMARINE);
+        case T_Co_khaki:
+            return(KHAKI);
+        case T_Co_purple:
+            return(PURPLE);
+        case T_Co_yellowgreen:
+            return(YELLOWGREEN);
+        case T_Co_pink:
+            return(PINK);
+        case T_Co_orange:
+            return(ORANGE);
+        case T_Co_orchid:
+            return(ORCHID);
         case T_Co_colindex:
-        res = (int)get_lnum(son1(node));
-        if (res >= G_cmap_size) {
-            SYERR(node,"Illegal color index.\nColor entries must be declared first");
-        }
-        return(res);
+            res = (int)get_lnum(son1(node));
+            if (res >= G_cmap_size) {
+                SYERR(node,"Illegal color index.\nColor entries must be declared first");
+            }
+            return(res);
     }
     assert((0));  /* we should never come to this point */
     return(BLACK);
@@ -1629,15 +1610,14 @@ static int get_color(yysyntaxtree node)
  *  ---------------------------
  *  return 1 for yes and 0 for no.
  */
-
 static int get_yesno(yysyntaxtree node)
 {
     debugmessage("get_yesno","");
 
-        switch(tag(node)) {
+    switch(tag(node)) {
         case T_Co_yes:  return(YES);
         case T_Co_no:   return(NO);
-    default: assert((0));
+        default: assert((0));
     }
     return(0);
 } /* get_yesno */
@@ -1661,55 +1641,55 @@ static void calc_nr_classes(yysyntaxtree node)
     while ( node && (tag(node) == T_Co_graph_entry) ) {
         node1 = son1(node);
         assert(node1);
-            switch (tag(node1)) {
-        case T_Co_graph:
-            calc_nr_classes(son1(node1));
-            break;
-
-        case T_Co_graph_attribute:
-
-            node2 = son1(node1);
-            assert((node2));
-            switch(tag(node2)) {
-            case T_Co_classname:
-            case T_Co_hidden:
-                h = (int)FETCHNUM();
-                if (h>max_nr_classes) max_nr_classes = h;
-                            break;
-            }
-            break;
-
-        case T_Co_foldedge_defaults:
-        case T_Co_edge_defaults:
-
-            node2 = son1(node1);
-            assert((node2));
-            switch(tag(node2)) {
-            case T_Co_class:
-                h = (int)FETCHNUM();
-                if (h>max_nr_classes) max_nr_classes = h;
+        switch (tag(node1)) {
+            case T_Co_graph:
+                calc_nr_classes(son1(node1));
                 break;
-            }
-            break;
 
-        case T_Co_edge:
-        case T_Co_near_edge:
-        case T_Co_bent_near_edge:
-        case T_Co_back_edge:
+            case T_Co_graph_attribute:
 
-            node1 = son1(node1);
-            while ( node1 && (tag(node1)==T_Co_edge_attribute) ) {
                 node2 = son1(node1);
-                assert(node2);
-                    switch(tag(node2)) {
-                case T_Co_class:
-                    h = (int)FETCHNUM();
-                    if (h>max_nr_classes)
-                        max_nr_classes = h;
-                    break;
+                assert((node2));
+                switch(tag(node2)) {
+                    case T_Co_classname:
+                    case T_Co_hidden:
+                        h = (int)FETCHNUM();
+                        if (h>max_nr_classes) max_nr_classes = h;
+                        break;
                 }
-                node1 = son2(node1);
-            }
+                break;
+
+            case T_Co_foldedge_defaults:
+            case T_Co_edge_defaults:
+
+                node2 = son1(node1);
+                assert((node2));
+                switch(tag(node2)) {
+                    case T_Co_class:
+                        h = (int)FETCHNUM();
+                        if (h>max_nr_classes) max_nr_classes = h;
+                        break;
+                }
+                break;
+
+            case T_Co_edge:
+            case T_Co_near_edge:
+            case T_Co_bent_near_edge:
+            case T_Co_back_edge:
+
+                node1 = son1(node1);
+                while ( node1 && (tag(node1)==T_Co_edge_attribute) ) {
+                    node2 = son1(node1);
+                    assert(node2);
+                    switch(tag(node2)) {
+                        case T_Co_class:
+                            h = (int)FETCHNUM();
+                            if (h>max_nr_classes)
+                                max_nr_classes = h;
+                            break;
+                    }
+                    node1 = son2(node1);
+                }
         }
         node = son2(node);
     } /* while */
@@ -1729,7 +1709,6 @@ static char buffer[1024];      /* Buffer to create error messages */
  *  Search a node in the nodelist and graphlist.
  *  Creates an error message, if the node is not avalable.
  */
-
 static GNODE search_node(yysyntaxtree x,char *title)
 {
     GNODE n;
@@ -1739,28 +1718,8 @@ static GNODE search_node(yysyntaxtree x,char *title)
         SPRINTF(buffer,"Undefined node %s",title);
         SYERR(x,buffer);
     }
-        return(n);
-} /* search_node */
-
-
-/*  Visible Node Search
- *  -------------------
- *  Search a node in the nodelist and graphlist.
- *  Return NULL, if the node is not avalable or invisible.
- */
-
-GNODE   search_visible_node(char *title)
-{
-    GNODE   n;
-    if (!title) return(NULL);
-    debugmessage("search_visible_node",title);
-    n = lookup_hashnode(title);
-
-    /* note: at that time point are NINLIST and NINVISIBLE inverse */
-
     return(n);
-} /* search_visible_node */
-
+} /* search_node */
 
 
 /*  Node Check
@@ -1889,8 +1848,8 @@ GNODE lookup_hashnode(char *title)
 
     h = hashtable[hashval(title)];
     while (h) {
-                if (title==NTITLE(h)) return(h);
-                if (strcmp(title,NTITLE(h))==0) return(h);
+        if (title==NTITLE(h)) return(h);
+        if (strcmp(title,NTITLE(h))==0) return(h);
         h = NINTERN(h);
     }
     return(NULL);
