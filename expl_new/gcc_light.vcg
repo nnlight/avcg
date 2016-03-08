@@ -1,0 +1,1474 @@
+graph: {
+port_sharing: no
+graph: { title: "GrMarker_t GrGraph::AllocMarker()"
+folding: 1
+hidden: 2
+node: { title: "GrMarker_t GrGraph::AllocMarker().0" }
+graph: {
+title: "GrMarker_t GrGraph::AllocMarker().BB2"
+folding: 1
+color: lightblue
+label: "basic block 2"
+
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().3"
+  color: lightgrey
+  label: "note 3
+ NOTE_INSN_BASIC_BLOCK"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().3" targetname: "GrMarker_t GrGraph::AllocMarker().5" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().2"
+  color: lightgrey
+  label: "note 2
+ NOTE_INSN_FUNCTION_BEG"
+}
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().2" targetname: "GrMarker_t GrGraph::AllocMarker().4" color: blue }
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().2" targetname: "GrMarker_t GrGraph::AllocMarker().5" }
+graph: {
+title: "GrMarker_t GrGraph::AllocMarker().BB3"
+folding: 1
+color: lightblue
+label: "basic block 3"
+
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().4"
+  color: lightgrey
+  label: "note 4
+ NOTE_INSN_BASIC_BLOCK"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().4" targetname: "GrMarker_t GrGraph::AllocMarker().5" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().5"
+  color: green
+  label: "insn 5
+(set (mem/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -4 [0xfffffffffffffffc])) [0 i+0 S4 A32])
+    (const_int 0 [0]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().5" targetname: "GrMarker_t GrGraph::AllocMarker().6" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().6"
+  color: darkgreen
+  label: "jump_insn 6
+(set (pc)
+    (label_ref 60))
+"
+}
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().6" targetname: "GrMarker_t GrGraph::AllocMarker().60" color: blue }
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().6" targetname: "GrMarker_t GrGraph::AllocMarker().64" color: green class: 3 }
+graph: {
+title: "GrMarker_t GrGraph::AllocMarker().BB4"
+folding: 1
+color: lightblue
+label: "basic block 4"
+
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().64"
+  color: darkgrey
+  shape: ellipse
+  label: "code_label 64
+ 4 78 \"\" [1 uses]
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().64" targetname: "GrMarker_t GrGraph::AllocMarker().9" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().9"
+  color: green
+  label: "insn 9
+(set (reg/f:SI 68)
+    (mem/f/c:SI (reg/f:SI 53 virtual-incoming-args) [0 this+0 S4 A32]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().9" targetname: "GrMarker_t GrGraph::AllocMarker().10" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().10"
+  color: green
+  label: "insn 10
+(set (reg:SI 69)
+    (mem/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -4 [0xfffffffffffffffc])) [0 i+0 S4 A32]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().10" targetname: "GrMarker_t GrGraph::AllocMarker().11" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().11"
+  color: green
+  label: "insn 11
+(parallel [
+        (set (reg/f:SI 70)
+            (plus:SI (reg/f:SI 68)
+                (reg:SI 69)))
+        (clobber (reg:CC 17 flags))
+    ])
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().11" targetname: "GrMarker_t GrGraph::AllocMarker().12" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().12"
+  color: green
+  label: "insn 12
+(set (reg:QI 60 [ D.2926 ])
+    (mem/j:QI (plus:SI (reg/f:SI 70)
+            (const_int 12 [0xc])) [0 this_4(D)->busy_markers S1 A8]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().12" targetname: "GrMarker_t GrGraph::AllocMarker().13" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().13"
+  color: green
+  label: "insn 13
+(set (reg:CCZ 17 flags)
+    (compare:CCZ (reg:QI 60 [ D.2926 ])
+        (const_int 0 [0])))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().13" targetname: "GrMarker_t GrGraph::AllocMarker().14" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().14"
+  color: darkgreen
+  label: "jump_insn 14
+(set (pc)
+    (if_then_else (eq (reg:CCZ 17 flags)
+            (const_int 0 [0]))
+        (label_ref 19)
+        (pc)))
+"
+}
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().14" targetname: "GrMarker_t GrGraph::AllocMarker().15" color: blue }
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().14" targetname: "GrMarker_t GrGraph::AllocMarker().19" color: blue }
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().14" targetname: "GrMarker_t GrGraph::AllocMarker().16" }
+graph: {
+title: "GrMarker_t GrGraph::AllocMarker().BB5"
+folding: 1
+color: lightblue
+label: "basic block 5"
+
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().15"
+  color: lightgrey
+  label: "note 15
+ NOTE_INSN_BASIC_BLOCK"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().15" targetname: "GrMarker_t GrGraph::AllocMarker().16" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().16"
+  color: green
+  label: "insn 16
+(parallel [
+        (set (mem/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+                    (const_int -4 [0xfffffffffffffffc])) [0 i+0 S4 A32])
+            (plus:SI (mem/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+                        (const_int -4 [0xfffffffffffffffc])) [0 i+0 S4 A32])
+                (const_int 1 [0x1])))
+        (clobber (reg:CC 17 flags))
+    ])
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().16" targetname: "GrMarker_t GrGraph::AllocMarker().17" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().17"
+  color: darkgreen
+  label: "jump_insn 17
+(set (pc)
+    (label_ref 60))
+"
+}
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().17" targetname: "GrMarker_t GrGraph::AllocMarker().60" color: blue }
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().17" targetname: "GrMarker_t GrGraph::AllocMarker().19" color: green class: 3 }
+graph: {
+title: "GrMarker_t GrGraph::AllocMarker().BB6"
+folding: 1
+color: lightblue
+label: "basic block 6"
+
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().19"
+  color: darkgrey
+  shape: ellipse
+  label: "code_label 19
+ 6 75 \"\" [1 uses]
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().19" targetname: "GrMarker_t GrGraph::AllocMarker().21" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().21"
+  color: green
+  label: "insn 21
+(set (reg/f:SI 71)
+    (mem/f/c:SI (reg/f:SI 53 virtual-incoming-args) [0 this+0 S4 A32]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().21" targetname: "GrMarker_t GrGraph::AllocMarker().22" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().22"
+  color: green
+  label: "insn 22
+(set (reg:SI 72)
+    (mem/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -4 [0xfffffffffffffffc])) [0 i+0 S4 A32]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().22" targetname: "GrMarker_t GrGraph::AllocMarker().23" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().23"
+  color: green
+  label: "insn 23
+(parallel [
+        (set (reg/f:SI 73)
+            (plus:SI (reg/f:SI 71)
+                (reg:SI 72)))
+        (clobber (reg:CC 17 flags))
+    ])
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().23" targetname: "GrMarker_t GrGraph::AllocMarker().24" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().24"
+  color: green
+  label: "insn 24
+(set (mem/j:QI (plus:SI (reg/f:SI 73)
+            (const_int 12 [0xc])) [0 this_4(D)->busy_markers S1 A8])
+    (const_int 1 [0x1]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().24" targetname: "GrMarker_t GrGraph::AllocMarker().25" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().25"
+  color: green
+  label: "insn 25
+(set (reg/f:SI 74)
+    (mem/f/c:SI (reg/f:SI 53 virtual-incoming-args) [0 this+0 S4 A32]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().25" targetname: "GrMarker_t GrGraph::AllocMarker().26" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().26"
+  color: green
+  label: "insn 26
+(set (reg:SI 76)
+    (mem/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -4 [0xfffffffffffffffc])) [0 i+0 S4 A32]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().26" targetname: "GrMarker_t GrGraph::AllocMarker().27" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().27"
+  color: green
+  label: "insn 27
+(parallel [
+        (set (reg:SI 75)
+            (plus:SI (reg:SI 76)
+                (const_int 8 [0x8])))
+        (clobber (reg:CC 17 flags))
+    ])
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().27" targetname: "GrMarker_t GrGraph::AllocMarker().28" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().28"
+  color: green
+  label: "insn 28
+(set (reg:HI 61 [ D.2929 ])
+    (mem/j:HI (plus:SI (mult:SI (reg:SI 75)
+                (const_int 2 [0x2]))
+            (reg/f:SI 74)) [0 this_4(D)->markers_init_val S2 A16]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().28" targetname: "GrMarker_t GrGraph::AllocMarker().29" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().29"
+  color: green
+  label: "insn 29
+(set (reg:CCZ 17 flags)
+    (compare:CCZ (reg:HI 61 [ D.2929 ])
+        (const_int -1 [0xffffffffffffffff])))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().29" targetname: "GrMarker_t GrGraph::AllocMarker().30" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().30"
+  color: darkgreen
+  label: "jump_insn 30
+(set (pc)
+    (if_then_else (ne (reg:CCZ 17 flags)
+            (const_int 0 [0]))
+        (label_ref 38)
+        (pc)))
+"
+}
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().30" targetname: "GrMarker_t GrGraph::AllocMarker().31" color: blue }
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().30" targetname: "GrMarker_t GrGraph::AllocMarker().38" color: blue }
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().30" targetname: "GrMarker_t GrGraph::AllocMarker().32" }
+graph: {
+title: "GrMarker_t GrGraph::AllocMarker().BB7"
+folding: 1
+color: lightblue
+label: "basic block 7"
+
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().31"
+  color: lightgrey
+  label: "note 31
+ NOTE_INSN_BASIC_BLOCK"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().31" targetname: "GrMarker_t GrGraph::AllocMarker().32" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().32"
+  color: green
+  label: "insn 32
+(set (mem:SI (plus:SI (reg/f:SI 56 virtual-outgoing-args)
+            (const_int 12 [0xc])) [0 S4 A32])
+    (symbol_ref:SI (\"_ZZN7GrGraph11AllocMarkerEvE19__PRETTY_FUNCTION__\") [flags 0x2]  <var_decl 0xb72364e0 __PRETTY_FUNCTION__>))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().32" targetname: "GrMarker_t GrGraph::AllocMarker().33" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().33"
+  color: green
+  label: "insn 33
+(set (mem:SI (plus:SI (reg/f:SI 56 virtual-outgoing-args)
+            (const_int 8 [0x8])) [0 S4 A32])
+    (const_int 172 [0xac]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().33" targetname: "GrMarker_t GrGraph::AllocMarker().34" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().34"
+  color: green
+  label: "insn 34
+(set (mem:SI (plus:SI (reg/f:SI 56 virtual-outgoing-args)
+            (const_int 4 [0x4])) [0 S4 A32])
+    (symbol_ref/f:SI (\"*.LC2\") [flags 0x2]  <var_decl 0xb7258c60 *.LC2>))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().34" targetname: "GrMarker_t GrGraph::AllocMarker().35" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().35"
+  color: green
+  label: "insn 35
+(set (mem:SI (reg/f:SI 56 virtual-outgoing-args) [0 S4 A32])
+    (symbol_ref/f:SI (\"*.LC6\") [flags 0x2]  <var_decl 0xb7258f00 *.LC6>))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().35" targetname: "GrMarker_t GrGraph::AllocMarker().36" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().36"
+  color: darkgreen
+  label: "call_insn 36
+(call (mem:QI (symbol_ref:SI (\"__assert_fail\") [flags 0x41]  <function_decl 0xb7209280 __assert_fail>) [0 __assert_fail S1 A8])
+    (const_int 16 [0x10]))
+"
+}
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().36" targetname: "GrMarker_t GrGraph::AllocMarker().38" color: green class: 3 }
+graph: {
+title: "GrMarker_t GrGraph::AllocMarker().BB8"
+folding: 1
+color: lightblue
+label: "basic block 8"
+
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().38"
+  color: darkgrey
+  shape: ellipse
+  label: "code_label 38
+ 8 76 \"\" [1 uses]
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().38" targetname: "GrMarker_t GrGraph::AllocMarker().40" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().40"
+  color: green
+  label: "insn 40
+(set (reg/f:SI 77)
+    (mem/f/c:SI (reg/f:SI 53 virtual-incoming-args) [0 this+0 S4 A32]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().40" targetname: "GrMarker_t GrGraph::AllocMarker().41" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().41"
+  color: green
+  label: "insn 41
+(set (reg:SI 79)
+    (mem/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -4 [0xfffffffffffffffc])) [0 i+0 S4 A32]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().41" targetname: "GrMarker_t GrGraph::AllocMarker().42" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().42"
+  color: green
+  label: "insn 42
+(parallel [
+        (set (reg:SI 78)
+            (plus:SI (reg:SI 79)
+                (const_int 8 [0x8])))
+        (clobber (reg:CC 17 flags))
+    ])
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().42" targetname: "GrMarker_t GrGraph::AllocMarker().43" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().43"
+  color: green
+  label: "insn 43
+(set (reg:HI 62 [ D.2932 ])
+    (mem/j:HI (plus:SI (mult:SI (reg:SI 78)
+                (const_int 2 [0x2]))
+            (reg/f:SI 77)) [0 this_4(D)->markers_init_val S2 A16]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().43" targetname: "GrMarker_t GrGraph::AllocMarker().44" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().44"
+  color: green
+  label: "insn 44
+(parallel [
+        (set (reg:HI 63 [ D.2933 ])
+            (plus:HI (reg:HI 62 [ D.2932 ])
+                (const_int 1 [0x1])))
+        (clobber (reg:CC 17 flags))
+    ])
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().44" targetname: "GrMarker_t GrGraph::AllocMarker().45" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().45"
+  color: green
+  label: "insn 45
+(set (reg/f:SI 80)
+    (mem/f/c:SI (reg/f:SI 53 virtual-incoming-args) [0 this+0 S4 A32]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().45" targetname: "GrMarker_t GrGraph::AllocMarker().46" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().46"
+  color: green
+  label: "insn 46
+(set (reg:SI 82)
+    (mem/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -4 [0xfffffffffffffffc])) [0 i+0 S4 A32]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().46" targetname: "GrMarker_t GrGraph::AllocMarker().47" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().47"
+  color: green
+  label: "insn 47
+(parallel [
+        (set (reg:SI 81)
+            (plus:SI (reg:SI 82)
+                (const_int 8 [0x8])))
+        (clobber (reg:CC 17 flags))
+    ])
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().47" targetname: "GrMarker_t GrGraph::AllocMarker().48" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().48"
+  color: green
+  label: "insn 48
+(set (mem/j:HI (plus:SI (mult:SI (reg:SI 81)
+                (const_int 2 [0x2]))
+            (reg/f:SI 80)) [0 this_4(D)->markers_init_val S2 A16])
+    (reg:HI 63 [ D.2933 ]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().48" targetname: "GrMarker_t GrGraph::AllocMarker().49" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().49"
+  color: green
+  label: "insn 49
+(set (reg/f:SI 83)
+    (mem/f/c:SI (reg/f:SI 53 virtual-incoming-args) [0 this+0 S4 A32]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().49" targetname: "GrMarker_t GrGraph::AllocMarker().50" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().50"
+  color: green
+  label: "insn 50
+(set (reg:SI 85)
+    (mem/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -4 [0xfffffffffffffffc])) [0 i+0 S4 A32]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().50" targetname: "GrMarker_t GrGraph::AllocMarker().51" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().51"
+  color: green
+  label: "insn 51
+(parallel [
+        (set (reg:SI 84)
+            (plus:SI (reg:SI 85)
+                (const_int 8 [0x8])))
+        (clobber (reg:CC 17 flags))
+    ])
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().51" targetname: "GrMarker_t GrGraph::AllocMarker().52" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().52"
+  color: green
+  label: "insn 52
+(set (reg:HI 86)
+    (mem/j:HI (plus:SI (mult:SI (reg:SI 84)
+                (const_int 2 [0x2]))
+            (reg/f:SI 83)) [0 this_4(D)->markers_init_val S2 A16]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().52" targetname: "GrMarker_t GrGraph::AllocMarker().53" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().53"
+  color: green
+  label: "insn 53
+(set (mem/c:HI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -6 [0xfffffffffffffffa])) [0 new_init_val+0 S2 A16])
+    (reg:HI 86))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().53" targetname: "GrMarker_t GrGraph::AllocMarker().54" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().54"
+  color: green
+  label: "insn 54
+(set (reg:SI 87)
+    (mem/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -4 [0xfffffffffffffffc])) [0 i+0 S4 A32]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().54" targetname: "GrMarker_t GrGraph::AllocMarker().55" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().55"
+  color: green
+  label: "insn 55
+(parallel [
+        (set (reg:SI 64 [ D.2935 ])
+            (ashift:SI (reg:SI 87)
+                (const_int 16 [0x10])))
+        (clobber (reg:CC 17 flags))
+    ])
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().55" targetname: "GrMarker_t GrGraph::AllocMarker().56" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().56"
+  color: green
+  label: "insn 56
+(set (reg:SI 65 [ D.2936 ])
+    (zero_extend:SI (mem/c:HI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+                (const_int -6 [0xfffffffffffffffa])) [0 new_init_val+0 S2 A16])))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().56" targetname: "GrMarker_t GrGraph::AllocMarker().57" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().57"
+  color: green
+  label: "insn 57
+(parallel [
+        (set (reg:SI 66 [ D.2934 ])
+            (ior:SI (reg:SI 64 [ D.2935 ])
+                (reg:SI 65 [ D.2936 ])))
+        (clobber (reg:CC 17 flags))
+    ])
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().57" targetname: "GrMarker_t GrGraph::AllocMarker().58" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().58"
+  color: darkgreen
+  label: "jump_insn 58
+(set (pc)
+    (label_ref 74))
+"
+}
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().58" targetname: "GrMarker_t GrGraph::AllocMarker().74" color: blue }
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().58" targetname: "GrMarker_t GrGraph::AllocMarker().60" color: green class: 3 }
+graph: {
+title: "GrMarker_t GrGraph::AllocMarker().BB9"
+folding: 1
+color: lightblue
+label: "basic block 9"
+
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().60"
+  color: darkgrey
+  shape: ellipse
+  label: "code_label 60
+ 9 74 \"\" [2 uses]
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().60" targetname: "GrMarker_t GrGraph::AllocMarker().62" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().62"
+  color: green
+  label: "insn 62
+(set (reg:CC 17 flags)
+    (compare:CC (mem/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+                (const_int -4 [0xfffffffffffffffc])) [0 i+0 S4 A32])
+        (const_int 3 [0x3])))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().62" targetname: "GrMarker_t GrGraph::AllocMarker().63" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().63"
+  color: green
+  label: "insn 63
+(set (reg:QI 59 [ D.2924 ])
+    (leu:QI (reg:CC 17 flags)
+        (const_int 0 [0])))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().63" targetname: "GrMarker_t GrGraph::AllocMarker().65" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().65"
+  color: green
+  label: "insn 65
+(set (reg:CCZ 17 flags)
+    (compare:CCZ (reg:QI 59 [ D.2924 ])
+        (const_int 0 [0])))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().65" targetname: "GrMarker_t GrGraph::AllocMarker().66" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().66"
+  color: darkgreen
+  label: "jump_insn 66
+(set (pc)
+    (if_then_else (ne (reg:CCZ 17 flags)
+            (const_int 0 [0]))
+        (label_ref 64)
+        (pc)))
+"
+}
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().66" targetname: "GrMarker_t GrGraph::AllocMarker().64" color: blue }
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().66" targetname: "GrMarker_t GrGraph::AllocMarker().67" color: blue }
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().66" targetname: "GrMarker_t GrGraph::AllocMarker().68" }
+graph: {
+title: "GrMarker_t GrGraph::AllocMarker().BB10"
+folding: 1
+color: lightblue
+label: "basic block 10"
+
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().67"
+  color: lightgrey
+  label: "note 67
+ NOTE_INSN_BASIC_BLOCK"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().67" targetname: "GrMarker_t GrGraph::AllocMarker().68" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().68"
+  color: green
+  label: "insn 68
+(set (mem:SI (plus:SI (reg/f:SI 56 virtual-outgoing-args)
+            (const_int 12 [0xc])) [0 S4 A32])
+    (symbol_ref:SI (\"_ZZN7GrGraph11AllocMarkerEvE19__PRETTY_FUNCTION__\") [flags 0x2]  <var_decl 0xb72364e0 __PRETTY_FUNCTION__>))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().68" targetname: "GrMarker_t GrGraph::AllocMarker().69" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().69"
+  color: green
+  label: "insn 69
+(set (mem:SI (plus:SI (reg/f:SI 56 virtual-outgoing-args)
+            (const_int 8 [0x8])) [0 S4 A32])
+    (const_int 176 [0xb0]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().69" targetname: "GrMarker_t GrGraph::AllocMarker().70" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().70"
+  color: green
+  label: "insn 70
+(set (mem:SI (plus:SI (reg/f:SI 56 virtual-outgoing-args)
+            (const_int 4 [0x4])) [0 S4 A32])
+    (symbol_ref/f:SI (\"*.LC2\") [flags 0x2]  <var_decl 0xb7258c60 *.LC2>))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().70" targetname: "GrMarker_t GrGraph::AllocMarker().71" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().71"
+  color: green
+  label: "insn 71
+(set (mem:SI (reg/f:SI 56 virtual-outgoing-args) [0 S4 A32])
+    (symbol_ref/f:SI (\"*.LC7\") [flags 0x2]  <var_decl 0xb7258f60 *.LC7>))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().71" targetname: "GrMarker_t GrGraph::AllocMarker().72" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().72"
+  color: darkgreen
+  label: "call_insn 72
+(call (mem:QI (symbol_ref:SI (\"__assert_fail\") [flags 0x41]  <function_decl 0xb7209280 __assert_fail>) [0 __assert_fail S1 A8])
+    (const_int 16 [0x10]))
+"
+}
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().72" targetname: "GrMarker_t GrGraph::AllocMarker().74" color: green class: 3 }
+graph: {
+title: "GrMarker_t GrGraph::AllocMarker().BB11"
+folding: 1
+color: lightblue
+label: "basic block 11"
+
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().74"
+  color: darkgrey
+  shape: ellipse
+  label: "code_label 74
+ 11 77 \"\" [1 uses]
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().74" targetname: "GrMarker_t GrGraph::AllocMarker().76" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().76"
+  color: green
+  label: "insn 76
+(set (reg:SI 67 [ <retval> ])
+    (reg:SI 66 [ D.2934 ]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().76" targetname: "GrMarker_t GrGraph::AllocMarker().77" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().77"
+  color: darkgreen
+  label: "jump_insn 77
+(set (pc)
+    (label_ref 79))
+"
+}
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().77" targetname: "GrMarker_t GrGraph::AllocMarker().79" color: blue }
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().77" targetname: "GrMarker_t GrGraph::AllocMarker().81" color: green class: 3 }
+graph: {
+title: "GrMarker_t GrGraph::AllocMarker().BB12"
+folding: 1
+color: lightblue
+label: "basic block 12"
+
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().84"
+  color: lightgrey
+  label: "note 84
+ NOTE_INSN_BASIC_BLOCK"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().84" targetname: "GrMarker_t GrGraph::AllocMarker().81" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().81"
+  color: green
+  label: "insn 81
+(clobber (reg/i:SI 0 ax))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().81" targetname: "GrMarker_t GrGraph::AllocMarker().82" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().82"
+  color: green
+  label: "insn 82
+(clobber (reg:SI 67 [ <retval> ]))
+"
+}
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().82" targetname: "GrMarker_t GrGraph::AllocMarker().79" }
+graph: {
+title: "GrMarker_t GrGraph::AllocMarker().BB13"
+folding: 1
+color: lightblue
+label: "basic block 13"
+
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().79"
+  color: darkgrey
+  shape: ellipse
+  label: "code_label 79
+ 13 73 \"\" [1 uses]
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().79" targetname: "GrMarker_t GrGraph::AllocMarker().80" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().80"
+  color: green
+  label: "insn 80
+(set (reg/i:SI 0 ax)
+    (reg:SI 67 [ <retval> ]))
+"
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().80" targetname: "GrMarker_t GrGraph::AllocMarker().83" }
+node: {
+  title: "GrMarker_t GrGraph::AllocMarker().83"
+  color: green
+  label: "insn 83
+(use (reg/i:SI 0 ax))
+"
+}
+}
+edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().83" targetname: "GrMarker_t GrGraph::AllocMarker().999999" }
+node: { title: "GrMarker_t GrGraph::AllocMarker().999999" label: "END" }
+}
+graph: { title: "void GrGraph::ExcludeNodeFromList(GrNode*)"
+folding: 1
+hidden: 2
+node: { title: "void GrGraph::ExcludeNodeFromList(GrNode*).0" }
+graph: {
+title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB2"
+folding: 1
+color: lightblue
+label: "basic block 2"
+
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).3"
+  color: lightgrey
+  label: "note 3
+ NOTE_INSN_BASIC_BLOCK"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).3" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).5" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).2"
+  color: lightgrey
+  label: "note 2
+ NOTE_INSN_FUNCTION_BEG"
+}
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).2" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).4" color: blue }
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).2" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).5" }
+graph: {
+title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB3"
+folding: 1
+color: lightblue
+label: "basic block 3"
+
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).4"
+  color: lightgrey
+  label: "note 4
+ NOTE_INSN_BASIC_BLOCK"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).4" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).5" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).5"
+  color: green
+  label: "insn 5
+(set (reg/f:SI 61)
+    (mem/f/c:SI (plus:SI (reg/f:SI 53 virtual-incoming-args)
+            (const_int 4 [0x4])) [0 node+0 S4 A32]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).5" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).6" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).6"
+  color: green
+  label: "insn 6
+(set (reg/f:SI 62)
+    (mem/f/j:SI (plus:SI (reg/f:SI 61)
+            (const_int 24 [0x18])) [0 node_1(D)->adjnode+0 S4 A32]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).6" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).7" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).7"
+  color: green
+  label: "insn 7
+(set (mem/f/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -4 [0xfffffffffffffffc])) [0 prev+0 S4 A32])
+    (reg/f:SI 62))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).7" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).8" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).8"
+  color: green
+  label: "insn 8
+(set (reg/f:SI 63)
+    (mem/f/c:SI (plus:SI (reg/f:SI 53 virtual-incoming-args)
+            (const_int 4 [0x4])) [0 node+0 S4 A32]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).8" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).9" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).9"
+  color: green
+  label: "insn 9
+(set (reg/f:SI 64)
+    (mem/f/j:SI (plus:SI (reg/f:SI 63)
+            (const_int 28 [0x1c])) [0 node_1(D)->adjnode+4 S4 A32]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).9" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).10" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).10"
+  color: green
+  label: "insn 10
+(set (mem/f/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -8 [0xfffffffffffffff8])) [0 next+0 S4 A32])
+    (reg/f:SI 64))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).10" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).11" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).11"
+  color: green
+  label: "insn 11
+(set (reg:CCZ 17 flags)
+    (compare:CCZ (mem/f/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+                (const_int -4 [0xfffffffffffffffc])) [0 prev+0 S4 A32])
+        (const_int 0 [0])))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).11" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).12" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).12"
+  color: darkgreen
+  label: "jump_insn 12
+(set (pc)
+    (if_then_else (eq (reg:CCZ 17 flags)
+            (const_int 0 [0]))
+        (label_ref 19)
+        (pc)))
+"
+}
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).12" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).13" color: blue }
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).12" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).19" color: blue }
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).12" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).14" }
+graph: {
+title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB4"
+folding: 1
+color: lightblue
+label: "basic block 4"
+
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).13"
+  color: lightgrey
+  label: "note 13
+ NOTE_INSN_BASIC_BLOCK"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).13" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).14" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).14"
+  color: green
+  label: "insn 14
+(set (reg/f:SI 65)
+    (mem/f/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -4 [0xfffffffffffffffc])) [0 prev+0 S4 A32]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).14" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).15" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).15"
+  color: green
+  label: "insn 15
+(set (reg/f:SI 66)
+    (mem/f/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -8 [0xfffffffffffffff8])) [0 next+0 S4 A32]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).15" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).16" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).16"
+  color: green
+  label: "insn 16
+(set (mem/f/j:SI (plus:SI (reg/f:SI 65)
+            (const_int 28 [0x1c])) [0 prev_2->adjnode+4 S4 A32])
+    (reg/f:SI 66))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).16" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).17" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).17"
+  color: darkgreen
+  label: "jump_insn 17
+(set (pc)
+    (label_ref 37))
+"
+}
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).17" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).37" color: blue }
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).17" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).19" color: green class: 3 }
+graph: {
+title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB5"
+folding: 1
+color: lightblue
+label: "basic block 5"
+
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).19"
+  color: darkgrey
+  shape: ellipse
+  label: "code_label 19
+ 5 87 \"\" [1 uses]
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).19" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).21" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).21"
+  color: green
+  label: "insn 21
+(set (reg/f:SI 67)
+    (mem/f/c:SI (reg/f:SI 53 virtual-incoming-args) [0 this+0 S4 A32]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).21" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).22" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).22"
+  color: green
+  label: "insn 22
+(set (reg/f:SI 59 [ D.2900 ])
+    (mem/f/j:SI (plus:SI (reg/f:SI 67)
+            (const_int 4 [0x4])) [0 this_4(D)->nodes+0 S4 A32]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).22" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).23" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).23"
+  color: green
+  label: "insn 23
+(set (reg:CCZ 17 flags)
+    (compare:CCZ (reg/f:SI 59 [ D.2900 ])
+        (mem/f/c:SI (plus:SI (reg/f:SI 53 virtual-incoming-args)
+                (const_int 4 [0x4])) [0 node+0 S4 A32])))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).23" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).24" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).24"
+  color: darkgreen
+  label: "jump_insn 24
+(set (pc)
+    (if_then_else (eq (reg:CCZ 17 flags)
+            (const_int 0 [0]))
+        (label_ref 32)
+        (pc)))
+"
+}
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).24" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).25" color: blue }
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).24" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).32" color: blue }
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).24" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).26" }
+graph: {
+title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB6"
+folding: 1
+color: lightblue
+label: "basic block 6"
+
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).25"
+  color: lightgrey
+  label: "note 25
+ NOTE_INSN_BASIC_BLOCK"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).25" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).26" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).26"
+  color: green
+  label: "insn 26
+(set (mem:SI (plus:SI (reg/f:SI 56 virtual-outgoing-args)
+            (const_int 12 [0xc])) [0 S4 A32])
+    (symbol_ref:SI (\"_ZZN7GrGraph19ExcludeNodeFromListEP6GrNodeE19__PRETTY_FUNCTION__\") [flags 0x2]  <var_decl 0xb723a900 __PRETTY_FUNCTION__>))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).26" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).27" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).27"
+  color: green
+  label: "insn 27
+(set (mem:SI (plus:SI (reg/f:SI 56 virtual-outgoing-args)
+            (const_int 8 [0x8])) [0 S4 A32])
+    (const_int 222 [0xde]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).27" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).28" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).28"
+  color: green
+  label: "insn 28
+(set (mem:SI (plus:SI (reg/f:SI 56 virtual-outgoing-args)
+            (const_int 4 [0x4])) [0 S4 A32])
+    (symbol_ref/f:SI (\"*.LC2\") [flags 0x2]  <var_decl 0xb7258c60 *.LC2>))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).28" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).29" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).29"
+  color: green
+  label: "insn 29
+(set (mem:SI (reg/f:SI 56 virtual-outgoing-args) [0 S4 A32])
+    (symbol_ref/f:SI (\"*.LC10\") [flags 0x2]  <var_decl 0xb729e120 *.LC10>))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).29" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).30" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).30"
+  color: darkgreen
+  label: "call_insn 30
+(call (mem:QI (symbol_ref:SI (\"__assert_fail\") [flags 0x41]  <function_decl 0xb7209280 __assert_fail>) [0 __assert_fail S1 A8])
+    (const_int 16 [0x10]))
+"
+}
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).30" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).32" color: green class: 3 }
+graph: {
+title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB7"
+folding: 1
+color: lightblue
+label: "basic block 7"
+
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).32"
+  color: darkgrey
+  shape: ellipse
+  label: "code_label 32
+ 7 89 \"\" [1 uses]
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).32" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).34" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).34"
+  color: green
+  label: "insn 34
+(set (reg/f:SI 68)
+    (mem/f/c:SI (reg/f:SI 53 virtual-incoming-args) [0 this+0 S4 A32]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).34" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).35" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).35"
+  color: green
+  label: "insn 35
+(set (reg/f:SI 69)
+    (mem/f/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -8 [0xfffffffffffffff8])) [0 next+0 S4 A32]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).35" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).36" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).36"
+  color: green
+  label: "insn 36
+(set (mem/f/j:SI (plus:SI (reg/f:SI 68)
+            (const_int 4 [0x4])) [0 this_4(D)->nodes+0 S4 A32])
+    (reg/f:SI 69))
+"
+}
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).36" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).37" }
+graph: {
+title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB8"
+folding: 1
+color: lightblue
+label: "basic block 8"
+
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).37"
+  color: darkgrey
+  shape: ellipse
+  label: "code_label 37
+ 8 88 \"\" [1 uses]
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).37" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).39" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).39"
+  color: green
+  label: "insn 39
+(set (reg:CCZ 17 flags)
+    (compare:CCZ (mem/f/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+                (const_int -8 [0xfffffffffffffff8])) [0 next+0 S4 A32])
+        (const_int 0 [0])))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).39" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).40" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).40"
+  color: darkgreen
+  label: "jump_insn 40
+(set (pc)
+    (if_then_else (eq (reg:CCZ 17 flags)
+            (const_int 0 [0]))
+        (label_ref 47)
+        (pc)))
+"
+}
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).40" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).41" color: blue }
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).40" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).47" color: blue }
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).40" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).42" }
+graph: {
+title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB9"
+folding: 1
+color: lightblue
+label: "basic block 9"
+
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).41"
+  color: lightgrey
+  label: "note 41
+ NOTE_INSN_BASIC_BLOCK"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).41" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).42" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).42"
+  color: green
+  label: "insn 42
+(set (reg/f:SI 70)
+    (mem/f/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -8 [0xfffffffffffffff8])) [0 next+0 S4 A32]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).42" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).43" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).43"
+  color: green
+  label: "insn 43
+(set (reg/f:SI 71)
+    (mem/f/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -4 [0xfffffffffffffffc])) [0 prev+0 S4 A32]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).43" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).44" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).44"
+  color: green
+  label: "insn 44
+(set (mem/f/j:SI (plus:SI (reg/f:SI 70)
+            (const_int 24 [0x18])) [0 next_3->adjnode+0 S4 A32])
+    (reg/f:SI 71))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).44" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).45" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).45"
+  color: darkgreen
+  label: "jump_insn 45
+(set (pc)
+    (label_ref 65))
+"
+}
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).45" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).65" color: blue }
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).45" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).47" color: green class: 3 }
+graph: {
+title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB10"
+folding: 1
+color: lightblue
+label: "basic block 10"
+
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).47"
+  color: darkgrey
+  shape: ellipse
+  label: "code_label 47
+ 10 90 \"\" [1 uses]
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).47" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).49" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).49"
+  color: green
+  label: "insn 49
+(set (reg/f:SI 72)
+    (mem/f/c:SI (reg/f:SI 53 virtual-incoming-args) [0 this+0 S4 A32]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).49" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).50" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).50"
+  color: green
+  label: "insn 50
+(set (reg/f:SI 60 [ D.2906 ])
+    (mem/f/j:SI (plus:SI (reg/f:SI 72)
+            (const_int 8 [0x8])) [0 this_4(D)->nodes+4 S4 A32]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).50" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).51" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).51"
+  color: green
+  label: "insn 51
+(set (reg:CCZ 17 flags)
+    (compare:CCZ (reg/f:SI 60 [ D.2906 ])
+        (mem/f/c:SI (plus:SI (reg/f:SI 53 virtual-incoming-args)
+                (const_int 4 [0x4])) [0 node+0 S4 A32])))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).51" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).52" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).52"
+  color: darkgreen
+  label: "jump_insn 52
+(set (pc)
+    (if_then_else (eq (reg:CCZ 17 flags)
+            (const_int 0 [0]))
+        (label_ref 60)
+        (pc)))
+"
+}
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).52" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).53" color: blue }
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).52" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).60" color: blue }
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).52" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).54" }
+graph: {
+title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB11"
+folding: 1
+color: lightblue
+label: "basic block 11"
+
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).53"
+  color: lightgrey
+  label: "note 53
+ NOTE_INSN_BASIC_BLOCK"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).53" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).54" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).54"
+  color: green
+  label: "insn 54
+(set (mem:SI (plus:SI (reg/f:SI 56 virtual-outgoing-args)
+            (const_int 12 [0xc])) [0 S4 A32])
+    (symbol_ref:SI (\"_ZZN7GrGraph19ExcludeNodeFromListEP6GrNodeE19__PRETTY_FUNCTION__\") [flags 0x2]  <var_decl 0xb723a900 __PRETTY_FUNCTION__>))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).54" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).55" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).55"
+  color: green
+  label: "insn 55
+(set (mem:SI (plus:SI (reg/f:SI 56 virtual-outgoing-args)
+            (const_int 8 [0x8])) [0 S4 A32])
+    (const_int 230 [0xe6]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).55" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).56" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).56"
+  color: green
+  label: "insn 56
+(set (mem:SI (plus:SI (reg/f:SI 56 virtual-outgoing-args)
+            (const_int 4 [0x4])) [0 S4 A32])
+    (symbol_ref/f:SI (\"*.LC2\") [flags 0x2]  <var_decl 0xb7258c60 *.LC2>))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).56" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).57" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).57"
+  color: green
+  label: "insn 57
+(set (mem:SI (reg/f:SI 56 virtual-outgoing-args) [0 S4 A32])
+    (symbol_ref/f:SI (\"*.LC11\") [flags 0x2]  <var_decl 0xb729e180 *.LC11>))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).57" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).58" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).58"
+  color: darkgreen
+  label: "call_insn 58
+(call (mem:QI (symbol_ref:SI (\"__assert_fail\") [flags 0x41]  <function_decl 0xb7209280 __assert_fail>) [0 __assert_fail S1 A8])
+    (const_int 16 [0x10]))
+"
+}
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).58" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).60" color: green class: 3 }
+graph: {
+title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB12"
+folding: 1
+color: lightblue
+label: "basic block 12"
+
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).60"
+  color: darkgrey
+  shape: ellipse
+  label: "code_label 60
+ 12 92 \"\" [1 uses]
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).60" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).62" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).62"
+  color: green
+  label: "insn 62
+(set (reg/f:SI 73)
+    (mem/f/c:SI (reg/f:SI 53 virtual-incoming-args) [0 this+0 S4 A32]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).62" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).63" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).63"
+  color: green
+  label: "insn 63
+(set (reg/f:SI 74)
+    (mem/f/c:SI (plus:SI (reg/f:SI 54 virtual-stack-vars)
+            (const_int -4 [0xfffffffffffffffc])) [0 prev+0 S4 A32]))
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).63" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).64" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).64"
+  color: green
+  label: "insn 64
+(set (mem/f/j:SI (plus:SI (reg/f:SI 73)
+            (const_int 8 [0x8])) [0 this_4(D)->nodes+4 S4 A32])
+    (reg/f:SI 74))
+"
+}
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).64" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).65" }
+graph: {
+title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB13"
+folding: 1
+color: lightblue
+label: "basic block 13"
+
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).65"
+  color: darkgrey
+  shape: ellipse
+  label: "code_label 65
+ 13 91 \"\" [1 uses]
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).65" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).67" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).66"
+  color: lightgrey
+  label: "note 66
+ NOTE_INSN_BASIC_BLOCK"
+}
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).66" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).67" }
+graph: {
+title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB14"
+folding: 1
+color: lightblue
+label: "basic block 14"
+
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).67"
+  color: darkgrey
+  shape: ellipse
+  label: "code_label 67
+ 14 86 \"\" [0 uses]
+"
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).67" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).999999" }
+node: {
+  title: "void GrGraph::ExcludeNodeFromList(GrNode*).68"
+  color: lightgrey
+  label: "note 68
+ NOTE_INSN_BASIC_BLOCK"
+}
+}
+edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).68" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).999999" }
+node: { title: "void GrGraph::ExcludeNodeFromList(GrNode*).999999" label: "END" }
+}
+}
