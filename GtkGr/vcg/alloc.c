@@ -898,7 +898,6 @@ GEDGE   tmpedgealloc(
     int xclass,
     int prio,
     int ecolor,
-    int elcol,
     int arrows,
     int barrows,
     int arrowsty,
@@ -917,7 +916,6 @@ GEDGE   tmpedgealloc(
     EPRIO(h)        = prio;
     EHORDER(h)      = horder;
     ECOLOR(h)       = ecolor;
-    ELABELCOL(h)    = elcol;
     EARROWSTYLE(h)  = AS_SOLID;
     EARROWCOL(h)    = ecolor;
     EARROWSIZE(h)   = arrows;

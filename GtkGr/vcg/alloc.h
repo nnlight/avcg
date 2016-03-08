@@ -84,7 +84,7 @@ void  foldedgedefaults  _PP((GEDGE edge));
 void  inherit_foldedge_attributes   _PP((GEDGE fn, GEDGE y));
 void  copy_edgeattributes       _PP((GEDGE fn, GEDGE y));
 
-GEDGE tmpedgealloc _PP((int lstyle,int thick,int xclass,int prio,int ecolor,int elcol,int arrows,int barrows,int arrowsty,int barrowsty,int arrowc,int barrowc,int horder));
+GEDGE tmpedgealloc(int lstyle,int thick,int xclass,int prio,int ecolor,int arrows,int barrows,int arrowsty,int barrowsty,int arrowc,int barrowc,int horder);
 void near_edge_insert       _PP((GEDGE e));
 void bentnear_edge_insert   _PP((GEDGE e));
 void back_edge_insert       _PP((GEDGE e));

@@ -485,18 +485,16 @@ static void prepare_anchoredge(GEDGE edge)
             ECLASS(edge),
             200,
             ECOLOR(edge),       /* not used later */
-            ELABELCOL(edge),    /* not used later */
             0,
             EARROWBSIZE(edge),  /* not used later */
             AS_NONE,
-            EARROWBSTYLE(edge),     /* not used later */
+            EARROWBSTYLE(edge), /* not used later */
             EARROWCOL(edge),    /* not used later */
             EARROWBCOL(edge),   /* not used later */
             EHORDER(edge));
         EANCHOR(h) = 66;
         ESTART(h) = ESTART(edge);
         EEND(h)   = v;
-        ELABEL(h) = NULL;
         create_connection(ESTART(edge), v, h);
     }
     c = NCONNECT(ESTART(edge));
@@ -509,7 +507,6 @@ static void prepare_anchoredge(GEDGE edge)
         ECLASS(edge),
         EPRIO(edge),
         ECOLOR(edge),
-        ELABELCOL(edge),
         EARROWSIZE(edge),
         EARROWBSIZE(edge),
         EARROWSTYLE(edge),
@@ -521,6 +518,7 @@ static void prepare_anchoredge(GEDGE edge)
     ESTART(h) = v;
     EEND(h)   = EEND(edge);
     ELABEL(h) = ELABEL(edge);
+    ELABELCOL(h) = ELABELCOL(edge);
     delete_adjedge(edge);
     EINVISIBLE(edge) = 0;
     create_adjedge(h);
@@ -2640,7 +2638,10 @@ GEDGE revert_edge(GEDGE edge)
     EEND(edge) = h;
     if (EART(edge) == 'R')  EART(edge) = 'U';
     else if (EART(edge) == 'S')  EART(edge) = 'S';
-    else EART(edge) = 'R';
+    else {
+        assert(EART(edge) == 'U');
+        EART(edge) = 'R';
+    }
 
     hh = EARROWSIZE(edge);
     EARROWSIZE(edge)  = EARROWBSIZE(edge);
@@ -2676,7 +2677,6 @@ static GEDGE create_edge(GNODE start, GNODE end, GEDGE edge, int arrow)
         ECLASS(edge),
         EPRIO(edge),
         ECOLOR(edge),
-        ELABELCOL(edge),
         EARROWSIZE(edge),
         EARROWBSIZE(edge),
         EARROWSTYLE(edge),
@@ -2685,6 +2685,7 @@ static GEDGE create_edge(GNODE start, GNODE end, GEDGE edge, int arrow)
         EARROWBCOL(edge),
         EHORDER(edge));
     ELABEL(h) = ELABEL(edge);
+    ELABELCOL(h) = ELABELCOL(edge);
     EANCHOR(h) = EANCHOR(edge);
     ESTART(h) = start;
     EEND(h)   = end;

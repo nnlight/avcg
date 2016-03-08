@@ -1016,7 +1016,8 @@ static void edge_analyse(yysyntaxtree node, GEDGE defedge)
                     FPRINTF(stderr,"Line %d: near edge with label ignored !\n",
                             xfirst_line(node2));
                 }
-                else near_edge_insert(e);
+                else
+                    near_edge_insert(e);
                 break;
 
                 /*---------------- end of T_Co_near_edge ----------------------*/
@@ -1033,7 +1034,8 @@ static void edge_analyse(yysyntaxtree node, GEDGE defedge)
                     FPRINTF(stderr,"Line %d: near edge with anchorpoint neighbouring ignored !\n",
                             xfirst_line(node2));
                 }
-                else bentnear_edge_insert(e);
+                else
+                    bentnear_edge_insert(e);
                 break;
 
                 /*---------------- end of T_Co_near_edge ----------------------*/

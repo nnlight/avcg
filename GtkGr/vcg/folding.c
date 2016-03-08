@@ -1528,10 +1528,10 @@ static GNODE    search_visible(GNODE v)
  *   be replaced by edges to the summary node.
  *   As side effect, the invisibility flag of the edge is set, if the
  *   edge is invisible.
- *   This function returns e,           if e must be drawn,
- *             a substitution edge, if e is from a visible node
- *                      to an invisible aubgraph node
- *             NULL,        if e is invisible.
+ *   This function returns e,                   if e must be drawn,
+ *                         a substitution edge, if e is from a visible node
+ *                                              to an invisible aubgraph node
+ *                         NULL,                if e is invisible.
  *
  *   Note the situation we expect: edgelist contains all stable edge,
  *   independent of visible or not.
@@ -1577,6 +1577,7 @@ static GEDGE    substed_edge(GEDGE e)
 
     for (h = tmpedgelist; h; h = ENEXT(h))
     {
+        printf("!!!!!!!!!!!!!!!!!!!!!!\n");
         if ((ESTART(h)==ss) && (EEND(h)==tt)) return(h);
     }
 
@@ -1590,7 +1591,6 @@ static GEDGE    substed_edge(GEDGE e)
         ECLASS(e),
         EPRIO(e),
         ECOLOR(e),
-        ELABELCOL(e),
         EARROWSIZE(e),
         EARROWBSIZE(e),
         EARROWSTYLE(e),
@@ -1657,7 +1657,6 @@ static void create_lab_adjacencies(void)
                         ECLASS(e),
                         EPRIO(e),
                         ECOLOR(e),
-                        ELABELCOL(e),
                         0,
                         EARROWBSIZE(e),
                         AS_NONE,
@@ -1668,7 +1667,6 @@ static void create_lab_adjacencies(void)
                 EANCHOR(e1) = EANCHOR(e);
                 ESTART(e1)  = ESTART(e);
                 EEND(e1)    = v;
-                ELABEL(e1)  = NULL;
                 create_adjedge(e1);
                 e2 = tmpedgealloc(
                         ELSTYLE(e),
@@ -1676,7 +1674,6 @@ static void create_lab_adjacencies(void)
                         ECLASS(e),
                         EPRIO(e),
                         ECOLOR(e),
-                        ELABELCOL(e),
                         EARROWSIZE(e),
                         0,
                         EARROWSTYLE(e),
@@ -1686,10 +1683,10 @@ static void create_lab_adjacencies(void)
                         EHORDER(e));
                 ESTART(e2)  = v;
                 EEND(e2)    = EEND(e);
-                ELABEL(e2)  = NULL;
                 create_adjedge(e2);
             }
-            else create_adjedge(e);
+            else
+                create_adjedge(e);
         }
     }
 }
@@ -1791,7 +1788,8 @@ static void split_double_edges(void)
             for (c = FirstSucc(v); c; c = NextSucc(c))
             {
                 if ((c!=e)&&(ETARGET(c)==ETARGET(e))) {
-                    found++; break;
+                    found = 1;
+                    break;
                 }
             }
             if (found) {
@@ -1804,7 +1802,6 @@ static void split_double_edges(void)
                         ECLASS(e),
                         EPRIO(e),
                         ECOLOR(e),
-                        ELABELCOL(e),
                         0,
                         EARROWBSIZE(e),
                         AS_NONE,
@@ -1816,6 +1813,7 @@ static void split_double_edges(void)
                 ESTART(e1)  = v;
                 EEND(e1)    = w;
                 ELABEL(e1)  = ELABEL(e);
+                ELABELCOL(e1) = ELABELCOL(e);
                 create_adjedge(e1);
                 e2 = tmpedgealloc(
                         ELSTYLE(e),
@@ -1823,7 +1821,6 @@ static void split_double_edges(void)
                         ECLASS(e),
                         EPRIO(e),
                         ECOLOR(e),
-                        ELABELCOL(e),
                         EARROWSIZE(e),
                         0,
                         EARROWSTYLE(e),
@@ -1833,7 +1830,6 @@ static void split_double_edges(void)
                         EHORDER(e));
                 ESTART(e2)  = w;
                 EEND(e2)    = EEND(e);
-                ELABEL(e2)  = NULL;
                 create_adjedge(e2);
                 delete_adjedge(e);
             }
