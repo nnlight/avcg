@@ -220,6 +220,9 @@ static GNODE internal_nodealloc(void)
     NY(h)           = 0L;
     NSGRAPH(h)      = NULL;
     NROOT(h)        = NULL;
+    NREGREPL(h)     = NULL;
+    NREGION(h)      = NULL;
+    NREGROOT(h)     = NULL;
     NINLIST(h)      = 1;
     NINVISIBLE(h)   = 0;
     NTIEFE(h)       = -1;

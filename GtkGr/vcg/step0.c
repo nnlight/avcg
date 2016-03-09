@@ -1177,7 +1177,7 @@ static void graph_attributes(
 
     /* For the folding keepers */
 
-#if 0
+#if 1
     if (NFOLDING(v)==0) {
         /* for the initial folding: we must recognize the
          * foldstoppers.
@@ -1236,7 +1236,7 @@ static void node_attributes(
     if (NLABEL(v)==NULL) NLABEL(v) = NTITLE(v);
 
     /* For the folding keepers */
-#if 1
+#if 0
     if (NFOLDING(v)>=0 && !silent) {
         FPRINTF(stderr,"Folding attribute for nodes currently not implemented !\n");
     }
