@@ -66,7 +66,7 @@
 /* Copy the first part of user declarations.  */
 
 
-/************* FIRST USER DECLARATIONS *****/
+/****************** FIRST USER DECLARATIONS ***************************/
 
 #include <stdio.h>
 #include <string.h>
@@ -605,17 +605,17 @@ typedef union YYSTYPE
 {
 
 
-	unsigned char      byte;
-	short int          snum;
-	unsigned short int usnum;
-	int                num;
-	unsigned int       unum;
-	long int           lnum;
-	unsigned long int  ulnum;
-	float              realnum;
-	double             lrealnum;
-	char              *string;
-	yysyntaxtree       tree;
+        unsigned char      byte;
+        short int          snum;
+        unsigned short int usnum;
+        int                num;
+        unsigned int       unum;
+        long int           lnum;
+        unsigned long int  ulnum;
+        float              realnum;
+        double             lrealnum;
+        char              *string;
+        yysyntaxtree       tree;
 
 
 
@@ -642,7 +642,7 @@ typedef struct YYLTYPE
 /* Copy the second part of user declarations.  */
 
 
-/************* SECOND USER DECLARATIONS *****/
+/****************** SECOND USER DECLARATIONS **************************/
 
 
 
@@ -1083,38 +1083,38 @@ static const yytype_int16 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   365,   365,   371,   374,   380,   382,   384,   386,   388,
-     390,   392,   394,   396,   398,   400,   402,   407,   410,   413,
-     416,   419,   422,   425,   428,   431,   434,   437,   440,   442,
-     444,   447,   450,   453,   456,   459,   462,   465,   468,   471,
-     474,   478,   481,   484,   487,   490,   493,   496,   499,   502,
-     505,   508,   511,   514,   517,   520,   524,   527,   530,   533,
-     536,   539,   543,   546,   549,   552,   555,   558,   561,   564,
-     567,   570,   572,   575,   578,   581,   584,   587,   591,   594,
-     598,   601,   604,   608,   611,   614,   617,   621,   624,   627,
-     630,   633,   636,   639,   642,   646,   649,   652,   655,   658,
-     661,   664,   667,   673,   675,   677,   679,   681,   683,   685,
-     687,   689,   691,   693,   695,   697,   699,   701,   703,   705,
-     707,   709,   711,   713,   715,   717,   719,   721,   723,   725,
-     727,   729,   731,   733,   735,   737,   742,   744,   749,   751,
-     753,   755,   761,   763,   765,   767,   770,   772,   774,   776,
-     778,   780,   782,   784,   786,   788,   790,   792,   794,   800,
-     802,   807,   809,   811,   816,   818,   822,   824,   826,   828,
-     832,   834,   836,   838,   842,   844,   848,   853,   858,   863,
-     869,   875,   878,   884,   889,   894,   899,   905,   908,   914,
-     921,   924,   930,   933,   936,   939,   942,   945,   948,   951,
-     954,   957,   960,   963,   966,   969,   972,   975,   978,   981,
-     984,   987,   990,   993,   996,   999,  1002,  1005,  1008,  1011,
-    1016,  1018,  1020,  1024,  1026,  1028,  1030,  1034,  1036,  1038,
-    1042,  1044,  1046,  1051,  1054,  1057,  1060,  1063,  1066,  1069,
-    1072,  1075,  1078,  1081,  1084,  1087,  1090,  1093,  1096,  1099,
-    1102,  1105,  1108,  1111,  1117,  1119,  1121,  1123,  1125,  1130,
-    1132,  1134,  1138,  1141,  1144,  1147,  1150,  1153,  1156,  1161,
-    1164,  1168,  1170,  1172,  1174,  1176,  1178,  1180,  1182,  1184,
-    1186,  1188,  1190,  1192,  1194,  1196,  1198,  1200,  1202,  1204,
-    1206,  1208,  1210,  1212,  1214,  1216,  1218,  1222,  1224,  1226,
-    1230,  1232,  1234,  1236,  1238,  1242,  1247,  1250,  1254,  1256,
-    1259,  1262,  1267,  1272,  1276,  1280,  1284
+       0,   365,   365,   370,   372,   377,   378,   379,   380,   381,
+     382,   383,   384,   385,   386,   387,   388,   392,   394,   396,
+     398,   400,   402,   404,   406,   408,   410,   412,   414,   415,
+     416,   418,   420,   422,   424,   426,   428,   430,   432,   434,
+     436,   438,   440,   442,   444,   446,   448,   450,   452,   454,
+     456,   458,   460,   462,   464,   466,   469,   471,   473,   475,
+     477,   479,   482,   484,   486,   488,   490,   492,   494,   496,
+     498,   500,   501,   503,   505,   507,   509,   511,   514,   516,
+     519,   521,   523,   526,   528,   530,   532,   535,   537,   539,
+     541,   543,   545,   547,   549,   552,   554,   556,   558,   560,
+     562,   564,   566,   571,   572,   573,   574,   575,   576,   577,
+     578,   579,   580,   581,   582,   583,   584,   585,   586,   587,
+     588,   589,   590,   591,   592,   593,   594,   595,   596,   597,
+     598,   599,   600,   601,   602,   603,   607,   608,   612,   613,
+     614,   615,   620,   621,   622,   623,   624,   625,   626,   627,
+     628,   629,   630,   631,   632,   633,   634,   635,   636,   641,
+     642,   646,   647,   648,   652,   653,   656,   657,   658,   659,
+     662,   663,   664,   665,   668,   669,   672,   676,   680,   684,
+     689,   694,   696,   701,   705,   709,   713,   718,   720,   725,
+     731,   733,   738,   740,   742,   744,   746,   748,   750,   752,
+     754,   756,   758,   760,   762,   764,   766,   768,   770,   772,
+     774,   776,   778,   780,   782,   784,   786,   788,   790,   792,
+     796,   797,   798,   801,   802,   803,   804,   807,   808,   809,
+     812,   813,   814,   818,   820,   822,   824,   826,   828,   830,
+     832,   834,   836,   838,   840,   842,   844,   846,   848,   850,
+     852,   854,   856,   858,   863,   864,   865,   866,   867,   871,
+     872,   873,   876,   878,   880,   882,   884,   886,   888,   892,
+     894,   897,   898,   899,   900,   901,   902,   903,   904,   905,
+     906,   907,   908,   909,   910,   911,   912,   913,   914,   915,
+     916,   917,   918,   919,   920,   921,   922,   925,   926,   927,
+     930,   931,   932,   933,   934,   937,   941,   943,   947,   948,
+     950,   952,   956,   960,   963,   966,   969
 };
 #endif
 
@@ -2752,1892 +2752,1577 @@ yyreduce:
     {
         case 2:
 
-    {
-		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); Syntax_Tree = (yyval.tree); }
+    { (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); Syntax_Tree = (yyval.tree); }
     break;
 
   case 3:
 
-    {
-		 (yyval.tree) = T_graph_entry((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
+    { (yyval.tree) = T_graph_entry((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
     break;
 
   case 4:
 
-    {
-		 (yyval.tree) = T_graph_entry((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_graph_entry((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 5:
 
-    {
-		 (yyval.tree) = T_graph_attribute((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_graph_attribute((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 6:
 
-    {
-		 (yyval.tree) = T_node_defaults((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));   }
+    { (yyval.tree) = T_node_defaults((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 7:
 
-    {
-		 (yyval.tree) = T_edge_defaults((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));   }
+    { (yyval.tree) = T_edge_defaults((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 8:
 
-    {
-		 (yyval.tree) = T_foldnode_defaults((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));}
+    { (yyval.tree) = T_foldnode_defaults((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));}
     break;
 
   case 9:
 
-    {
-		 (yyval.tree) = T_foldedge_defaults((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));}
+    { (yyval.tree) = T_foldedge_defaults((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));}
     break;
 
   case 10:
 
-    {
-		 (yyval.tree) = T_graph((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));           }
+    { (yyval.tree) = T_graph((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));            }
     break;
 
   case 11:
 
-    {
-		 (yyval.tree) = T_node((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));            }
+    { (yyval.tree) = T_node((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));             }
     break;
 
   case 12:
 
-    {
-		 (yyval.tree) = T_edge((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));            }
+    { (yyval.tree) = T_edge((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));             }
     break;
 
   case 13:
 
-    {
-		 (yyval.tree) = T_near_edge((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));       }
+    { (yyval.tree) = T_near_edge((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 14:
 
-    {
-		 (yyval.tree) = T_bent_near_edge((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));  }
+    { (yyval.tree) = T_bent_near_edge((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 15:
 
-    {
-		 (yyval.tree) = T_back_edge((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));       }
+    { (yyval.tree) = T_back_edge((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 16:
 
-    {
-		 (yyval.tree) = T_constraint((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));      }
+    { (yyval.tree) = T_constraint((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 17:
 
-    {
-		 (yyval.tree) = T_title((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
+    { (yyval.tree) = T_title((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 18:
 
-    {
-		 (yyval.tree) = T_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
+    { (yyval.tree) = T_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 19:
 
-    {
-		 (yyval.tree) = T_info1((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
+    { (yyval.tree) = T_info1((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 20:
 
-    {
-		 (yyval.tree) = T_info2((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
+    { (yyval.tree) = T_info2((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 21:
 
-    {
-		 (yyval.tree) = T_info3((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
+    { (yyval.tree) = T_info3((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 22:
 
-    {
-		 (yyval.tree) = T_color((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
+    { (yyval.tree) = T_color((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 23:
 
-    {
-		 (yyval.tree) = T_textcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));          }
+    { (yyval.tree) = T_textcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));          }
     break;
 
   case 24:
 
-    {
-		 (yyval.tree) = T_colorborder((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
+    { (yyval.tree) = T_colorborder((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 25:
 
-    {
-		 (yyval.tree) = T_width((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
+    { (yyval.tree) = T_width((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 26:
 
-    {
-		 (yyval.tree) = T_height((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
+    { (yyval.tree) = T_height((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
 
   case 27:
 
-    {
-		 (yyval.tree) = T_borderwidth((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
+    { (yyval.tree) = T_borderwidth((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 28:
 
-    {
-		 (yyval.tree) = T_xdef((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));               }
+    { (yyval.tree) = T_xdef((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));               }
     break;
 
   case 29:
 
-    {
-		 (yyval.tree) = T_ydef((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));               }
+    { (yyval.tree) = T_ydef((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));               }
     break;
 
   case 30:
 
-    {
-		 (yyval.tree) = T_loc((yyvsp[(5) - (9)].tree),(yyvsp[(8) - (9)].tree),yylocate((yylsp[(1) - (9)])));       }
+    { (yyval.tree) = T_loc((yyvsp[(5) - (9)].tree),(yyvsp[(8) - (9)].tree),yylocate((yylsp[(1) - (9)])));             }
     break;
 
   case 31:
 
-    {
-		 (yyval.tree) = T_folding((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
+    { (yyval.tree) = T_folding((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 32:
 
-    {
-		 (yyval.tree) = T_scaling((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
+    { (yyval.tree) = T_scaling((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 33:
 
-    {
-		 (yyval.tree) = T_shrink((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
+    { (yyval.tree) = T_shrink((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
 
   case 34:
 
-    {
-		 (yyval.tree) = T_stretch((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
+    { (yyval.tree) = T_stretch((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 35:
 
-    {
-		 (yyval.tree) = T_textmode((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
+    { (yyval.tree) = T_textmode((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
     break;
 
   case 36:
 
-    {
-		 (yyval.tree) = T_shape((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    	       }
+    { (yyval.tree) = T_shape((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 37:
 
-    {
-		 (yyval.tree) = T_level((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
+    { (yyval.tree) = T_level((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 38:
 
-    {
-		 (yyval.tree) = T_level((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
+    { (yyval.tree) = T_level((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 39:
 
-    {
-		 (yyval.tree) = T_horizontal_order((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   }
+    { (yyval.tree) = T_horizontal_order((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   }
     break;
 
   case 40:
 
-    {
-		 (yyval.tree) = T_status((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
+    { (yyval.tree) = T_status((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
 
   case 41:
 
-    {
-		 (yyval.tree) = T_xmax((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));               }
+    { (yyval.tree) = T_xmax((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));               }
     break;
 
   case 42:
 
-    {
-		 (yyval.tree) = T_ymax((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));               }
+    { (yyval.tree) = T_ymax((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));               }
     break;
 
   case 43:
 
-    {
-		 (yyval.tree) = T_xbase((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
+    { (yyval.tree) = T_xbase((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 44:
 
-    {
-		 (yyval.tree) = T_ybase((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
+    { (yyval.tree) = T_ybase((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));              }
     break;
 
   case 45:
 
-    {
-		 (yyval.tree) = T_xspace((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
+    { (yyval.tree) = T_xspace((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
 
   case 46:
 
-    {
-		 (yyval.tree) = T_xlspace((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
+    { (yyval.tree) = T_xlspace((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 47:
 
-    {
-		 (yyval.tree) = T_yspace((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
+    { (yyval.tree) = T_yspace((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
 
   case 48:
 
-    {
-		 (yyval.tree) = T_xraster((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
+    { (yyval.tree) = T_xraster((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 49:
 
-    {
-		 (yyval.tree) = T_xlraster((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
+    { (yyval.tree) = T_xlraster((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
     break;
 
   case 50:
 
-    {
-		 (yyval.tree) = T_yraster((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
+    { (yyval.tree) = T_yraster((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 51:
 
-    {
-		 (yyval.tree) = T_hidden((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); 	       }
+    { (yyval.tree) = T_hidden((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
 
   case 52:
 
-    {
-		 (yyval.tree) = T_hidden((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); 	       }
+    { (yyval.tree) = T_hidden((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));             }
     break;
 
   case 53:
 
-    {
-		 (yyval.tree) = T_classname((yyvsp[(2) - (4)].tree),(yyvsp[(4) - (4)].tree),yylocate((yylsp[(1) - (4)])));       }
+    { (yyval.tree) = T_classname((yyvsp[(2) - (4)].tree),(yyvsp[(4) - (4)].tree),yylocate((yylsp[(1) - (4)])));       }
     break;
 
   case 54:
 
-    {
-		 (yyval.tree) = T_infoname((yyvsp[(2) - (4)].tree),(yyvsp[(4) - (4)].tree),yylocate((yylsp[(1) - (4)])));        }
+    { (yyval.tree) = T_infoname((yyvsp[(2) - (4)].tree),(yyvsp[(4) - (4)].tree),yylocate((yylsp[(1) - (4)])));        }
     break;
 
   case 55:
 
-    {
-		 (yyval.tree) = T_colentry((yyvsp[(2) - (6)].tree),(yyvsp[(4) - (6)].tree),(yyvsp[(5) - (6)].tree),(yyvsp[(6) - (6)].tree),yylocate((yylsp[(1) - (6)])));   }
+    { (yyval.tree) = T_colentry((yyvsp[(2) - (6)].tree),(yyvsp[(4) - (6)].tree),(yyvsp[(5) - (6)].tree),(yyvsp[(6) - (6)].tree),yylocate((yylsp[(1) - (6)])));  }
     break;
 
   case 56:
 
-    {
-		 (yyval.tree) = T_layoutalgorithm((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_layoutalgorithm((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 57:
 
-    {
-		 (yyval.tree) = T_layoutfrequency((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_layoutfrequency((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 58:
 
-    {
-		 (yyval.tree) = T_downfactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
+    { (yyval.tree) = T_downfactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 59:
 
-    {
-		 (yyval.tree) = T_upfactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
+    { (yyval.tree) = T_upfactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
     break;
 
   case 60:
 
-    {
-		 (yyval.tree) = T_nearfactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
+    { (yyval.tree) = T_nearfactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 61:
 
-    {
-		 (yyval.tree) = T_splinefactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
+    { (yyval.tree) = T_splinefactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 62:
 
-    {
-		 (yyval.tree) = T_late_edge_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_late_edge_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 63:
 
-    {
-		 (yyval.tree) = T_display_edge_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
+    { (yyval.tree) = T_display_edge_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
 
   case 64:
 
-    {
-		 (yyval.tree) = T_dirty_edge_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   }
+    { (yyval.tree) = T_dirty_edge_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   }
     break;
 
   case 65:
 
-    {
-		 (yyval.tree) = T_finetuning((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));	       }
+    { (yyval.tree) = T_finetuning((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 66:
 
-    {
-		 (yyval.tree) = T_hidesingles((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
+    { (yyval.tree) = T_hidesingles((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 67:
 
-    {
-		 (yyval.tree) = T_straightphase((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));	       }
+    { (yyval.tree) = T_straightphase((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 68:
 
-    {
-		 (yyval.tree) = T_priophase((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));	       }
+    { (yyval.tree) = T_priophase((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));          }
     break;
 
   case 69:
 
-    {
-		 (yyval.tree) = T_manhatten((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));	       }
+    { (yyval.tree) = T_manhatten((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));          }
     break;
 
   case 70:
 
-    {
-		 (yyval.tree) = T_smanhatten((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));	       }
+    { (yyval.tree) = T_smanhatten((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 71:
 
-    {
-		 (yyval.tree) = T_nonearedges(yylocate((yylsp[(1) - (1)])));	       }
+    { (yyval.tree) = T_nonearedges(yylocate((yylsp[(1) - (1)])));           }
     break;
 
   case 72:
 
-    {
-		 (yyval.tree) = T_nonearedges(yylocate((yylsp[(1) - (3)])));	       }
+    { (yyval.tree) = T_nonearedges(yylocate((yylsp[(1) - (3)])));           }
     break;
 
   case 73:
 
-    {
-		 (yyval.tree) = T_dummy(yylocate((yylsp[(1) - (3)])));	     	       }
+    { (yyval.tree) = T_dummy(yylocate((yylsp[(1) - (3)])));                 }
     break;
 
   case 74:
 
-    {
-		 (yyval.tree) = T_orientation((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
+    { (yyval.tree) = T_orientation((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 75:
 
-    {
-		 (yyval.tree) = T_node_alignment((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
+    { (yyval.tree) = T_node_alignment((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
 
   case 76:
 
-    {
-		 (yyval.tree) = T_port_sharing((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
+    { (yyval.tree) = T_port_sharing((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 77:
 
-    {
-		 (yyval.tree) = T_arrow_mode((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
+    { (yyval.tree) = T_arrow_mode((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 78:
 
-    {
-		 (yyval.tree) = T_spreadlevel((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
+    { (yyval.tree) = T_spreadlevel((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 79:
 
-    {
-		 (yyval.tree) = T_treefactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
+    { (yyval.tree) = T_treefactor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 80:
 
-    {
-		 (yyval.tree) = T_crossing_phase2((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_crossing_phase2((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 81:
 
-    {
-		 (yyval.tree) = T_crossing_opt((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
+    { (yyval.tree) = T_crossing_opt((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 82:
 
-    {
-		 (yyval.tree) = T_crossing_weight((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_crossing_weight((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 83:
 
-    {
-		 (yyval.tree) = T_view_method((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       	}
+    { (yyval.tree) = T_view_method((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 84:
 
-    {
-		 (yyval.tree) = T_view_edges((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       	}
+    { (yyval.tree) = T_view_edges((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 85:
 
-    {
-		 (yyval.tree) = T_view_nodes((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       	}
+    { (yyval.tree) = T_view_nodes((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 86:
 
-    {
-		 (yyval.tree) = T_view_splines((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  	}
+    { (yyval.tree) = T_view_splines((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 87:
 
-    {
-		 (yyval.tree) = T_bend_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   		}
+    { (yyval.tree) = T_bend_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
     break;
 
   case 88:
 
-    {
-		 (yyval.tree) = T_cross_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  		}
+    { (yyval.tree) = T_cross_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));          }
     break;
 
   case 89:
 
-    {
-		 (yyval.tree) = T_cross_min((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  		}
+    { (yyval.tree) = T_cross_min((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));          }
     break;
 
   case 90:
 
-    {
-		 (yyval.tree) = T_pendel_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); 		}
+    { (yyval.tree) = T_pendel_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 91:
 
-    {
-		 (yyval.tree) = T_pendel_min((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  	}
+    { (yyval.tree) = T_pendel_min((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 92:
 
-    {
-		 (yyval.tree) = T_rubber_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); 		}
+    { (yyval.tree) = T_rubber_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 93:
 
-    {
-		 (yyval.tree) = T_rubber_min((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  	}
+    { (yyval.tree) = T_rubber_min((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 94:
 
-    {
-		 (yyval.tree) = T_straight_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); 	}
+    { (yyval.tree) = T_straight_max((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 95:
 
-    {
-		 (yyval.tree) = T_typename((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
+    { (yyval.tree) = T_typename((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
     break;
 
   case 96:
 
-    {
-		 (yyval.tree) = T_include((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
+    { (yyval.tree) = T_include((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 97:
 
-    {
-		 (yyval.tree) = T_layoutparameter((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_layoutparameter((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 98:
 
-    {
-		 (yyval.tree) = T_topsort((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
+    { (yyval.tree) = T_topsort((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 99:
 
-    {
-		 (yyval.tree) = T_inputfunction((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
+    { (yyval.tree) = T_inputfunction((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 100:
 
-    {
-		 (yyval.tree) = T_outputfunction((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
+    { (yyval.tree) = T_outputfunction((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
 
   case 101:
 
-    {
-		 (yyval.tree) = T_xscrollbar((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
+    { (yyval.tree) = T_xscrollbar((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 102:
 
-    {
-		 (yyval.tree) = T_yscrollbar((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
+    { (yyval.tree) = T_yscrollbar((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 103:
 
-    {
-		 (yyval.tree) = T_aquamarine(yylocate((yylsp[(1) - (1)])));   }
+    { (yyval.tree) = T_aquamarine(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 104:
 
-    {
-		 (yyval.tree) = T_black(yylocate((yylsp[(1) - (1)])));        }
+    { (yyval.tree) = T_black(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 105:
 
-    {
-		 (yyval.tree) = T_blue(yylocate((yylsp[(1) - (1)])));         }
+    { (yyval.tree) = T_blue(yylocate((yylsp[(1) - (1)])));         }
     break;
 
   case 106:
 
-    {
-		 (yyval.tree) = T_cyan(yylocate((yylsp[(1) - (1)])));         }
+    { (yyval.tree) = T_cyan(yylocate((yylsp[(1) - (1)])));         }
     break;
 
   case 107:
 
-    {
-		 (yyval.tree) = T_darkblue(yylocate((yylsp[(1) - (1)])));     }
+    { (yyval.tree) = T_darkblue(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 108:
 
-    {
-		 (yyval.tree) = T_darkcyan(yylocate((yylsp[(1) - (1)])));     }
+    { (yyval.tree) = T_darkcyan(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 109:
 
-    {
-		 (yyval.tree) = T_darkgreen(yylocate((yylsp[(1) - (1)])));    }
+    { (yyval.tree) = T_darkgreen(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 110:
 
-    {
-		 (yyval.tree) = T_darkgrey(yylocate((yylsp[(1) - (1)])));     }
+    { (yyval.tree) = T_darkgrey(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 111:
 
-    {
-		 (yyval.tree) = T_darkmagenta(yylocate((yylsp[(1) - (1)])));  }
+    { (yyval.tree) = T_darkmagenta(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 112:
 
-    {
-		 (yyval.tree) = T_darkred(yylocate((yylsp[(1) - (1)])));      }
+    { (yyval.tree) = T_darkred(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 113:
 
-    {
-		 (yyval.tree) = T_darkyellow(yylocate((yylsp[(1) - (1)])));   }
+    { (yyval.tree) = T_darkyellow(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 114:
 
-    {
-		 (yyval.tree) = T_gold(yylocate((yylsp[(1) - (1)])));         }
+    { (yyval.tree) = T_gold(yylocate((yylsp[(1) - (1)])));         }
     break;
 
   case 115:
 
-    {
-		 (yyval.tree) = T_green(yylocate((yylsp[(1) - (1)])));        }
+    { (yyval.tree) = T_green(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 116:
 
-    {
-		 (yyval.tree) = T_khaki(yylocate((yylsp[(1) - (1)])));        }
+    { (yyval.tree) = T_khaki(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 117:
 
-    {
-		 (yyval.tree) = T_lightblue(yylocate((yylsp[(1) - (1)])));    }
+    { (yyval.tree) = T_lightblue(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 118:
 
-    {
-		 (yyval.tree) = T_lightcyan(yylocate((yylsp[(1) - (1)])));    }
+    { (yyval.tree) = T_lightcyan(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 119:
 
-    {
-		 (yyval.tree) = T_lightgreen(yylocate((yylsp[(1) - (1)])));   }
+    { (yyval.tree) = T_lightgreen(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 120:
 
-    {
-		 (yyval.tree) = T_lightgrey(yylocate((yylsp[(1) - (1)])));    }
+    { (yyval.tree) = T_lightgrey(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 121:
 
-    {
-		 (yyval.tree) = T_lightmagenta(yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_lightmagenta(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 122:
 
-    {
-		 (yyval.tree) = T_lightred(yylocate((yylsp[(1) - (1)])));     }
+    { (yyval.tree) = T_lightred(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 123:
 
-    {
-		 (yyval.tree) = T_lightyellow(yylocate((yylsp[(1) - (1)])));  }
+    { (yyval.tree) = T_lightyellow(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 124:
 
-    {
-		 (yyval.tree) = T_lilac(yylocate((yylsp[(1) - (1)])));        }
+    { (yyval.tree) = T_lilac(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 125:
 
-    {
-		 (yyval.tree) = T_magenta(yylocate((yylsp[(1) - (1)])));      }
+    { (yyval.tree) = T_magenta(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 126:
 
-    {
-		 (yyval.tree) = T_orange(yylocate((yylsp[(1) - (1)])));       }
+    { (yyval.tree) = T_orange(yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 127:
 
-    {
-		 (yyval.tree) = T_orchid(yylocate((yylsp[(1) - (1)])));       }
+    { (yyval.tree) = T_orchid(yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 128:
 
-    {
-		 (yyval.tree) = T_pink(yylocate((yylsp[(1) - (1)])));         }
+    { (yyval.tree) = T_pink(yylocate((yylsp[(1) - (1)])));         }
     break;
 
   case 129:
 
-    {
-		 (yyval.tree) = T_purple(yylocate((yylsp[(1) - (1)])));       }
+    { (yyval.tree) = T_purple(yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 130:
 
-    {
-		 (yyval.tree) = T_red(yylocate((yylsp[(1) - (1)])));          }
+    { (yyval.tree) = T_red(yylocate((yylsp[(1) - (1)])));          }
     break;
 
   case 131:
 
-    {
-		 (yyval.tree) = T_turquoise(yylocate((yylsp[(1) - (1)])));    }
+    { (yyval.tree) = T_turquoise(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 132:
 
-    {
-		 (yyval.tree) = T_white(yylocate((yylsp[(1) - (1)])));        }
+    { (yyval.tree) = T_white(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 133:
 
-    {
-		 (yyval.tree) = T_yellow(yylocate((yylsp[(1) - (1)])));       }
+    { (yyval.tree) = T_yellow(yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 134:
 
-    {
-		 (yyval.tree) = T_yellowgreen(yylocate((yylsp[(1) - (1)])));  }
+    { (yyval.tree) = T_yellowgreen(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 135:
 
-    {
-		 (yyval.tree) = T_colindex((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));   }
+    { (yyval.tree) = T_colindex((yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 136:
 
-    {
-		 (yyval.tree) = T_high(yylocate((yylsp[(1) - (1)]))); 	       }
+    { (yyval.tree) = T_high(yylocate((yylsp[(1) - (1)])));         }
     break;
 
   case 137:
 
-    {
-		 (yyval.tree) = T_low(yylocate((yylsp[(1) - (1)])));          }
+    { (yyval.tree) = T_low(yylocate((yylsp[(1) - (1)])));          }
     break;
 
   case 138:
 
-    {
-		 (yyval.tree) = T_top_to_bottom(yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_top_to_bottom(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 139:
 
-    {
-		 (yyval.tree) = T_bottom_to_top(yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_bottom_to_top(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 140:
 
-    {
-		 (yyval.tree) = T_left_to_right(yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_left_to_right(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 141:
 
-    {
-		 (yyval.tree) = T_right_to_left(yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_right_to_left(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 142:
 
-    {
-		 (yyval.tree) = T_barycenter(yylocate((yylsp[(1) - (1)])));    }
+    { (yyval.tree) = T_barycenter(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 143:
 
-    {
-		 (yyval.tree) = T_isi(yylocate((yylsp[(1) - (1)])));           }
+    { (yyval.tree) = T_isi(yylocate((yylsp[(1) - (1)])));           }
     break;
 
   case 144:
 
-    {
-		 (yyval.tree) = T_planar(yylocate((yylsp[(1) - (1)])));        }
+    { (yyval.tree) = T_planar(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 145:
 
-    {
-		 (yyval.tree) = T_constaints(yylocate((yylsp[(1) - (1)])));    }
+    { (yyval.tree) = T_constaints(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 146:
 
-    {
-		 (yyval.tree) = T_tree(yylocate((yylsp[(1) - (1)])));          }
+    { (yyval.tree) = T_tree(yylocate((yylsp[(1) - (1)])));          }
     break;
 
   case 147:
 
-    {
-		 (yyval.tree) = T_maxdepth(yylocate((yylsp[(1) - (1)])));      }
+    { (yyval.tree) = T_maxdepth(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 148:
 
-    {
-		 (yyval.tree) = T_mindepth(yylocate((yylsp[(1) - (1)])));      }
+    { (yyval.tree) = T_mindepth(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 149:
 
-    {
-		 (yyval.tree) = T_maxdepthslow(yylocate((yylsp[(1) - (1)])));  }
+    { (yyval.tree) = T_maxdepthslow(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 150:
 
-    {
-		 (yyval.tree) = T_mindepthslow(yylocate((yylsp[(1) - (1)])));  }
+    { (yyval.tree) = T_mindepthslow(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 151:
 
-    {
-		 (yyval.tree) = T_maxdegree(yylocate((yylsp[(1) - (1)])));     }
+    { (yyval.tree) = T_maxdegree(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 152:
 
-    {
-		 (yyval.tree) = T_mindegree(yylocate((yylsp[(1) - (1)])));     }
+    { (yyval.tree) = T_mindegree(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 153:
 
-    {
-		 (yyval.tree) = T_maxindegree(yylocate((yylsp[(1) - (1)])));   }
+    { (yyval.tree) = T_maxindegree(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 154:
 
-    {
-		 (yyval.tree) = T_minindegree(yylocate((yylsp[(1) - (1)])));   }
+    { (yyval.tree) = T_minindegree(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 155:
 
-    {
-		 (yyval.tree) = T_maxoutdegree(yylocate((yylsp[(1) - (1)])));  }
+    { (yyval.tree) = T_maxoutdegree(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 156:
 
-    {
-		 (yyval.tree) = T_minoutdegree(yylocate((yylsp[(1) - (1)])));  }
+    { (yyval.tree) = T_minoutdegree(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 157:
 
-    {
-		 (yyval.tree) = T_minbackwards(yylocate((yylsp[(1) - (1)])));  }
+    { (yyval.tree) = T_minbackwards(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 158:
 
-    {
-		 (yyval.tree) = T_depthfirst(yylocate((yylsp[(1) - (1)])));    }
+    { (yyval.tree) = T_depthfirst(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 159:
 
-    {
-		 (yyval.tree) = T_every(yylocate((yylsp[(1) - (1)]))); 	}
+    { (yyval.tree) = T_every(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 160:
 
-    {
-		 (yyval.tree) = T_manual(yylocate((yylsp[(1) - (1)]))); 	}
+    { (yyval.tree) = T_manual(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 161:
 
-    {
-		 (yyval.tree) = T_black(yylocate((yylsp[(1) - (1)]))); 	}
+    { (yyval.tree) = T_black(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 162:
 
-    {
-		 (yyval.tree) = T_grey(yylocate((yylsp[(1) - (1)]))); 		}
+    { (yyval.tree) = T_grey(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 163:
 
-    {
-		 (yyval.tree) = T_white(yylocate((yylsp[(1) - (1)]))); 	}
+    { (yyval.tree) = T_white(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 164:
 
-    {
-		 (yyval.tree) = T_yes(yylocate((yylsp[(1) - (1)]))); 		}
+    { (yyval.tree) = T_yes(yylocate((yylsp[(1) - (1)])));              }
     break;
 
   case 165:
 
-    {
-		 (yyval.tree) = T_no(yylocate((yylsp[(1) - (1)]))); 		}
+    { (yyval.tree) = T_no(yylocate((yylsp[(1) - (1)])));               }
     break;
 
   case 166:
 
-    {
-		 (yyval.tree) = T_bary(yylocate((yylsp[(1) - (1)]))); 	       }
+    { (yyval.tree) = T_bary(yylocate((yylsp[(1) - (1)])));         }
     break;
 
   case 167:
 
-    {
-		 (yyval.tree) = T_median(yylocate((yylsp[(1) - (1)])));       }
+    { (yyval.tree) = T_median(yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 168:
 
-    {
-		 (yyval.tree) = T_barymedian(yylocate((yylsp[(1) - (1)])));   }
+    { (yyval.tree) = T_barymedian(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 169:
 
-    {
-		 (yyval.tree) = T_medianbary(yylocate((yylsp[(1) - (1)])));   }
+    { (yyval.tree) = T_medianbary(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 170:
 
-    {
-		 (yyval.tree) = T_cfish(yylocate((yylsp[(1) - (1)]))); 	}
+    { (yyval.tree) = T_cfish(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 171:
 
-    {
-		 (yyval.tree) = T_fcfish(yylocate((yylsp[(1) - (1)])));	}
+    { (yyval.tree) = T_fcfish(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 172:
 
-    {
-		 (yyval.tree) = T_pfish(yylocate((yylsp[(1) - (1)]))); 	}
+    { (yyval.tree) = T_pfish(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 173:
 
-    {
-		 (yyval.tree) = T_fpfish(yylocate((yylsp[(1) - (1)])));	}
+    { (yyval.tree) = T_fpfish(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 174:
 
-    {
-		 (yyval.tree) = T_fixed(yylocate((yylsp[(1) - (1)])));         }
+    { (yyval.tree) = T_fixed(yylocate((yylsp[(1) - (1)])));         }
     break;
 
   case 175:
 
-    {
-		 (yyval.tree) = T_free(yylocate((yylsp[(1) - (1)])));          }
+    { (yyval.tree) = T_free(yylocate((yylsp[(1) - (1)])));          }
     break;
 
   case 176:
 
-    {
-		 (yyval.tree) = (yyvsp[(2) - (2)].tree);              }
+    { (yyval.tree) = (yyvsp[(2) - (2)].tree);              }
     break;
 
   case 177:
 
-    {
-		 (yyval.tree) = (yyvsp[(2) - (2)].tree);              }
+    { (yyval.tree) = (yyvsp[(2) - (2)].tree);              }
     break;
 
   case 178:
 
-    {
-		 (yyval.tree) = (yyvsp[(2) - (2)].tree);              }
+    { (yyval.tree) = (yyvsp[(2) - (2)].tree);              }
     break;
 
   case 179:
 
-    {
-		 (yyval.tree) = (yyvsp[(2) - (2)].tree);              }
+    { (yyval.tree) = (yyvsp[(2) - (2)].tree);              }
     break;
 
   case 180:
 
-    {
-		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
+    { (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
 
   case 181:
 
-    {
-		 (yyval.tree) = T_node_attribute((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
+    { (yyval.tree) = T_node_attribute((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
     break;
 
   case 182:
 
-    {
-		 (yyval.tree) = T_node_attribute((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_node_attribute((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 183:
 
-    {
-		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
+    { (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
 
   case 184:
 
-    {
-		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
+    { (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
 
   case 185:
 
-    {
-		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
+    { (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
 
   case 186:
 
-    {
-		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
+    { (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
 
   case 187:
 
-    {
-		 (yyval.tree) = T_edge_attribute((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
+    { (yyval.tree) = T_edge_attribute((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
     break;
 
   case 188:
 
-    {
-		 (yyval.tree) = T_edge_attribute((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_edge_attribute((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 189:
 
-    {
-		 (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
+    { (yyval.tree) = REVERT((yyvsp[(3) - (4)].tree)); }
     break;
 
   case 190:
 
-    {
-		 (yyval.tree) = T_constraint_attribute((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
+    { (yyval.tree) = T_constraint_attribute((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
     break;
 
   case 191:
 
-    {
-		 (yyval.tree) = T_constraint_attribute((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_constraint_attribute((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 192:
 
-    {
-		 (yyval.tree) = T_title((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
+    { (yyval.tree) = T_title((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 193:
 
-    {
-		 (yyval.tree) = T_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
+    { (yyval.tree) = T_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 194:
 
-    {
-		 (yyval.tree) = T_info1((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
+    { (yyval.tree) = T_info1((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 195:
 
-    {
-		 (yyval.tree) = T_info2((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
+    { (yyval.tree) = T_info2((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 196:
 
-    {
-		 (yyval.tree) = T_info3((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
+    { (yyval.tree) = T_info3((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 197:
 
-    {
-		 (yyval.tree) = T_fontname((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
+    { (yyval.tree) = T_fontname((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 198:
 
-    {
-		 (yyval.tree) = T_color((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
+    { (yyval.tree) = T_color((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 199:
 
-    {
-		 (yyval.tree) = T_textcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_textcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 200:
 
-    {
-		 (yyval.tree) = T_bordercolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  }
+    { (yyval.tree) = T_bordercolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 201:
 
-    {
-		 (yyval.tree) = T_iconfile((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
+    { (yyval.tree) = T_iconfile((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 202:
 
-    {
-		 (yyval.tree) = T_anchorpoints((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
+    { (yyval.tree) = T_anchorpoints((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
 
   case 203:
 
-    {
-		 (yyval.tree) = T_typename((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
+    { (yyval.tree) = T_typename((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 204:
 
-    {
-		 (yyval.tree) = T_width((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
+    { (yyval.tree) = T_width((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 205:
 
-    {
-		 (yyval.tree) = T_height((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
+    { (yyval.tree) = T_height((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
     break;
 
   case 206:
 
-    {
-		 (yyval.tree) = T_borderwidth((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  }
+    { (yyval.tree) = T_borderwidth((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 207:
 
-    {
-		 (yyval.tree) = T_loc((yyvsp[(5) - (9)].tree),(yyvsp[(8) - (9)].tree),yylocate((yylsp[(1) - (9)])));       }
+    { (yyval.tree) = T_loc((yyvsp[(5) - (9)].tree),(yyvsp[(8) - (9)].tree),yylocate((yylsp[(1) - (9)])));           }
     break;
 
   case 208:
 
-    {
-		 (yyval.tree) = T_folding((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
+    { (yyval.tree) = T_folding((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));          }
     break;
 
   case 209:
 
-    {
-		 (yyval.tree) = T_scaling((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
+    { (yyval.tree) = T_scaling((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));          }
     break;
 
   case 210:
 
-    {
-		 (yyval.tree) = T_shrink((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
+    { (yyval.tree) = T_shrink((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
     break;
 
   case 211:
 
-    {
-		 (yyval.tree) = T_stretch((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
+    { (yyval.tree) = T_stretch((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));          }
     break;
 
   case 212:
 
-    {
-		 (yyval.tree) = T_iconwidth((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_iconwidth((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 213:
 
-    {
-		 (yyval.tree) = T_iconheight((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   }
+    { (yyval.tree) = T_iconheight((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 214:
 
-    {
-		 (yyval.tree) = T_textmode((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
+    { (yyval.tree) = T_textmode((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 215:
 
-    {
-		 (yyval.tree) = T_iconstyle((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_iconstyle((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 216:
 
-    {
-		 (yyval.tree) = T_shape((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    	 }
+    { (yyval.tree) = T_shape((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 217:
 
-    {
-		 (yyval.tree) = T_level((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
+    { (yyval.tree) = T_level((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 218:
 
-    {
-		 (yyval.tree) = T_level((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
+    { (yyval.tree) = T_level((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 219:
 
-    {
-		 (yyval.tree) = T_horizontal_order((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
+    { (yyval.tree) = T_horizontal_order((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
 
   case 220:
 
-    {
-		 (yyval.tree) = T_center(yylocate((yylsp[(1) - (1)])));        }
+    { (yyval.tree) = T_center(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 221:
 
-    {
-		 (yyval.tree) = T_left_justify(yylocate((yylsp[(1) - (1)])));  }
+    { (yyval.tree) = T_left_justify(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 222:
 
-    {
-		 (yyval.tree) = T_right_justify(yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_right_justify(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 223:
 
-    {
-		 (yyval.tree) = T_box(yylocate((yylsp[(1) - (1)]))); 		}
+    { (yyval.tree) = T_box(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 224:
 
-    {
-		 (yyval.tree) = T_rhomb(yylocate((yylsp[(1) - (1)])));		}
+    { (yyval.tree) = T_rhomb(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 225:
 
-    {
-		 (yyval.tree) = T_ellipse(yylocate((yylsp[(1) - (1)])));	}
+    { (yyval.tree) = T_ellipse(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 226:
 
-    {
-		 (yyval.tree) = T_triangle(yylocate((yylsp[(1) - (1)])));	}
+    { (yyval.tree) = T_triangle(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 227:
 
-    {
-		 (yyval.tree) = T_bottom(yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_bottom(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 228:
 
-    {
-		 (yyval.tree) = T_top(yylocate((yylsp[(1) - (1)])));    }
+    { (yyval.tree) = T_top(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 229:
 
-    {
-		 (yyval.tree) = T_center(yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_center(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 230:
 
-    {
-		 (yyval.tree) = T_bottom(yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_bottom(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 231:
 
-    {
-		 (yyval.tree) = T_top(yylocate((yylsp[(1) - (1)])));    }
+    { (yyval.tree) = T_top(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 232:
 
-    {
-		 (yyval.tree) = T_around(yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_around(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 233:
 
-    {
-		 (yyval.tree) = T_sourcename((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_sourcename((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 234:
 
-    {
-		 (yyval.tree) = T_targetname((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_targetname((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 235:
 
-    {
-		 (yyval.tree) = T_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
+    { (yyval.tree) = T_label((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 236:
 
-    {
-		 (yyval.tree) = T_textcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));          }
+    { (yyval.tree) = T_textcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 237:
 
-    {
-		 (yyval.tree) = T_fontname((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
+    { (yyval.tree) = T_fontname((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 238:
 
-    {
-		 (yyval.tree) = T_color((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
+    { (yyval.tree) = T_color((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 239:
 
-    {
-		 (yyval.tree) = T_typename((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
+    { (yyval.tree) = T_typename((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 240:
 
-    {
-		 (yyval.tree) = T_thickness((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
+    { (yyval.tree) = T_thickness((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 241:
 
-    {
-		 (yyval.tree) = T_class((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
+    { (yyval.tree) = T_class((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));            }
     break;
 
   case 242:
 
-    {
-		 (yyval.tree) = T_priority((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
+    { (yyval.tree) = T_priority((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));         }
     break;
 
   case 243:
 
-    {
-		 (yyval.tree) = T_arrowwidth((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_arrowwidth((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 244:
 
-    {
-		 (yyval.tree) = T_arrowheight((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));   }
+    { (yyval.tree) = T_arrowheight((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 245:
 
-    {
-		 (yyval.tree) = T_arrowcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_arrowcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 246:
 
-    {
-		 (yyval.tree) = T_barrowcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_barrowcolor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 247:
 
-    {
-		 (yyval.tree) = T_arrowsize((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
+    { (yyval.tree) = T_arrowsize((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 248:
 
-    {
-		 (yyval.tree) = T_barrowsize((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
+    { (yyval.tree) = T_barrowsize((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 249:
 
-    {
-		 (yyval.tree) = T_arrowstyle((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_arrowstyle((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));       }
     break;
 
   case 250:
 
-    {
-		 (yyval.tree) = T_barrowstyle((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_barrowstyle((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 251:
 
-    {
-		 (yyval.tree) = T_linestyle((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
+    { (yyval.tree) = T_linestyle((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
     break;
 
   case 252:
 
-    {
-		 (yyval.tree) = T_anchor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));        }
+    { (yyval.tree) = T_anchor((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));           }
     break;
 
   case 253:
 
-    {
-		 (yyval.tree) = T_horizontal_order((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
+    { (yyval.tree) = T_horizontal_order((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
 
   case 254:
 
-    {
-		 (yyval.tree) = T_continuous(yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_continuous(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 255:
 
-    {
-		 (yyval.tree) = T_continuous(yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_continuous(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 256:
 
-    {
-		 (yyval.tree) = T_dotted(yylocate((yylsp[(1) - (1)])));     }
+    { (yyval.tree) = T_dotted(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 257:
 
-    {
-		 (yyval.tree) = T_dashed(yylocate((yylsp[(1) - (1)])));     }
+    { (yyval.tree) = T_dashed(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 258:
 
-    {
-		 (yyval.tree) = T_invisible(yylocate((yylsp[(1) - (1)])));  }
+    { (yyval.tree) = T_invisible(yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 259:
 
-    {
-		 (yyval.tree) = T_none(yylocate((yylsp[(1) - (1)])));      }
+    { (yyval.tree) = T_none(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 260:
 
-    {
-		 (yyval.tree) = T_line(yylocate((yylsp[(1) - (1)])));      }
+    { (yyval.tree) = T_line(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 261:
 
-    {
-		 (yyval.tree) = T_solid(yylocate((yylsp[(1) - (1)])));     }
+    { (yyval.tree) = T_solid(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 262:
 
-    {
-		 (yyval.tree) = T_title((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
+    { (yyval.tree) = T_title((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));     }
     break;
 
   case 263:
 
-    {
-		 (yyval.tree) = T_priority((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  }
+    { (yyval.tree) = T_priority((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  }
     break;
 
   case 264:
 
-    {
-		 (yyval.tree) = T_size((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
+    { (yyval.tree) = T_size((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 265:
 
-    {
-		 (yyval.tree) = T_nodes((yyvsp[(4) - (5)].tree),yylocate((yylsp[(1) - (5)])));     }
+    { (yyval.tree) = T_nodes((yyvsp[(4) - (5)].tree),yylocate((yylsp[(1) - (5)])));     }
     break;
 
   case 266:
 
-    {
-		 (yyval.tree) = T_interval((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  }
+    { (yyval.tree) = T_interval((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));  }
     break;
 
   case 267:
 
-    {
-		 (yyval.tree) = T_name((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
+    { (yyval.tree) = T_name((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));      }
     break;
 
   case 268:
 
-    {
-		 (yyval.tree) = T_dimension((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
+    { (yyval.tree) = T_dimension((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
 
   case 269:
 
-    {
-		 (yyval.tree) = T_string_array((yyvsp[(1) - (2)].tree),(yyvsp[(2) - (2)].tree),yylocate((yylsp[(1) - (2)])));    }
+    { (yyval.tree) = T_string_array((yyvsp[(1) - (2)].tree),(yyvsp[(2) - (2)].tree),yylocate((yylsp[(1) - (2)])));    }
     break;
 
   case 270:
 
-    {
-		 (yyval.tree) = T_string_array(NULL,(yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));  }
+    { (yyval.tree) = T_string_array(NULL,(yyvsp[(1) - (1)].tree),yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 271:
 
-    {
-		 (yyval.tree) = T_equal(yylocate((yylsp[(1) - (1)])));            }
+    { (yyval.tree) = T_equal(yylocate((yylsp[(1) - (1)])));            }
     break;
 
   case 272:
 
-    {
-		 (yyval.tree) = T_smaller(yylocate((yylsp[(1) - (1)])));          }
+    { (yyval.tree) = T_smaller(yylocate((yylsp[(1) - (1)])));          }
     break;
 
   case 273:
 
-    {
-		 (yyval.tree) = T_greater(yylocate((yylsp[(1) - (1)])));          }
+    { (yyval.tree) = T_greater(yylocate((yylsp[(1) - (1)])));          }
     break;
 
   case 274:
 
-    {
-		 (yyval.tree) = T_neighbors(yylocate((yylsp[(1) - (1)])));        }
+    { (yyval.tree) = T_neighbors(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 275:
 
-    {
-		 (yyval.tree) = T_low_margin(yylocate((yylsp[(1) - (1)])));       }
+    { (yyval.tree) = T_low_margin(yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 276:
 
-    {
-		 (yyval.tree) = T_high_margin(yylocate((yylsp[(1) - (1)])));      }
+    { (yyval.tree) = T_high_margin(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 277:
 
-    {
-		 (yyval.tree) = T_xrange(yylocate((yylsp[(1) - (1)])));           }
+    { (yyval.tree) = T_xrange(yylocate((yylsp[(1) - (1)])));           }
     break;
 
   case 278:
 
-    {
-		 (yyval.tree) = T_cluster(yylocate((yylsp[(1) - (1)])));          }
+    { (yyval.tree) = T_cluster(yylocate((yylsp[(1) - (1)])));          }
     break;
 
   case 279:
 
-    {
-		 (yyval.tree) = T_limit(yylocate((yylsp[(1) - (1)])));            }
+    { (yyval.tree) = T_limit(yylocate((yylsp[(1) - (1)])));            }
     break;
 
   case 280:
 
-    {
-		 (yyval.tree) = T_above(yylocate((yylsp[(1) - (1)])));            }
+    { (yyval.tree) = T_above(yylocate((yylsp[(1) - (1)])));            }
     break;
 
   case 281:
 
-    {
-		 (yyval.tree) = T_below(yylocate((yylsp[(1) - (1)])));            }
+    { (yyval.tree) = T_below(yylocate((yylsp[(1) - (1)])));            }
     break;
 
   case 282:
 
-    {
-		 (yyval.tree) = T_left(yylocate((yylsp[(1) - (1)])));             }
+    { (yyval.tree) = T_left(yylocate((yylsp[(1) - (1)])));             }
     break;
 
   case 283:
 
-    {
-		 (yyval.tree) = T_right(yylocate((yylsp[(1) - (1)])));            }
+    { (yyval.tree) = T_right(yylocate((yylsp[(1) - (1)])));            }
     break;
 
   case 284:
 
-    {
-		 (yyval.tree) = T_in_font(yylocate((yylsp[(1) - (1)])));          }
+    { (yyval.tree) = T_in_font(yylocate((yylsp[(1) - (1)])));          }
     break;
 
   case 285:
 
-    {
-		 (yyval.tree) = T_behind(yylocate((yylsp[(1) - (1)])));           }
+    { (yyval.tree) = T_behind(yylocate((yylsp[(1) - (1)])));           }
     break;
 
   case 286:
 
-    {
-		 (yyval.tree) = T_equal_position(yylocate((yylsp[(1) - (1)])));   }
+    { (yyval.tree) = T_equal_position(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 287:
 
-    {
-		 (yyval.tree) = T_equal_row(yylocate((yylsp[(1) - (1)])));        }
+    { (yyval.tree) = T_equal_row(yylocate((yylsp[(1) - (1)])));        }
     break;
 
   case 288:
 
-    {
-		 (yyval.tree) = T_equal_column(yylocate((yylsp[(1) - (1)])));     }
+    { (yyval.tree) = T_equal_column(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 289:
 
-    {
-		 (yyval.tree) = T_top_margin(yylocate((yylsp[(1) - (1)])));       }
+    { (yyval.tree) = T_top_margin(yylocate((yylsp[(1) - (1)])));       }
     break;
 
   case 290:
 
-    {
-		 (yyval.tree) = T_bottom_margin(yylocate((yylsp[(1) - (1)])));    }
+    { (yyval.tree) = T_bottom_margin(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 291:
 
-    {
-		 (yyval.tree) = T_left_margin(yylocate((yylsp[(1) - (1)])));      }
+    { (yyval.tree) = T_left_margin(yylocate((yylsp[(1) - (1)])));      }
     break;
 
   case 292:
 
-    {
-		 (yyval.tree) = T_right_margin(yylocate((yylsp[(1) - (1)])));     }
+    { (yyval.tree) = T_right_margin(yylocate((yylsp[(1) - (1)])));     }
     break;
 
   case 293:
 
-    {
-		 (yyval.tree) = T_upper_neighbor(yylocate((yylsp[(1) - (1)])));   }
+    { (yyval.tree) = T_upper_neighbor(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 294:
 
-    {
-		 (yyval.tree) = T_lower_neighbor(yylocate((yylsp[(1) - (1)])));   }
+    { (yyval.tree) = T_lower_neighbor(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 295:
 
-    {
-		 (yyval.tree) = T_left_neighbor(yylocate((yylsp[(1) - (1)])));    }
+    { (yyval.tree) = T_left_neighbor(yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 296:
 
-    {
-		 (yyval.tree) = T_right_neighbor(yylocate((yylsp[(1) - (1)])));   }
+    { (yyval.tree) = T_right_neighbor(yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 297:
 
-    {
-		 (yyval.tree) = T_x(yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_x(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 298:
 
-    {
-		 (yyval.tree) = T_y(yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_y(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 299:
 
-    {
-		 (yyval.tree) = T_z(yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_z(yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 300:
 
-    {
-		 (yyval.tree) = T_integer((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_integer((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 301:
 
-    {
-		 (yyval.tree) = T_float((yyvsp[(1) - (1)].lrealnum),yylocate((yylsp[(1) - (1)])));   }
+    { (yyval.tree) = T_float((yyvsp[(1) - (1)].lrealnum),yylocate((yylsp[(1) - (1)])));   }
     break;
 
   case 302:
 
-    {
-		 (yyval.tree) = T_char((yyvsp[(1) - (1)].byte),yylocate((yylsp[(1) - (1)])));    }
+    { (yyval.tree) = T_char((yyvsp[(1) - (1)].byte),yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 303:
 
-    {
-		 (yyval.tree) = T_string((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)])));  }
+    { (yyval.tree) = T_string((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 304:
 
-    {
-		 (yyval.tree) = (yyvsp[(1) - (1)].tree); }
+    { (yyval.tree) = (yyvsp[(1) - (1)].tree); }
     break;
 
   case 305:
 
-    {
-		 (yyval.tree) = REVERT((yyvsp[(2) - (3)].tree)); }
+    { (yyval.tree) = REVERT((yyvsp[(2) - (3)].tree)); }
     break;
 
   case 306:
 
-    {
-		 (yyval.tree) = T_index_value((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
+    { (yyval.tree) = T_index_value((yyvsp[(2) - (2)].tree),(yyvsp[(1) - (2)].tree),yylocate((yylsp[(1) - (2)])));   }
     break;
 
   case 307:
 
-    {
-		 (yyval.tree) = T_index_value((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
+    { (yyval.tree) = T_index_value((yyvsp[(1) - (1)].tree),NULL,yylocate((yylsp[(1) - (1)]))); }
     break;
 
   case 308:
 
-    {
-		 (yyval.tree) = (yyvsp[(1) - (1)].tree);           }
+    { (yyval.tree) = (yyvsp[(1) - (1)].tree);           }
     break;
 
   case 309:
 
-    {
-		 (yyval.tree) = T_index((yyvsp[(1) - (3)].tree),(yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
+    { (yyval.tree) = T_index((yyvsp[(1) - (3)].tree),(yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
 
   case 310:
 
-    {
-		 (yyval.tree) = T_range((yyvsp[(1) - (3)].tree),(yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
+    { (yyval.tree) = T_range((yyvsp[(1) - (3)].tree),(yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)]))); }
     break;
 
   case 311:
 
-    {
-		 (yyval.tree) = T_stern((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
+    { (yyval.tree) = T_stern((yyvsp[(3) - (3)].tree),yylocate((yylsp[(1) - (3)])));    }
     break;
 
   case 312:
 
-    {
-		 (yyval.tree) = T_range((yyvsp[(2) - (5)].tree),(yyvsp[(4) - (5)].tree),yylocate((yylsp[(1) - (5)]))); }
+    { (yyval.tree) = T_range((yyvsp[(2) - (5)].tree),(yyvsp[(4) - (5)].tree),yylocate((yylsp[(1) - (5)]))); }
     break;
 
   case 313:
 
-    {
-		 (yyval.tree) = T_index_val((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)])));    }
+    { (yyval.tree) = T_index_val((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)])));}
     break;
 
   case 314:
 
-    {
-		 (yyval.tree) = T_integer((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)])));  }
+    { (yyval.tree) = T_integer((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)])));  }
     break;
 
   case 315:
 
-    {
-		 (yyval.tree) = T_float((yyvsp[(1) - (1)].lrealnum),yylocate((yylsp[(1) - (1)])));    }
+    { (yyval.tree) = T_float((yyvsp[(1) - (1)].lrealnum),yylocate((yylsp[(1) - (1)])));    }
     break;
 
   case 316:
 
-    {
-		 (yyval.tree) = T_string((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)])));   }
+    { (yyval.tree) = T_string((yyvsp[(1) - (1)].lnum),yylocate((yylsp[(1) - (1)])));   }
     break;
 
 
@@ -4892,11 +4577,11 @@ yyreturn:
  */
 int parse()
 {
-	nr_errors = 0;
-	debugmessage("yyparse()\n", "");
-	yyparse();
+        nr_errors = 0;
+        debugmessage("yyparse()\n", "");
+        yyparse();
 
-	return (nr_errors);
+        return (nr_errors);
 } /* parse */
 
 

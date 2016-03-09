@@ -519,17 +519,17 @@ typedef union YYSTYPE
 {
 
 
-	unsigned char      byte;
-	short int          snum;
-	unsigned short int usnum;
-	int                num;
-	unsigned int       unum;
-	long int           lnum;
-	unsigned long int  ulnum;
-	float              realnum;
-	double             lrealnum;
-	char              *string;
-	yysyntaxtree       tree;
+        unsigned char      byte;
+        short int          snum;
+        unsigned short int usnum;
+        int                num;
+        unsigned int       unum;
+        long int           lnum;
+        unsigned long int  ulnum;
+        float              realnum;
+        double             lrealnum;
+        char              *string;
+        yysyntaxtree       tree;
 
 
 
