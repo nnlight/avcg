@@ -45,7 +45,7 @@
  *   Folded regions have a summary node in nodelist, and all nodes of
  *   this region outside nodelist.
  *  NREGREPL(r) is the start node of the region which has the summary
- *          node r.
+ *              node r.
  *  NREGION(r)  is the list of nodes of region r (except the start node)
  *  NREGROOT(n) = r if n is invisible and node of region r
  *
@@ -85,13 +85,11 @@
  * add_sgfoldstart  add a start point to the subgraph folding keepers
  * add_foldstart    add a start point to the region folding keepers
  * add_foldstop     add a stop point to the region folding keepers
- * clear_hide_class reinitialize hide_class[] (the array indicating which
- *          edge classes are hidden)
- * folding      do all foldings and create the adjacency lists
+ * folding          do all foldings and create the adjacency lists
  * create_adjedge   insert an edge into the adjacency lists of its source
- *          and target node.
+ *                  and target node.
  * delete_adjedge   delete an adjacency edge from source and target,
- *          i.e. make the edge invisible.
+ *                  i.e. make the edge invisible.
  ************************************************************************/
 
 #include <stdio.h>
@@ -420,6 +418,7 @@ void    folding(void)
     for (v = invis_nodes; v; v = vn)
     {
         vn = NNEXT(v);
+        NNEXT(v) = DEAD_GNODE;
         insert_node(v, HIDDEN_CNODE);
     }
     invis_nodes = NULL;
@@ -926,23 +925,6 @@ static void unfold_region(GNODE n)
  *   repushed into the nodelist.
  */
 
-int     *hide_class=NULL;   /* table which edge classes are hidden*/
-
-
-/*  Initialization
- *  --------------
- *  All classes are visible, no class is hidden.
- */
-
-void    clear_hide_class(void)
-{
-    int i;
-
-    debugmessage("clear_hide_class","");
-    if (!hide_class) return;
-    for (i=0;i<max_nr_classes;i++) hide_class[i] = 0;
-}
-
 
 /*  Insert node into the list invis_nodes.
  *  -------------------------------------
@@ -1208,15 +1190,11 @@ static void sort_all_nodes(void)
 
     max = i;
     if (max < 2) return;
-        if (max+2 > noso_size) {
-                if (node_sort_array) free(node_sort_array);
-                node_sort_array = (GNODE *)libc_malloc((max+2)*sizeof(GNODE));
-                noso_size = max+2;
-#ifdef DEBUG
-                PRINTF("Sizeof table `node_sort_array': %d Bytes\n",
-                        (max+2)*sizeof(GNODE));
-#endif
-        }
+    if (max > noso_size) {
+        if (node_sort_array) free(node_sort_array);
+        node_sort_array = (GNODE *)libc_malloc(max*sizeof(GNODE));
+        noso_size = max;
+    }
     i = 0;
     for (v = nodelist; v; v = NNEXT(v)) { node_sort_array[i++] = v; }
 

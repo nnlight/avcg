@@ -140,11 +140,10 @@ extern int     fold_barrsty;
 
 extern int  max_eprio;
 
-extern int  info_name_available;
 extern char *info_names[3];
 extern int  max_nr_classes;
-extern int  class_name_available;
 extern char **class_names;
+extern int  *hide_class;
 
 extern int locFlag;
 

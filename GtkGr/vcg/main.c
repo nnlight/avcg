@@ -70,7 +70,6 @@ static void parse_part( FILE *f, const char *fname)
 
     /* We start from the scratch */
 
-    info_name_available = 0;
     for (i=0; i<3; i++) info_names[i] = NULL;
 
     free_memory();
@@ -159,10 +158,6 @@ static void visualize_part(void)
     G_xraster   = 1;
     G_yraster   = 1;
     G_dxraster  = 1;
-
-    /* No edge class is hidden: initialize this */
-
-    clear_hide_class();
 
 
     /*  Analyze specification and allocate graph */

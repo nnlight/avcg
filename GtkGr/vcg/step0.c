@@ -39,8 +39,6 @@
  *    - add_foldstart:   remark node as start node of a fold region operation
  *    - add_foldstop:    remark node as stop  node of a fold region operation
  *    - add_sgfoldstart: remark node as summary node of folded subgraph
- *    - hide_class:      array. Component i is 1, if edge class i+1 is hidden.
- *    - clear_hide_class: initialization of this arry.
  * See folding.c for more information about these functions. We call these
  * functions and structs that are used to recognize which must be folded
  * the `folding keepers'. The real folding according to our settings of the
@@ -216,6 +214,7 @@ void step0_main(void)
     for (i=0; i<max_nr_classes; i++) class_names[i]=0;
     if (hide_class) free(hide_class);
     hide_class = (int *)libc_malloc(max_nr_classes * sizeof(int));
+    for (i=0; i<max_nr_classes; i++) hide_class[i] = 0;
 
     /* Initialize folding attributes of nodes and edges */
 
@@ -229,7 +228,6 @@ void step0_main(void)
 
     /* Initialize the folding keepers */
 
-    clear_hide_class();
     clear_folding_keepers();
 
     /* Initialize the hash table of stable nodes */
@@ -459,9 +457,7 @@ static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
                         if (!subg_bit) {
                             h = (int)FETCHNUM();
                             if ((h>0)&&(h<=3)) {
-                                info_name_available = 1;
-                                info_names[h-1] =
-                                    SDecode(son2(node2));
+                                info_names[h-1] = SDecode(son2(node2));
                             }
                         }
                         break;
@@ -469,9 +465,7 @@ static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
                         if (!subg_bit) {
                             h = (int)FETCHNUM();
                             if ((h>0)&&(h<=max_nr_classes)) {
-                                class_name_available = 1;
-                                class_names[h-1] =
-                                    SDecode(son2(node2));
+                                class_names[h-1] = SDecode(son2(node2));
                             }
                         }
                         break;

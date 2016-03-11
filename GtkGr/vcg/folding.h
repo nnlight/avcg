@@ -53,7 +53,6 @@
  * ----------------
  */
 
-extern int      *hide_class;
 
 /* Prototypes
  * ----------
@@ -71,7 +70,6 @@ void    add_foldstop          (GNODE v);
 
 void    create_adjedge   (GEDGE edge);
 void    delete_adjedge   (GEDGE edge);
-void    clear_hide_class (void);
 GNODE   create_labelnode (GEDGE e);
 
 

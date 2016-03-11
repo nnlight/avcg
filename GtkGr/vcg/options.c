@@ -365,7 +365,6 @@ int max_eprio;
  *      interaction menu.
  */
 
-int     info_name_available;
 char    *info_names[3];
 
 /*  The names of the edge classes. If class_name_available,
@@ -373,10 +372,10 @@ char    *info_names[3];
  *      interaction menu.
  */
 
-
 int     max_nr_classes;
-int     class_name_available;
 char    **class_names = NULL;
+/* Table which edge classes are hidden. Component i is 1, if edge class i+1 is hidden. */
+int     *hide_class = NULL;
 
 
 /* the following flag indicates whether all nodes to be visualized
