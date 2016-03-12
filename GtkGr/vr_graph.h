@@ -34,6 +34,7 @@ public:
     int stretch_;
     int shrink_;
     string infos_[VRNODE_INFO_COUNT];
+    bool is_selected_;
 public:
     VRNode( VRGraph *graph, const char *title, int x, int y);
     ~VRNode();
@@ -117,9 +118,11 @@ public:
 
     void AddNode( DrawBuffer *draw_buffer, int x, int y, const char *title, const char *label);
     VRNode *AddSizedNode( int x, int y, int width, int height, const char *title, const char *label);
+    void UnselectAllNodes();
     void DrawGraph( DrawBuffer *draw_buffer);
 
     void HandleInfoBoxPress( DrawBuffer *draw_buffer, int x, int y, int info_num);
+    VRNode *FindNodeByCoords( int x, int y);
 
     /* загрузка графа из vcg */
     void LoadVcgGraph();

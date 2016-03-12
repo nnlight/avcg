@@ -168,14 +168,27 @@ ui_da_mouse_button_press_cb( GtkWidget      *da,
     int y = (int)event->y;
     if (event->button == 1)
     {
+        int vrg_x, vrg_y;
+        db->ConvertDa2Vrg( x, y, vrg_x, vrg_y);
         if ( uic->m_CurrentMode == MODE_VIEW_NODE_INFO1
             || uic->m_CurrentMode == MODE_VIEW_NODE_INFO2
             || uic->m_CurrentMode == MODE_VIEW_NODE_INFO3 )
         {
-            int vrg_x, vrg_y;
-            db->ConvertDa2Vrg( x, y, vrg_x, vrg_y);
             uic->m_VRGraph->HandleInfoBoxPress( db, vrg_x, vrg_y,
                                                 uic->m_CurrentMode - MODE_VIEW_NODE_INFO1 + 1);
+        } else if ( uic->m_CurrentMode == MODE_VIEW )
+        {
+            if ( !(event->state & GDK_CONTROL_MASK) )
+            {
+                uic->m_VRGraph->UnselectAllNodes();
+            }
+            VRNode *node = uic->m_VRGraph->FindNodeByCoords( vrg_x, vrg_y);
+            if (node)
+            {
+                node->is_selected_ = true;
+            }
+            uic->m_VRGraph->DrawGraph( db);
+            db->PublicInvalidateDa();
         } else
         {
             db->ButtonPress( x, y);

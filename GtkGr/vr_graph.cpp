@@ -19,6 +19,7 @@ VRNode::VRNode( VRGraph *graph, const char *title, int x, int y)
     , shape_(NS_BOX)
     , textmode_(TM_CENTER)
     , stretch_ (1), shrink_(1)
+    , is_selected_(false)
 {
 }
 
@@ -181,6 +182,16 @@ VRNode *VRGraph::AddSizedNode( int x, int y, int width, int height, const char *
     return p;
 } /* VRGraph::AddSizedNode */
 
+void VRGraph::UnselectAllNodes()
+{
+    for ( VRNode *node = GetFirstNode();
+          node;
+          node = node->GetNextNode() )
+    {
+        node->is_selected_ = false;
+    }
+} /* VRGraph::UnselectAllNodes */
+
 /**
  * Отрисовать заданную область в draw_buffer
  */
@@ -267,9 +278,24 @@ void VRGraph::HandleInfoBoxPress( DrawBuffer *draw_buffer, int x, int y, int inf
     return;
 } /* VRGraph::HandleInfoBoxPress */
 
+VRNode *VRGraph::FindNodeByCoords( int x, int y)
+{
+    for ( VRNode *node = GetFirstNode();
+          node;
+          node = node->GetNextNode() )
+    {
+        if ( node->x_ <= x  && x < node->x_ + node->width_
+             && node->y_ <= y  && y < node->y_ + node->height_ )
+        {
+            return node;
+        }
+    }
+    return NULL;
+} /* VRGraph::FindNodeByCoords */
+
 void VRGraph::DrawNodeText( DrawBuffer *draw_buffer, VRNode *node)
 {
-    draw_buffer->SetCurrentColor( node->textcolor_);
+    draw_buffer->SetCurrentColor( node->is_selected_ ? node->color_ : node->textcolor_);
     /*draw_buffer->DrawText( node->x_ + node->borderw_ + NODE_LABEL_MARGIN, DTP_MIN,
                            node->y_ + node->borderw_ + NODE_LABEL_MARGIN, DTP_MIN,
                            node->label_.c_str());*/
@@ -324,7 +350,7 @@ void VRGraph::DrawNodeText( DrawBuffer *draw_buffer, VRNode *node)
 
 void VRGraph::DrawNode( DrawBuffer *draw_buffer, VRNode *node)
 {
-    draw_buffer->SetCurrentColor( node->color_);
+    draw_buffer->SetCurrentColor( node->is_selected_ ? node->bcolor_ : node->color_ );
     switch (node->shape_)
     {
     case NS_BOX:      draw_buffer->DrawRectangle( node->x_, node->y_, node->width_, node->height_, true); break;
@@ -334,7 +360,7 @@ void VRGraph::DrawNode( DrawBuffer *draw_buffer, VRNode *node)
     default: assert( !"unknown nodeshape" );
     }
     draw_buffer->SetLineWidth( node->borderw_);
-    draw_buffer->SetCurrentColor( node->bcolor_);
+    draw_buffer->SetCurrentColor( node->is_selected_ ? node->color_ : node->bcolor_);
     switch (node->shape_)
     {
     case NS_BOX:      draw_buffer->DrawRectangle( node->x_, node->y_, node->width_, node->height_, false); break;
