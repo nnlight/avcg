@@ -500,9 +500,7 @@ ADJEDGE save_node_adjlist(GNODE v, Graphdir_t dir)
     {
         for (e = FirstPred(v); e; e = NextPred(e))
         {
-            a = edgelist_alloc();
-            AKANTE(a) = e;
-            ANEXT(a) = NULL;
+            a = cons_edge_tmp(e, NULL);
             if (prev_a) {
                 ANEXT(prev_a) = a;
             } else {
@@ -515,9 +513,7 @@ ADJEDGE save_node_adjlist(GNODE v, Graphdir_t dir)
     {
         for (e = FirstSucc(v); e; e = NextSucc(e))
         {
-            a = edgelist_alloc();
-            AKANTE(a) = e;
-            ANEXT(a) = NULL;
+            a = cons_edge_tmp(e, NULL);
             if (prev_a) {
                 ANEXT(prev_a) = a;
             } else {

@@ -312,7 +312,7 @@ static int estimate_num_nodes(yysyntaxtree x)
       if ( subg_bit > 0 ) {                     \
         GNLIST l;                               \
         NROOT(v)    = root;             \
-        l = nodelist_alloc(v);              \
+        l = cons_node(v, NULL);              \
         if (rootend) GNNEXT(rootend) = l;\
         else         NSGRAPH(root) = l;  \
         rootend = l;                        \

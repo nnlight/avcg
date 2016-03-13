@@ -1139,7 +1139,8 @@ static void add_to_zero_indegree_list(GNODE v)
         h = zero_free_list;
         zero_free_list = GNNEXT(zero_free_list);
     }
-    else h = tmpnodelist_alloc();
+    else
+        h = cons_node_tmp(NULL, NULL);
     GNNODE(h) = v;
     GNNEXT(h) = zero_indegree_list;
     zero_indegree_list = h;
@@ -1361,7 +1362,8 @@ static void add_to_nlist(GNODE v, GNLIST *l)
         h = zero_free_list;
         zero_free_list = GNNEXT(zero_free_list);
     }
-    else h = tmpnodelist_alloc();
+    else
+        h = cons_node_tmp(NULL, NULL);
     GNNODE(h) = v;
     GNNEXT(h) = *l;
     *l = h;
@@ -2262,7 +2264,6 @@ static int tune_node_depth(GNODE v,int lab)
 static void create_depth_lists(void)
 {
     GNODE h;
-    GNLIST hl;
     int t;
 
     debugmessage("create_depth_lists","");
@@ -2271,28 +2272,19 @@ static void create_depth_lists(void)
     {
         t = NTIEFE(h);
         assert((t<=maxdepth));
-        hl = tmpnodelist_alloc();
-        GNNEXT(hl) = TSUCC(layer[t]);
-        TSUCC(layer[t]) = hl;
-        GNNODE(hl) = h;
+        TSUCC(layer[t]) = cons_node_tmp(h, TSUCC(layer[t]));
     }
     for (h = labellist; h; h = NNEXT(h))
     {
         t = NTIEFE(h);
         assert((t<=maxdepth+1));
-        hl = tmpnodelist_alloc();
-        GNNEXT(hl) = TSUCC(layer[t]);
-        TSUCC(layer[t]) = hl;
-        GNNODE(hl) = h;
+        TSUCC(layer[t]) = cons_node_tmp(h, TSUCC(layer[t]));
     }
     for (h = dummylist; h; h = NNEXT(h))
     {
         t = NTIEFE(h);
         assert((t<=maxdepth+1));
-        hl = tmpnodelist_alloc();
-        GNNEXT(hl) = TSUCC(layer[t]);
-        TSUCC(layer[t]) = hl;
-        GNNODE(hl) = h;
+        TSUCC(layer[t]) = cons_node_tmp(h, TSUCC(layer[t]));
     }
 }
 
@@ -2313,7 +2305,7 @@ static void create_depth_lists(void)
 static void complete_depth_lists(void)
 {
     int     i, k;
-    GNLIST  n, hl;
+    GNLIST  n;
     GNODE   node;
     GEDGE   edge;
     int     backward_connection;
@@ -2356,10 +2348,7 @@ static void complete_depth_lists(void)
 
             /* fill TPRED-list */
             if ( (!backward_connection)&&(NMARK(node)==0) ) {
-                hl = tmpnodelist_alloc();
-                GNNEXT(hl) = TPRED(layer[i]);
-                TPRED(layer[i]) = hl;
-                GNNODE(hl) = node;
+                TPRED(layer[i]) = cons_node_tmp(node, TPRED(layer[i]));
             }
 
             /* count the edges. Note: forward connections
@@ -2727,7 +2716,6 @@ static GEDGE create_edge(GNODE start, GNODE end, GEDGE edge, int arrow)
 
 static GNODE create_dummy(int t)
 {
-    GNLIST hl;
     GNODE  v;
 
     debugmessage("create_dummy","");
@@ -2745,10 +2733,7 @@ static GNODE create_dummy(int t)
 
     /* if t appropriate, insert dummy node into the layer[t] */
     if (t<0) return(v);
-    hl = tmpnodelist_alloc();
-    GNNEXT(hl) = TSUCC(layer[t]);
-    TSUCC(layer[t]) = hl;
-    GNNODE(hl) = v;
+    TSUCC(layer[t]) = cons_node_tmp(v, TSUCC(layer[t]));
     return(v);
 }
 

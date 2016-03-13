@@ -441,7 +441,7 @@ void step2_main(void)
 static void create_tmp_layer(void)
 {
     int    i, j;
-    GNLIST h1, h2;
+    GNLIST h1;
 
 
     /* Allocate the array tmp_layer */
@@ -482,10 +482,7 @@ static void create_tmp_layer(void)
         for (h1 = TPRED(layer[i]); h1; h1 = GNNEXT(h1))
         {
             j++;
-            h2 = tmpnodelist_alloc();
-            GNNEXT(h2) = TSUCC(tmp_layer[i]);
-            TSUCC(tmp_layer[i]) = h2;
-            GNNODE(h2) = GNNODE(h1);
+            TSUCC(tmp_layer[i]) = cons_node_tmp(GNNODE(h1), TSUCC(tmp_layer[i]));
         }
 
         TANZ(tmp_layer[i])      = TANZ(layer[i]) = j;
@@ -500,10 +497,7 @@ static void create_tmp_layer(void)
         TSUCC(layer[i]) = NULL;
         for (h1 = TPRED(layer[i]); h1; h1 = GNNEXT(h1))
         {
-            h2 = tmpnodelist_alloc();
-            GNNEXT(h2) = TSUCC(layer[i]);
-            TSUCC(layer[i]) = h2;
-            GNNODE(h2) = GNNODE(h1);
+            TSUCC(layer[i]) = cons_node_tmp(GNNODE(h1), TSUCC(layer[i]));
         }
     }
 } /* create_tmp_layer */
@@ -2721,7 +2715,7 @@ static void copy_layers(DEPTH *l1, DEPTH *l2)
                 GNNODE(h1) = GNNODE(h2);
                 h2 = GNNEXT(h2);
                 if (h2 && !GNNEXT(h1))
-                    GNNEXT(h1) = tmpnodelist_alloc();
+                    GNNEXT(h1) = cons_node_tmp(NULL, NULL);
                 h1 = GNNEXT(h1);
             }
             TANZ(l1[i]) = TANZ(l2[i]);
@@ -3011,9 +3005,7 @@ static void left_conn_list(GNODE v,GNODE w)
 
     debugmessage("left_conn_list","");
 
-    h = tmpnodelist_alloc();
-    GNNODE(h) = v;
-    GNNEXT(h) = leftlist;
+    h = cons_node_tmp(v, leftlist);
     leftlist = h;
     if (!leftlistend) leftlistend = h;
 
@@ -3035,10 +3027,8 @@ static void right_conn_list(GNODE v,GNODE w)
 
     debugmessage("right_conn_list","");
 
-    h = tmpnodelist_alloc();
-    GNNODE(h) = v;
+    h = cons_node_tmp(v, NULL);
     if (rightlistend) GNNEXT(rightlistend) = h;
-    GNNEXT(h) = NULL;
     rightlistend = h;
     if (!rightlist) rightlist = h;
 
@@ -3079,10 +3069,7 @@ static void recreate_predlists(void)
         for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
         {
             k++;
-            h2 = tmpnodelist_alloc();
-            GNNEXT(h2) = TPRED(layer[i]);
-            TPRED(layer[i]) = h2;
-            GNNODE(h2) = GNNODE(h1);
+            TPRED(layer[i]) = cons_node_tmp(GNNODE(h1), TPRED(layer[i]));
         }
         assert(TANZ(layer[i]) == k);
     }

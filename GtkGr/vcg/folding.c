@@ -166,9 +166,7 @@ static GNLIST ufoldstart;  /* Node where region unfolding starts         */
 
 static void foldnodelist_add(GNLIST *lp, GNODE v)
 {
-    GNLIST l = nodelist_alloc(v);
-    GNNEXT(l) = *lp;
-    *lp = l;
+    *lp = cons_node(v, *lp);
 }
 
 static void foldnodelist_remove(GNLIST *lp, GNODE v)
@@ -781,7 +779,6 @@ static void fold_region(GNODE n, int k)
 static void recursive_fold(GNODE v, GNODE n, int k)
 {
     GEDGE   e, ee, nxt_e;
-    GNLIST  l;
 
     assert((v));
     assert((n));
@@ -796,9 +793,7 @@ static void recursive_fold(GNODE v, GNODE n, int k)
 
     /* Add v to the region list of n */
     NREGROOT(v) = n;
-    l = nodelist_alloc(v);
-    GNNEXT(l)  = NREGION(n);
-    NREGION(n) = l;
+    NREGION(n) = cons_node(v, NREGION(n));
 
     delete_node(v,FOLDED_RGNODE);
 

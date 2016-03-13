@@ -74,8 +74,6 @@ void check_graph_consistency _PP((void));
 
 GNLIST  cons_node(GNODE v, GNLIST next);
 GNLIST  cons_node_tmp(GNODE v, GNLIST next);
-GNLIST  nodelist_alloc      _PP((GNODE v));
-GNLIST  tmpnodelist_alloc   _PP((void));
 void free_gnlist_list(GNLIST r);
 
 GEDGE edgealloc     _PP((GEDGE refedge));
@@ -91,7 +89,6 @@ ADJEDGE cons_edge_tmp(GEDGE e, ADJEDGE next);
 void near_edge_insert(GEDGE e);
 void bentnear_edge_insert(GEDGE e);
 void back_edge_insert(GEDGE e);
-ADJEDGE edgelist_alloc(void);
 
 CONNECT connectalloc    _PP((GNODE node));
 

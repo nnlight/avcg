@@ -544,7 +544,7 @@ void check_graph_consistency(void)
             w = nodealloc( v );
             NTITLE(w) = "artificial node";
             NROOT(w) = v;
-            NSGRAPH(v) = nodelist_alloc(w);
+            NSGRAPH(v) = cons_node(w, NULL);
         }
     }
 } /* check_graph_consistency */
@@ -601,33 +601,6 @@ GNLIST cons_node_tmp(GNODE v, GNLIST next)
     return(h);
 }
 
-/*  Allocate a GNLIST object
- *  ------------------------
- *  First, we look in the free list, if we have a free node. Otherwise,
- *  we allocate a node from the core memory.
- *  We also set some default values.
- *  These node lists are part of the stable graph representation, i.e.
- *  need not to be freed unless a reload of the graph. Thus we don't
- *  store them in the tmpnconslist.
- */
-GNLIST nodelist_alloc(GNODE v)
-{
-    return cons_node(v, NULL);
-}
-
-/*  Allocate a temporary GNLIST object
- *  ----------------------------------
- *  First, we look in the free list, if we have a free node. Otherwise,
- *  we allocate a node from the core memory.
- *  We also set some default values.
- *  These node lists are temporary, thus we store them in the
- *  tmpnconslist, to give them free later.
- */
-GNLIST  tmpnodelist_alloc(void)
-{
-    return cons_node_tmp(NULL, NULL);
-}
-
 /*  Deallocate all temporary GNLIST objects
  *  --------------------------------------
  */
@@ -647,7 +620,7 @@ static void free_tmpnodelists(void)
 
 /*  Deallocate GNLIST objects
  *  ------------------------------------
- *  These GNLIST objects should be allocated by nodelist_alloc,
+ *  These GNLIST objects should be allocated by cons_node,
  *  i.e. should not be temporary.
  */
 void free_gnlist_list(GNLIST r)
@@ -1004,19 +977,6 @@ void bentnear_edge_insert(GEDGE e)
 void back_edge_insert(GEDGE e)
 {
     back_edge_list = cons_edge(e, back_edge_list);
-}
-
-
-
-/*  Allocate a ADJEDGE object
- *  -------------------------
- *  First, we look in the free list, if we have a free cell. Otherwise,
- *  we allocate a cell from the core memory.
- */
-
-ADJEDGE edgelist_alloc(void)
-{
-    return cons_edge(NULL, NULL);
 }
 
 

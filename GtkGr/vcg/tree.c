@@ -374,10 +374,7 @@ static void create_tpred_lists(void)
         for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
         {
             k++;
-            h2 = tmpnodelist_alloc();
-            GNNEXT(h2) = TPRED(layer[i]);
-            TPRED(layer[i]) = h2;
-            GNNODE(h2) = GNNODE(h1);
+            TPRED(layer[i]) = cons_node_tmp(GNNODE(h1), TPRED(layer[i]));
         }
         TANZ(layer[i]) = k;
         if (k>max_nodes_per_layer) max_nodes_per_layer = k;
