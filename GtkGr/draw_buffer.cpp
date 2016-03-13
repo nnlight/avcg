@@ -784,7 +784,12 @@ void DrawBuffer::DrawText( vrgint x, DrawTextPos_t x_pos, vrgint y, DrawTextPos_
     pango_layout_get_pixel_size( layout, &pm_width, &pm_height);
 
     if ( !IsBBoxIntersectsPm( pm_x, pm_y, pm_x + pm_width, pm_y + pm_height) )
+    {
+        //pango_attr_list_unref( attr_list);
+        g_object_unref( layout);
+        pango_font_description_free( font_description);
         return;
+    }
 
     switch (x_pos)
     {
