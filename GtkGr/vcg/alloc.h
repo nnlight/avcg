@@ -72,6 +72,8 @@ GNODE   search_xy_node  _PP((long x,long y));
 void check_graph_consistency _PP((void));
 
 
+GNLIST  cons_node(GNODE v, GNLIST next);
+GNLIST  cons_node_tmp(GNODE v, GNLIST next);
 GNLIST  nodelist_alloc      _PP((GNODE v));
 GNLIST  tmpnodelist_alloc   _PP((void));
 void free_gnlist_list(GNLIST r);
@@ -83,9 +85,12 @@ void  inherit_foldedge_attributes   _PP((GEDGE fn, GEDGE y));
 void  copy_edgeattributes       _PP((GEDGE fn, GEDGE y));
 
 GEDGE tmpedgealloc(int lstyle,int thick,int xclass,int prio,int ecolor,int arrows,int barrows,int arrowsty,int barrowsty,int arrowc,int barrowc,int horder);
-void near_edge_insert       _PP((GEDGE e));
-void bentnear_edge_insert   _PP((GEDGE e));
-void back_edge_insert       _PP((GEDGE e));
+
+ADJEDGE cons_edge(GEDGE e, ADJEDGE next);
+ADJEDGE cons_edge_tmp(GEDGE e, ADJEDGE next);
+void near_edge_insert(GEDGE e);
+void bentnear_edge_insert(GEDGE e);
+void back_edge_insert(GEDGE e);
 ADJEDGE edgelist_alloc(void);
 
 CONNECT connectalloc    _PP((GNODE node));

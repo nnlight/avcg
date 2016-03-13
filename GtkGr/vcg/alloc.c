@@ -101,7 +101,7 @@ static GNODE internal_nodealloc();
 static void free_tmpnodelists();
 static GEDGE internal_edgealloc();
 static void free_tmpedges();
-static void free_edgelists();
+static void free_tmpedgelists();
 static void free_connect();
 static void reinit_all_lists();
 
@@ -562,10 +562,44 @@ void check_graph_consistency(void)
  *  we use a similar memory management as for temporary GNODE objects.
  */
 
-
 static GNLIST tmpnconslist   = NULL;  /* list of allocated cons cells */
 static GNLIST ncons_freelist = NULL;  /* list of free cons cells      */
 
+
+/*  Allocate a GNLIST object
+ *  ------------------------
+ *  First, we look in the free list, if we have a free node. Otherwise,
+ *  we allocate a node from the core memory.
+ */
+GNLIST cons_node(GNODE v, GNLIST next)
+{
+    GNLIST  h;
+
+    if (ncons_freelist) {
+        h = ncons_freelist;
+        ncons_freelist = GNINTERN(ncons_freelist);
+    }
+    else {
+        h = (GNLIST)myalloc(sizeof(struct gnlist));
+    }
+    GNINTERN(h) = DEAD_GNLIST;
+    GNNODE(h)   = v;
+    GNNEXT(h)   = next;
+    return(h);
+}
+
+/*  Allocate a temporary GNLIST object
+ *  ----------------------------------
+ *  These node lists are temporary, thus we store them in the
+ *  tmpnconslist, to give them free later.
+ */
+GNLIST cons_node_tmp(GNODE v, GNLIST next)
+{
+    GNLIST h     = cons_node(v, next);
+    GNINTERN(h)  = tmpnconslist;
+    tmpnconslist = h;
+    return(h);
+}
 
 /*  Allocate a GNLIST object
  *  ------------------------
@@ -578,18 +612,7 @@ static GNLIST ncons_freelist = NULL;  /* list of free cons cells      */
  */
 GNLIST nodelist_alloc(GNODE v)
 {
-    GNLIST  h;
-
-    if (ncons_freelist) {
-        h = ncons_freelist;
-        ncons_freelist = GNINTERN(ncons_freelist);
-    }
-    else
-        h = (GNLIST)myalloc(sizeof(struct gnlist));
-    GNINTERN(h) = DEAD_GNLIST;
-    GNNODE(h)   = v;
-    GNNEXT(h)   = NULL;
-    return(h);
+    return cons_node(v, NULL);
 }
 
 /*  Allocate a temporary GNLIST object
@@ -602,19 +625,7 @@ GNLIST nodelist_alloc(GNODE v)
  */
 GNLIST  tmpnodelist_alloc(void)
 {
-    GNLIST  h;
-
-    if (ncons_freelist) {
-        h = ncons_freelist;
-        ncons_freelist = GNINTERN(ncons_freelist);
-    }
-    else
-        h = (GNLIST)myalloc(sizeof(struct gnlist));
-    GNINTERN(h) = tmpnconslist;
-    GNNODE(h)   = NULL;
-    GNNEXT(h)   = NULL;
-    tmpnconslist = h;
-    return(h);
+    return cons_node_tmp(NULL, NULL);
 }
 
 /*  Deallocate all temporary GNLIST objects
@@ -926,7 +937,6 @@ static void free_tmpedges(void)
  *  edges specified by `back_edge'. This is the back_edge_list.
  */
 
-
 /* for stable default connections: */
 
 ADJEDGE near_edge_list = NULL;      /* list of default connections */
@@ -939,13 +949,12 @@ static ADJEDGE tmpeconslist   = NULL;  /* list of allocated cons cells */
 static ADJEDGE econs_freelist = NULL;  /* list of free cons cells      */
 
 
-/*  Insert a near edge into near_edge_list
- *  --------------------------------------
+/*  Allocate a ADJEDGE object
+ *  -------------------------
  *  First, we look in the free list, if we have a free cell. Otherwise,
  *  we allocate a cell from the core memory.
  */
-
-void near_edge_insert(GEDGE e)
+ADJEDGE cons_edge(GEDGE e, ADJEDGE next)
 {
     ADJEDGE h;
 
@@ -953,56 +962,48 @@ void near_edge_insert(GEDGE e)
         h = econs_freelist;
         econs_freelist = AINTERN(econs_freelist);
     }
-    else
+    else {
         h = (ADJEDGE)myalloc(sizeof(struct adjedge));
+    }
+    AINTERN(h) = DEAD_GELIST;
     AKANTE(h) = e;
-    ANEXT(h) = AINTERN(h) = near_edge_list;
-    near_edge_list = h;
+    ANEXT(h) = next;
+    return(h);
 }
 
+/*  Allocate a temporary ADJEDGE object
+ *  -------------------------
+ */
+ADJEDGE cons_edge_tmp(GEDGE e, ADJEDGE next)
+{
+    ADJEDGE h = cons_edge(e, next);
+    AINTERN(h) = tmpeconslist;
+    tmpeconslist = h;
+    return(h);
+}
+
+/*  Insert a near edge into near_edge_list
+ *  --------------------------------------
+ */
+void near_edge_insert(GEDGE e)
+{
+    near_edge_list = cons_edge(e, near_edge_list);
+}
 
 /*  Insert a bent near edge into bent_near_edge_list
  *  ------------------------------------------------
- *  First, we look in the free list, if we have a free cell. Otherwise,
- *  we allocate a cell from the core memory.
  */
-
 void bentnear_edge_insert(GEDGE e)
 {
-    ADJEDGE h;
-
-    if (econs_freelist) {
-        h = econs_freelist;
-        econs_freelist = AINTERN(econs_freelist);
-    }
-    else
-        h = (ADJEDGE)myalloc(sizeof(struct adjedge));
-    AKANTE(h) = e;
-    ANEXT(h) = AINTERN(h) = bent_near_edge_list;
-    bent_near_edge_list = h;
+    bent_near_edge_list = cons_edge(e, bent_near_edge_list);
 }
-
-
 
 /*  Insert a back edge into back_edge_list
  *  --------------------------------------
- *  First, we look in the free list, if we have a free cell. Otherwise,
- *  we allocate a cell from the core memory.
  */
-
 void back_edge_insert(GEDGE e)
 {
-    ADJEDGE h;
-
-    if (econs_freelist) {
-        h = econs_freelist;
-        econs_freelist = AINTERN(econs_freelist);
-    }
-    else
-        h = (ADJEDGE)myalloc(sizeof(struct adjedge));
-    AKANTE(h) = e;
-    ANEXT(h) = AINTERN(h) = back_edge_list;
-    back_edge_list = h;
+    back_edge_list = cons_edge(e, back_edge_list);
 }
 
 
@@ -1015,17 +1016,7 @@ void back_edge_insert(GEDGE e)
 
 ADJEDGE edgelist_alloc(void)
 {
-    ADJEDGE h;
-
-    if (econs_freelist) {
-        h = econs_freelist;
-        econs_freelist = AINTERN(econs_freelist);
-    }
-    else
-        h = (ADJEDGE)myalloc(sizeof(struct adjedge));
-    AINTERN(h) = tmpeconslist;
-    tmpeconslist = h;
-    return(h);
+    return cons_edge(NULL, NULL);
 }
 
 
@@ -1033,7 +1024,7 @@ ADJEDGE edgelist_alloc(void)
  *  ----------------------------------------
  */
 
-static void free_edgelists(void)
+static void free_tmpedgelists(void)
 {
     ADJEDGE h;
 
@@ -1202,7 +1193,7 @@ void free_all_lists(void)
     free_tmpnodes();
     free_tmpedges();
     free_tmpnodelists();
-    free_edgelists();
+    free_tmpedgelists();
     free_connect();
 } /* free_all_lists */
 
