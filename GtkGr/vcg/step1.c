@@ -285,13 +285,13 @@ void step1_main(void)
      */
 
     if (layout_flag == TREE_LAYOUT) {
-            stop_time("step1_main");
-                        layout_flag = tree_main();
-            if (layout_flag != TREE_LAYOUT) {
-                FPRINTF(stderr,"\nThis is not a downward tree. ");
-                FPRINTF(stderr,"Continuing with normal layout\n");
-            }
+        stop_time("step1_main");
+        layout_flag = tree_main();
+        if (layout_flag != TREE_LAYOUT) {
+            FPRINTF(stderr,"\nThis is not a downward tree. ");
+            FPRINTF(stderr,"Continuing with normal layout\n");
         }
+    }
 
 
     if (layout_flag != TREE_LAYOUT) {
@@ -825,8 +825,8 @@ static void partition_edges(void)
     /* First try */
     /* --------- */
 
-        act_dfsnum = 1L;
-        maxdepth = 0;       /* maximal depth of the spanning tree */
+    act_dfsnum = 1L;
+    maxdepth = 0;       /* maximal depth of the spanning tree */
 
     gs_wait_message('p');
     for (node = nodelist; node; node = NNEXT(node))
@@ -834,7 +834,7 @@ static void partition_edges(void)
         if ( !NMARK(node) ) {
             act_level = 0;
             depth_first_search(node);
-            }
+        }
     }
 
     /* labels are always reachaeble from other nodes, thus all label
@@ -855,28 +855,28 @@ static void partition_edges(void)
         if (test_timelimit(30)) {
             gs_wait_message('t');
             return;
-    }
+        }
 
 
     /* Second try */
     /* ---------- */
 
-        depth1 = maxdepth;
+    depth1 = maxdepth;
 
     gs_wait_message('p');
     for (node = nodelist; node; node = NNEXT(node)) { NMARK(node) = 0; }
     for (node = labellist; node; node = NNEXT(node)) { NMARK(node) = 0; }
     for (node = dummylist; node; node = NNEXT(node)) { NMARK(node) = 0; }
 
-        act_dfsnum = 1L;
-        maxdepth = 0;       /* maximal depth of the spanning tree */
+    act_dfsnum = 1L;
+    maxdepth = 0;       /* maximal depth of the spanning tree */
 
     for (node = nodelist; node; node = NNEXT(node))
     {
         if ( !NMARK(node) ) {
             act_level = 0;
             alt_depth_first_search(node);
-            }
+        }
     }
 
     /* labels are always reachable from other nodes, thus all label
@@ -903,15 +903,15 @@ static void partition_edges(void)
     for (node = labellist; node; node = NNEXT(node)) { NMARK(node) = 0; }
     for (node = dummylist; node; node = NNEXT(node)) { NMARK(node) = 0; }
 
-        act_dfsnum = 1L;
-        maxdepth = 0;       /* maximal depth of the spanning tree */
+    act_dfsnum = 1L;
+    maxdepth = 0;       /* maximal depth of the spanning tree */
 
     for (node = nodelist; node; node = NNEXT(node))
     {
         if ( !NMARK(node) ) {
             act_level = 0;
             depth_first_search(node);
-            }
+        }
     }
 
     /* labels are always reachaeble from other nodes, thus all label
@@ -1134,6 +1134,7 @@ static void add_to_zero_indegree_list(GNODE v)
     GNLIST h;
 
     debugmessage("add_to_zero_indegree_list","");
+    assert(v);
 
     if (zero_free_list) {
         h = zero_free_list;
@@ -1401,7 +1402,7 @@ static void sc_component_sort(void)
     zero_free_list   = NULL;
     global_node_list = NULL;
 
-        maxdepth = 1;       /* maximal depth of the layout */
+    maxdepth = 1;       /* maximal depth of the layout */
 
     for (v = nodelist; v; v = NNEXT(v))
     {
@@ -1479,10 +1480,10 @@ static void calc_sc_component(GNLIST *nlist)
  */
 static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
 {
-        GNODE   kn;
+    GNODE   kn;
     GNLIST  h;
     GNLIST  closed_scc_list;
-        GEDGE   edge;
+    GEDGE   edge;
     int mylevel;
     GNODE   actrev;
     int     degree;
@@ -1494,12 +1495,12 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
 
     assert((node));
     debugmessage("scc_traversal",(NTITLE(node)?NTITLE(node):"(null)"));
-        if (NMARK(node)) return;
+    if (NMARK(node)) return;
 
     NMARK(node)     = 1;
     NOPENSCC(node)  = 1L;
-        NDFS(node)      = *dfsnum;
-        NLOWPT(node)    = *dfsnum;
+    NDFS(node)      = *dfsnum;
+    NLOWPT(node)    = *dfsnum;
     (*dfsnum)++;
 
     add_to_nlist(node, open_sccp);
@@ -1603,12 +1604,12 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
             while (kn) {
                 if (NLEVEL(kn)>=0) NTIEFE(kn) = NLEVEL(kn);
                 else NTIEFE(kn) = minlevel;
-                    maxdepth = (NTIEFE(kn)>maxdepth) ?
-                        NTIEFE(kn) : maxdepth;
+                maxdepth = (NTIEFE(kn)>maxdepth) ?
+                    NTIEFE(kn) : maxdepth;
 #ifdef SCCDEBUG
                 PRINTF("[%ld|%s] (%d) (max %d)\n", kn,
-                    (NTITLE(kn)?NTITLE(kn):"null"),
-                    NTIEFE(kn), maxdepth);
+                        (NTITLE(kn)?NTITLE(kn):"null"),
+                        NTIEFE(kn), maxdepth);
 #endif
                 kn = get_nlist(&closed_scc_list);
             }
@@ -1618,9 +1619,9 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
 
         /* It holds for all nodes v in nlist:
          *    NTIEFE(v) != 0   <=>  v is in another closed component
-         *                  except closed_scc_list.
+         *                          except closed_scc_list.
          *    NTIEFE(v) == 0   <=>  v is in closed_scc_list   or
-         *              v is not reachable from node.
+         *                          v is not reachable from node.
          *
          * Note: if v is not reachable from node, then v is either
          * in a open component or v is not yet inspected.
@@ -2011,7 +2012,7 @@ static void tune_partitioning(void)
             if (test_timelimit(30)) {
                 gs_wait_message('t');
                 return;
-        }
+            }
 
         /* First, check normal nodes */
         for (v = nodelist; v; v = NNEXT(v))
@@ -2063,21 +2064,21 @@ static int tune_node_depth(GNODE v,int lab)
     if ((!FirstSucc(v)) || (!FirstPred(v))) delta = 1;
     else delta = 0;
 
-        for (edge = FirstPred(v); edge; edge = NextPred(edge))
+    for (edge = FirstPred(v); edge; edge = NextPred(edge))
     {
         nr_edges += EPRIO(edge);
         nr_redges++;
         if (NTIEFE(ESOURCE(edge))!=nodelevel)
             leveldiff += (EPRIO(edge)*
-                (NTIEFE(ESOURCE(edge))-nodelevel+delta));
+                          (NTIEFE(ESOURCE(edge))-nodelevel+delta));
     }
-        for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
+    for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
     {
         nr_edges += EPRIO(edge);
         nr_redges++;
         if (NTIEFE(ETARGET(edge))!=nodelevel)
             leveldiff += (EPRIO(edge)*
-                (NTIEFE(ETARGET(edge))-nodelevel-delta));
+                          (NTIEFE(ETARGET(edge))-nodelevel-delta));
     }
 
     /*  Nodes without edges should be at position 0.
@@ -2124,33 +2125,33 @@ static int tune_node_depth(GNODE v,int lab)
         if (near_edge_layout) delta = 0; else delta = 1;
 
         if (nodelevel > NTIEFE(v)) {
-                for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
+            for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
             {
-                            if (   (NTIEFE(ETARGET(edge))>NTIEFE(v))
-                                && (nodelevel>=NTIEFE(ETARGET(edge))))
+                if (   (NTIEFE(ETARGET(edge))>NTIEFE(v))
+                        && (nodelevel>=NTIEFE(ETARGET(edge))))
                     nodelevel = NTIEFE(ETARGET(edge))-delta;
-                    }
-                for (edge = FirstPred(v); edge; edge = NextPred(edge))
+            }
+            for (edge = FirstPred(v); edge; edge = NextPred(edge))
             {
-                            if (   (NTIEFE(ESOURCE(edge))>NTIEFE(v))
-                                && (nodelevel>=NTIEFE(ESOURCE(edge))))
+                if (   (NTIEFE(ESOURCE(edge))>NTIEFE(v))
+                        && (nodelevel>=NTIEFE(ESOURCE(edge))))
                     nodelevel = NTIEFE(ESOURCE(edge))-delta;
-                    }
+            }
             if (nodelevel <= NTIEFE(v)) return(0);
         }
-            if (nodelevel < NTIEFE(v)) {
-                for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
+        if (nodelevel < NTIEFE(v)) {
+            for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
             {
-                            if (   (NTIEFE(ETARGET(edge))<NTIEFE(v))
-                                && (nodelevel<=NTIEFE(ETARGET(edge))))
+                if (   (NTIEFE(ETARGET(edge))<NTIEFE(v))
+                        && (nodelevel<=NTIEFE(ETARGET(edge))))
                     nodelevel = NTIEFE(ETARGET(edge))+delta;
-                    }
-                for (edge = FirstPred(v); edge; edge = NextPred(edge))
+            }
+            for (edge = FirstPred(v); edge; edge = NextPred(edge))
             {
-                            if (   (NTIEFE(ESOURCE(edge))<NTIEFE(v))
-                                && (nodelevel<=NTIEFE(ESOURCE(edge))))
+                if (   (NTIEFE(ESOURCE(edge))<NTIEFE(v))
+                        && (nodelevel<=NTIEFE(ESOURCE(edge))))
                     nodelevel = NTIEFE(ESOURCE(edge))+delta;
-                    }
+            }
             if (nodelevel >= NTIEFE(v)) return(0);
         }
 
@@ -2158,36 +2159,37 @@ static int tune_node_depth(GNODE v,int lab)
          * whether they are still not reverted. But we allow to
          * re-revert edges such that they are now normal again.
          */
-            for (edge = FirstPred(v); edge; edge = NextPred(edge))
+        for (edge = FirstPred(v); edge; edge = NextPred(edge))
         {
             if (EART(edge)!='R') {
-                            if (  (nodelevel< NTIEFE(ESOURCE(edge)))
-                                    &&(NTIEFE(v)>=NTIEFE(ESOURCE(edge))) )
+                if (  (nodelevel< NTIEFE(ESOURCE(edge)))
+                        &&(NTIEFE(v)>=NTIEFE(ESOURCE(edge))) )
                     return(0);
             }
-                }
-            for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
+        }
+        for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
         {
             if (EART(edge)!='R') {
-                            if (  (nodelevel> NTIEFE(ETARGET(edge)))
-                                    &&(NTIEFE(v)<=NTIEFE(ETARGET(edge))) )
+                if (  (nodelevel> NTIEFE(ETARGET(edge)))
+                        &&(NTIEFE(v)<=NTIEFE(ETARGET(edge))) )
                     return(0);
             }
-                }
+        }
     }
-    else {  /*  For tree layout, it is not allowed to create nearedges
+    else {
+        /*  For tree layout, it is not allowed to create nearedges
          *  where previously no nearedges existed.
          */
 
-            for (edge = FirstPred(v); edge; edge = NextPred(edge))
+        for (edge = FirstPred(v); edge; edge = NextPred(edge))
         {
-                        if (nodelevel==NTIEFE(ESOURCE(edge))) return(0);
-                }
-            for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
-        {
-                        if (nodelevel==NTIEFE(ETARGET(edge))) return(0);
-                }
+            if (nodelevel==NTIEFE(ESOURCE(edge))) return(0);
         }
+        for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
+        {
+            if (nodelevel==NTIEFE(ETARGET(edge))) return(0);
+        }
+    }
 
     /*  Each node can only have two neighbors. Here we check that
      *  the node at the new position is maximal two neighbours,
@@ -2195,42 +2197,42 @@ static int tune_node_depth(GNODE v,int lab)
      */
 
     delta = 0;
-        for (edge = FirstPred(v); edge; edge = NextPred(edge))
+    for (edge = FirstPred(v); edge; edge = NextPred(edge))
     {
         hh = ESOURCE(edge);
-                if (nodelevel==NTIEFE(hh)) {
+        if (nodelevel==NTIEFE(hh)) {
             delta++;
             if (NCONNECT(hh)) return(0);
             hdelta = 0;
-                for (hedge = FirstPred(hh); hedge; hedge = NextPred(hedge))
+            for (hedge = FirstPred(hh); hedge; hedge = NextPred(hedge))
             {
                 if (NTIEFE(hh)==NTIEFE(ESOURCE(hedge))) hdelta++;
             }
-                for (hedge = FirstSucc(hh); hedge; hedge = NextSucc(hedge))
+            for (hedge = FirstSucc(hh); hedge; hedge = NextSucc(hedge))
             {
                 if (NTIEFE(hh)==NTIEFE(ETARGET(hedge))) hdelta++;
             }
             if (hdelta>1) return(0);
         }
-        }
-        for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
+    }
+    for (edge = FirstSucc(v); edge; edge = NextSucc(edge))
     {
         hh = ETARGET(edge);
-                if (nodelevel==NTIEFE(hh)) {
+        if (nodelevel==NTIEFE(hh)) {
             delta++;
             if (NCONNECT(hh)) return(0);
             hdelta = 0;
-                for (hedge = FirstPred(hh); hedge; hedge = NextPred(hedge))
+            for (hedge = FirstPred(hh); hedge; hedge = NextPred(hedge))
             {
                 if (NTIEFE(hh)==NTIEFE(ESOURCE(hedge))) hdelta++;
             }
-                for (hedge = FirstSucc(hh); hedge; hedge = NextSucc(hedge))
+            for (hedge = FirstSucc(hh); hedge; hedge = NextSucc(hedge))
             {
                 if (NTIEFE(hh)==NTIEFE(ETARGET(hedge))) hdelta++;
             }
             if (hdelta>1) return(0);
         }
-        }
+    }
     if (delta>2) return(0);
 
     /* Now, nearly everything is okay. Final checks.
