@@ -182,6 +182,7 @@
 #define DEAD_GNODE  ((GNODE)DEAD_PTR)
 #define DEAD_GEDGE  ((GEDGE)DEAD_PTR)
 #define DEAD_GELIST ((ADJEDGE)DEAD_PTR)
+#define DEAD_GNLIST ((GNLIST)DEAD_PTR)
 
 /**
  * Использовать ли для некоторых функций макрос-версии?

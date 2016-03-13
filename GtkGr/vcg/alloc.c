@@ -40,7 +40,7 @@
  * This file is a collection of auxiliary functions that implement the
  * memory management. It provides the following functions:
  *
- * myalloc      allocates memory from the internal memory management.
+ * myalloc          allocates memory from the internal memory management.
  * free_memory      gives the complete memory free.
  *
  * nodealloc        allocates a GNODE object (node), adds it to nodelist
@@ -49,35 +49,33 @@
  * free_node        deallocate a nontemporary GNODE object
  *
  * nodelist_alloc   allocates a stable node list element (i.e. a cons
- *          cell whose head is a GNODE object)
+ *                  cell whose head is a GNODE object)
  * tmpnodelist_alloc    allocates a temporary node list element (i.e. a cons
- *          cell whose head is a GNODE object)
- * free_regionnodelist  deallocate a list of node list elements.
- *          These were used as storage of regions.
+ *                      cell whose head is a GNODE object)
  *
  * edgealloc        allocates a GEDGE object (edge), adds it to edgelist
  * tmpedgealloc     allocates a temporary GEDGE object
  *
  * near_edge_insert     insert a near edge into near_edge_list. A near edge
- *          is a special edge that must always be placed near an
- *          other edge. See the nearedge-specification-feature.
- *          We use a special adjacency list to notify all
- *          near edges.
+ *                      is a special edge that must always be placed near an
+ *                      other edge. See the nearedge-specification-feature.
+ *                      We use a special adjacency list to notify all
+ *                      near edges.
  * bentnear_edge_insert insert a bent near edge into bent_near_edge_list.
- *          A bent near edge is a special edge consisting of a
- *          near edge, a dummy node and a normal edge.
- *          See the nearedge-specification-feature.
- *          We use a special adjacency list to notify all
- *          bent near edges.
+ *                      A bent near edge is a special edge consisting of a
+ *                      near edge, a dummy node and a normal edge.
+ *                      See the nearedge-specification-feature.
+ *                      We use a special adjacency list to notify all
+ *                      bent near edges.
  * back_edge_insert     insert a back edge into back_edge_list. A back edge
- *          is an edge that preferably is reverted.
- *          We use a special adjacency list to notify all
- *          back edges.
+ *                      is an edge that preferably is reverted.
+ *                      We use a special adjacency list to notify all
+ *                      back edges.
  *
  * connectalloc     allocates a CONNECT element of a node
  *
  * dllist_alloc     allocates a DLLIST-cons cell. These are double linked
- *          lists of nodes.
+ *                  lists of nodes.
  * dllist_free      gives one DLLIST-cons cell free.
  *
  * free_all_lists   gives all temporary memory free.
@@ -100,7 +98,7 @@
  */
 
 static GNODE internal_nodealloc();
-static void free_nodelists();
+static void free_tmpnodelists();
 static GEDGE internal_edgealloc();
 static void free_tmpedges();
 static void free_edgelists();
@@ -566,7 +564,6 @@ void check_graph_consistency(void)
 
 
 static GNLIST tmpnconslist   = NULL;  /* list of allocated cons cells */
-static GNLIST foldnconslist   = NULL; /* list of all. fold cons cells */
 static GNLIST ncons_freelist = NULL;  /* list of free cons cells      */
 
 
@@ -583,8 +580,13 @@ GNLIST nodelist_alloc(GNODE v)
 {
     GNLIST  h;
 
-    h = (GNLIST)myalloc(sizeof(struct gnlist));
-    GNINTERN(h) = NULL;
+    if (ncons_freelist) {
+        h = ncons_freelist;
+        ncons_freelist = GNINTERN(ncons_freelist);
+    }
+    else
+        h = (GNLIST)myalloc(sizeof(struct gnlist));
+    GNINTERN(h) = DEAD_GNLIST;
     GNNODE(h)   = v;
     GNNEXT(h)   = NULL;
     return(h);
@@ -615,40 +617,10 @@ GNLIST  tmpnodelist_alloc(void)
     return(h);
 }
 
-
-/*  Allocate a foldlist GNLIST object
- *  ---------------------------------
- *  First, we look in the free list, if we have a free node. Otherwise,
- *  we allocate a node from the core memory.
- *  We also set some default values.
- *  These node lists are used for the folding action keepers in
- *  folding.c. They live longer than temporary nodes, but are
- *  also temporary, because they are deallocated after folding.
- */
-
-GNLIST  foldnodelist_alloc(void)
-{
-    GNLIST  h;
-
-    if (ncons_freelist) {
-        h = ncons_freelist;
-        ncons_freelist = GNINTERN(ncons_freelist);
-    }
-    else
-        h = (GNLIST)myalloc(sizeof(struct gnlist));
-    GNINTERN(h) = foldnconslist;
-    GNNODE(h)   = NULL;
-    GNNEXT(h)   = NULL;
-    foldnconslist = h;
-    return(h);
-}
-
-
-
 /*  Deallocate all temporary GNLIST objects
  *  --------------------------------------
  */
-static void free_nodelists(void)
+static void free_tmpnodelists(void)
 {
     GNLIST  h;
 
@@ -662,39 +634,26 @@ static void free_nodelists(void)
     }
 }
 
-
-/*  Deallocate all fold GNLIST objects
- *  ----------------------------------
- */
-void free_foldnodelists(void)
-{
-    GNLIST  h;
-
-    /* все из foldnconslist переносим в ncons_freelist */
-    h = foldnconslist;
-    if (h) {
-        while (GNINTERN(h)) h = GNINTERN(h);
-        GNINTERN(h) = ncons_freelist;
-        ncons_freelist = foldnconslist;
-        foldnconslist = NULL;
-    }
-}
-
-
-/*  Deallocate GNLIST objects of regions
+/*  Deallocate GNLIST objects
  *  ------------------------------------
  *  These GNLIST objects should be allocated by nodelist_alloc,
  *  i.e. should not be temporary.
  */
-void free_regionnodelist(GNLIST r)
+void free_gnlist_list(GNLIST r)
 {
-    GNLIST  h;
+    GNLIST h, nxt_h;
+    GNLIST prev_h = NULL;
 
-    /* все из r переносим в ncons_freelist, r не нулим */
-    h = r;
-    if (h) {
-        while(GNINTERN(h)) h = GNINTERN(h);
-        GNINTERN(h) = ncons_freelist;
+    /* все из r по GNNEXT переносим в ncons_freelist по GNINTERN */
+    for (h = r; h; h = nxt_h)
+    {
+        nxt_h = GNNEXT(h);
+        assert(GNINTERN(h) == DEAD_GNLIST);
+        GNINTERN(h) = nxt_h;
+        prev_h = h;
+    }
+    if (prev_h) {
+        GNINTERN(prev_h) = ncons_freelist;
         ncons_freelist = r;
     }
 }
@@ -1242,7 +1201,7 @@ void free_all_lists(void)
 {
     free_tmpnodes();
     free_tmpedges();
-    free_nodelists();
+    free_tmpnodelists();
     free_edgelists();
     free_connect();
 } /* free_all_lists */

@@ -307,12 +307,14 @@ static int estimate_num_nodes(yysyntaxtree x)
 
 /*  Abbreviation to add v into the nodelist NSGRAPH(root) */
 
-#define add_to_nodelist_of_root(v)  \
-    { if ( subg_bit > 0 ) {                     \
+#define add_to_nodelist_of_root(v, root, rootend)  \
+    { assert((subg_bit > 0) == (root != NULL)); \
+      if ( subg_bit > 0 ) {                     \
+        GNLIST l;                               \
         NROOT(v)    = root;             \
         l = nodelist_alloc(v);              \
-        if (rootend)    GNNEXT(rootend) = l;\
-        else        NSGRAPH(root) = l;  \
+        if (rootend) GNNEXT(rootend) = l;\
+        else         NSGRAPH(root) = l;  \
         rootend = l;                        \
     }}
 
@@ -322,7 +324,6 @@ static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
     yysyntaxtree    node1, node2;   /* auxiliary variables */
     struct  gnode defaultnode;
     GNODE   v;
-    GNLIST  l;
     int     invis;
     GNLIST  rootend;        /* end of the actual node list */
     int     rootshrink;     /* shrink factor of the root   */
@@ -376,7 +377,7 @@ static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
             case T_Co_graph:
                 v = graphalloc(&defaultnode);
 
-                add_to_nodelist_of_root(v);
+                add_to_nodelist_of_root(v, root, rootend);
 
                 graph_attributes(son1(node1),v,rootshrink,rootstretch);
                 subg_bit++;
@@ -872,7 +873,7 @@ static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
 
             case T_Co_node:
                 v = nodealloc(&defaultnode);
-                add_to_nodelist_of_root(v);
+                add_to_nodelist_of_root(v, root, rootend);
                 node_attributes(son1(node1),v,rootshrink,rootstretch);
                 break;
 

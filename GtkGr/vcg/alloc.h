@@ -74,9 +74,7 @@ void check_graph_consistency _PP((void));
 
 GNLIST  nodelist_alloc      _PP((GNODE v));
 GNLIST  tmpnodelist_alloc   _PP((void));
-GNLIST  foldnodelist_alloc  _PP((void));
-void free_regionnodelist    _PP(( GNLIST r));
-void free_foldnodelists     _PP((void));
+void free_gnlist_list(GNLIST r);
 
 GEDGE edgealloc     _PP((GEDGE refedge));
 void  edgedefaults  _PP((GEDGE edge));

@@ -166,8 +166,7 @@ static GNLIST ufoldstart;  /* Node where region unfolding starts         */
 
 static void foldnodelist_add(GNLIST *lp, GNODE v)
 {
-    GNLIST l = foldnodelist_alloc();
-    GNNODE(l) = v;
+    GNLIST l = nodelist_alloc(v);
     GNNEXT(l) = *lp;
     *lp = l;
 }
@@ -177,7 +176,13 @@ static void foldnodelist_remove(GNLIST *lp, GNODE v)
     GNLIST l = *lp;
 
     while (l) {
-        if (GNNODE(l)==v) { *lp = GNNEXT(l); break; }
+        if (GNNODE(l)==v) {
+            *lp = GNNEXT(l);
+
+            GNNEXT(l) = NULL;
+            free_gnlist_list(l);
+            break;
+        }
         lp = &GNNEXT(l);
         l  = GNNEXT(l);
     }
@@ -185,11 +190,11 @@ static void foldnodelist_remove(GNLIST *lp, GNODE v)
 
 void init_folding_keepers_globals()
 {
-    ufoldstart  = NULL;
-    foldstart   = NULL;
-    foldstops   = NULL;
     f_subgraphs = NULL;
     uf_subgraphs= NULL;
+    foldstops   = NULL;
+    foldstart   = NULL;
+    ufoldstart  = NULL;
 }
 
 /*   Fold starters and stoppers
@@ -217,7 +222,12 @@ void clear_folding_keepers(void)
     for (l = foldstart; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
     for (l = ufoldstart; l; l = GNNEXT(l)) { NREVERT(GNNODE(l)) = NOREVERT; }
 
-    free_foldnodelists();
+    free_gnlist_list(f_subgraphs);
+    free_gnlist_list(uf_subgraphs);
+    free_gnlist_list(foldstops);
+    free_gnlist_list(foldstart);
+    free_gnlist_list(ufoldstart);
+
     init_folding_keepers_globals();
 }
 
@@ -787,14 +797,9 @@ static void recursive_fold(GNODE v, GNODE n, int k)
     /* Add v to the region list of n */
     NREGROOT(v) = n;
     l = nodelist_alloc(v);
-    if ( !NREGION(n) ) {
-        GNNEXT(l)  = NULL;
-        NREGION(n) = l;
-    }
-    else {
-        GNNEXT(l)  = NREGION(n);
-        NREGION(n) = l;
-    }
+    GNNEXT(l)  = NREGION(n);
+    NREGION(n) = l;
+
     delete_node(v,FOLDED_RGNODE);
 
     /* Go into the recursion */
@@ -902,14 +907,14 @@ static void unfold_region(GNODE n)
 
     free_node(h);         /* give h free */
 
-    while (l) {
+    for ( ; l; l = GNNEXT(l))
+    {
         h = GNNODE(l);
         NREGROOT(h) = NULL;
         insert_node(h, FOLDED_RGNODE);
-        l = GNNEXT(l);
     }
 
-    free_regionnodelist(startl); /* give the region cons cells free */
+    free_gnlist_list(startl); /* give the region cons cells free */
 } /* unfold_region */
 
 /*--------------------------------------------------------------------*/

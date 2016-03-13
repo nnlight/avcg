@@ -2274,7 +2274,7 @@ static void create_depth_lists(void)
         hl = tmpnodelist_alloc();
         GNNEXT(hl) = TSUCC(layer[t]);
         TSUCC(layer[t]) = hl;
-            GNNODE(hl) = h;
+        GNNODE(hl) = h;
     }
     for (h = labellist; h; h = NNEXT(h))
     {
@@ -2283,7 +2283,7 @@ static void create_depth_lists(void)
         hl = tmpnodelist_alloc();
         GNNEXT(hl) = TSUCC(layer[t]);
         TSUCC(layer[t]) = hl;
-            GNNODE(hl) = h;
+        GNNODE(hl) = h;
     }
     for (h = dummylist; h; h = NNEXT(h))
     {
@@ -2292,7 +2292,7 @@ static void create_depth_lists(void)
         hl = tmpnodelist_alloc();
         GNNEXT(hl) = TSUCC(layer[t]);
         TSUCC(layer[t]) = hl;
-            GNNODE(hl) = h;
+        GNNODE(hl) = h;
     }
 }
 

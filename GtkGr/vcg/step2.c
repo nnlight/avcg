@@ -2698,7 +2698,7 @@ static void apply_horder(int i)
  */
 static void copy_layers(DEPTH *l1, DEPTH *l2)
 {
-        int    i;
+    int    i;
     GNLIST h1, h2;
 
     debugmessage("copy_layers","");
