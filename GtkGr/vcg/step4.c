@@ -64,9 +64,9 @@
  *        edge of v, and NPREDL(v) and NPREDR(v) the leftest and rightest
  *        predecessor edge.
  *    12) All nodes have filled NX, NY, NWIDTH and NHEIGHT such that
- *    they do not overlap. NX and NY are absolutely. NWIDTH and
- *    NHEIGHT are stretched or shrinked according to the local
- *    factors at the nodes.
+ *        they do not overlap. NX and NY are absolutely. NWIDTH and
+ *        NHEIGHT are stretched or shrinked according to the local
+ *        factors at the nodes.
  *
  * We summarize all subsequential edges that point to the same node into
  * ports. This has the advantage that we need only to draw one arrow
@@ -87,13 +87,13 @@
  * ------------------------------------------
  * step4_main           Main routine to calculate edge co-ordinates
  * calc_node_ports      Calculate the ports where the edges come
- *              in or out
+ *                      in or out
  * calc_edge_xy         Calculate the coordinates of edges
  * calc_edgearrow       Calculate the orientation of edges
- * calc_max_xy_pos  Calculate the maximal x/y-positions in the
- *          layout.
+ * calc_max_xy_pos      Calculate the maximal x/y-positions in the
+ *                      layout.
  * statistics           Calculate a statistic of the layout (not needed
- *          in this step, but later, see menu point statistics).
+ *                      in this step, but later, see menu point statistics).
  *
  ************************************************************************/
 
@@ -306,7 +306,8 @@ void calc_node_ports(GNODE v, int xypos_avail)
         if ((psize==act_psize)&&(pcol==act_pcol)&&(pstyle==act_pstyle)){
             if (pstyle!= -1) EWEIGHTS(e) = act_port;
         }
-        else {  act_pstyle = pstyle;
+        else {
+            act_pstyle = pstyle;
             act_psize  = psize;
             act_pcol   = pcol;
             if (pstyle!= -1) {
@@ -331,20 +332,24 @@ void calc_node_ports(GNODE v, int xypos_avail)
                     portpos = -1;
                 else if (NX(ETARGET(e))>NX(v)+NWIDTH(v))
                     portpos = 1;
-                else    portpos = 0;
+                else
+                    portpos = 0;
                 if (portpos<0) midport = EWEIGHTS(e);
                 if (portpos==0) {
                     if (!nullport)
                         midport =
                         nullport = EWEIGHTS(e);
-                    else    midport = (EWEIGHTS(e)
-                                +nullport)/2;
+                    else
+                        midport = (EWEIGHTS(e)
+                                   +nullport)/2;
                 }
-                else nullport = 0;
+                else
+                    nullport = 0;
             }
             if (act_port-midport > midport-1)
                 portpos = 2*act_port-3*midport+1;
-            else    portpos = midport-1;
+            else
+                portpos = midport-1;
             NWEIGHTS(v) = 2*(midport+portpos)-1;
             if (portpos) {
                 for (e = FirstSucc(v); e; e = NextSucc(e))
@@ -387,7 +392,8 @@ void calc_node_ports(GNODE v, int xypos_avail)
         if ((psize==act_psize)&&(pcol==act_pcol)&&(pstyle==act_pstyle)){
             if (pstyle!= -1) EWEIGHTP(e) = act_port;
         }
-        else {  act_pstyle = pstyle;
+        else {
+            act_pstyle = pstyle;
             act_psize  = psize;
             act_pcol   = pcol;
             if (pstyle!= -1) {
@@ -413,20 +419,24 @@ void calc_node_ports(GNODE v, int xypos_avail)
                     portpos = -1;
                 else if (NX(ESOURCE(e))>NX(v)+NWIDTH(v))
                     portpos = 1;
-                else    portpos = 0;
+                else
+                    portpos = 0;
                 if (portpos<0) midport = EWEIGHTP(e);
                 if (portpos==0) {
                     if (!nullport)
                         midport =
                         nullport = EWEIGHTP(e);
-                    else    midport = (EWEIGHTP(e)
-                                +nullport)/2;
+                    else
+                        midport = (EWEIGHTP(e)
+                                   +nullport)/2;
                 }
-                else nullport = 0;
+                else
+                    nullport = 0;
             }
             if (act_port-midport > midport-1)
                 portpos = 2*act_port-3*midport+1;
-            else    portpos = midport-1;
+            else
+                portpos = midport-1;
             NWEIGHTP(v) = 2*(midport+portpos)-1;
             if (portpos) {
                 for (e = FirstPred(v); e; e = NextPred(e))
@@ -494,8 +504,8 @@ void calc_edge_xy(GNODE v)
 
     switch (NSHAPE(v)) {
     case TRIANGLE:  dist1 = node_width/4;
-            break;
-    default:    dist1 = 0;
+                    break;
+    default:        dist1 = 0;
     }
 
     /* First: edge coordinates of connections */
@@ -507,13 +517,15 @@ void calc_edge_xy(GNODE v)
                 ETBENDY(e) = ESTARTY(e) = node_y+node_height/2;
                 if (NX(EEND(e))<node_x)
                     ETBENDX(e) = ESTARTX(e) = node_x+dist1;
-                else    ETBENDX(e) = ESTARTX(e) = node_x-dist1+node_width;
+                else
+                    ETBENDX(e) = ESTARTX(e) = node_x-dist1+node_width;
             }
             else { /* EEND(e)==v */
                 EBBENDY(e) = EENDY(e) = node_y+node_height/2;
                 if (NX(ESTART(e))<node_x)
                     EBBENDX(e) = EENDX(e) = node_x+dist1;
-                else    EBBENDX(e) = EENDX(e) = node_x-dist1+node_width;
+                else
+                    EBBENDX(e) = EENDX(e) = node_x-dist1+node_width;
             }
         }
         if (CTARGET2(c)) {
@@ -522,13 +534,15 @@ void calc_edge_xy(GNODE v)
                 ETBENDY(e) = ESTARTY(e) = node_y+node_height/2;
                 if (NX(EEND(e))<node_x)
                     ETBENDX(e) = ESTARTX(e) = node_x+dist1;
-                else    ETBENDX(e) = ESTARTX(e) = node_x-dist1+node_width;
+                else
+                    ETBENDX(e) = ESTARTX(e) = node_x-dist1+node_width;
             }
             else { /* EEND(e)==v */
                 EBBENDY(e) = EENDY(e) = node_y+node_height/2;
                 if (NX(ESTART(e))<node_x)
                     EBBENDX(e) = EENDX(e) = node_x+dist1;
-                else    EBBENDX(e) = EENDX(e) = node_x-dist1+node_width;
+                else
+                    EBBENDX(e) = EENDX(e) = node_x-dist1+node_width;
             }
         }
     }
@@ -537,28 +551,31 @@ void calc_edge_xy(GNODE v)
     for (e = FirstSucc(v); e; e = NextSucc(e))
     {
         switch (EART(e)) {
-        case 'l': ETBENDY(e) = ESTARTY(e) = node_y+node_height/2;
-              ETBENDX(e) = ESTARTX(e) = node_x+dist1;
-              break;
-        case 'r': ETBENDY(e) = ESTARTY(e) = node_y+node_height/2;
-              ETBENDX(e) = ESTARTX(e) = node_x+node_width-dist1;
-              break;
+        case 'l':
+            ETBENDY(e) = ESTARTY(e) = node_y+node_height/2;
+            ETBENDX(e) = ESTARTX(e) = node_x+dist1;
+            break;
+        case 'r':
+            ETBENDY(e) = ESTARTY(e) = node_y+node_height/2;
+            ETBENDX(e) = ESTARTX(e) = node_x+node_width-dist1;
+            break;
         default:
-              ETBENDX(e) = ESTARTX(e) = node_x +
+            ETBENDX(e) = ESTARTX(e) = node_x +
                 node_width * EWEIGHTS(e) / (node_succports+1);
 
-              switch (NSHAPE(v)) {
-              case RHOMB:
+            switch (NSHAPE(v)) {
+            case RHOMB:
                 if (ESTARTX(e)-node_x < node_width/2)
                     dist = ((node_width+1)/2 - ESTARTX(e)
                         + node_x) * node_height
                         / node_width;
-                else    dist = (-(node_width+1)/2 + ESTARTX(e)
+                else
+                    dist = (-(node_width+1)/2 + ESTARTX(e)
                         - node_x) * node_height
                         / node_width;
                 ESTARTY(e) = node_y + node_height - dist;
                 break;
-              case ELLIPSE:
+            case ELLIPSE:
                 dist = node_height/2 -
                     gstoint(sqrt(
                       (double)(node_height*node_height)/4.0
@@ -568,38 +585,41 @@ void calc_edge_xy(GNODE v)
                         *(ESTARTX(e)-node_x-(double)node_width/2.0)));
                 ESTARTY(e) = node_y + node_height - dist;
                 break;
-              default:
+            default:
                 ESTARTY(e) = node_y + node_height;
-              }
-              ETBENDY(e) = ESTARTY(e);
+            }
+            ETBENDY(e) = ESTARTY(e);
         }
     }
     /* Now: check all predecessors */
     for (e = FirstPred(v); e; e = NextPred(e))
     {
         switch (EART(e)) {
-        case 'l': EBBENDY(e) = EENDY(e) = node_y+node_height/2;
-              EBBENDX(e) = EENDX(e) = node_x+node_width-dist1;
-              break;
-        case 'r': EBBENDY(e) = EENDY(e) = node_y+node_height/2;
-              EBBENDX(e) = EENDX(e) = node_x+dist1;
-              break;
+        case 'l':
+            EBBENDY(e) = EENDY(e) = node_y+node_height/2;
+            EBBENDX(e) = EENDX(e) = node_x+node_width-dist1;
+            break;
+        case 'r':
+            EBBENDY(e) = EENDY(e) = node_y+node_height/2;
+            EBBENDX(e) = EENDX(e) = node_x+dist1;
+            break;
         default:
-              EBBENDX(e) = EENDX(e) = node_x +
+            EBBENDX(e) = EENDX(e) = node_x +
                 node_width * EWEIGHTP(e) / (node_predports+1);
 
-              switch (NSHAPE(v)) {
-              case RHOMB:
+            switch (NSHAPE(v)) {
+            case RHOMB:
                 if (EENDX(e)-node_x < node_width/2)
                     dist = ((node_width+1)/2 - EENDX(e)
                         + node_x) * node_height
                         / node_width;
-                else    dist = (-(node_width+1)/2 + EENDX(e)
+                else
+                    dist = (-(node_width+1)/2 + EENDX(e)
                         - node_x) * node_height
                         / node_width;
                 EENDY(e) = node_y + dist;
                 break;
-              case ELLIPSE:
+            case ELLIPSE:
                 dist = node_height/2 -
                     gstoint(sqrt(
                       (double)(node_height*node_height)/4.0
@@ -609,23 +629,24 @@ void calc_edge_xy(GNODE v)
                         *(EENDX(e)-node_x-(double)node_width/2.0)));
                 EENDY(e) = node_y + dist;
                 break;
-              case TRIANGLE:
+            case TRIANGLE:
                 if (EENDX(e)-node_x < node_width/2)
                     dist = ((node_width+1)/2 - EENDX(e)
                         + node_x) * node_height * 2
                         / node_width;
-                else    dist = (-(node_width+1)/2 + EENDX(e)
+                else
+                    dist = (-(node_width+1)/2 + EENDX(e)
                         - node_x) * node_height * 2
                         / node_width;
                 EENDY(e) = node_y + dist;
                 break;
-              default:
+            default:
                 EENDY(e) = node_y;
-              }
-              EBBENDY(e) = EENDY(e);
+            }
+            EBBENDY(e) = EENDY(e);
         }
     }
-}
+} /* calc_edge_xy */
 
 
 /*--------------------------------------------------------------------*/
@@ -655,19 +676,17 @@ static void     calc_manhatten(void)
          */
         topbendp = 0;
         botbendp = MAXINT;
-        li = TPRED(layer[i]);
-        while (li) {
+        for (li = TPRED(layer[i]); li; li = GNNEXT(li))
+        {
             tpred_connection1[NPOS(GNNODE(li))] = li;
             if (NY(GNNODE(li))+NHEIGHT(GNNODE(li))>topbendp)
                 topbendp = NY(GNNODE(li))+NHEIGHT(GNNODE(li));
-            li = GNNEXT(li);
         }
-        li = TPRED(layer[i+1]);
-        while (li) {
+        for (li = TPRED(layer[i+1]); li; li = GNNEXT(li))
+        {
             tpred_connection2[NPOS(GNNODE(li))] = li;
             if (NY(GNNODE(li))<botbendp)
                 botbendp = NY(GNNODE(li));
-            li = GNNEXT(li);
         }
 
         /* Now we fill ETBENDY by the indicator in which row
@@ -707,7 +726,7 @@ static  int     size_lower_list;        /* nr. of elements in lower_list */
 static  int     size_upper_list;        /* nr. of elements in upper_list */
 static  int     maxr_lower_list;        /* maximal row     in lower_list */
 static  int     maxr_upper_list;        /* maximal row     in upper_list */
-static  int     maxr_sum;       /* sum of maximal rows           */
+static  int     maxr_sum;               /* sum of maximal rows           */
 static  DLLIST  lower_list     = NULL;  /* the lower list                */
 static  DLLIST  lower_list_end = NULL;  /* and its end                   */
 static  DLLIST  upper_list     = NULL;  /* the upper list                */
@@ -721,10 +740,10 @@ static int  fill_row_indicators(int level)
     GEDGE e1, e2;
 
     debugmessage("fill_row_indicator","");
-        assert((level>=0));
-        assert((level<=maxdepth));      /* we access to level+1
-                                         * and tmp_layer[maxdepth+1] exists
-                                         */
+    assert((level>=0));
+    assert((level<=maxdepth));      /* we access to level+1
+                                     * and tmp_layer[maxdepth+1] exists
+                                     */
     size_upper_list = size_lower_list = 0;
     maxr_lower_list = maxr_upper_list = 0;
     lower_list = lower_list_end = NULL;
@@ -751,7 +770,8 @@ static int  fill_row_indicators(int level)
                 finish_upper(GNNODE(li1),ESTARTX(e1));
                 e1 = NextSucc(e1);
             }
-            else {  finish_lower(GNNODE(li2),EENDX(e2));
+            else {
+                finish_lower(GNNODE(li2),EENDX(e2));
                 e2 = NextPred(e2);
             }
         }
@@ -779,7 +799,7 @@ static int  fill_row_indicators(int level)
         }
     }
 
-        return(maxr_sum);
+    return(maxr_sum);
 }
 
 
@@ -795,7 +815,7 @@ static int  fill_row_indicators(int level)
 static void     finish_upper(GNODE v, int xpos)
 {
     GEDGE e;
-    DLLIST n,m;
+    DLLIST n, nxt_n;
     int k;
 
     debugmessage("finish_upper","");
@@ -819,17 +839,16 @@ static void     finish_upper(GNODE v, int xpos)
     k = maxr_upper_list + maxr_lower_list;
     if (k>maxr_sum) maxr_sum = k;
 
-    n = upper_list;
-    while (n) {
-        m = DSUCC(n);
+    for (n = upper_list; n; n = nxt_n)
+    {
+        nxt_n = DSUCC(n);
         if (DNX(n) <= xpos) delete_upper(n);
-        n = m;
     }
+
     maxr_upper_list = 0;
-    n = upper_list;
-    while (n) {
+    for (n = upper_list; n; n = DSUCC(n))
+    {
         if (DINFO(n)> maxr_upper_list) maxr_upper_list = DINFO(n);
-        n = DSUCC(n);
     }
 }
 
@@ -843,7 +862,7 @@ static void     finish_upper(GNODE v, int xpos)
 static void     finish_lower(GNODE v, int xpos)
 {
     GEDGE e;
-    DLLIST n,m;
+    DLLIST n, nxt_n;
     int k;
 
     debugmessage("finish_lower","");
@@ -867,18 +886,16 @@ static void     finish_lower(GNODE v, int xpos)
     k = maxr_upper_list + maxr_lower_list;
     if (k>maxr_sum) maxr_sum = k;
 
-    n = lower_list;
-    while (n) {
-        m = DSUCC(n);
+    for (n = lower_list; n; n = nxt_n)
+    {
+        nxt_n = DSUCC(n);
         if (DNX(n) <= xpos) delete_lower(n);
-        n = m;
     }
 
     maxr_lower_list = 0;
-    n = lower_list;
-    while (n) {
+    for (n = lower_list; n; n = DSUCC(n))
+    {
         if (DINFO(n)> maxr_lower_list) maxr_lower_list = DINFO(n);
-        n = DSUCC(n);
     }
 }
 
@@ -940,8 +957,7 @@ static void     delete_upper(DLLIST x)
 {
     assert((x));
     assert((DNODE(x)));
-    debugmessage("delete_upper",
-        (NTITLE(DNODE(x))?NTITLE(DNODE(x)):""));
+    debugmessage("delete_upper", (NTITLE(DNODE(x))?NTITLE(DNODE(x)):""));
     if (DPRED(x)) DSUCC(DPRED(x)) = DSUCC(x);
     else          upper_list      = DSUCC(x);
     if (DSUCC(x)) DPRED(DSUCC(x)) = DPRED(x);
@@ -959,8 +975,7 @@ static void     delete_lower(DLLIST x)
 {
     assert((x));
     assert((DNODE(x)));
-    debugmessage("delete_lower",
-        (NTITLE(DNODE(x))?NTITLE(DNODE(x)):""));
+    debugmessage("delete_lower", (NTITLE(DNODE(x))?NTITLE(DNODE(x)):""));
     if (DPRED(x)) DSUCC(DPRED(x)) = DSUCC(x);
     else          lower_list      = DSUCC(x);
     if (DSUCC(x)) DPRED(DSUCC(x)) = DPRED(x);
@@ -995,12 +1010,13 @@ static void     evaluate_row_indicators(int level, int maxr, int miny, int maxy)
                 if (ESTARTX(e) >= EENDX(e))
                     k = maxy- (maxy-miny) *
                            (maxr+1-ETBENDY(e)) / (maxr+1);
-                else    k = miny+ (maxy-miny) *
+                else
+                    k = miny+ (maxy-miny) *
                            (maxr+1-ETBENDY(e)) / (maxr+1);
             }
             ETBENDY(e) = k;
             EBBENDY(e) = k;
-            }
+        }
     }
 
     for (li = TSUCC(layer[level]); li; li = GNNEXT(li))
@@ -1107,18 +1123,17 @@ static void calc_all_bendpoints(void)
          *             d
          */
 
-        li = TSUCC(layer[i]);
         minx = MAXINT;
         maxx = 0;
-        while (li) {
+        for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+        {
             j = NY(GNNODE(li));
             if (j<minx) minx = j;
             j = j + NHEIGHT(GNNODE(li));
             if (j>maxx) maxx = j;
-            li = GNNEXT(li);
         }
-        li = TSUCC(layer[i]);
-        while (li) {
+        for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+        {
             node = GNNODE(li);
 
             if (  (NWIDTH(node)==0) && (NHEIGHT(node)==0)
@@ -1151,7 +1166,6 @@ static void calc_all_bendpoints(void)
                 EENDY(NextPred(FirstPred(node))) = minx;
                 EBBENDY(NextPred(FirstPred(node))) = minx;
             }
-            li = GNNEXT(li);
         }
 
         /*  And now the real bendpoint calculation.
@@ -1159,19 +1173,17 @@ static void calc_all_bendpoints(void)
 
         topbendp = 0;
         botbendp = MAXINT;
-        li = TPRED(layer[i]);
-        while (li) {
+        for (li = TPRED(layer[i]); li; li = GNNEXT(li))
+        {
             tpred_connection1[NPOS(GNNODE(li))] = li;
             if (NY(GNNODE(li))+NHEIGHT(GNNODE(li))>topbendp)
                 topbendp = NY(GNNODE(li))+NHEIGHT(GNNODE(li));
-            li = GNNEXT(li);
         }
-        li = TPRED(layer[i+1]);
-        while (li) {
+        for (li = TPRED(layer[i+1]); li; li = GNNEXT(li))
+        {
             tpred_connection2[NPOS(GNNODE(li))] = li;
             if (NY(GNNODE(li))<botbendp)
                 botbendp = NY(GNNODE(li));
-            li = GNNEXT(li);
         }
 
         j = 1;
@@ -1180,27 +1192,25 @@ static void calc_all_bendpoints(void)
         while (changed) {
             j++;
             if (j>max_edgebendings) {
-                            gs_wait_message('t');
-                            break;
-                    }
-                if (G_timelimit>0)
-                        if (test_timelimit(100)) {
-                                gs_wait_message('t');
-                                break;
-                        }
+                gs_wait_message('t');
+                break;
+            }
+            if (G_timelimit>0)
+                if (test_timelimit(100)) {
+                    gs_wait_message('t');
+                    break;
+                }
 
             changed = 0;
-            li = TSUCC(layer[i]);
-            while (li) {
+            for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+            {
                 h = calc_topbendpoint(li);
                 changed += set_topbendpoint(li,h);
-                li = GNNEXT(li);
             }
-            li = TSUCC(layer[i+1]);
-            while (li) {
+            for (li = TSUCC(layer[i+1]); li; li = GNNEXT(li))
+            {
                 h = calc_botbendpoint(li);
                 changed += set_botbendpoint(li,h);
-                li = GNNEXT(li);
             }
         }
 
@@ -1210,19 +1220,17 @@ static void calc_all_bendpoints(void)
          */
 
         if (changed) {
-            li = TSUCC(layer[i]);
-            while (li) {
+            for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+            {
                 (void)set_topbendpoint(li,topbendp);
-                li = GNNEXT(li);
             }
-            li = TSUCC(layer[i+1]);
-            while (li) {
+            for (li = TSUCC(layer[i+1]); li; li = GNNEXT(li))
+            {
                 (void)set_botbendpoint(li,botbendp);
-                li = GNNEXT(li);
             }
         }
     }
-}
+} /* calc_all_bendpoints */
 
 
 
@@ -1234,20 +1242,20 @@ static void calc_all_bendpoints(void)
 
 static int set_topbendpoint(GNLIST li, int bendp)
 {
-        GEDGE e;
+    GEDGE e;
     int changed;
 
-        debugmessage("set_topbendpoint","");
-        assert((li));
-        assert((GNNODE(li)));
+    debugmessage("set_topbendpoint","");
+    assert((li));
+    assert((GNNODE(li)));
     changed = 0;
     for (e = FirstSucc(GNNODE(li)); e; e = NextSucc(e))
     {
-                if (ETBENDY(e)<bendp) {
-                        ETBENDY(e) = bendp;
+        if (ETBENDY(e)<bendp) {
+            ETBENDY(e) = bendp;
             changed = 1;
         }
-        }
+    }
     return(changed);
 }
 
@@ -1260,20 +1268,20 @@ static int set_topbendpoint(GNLIST li, int bendp)
 
 static int set_botbendpoint(GNLIST li, int bendp)
 {
-        GEDGE e;
+    GEDGE e;
     int changed;
 
-        debugmessage("set_botbendpoint","");
-        assert((li));
-        assert((GNNODE(li)));
+    debugmessage("set_botbendpoint","");
+    assert((li));
+    assert((GNNODE(li)));
     changed = 0;
     for (e = FirstPred(GNNODE(li)); e; e = NextPred(e))
     {
-                if (EBBENDY(e)>bendp) {
-                        EBBENDY(e) = bendp;
+        if (EBBENDY(e)>bendp) {
+            EBBENDY(e) = bendp;
             changed = 1;
         }
-        }
+    }
     return(changed);
 }
 
@@ -1359,8 +1367,8 @@ static int calc_edgetopbendpoint(GEDGE e, GNLIST li)
     ty = EBBENDY(e);
     offset = 7*EARROWBSIZE(e)/10+2;
     if (sx<tx) {
-        li2 = GNNEXT(li);
-        while (li2) {
+        for (li2 = GNNEXT(li); li2; li2 = GNNEXT(li2))
+        {
             node = GNNODE(li2);
             if (!NANCHORNODE(node)) {
                 kx = NX(node);
@@ -1405,15 +1413,14 @@ static int calc_edgetopbendpoint(GEDGE e, GNLIST li)
                     h = bendformula;
                     if (h>bendp) bendp = h;
                 }
-                        }
-            li2 = GNNEXT(li2);
+            }
         }
     }
     else if (tx<sx) {
         li2 = tpred_connection1[NPOS(GNNODE(li))];
         /* li is now the corresponding in the TPRED list */
-        li2 = GNNEXT(li2);
-        while (li2) {
+        for (li2 = GNNEXT(li2); li2; li2 = GNNEXT(li2))
+        {
             node = GNNODE(li2);
             if (!NANCHORNODE(node)) {
                 kx = NX(node) + NWIDTH(node);
@@ -1459,11 +1466,10 @@ static int calc_edgetopbendpoint(GEDGE e, GNLIST li)
                     if (h>bendp) bendp = h;
                 }
             }
-            li2 = GNNEXT(li2);
         }
     }
     return(bendp);
-}
+} /* calc_edgetopbendpoint */
 
 
 
@@ -1548,8 +1554,8 @@ static int calc_edgebotbendpoint(GEDGE e, GNLIST li)
     offset = 7*EARROWSIZE(e)/10+2;
 
     if (sx<tx) {
-        li2 = GNNEXT(li);
-        while (li2) {
+        for (li2 = GNNEXT(li); li2; li2 = GNNEXT(li2))
+        {
             node = GNNODE(li2);
             if (!NANCHORNODE(node)) {
                 kx = NX(node);
@@ -1611,15 +1617,14 @@ static int calc_edgebotbendpoint(GEDGE e, GNLIST li)
                     h = bendformula;
                     if ((h>0)&&(h<bendp)) bendp = h;
                 }
-                        }
-            li2 = GNNEXT(li2);
+            }
         }
     }
     else if (tx<sx) {
         li2 = tpred_connection2[NPOS(GNNODE(li))];
         /* li is now the corresponding in the TPRED list */
-        li2 = GNNEXT(li2);
-        while (li2) {
+        for (li2 = GNNEXT(li2); li2; li2 = GNNEXT(li2))
+        {
             node = GNNODE(li2);
             if (!NANCHORNODE(node)) {
                 kx = NX(node) + NWIDTH(node);
@@ -1682,11 +1687,10 @@ static int calc_edgebotbendpoint(GEDGE e, GNLIST li)
                     if ((h>0)&&(h<bendp)) bendp = h;
                 }
             }
-            li2 = GNNEXT(li2);
         }
     }
     return(bendp);
-}
+} /* calc_edgebotbendpoint */
 
 /*--------------------------------------------------------------------*/
 /*  Fine tuning of bendings on dummy nodes                            */
@@ -1752,19 +1756,18 @@ static void     tune_dummy_bendings(void)
     for (i=0; i<=maxdepth+1; i++) {
         if (i%10==0) gs_wait_message('e');
 
-        li = TPRED(layer[i]);
-        while (li) {
+        for (li = TPRED(layer[i]); li; li = GNNEXT(li))
+        {
             tpred_connection1[NPOS(GNNODE(li))] = li;
-            li = GNNEXT(li);
         }
 
-        li = TSUCC(layer[i]);
-        while (li) {
+        for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
+        {
             node = GNNODE(li);
             if (  (NWIDTH(node)==0)
                 &&(FirstSucc(node)) && (NextSucc(FirstSucc(node))==NULL)
-                &&(FirstPred(node)) && (NextPred(FirstPred(node))==NULL)) {
-
+                &&(FirstPred(node)) && (NextPred(FirstPred(node))==NULL))
+            {
                 /* It is a dummy node with just one successor
                  * and one predecessor.
                  */
@@ -1776,7 +1779,8 @@ static void     tune_dummy_bendings(void)
                 b2y = EBBENDY(e1);
                 ay  = ETBENDY(e1);
                 if (  (b2y==EENDY(e1))
-                    &&(by>my) && (by>ay)) {
+                    &&(by>my) && (by>ay))
+                {
                     ax = ETBENDX(e1);
                     mx = ESTARTX(e2);
                     /* assert(bx == mx); */
@@ -1785,75 +1789,73 @@ static void     tune_dummy_bendings(void)
                     if (  ((ax<mx)&&(mx<EBBENDX(e2)))
                         ||((ax<mx)&&(G_spline))) {
 
-        li2 = tpred_connection1[NPOS(node)];
-        /* li is now the corresponding in the TPRED list */
-        li2 = GNNEXT(li2);
-        while (li2) {
-            if (okay==0) break;
-            if (!NANCHORNODE(GNNODE(li2))) {
-                kx = NX(GNNODE(li2)) + NWIDTH(GNNODE(li2));
-                if (NWIDTH(GNNODE(li2))==0)
-                    kx += G_dspace;
-                if (kx<=ax) break;
-                ky = NY(GNNODE(li2)) - 2;
-                if (kx<=mx) {
-                    h = ((mx-kx)*(ay-by))/(mx-ax)+by;
-                    if (ky<=h) okay = 0;
-                }
-            }
-            e3 = NPREDR(GNNODE(li2));
-            if ((e3)&&(EBBENDY(e3)!=EENDY(e3))) {
-                kx = EBBENDX(e3) + G_dspace-3;
-                if (kx<=ax) break;
-                ky = EBBENDY(e3);
-                if (kx<=mx) {
-                    h = ((mx-kx)*(ay-by))/(mx-ax)+by;
-                    if (ky<=h) okay = 0;
-                }
-            }
-            li2 = GNNEXT(li2);
-        }
+                        li2 = tpred_connection1[NPOS(node)];
+                        /* li is now the corresponding in the TPRED list */
+                        for (li2 = GNNEXT(li2); li2; li2 = GNNEXT(li2))
+                        {
+                            if (okay==0) break;
+                            if (!NANCHORNODE(GNNODE(li2))) {
+                                kx = NX(GNNODE(li2)) + NWIDTH(GNNODE(li2));
+                                if (NWIDTH(GNNODE(li2))==0)
+                                    kx += G_dspace;
+                                if (kx<=ax) break;
+                                ky = NY(GNNODE(li2)) - 2;
+                                if (kx<=mx) {
+                                    h = ((mx-kx)*(ay-by))/(mx-ax)+by;
+                                    if (ky<=h) okay = 0;
+                                }
+                            }
+                            e3 = NPREDR(GNNODE(li2));
+                            if ((e3)&&(EBBENDY(e3)!=EENDY(e3))) {
+                                kx = EBBENDX(e3) + G_dspace-3;
+                                if (kx<=ax) break;
+                                ky = EBBENDY(e3);
+                                if (kx<=mx) {
+                                    h = ((mx-kx)*(ay-by))/(mx-ax)+by;
+                                    if (ky<=h) okay = 0;
+                                }
+                            }
+                        }
 
                         if (okay) {
                             ESTARTY(e2)=
-                             EBBENDY(e1)=
-                             EENDY(e1)=ETBENDY(e2);
+                                EBBENDY(e1)=
+                                EENDY(e1)=ETBENDY(e2);
                         }
                     }
                     else if (  ((ax>mx)&&(mx>EBBENDX(e2)))
                              ||((ax>mx)&&(G_spline))) {
 
-        li2 = GNNEXT(li);
-        while (li2) {
-            if (okay==0) break;
-            if (!NANCHORNODE(GNNODE(li2))) {
-                kx = NX(GNNODE(li2));
-                if (NWIDTH(GNNODE(li2))==0)
-                    kx -= G_dspace;
-                if (kx>=ax) break;
-                ky = NY(GNNODE(li2)) - 2;
-                if (kx>=mx) {
-                    h = ((mx-kx)*(ay-by))/(mx-ax)+by;
-                    if (ky<=h) okay = 0;
-                }
-            }
-            e3 = NPREDL(GNNODE(li2));
-            if ((e3)&&(EBBENDY(e3)!=EENDY(e3))) {
-                kx = EBBENDX(e3) - G_dspace+3;
-                if (kx>=ax) break;
-                ky = EBBENDY(e3);
-                if (kx>=mx) {
-                    h = ((mx-kx)*(ay-by))/(mx-ax)+by;
-                    if (ky<=h) okay = 0;
-                }
-            }
-            li2 = GNNEXT(li2);
-        }
+                        for (li2 = GNNEXT(li); li2; li2 = GNNEXT(li2))
+                        {
+                            if (okay==0) break;
+                            if (!NANCHORNODE(GNNODE(li2))) {
+                                kx = NX(GNNODE(li2));
+                                if (NWIDTH(GNNODE(li2))==0)
+                                    kx -= G_dspace;
+                                if (kx>=ax) break;
+                                ky = NY(GNNODE(li2)) - 2;
+                                if (kx>=mx) {
+                                    h = ((mx-kx)*(ay-by))/(mx-ax)+by;
+                                    if (ky<=h) okay = 0;
+                                }
+                            }
+                            e3 = NPREDL(GNNODE(li2));
+                            if ((e3)&&(EBBENDY(e3)!=EENDY(e3))) {
+                                kx = EBBENDX(e3) - G_dspace+3;
+                                if (kx>=ax) break;
+                                ky = EBBENDY(e3);
+                                if (kx>=mx) {
+                                    h = ((mx-kx)*(ay-by))/(mx-ax)+by;
+                                    if (ky<=h) okay = 0;
+                                }
+                            }
+                        }
 
                         if (okay) {
                             ESTARTY(e2)=
-                             EBBENDY(e1) =
-                             EENDY(e1)=ETBENDY(e2);
+                                EBBENDY(e1) =
+                                EENDY(e1)=ETBENDY(e2);
                         }
                     }
                 }
@@ -1862,7 +1864,8 @@ static void     tune_dummy_bendings(void)
 
                 ay  = EBBENDY(e2);
                 if (  (by==ESTARTY(e2))
-                    &&(b2y<my) && (b2y<ay)) {
+                    &&(b2y<my) && (b2y<ay))
+                {
                     ax = EBBENDX(e2);
                     mx = ESTARTX(e2);
                     by = b2y;    /* to avoid confusion */
@@ -1872,84 +1875,81 @@ static void     tune_dummy_bendings(void)
                     if (  ((ax<mx)&&(mx<ETBENDX(e1)))
                         ||((ax<mx)&&(G_spline))) {
 
-        li2 = tpred_connection1[NPOS(node)];
-        /* li is now the corresponding in the TPRED list */
-        li2 = GNNEXT(li2);
-        while (li2) {
-            if (okay==0) break;
-            if (!NANCHORNODE(GNNODE(li2))) {
-                kx = NX(GNNODE(li2)) + NWIDTH(GNNODE(li2));
-                if (NWIDTH(GNNODE(li2))==0)
-                    kx += G_dspace;
-                if (kx<=ax) break;
-                ky = NY(GNNODE(li2))+NHEIGHT(GNNODE(li2))+2;
-                if (kx<=mx) {
-                    h = ((mx-kx)*(ay-by))/(mx-ax)+by;
-                    if (ky>=h) okay = 0;
-                }
-            }
-            e3 = NSUCCR(GNNODE(li2));
-            if ((e3)&&(ETBENDY(e3)!=ESTARTY(e3))) {
-                kx = ETBENDX(e3) + G_dspace-3;
-                if (kx<=ax) break;
-                ky = ETBENDY(e3);
-                if (kx<=mx) {
-                    h = ((mx-kx)*(ay-by))/(mx-ax)+by;
-                    if (ky>=h) okay = 0;
-                }
-            }
-            li2 = GNNEXT(li2);
-        }
+                        li2 = tpred_connection1[NPOS(node)];
+                        /* li is now the corresponding in the TPRED list */
+                        for (li2 = GNNEXT(li2); li2; li2 = GNNEXT(li2))
+                        {
+                            if (okay==0) break;
+                            if (!NANCHORNODE(GNNODE(li2))) {
+                                kx = NX(GNNODE(li2)) + NWIDTH(GNNODE(li2));
+                                if (NWIDTH(GNNODE(li2))==0)
+                                    kx += G_dspace;
+                                if (kx<=ax) break;
+                                ky = NY(GNNODE(li2))+NHEIGHT(GNNODE(li2))+2;
+                                if (kx<=mx) {
+                                    h = ((mx-kx)*(ay-by))/(mx-ax)+by;
+                                    if (ky>=h) okay = 0;
+                                }
+                            }
+                            e3 = NSUCCR(GNNODE(li2));
+                            if ((e3)&&(ETBENDY(e3)!=ESTARTY(e3))) {
+                                kx = ETBENDX(e3) + G_dspace-3;
+                                if (kx<=ax) break;
+                                ky = ETBENDY(e3);
+                                if (kx<=mx) {
+                                    h = ((mx-kx)*(ay-by))/(mx-ax)+by;
+                                    if (ky>=h) okay = 0;
+                                }
+                            }
+                        }
 
                         if (okay) {
                             ESTARTY(e2)=
-                             ETBENDY(e2)=
-                             EENDY(e1)=EBBENDY(e1);
+                                ETBENDY(e2)=
+                                EENDY(e1)=EBBENDY(e1);
                         }
                     }
                     else if (  ((ax>mx)&&(mx>ETBENDX(e1)))
                              ||((ax>mx)&&(G_spline))) {
 
-        li2 = GNNEXT(li);
-        while (li2) {
-            if (okay==0) break;
-            if (!NANCHORNODE(GNNODE(li2))) {
-                kx = NX(GNNODE(li2));
-                if (NWIDTH(GNNODE(li2))==0)
-                    kx -= G_dspace;
-                if (kx>=ax) break;
-                ky = NY(GNNODE(li2))+NHEIGHT(GNNODE(li2))+2;
-                if (kx>=mx) {
-                    h = ((mx-kx)*(ay-by))/(mx-ax)+by;
-                    if (ky>=h) okay = 0;
-                }
-            }
-            e3 = NSUCCL(GNNODE(li2));
-            if ((e3)&&(ETBENDY(e3)!=ESTARTY(e3))) {
-                kx = ETBENDX(e3) - G_dspace+3;
-                if (kx>=ax) break;
-                ky = ETBENDY(e3);
-                if (kx>=mx) {
-                    h = ((mx-kx)*(ay-by))/(mx-ax)+by;
-                    if (ky>=h) okay = 0;
-                }
-            }
-            li2 = GNNEXT(li2);
-        }
+                        for (li2 = GNNEXT(li); li2; li2 = GNNEXT(li2))
+                        {
+                            if (okay==0) break;
+                            if (!NANCHORNODE(GNNODE(li2))) {
+                                kx = NX(GNNODE(li2));
+                                if (NWIDTH(GNNODE(li2))==0)
+                                    kx -= G_dspace;
+                                if (kx>=ax) break;
+                                ky = NY(GNNODE(li2))+NHEIGHT(GNNODE(li2))+2;
+                                if (kx>=mx) {
+                                    h = ((mx-kx)*(ay-by))/(mx-ax)+by;
+                                    if (ky>=h) okay = 0;
+                                }
+                            }
+                            e3 = NSUCCL(GNNODE(li2));
+                            if ((e3)&&(ETBENDY(e3)!=ESTARTY(e3))) {
+                                kx = ETBENDX(e3) - G_dspace+3;
+                                if (kx>=ax) break;
+                                ky = ETBENDY(e3);
+                                if (kx>=mx) {
+                                    h = ((mx-kx)*(ay-by))/(mx-ax)+by;
+                                    if (ky>=h) okay = 0;
+                                }
+                            }
+                        }
 
                         if (okay) {
                             ESTARTY(e2)=
-                             ETBENDY(e2)=
-                             EENDY(e1)=EBBENDY(e1);
+                                ETBENDY(e2)=
+                                EENDY(e1)=EBBENDY(e1);
                         }
                     }
                 }
             }
-            li = GNNEXT(li);
         }
     }
 
-}
+} /* tune_dummy_bendings */
 
 
 /*--------------------------------------------------------------------*/
@@ -2052,7 +2052,8 @@ void    calc_edgearrow(GNODE v)
         assert((EEND(CEDGE(c))==v));
         if (ESTARTX(CEDGE(c))<EENDX(CEDGE(c)))
             j = ORI_WEST;
-        else    j = ORI_EAST;
+        else
+            j = ORI_EAST;
         for (e = FirstSucc(v); e; e = NextSucc(e))
         {
             EORI2(e)= j;
@@ -2066,7 +2067,7 @@ void    calc_edgearrow(GNODE v)
             EORI2(CEDGE2(c)) = j;
         }
     }
-}
+} /* calc_edgearrow */
 
 
 
@@ -2136,9 +2137,10 @@ static void check_up_port(GEDGE edge)
         if (port!=EWEIGHTS(e)) break;
         /* assert((ESTARTY(e)<EBBENDY(e))); */
         if (ETBENDY(e)!=ESTARTY(e))
-                fval = (float)(ETBENDX(e)-ESTARTX(e))/
+            fval = (float)(ETBENDX(e)-ESTARTX(e))/
                     (float)(ETBENDY(e)-ESTARTY(e));
-        else    fval = (float)(EBBENDX(e)-ESTARTX(e))/
+        else
+            fval = (float)(EBBENDX(e)-ESTARTX(e))/
                     (float)(EBBENDY(e)-ESTARTY(e));
         if (!((-0.5<fval)&&(fval<0.5))) is_north = 0;
         if (!(0.1<fval))        is_northwest = 0;
@@ -2209,7 +2211,8 @@ static void check_down_port(GEDGE edge)
         if (EBBENDY(e)!=EENDY(e))
             fval = (float)(EENDX(e)-EBBENDX(e))/
                     (float)(EENDY(e)-EBBENDY(e));
-        else    fval = (float)(EENDX(e)-ETBENDX(e))/
+        else
+            fval = (float)(EENDX(e)-ETBENDX(e))/
                     (float)(EENDY(e)-ETBENDY(e));
         if (!((-0.5<fval)&&(fval<0.5))) is_south = 0;
         if (!(0.1<fval))        is_southeast = 0;
@@ -2373,13 +2376,14 @@ static void flip_ver_mirror(void)
     my_maxy = 0;
 
     /* First: calculate maxy */
-    for (i=maxdepth+1; i>=0; i--) if (TSUCC(layer[i])) break;
+    for (i=maxdepth+1; i>=0; i--)
+        if (TSUCC(layer[i]))
+            break;
 
-    k = TSUCC(layer[i]);
-    while (k) {
+    for (k = TSUCC(layer[i]); k; k = GNNEXT(k))
+    {
         if (NY(GNNODE(k))+NHEIGHT(GNNODE(k))>my_maxy)
             my_maxy = NY(GNNODE(k))+NHEIGHT(GNNODE(k));
-        k = GNNEXT(k);
     }
 
     my_maxy = my_maxy + G_ybase;
@@ -2401,7 +2405,8 @@ static void flip_ver_all_nodes(GNODE v)
     GEDGE e;
 
     debugmessage("flip_ver_all_nodes","");
-    while (v) {
+    for ( ; v; v = NNEXT(v))
+    {
         NY(v) = my_maxy - NY(v) - NHEIGHT(v);
 
         c = NCONNECT(v);
@@ -2413,7 +2418,6 @@ static void flip_ver_all_nodes(GNODE v)
         {
             flip_ver_edge(e);
         }
-        v = NNEXT(v);
     }
 }
 
