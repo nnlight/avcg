@@ -182,14 +182,22 @@ VRNode *VRGraph::AddSizedNode( int x, int y, int width, int height, const char *
     return p;
 } /* VRGraph::AddSizedNode */
 
-void VRGraph::UnselectAllNodes()
+bool VRGraph::UnselectAllNodes( VRNode *skip_node)
 {
+    bool is_changed = false;
+
     for ( VRNode *node = GetFirstNode();
           node;
           node = node->GetNextNode() )
     {
+        if (node == skip_node)
+        {
+            continue;
+        }
+        is_changed = is_changed || (node->is_selected_ != false);
         node->is_selected_ = false;
     }
+    return is_changed;
 } /* VRGraph::UnselectAllNodes */
 
 /**

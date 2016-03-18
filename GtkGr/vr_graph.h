@@ -118,7 +118,7 @@ public:
 
     void AddNode( DrawBuffer *draw_buffer, int x, int y, const char *title, const char *label);
     VRNode *AddSizedNode( int x, int y, int width, int height, const char *title, const char *label);
-    void UnselectAllNodes();
+    bool UnselectAllNodes( VRNode *skip_node);
     void DrawGraph( DrawBuffer *draw_buffer);
 
     void HandleInfoBoxPress( DrawBuffer *draw_buffer, int x, int y, int info_num);

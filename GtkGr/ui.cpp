@@ -74,6 +74,14 @@ ui_key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data)
         uic->UpdateStatusbar();
         break;
 
+    case GDK_Escape:
+        if ( uic->m_VRGraph->UnselectAllNodes( NULL) )
+        {
+            uic->m_VRGraph->DrawGraph( db);
+            db->PublicInvalidateDa();
+        }
+        break;
+
     case GDK_p:
         db->PKey();
         break;
@@ -178,17 +186,22 @@ ui_da_mouse_button_press_cb( GtkWidget      *da,
                                                 uic->m_CurrentMode - MODE_VIEW_NODE_INFO1 + 1);
         } else if ( uic->m_CurrentMode == MODE_VIEW )
         {
-            if ( !(event->state & GDK_CONTROL_MASK) )
-            {
-                uic->m_VRGraph->UnselectAllNodes();
-            }
+            bool is_changed = false;
             VRNode *node = uic->m_VRGraph->FindNodeByCoords( vrg_x, vrg_y);
+            if ( !(event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) )
+            {
+                is_changed = is_changed || uic->m_VRGraph->UnselectAllNodes( node);
+            }
             if (node)
             {
+                is_changed = is_changed || (node->is_selected_ != true);
                 node->is_selected_ = true;
             }
-            uic->m_VRGraph->DrawGraph( db);
-            db->PublicInvalidateDa();
+            if (is_changed)
+            {
+                uic->m_VRGraph->DrawGraph( db);
+                db->PublicInvalidateDa();
+            }
         } else
         {
             db->ButtonPress( x, y);
