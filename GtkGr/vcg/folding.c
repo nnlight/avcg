@@ -1618,52 +1618,20 @@ static void create_adjacencies(void)
  *   two edges. However this occurs only for summary nodes, thus we hope
  *   it is quite seldom.
  */
-
 static void create_lab_adjacencies(void)
 {
     GEDGE   edge, e, e1, e2;
     GNODE   v;
 
-    debugmessage("create_lab_adjacencies","");
     for (edge = edgelist; edge; edge = ENEXT(edge))
     {
         e = substed_edge(edge);
         if (e) {
             if ( ELABEL(e) ) {
                 v = create_labelnode(e);
-                e1 = tmpedgealloc(
-                        ELSTYLE(e),
-                        ETHICKNESS(e),
-                        ECLASS(e),
-                        EPRIO(e),
-                        ECOLOR(e),
-                        0,
-                        EARROWBSIZE(e),
-                        AS_NONE,
-                        EARROWBSTYLE(e),
-                        EARROWCOL(e),
-                        EARROWBCOL(e),
-                        EHORDER(e));
-                EANCHOR(e1) = EANCHOR(e);
-                ESTART(e1)  = ESTART(e);
-                EEND(e1)    = v;
-                create_adjedge(e1);
-                e2 = tmpedgealloc(
-                        ELSTYLE(e),
-                        ETHICKNESS(e),
-                        ECLASS(e),
-                        EPRIO(e),
-                        ECOLOR(e),
-                        EARROWSIZE(e),
-                        0,
-                        EARROWSTYLE(e),
-                        AS_NONE,
-                        EARROWCOL(e),
-                        EARROWBCOL(e),
-                        EHORDER(e));
-                ESTART(e2)  = v;
-                EEND(e2)    = EEND(e);
-                create_adjedge(e2);
+                e1 = create_edge(ESOURCE(e), v, e, 0);
+                e2 = create_edge(v, ETARGET(e), e, 1);
+                EANCHOR(e2) = 0;
             }
             else
                 create_adjedge(e);
@@ -1776,41 +1744,12 @@ static void split_double_edges(void)
                 w = create_labelnode(e);
                 NLABEL(w) = "";
                 NWIDTH(w) = NHEIGHT(w) = 0;
-                e1 = tmpedgealloc(
-                        ELSTYLE(e),
-                        ETHICKNESS(e),
-                        ECLASS(e),
-                        EPRIO(e),
-                        ECOLOR(e),
-                        0,
-                        EARROWBSIZE(e),
-                        AS_NONE,
-                        EARROWBSTYLE(e),
-                        EARROWCOL(e),
-                        EARROWBCOL(e),
-                        EHORDER(e));
-                EANCHOR(e1) = EANCHOR(e);
-                ESTART(e1)  = v;
-                EEND(e1)    = w;
-                ELABEL(e1)  = ELABEL(e);
+                /*ELNODE(e) = NULL; ???*/
+                e1 = create_edge(ESOURCE(e), w, e, 0);
+                ELABEL(e1)    = ELABEL(e);
                 ELABELCOL(e1) = ELABELCOL(e);
-                create_adjedge(e1);
-                e2 = tmpedgealloc(
-                        ELSTYLE(e),
-                        ETHICKNESS(e),
-                        ECLASS(e),
-                        EPRIO(e),
-                        ECOLOR(e),
-                        EARROWSIZE(e),
-                        0,
-                        EARROWSTYLE(e),
-                        AS_NONE,
-                        EARROWCOL(e),
-                        EARROWBCOL(e),
-                        EHORDER(e));
-                ESTART(e2)  = w;
-                EEND(e2)    = EEND(e);
-                create_adjedge(e2);
+                e2 = create_edge(w, ETARGET(e), e, 1);
+                EANCHOR(e2) = 0;
                 delete_adjedge(e);
             }
         }

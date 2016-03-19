@@ -124,11 +124,11 @@ GNODE   lookup_hashnode     _PP((char *title));
 
 
 /* from step1.c */
-void    step1_main              _PP((void));
+void    step1_main();
 GEDGE   revert_edge(GEDGE edge);
-void    calc_number_reversions _PP((void));
-void    prepare_back_edges     _PP((void));
-void    insert_anchor_edges     _PP((void));
+GEDGE   create_edge(GNODE start, GNODE end, GEDGE edge, int arrow);
+void    prepare_back_edges();
+void    insert_anchor_edges();
 #ifdef DEBUG
 void    db_output_graph         _PP((void));
 void    db_output_adjacencies   _PP((void));

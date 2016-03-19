@@ -176,7 +176,6 @@ static void     check_edge(GNODE n, GEDGE e, int l);
 static void inspect_double_edges    _PP((void));
 static void     check_double_edge(GEDGE e);
 static GNODE    create_dummy        _PP((int t));
-static GEDGE    create_edge(GNODE x, GNODE y,GEDGE e,int t);
 
 
 /* Global variables
@@ -1903,20 +1902,12 @@ static void revert_outedges(GNODE v, GNODE w)
 /*  Add labels after partitioning                                     */
 /*--------------------------------------------------------------------*/
 
-/* If we still don't have the labels, we double the NTIEFE of the nodes
- * and add the labels in between.
- */
-static void add_phase1_labels(void)
+static void add_phase1_labels_for_list(GNODE v)
 {
-    GNODE v, vl, vt;
+    GNODE vl, vt;
     GEDGE edge, nxt_edge;
 
-    maxdepth = 2*maxdepth;
-    for (v = nodelist; v; v = NNEXT(v)) { NTIEFE(v) = 2 * NTIEFE(v); }
-    for (v = labellist; v; v = NNEXT(v)) { NTIEFE(v) = 2 * NTIEFE(v); }
-    for (v = dummylist; v; v = NNEXT(v)) { NTIEFE(v) = 2 * NTIEFE(v); }
-
-    for (v = nodelist; v; v = NNEXT(v))
+    for ( ; v; v = NNEXT(v))
     {
         for (edge = FirstSucc(v); edge; edge = nxt_edge)
         {
@@ -1925,14 +1916,29 @@ static void add_phase1_labels(void)
                 vl = create_labelnode(edge);
                 vt = ETARGET(edge);
                 NTIEFE(vl) = (NTIEFE(v) + NTIEFE(vt)) / 2;
-                (void)create_edge(v,vl,edge,0);
-                (void)create_edge(vl,vt,edge,1);
+                create_edge(v,vl,edge,0);
+                create_edge(vl,vt,edge,1);
                 delete_adjedge(edge);
             }
         }
     }
-    assert(labellist == NULL);
-    assert(dummylist == NULL);
+}
+
+/* If we still don't have the labels, we double the NTIEFE of the nodes
+ * and add the labels in between.
+ */
+static void add_phase1_labels(void)
+{
+    GNODE v;
+
+    maxdepth = 2*maxdepth;
+    for (v = nodelist; v; v = NNEXT(v)) { NTIEFE(v) = 2 * NTIEFE(v); }
+    for (v = labellist; v; v = NNEXT(v)) { NTIEFE(v) = 2 * NTIEFE(v); }
+    for (v = dummylist; v; v = NNEXT(v)) { NTIEFE(v) = 2 * NTIEFE(v); }
+
+    add_phase1_labels_for_list(nodelist);
+    add_phase1_labels_for_list(labellist);
+    add_phase1_labels_for_list(dummylist);
 } /* add_phase1_labels */
 
 
@@ -2622,7 +2628,7 @@ GEDGE revert_edge(GEDGE edge)
  *  arrow = 2 means both source and target are dummy nodes.
  *  arrow = 3 means both source and target are no dummy nodes.
  */
-static GEDGE create_edge(GNODE start, GNODE end, GEDGE edge, int arrow)
+GEDGE create_edge(GNODE start, GNODE end, GEDGE edge, int arrow)
 {
     GEDGE h;
 
@@ -2639,8 +2645,6 @@ static GEDGE create_edge(GNODE start, GNODE end, GEDGE edge, int arrow)
         EARROWCOL(edge),
         EARROWBCOL(edge),
         EHORDER(edge));
-    ELABEL(h) = ELABEL(edge);
-    ELABELCOL(h) = ELABELCOL(edge);
     EANCHOR(h) = EANCHOR(edge);
     ESTART(h) = start;
     EEND(h)   = end;
@@ -2649,27 +2653,28 @@ static GEDGE create_edge(GNODE start, GNODE end, GEDGE edge, int arrow)
     case 0:
         EARROWSTYLE(h) = AS_NONE;
         EARROWSIZE(h)  = 0;
-        ELABEL(h)      = NULL;
         break;
     case 1:
         EARROWBSTYLE(h) = AS_NONE;
         EARROWBSIZE(h)  = 0;
-        ELABEL(h)       = NULL;
         break;
     case 2:
         EARROWSTYLE(h)  = AS_NONE;
         EARROWSIZE(h)   = 0;
         EARROWBSTYLE(h) = AS_NONE;
         EARROWBSIZE(h)  = 0;
-        ELABEL(h)       = NULL;
         break;
+    default:
+        assert(0);
+        ELABEL(h)    = ELABEL(edge);
+        ELABELCOL(h) = ELABELCOL(edge);
     }
 
     if (EART(edge)=='S') EART(h) = 'U';
-    else             EART(h) = EART(edge);
+    else                 EART(h) = EART(edge);
     if (start==end) EART(h) = 'S';
-    create_adjedge(h);
 
+    create_adjedge(h);
     return h;
 } /* create_edge */
 
@@ -2763,23 +2768,23 @@ static void check_double_edge(GEDGE edge)
 
         tide = ide = aside1 = aside2 = 1;
 
-                if (ESTART(f1)      != ESTART(f2))       tide=0;
-                if (EEND(f1)        != EEND(f2))         tide=0;
-                if (ELSTYLE(f1)     != ELSTYLE(f2))      ide=0;
-                if (ETHICKNESS(f1)  >  ETHICKNESS(f2))   ide=0;
-                if (EPRIO(f1)       >  EPRIO(f2))        ide=0;
-                if (EHORDER(f1)     != EHORDER(f2))      ide=0;
-                if (ECLASS(f1)      != ECLASS(f2))       ide=0;
-                if (ECOLOR(f1)      != ECOLOR(f2))       ide=0;
-                if (EARROWSIZE(f1)  != EARROWSIZE(f2))   aside1=0;
-                if (EARROWBSIZE(f1) != EARROWBSIZE(f2))  aside2=0;
-                if (EARROWSTYLE(f1) != EARROWSTYLE(f2))  aside1=0;
-                if (EARROWBSTYLE(f1)!= EARROWBSTYLE(f2)) aside2=0;
-                if (EARROWCOL(f1)   != EARROWCOL(f2))    aside1=0;
-                if (EARROWBCOL(f1)  != EARROWBCOL(f2))   aside2=0;
-                if (EANCHOR(f1)     != EANCHOR(f2))      ide=0;
+        if (ESTART(f1)      != ESTART(f2))       tide=0;
+        if (EEND(f1)        != EEND(f2))         tide=0;
+        if (ELSTYLE(f1)     != ELSTYLE(f2))      ide=0;
+        if (ETHICKNESS(f1)  >  ETHICKNESS(f2))   ide=0;
+        if (EPRIO(f1)       >  EPRIO(f2))        ide=0;
+        if (EHORDER(f1)     != EHORDER(f2))      ide=0;
+        if (ECLASS(f1)      != ECLASS(f2))       ide=0;
+        if (ECOLOR(f1)      != ECOLOR(f2))       ide=0;
+        if (EARROWSIZE(f1)  != EARROWSIZE(f2))   aside1=0;
+        if (EARROWBSIZE(f1) != EARROWBSIZE(f2))  aside2=0;
+        if (EARROWSTYLE(f1) != EARROWSTYLE(f2))  aside1=0;
+        if (EARROWBSTYLE(f1)!= EARROWBSTYLE(f2)) aside2=0;
+        if (EARROWCOL(f1)   != EARROWCOL(f2))    aside1=0;
+        if (EARROWBCOL(f1)  != EARROWBCOL(f2))   aside2=0;
+        if (EANCHOR(f1)     != EANCHOR(f2))      ide=0;
 
-                if (tide && ide && aside1 && aside2 && summarize_double_edges) {
+        if (tide && ide && aside1 && aside2 && summarize_double_edges) {
             delete_adjedge(f1);
             return;
         }
