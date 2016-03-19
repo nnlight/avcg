@@ -2723,11 +2723,10 @@ static GNODE create_dummy(int t)
     debugmessage("create_dummy","");
     assert((t<=maxdepth+1));
 
-    v = tmpnodealloc(CENTER,-1,-1,0,G_color,G_color,G_color,1,1,-1);
+    v = tmpnodealloc(CENTER,-1,-1,0,G_color,G_color,G_color);
     NTITLE(v)   = "";
     NLABEL(v)   = "";
     NTIEFE(v)   = t;
-    NHORDER(v)  = -1;
     NBEFORE(v)      = NULL;
     NNEXT(v)        = dummylist;
     if (dummylist) NBEFORE(dummylist) = v;

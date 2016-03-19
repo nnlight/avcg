@@ -1427,13 +1427,11 @@ GNODE   create_labelnode(GEDGE e)
 
     debugmessage("create_labelnode","");
     v = tmpnodealloc(CENTER,-1,-1,0,
-            G_color,ELABELCOL(e),ELABELCOL(e),1,1,-1);
+            G_color,ELABELCOL(e),ELABELCOL(e));
     NSX(v) = (NSX(ESTART(e))+NSX(EEND(e)))/2L;
     NSY(v) = (NSY(ESTART(e))+NSY(EEND(e)))/2L;
     NTITLE(v)   = "";
     NLABEL(v)   = ELABEL(e);
-    NSTRETCH(v) = 1;
-    NSHRINK(v)  = 1;
     adapt_labelpos(v,e);
     ins_node_in_dl_list(v,labellist,labellistend);
     EINVISIBLE(e)=1;

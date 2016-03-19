@@ -457,16 +457,13 @@ GNODE   tmpnodealloc(
     int borderw,
     int color,
     int textc,
-    int borderc,
-    int shrink,
-    int stretch,
-    int horder)
+    int borderc)
 {
     GNODE   h;
 
     h = internal_nodealloc();
 
-    NHORDER(h)      = horder;
+    NHORDER(h)      = -1;
     NTEXTMODE(h)    = textm;
     NSTATE(h)       = 0;
     NWIDTH(h)       = width;
@@ -476,8 +473,8 @@ GNODE   tmpnodealloc(
     NCOLOR(h)       = color;
     NTCOLOR(h)      = textc;
     NBCOLOR(h)      = borderc;
-    NSHRINK(h)      = shrink;
-    NSTRETCH(h)     = stretch;
+    NSHRINK(h)      = 1;
+    NSTRETCH(h)     = 1;
     NINLIST(h)      = 0;
     NINVISIBLE(h)   = 1;
     NDFS(h)         = 0L;
