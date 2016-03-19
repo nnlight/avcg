@@ -121,7 +121,7 @@ static void visualize_part(void)
 
     /* Init of the default values */
 
-    G_title         = myalloc(256);
+    G_title         = myalloc(256, MA_MISC);
     strcpy( G_title, "G_title");
     G_title[255]    = 0;
     G_x             = -1L;

@@ -49,12 +49,24 @@ extern GNODE debug_checknode;
 #endif
 
 
+typedef enum Memarea_t {
+    MA_GNODE,
+    MA_GEDGE,
+    MA_GNLIST,
+    MA_ADJEDGE,
+    MA_CONNECT,
+    MA_DLLIST,
+    MA_MISC,
+    MA_COUNT
+} Memarea_t;
+
 /* Prototypes
  * ----------
  * See alloc.c for more information.
  */
 
-char *myalloc(int x);
+void print_mem_stats();
+char *myalloc(int x, Memarea_t ma);
 void free_memory(void);
 void *libc_malloc(int size);
 

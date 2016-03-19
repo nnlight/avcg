@@ -3,6 +3,7 @@
 #include "vcg_iface.h"
 
 
+extern "C" void print_mem_stats();
 
 
 int main(int argc , char *argv[])
@@ -14,9 +15,11 @@ int main(int argc , char *argv[])
     }
 
     vcg_ParseFile( argv[1]);
+    print_mem_stats();
     printf("1st ok (%s)\n", argv[1]);
 
     vcg_ParseFile( argv[1]);
+    print_mem_stats();
     printf("2nd ok (%s)\n", argv[1]);
 
     return 0;

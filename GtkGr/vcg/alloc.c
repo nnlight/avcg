@@ -115,12 +115,45 @@ static void reinit_all_lists();
 
 static long node_refnum = 0L;   /* reference counter for REFNUM of nodes */
 
+static unsigned long total_mem;
+static unsigned long mem_size[MA_COUNT];
+static unsigned long obj_count[MA_COUNT];
+
+static void init_mem_stats()
+{
+    int i;
+
+    total_mem = 0;
+    for (i = 0; i < MA_COUNT; i++) {
+        mem_size[i] = 0;
+        obj_count[i] = 0;
+    }
+}
+
+void print_mem_stats()
+{
+#if 0
+    printf("TOT:%ldk N:%ldk E:%ldk NLI:%ldk ELI:%ldk CON:%ldk DLL:%ldk ncount:%ld ecount:%ld\n",
+            total_mem>>10, mem_size[MA_GNODE]>>10, mem_size[MA_GEDGE]>>10,
+            mem_size[MA_GNLIST]>>10, mem_size[MA_ADJEDGE]>>10, mem_size[MA_CONNECT]>>10,
+            mem_size[MA_DLLIST]>>10, obj_count[MA_GNODE], obj_count[MA_GEDGE]);
+#endif
+}
+
 
 /**
  *   Allocate x bytes. We use the memory mechanism from the parser.
  */
-char *myalloc(int x)
+char *myalloc(int x, Memarea_t ma)
 {
+    unsigned long old_mem = total_mem;
+    total_mem += (x + 7) & ~7;
+    mem_size[ma] += (x + 7) & ~7;
+    obj_count[ma] += 1;
+    if ((total_mem >> 25) != (old_mem >> 25)) { /* new 32MB block */
+        print_mem_stats();
+    }
+
     return ParseMalloc(x);
 } /* myalloc */
 
@@ -134,6 +167,7 @@ void free_memory(void)
     node_refnum = 0L;
     reinit_all_lists();
     graph_init();
+    init_mem_stats();
 } /* free_memory */
 
 /**
@@ -200,7 +234,7 @@ static GNODE internal_nodealloc(void)
         node_freelist = NINTERN(node_freelist);
     }
     else {
-        h = (GNODE) myalloc(sizeof(struct gnode));
+        h = (GNODE) myalloc(sizeof(struct gnode), MA_GNODE);
     }
 
     NREFNUM(h)      = node_refnum++;
@@ -580,7 +614,7 @@ GNLIST cons_node(GNODE v, GNLIST next)
         ncons_freelist = GNINTERN(ncons_freelist);
     }
     else {
-        h = (GNLIST)myalloc(sizeof(struct gnlist));
+        h = (GNLIST)myalloc(sizeof(struct gnlist), MA_GNLIST);
     }
     GNINTERN(h) = DEAD_GNLIST;
     GNNODE(h)   = v;
@@ -686,7 +720,7 @@ static GEDGE internal_edgealloc(void)
         edge_freelist = ENEXT(edge_freelist);
     }
     else {
-        h = (GEDGE) myalloc(sizeof(struct gedge));
+        h = (GEDGE) myalloc(sizeof(struct gedge), MA_GEDGE);
     }
 
     ESTART(h)       = NULL;
@@ -936,7 +970,7 @@ ADJEDGE cons_edge(GEDGE e, ADJEDGE next)
         econs_freelist = AINTERN(econs_freelist);
     }
     else {
-        h = (ADJEDGE)myalloc(sizeof(struct adjedge));
+        h = (ADJEDGE)myalloc(sizeof(struct adjedge), MA_ADJEDGE);
     }
     AINTERN(h) = DEAD_GELIST;
     AKANTE(h) = e;
@@ -1034,7 +1068,7 @@ CONNECT connectalloc(GNODE node)
         connect_freelist = CINTERN(connect_freelist);
     }
     else
-        h = (CONNECT)myalloc(sizeof(struct connect));
+        h = (CONNECT)myalloc(sizeof(struct connect), MA_CONNECT);
     CTARGET(h)  = NULL;
     CEDGE(h)    = NULL;
     CTARGET2(h) = NULL;
@@ -1102,7 +1136,7 @@ DLLIST  dllist_alloc(GNODE node, DLLIST pred)
         dllist_freelist = DSUCC(dllist_freelist);
     }
     else
-        h = (DLLIST)myalloc(sizeof(struct dllist));
+        h = (DLLIST)myalloc(sizeof(struct dllist), MA_DLLIST);
     DNODE(h) = node;
     DPRED(h) = pred;
     DSUCC(h) = NULL;
