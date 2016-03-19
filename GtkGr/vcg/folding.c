@@ -130,7 +130,7 @@ static long no_outdeg       _PP((GNODE n));
 static long no_degree       _PP((GNODE n));
 
 static void create_adjacencies  _PP((void));
-static void create_lab_adjacencies  _PP((void));
+static void add_labels_at_folding();
 static void adapt_labelpos      _PP((GNODE v,GEDGE e));
 static GNODE    search_visible      _PP((GNODE v));
 static GEDGE    substed_edge        _PP((GEDGE e));
@@ -476,18 +476,17 @@ void    folding(void)
         }
     }
 
-    /* 8) If labels necessary, create labels */
+
+    /* 8) Hide edge classes */
 
     refresh();
-    if ((G_displayel==YES) && (G_dirtyel==NO) && (edge_label_phase==0))
-        create_lab_adjacencies();
-    else
-        create_adjacencies();
-
-    /* 9) Hide edge classes */
-
-    gs_wait_message('f');
+    create_adjacencies();
     hide_edge_classes();
+
+    /* 9) If labels necessary, create labels */
+
+    if ((G_displayel==YES) && (G_dirtyel==NO) && (edge_label_phase==0))
+        add_labels_at_folding();
 
 
     /* For stable layout: sort nodelist */
@@ -930,28 +929,14 @@ static void unfold_region(GNODE n)
  *  -------------------------------------
  *  If the node is in the node list, remove it from the node list
  *  and push it into the list invis_nodes.
- *  We collect the temporary hidden nodes that come not to invis_nodes
- *  into the list tmpinvis_nodes. This list is only internally used
- *  in hide_edge_classes.
  */
-
-static GNODE tmpinvis_nodes;
-
 static void hide_node(GNODE v)
 {
-    debugmessage("hide_node","");
+    assert(NINLIST(v));
 
-    /* remove node from the node list */
-    if (!NINLIST(v)) {
-        del_node_from_dl_list(v,labellist,labellistend);
-        NNEXT(v) = tmpinvis_nodes;
-        tmpinvis_nodes = v;
-    }
-    else {
-        delete_node(v,HIDDEN_CNODE);
-        NNEXT(v) = invis_nodes;
-        invis_nodes = v;
-    }
+    delete_node(v,HIDDEN_CNODE);
+    NNEXT(v) = invis_nodes;
+    invis_nodes = v;
 }
 
 
@@ -961,14 +946,14 @@ static void hide_node(GNODE v)
 static void hide_edge_classes(void)
 {
     GEDGE h, nxt_h;
-    GNODE v, w;
+    GNODE v, nxt_v;
     int   allhidden;
 
-    debugmessage("hide_edge_classes","");
-    tmpinvis_nodes = NULL;
-    for (v = nodelist; v; v = w)
+    /*assert(invis_nodes == NULL);*/
+
+    for (v = nodelist; v; v = nxt_v)
     {
-        w = NNEXT(v);
+        nxt_v = NNEXT(v);
         if (FirstPred(v) || FirstSucc(v)) {
             allhidden = 1;
             for (h = FirstPred(v);
@@ -989,29 +974,9 @@ static void hide_edge_classes(void)
         }
         else { if (hide_single_nodes) hide_node(v); }
     }
-    for (v = labellist; v; v= w)
-    {
-        w = NNEXT(v);
-        if (FirstPred(v) || FirstSucc(v)) {
-            allhidden = 1;
-            for (h = FirstPred(v);
-                 h && allhidden;
-                 h = NextPred(h))
-            {
-                assert(ECLASS(h)>0);
-                if (!hide_class[ECLASS(h)-1]) allhidden=0;
-            }
-            for (h = FirstSucc(v);
-                 h && allhidden;
-                 h = NextSucc(h))
-            {
-                assert(ECLASS(h)>0);
-                if (!hide_class[ECLASS(h)-1]) allhidden=0;
-            }
-            if (allhidden) hide_node(v);
-        }
-        else { if (hide_single_nodes) hide_node(v); }
-    }
+    assert(labellist == NULL);
+    assert(dummylist == NULL);
+
     /* I assume that the following is not anymore necessary: (work in ccmir.vcg) */
     for (v = invis_nodes; v; v = NNEXT(v))
     {
@@ -1019,29 +984,7 @@ static void hide_edge_classes(void)
         for (h = FirstSucc(v); h; h = nxt_h)
         {
             nxt_h = NextSucc(h);
-            if (!EINVISIBLE(h)) delete_adjedge(h);
-            EINVISIBLE(h) = 1;
-        }
-    }
-    /* I assume that the following is not anymore necessary:
-     * It may be that the edge of a labeled node is not hidden
-     * because of the class, but because it is the successor of a
-     * hidden node. Then the label is useless because its edge
-     * is deleted. We delete now the label, too.
-     */
-    for (v = labellist; v; v = w)
-    {
-        w = NNEXT(v);
-        assert(FirstPred(v));
-        if (!FirstPred(v)) hide_node(v);
-    }
-    /* I assume that the following is not anymore necessary: */
-    for (v = tmpinvis_nodes; v; v = NNEXT(v))
-    {
-        /* delete all outgoing edges */
-        for (h = FirstSucc(v); h; h = nxt_h)
-        {
-            nxt_h = NextSucc(h);
+            /*assert(EINVISIBLE(h));*/
             if (!EINVISIBLE(h)) delete_adjedge(h);
             EINVISIBLE(h) = 1;
         }
@@ -1591,14 +1534,12 @@ static GEDGE    substed_edge(GEDGE e)
 
 /*   Create adjacency lists
  *   ======================
- *   This is the first version: we don't need labels.
  *   Adjacency lists of all nodes in the nodelist, i.e. of all visible nodes.
  */
 static void create_adjacencies(void)
 {
     GEDGE edge, e;
 
-    debugmessage("create_adjacencies","");
     for (edge = edgelist; edge; edge = ENEXT(edge))
     {
         e = substed_edge(edge);
@@ -1608,33 +1549,29 @@ static void create_adjacencies(void)
 
 
 
-/*   Create adjacency lists
+/*   Add label nodes
  *   ======================
- *   This is the second version: we need labels.
- *   Adjacency lists of all nodes in the nodelist, i.e. of all visible nodes,
- *   and of all label nodes.
- *   Warning: This function is a little bit inefficient: If substed_edge
- *   creates a labled substed edge, this edge is again substituted by
- *   two edges. However this occurs only for summary nodes, thus we hope
- *   it is quite seldom.
  */
-static void create_lab_adjacencies(void)
+static void add_labels_at_folding(void)
 {
-    GEDGE   edge, e, e1, e2;
-    GNODE   v;
+    GNODE v, vlab;
+    GEDGE e, nxt_e, e1, e2;
 
-    for (edge = edgelist; edge; edge = ENEXT(edge))
+    assert(labellist == NULL);
+    assert(dummylist == NULL);
+    for (v = nodelist; v; v = NNEXT(v))
     {
-        e = substed_edge(edge);
-        if (e) {
-            if ( ELABEL(e) ) {
-                v = create_labelnode(e);
-                e1 = create_edge(ESOURCE(e), v, e, 0);
-                e2 = create_edge(v, ETARGET(e), e, 1);
+        for (e = FirstSucc(v); e; e = nxt_e)
+        {
+            nxt_e = NextSucc(e);
+            assert(!EINVISIBLE(e));
+            if (ELABEL(e)) {
+                vlab = create_labelnode(e);
+                e1 = create_edge(ESOURCE(e), vlab, e, 0);
+                e2 = create_edge(vlab, ETARGET(e), e, 1);
                 EANCHOR(e2) = 0;
+                delete_adjedge(e);
             }
-            else
-                create_adjedge(e);
         }
     }
 }
@@ -1697,6 +1634,7 @@ static void summarize_edges(void)
         assert(NextSucc(FirstSucc(v)) == NULL);
     }
 #endif
+    assert(dummylist == NULL);
 } /* summarize_edges */
 
 
@@ -1754,6 +1692,14 @@ static void split_double_edges(void)
             }
         }
     }
+#ifdef CHECK_ASSERTIONS
+    for (v = labellist; v; v = NNEXT(v))
+    {
+        /* only one edge !!! */
+        assert(NextSucc(FirstSucc(v)) == NULL);
+    }
+#endif
+    assert(dummylist == NULL);
 } /* split_double_edges */
 
 
