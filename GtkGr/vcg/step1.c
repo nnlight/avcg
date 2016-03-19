@@ -1909,66 +1909,30 @@ static void revert_outedges(GNODE v, GNODE w)
 static void add_phase1_labels(void)
 {
     GNODE v, vl, vt;
-    GEDGE edge, edgenext;
-
-    debugmessage("add_phase1_labels","");
-
-    /* In order to avoid that the level of a node is double duplicated,
-     * we mark the nodes.
-     */
-    for (v = nodelist; v; v = NNEXT(v)) { NMARK(v) = 0; }
-    for (v = dummylist; v; v = NNEXT(v)) { NMARK(v) = 0; }
-    for (v = labellist; v; v = NNEXT(v)) { NMARK(v) = 0; }
+    GEDGE edge, nxt_edge;
 
     maxdepth = 2*maxdepth;
-    for (v = nodelist; v; v = NNEXT(v))
-    {
-        if (!NMARK(v)) { NTIEFE(v) = 2* NTIEFE(v); NMARK(v) = 1; }
-        else assert((0));;
-    }
-    for (v = dummylist; v; v = NNEXT(v))
-    {
-        if (!NMARK(v)) { NTIEFE(v) = 2* NTIEFE(v); NMARK(v) = 1; }
-        else assert((0));;
-    }
-    for (v = labellist; v; v = NNEXT(v))
-    {
-        if (!NMARK(v)) { NTIEFE(v) = 2* NTIEFE(v); NMARK(v) = 1; }
-        else assert((0));;
-    }
+    for (v = nodelist; v; v = NNEXT(v)) { NTIEFE(v) = 2 * NTIEFE(v); }
+    for (v = labellist; v; v = NNEXT(v)) { NTIEFE(v) = 2 * NTIEFE(v); }
+    for (v = dummylist; v; v = NNEXT(v)) { NTIEFE(v) = 2 * NTIEFE(v); }
 
     for (v = nodelist; v; v = NNEXT(v))
     {
-        for (edge = FirstSucc(v); edge; edge = edgenext)
+        for (edge = FirstSucc(v); edge; edge = nxt_edge)
         {
-            edgenext = NextSucc(edge);
+            nxt_edge = NextSucc(edge);
             if (ELABEL(edge)) {
                 vl = create_labelnode(edge);
                 vt = ETARGET(edge);
-                NTIEFE(vl) = ( NTIEFE(ESOURCE(edge))
-                          +NTIEFE(ETARGET(edge)))/2;
+                NTIEFE(vl) = (NTIEFE(v) + NTIEFE(vt)) / 2;
                 (void)create_edge(v,vl,edge,0);
                 (void)create_edge(vl,vt,edge,1);
                 delete_adjedge(edge);
             }
         }
     }
-    for (v = tmpnodelist; v; v = NNEXT(v))
-    {
-        for (edge = FirstSucc(v); edge; edge = edgenext)
-        {
-            edgenext = NextSucc(edge);
-            if (ELABEL(edge)) {
-                vl = create_labelnode(edge);
-                vt = ETARGET(edge);
-                NTIEFE(vl) = ( NTIEFE(ESOURCE(edge))
-                          +NTIEFE(ETARGET(edge)))/2;
-                (void)create_edge(v,vl,edge,0);
-                (void)create_edge(vl,vt,edge,1);
-                delete_adjedge(edge);
-            }
-        }
-    }
+    assert(labellist == NULL);
+    assert(dummylist == NULL);
 } /* add_phase1_labels */
 
 
