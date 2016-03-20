@@ -736,7 +736,7 @@ static GEDGE internal_edgealloc(void)
     EART(h)         = 'U';
     ELNODE(h)       = NULL;
     EANCHOR(h)      = 0;
-    EINVISIBLE(h)   = 0;
+    EINVISIBLE(h)   = 1;
     EWEIGHTS(h)     = 0;
     EWEIGHTP(h)     = 0;
     init_edge_graph_fields_as_dead(h);

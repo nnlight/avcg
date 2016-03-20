@@ -701,7 +701,7 @@ static void unfold_sg(GNODE u)
  *   if the effect is inverse.
  *   The reason is, that unfolding is done BEFORE the adjacency lists
  *   exist, but folding can only be done AFTER the adjacency lists exist.
- *   Firther we use a dirty trick here: instead of creating a summary
+ *   Further we use a dirty trick here: instead of creating a summary
  *   node of the region, we use the start node of the region as summary
  *   node. This has the advantage that the summary node is in the correct
  *   subgraph, and that we have no problems with the hashtable to
@@ -720,8 +720,10 @@ static void unfold_sg(GNODE u)
  */
 static void fold_region(GNODE n, int k)
 {
-    GEDGE   e, nxt_e;
+    GEDGE   e, nxt_e, ee;
     GNODE   h;
+    GNLIST  li;
+    GNODE   v;
 
 
     assert((n));
@@ -753,6 +755,7 @@ static void fold_region(GNODE n, int k)
 
     inherit_foldnode_attributes(&foldnode, n);
 
+    assert(NREGION(n) == NULL);
     NREGREPL(n) = h;
     NREGION(n)  = NULL;   /* here we collect the nodes of this region */
 
@@ -762,10 +765,65 @@ static void fold_region(GNODE n, int k)
         nxt_e = NextSucc(e);
         if ( ECLASS(e) <= k ) {
             if ( !foldstop_reached(EEND(e)) ) {
-                EINVISIBLE(e) = 1;
+                delete_adjedge(e);
                 recursive_fold(EEND(e),n,k);
             }
         }
+    }
+
+    /* Calculates substitutions for non-folded edges */
+    for (li = NREGION(n); li; li = GNNEXT(li))
+    {
+        v = GNNODE(li);
+
+        /* Substitute the predecessor edges of v */
+        for (e = FirstPred(v); e; e = nxt_e)
+        {
+            nxt_e = NextPred(e);
+            ee = substed_edge(e);
+            if (ee!=e) {
+                /* Edge e should be invisible or substituted:
+                 * Remove edge e from adjacency lists.
+                 */
+                delete_adjedge(e);
+                /* and insert new edge, but avoid self loops at
+                 * the region node.
+                 */
+                if (ee) {
+                    assert(EEND(ee)==n);
+                    if (ESTART(ee)!=n);
+                        create_adjedge(ee);
+                }
+            }
+        }
+
+        /* Substitute the successor edges of v */
+        for (e = FirstSucc(v); e; e = nxt_e)
+        {
+            nxt_e = NextSucc(e);
+            ee = substed_edge(e);
+            if (ee!=e) {
+                /* Edge e should be invisible or substituted:
+                 * Remove edge e from adjacency lists.
+                 */
+                delete_adjedge(e);
+                /* and insert new edge, but avoid self loops at
+                 * the region node.
+                 */
+                if (ee) {
+                    assert(ESTART(ee)==n);
+                    if (EEND(ee)!=n);
+                        create_adjedge(ee);
+                }
+            }
+        }
+
+        /* nnlight - my watching checks */
+        assert(FirstPred(v) == NULL);
+        assert(FirstSucc(v) == NULL);
+
+        /*NPRED(v) = NSUCC(v) = NULL;*/  /* because v is invisible */
+        unlink_node_edges(v);
     }
 } /* fold_region */
 
@@ -774,10 +832,7 @@ static void fold_region(GNODE n, int k)
  *  This is an auxiliary function of fold_region.
  *  It folds the region of class <=k starting at v. The summary node
  *  of the region is n. It makes the nodes of the region invisible,
- *  and calculates substitutions for edges.
- *  The function is a little bit inefficient if we have cross edges
- *  inside the folded region, because these might be substituted
- *  and the substed will be later removed.
+ *  and fold (unlink) internal edges.
  */
 static void recursive_fold(GNODE v, GNODE n, int k)
 {
@@ -806,56 +861,11 @@ static void recursive_fold(GNODE v, GNODE n, int k)
         nxt_e = NextSucc(e);
         if ( ECLASS(e) <= k ) {
             if ( !foldstop_reached(EEND(e)) ) {
-                EINVISIBLE(e) = 1;
+                delete_adjedge(e);
                 recursive_fold(EEND(e),n,k);
             }
         }
     }
-
-    /* Substitute the predecessor edges of v */
-    for (e = FirstPred(v); e; e = nxt_e)
-    {
-        nxt_e = NextPred(e);
-        ee = substed_edge(e);
-        if (ee!=e) {
-            /* Edge e invisible or substituted:
-             * Remove edge e from adjacency list of the source.
-             */
-            delete_adjedge(e);
-            /* and insert new edge, but avoid self loops at
-             * the region node.
-             */
-            assert((!ee)||(EEND(ee)==n));
-            if (ee && (ESTART(ee)!=n))
-                create_adjedge(ee);
-        }
-    }
-
-    /* Substitute the successor edges of v */
-    for (e = FirstSucc(v); e; e = nxt_e)
-    {
-        nxt_e = NextSucc(e);
-        ee = substed_edge(e);
-        if (ee!=e) {
-            /* Edge e invisible or substituted:
-             * Remove edge e from adjacency list of the source.
-             */
-            delete_adjedge(e);
-            /* and insert new edge, but avoid self loops at
-             * the region node.
-             */
-            assert((!ee)||(ESTART(ee)==n));
-            if (ee && (EEND(ee)!=n))
-                create_adjedge(ee);
-        }
-    }
-
-    /* nnlight - my watching checks */
-    assert(FirstPred(v) == NULL);
-    assert(FirstSucc(v) == NULL);
-
-    /*NPRED(v) = NSUCC(v) = NULL;*/  /* because v is invisible */
-    unlink_node_edges(v);
 } /* recursive_fold */
 
 
@@ -990,7 +1000,6 @@ static void hide_edge_classes(void)
             nxt_h = NextSucc(h);
             /*assert(EINVISIBLE(h));*/
             if (!EINVISIBLE(h)) delete_adjedge(h);
-            EINVISIBLE(h) = 1;
         }
     }
 
@@ -999,7 +1008,6 @@ static void hide_edge_classes(void)
         assert(ECLASS(h)>0);
         if (hide_class[ECLASS(h)-1]) {
             if (!EINVISIBLE(h)) delete_adjedge(h);
-            EINVISIBLE(h) = 1;
         }
     }
     for (h = tmpedgelist; h; h = ENEXT(h))
@@ -1007,7 +1015,6 @@ static void hide_edge_classes(void)
         assert(ECLASS(h)>0);
         if (hide_class[ECLASS(h)-1]) {
             if (!EINVISIBLE(h)) delete_adjedge(h);
-            EINVISIBLE(h) = 1;
         }
     }
 } /* hide_edge_classes */
@@ -1065,7 +1072,7 @@ static void refresh(void)
         }
         EART(e)     = 'U';
         ELNODE(e)   = NULL;
-        EINVISIBLE(e)   = 0;
+        EINVISIBLE(e)   = 1;
         EORI(e)     = NO_ORI;
         EORI2(e)    = NO_ORI;
     }
@@ -1349,6 +1356,7 @@ static long no_degree(GNODE n)
  */
 void    create_adjedge(GEDGE edge)
 {
+    assert(EINVISIBLE(edge) == 1);
     link_edge(edge);
     EINVISIBLE(edge) = 0;
 }
@@ -1358,13 +1366,12 @@ void    create_adjedge(GEDGE edge)
  *   i.e. delete an edge e from the adjacency lists of its source
  *   and target node.
  */
-
 void    delete_adjedge(GEDGE edge)
 {
+    assert(EINVISIBLE(edge) == 0);
     unlink_edge(edge);
     EINVISIBLE(edge) = 1;
 }
-
 
 
 /*   Create an label node
@@ -1375,7 +1382,6 @@ void    delete_adjedge(GEDGE edge)
  *   as nodes.
  *   The new temporary node is inserted into the label list.
  */
-
 GNODE   create_labelnode(GEDGE e)
 {
     GNODE   v;
@@ -1389,7 +1395,6 @@ GNODE   create_labelnode(GEDGE e)
     NLABEL(v)   = ELABEL(e);
     adapt_labelpos(v,e);
     ins_node_in_dl_list(v,labellist,labellistend);
-    EINVISIBLE(e)=1;
     ELNODE(e) = v;
     return(v);
 }
@@ -1461,12 +1466,11 @@ static GNODE    search_visible(GNODE v)
  *   ---------------------------
  *   If a subgraph is folded, all edges to nodes of this subgraph must
  *   be replaced by edges to the summary node.
- *   As side effect, the invisibility flag of the edge is set, if the
- *   edge is invisible.
  *   This function returns e,                   if e must be drawn,
  *                         a substitution edge, if e is from a visible node
- *                                              to an invisible aubgraph node
- *                         NULL,                if e is invisible.
+ *                                              to an invisible subgraph node,
+ *                         NULL,                if neither e nor substitution edge
+                                                must be drawn.
  *
  *   Note the situation we expect: edgelist contains all stable edge,
  *   independent of visible or not.
@@ -1486,11 +1490,9 @@ static GEDGE    substed_edge(GEDGE e)
 
     /* We assume: e is in edgelist !!! */
 
-    if (EINVISIBLE(e)) return(NULL);
     s = ESTART(e);
     t = EEND(e);
     if ( NINLIST(s) && NINLIST(t) ) return(e);  /* edge must be drawn */
-    EINVISIBLE(e) = 1;
 
     ss = search_visible(s);
     tt = search_visible(t);
@@ -1541,7 +1543,7 @@ static GEDGE    substed_edge(GEDGE e)
     ESTART(h)   = ss;
     EEND(h)     = tt;
     return(h);
-}
+} /* substed_edge */
 
 
 
