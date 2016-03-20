@@ -78,10 +78,11 @@ void  inherit_foldnode_attributes   _PP((GNODE fn, GNODE y));
 void  copy_nodeattributes       _PP((GNODE fn, GNODE y));
 
 GNODE tmpnodealloc(int textm,int width,int height,int borderw,int color,int textc,int borderc);
-void    free_node   _PP((GNODE v));
-void    free_tmpnodes   _PP((void));
-GNODE   search_xy_node  _PP((long x,long y));
-void check_graph_consistency _PP((void));
+void    free_node(GNODE v);
+void    free_tmpnodes();
+void free_tmpedges();
+GNODE   search_xy_node(long x,long y);
+void check_graph_consistency();
 
 
 GNLIST  cons_node(GNODE v, GNLIST next);

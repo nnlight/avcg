@@ -100,7 +100,6 @@
 static GNODE internal_nodealloc();
 static void free_tmpnodelists();
 static GEDGE internal_edgealloc();
-static void free_tmpedges();
 static void free_tmpedgelists();
 static void free_connect();
 static void reinit_all_lists();
@@ -909,7 +908,7 @@ GEDGE   tmpedgealloc(
  *  --------------------------------------
  */
 
-static void free_tmpedges(void)
+void free_tmpedges(void)
 {
     GEDGE   h;
 

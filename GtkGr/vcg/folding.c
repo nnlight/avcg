@@ -412,6 +412,7 @@ void    folding(void)
     debugmessage("folding","");
 
     assert((labellist == NULL));
+    assert((dummylist == NULL));
     assert((tmpnodelist == NULL));
     assert((tmpedgelist == NULL));
 
@@ -453,8 +454,8 @@ void    folding(void)
         unfold_region(GNNODE(l));
     }
 
-    /* 5) refresh the situation: initialize indegree of nodes,
-     *    visibility flag of edges etc. Clear adjacency lists.
+    /* 5) Refresh the situation: initialize visibility flag of edges etc.
+     *    Clear adjacency lists.
      */
 
     gs_wait_message('f');
@@ -479,6 +480,7 @@ void    folding(void)
 
     /* 8) Hide edge classes */
 
+    free_tmpedges();
     refresh();
     create_adjacencies();
     hide_edge_classes();
@@ -497,12 +499,14 @@ void    folding(void)
      */
 
     locFlag = 1;
-    v = nodelist;
-    while (v && locFlag) {
-        if ((NSX(v)==0L) && (NSY(v)==0L)) locFlag=0;
+    for (v = nodelist; v; v = NNEXT(v))
+    {
+        if ((NSX(v)==0L) && (NSY(v)==0L)) {
+            locFlag = 0;
+            break;
+        }
         NX(v) = NSX(v);
         NY(v) = NSY(v);
-        v = NNEXT(v);
     }
 
     /* 11) If labels, we calculate edge positions without labels.
@@ -510,9 +514,9 @@ void    folding(void)
 
     if (locFlag && (G_displayel==YES)) {
         free_tmpnodes();
+        free_tmpedges();
         refresh();
         create_adjacencies();
-        gs_wait_message('f');
         hide_edge_classes();
         for (v = nodelist; v; v = NNEXT(v))
         {
@@ -1018,7 +1022,6 @@ static void hide_edge_classes(void)
  *   i.e. refresh all nodes and edges existing before the layouting.
  *   All layout relevent attributes must become undefined and the
  *   adjacency list must be cleared.
- *   Edges must be reverted and must made visible.
  *   Note: this should be done when maximal many nodes are in the node
  *   list, i.e. no unfolding is done anymore, but before the creation
  *   of adjacency lists.
@@ -1066,13 +1069,14 @@ static void refresh(void)
         EORI(e)     = NO_ORI;
         EORI2(e)    = NO_ORI;
     }
+    assert(tmpedgelist == NULL);
 }
 
 
 /*  Refresh all nodes of a list
  *  ---------------------------
  *  Given a nodelist v, connected via NNEXT, all nodes become
- *  undefined deepth, position, mark, indegree, outdegree.
+ *  undefined deepth, position, mark.
  *  Old adjacency list are cleared.
  */
 static void refresh_all_nodes(GNODE v)
@@ -1088,6 +1092,14 @@ static void refresh_all_nodes(GNODE v)
         NX(v)       = 0L;
         NY(v)       = 0L;
         NCONNECT(v) = NULL;
+        /*
+         * FIXME:
+         * Дуги из tmpedgelist перед фолдингом удаляются (т.е. переносятся в список
+         * свободных), при этом они остаются слинкованными с узлами и между собой,
+         * и с дцгами из списка edgelist.
+         * Тут производится отвязывание дуг, которые уже логически удалены.
+         * Note: есть еще список invis_nodes, который надо тоже учитывать.
+         */
         unlink_node_edges(v);
         /*init_node_adj_fields(v);*/
     }
@@ -1500,8 +1512,9 @@ static GEDGE    substed_edge(GEDGE e)
 
     for (h = tmpedgelist; h; h = ENEXT(h))
     {
-        printf("!!!!!!!!!!!!!!!!!!!!!!\n");
-        if ((ESTART(h)==ss) && (EEND(h)==tt)) return(h);
+        assert(!EINVISIBLE(h));
+        /*if ((ESTART(h)==ss) && (EEND(h)==tt)) return(h);*/
+        if ((ESTART(h)==ss) && (EEND(h)==tt)) return NULL;
     }
 
     /*  HERE IS THE POSSIBLE ENTRY POINT TO GIVE THE EDGES TO FOLDED
@@ -1540,6 +1553,7 @@ static void create_adjacencies(void)
 {
     GEDGE edge, e;
 
+    assert(tmpedgelist == NULL);
     for (edge = edgelist; edge; edge = ENEXT(edge))
     {
         e = substed_edge(edge);
