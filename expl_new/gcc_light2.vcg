@@ -5,7 +5,6 @@ hidden: 2
 node: { title: "GrMarker_t GrGraph::AllocMarker().0" }
 graph: {
 title: "GrMarker_t GrGraph::AllocMarker().BB2"
-folding: 1
 color: lightblue
 label: "basic block 2"
 
@@ -27,7 +26,6 @@ edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().2" targetname: "GrMarker_
 edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().2" targetname: "GrMarker_t GrGraph::AllocMarker().5" }
 graph: {
 title: "GrMarker_t GrGraph::AllocMarker().BB3"
-folding: 1
 color: lightblue
 label: "basic block 3"
 
@@ -61,7 +59,6 @@ edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().6" targetname: "GrMarker_
 edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().6" targetname: "GrMarker_t GrGraph::AllocMarker().64" color: green class: 3 }
 graph: {
 title: "GrMarker_t GrGraph::AllocMarker().BB4"
-folding: 1
 color: lightblue
 label: "basic block 4"
 
@@ -143,7 +140,6 @@ edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().14" targetname: "GrMarker
 edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().14" targetname: "GrMarker_t GrGraph::AllocMarker().16" }
 graph: {
 title: "GrMarker_t GrGraph::AllocMarker().BB5"
-folding: 1
 color: lightblue
 label: "basic block 5"
 
@@ -182,7 +178,6 @@ edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().17" targetname: "GrMarker
 edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().17" targetname: "GrMarker_t GrGraph::AllocMarker().19" color: green class: 3 }
 graph: {
 title: "GrMarker_t GrGraph::AllocMarker().BB6"
-folding: 1
 color: lightblue
 label: "basic block 6"
 
@@ -307,7 +302,6 @@ edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().30" targetname: "GrMarker
 edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().30" targetname: "GrMarker_t GrGraph::AllocMarker().32" }
 graph: {
 title: "GrMarker_t GrGraph::AllocMarker().BB7"
-folding: 1
 color: lightblue
 label: "basic block 7"
 
@@ -369,7 +363,6 @@ node: {
 edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().36" targetname: "GrMarker_t GrGraph::AllocMarker().38" color: green class: 3 }
 graph: {
 title: "GrMarker_t GrGraph::AllocMarker().BB8"
-folding: 1
 color: lightblue
 label: "basic block 8"
 
@@ -593,7 +586,6 @@ edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().58" targetname: "GrMarker
 edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().58" targetname: "GrMarker_t GrGraph::AllocMarker().60" color: green class: 3 }
 graph: {
 title: "GrMarker_t GrGraph::AllocMarker().BB9"
-folding: 1
 color: lightblue
 label: "basic block 9"
 
@@ -654,7 +646,6 @@ edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().66" targetname: "GrMarker
 edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().66" targetname: "GrMarker_t GrGraph::AllocMarker().68" }
 graph: {
 title: "GrMarker_t GrGraph::AllocMarker().BB10"
-folding: 1
 color: lightblue
 label: "basic block 10"
 
@@ -716,7 +707,6 @@ node: {
 edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().72" targetname: "GrMarker_t GrGraph::AllocMarker().74" color: green class: 3 }
 graph: {
 title: "GrMarker_t GrGraph::AllocMarker().BB11"
-folding: 1
 color: lightblue
 label: "basic block 11"
 
@@ -751,7 +741,6 @@ edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().77" targetname: "GrMarker
 edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().77" targetname: "GrMarker_t GrGraph::AllocMarker().81" color: green class: 3 }
 graph: {
 title: "GrMarker_t GrGraph::AllocMarker().BB12"
-folding: 1
 color: lightblue
 label: "basic block 12"
 
@@ -781,7 +770,6 @@ node: {
 edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().82" targetname: "GrMarker_t GrGraph::AllocMarker().79" }
 graph: {
 title: "GrMarker_t GrGraph::AllocMarker().BB13"
-folding: 1
 color: lightblue
 label: "basic block 13"
 
@@ -815,12 +803,10 @@ edge: { sourcename: "GrMarker_t GrGraph::AllocMarker().83" targetname: "GrMarker
 node: { title: "GrMarker_t GrGraph::AllocMarker().999999" label: "END" }
 }
 graph: { title: "void GrGraph::ExcludeNodeFromList(GrNode*)"
-folding: 1
 hidden: 2
 node: { title: "void GrGraph::ExcludeNodeFromList(GrNode*).0" }
 graph: {
 title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB2"
-folding: 1
 color: lightblue
 label: "basic block 2"
 
@@ -842,7 +828,6 @@ edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).2" targetname: "
 edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).2" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).5" }
 graph: {
 title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB3"
-folding: 1
 color: lightblue
 label: "basic block 3"
 
@@ -941,7 +926,6 @@ edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).12" targetname: 
 edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).12" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).14" }
 graph: {
 title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB4"
-folding: 1
 color: lightblue
 label: "basic block 4"
 
@@ -995,7 +979,6 @@ edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).17" targetname: 
 edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).17" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).19" color: green class: 3 }
 graph: {
 title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB5"
-folding: 1
 color: lightblue
 label: "basic block 5"
 
@@ -1055,7 +1038,6 @@ edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).24" targetname: 
 edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).24" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).26" }
 graph: {
 title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB6"
-folding: 1
 color: lightblue
 label: "basic block 6"
 
@@ -1117,7 +1099,6 @@ node: {
 edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).30" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).32" color: green class: 3 }
 graph: {
 title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB7"
-folding: 1
 color: lightblue
 label: "basic block 7"
 
@@ -1162,7 +1143,6 @@ node: {
 edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).36" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).37" }
 graph: {
 title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB8"
-folding: 1
 color: lightblue
 label: "basic block 8"
 
@@ -1203,7 +1183,6 @@ edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).40" targetname: 
 edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).40" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).42" }
 graph: {
 title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB9"
-folding: 1
 color: lightblue
 label: "basic block 9"
 
@@ -1257,7 +1236,6 @@ edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).45" targetname: 
 edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).45" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).47" color: green class: 3 }
 graph: {
 title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB10"
-folding: 1
 color: lightblue
 label: "basic block 10"
 
@@ -1317,7 +1295,6 @@ edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).52" targetname: 
 edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).52" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).54" }
 graph: {
 title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB11"
-folding: 1
 color: lightblue
 label: "basic block 11"
 
@@ -1379,7 +1356,6 @@ node: {
 edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).58" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).60" color: green class: 3 }
 graph: {
 title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB12"
-folding: 1
 color: lightblue
 label: "basic block 12"
 
@@ -1424,7 +1400,6 @@ node: {
 edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).64" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).65" }
 graph: {
 title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB13"
-folding: 1
 color: lightblue
 label: "basic block 13"
 
@@ -1447,7 +1422,6 @@ node: {
 edge: { sourcename: "void GrGraph::ExcludeNodeFromList(GrNode*).66" targetname: "void GrGraph::ExcludeNodeFromList(GrNode*).67" }
 graph: {
 title: "void GrGraph::ExcludeNodeFromList(GrNode*).BB14"
-folding: 1
 color: lightblue
 label: "basic block 14"
 
