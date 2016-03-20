@@ -836,7 +836,7 @@ static void fold_region(GNODE n, int k)
  */
 static void recursive_fold(GNODE v, GNODE n, int k)
 {
-    GEDGE   e, ee, nxt_e;
+    GEDGE   e, nxt_e;
 
     assert((v));
     assert((n));
