@@ -172,8 +172,7 @@ extern int backward_connection2(CONNECT c);
 /*  Graphs
  *  ======
  *  The complete data structure of a graph is an adjacency list
- *  representation, i.e. all nodes contain adjacency lists of
- *  incoming and outgoing edges.
+ *  representation.
  *  Furthermore, all nodes contain in NROOT a pointer to the subgraph
  *  summary node they belong to. NROOT of top level nodes is NULL.
  *  Summary nodes of subgraphs contain in NSGRAPH a list of all nodes
@@ -197,14 +196,14 @@ extern int backward_connection2(CONNECT c);
  *                        ,-----------------------------,
  *  NSGRAPH connection:   |            ,-------------,  |
  *                        V            V             |  |
- *                  *->*  *----->*->*  *----->*      |  |
- *                  |  |  |      |  |  |      |      |  |
- *                  V  |  V      V  |  V      V      |  |
- *     nodelist --> A -+> B ---> C -+> D ---> E      |  |
- *                     |            |                |  |
- *                     `-----,      `-----,          |  |
- *                           |            |   NSGRAPH|  |NSGRAPH
- *                           V            V          |  |
+ *                        *----->*->*  *----->*      |  |
+ *                        |      |  |  |      |      |  |
+ *                        V      V  |  V      V      |  |
+ *     nodelist --> A --> B ---> C -+> D ---> E      |  |
+ *                                  |                |  |
+ *                                  `-----,          |  |
+ *                                        |   NSGRAPH|  |NSGRAPH
+ *                                        V          |  |
  *     graphlist ----------> S1 --------> S2         |  |
  *                           |            |          |  |
  *                           |            `----------'  |
@@ -522,11 +521,7 @@ typedef struct gedge
     char    arrowcolor2;
     char    labelcolor;
 
-#ifdef VMS
-    int     anchor;
-#else
     signed char    anchor;
-#endif
 
     /* The layout decides wether an edge is visible or reverted, etc. */
 
