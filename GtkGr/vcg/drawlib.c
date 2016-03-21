@@ -52,7 +52,7 @@
  *      5   =   FPSCF= polar      fixed continuous fisheye
  */
 
-int fisheye_view = 0;
+static int fisheye_view = 0;
 
 
 static int colored = 1;

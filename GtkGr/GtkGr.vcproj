@@ -303,10 +303,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\vcg\timing.h"
-				>
-			</File>
-			<File
 				RelativePath=".\vcg\vcg_defs.h"
 				>
 			</File>

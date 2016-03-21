@@ -107,7 +107,6 @@
 #include "options.h"
 #include "folding.h"
 #include "steps.h"
-#include "timing.h"
 #include "graph.h"
 
 /* Prototypes
@@ -155,7 +154,6 @@ static void     flip_ver_edge       _PP((GEDGE e));
  */
 void    step4_main(void)
 {
-    start_time();
     debugmessage("step4_main","");
     assert((layer));
 
@@ -201,9 +199,7 @@ void    step4_main(void)
      */
     calc_max_xy_pos();
 
-    stop_time("step4_main");
-
-}
+} /* step4_main */
 
 
 /*--------------------------------------------------------------------*/

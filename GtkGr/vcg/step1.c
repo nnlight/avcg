@@ -117,7 +117,6 @@
 #include "options.h"
 #include "folding.h"
 #include "steps.h"
-#include "timing.h"
 #include "graph.h"
 
 
@@ -198,7 +197,6 @@ void step1_main(void)
 {
     int i;
 
-    start_time();
     debugmessage("step1_main","");
     assert((dummylist==NULL));
 
@@ -284,7 +282,6 @@ void step1_main(void)
      */
 
     if (layout_flag == TREE_LAYOUT) {
-        stop_time("step1_main");
         layout_flag = tree_main();
         if (layout_flag != TREE_LAYOUT) {
             FPRINTF(stderr,"\nThis is not a downward tree. ");
@@ -295,7 +292,6 @@ void step1_main(void)
 
     if (layout_flag != TREE_LAYOUT) {
         complete_depth_lists();
-        stop_time("step1_main");
     }
 } /* step1_main */
 

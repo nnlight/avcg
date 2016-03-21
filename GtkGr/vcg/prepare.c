@@ -85,7 +85,6 @@
 #include "folding.h"
 #include "drawlib.h"
 #include "steps.h"
-#include "timing.h"
 #include "graph.h"
 
 /* Prototypes
@@ -119,7 +118,6 @@ void prepare_nodes(void)
     GNODE v,w;
     GEDGE e;
 
-    start_time();
     debugmessage("prepare_nodes","");
 
     /* First, calculate width and height of each node */
@@ -180,16 +178,16 @@ void prepare_nodes(void)
     for (v = labellist; v; v = NNEXT(v)) { calc_node_degree(v); }
     for (v = dummylist; v; v = NNEXT(v)) { calc_node_degree(v); }
 
-        i = (maxindeg > maxoutdeg ? maxindeg : maxoutdeg);
-        if (i+2 > size_of_adjarray) {
-                if (adjarray2) free(adjarray2);
-                adjarray2 = (GEDGE *)libc_malloc((i+2)*sizeof(GEDGE));
-                size_of_adjarray = i+2;
+    i = (maxindeg > maxoutdeg ? maxindeg : maxoutdeg);
+    if (i+2 > size_of_adjarray) {
+        if (adjarray2) free(adjarray2);
+        adjarray2 = (GEDGE *)libc_malloc((i+2)*sizeof(GEDGE));
+        size_of_adjarray = i+2;
 #ifdef DEBUG
-                PRINTF("Sizeof table `adjarray2': %d Bytes\n",
-                        (i+2)*sizeof(GEDGE));
+        PRINTF("Sizeof table `adjarray2': %d Bytes\n",
+                (i+2)*sizeof(GEDGE));
 #endif
-        }
+    }
 
 
     /* Now, sort the adjacency lists */
@@ -216,7 +214,6 @@ void prepare_nodes(void)
      */
     calc_max_xy_pos();
 
-    stop_time("prepare_nodes");
     debugmessage("end of prepare_nodes","");
 } /* prepare_nodes */
 
@@ -312,7 +309,8 @@ static void calc_node_anchor(GNODE v)
             assert(EART(e) != 'R');
             EART(e) = 'r';
         }
-        else delete_adjedge(e); /* Edge is not drawable */
+        else
+            delete_adjedge(e); /* Edge is not drawable */
     }
 } /* calc_node_anchor */
 
@@ -323,24 +321,24 @@ static void calc_node_anchor(GNODE v)
 
 static void sort_adjacencies(GNODE v)
 {
-        int i, len;
+    int i, len;
     GEDGE e;
 
-        debugmessage("sort_adjacencies","");
-        assert((v));
+    debugmessage("sort_adjacencies","");
+    assert((v));
 
     i = 0;
     for (e = FirstPred(v); e; e = NextPred(e))
     {
-                adjarray2[i++] = e;
-        }
+        adjarray2[i++] = e;
+    }
     len = i;
 
-        qsort(adjarray2, len, sizeof(GEDGE),
-        (int (*) (const void *, const void *))compare_ppos);
+    qsort(adjarray2, len, sizeof(GEDGE),
+            (int (*) (const void *, const void *))compare_ppos);
     for ( i = 0;
-        i < len;
-        i++ )
+          i < len;
+          i++ )
     {
         e = adjarray2[i];
         if (i > 0) {
@@ -364,11 +362,11 @@ static void sort_adjacencies(GNODE v)
     }
     len = i;
 
-        qsort(adjarray2, len, sizeof(GEDGE),
-        (int (*) (const void *, const void *))compare_spos);
+    qsort(adjarray2, len, sizeof(GEDGE),
+            (int (*) (const void *, const void *))compare_spos);
     for ( i = 0;
-        i < len;
-        i++ )
+          i < len;
+          i++ )
     {
         e = adjarray2[i];
         if (i > 0) {

@@ -96,7 +96,6 @@
 #include "options.h"
 #include "folding.h"
 #include "steps.h"
-#include "timing.h"
 #include "graph.h"
 
 /* Prototypes
@@ -211,7 +210,6 @@ static int firstcall = 1;
  */
 void step3_main(void)
 {
-    start_time();
     debugmessage("step3_main","");
     assert((layer));
 
@@ -278,8 +276,6 @@ void step3_main(void)
      * for some shapes.
      */
     calc_all_ports(1);
-
-    stop_time("step3_main");
 
 } /* step3_main */
 

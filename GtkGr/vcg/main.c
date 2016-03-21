@@ -47,7 +47,6 @@
 #include "steps.h"
 #include "main.h"
 #include "options.h"
-#include "timing.h"
 #include "vcg_iface.h"
 
 
@@ -65,7 +64,6 @@ static void parse_part( FILE *f, const char *fname)
 {
     int     errs,i;
 
-    start_time();
     debugmessage("parse_part","");
 
     /* We start from the scratch */
@@ -84,8 +82,6 @@ static void parse_part( FILE *f, const char *fname)
 
     if (errs>0) Fatal_error("Syntax error","");
     assert((Syntax_Tree!=NULL));
-
-    stop_time("parse_part");
 } /* parse_part */
 
 
@@ -121,9 +117,7 @@ static void visualize_part(void)
 
     /* Init of the default values */
 
-    G_title         = myalloc(256, MA_MISC);
-    strcpy( G_title, "G_title");
-    G_title[255]    = 0;
+    G_title         = "G_title";
     G_x             = -1L;
     G_y             = -1L;
 
@@ -136,17 +130,12 @@ static void visualize_part(void)
     {
         G_width = G_height = 700;
     }
-    G_width_set  = 0;   /* because they are not set by */
-    G_height_set = 0;   /* the specification           */
-    if (!G_xymax_final) G_xmax = G_width+10;
-    if (!G_xymax_final) G_ymax = G_height+10;
     G_xbase         = 5;
     G_ybase         = 5;
     G_dspace        = 0;
     G_xspace        = 20;
     G_yspace        = 70;
     G_orientation   = TOP_TO_BOTTOM;
-    G_folding       = 0;
     G_color         = WHITE;
     G_displayel     = NO;
     G_dirtyel       = NO;
@@ -169,11 +158,10 @@ static void visualize_part(void)
 
     /* Set drawing area */
 
-    G_xymax_final = 1;
-    V_xmin = V_xmin_initial;
-    V_xmax = V_xmin + (long)G_xmax;
-    V_ymin = V_ymin_initial;
-    V_ymax = V_ymin + (long)G_ymax;
+    V_xmin = 0;
+    V_xmax = V_xmin + G_width+10;
+    V_ymin = 0;
+    V_ymax = V_ymin + G_height+10;
 
     relayout();
 } /* visualize_part */
@@ -187,11 +175,9 @@ static void visualize_part(void)
 static void relayout(void)
 {
     debugmessage("relayout","");
-    start_time();
 
     free_all_lists();
     folding();
-    stop_time("folding");
 
     if (!locFlag) {
 
@@ -261,9 +247,6 @@ void vcg_Parse( FILE *input_file, const char *filename)
         FPRINTF(stderr,"Warning: On this system, chars are unsigned.\n");
         FPRINTF(stderr,"This may yield problems with the graph folding operation.\n");
     }
-
-
-    G_xmax = G_ymax = -1;
 
     initOptions();
 

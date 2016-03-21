@@ -107,7 +107,6 @@
 #include "options.h"
 #include "folding.h"
 #include "steps.h"
-#include "timing.h"
 #include "graph.h"
 
 
@@ -163,7 +162,6 @@ static int tree_factor2;
 
 int tree_main(void)
 {
-    start_time();
     debugmessage("tree_main","");
     assert((layer));
 
@@ -187,7 +185,6 @@ int tree_main(void)
     /* Check whether it is a forest of trees */
 
     if (!is_tree()) {
-        stop_time("tree_main");
         return(0);
     }
 
@@ -232,7 +229,6 @@ int tree_main(void)
 
     nr_crossings = 0;
 
-    stop_time("tree_main");
     return(TREE_LAYOUT);
 } /* tree_main */
 

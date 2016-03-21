@@ -49,8 +49,6 @@
 
 extern int silent;
 extern int fastflag;
-extern int supress_nodes;
-extern int supress_edges;
 extern int summarize_double_edges;
 extern int hide_single_nodes;
 extern int layout_flag;
@@ -88,25 +86,18 @@ extern long V_xmin;
 extern long V_xmax;
 extern long V_ymin;
 extern long V_ymax;
-extern long V_xmin_initial;
-extern long V_ymin_initial;
 
 
 
 #define MAXCLASS  16
 
 extern int G_timelimit;
-extern int G_xymax_final;
 extern char *G_title;
 extern long G_x, G_y;
 extern int G_width, G_height;
-extern int G_width_set, G_height_set;
-extern int G_xmax, G_ymax;
 extern int G_xbase, G_ybase;
 extern int G_xspace, G_yspace;
 extern int G_orientation;
-extern int G_folding;
-extern int G_invisible[];
 extern int G_color;
 extern int G_displayel;
 extern int G_dirtyel;
@@ -137,8 +128,6 @@ extern int     fold_arrowc;
 extern int     fold_barrowc;
 extern int     fold_arrsty;
 extern int     fold_barrsty;
-
-extern int  max_eprio;
 
 extern char *info_names[3];
 extern int  max_nr_classes;

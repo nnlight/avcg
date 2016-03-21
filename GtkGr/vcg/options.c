@@ -104,12 +104,6 @@ int silent = 0;
 
 int fastflag = 0;
 
-/*  Flag to supress drawing of nodes and edges.
- */
-
-int supress_nodes = 0;
-int supress_edges = 0;
-
 /*  Flag to summarize multiple edges without label between same nodes.
  */
 
@@ -293,30 +287,22 @@ long    V_xmax;         /* that are visible                 */
 long    V_ymin;
 long    V_ymax;
 
-long    V_xmin_initial = 0L;        /* and their initial values */
-long    V_ymin_initial = 0L;
-
 
 /*  Global Graph Attributes
  *  -----------------------
  */
 
 int     G_timelimit = 0;    /* Limitation in the running time
-                 * in seconds. 0 = no limit.
-                 */
-
-int G_xymax_final = 0;
+                             * in seconds. 0 = no limit.
+                             */
 
 char    *G_title;       /* title of the global graph          */
 long    G_x, G_y;       /* window location on the root screen */
 int     G_width, G_height;  /* size of the open part of window    */
-int     G_width_set;        /* indicates that the width  was set. */
-int     G_height_set;       /* indicates that the height was set. */
-int     G_xmax, G_ymax;     /* maximal size of window             */
+/*int     G_xmax, G_ymax;*/     /* maximal size of window             */
 int     G_xbase, G_ybase;   /* location of the origin (0,0)       */
 int     G_xspace, G_yspace; /* offset of drawing area             */
 int     G_orientation;      /* top-to-bottom, or left-to-right    */
-int     G_folding;      /* global graph folded (1) or not (0) */
 int     G_color;        /* background color                   */
 int     G_displayel;        /* edge labels drawn (1) or not (0)   */
 int     G_dirtyel;      /* edge labels dirty (1) or not (0)   */
@@ -352,12 +338,6 @@ int     fold_arrowc = -1;          /* folded edge arrowcolor     */
 int     fold_barrowc= -1;          /* folded edge back arrowcolor*/
 int     fold_arrsty = -1;          /* folded edge arrowstyle     */
 int     fold_barrsty= -1;          /* folded edge back arrowstyle*/
-
-
-/*  The maximal edge priority
- */
-
-int max_eprio;
 
 
 /*  The names of the info fields. If info_name_available,

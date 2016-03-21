@@ -134,7 +134,6 @@
 #include "options.h"
 #include "folding.h"
 #include "steps.h"
-#include "timing.h"
 #include "graph.h"
 
 
@@ -287,7 +286,6 @@ void step2_main(void)
     int i;
     int old_nr_crossings;
 
-    start_time();
     debugmessage("step2_main","");
     assert((layer));
 
@@ -417,7 +415,6 @@ void step2_main(void)
 
     recreate_predlists();
 
-    stop_time("step2_main");
 } /* step2_main */
 
 
@@ -523,6 +520,7 @@ static void tree_horizontal_order(void)
     GNODE  node;
     GEDGE  e;
     double maxbary;
+    int max_eprio = 0;
 
     debugmessage("tree_horizontal_order","");
 
@@ -537,6 +535,8 @@ static void tree_horizontal_order(void)
             for (e = FirstSucc(GNNODE(li)); e; e = NextSucc(e))
             {
                 EWEIGHTS(e) = 0;
+                if (EPRIO(e) > max_eprio)
+                    max_eprio = EPRIO(e);
             }
         }
     }

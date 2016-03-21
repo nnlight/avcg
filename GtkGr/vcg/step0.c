@@ -78,7 +78,6 @@
 #include "options.h"
 #include "folding.h"
 #include "steps.h"
-#include "timing.h"
 
 
 /* судя по названию, когда-то получались размеры экрана */
@@ -170,7 +169,6 @@ void step0_main(void)
     struct gnode defaultnode;
     struct gedge defaultedge;
 
-    start_time();
     debugmessage("step0_main","");
 
     assert((nodelist==NULL));
@@ -196,7 +194,6 @@ void step0_main(void)
 
     /* Calculate the number of edge classes */
 
-    max_eprio = 0;
     max_nr_classes = 1;
     calc_nr_classes(Syntax_Tree);
 
@@ -254,7 +251,6 @@ void step0_main(void)
 
     debug_init_checknode();
 
-    stop_time("step0_main without folding");
 } /* step0_main */
 
 
@@ -418,18 +414,16 @@ static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
                         if (!subg_bit)  {
                             G_width  = (int)FETCHNUM();
                             if (G_width <= 0) G_width = 100;
-                            G_width_set = 1;
                         }
                         break;
                     case T_Co_height:
                         if (!subg_bit) {
                             G_height = (int)FETCHNUM();
                             if (G_height <= 0) G_height = 100;
-                            G_height_set = 1;
                         }
                         break;
                     case T_Co_xmax:
-                        if (!subg_bit) {
+                        /*if (!subg_bit) {
                             if (!G_xymax_final)
                                 G_xmax = (int)FETCHNUM();
                             if (G_xmax <= 200) G_xmax = 200;
@@ -437,12 +431,11 @@ static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
                                 G_xmax = 2*ScreenWidth;
                             if (G_width>G_xmax) {
                                 G_width = G_xmax;
-                                G_width_set = 1;
                             }
-                        }
+                        }*/
                         break;
                     case T_Co_ymax:
-                        if (!subg_bit) {
+                        /*if (!subg_bit) {
                             if (!G_xymax_final)
                                 G_ymax = (int)FETCHNUM();
                             if (G_ymax <= 200) G_ymax = 200;
@@ -450,9 +443,8 @@ static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
                                 G_ymax = 2*ScreenHeight;
                             if (G_height>G_ymax) {
                                 G_height = G_ymax;
-                                G_height_set = 1;
                             }
-                        }
+                        }*/
                         break;
                     case T_Co_infoname:
                         if (!subg_bit) {
@@ -676,12 +668,12 @@ static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
                             hide_single_nodes = get_yesno(son1(node2));
                         break;
                     case T_Co_view_nodes:
-                        if (!subg_bit)
-                            supress_nodes = 1-get_yesno(son1(node2));
+                        /*if (!subg_bit)
+                            supress_nodes = 1-get_yesno(son1(node2));*/
                         break;
                     case T_Co_view_edges:
-                        if (!subg_bit)
-                            supress_edges = 1-get_yesno(son1(node2));
+                        /*if (!subg_bit)
+                            supress_edges = 1-get_yesno(son1(node2));*/
                         break;
                     case T_Co_view_splines:
                         if (!subg_bit)
@@ -1409,7 +1401,6 @@ static void edge_attributes(yysyntaxtree node, GEDGE e)
     }
     if ((ESTART(e)==NULL)||(EEND(e)==NULL))
         SYERR(node,"Missing source or target of an edge");
-    if (EPRIO(e) > max_eprio) max_eprio = EPRIO(e);
 } /* edge_attributes */
 
 
