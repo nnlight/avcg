@@ -52,12 +52,12 @@
  * After that, the following invariants hold:
  *    1)  NINDEG, NOUTDEG, NWIDTH and NHEIGHT are proper filled for nodes.
  *        maxindeg and maxoutdeg are upper estimations of NINDEG and
- *    NOUTDEG of nodes.
+ *        NOUTDEG of nodes.
  *    2)  The adjacency lists NPRED(v) and the connection fields
  *        NCONNECT(v) contain all visible nodes.
  *    3)  Reverted edges are marked with EART(e)='R'.
- *    Edges to the left are marked with EART(e)='l', and to
- *    the right with EART(e)='r'.
+ *        Edges to the left are marked with EART(e)='l', and to
+ *        the right with EART(e)='r'.
  *        Self loops or double edges don't anymore exist.
  *    4)  All nodes have filled NX, NY, NWIDTH and NHEIGHT.
  *        NX and NY are absolutely.

@@ -78,7 +78,7 @@
  *                  lists of nodes.
  * dllist_free      gives one DLLIST-cons cell free.
  *
- * free_all_lists   gives all temporary memory free.
+ * free_all_tmplists   gives all temporary memory free.
  ***************************************************************************/
 
 
@@ -1178,14 +1178,14 @@ void    dllist_free_all(DLLIST x)
 /*  Deallocation of all temporary lists
  *  ===================================
  */
-void free_all_lists(void)
+void free_all_tmplists(void)
 {
     free_tmpnodes();
     free_tmpedges();
     free_tmpnodelists();
     free_tmpedgelists();
     free_connect();
-} /* free_all_lists */
+} /* free_all_tmplists */
 
 
 /*  Reinitialization of all struct keeping lists

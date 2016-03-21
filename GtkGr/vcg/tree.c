@@ -39,9 +39,9 @@
  *        Visible edges can be detected by the EINVISIBLE flag (==0) in these
  *        lists. Note: invisible edges may also be in edgelist or tmpedgelist.
  *        An edge is visible iff
- *         a) it is used in the adjacency lists.
- *      or b) it is a direct neigbour edge in NCONNECT(v) for
- *            some node v.
+ *                 a) it is used in the adjacency lists.
+ *              or b) it is a direct neigbour edge in NCONNECT(v) for
+ *                    some node v.
  *    4)  maxdepth+1 is the maximal layer !!! NOT maxdepth !!!
  *    5)  NTIEFE(node) is filled for all nodes.
  *        NCONNECT(node) is filled for nodes that have direct neighbours
@@ -63,14 +63,14 @@
  *        lists TPRED and TSUCC to allow to traverse the nodes of one
  *        layer[i] backwards and forwards.
  *    2)  Note that the nodes reacheable via forward connections are now
- *    in the TSUCC and TPRED lists, too.
- *    TANZ(layer[i]) is the number of nodes in layer[i].
+ *        in the TSUCC and TPRED lists, too.
+ *        TANZ(layer[i]) is the number of nodes in layer[i].
  *    3)  The hierarchy in layer is proper.
  *    4)  nodelist, labellist and dummylist are not changed.
  *    5)  All pot. visible edges are in the lists edgelist or tmpedgelist,
- *    same as before.
+ *        same as before.
  *    6)  maxindeg and maxoutdeg are upper estimations of NINDEG and
- *    NOUTDEG of nodes.
+ *        NOUTDEG of nodes.
  *    7)  maxdepth+1 is the maximal layer !!! NOT maxdepth !!!
  *    8)  NTIEFE(node) is filled for all nodes. NINDEG and NOUTDEG are
  *        filled. Forward connections are not counted.
@@ -78,9 +78,9 @@
  *    9)  Reverted edges are marked with EART(e)='R'.
  *        Self loops don't anymore exist.
  *    10) NPOS(v) gives the horizontal position of a node inside the
- *    layer. Adjacency edges are sorted according to these NPOS
- *    values. The ordering inside a layer is such that the number
- *    of cossings is 0.
+ *        layer. Adjacency edges are sorted according to these NPOS
+ *        values. The ordering inside a layer is such that the number
+ *        of cossings is 0.
  *    11) NSUCCL(v) and NSUCCR(v) are the leftest and rightest successor
  *        edge of v, and NPREDL(v) and NPREDR(v) the leftest and rightest
  *        predecessor edge.
@@ -287,27 +287,20 @@ static int is_tree(void)
  */
 static int is_shared(GNODE v)
 {
-    int i;
     GEDGE e;
     CONNECT c;
-
-    debugmessage("is_shared","");
 
     if (!NMARK(v)) return(1);
 
     NMARK(v) = 0;
 
-    i = 0;
-    for (e = FirstPred(v); e; e = NextPred(e))
+    if (FirstPred(v) && NextPred(FirstPred(v)))
     {
-        i++;
+        return(1);
     }
-    if (i>1) return(1);
 
-    i = 0;
     for (e = FirstSucc(v); e; e = NextSucc(e))
     {
-        i++;
         if (is_shared(ETARGET(e))) return(1);
     }
 
@@ -438,63 +431,31 @@ static int compare_xpos(const GNODE *a, const GNODE *b)
 /*  Sort adjacency lists                                              */
 /*--------------------------------------------------------------------*/
 
-/* Sort the adjacency lists and init NPREDL, NPREDR, NSUCCL, NSUCCR
- * ----------------------------------------------------------------
+/* Sort the adjacency lists
+ * ------------------------
  */
 void sort_all_adjacencies(void)
 {
     int i;
-    GNLIST h1;
+    GNLIST li;
     GEDGE e;
 
     debugmessage("sort_all_adjacencies","");
 
     for (i=0; i<=maxdepth+1; i++) {
-#if 0
-        if (i>0) {
-            for (h1 = TSUCC(layer[i-1]); h1; h1 = GNNEXT(h1))
-            {
-                NTMPADJ(GNNODE(h1)) = NSUCC(GNNODE(h1));
-            }
-        }
-        if (i<maxdepth+1) {
-            for (h1 = TSUCC(layer[i+1]); h1; h1 = GNNEXT(h1))
-            {
-                NTMPADJ(GNNODE(h1)) = NPRED(GNNODE(h1));
-            }
-        }
-        for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
+        for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
         {
-            a = NPRED(GNNODE(h1));
-            while (a) {
-                assert((NTMPADJ(SOURCE(a))));
-                AKANTE(NTMPADJ(SOURCE(a))) = AKANTE(a);
-                NTMPADJ(SOURCE(a)) = ANEXT(NTMPADJ(SOURCE(a)));
-                a = ANEXT(a);
-            }
-            a = NSUCC(GNNODE(h1));
-            while (a) {
-                assert((NTMPADJ(TARGET(a))));
-                AKANTE(NTMPADJ(TARGET(a))) = AKANTE(a);
-                NTMPADJ(TARGET(a)) = ANEXT(NTMPADJ(TARGET(a)));
-                a = ANEXT(a);
-            }
-        }
-#else
-        for (h1 = TSUCC(layer[i]); h1; h1 = GNNEXT(h1))
-        {
-            if (i == 0)          assert(!FirstPred(GNNODE(h1)));
-            if (i == maxdepth+1) assert(!FirstSucc(GNNODE(h1)));
-            for (e = FirstPred(GNNODE(h1)); e; e = NextPred(e))
+            if (i == 0)          assert(!FirstPred(GNNODE(li)));
+            if (i == maxdepth+1) assert(!FirstSucc(GNNODE(li)));
+            for (e = FirstPred(GNNODE(li)); e; e = NextPred(e))
             {
                 relink_node_edge_as_last(ESOURCE(e), e, GD_SUCC);
             }
-            for (e = FirstSucc(GNNODE(h1)); e; e = NextSucc(e))
+            for (e = FirstSucc(GNNODE(li)); e; e = NextSucc(e))
             {
                 relink_node_edge_as_last(ETARGET(e), e, GD_PRED);
             }
         }
-#endif
     }
 } /* sort_all_adjacencies */
 
@@ -801,7 +762,8 @@ static int find_position(GNODE v, int leftest_pos)
 
     if ((NWIDTH(v)==0) && (NHEIGHT(v)==0))
         NX(v) = dxralign(NX(v)+NWIDTH(v)/2) - NWIDTH(v)/2;
-    else    NX(v) = xralign(NX(v) +NWIDTH(v)/2) - NWIDTH(v)/2;
+    else
+        NX(v) = xralign(NX(v) +NWIDTH(v)/2) - NWIDTH(v)/2;
     TACTX(layer[l]) = NX(v) + NWIDTH(v) + G_xspace;
 
     leftconn = 0;

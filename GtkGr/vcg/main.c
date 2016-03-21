@@ -176,7 +176,7 @@ static void relayout(void)
 {
     debugmessage("relayout","");
 
-    free_all_lists();
+    free_all_tmplists();
     folding();
 
     if (!locFlag) {

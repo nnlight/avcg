@@ -223,10 +223,6 @@ void step0_main(void)
     fold_barrowc_set = 0;
     fold_borderc_set = 0;
 
-    /* Initialize the folding keepers */
-
-    clear_folding_keepers();
-
     /* Initialize the hash table of stable nodes */
 
     init_hashtable();

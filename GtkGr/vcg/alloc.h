@@ -109,7 +109,7 @@ DLLIST  dllist_alloc    _PP((GNODE  node, DLLIST pred));
 void    dllist_free _PP((DLLIST x));
 void    dllist_free_all _PP((DLLIST x));
 
-void    free_all_lists   _PP((void));
+void    free_all_tmplists   _PP((void));
 
 /*--------------------------------------------------------------------*/
 
