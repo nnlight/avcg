@@ -441,8 +441,9 @@ static void init_xy_coordinates(void)
             v = GNNODE(li);
 
             if ((NWIDTH(v)==0)&&(NHEIGHT(v)==0))
-                  NX(v) = dxralign(actxpos+NWIDTH(v)/2)-NWIDTH(v)/2;
-            else  NX(v) =  xralign(actxpos+NWIDTH(v)/2)-NWIDTH(v)/2;
+                NX(v) = dxralign(actxpos+NWIDTH(v)/2)-NWIDTH(v)/2;
+            else
+                NX(v) =  xralign(actxpos+NWIDTH(v)/2)-NWIDTH(v)/2;
             NY(v) = actypos;
 
             actxpos = NX(v) + NWIDTH(v) + G_xspace;
@@ -872,10 +873,9 @@ static void traverse_and_search_mindist(GNODE v)
     if (NX(v) < TMINX(layer[level])) {
         TREFN(layer[level]) = v;
         TMINX(layer[level]) = NX(v);
-        li = TPRED(layer[level]);
-        while (li) {
+        for (li = TPRED(layer[level]); li; li = GNNEXT(li))
+        {
             if (GNNODE(li)==v) break;
-            li = GNNEXT(li);
         }
         assert((li));
         li = GNNEXT(li);
@@ -890,15 +890,17 @@ static void traverse_and_search_mindist(GNODE v)
     if (c) {
         if (CTARGET(c)) {
             if (NX(CTARGET(c))>NX(v))
-                 weight = 1;
-            else weight = EPRIO(CEDGE(c)) * layout_nearfactor;
+                weight = 1;
+            else
+                weight = EPRIO(CEDGE(c)) * layout_nearfactor;
             if (weight!=0)
                 traverse_and_search_mindist(CTARGET(c));
         }
         if (CTARGET2(c)) {
             if (NX(CTARGET2(c))>NX(v))
-                 weight = 1;
-            else weight = EPRIO(CEDGE2(c)) * layout_nearfactor;
+                weight = 1;
+            else
+                weight = EPRIO(CEDGE2(c)) * layout_nearfactor;
             if (weight!=0)
                 traverse_and_search_mindist(CTARGET2(c));
         }
@@ -1248,8 +1250,9 @@ static int nwsdump_mediumshift(int i, int dir)
     {
         levelshift[j] = nws(GNNODE(li));
         if ((sign<0) && (levelshift[j]>=0))
-             levelweight[j]=1;
-        else levelweight[j]= MAXINT;
+            levelweight[j]=1;
+        else
+            levelweight[j]= MAXINT;
         if (levelshift[j]<0) sign = -1; else sign = 1;
         j++;
     }
@@ -1309,8 +1312,9 @@ static int nwpdump_mediumshift(int i, int dir)
     {
         levelshift[j] = nwp(GNNODE(li));
         if ((sign<0) && (levelshift[j]>=0))
-             levelweight[j]=1;
-        else levelweight[j]= MAXINT;
+            levelweight[j]=1;
+        else
+            levelweight[j]= MAXINT;
         if (levelshift[j]<0) sign = -1; else sign = 1;
         j++;
     }
@@ -1382,8 +1386,9 @@ static int nwdump_mediumshift(int i, int dir)
             is_rnode = 0;
         }
         if ((sign<0) && (levelshift[j]>=0))
-             levelweight[j]=1;
-        else levelweight[j]= MAXINT;
+            levelweight[j]=1;
+        else
+            levelweight[j]= MAXINT;
         if (levelshift[j]<0) sign = -1; else sign = 1;
         j++;
     }
@@ -2442,16 +2447,12 @@ static int do_leftshifts(int i)
             NX(node) = oldx + diff;
             if (lnode) {
                 if ((NWIDTH(node)==0)||(NWIDTH(lnode)==0)) {
-                    if (NX(node)<NX(lnode)
-                            +NWIDTH(lnode)+G_dspace)
-                        NX(node) = NX(lnode)
-                            +NWIDTH(lnode)+G_dspace;
+                    if (NX(node) < NX(lnode)+NWIDTH(lnode)+G_dspace)
+                        NX(node) = NX(lnode)+NWIDTH(lnode)+G_dspace;
                 }
                 else {
-                    if (NX(node)<NX(lnode)
-                            +NWIDTH(lnode)+G_xspace)
-                        NX(node) = NX(lnode)
-                            +NWIDTH(lnode)+G_xspace;
+                    if (NX(node) < NX(lnode)+NWIDTH(lnode)+G_xspace)
+                        NX(node) = NX(lnode)+NWIDTH(lnode)+G_xspace;
                 }
             }
 
@@ -2494,16 +2495,12 @@ static int do_rightshifts(int i)
             NX(node) = oldx + diff;
             if (rnode) {
                 if ((NWIDTH(node)==0)||(NWIDTH(rnode)==0)) {
-                    if (NX(node)+NWIDTH(node)+G_dspace
-                            >NX(rnode))
-                        NX(node) = NX(rnode)
-                            -NWIDTH(node)-G_dspace;
+                    if (NX(node)+NWIDTH(node)+G_dspace > NX(rnode))
+                        NX(node) = NX(rnode)-NWIDTH(node)-G_dspace;
                 }
                 else {
-                    if (NX(node)+NWIDTH(node)+G_xspace
-                            >NX(rnode))
-                        NX(node) = NX(rnode)
-                            -NWIDTH(node)-G_xspace;
+                    if (NX(node)+NWIDTH(node)+G_xspace > NX(rnode))
+                        NX(node) = NX(rnode)-NWIDTH(node)-G_xspace;
                 }
             }
             if ((NWIDTH(node)==0)&&(NHEIGHT(node)==0))

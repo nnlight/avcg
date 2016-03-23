@@ -566,24 +566,28 @@ static int find_position(GNODE v, int leftest_pos)
             if (NHORDER(conn2)<NHORDER(v))
                 find_position(conn2,
                    xpos-NWIDTH(v)/2-NWIDTH(conn2)/2-G_xspace);
-            else    find_position(conn1,
+            else
+                find_position(conn1,
                    xpos-NWIDTH(v)/2-NWIDTH(conn1)/2-G_xspace);
         }
         else if (NHORDER(conn1)==NHORDER(v)) {
             if (NHORDER(conn2)<NHORDER(v))
                 find_position(conn2,
                    xpos-NWIDTH(v)/2-NWIDTH(conn2)/2-G_xspace);
-            else    find_position(conn1,
+            else
+                find_position(conn1,
                    xpos-NWIDTH(v)/2-NWIDTH(conn1)/2-G_xspace);
         }
         else if (NHORDER(conn1)<NHORDER(v)) {
             find_position(conn1,
                    xpos-NWIDTH(v)/2-NWIDTH(conn1)/2-G_xspace);
         }
-        else {  if (NHORDER(conn2)<NHORDER(conn1))
+        else {
+            if (NHORDER(conn2)<NHORDER(conn1))
                 find_position(conn2,
                    xpos-NWIDTH(v)/2-NWIDTH(conn2)/2-G_xspace);
-            else    find_position(conn1,
+            else
+                find_position(conn1,
                    xpos-NWIDTH(v)/2-NWIDTH(conn1)/2-G_xspace);
         }
 
