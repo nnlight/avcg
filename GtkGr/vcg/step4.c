@@ -45,11 +45,9 @@
  *                 a) it is used in the adjacency lists.
  *              or b) it is a direct neigbour edge in NCONNECT(v) for
  *                    some node v.
- *    6)  maxindeg and maxoutdeg are upper estimations of NINDEG and
- *        NOUTDEG of nodes.
+ *    6)  (deleted)
  *    7)  maxdepth+1 is the maximal layer !!! NOT maxdepth !!!
- *    8)  NTIEFE(node) is filled for all nodes. NINDEG and NOUTDEG are
- *        filled. Forward connections are not counted.
+ *    8)  NTIEFE(node) is filled for all nodes.
  *        NCONNECT(node) is filled for nodes that have direct neighbours
  *        in the layout. The edges in NCONNECT are not anymore in the
  *        adjacency lists, but still visible.

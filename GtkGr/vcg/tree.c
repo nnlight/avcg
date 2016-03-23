@@ -69,11 +69,9 @@
  *    4)  nodelist, labellist and dummylist are not changed.
  *    5)  All pot. visible edges are in the lists edgelist or tmpedgelist,
  *        same as before.
- *    6)  maxindeg and maxoutdeg are upper estimations of NINDEG and
- *        NOUTDEG of nodes.
+ *    6)  (deleted)
  *    7)  maxdepth+1 is the maximal layer !!! NOT maxdepth !!!
- *    8)  NTIEFE(node) is filled for all nodes. NINDEG and NOUTDEG are
- *        filled. Forward connections are not counted.
+ *    8)  NTIEFE(node) is filled for all nodes.
  *        NCONNECT(node) is filled as before.
  *    9)  Reverted edges are marked with EART(e)='R'.
  *        Self loops don't anymore exist.
@@ -116,7 +114,6 @@
 
 static int  is_tree     _PP((void));
 static int  is_shared   _PP((GNODE v));
-static void     calc_degree _PP((void));
 static void     create_tpred_lists  _PP((void));
 static void     sort_tsucc_and_tpred    _PP((void));
 static  int     compare_xpos        _PP((const GNODE *a, const GNODE *b));
@@ -187,10 +184,6 @@ int tree_main(void)
     if (!is_tree()) {
         return(0);
     }
-
-    gs_wait_message('T');
-
-    calc_degree();
 
     /* Create the TPRED lists
      * This also initializes max_nodes_per_layer.
@@ -314,34 +307,6 @@ static int is_shared(GNODE v)
         }
     }
     return(0);
-}
-
-
-/*--------------------------------------------------------------------*/
-/*  Calculate the degree of the nodes                                 */
-/*--------------------------------------------------------------------*/
-
-static void calc_degree(void)
-{
-    int i, j;
-    GNODE v;
-    GNLIST li;
-    int mymaxoutdeg;
-
-    debugmessage("calc_degree","");
-
-    mymaxoutdeg = 0;
-    for (i=0; i<= maxdepth+1; i++) {
-        for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
-        {
-            v = GNNODE(li);
-            assert(get_node_preds_num(v) <= 1);
-            j = get_node_succs_num(v);
-            if (j>mymaxoutdeg) mymaxoutdeg = j;
-        }
-    }
-    maxindeg = 1;
-    maxoutdeg = mymaxoutdeg;
 }
 
 

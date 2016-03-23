@@ -45,14 +45,9 @@
  *                 a) it is used in the adjacency lists.
  *              or b) it is a direct neigbour edge in NCONNECT(v) for
  *                    some node v.
- *    4)  maxindeg and maxoutdeg are the maximal indegree (number of
- *        incoming edges) and maximal outdegree (number of outgoing
- *        edges) occuring at visible nodes. Forward connections are
- *        not counted.
+ *    4)  (deleted)
  *    5)  maxdepth+1 is the maximal layer !!! NOT maxdepth !!!
- *    6)  NTIEFE(node) is filled for all nodes. NINDEG and NOUTDEG are
- *        filled. Forward connections are not counted. But  NINDEG and
- *        NOUTDEG are also filled at nodes that have forward connections.
+ *    6)  NTIEFE(node) is filled for all nodes.
  *        NCONNECT(node) is filled for nodes that have direct neighbours
  *        in the layout. The edges in NCONNECT are not anymore in the
  *        adjacency lists, but still visible. The forward connection nodes
@@ -86,18 +81,15 @@
  *        layer[i] backwards and forwards.
  *    2)  Note that the nodes reacheable via forward connections are now
  *        in the TSUCC and TPRED lists, too.
- *        TANZ(layer[i]) and NINDEG(node) and NOUTDEG(node) are adapted
- *        to this situation. The connection edge still do not count.
+ *        TANZ(layer[i]) are adapted to this situation.
+          The connection edge still do not count.
  *    3)  The hierarchy in layer is proper.
  *    4)  nodelist, labellist and dummylist are not changed.
  *    5)  All pot. visible edges are in the lists edgelist or tmpedgelist,
  *        same as before.
- *    6)  maxindeg and maxoutdeg are not changed. By inserting nodes
- *        reacheable by connections, the maximal indegree and outdegree
- *        may shrink, thus maxindeg and maxoutdeg are upper estimations.
+ *    6)  (deleted)
  *    7)  maxdepth+1 is the maximal layer !!! NOT maxdepth !!!
- *    8)  NTIEFE(node) is filled for all nodes. NINDEG and NOUTDEG are
- *        filled. Forward connections are not counted.
+ *    8)  NTIEFE(node) is filled for all nodes.
  *        NCONNECT(node) is filled as before.
  *        See point 2 !!!
  *    9)  Reverted edges are marked with EART(e)='R'.
@@ -2739,9 +2731,8 @@ static void copy_layers(DEPTH *l1, DEPTH *l2)
  * may have a left neighbour chain and a right neigbour chain,
  * and we must calculate which chain comes left or right.
  * This is done here. Further, the original adjacency lists
- * of these connections are recalculated, and NINDEG and NOUTDEG
- * of nodes and TANZ of the layers is updated, if connections
- * are found.
+ * of these connections are recalculated, and TANZ of the
+ * layers is updated, if connections are found.
  */
 static void insert_connects_in_layer(void)
 {

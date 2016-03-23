@@ -81,8 +81,6 @@ extern struct gnode foldnode;
 extern struct gedge foldedge;
 
 /* from step1.c */
-extern  int     maxindeg;
-extern  int     maxoutdeg;
 extern  DEPTH   *layer;     /* This is an array ! */
 extern  int     maxdepth;
 

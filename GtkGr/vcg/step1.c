@@ -72,16 +72,11 @@
  *    All visible nodes are in nodelist, labellist and dummylist.
  *    3)  All pot. visible edges are in the lists edgelist or tmpedgelist.
  *    Same as before.
- *    4)  If it is not a TREE_LAYOUT, then:
- *    maxindeg and maxoutdeg are the maximal indegree (number of
- *    incoming edges) and maximal outdegree (number of outgoing
- *    edges) occuring at visible nodes. Forward connections are
- *    not counted.
+ *    4)  (deleted)
  *    5)  maxdepth+1 is the maximal layer !!! NOT maxdepth !!!
  *    6)  NTIEFE(node) is filled for all nodes.
  *    7)  If it is not a TREE_LAYOUT, then:
- *    NINDEG and NOUTDEG are filled for all nodes. Forward connections
- *    are not counted. Edges of forward connection are bend to the
+ *    Edges of forward connection are bend to the
  *    connection reference node, that is the node that has these forward
  *    connections but no backward connection.
  *        NCONNECT(node) is filled for nodes that have direct neighbours
@@ -181,9 +176,6 @@ static GNODE    create_dummy        _PP((int t));
  * ----------------
  */
 
-int  maxindeg;  /* maximal indegree  of a node (upper estimation actually) */
-int  maxoutdeg; /* maximal outdegree of a node (upper estimation actually) */
-
 DEPTH *layer = NULL;           /* The table of layers     */
 int    maxdepth = 0;           /* Max. depth of layout    */
 static int size_of_layer = 0;  /* Size of table of layers */
@@ -278,7 +270,6 @@ void step1_main(void)
     inspect_double_edges();
 
     /* Now, we derive the TPRED lists from the TSUCC lists
-     * and calculate NINDEG, NOUTDEG, maxindeg and maxoutdeg
      */
 
     if (layout_flag == TREE_LAYOUT) {
@@ -302,8 +293,7 @@ void step1_main(void)
 
 /*  The creation of a proper hierarchy is initially driven by a depth
  *  first search. This depth first search should start at nodes that
- *  have no predecessors (i.e. indegree=0, but note that the field
- *  NINDEG is not yet initialized properly).
+ *  have no predecessors.
  *  Thus we reorder the nodelist that all nodes with NPRED(node)==NULL
  *  are at the beginning of this list, ordered according increasing
  *  NREFNUM.
@@ -2265,14 +2255,13 @@ static void create_depth_lists(void)
  *  lists. TPRED(layer[i]) is the reverted list of TSUCC(layer[i]),
  *  without the connection nodes. E.g. in A->B->C, the TSUCC-list
  *  contains A, B and C but the TPRED-list only contains A.
- *  NINDEG and NOUTDEG are calculated here.
  *
  *  If a node comes not into the TPRED-list because it has connections,
  *  we mark the node by NMARK.
  */
 static void complete_depth_lists(void)
 {
-    int     i, k;
+    int     i;
     GNLIST  n;
     GNODE   node;
     GEDGE   edge;
@@ -2281,8 +2270,6 @@ static void complete_depth_lists(void)
     CONNECT c;
 
     debugmessage("complete_depth_lists","");
-
-    maxindeg = maxoutdeg = 0;
 
     for (i=0; i<=maxdepth+1; i++) {
         for (n = TSUCC(layer[i]); n; n = GNNEXT(n))
@@ -2319,15 +2306,6 @@ static void complete_depth_lists(void)
                 TPRED(layer[i]) = cons_node_tmp(node, TPRED(layer[i]));
             }
 
-            /* count the edges. Note: forward connections
-             * have its successor and all successors of
-             * their direct neigbours.
-             */
-            k = get_node_succs_num(node);
-            if (k>maxoutdeg) maxoutdeg = k;
-
-            k = get_node_preds_num(node);
-            if (k>maxindeg) maxindeg = k;
         }
     }
 } /* complete_depth_lists */

@@ -304,9 +304,6 @@ typedef struct gnode
 
     long    dfsnum;         /* the dfs entry number      */
 
-    /*int   indegree;*/     /* number of incoming edges  */
-    /*int   outdegree;*/        /* number of outgoing edges  */
-
     /* To calculate crossings, we need a pointer to the last instance
      * of the upper or lower completion lists. See step2.c
      */
@@ -395,8 +392,6 @@ typedef struct gnode
 #define NWEIGHTP(x)     ((x)->weightp)
 #define NDFS(x)         ((x)->dfsnum)
 #define NHIGHPRIO(x)    ((x)->dfsnum)
-#define NINDEG(x)       ((x)->indegree)
-#define NOUTDEG(x)      ((x)->outdegree)
 #define NVPTR(x)        ((x)->Vpointer)
 #define NTEMPATTR(x,i)  ((x)->temp_attr[i])  /* for internal use */
 #define NMARKERVAL(x,i) ((x)->marker_val[i]) /* for internal use */

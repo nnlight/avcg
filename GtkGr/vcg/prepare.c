@@ -45,14 +45,12 @@
  *     edge is not visible.
  *  6) The locFlag is 1, if all visible nodes have positions (x,y).
  *
- * We calculate NINDEG and NOUTDEG of every node, reset width and height
- * of nodes, sort outgoing edges according to the gradient, calculate
- * ports and anchorpoints, and assign co-ordinates to the edges.
+ * We recalculate width and height of every node, sort outgoing edges
+ * according to the gradient, calculate ports and anchorpoints, and assign
+ * co-ordinates to the edges.
  *
  * After that, the following invariants hold:
- *    1)  NINDEG, NOUTDEG, NWIDTH and NHEIGHT are proper filled for nodes.
- *        maxindeg and maxoutdeg are upper estimations of NINDEG and
- *        NOUTDEG of nodes.
+ *    1)  NWIDTH and NHEIGHT are proper filled for nodes.
  *    2)  The adjacency lists NPRED(v) and the connection fields
  *        NCONNECT(v) contain all visible nodes.
  *    3)  Reverted edges are marked with EART(e)='R'.
@@ -102,9 +100,11 @@ static int  compare_spos        _PP((const GEDGE *a,const GEDGE *b));
  * ----------------
  */
 
-/* arrays where we can temporary sort the adjacency lists.
- */
+static int  maxindeg;  /* maximal indegree  of a node */
+static int  maxoutdeg; /* maximal outdegree of a node */
 
+/* array where we can temporary sort the adjacency lists.
+ */
 static GEDGE    *adjarray2 = NULL;
 static int      size_of_adjarray = 0;
 
@@ -121,7 +121,6 @@ void prepare_nodes(void)
     debugmessage("prepare_nodes","");
 
     /* First, calculate width and height of each node */
-    maxindeg = maxoutdeg = 0;
     for (v = nodelist; v; v = NNEXT(v)) { calc_node_size(v); }
     for (v = labellist; v; v = NNEXT(v)) { calc_node_size(v); }
 
@@ -168,27 +167,22 @@ void prepare_nodes(void)
     }
 
     /* Now, check the anchor points */
-    maxindeg = maxoutdeg = 0;
     for (v = nodelist; v; v = NNEXT(v)) { calc_node_anchor(v); }
     for (v = labellist; v; v = NNEXT(v)) { calc_node_anchor(v); }
     for (v = dummylist; v; v = NNEXT(v)) { calc_node_anchor(v); }
 
     /* Then, calculate the node in/outdegree */
+    maxindeg = maxoutdeg = 0;
     for (v = nodelist; v; v = NNEXT(v)) { calc_node_degree(v); }
     for (v = labellist; v; v = NNEXT(v)) { calc_node_degree(v); }
     for (v = dummylist; v; v = NNEXT(v)) { calc_node_degree(v); }
 
     i = (maxindeg > maxoutdeg ? maxindeg : maxoutdeg);
-    if (i+2 > size_of_adjarray) {
+    if (i > size_of_adjarray) {
         if (adjarray2) free(adjarray2);
-        adjarray2 = (GEDGE *)libc_malloc((i+2)*sizeof(GEDGE));
-        size_of_adjarray = i+2;
-#ifdef DEBUG
-        PRINTF("Sizeof table `adjarray2': %d Bytes\n",
-                (i+2)*sizeof(GEDGE));
-#endif
+        adjarray2 = (GEDGE *)libc_malloc(i*sizeof(GEDGE));
+        size_of_adjarray = i;
     }
-
 
     /* Now, sort the adjacency lists */
     for (v = nodelist; v; v = NNEXT(v)) { sort_adjacencies(v); }
@@ -219,10 +213,9 @@ void prepare_nodes(void)
 
 
 
-/* Set NINDEG and NOUTDEG of the node
+/* Update maxoutdeg and maxindeg
  * ----------------------------------
  */
-
 static void calc_node_degree(GNODE v)
 {
     int k;
