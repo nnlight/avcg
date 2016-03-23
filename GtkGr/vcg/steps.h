@@ -67,11 +67,6 @@
 
 /*--------------------------------------------------------------------*/
 
-/* See step[0-4].c for explanation
- * -------------------------------
- */
-
-
 /* Global Variables
  * ----------------
  */
@@ -86,7 +81,6 @@ extern  int     maxdepth;
 
 /* from step2.c */
 extern int     max_nodes_per_layer;
-extern int     nr_crossings;
 
 /* from step3.c */
 extern GNLIST *tpred_connection1;

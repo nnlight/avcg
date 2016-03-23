@@ -220,8 +220,6 @@ int tree_main(void)
     sort_all_adjacencies();
     calc_all_ports(1);
 
-    nr_crossings = 0;
-
     return(TREE_LAYOUT);
 } /* tree_main */
 

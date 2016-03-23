@@ -246,7 +246,7 @@ int max_nodes_per_layer;
 /* number of crossings of the graph layouted as in layer.
  */
 
-int     nr_crossings;
+static int      nr_crossings;
 
 /* array where we can temporary sort the nodes of one level.
  * Used for the barycenter method: All nodes of one level
