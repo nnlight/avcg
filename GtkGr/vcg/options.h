@@ -63,11 +63,11 @@ extern int edge_label_phase;
 extern int min_baryiterations;
 extern int max_baryiterations;
 extern int skip_baryphase2;
-extern int max_mediumshifts;
 extern int min_mediumshifts;
+extern int max_mediumshifts;
 extern int nwdumping_phase;
-extern int max_centershifts;
 extern int min_centershifts;
+extern int max_centershifts;
 extern int prio_phase;
 extern int straight_phase;
 extern int max_straighttune;
@@ -77,6 +77,8 @@ extern int one_line_manhatten;
 extern int layout_downfactor;
 extern int layout_upfactor;
 extern int layout_nearfactor;
+extern int spread_level;
+extern double tree_factor;
 
 extern int G_spline;
 extern int G_flat_factor;
@@ -97,6 +99,7 @@ extern long G_x, G_y;
 extern int G_width, G_height;
 extern int G_xbase, G_ybase;
 extern int G_xspace, G_yspace;
+extern int G_dspace;
 extern int G_orientation;
 extern int G_color;
 extern int G_displayel;
@@ -105,7 +108,6 @@ extern int G_shrink, G_stretch;
 extern int G_yalign;
 extern int G_portsharing;
 extern int G_arrowmode;
-extern int G_dspace;
 
 extern int G_xraster;
 extern int G_yraster;
@@ -141,10 +143,6 @@ extern int locFlag;
 /*  Prototypes
  *  ----------
  */
-
-int  scanOptions        (int argc, char *argv[]);
-void print_basic_help   (void);
-void print_help         (void);
 
 void initOptions();
 

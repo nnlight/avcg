@@ -63,12 +63,9 @@
  * ==========
  */
 
-static int simpleOption _PP((char *optstr));
-static int intOption    _PP((char *optstr, int *res));
-static int stringOption _PP((char *optstr, char *strw));
-static int fnameOption  _PP((char *optstr, char *res));
-static int wordOption   _PP((char *optstr, char **res));
-static int unitOption   _PP((char *optstr, float *res));
+static int  scanOptions        (int argc, char *argv[]);
+static void print_basic_help   (void);
+static void print_help         (void);
 
 
 /* Global variables
@@ -193,8 +190,8 @@ int skip_baryphase2 = 0;
  *  that calculates x positions. Minimal and maximal.
  */
 
-int max_mediumshifts = 100;
 int min_mediumshifts = 0;
+int max_mediumshifts = 100;
 
 
 /*  Flag, indicating that the last mediymshift phase is upwards
@@ -208,13 +205,8 @@ int nwdumping_phase = 0;
  *  Minimal and maximal.
  */
 
-int max_centershifts = 100;
 int min_centershifts = 0;
-
-/*  Number of iteration used for the straight line phase.
- */
-
-int max_straighttune = 100;
+int max_centershifts = 100;
 
 
 /*  Flag, indicates that the Priority layout phase should be used.
@@ -232,6 +224,11 @@ int prio_phase = 0;
  */
 
 int straight_phase = 0;
+
+/*  Number of iteration used for the straight line phase.
+ */
+
+int max_straighttune = 100;
 
 
 /*  Number of iterations during the calculation of bendings.
@@ -268,6 +265,17 @@ int layout_upfactor   = 1;
 int layout_nearfactor = 1;
 
 
+/* Level where we start to spread the tree.
+ */
+
+int spread_level = 1;
+
+/* Factor how much we allow to degenerate to the left
+ */
+
+double tree_factor = 0.5;
+
+
 /*  Edges can be drawn as splines, if G_spline is 1.
  *  G_flat_factor is the factor how splines should be bend.
  */
@@ -302,13 +310,13 @@ int     G_width, G_height;  /* size of the open part of window    */
 /*int     G_xmax, G_ymax;*/     /* maximal size of window             */
 int     G_xbase, G_ybase;   /* location of the origin (0,0)       */
 int     G_xspace, G_yspace; /* offset of drawing area             */
+int     G_dspace;           /* space between dummy nodes          */
 int     G_orientation;      /* top-to-bottom, or left-to-right    */
-int     G_color;        /* background color                   */
+int     G_color;            /* background color                   */
 int     G_displayel;        /* edge labels drawn (1) or not (0)   */
-int     G_dirtyel;      /* edge labels dirty (1) or not (0)   */
-int     G_shrink, G_stretch;    /* global scaling factors             */
+int     G_dirtyel;          /* edge labels dirty (1) or not (0)   */
+int     G_shrink, G_stretch;/* global scaling factors             */
 int     G_yalign;
-int     G_dspace;       /* space between dummy nodes          */
 int     G_portsharing;      /* edge sharing between the ports     */
 int     G_arrowmode;        /* arrow drawing mode                 */
 
@@ -723,7 +731,7 @@ static int unitOption(char *optstr, float *res)
  */
 
 #if 0
-int scanOptions(int argc, char *argv[])
+static int scanOptions(int argc, char *argv[])
 {
     int help;
 
@@ -968,7 +976,7 @@ int scanOptions(int argc, char *argv[])
  * --------------------
  */
 
-void print_basic_help(void)
+static void print_basic_help(void)
 {
     PRINTF("Usage:   %s [options] [filename]\n",gblargv[0]);
     PRINTF("Enter %s -h  for help information.\n", gblargv[0]);
@@ -980,7 +988,7 @@ void print_basic_help(void)
  * -------------------
  */
 
-void print_help(void)
+static void print_help(void)
 {
     if (!opt_give_help) return;
 
@@ -1242,28 +1250,39 @@ void print_help(void)
 
 void initOptions()
 {
+    /*silent = 0;*/
+    /*fastflag = 0;*/
+    /*summarize_double_edges = 0;*/
+    hide_single_nodes = 0;
     layout_flag = 0;
+
     crossing_heuristics = 0;
     local_unwind = 1;
     near_edge_layout = 1;
     fine_tune_layout = 1;
     edge_label_phase = 0;
-
     min_baryiterations = 0;
     max_baryiterations = MAXINT;
-
     skip_baryphase2 = 0;
-    max_mediumshifts = 100;
     min_mediumshifts = 0;
+    max_mediumshifts = 100;
     nwdumping_phase = 0;
-    max_centershifts = 100;
     min_centershifts = 0;
-    max_straighttune = 100;
+    max_centershifts = 100;
     prio_phase = 0;
     straight_phase = 0;
+    max_straighttune = 100;
     max_edgebendings = 100;
     manhatten_edges = 0;
     one_line_manhatten = 0;
+    layout_downfactor = 1;
+    layout_upfactor = 1;
+    layout_nearfactor = 1;
+    spread_level = 1;
+    tree_factor = 0.5;
+
+    G_spline = 0;
+    G_flat_factor = 70;
 }
 
 

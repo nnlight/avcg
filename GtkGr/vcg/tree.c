@@ -136,15 +136,6 @@ static void     correct_xpos        _PP((GNODE v,int diff));
 
 static GNODE    *sort_array = NULL;
 
-/* Level where we start to spread the tree.
- */
-
-int spread_level = 1;
-
-/* Factor how much we allow to degenerate to the left
- */
-
-double tree_factor = 0.5;
 static int tree_factor1;
 static int tree_factor2;
 

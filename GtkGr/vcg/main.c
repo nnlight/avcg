@@ -120,21 +120,12 @@ static void visualize_part(void)
     G_title         = "G_title";
     G_x             = -1L;
     G_y             = -1L;
-
-    /* Check the output device */
-#if 0
-    if (!exfile) {
-            setScreenSpecifics();   /* this sets G_width, G_height */
-    } else
-#endif
-    {
-        G_width = G_height = 700;
-    }
+    G_width = G_height = 700; /* setScreenSpecifics(); (this sets G_width, G_height)*/
     G_xbase         = 5;
     G_ybase         = 5;
-    G_dspace        = 0;
     G_xspace        = 20;
     G_yspace        = 70;
+    G_dspace        = 0;
     G_orientation   = TOP_TO_BOTTOM;
     G_color         = WHITE;
     G_displayel     = NO;
@@ -261,8 +252,8 @@ void vcg_Parse( FILE *input_file, const char *filename)
         max_straighttune = 2;
     }
 
-    /*if (!silent) { FPRINTF(stdout,"Wait "); FFLUSH(stdout); }*/
     parse_part( input_file, filename);
+    
     visualize_part();
 
 

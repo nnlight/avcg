@@ -101,10 +101,6 @@ extern int st_max_indeg;
 extern int st_max_outdeg;
 extern int st_max_degree;
 
-/* from tree.c */
-extern int spread_level;
-extern double tree_factor;
-
 
 /* Prototypes
  * ----------
