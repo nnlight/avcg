@@ -43,7 +43,6 @@
 #include "globals.h"
 #include "grammar.h"
 #include "alloc.h"
-#include "folding.h"
 #include "steps.h"
 #include "main.h"
 #include "options.h"
@@ -51,6 +50,7 @@
 
 
 static void relayout(void);
+static void add_dirty_labels();
 
 /*--------------------------------------------------------------------*/
 /*  Main routines                             */
@@ -212,7 +212,74 @@ static void relayout(void)
 
         prepare_nodes();
     }
+    if (G_displayel && (locFlag || G_dirtyel)) {
+        add_dirty_labels();
+    }
 } /* relayout */
+
+static void add_dirty_labels()
+{
+    GNODE node, v;
+    GEDGE e;
+
+    /* В случае грязных лейблов дуг, специальные узлы не создаются,
+     * т.о. лейблы никак не участвуют при лейауте.
+     * Но признак ELABEL протаскивается и здесь, в самом конце,
+     * мы им пользуемся, чтобы создать узлы.
+     */
+    /* все-таки могут появлятся технические лейбл узлы */
+    /*assert(labellist == NULL);*/
+#if 0
+    /* на cfg.vcg  появляются лишние лейблы при dirty_edge_labels: yes */
+    for (e = edgelist; e; e = ENEXT(e))
+    {
+        if (!EINVISIBLE(e) && ELABEL(e)) {
+            v = create_labelnode(e);
+            NX(v) = (ETBENDX(e)+EBBENDX(e))/2;
+            NY(v) = (ETBENDY(e)+EBBENDY(e))/2;
+            NX(v) = NX(v) - NWIDTH(v)/2;
+            NY(v) = NY(v) - NHEIGHT(v)/2;
+        }
+    }
+    for (e = tmpedgelist; e; e = ENEXT(e))
+    {
+        if (!EINVISIBLE(e) && ELABEL(e)) {
+            v = create_labelnode(e);
+            NX(v) = (ETBENDX(e)+EBBENDX(e))/2;
+            NY(v) = (ETBENDY(e)+EBBENDY(e))/2;
+            NX(v) = NX(v) - NWIDTH(v)/2;
+            NY(v) = NY(v) - NHEIGHT(v)/2;
+        }
+    }
+#else
+    for (node = nodelist; node; node = NNEXT(node))
+    {
+        for (e = FirstSucc(node); e; e = NextSucc(e))
+        {
+            if (!EINVISIBLE(e) && ELABEL(e)) {
+                v = create_labelnode(e);
+                NX(v) = (ETBENDX(e)+EBBENDX(e))/2;
+                NY(v) = (ETBENDY(e)+EBBENDY(e))/2;
+                NX(v) = NX(v) - NWIDTH(v)/2;
+                NY(v) = NY(v) - NHEIGHT(v)/2;
+            }
+        }
+    }
+    for (node = dummylist; node; node = NNEXT(node))
+    {
+        for (e = FirstSucc(node); e; e = NextSucc(e))
+        {
+            if (!EINVISIBLE(e) && ELABEL(e)) {
+                v = create_labelnode(e);
+                NX(v) = (ETBENDX(e)+EBBENDX(e))/2;
+                NY(v) = (ETBENDY(e)+EBBENDY(e))/2;
+                NX(v) = NX(v) - NWIDTH(v)/2;
+                NY(v) = NY(v) - NHEIGHT(v)/2;
+            }
+        }
+    }
+#endif
+} /* add_dirty_labels */
 
 /*--------------------------------------------------------------------*/
 

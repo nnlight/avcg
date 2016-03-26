@@ -1,5 +1,3 @@
-/* SCCS-info %W% %E% */
-
 /*--------------------------------------------------------------------*/
 /*                                                                    */
 /*              VCG : Visualization of Compiler Graphs                */
@@ -16,9 +14,6 @@
 /*   status:       in work                                            */
 /*                                                                    */
 /*--------------------------------------------------------------------*/
-
-
-/* $Id: steps.h,v 3.7 1995/02/08 11:11:14 sander Exp $ */
 
 /*
  *   Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
@@ -42,30 +37,18 @@
  *  Contact  sander@cs.uni-sb.de  for additional information.
  */
 
-
-/*
- * $Log: steps.h,v $
- * Revision 3.7  1995/02/08  11:11:14  sander
- * Distribution version 1.3.
- *
- * Revision 3.6  1994/12/23  18:12:45  sander
- * Manhatten layout added.
- * Option interface cleared.
- * infobox behaviour improved.
- * First version of fisheye (carthesian).
- * Options Noedge and nonode.
- * Titles in the node title box are now sorted.
- * Timelimit functionality improved.
- *
- * Revision 2.1  1993/12/08  21:21:34  sander
- * Reasonable fast and stable version
- *
- */
-
 #ifndef STEPS_H
 #define STEPS_H
 
 /*--------------------------------------------------------------------*/
+
+/* step0 - построение графа
+ * folding - adj cтроятся
+ * step1 - топ. сортировка узлов, создание dummy, разброс по уровням, (трюк с connect узлами)
+ * step2 - bary centering, cross calculation, horder, упор. на каждом уровне (дуги на conn узлы возвращаются)
+ * step3 - calculate coordinates of nodes
+ * step4 - коорд. дуг
+ */
 
 /* Global Variables
  * ----------------
@@ -107,8 +90,23 @@ extern int st_max_degree;
  */
 
 /* from step0.c */
-void    step0_main      _PP((void));
-GNODE   lookup_hashnode     _PP((char *title));
+void    step0_main          (void);
+GNODE   lookup_hashnode     (char *title);
+
+
+/* from folding.c */
+void    folding(void);
+
+void    init_folding_keepers_globals();
+void    add_sgfoldstart     (GNODE v);
+void    add_sgunfoldstart   (GNODE v);
+void    add_foldstart       (GNODE v);
+void    add_unfoldstart     (GNODE v);
+void    add_foldstop        (GNODE v);
+
+void    create_adjedge  (GEDGE edge);
+void    delete_adjedge  (GEDGE edge);
+GNODE   create_labelnode(GEDGE e);
 
 
 /* from step1.c */
@@ -118,43 +116,43 @@ GEDGE   create_edge(GNODE start, GNODE end, GEDGE edge, int arrow);
 void    prepare_back_edges();
 void    insert_anchor_edges();
 #ifdef DEBUG
-void    db_output_graph         _PP((void));
-void    db_output_adjacencies   _PP((void));
-void    db_output_adjacency _PP((GNODE node, int f));
-void    db_output_layer     _PP((void));
-void    db_output_vcglayer  _PP((char *fn));
+void    db_output_graph         (void);
+void    db_output_adjacencies   (void);
+void    db_output_adjacency     (GNODE node, int f);
+void    db_output_layer         (void);
+void    db_output_vcglayer      (char *fn);
 #endif
 
 /* from step2.c */
-void    step2_main              _PP((void));
+void    step2_main              (void);
 #ifdef DEBUG
-void    db_output_all_layers    _PP((void));
-void    db_output_tmp_layer _PP((int i));
-int     db_check_proper         _PP((GNODE v,int level));
+void    db_output_all_layers    (void);
+void    db_output_tmp_layer     (int i);
+int     db_check_proper         (GNODE v,int level);
 #endif
 
 /* from step3.c */
-void    step3_main              _PP((void));
-void    calc_all_node_sizes     _PP((void));
-void    alloc_levelshift    _PP((void));
+void    step3_main              (void);
+void    calc_all_node_sizes     (void);
+void    alloc_levelshift        (void);
 
 
 /* from step4.c */
-void    step4_main              _PP((void));
-void    calc_all_ports          _PP((int xya));
-void    calc_node_ports         _PP((GNODE v, int xya));
-void    calc_edge_xy            _PP((GNODE v));
-void    calc_edgearrow          _PP((GNODE v));
-void    calc_max_xy_pos     _PP((void));
-void    statistics      _PP((void));
+void    step4_main              (void);
+void    calc_all_ports          (int xya);
+void    calc_node_ports         (GNODE v, int xya);
+void    calc_edge_xy            (GNODE v);
+void    calc_edgearrow          (GNODE v);
+void    calc_max_xy_pos         (void);
+void    statistics              (void);
 
 /* from tree.c */
-int tree_main       _PP((void));
+int tree_main       (void);
 void sort_all_adjacencies();
 
 /* from prepare.c */
-void    prepare_nodes       _PP((void));
-void    calc_node_size          _PP((GNODE v));
+void    prepare_nodes           (void);
+void    calc_node_size          (GNODE v);
 
 /*--------------------------------------------------------------------*/
 

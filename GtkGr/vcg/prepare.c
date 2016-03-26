@@ -80,7 +80,6 @@
 #include "alloc.h"
 #include "main.h"
 #include "options.h"
-#include "folding.h"
 #include "drawlib.h"
 #include "steps.h"
 #include "graph.h"

@@ -271,10 +271,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\vcg\folding.h"
-				>
-			</File>
-			<File
 				RelativePath=".\vcg\gdl_defs.h"
 				>
 			</File>

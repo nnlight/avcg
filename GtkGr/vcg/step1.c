@@ -110,7 +110,6 @@
 #include "alloc.h"
 #include "main.h"
 #include "options.h"
-#include "folding.h"
 #include "steps.h"
 #include "graph.h"
 
@@ -594,9 +593,7 @@ static void insert_bent_near_edges(void)
             NLEVEL(v) = NLEVEL(ESOURCE(edge1));
             NHORDER(v) = NHORDER(ESOURCE(edge1));
             edge = create_edge(v,ETARGET(edge1),edge1,1);
-            ELABEL(edge) = NULL;
             edge = create_edge(ESOURCE(edge1),v,edge1,0);
-            ELABEL(edge) = NULL;
             EPRIO(edge) = 0;
             delete_adjedge(edge1);
             EINVISIBLE(edge1) = 0;
@@ -2622,6 +2619,8 @@ GEDGE create_edge(GNODE start, GNODE end, GEDGE edge, int arrow)
     EANCHOR(h) = EANCHOR(edge);
     ESTART(h) = start;
     EEND(h)   = end;
+    /* иногда ELABEL руками наследуется, спекулятивно копируем цвет */
+    ELABELCOL(h) = ELABELCOL(edge);
 
     switch (arrow) {
     case 0:

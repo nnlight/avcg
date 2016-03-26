@@ -89,7 +89,6 @@
 #include "main.h"
 #include "options.h"
 #include "alloc.h"
-#include "folding.h"
 #include "graph.h"
 
 
@@ -254,8 +253,8 @@ static GNODE internal_nodealloc(void)
     NREGREPL(h)     = NULL;
     NREGION(h)      = NULL;
     NREGROOT(h)     = NULL;
-    NINLIST(h)      = 1;
-    NINVISIBLE(h)   = 0;
+    NINLIST(h)      = 0;
+    NINVISIBLE(h)   = 1;
     NTIEFE(h)       = -1;
     NPOS(h)         = -1;
     NWEIGHTS(h)     = 0L;
@@ -290,6 +289,8 @@ GNODE nodealloc(GNODE refnode)
 
     h = internal_nodealloc();
     copy_nodeattributes(refnode, h);
+    NINLIST(h)      = 1;
+    NINVISIBLE(h)   = 0;
     ins_node_in_dl_list(h,nodelist,nodelistend);
     init_node_adj_fields(h);
     return(h);
@@ -433,8 +434,6 @@ GNODE graphalloc(GNODE refnode)
     h = internal_nodealloc();
     copy_nodeattributes(refnode, h);
     NFOLDING(h)   = -1;
-    NINLIST(h)    = 0;
-    NINVISIBLE(h) = 1;
     NDFS(h)       = 0L;
 
     ins_node_in_dl_list(h,graphlist,graphlistend);
@@ -474,8 +473,6 @@ GNODE   tmpnodealloc(
     NBCOLOR(h)      = borderc;
     NSHRINK(h)      = 1;
     NSTRETCH(h)     = 1;
-    NINLIST(h)      = 0;
-    NINVISIBLE(h)   = 1;
     NDFS(h)         = 0L;
 
     NINTERN(h)   = tmpnodelist;

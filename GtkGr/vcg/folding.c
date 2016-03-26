@@ -4,7 +4,7 @@
 /*
  * Copyright (C) 1993--1995 by Georg Sander, Iris Lemke, and
  *                             the Compare Consortium
- * Copyright (C) 2015 Nikita S <nnlight@gmail.com>
+ * Copyright (C) 2015-2016 Nikita S <nnlight@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,9 +100,9 @@
 #include "alloc.h"
 #include "main.h"
 #include "options.h"
-#include "folding.h"
 #include "steps.h"
 #include "graph.h"
+#include "drawlib.h"
 
 
 /* Prototypes
@@ -129,7 +129,6 @@ static long no_degree       _PP((GNODE n));
 
 static void create_adjacencies  _PP((void));
 static void add_labels_at_folding();
-static void adapt_labelpos      _PP((GNODE v,GEDGE e));
 static GNODE    search_visible      _PP((GNODE v));
 static GEDGE    substed_edge        _PP((GEDGE e));
 
@@ -202,7 +201,7 @@ void init_folding_keepers_globals()
 /* Clear all fold starter or stopper lists.
  * ---------------------------------------
  */
-void clear_folding_keepers(void)
+static void clear_folding_keepers(void)
 {
     GNLIST l;
 
@@ -456,7 +455,6 @@ void    folding(void)
      *    Clear adjacency lists.
      */
 
-    gs_wait_message('f');
     refresh();
 
     /* 6) Construct adjacency lists first time */
@@ -464,9 +462,8 @@ void    folding(void)
     create_adjacencies();
     hide_edge_classes();
 
-    /* 7) Fold region: fold first the lower then the higher classes */
-
-
+    /* 7) Fold region: fold first the lower then the higher classes
+     */
     for (rclass=0; rclass<17; rclass++) {
         for (l = foldstart; l; l = GNNEXT(l))
         {
@@ -483,19 +480,10 @@ void    folding(void)
     create_adjacencies();
     hide_edge_classes();
 
-    /* 9) If labels necessary, create labels */
 
-    if ((G_displayel==YES) && (G_dirtyel==NO) && (edge_label_phase==0))
-        add_labels_at_folding();
-
-
-    /* For stable layout: sort nodelist */
-    sort_all_nodes();
-
-    /* 10) check whether all nodes have already locations
-     *     and transfer the specified locations.
+    /* 9) Check whether all nodes have already locations
+     *    and transfer the specified locations.
      */
-
     locFlag = 1;
     for (v = nodelist; v; v = NNEXT(v))
     {
@@ -507,27 +495,25 @@ void    folding(void)
         NY(v) = NSY(v);
     }
 
-    /* 11) If labels, we calculate edge positions without labels.
+    /* 10) If labels necessary, create labels.
+     *     Если заданы позиции всех узлов, то лейблы рисуются как ditry
+     *     (т.е. в самом конце и не участвуют в layout'е).
      */
-
-    if (locFlag && (G_displayel==YES)) {
-        free_tmpnodes();
-        free_tmpedges();
-        refresh();
-        create_adjacencies();
-        hide_edge_classes();
-        for (v = nodelist; v; v = NNEXT(v))
-        {
-            NX(v) = NSX(v);
-            NY(v) = NSY(v);
-        }
+    if (!locFlag
+        && (G_displayel==YES) && (G_dirtyel==NO) && (edge_label_phase==0))
+    {
+        add_labels_at_folding();
     }
+
+
+    /* For stable layout: sort nodelist */
+    sort_all_nodes();
+
 
     /* 12) If necessary, remove double edges from the adjacency
      *     lists.
      */
 
-    gs_wait_message('f');
     if (summarize_double_edges) summarize_edges();
 
 
@@ -1329,6 +1315,24 @@ void    delete_adjedge(GEDGE edge)
 }
 
 
+/*   Calculate the string size of an label
+ *   -------------------------------------
+ */
+static void adapt_labelsize(GNODE v, GEDGE e)
+{
+    char *ss = NLABEL(v);
+/*int gs_stringw =8;
+int gs_stringh =16;*/
+    if (!ss) return;
+    if (NSHRINK(v)==0) NSHRINK(v) = 1;
+    gs_setshrink(NSTRETCH(v),NSHRINK(v));
+    gs_calcstringsize(ss);
+    gs_stringw += (ETHICKNESS(e)/2+1);
+    gs_stringh += (ETHICKNESS(e)/2+1);
+    NWIDTH(v)  = gs_stringw;
+    NHEIGHT(v) = gs_stringh;
+}
+
 /*   Create an label node
  *   --------------------
  *   For adjacencies with labels, we create label nodes and auxiliary
@@ -1344,39 +1348,12 @@ GNODE   create_labelnode(GEDGE e)
     debugmessage("create_labelnode","");
     v = tmpnodealloc(CENTER,-1,-1,0,
             G_color,ELABELCOL(e),ELABELCOL(e));
-    NSX(v) = (NSX(ESTART(e))+NSX(EEND(e)))/2L;
-    NSY(v) = (NSY(ESTART(e))+NSY(EEND(e)))/2L;
     NTITLE(v)   = "";
     NLABEL(v)   = ELABEL(e);
-    adapt_labelpos(v,e);
+    adapt_labelsize(v,e);
     ins_node_in_dl_list(v,labellist,labellistend);
     ELNODE(e) = v;
     return(v);
-}
-
-/*   Calculate the string size of an label
- *   -------------------------------------
- *   and adapt the coordinates of v. The coordinates of labels derived
- *   from nodes that have no coordinates may be wrong; but in this
- *   case, all positions are recalculated anyway.
- */
-static void adapt_labelpos(GNODE v, GEDGE e)
-{
-    char *ss;
-int gs_stringw =8;
-int gs_stringh =16;
-    assert((v));
-    ss = NLABEL(v);
-    if (!ss) return;
-    if (NSHRINK(v)==0) NSHRINK(v) = 1;
-/*TODO  gs_setshrink(NSTRETCH(v),NSHRINK(v));*/
-/*TODO  gs_calcstringsize(ss);*/
-/*TODO  gs_stringw += (ETHICKNESS(e)/2+1);
-    gs_stringh += (ETHICKNESS(e)/2+1);*/
-    NWIDTH(v)  = gs_stringw;
-    NHEIGHT(v) = gs_stringh;
-/*TODO  NSX(v) = NSX(v) - (long)(gs_stringw/2);
-    NSY(v) = NSY(v) - (long)(gs_stringh/2);*/
 }
 
 
