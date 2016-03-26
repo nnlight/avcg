@@ -557,6 +557,9 @@ void print_node_succs(GNODE v)
     printf("============\n");
 }
 
+/* Calculate the outdegree of a node
+ * ---------------------------------
+ */
 int get_node_succs_num(GNODE v)
 {
     GEDGE e;
@@ -569,6 +572,9 @@ int get_node_succs_num(GNODE v)
     return res;
 }
 
+/* Calculate the indegree of a node
+ * --------------------------------
+ */
 int get_node_preds_num(GNODE v)
 {
     GEDGE e;

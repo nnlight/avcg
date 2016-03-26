@@ -125,8 +125,6 @@ static void     sort_all_nodes      _PP((void));
 static int      compare_ndfs        _PP((const GNODE *a,const GNODE *b));
 
 static long no_dfs          _PP((GNODE n));
-static long no_indeg        _PP((GNODE n));
-static long no_outdeg       _PP((GNODE n));
 static long no_degree       _PP((GNODE n));
 
 static void create_adjacencies  _PP((void));
@@ -1123,9 +1121,9 @@ static void refresh_all_nodes(GNODE v)
  *
  *  layout_flag = 0, 1, 2, 3   -> we use the NREFNUM of the nodes.
  *  layout_flag = 4            -> we use the reverse dfs-depth starting
- *                at that node
+ *                                at that node
  *  layout_flag = 5            -> we use the dfs-depth starting
- *                at that node
+ *                                at that node
  *  layout_flag = 6            -> we use the indegree of that node.
  *  layout_flag = 7            -> we use the reverse indegree of that node.
  *  layout_flag = 8            -> we use the outdegree of that node.
@@ -1177,7 +1175,8 @@ static void sort_all_nodes(void)
      */
 
     switch (layout_flag) {
-    case 4: for (v = nodelist; v; v = NNEXT(v))
+    case 4:
+        for (v = nodelist; v; v = NNEXT(v))
         {
             if (G_timelimit>0) {
                 if (test_timelimit(15)) {
@@ -1190,7 +1189,8 @@ static void sort_all_nodes(void)
             NDFS(v) =  - no_dfs(v);
         }
         break;
-    case 5: for (v = nodelist; v; v = NNEXT(v))
+    case 5:
+        for (v = nodelist; v; v = NNEXT(v))
         {
             if (G_timelimit>0) {
                 if (test_timelimit(15)) {
@@ -1203,37 +1203,23 @@ static void sort_all_nodes(void)
             NDFS(v) =  no_dfs(v);
         }
         break;
-    case 6: while (v) {
-            NDFS(v) =  no_indeg(v);
-            v = NNEXT(v);
-        }
+    case 6:
+        for (v = nodelist; v; v = NNEXT(v)) { NDFS(v) =  get_node_preds_num(v); }
         break;
-    case 7: while (v) {
-            NDFS(v) =  - no_indeg(v);
-            v = NNEXT(v);
-        }
+    case 7:
+        for (v = nodelist; v; v = NNEXT(v)) { NDFS(v) =  - get_node_preds_num(v); }
         break;
-    case 8: while (v) {
-            NDFS(v) =  no_outdeg(v);
-            v = NNEXT(v);
-        }
+    case 8:
+        for (v = nodelist; v; v = NNEXT(v)) { NDFS(v) =  get_node_succs_num(v); }
         break;
-    case 9: while (v) {
-            NDFS(v) =  - no_outdeg(v);
-            v = NNEXT(v);
-        }
+    case 9:
+        for (v = nodelist; v; v = NNEXT(v)) { NDFS(v) =  - get_node_succs_num(v); }
         break;
     case 10:
-        while (v) {
-            NDFS(v) =  no_degree(v);
-            v = NNEXT(v);
-        }
+        for (v = nodelist; v; v = NNEXT(v)) { NDFS(v) =  no_degree(v); }
         break;
     case 11:
-        while (v) {
-            NDFS(v) =  - no_degree(v);
-            v = NNEXT(v);
-        }
+        for (v = nodelist; v; v = NNEXT(v)) { NDFS(v) =  - no_degree(v); }
         break;
     }
 
@@ -1248,12 +1234,12 @@ static void sort_all_nodes(void)
 
     for (i=1; i<max-1; i++) {
         NNEXT(node_sort_array[i]) = node_sort_array[i+1];
-        NBEFORE(node_sort_array[i]) = node_sort_array[i-1];
+        NPREV(node_sort_array[i]) = node_sort_array[i-1];
     }
-    NNEXT(node_sort_array[0])       = node_sort_array[1];
-    NBEFORE(node_sort_array[0])     = NULL;
-    NNEXT(node_sort_array[max-1])   = NULL;
-    NBEFORE(node_sort_array[max-1]) = node_sort_array[max-2];
+    NNEXT(node_sort_array[0])     = node_sort_array[1];
+    NPREV(node_sort_array[0])     = NULL;
+    NNEXT(node_sort_array[max-1]) = NULL;
+    NPREV(node_sort_array[max-1]) = node_sort_array[max-2];
     nodelist    = node_sort_array[0];
     nodelistend = node_sort_array[max-1];
 
@@ -1300,43 +1286,12 @@ static long no_dfs(GNODE n)
     return res;
 }
 
-
-/* Calculate the indegree of a node
- * --------------------------------
- */
-static long no_indeg(GNODE n)
-{
-    GEDGE edge;
-    long res = 0;
-
-    for (edge = FirstPred(n); edge; edge = NextPred(edge))
-    {
-        res++;
-    }
-    return res;
-}
-
-/* Calculate the outdegree of a node
- * --------------------------------
- */
-static long no_outdeg(GNODE n)
-{
-    GEDGE edge;
-    long res = 0;
-
-    for (edge = FirstSucc(n); edge; edge = NextSucc(edge))
-    {
-        res++;
-    }
-    return res;
-}
-
 /* Calculate the degree of a node
  * --------------------------------
  */
 static long no_degree(GNODE n)
 {
-    return no_indeg(n) + no_outdeg(n);
+    return get_node_preds_num(n) + get_node_succs_num(n);
 }
 
 
