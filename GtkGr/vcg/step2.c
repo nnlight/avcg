@@ -2498,6 +2498,7 @@ static unsigned int rand_num = 211;
 
 static void     myqsort(int l, int r)
 {
+#if 0
     int   i, j, k;
     GNODE v, t;
 
@@ -2530,7 +2531,23 @@ static void     myqsort(int l, int r)
     exchange(sort_array[l],sort_array[j]);
     if (l<j-1) myqsort(l,j-1);
     if (j+1<r) myqsort(j+1,r);
-}
+#else
+    int   i, j;
+    GNODE t;
+
+    for (i = l+1; i <= r; i++)
+    {
+        for (j = i; j > l; j--)
+            if (NBARY(sort_array[j-1]) > NBARY(sort_array[j])) {
+                exchange(sort_array[j-1], sort_array[j]);
+            } else
+                break;
+    }
+#endif
+    /*for (i=l; i < r; i++) {
+        assert(NBARY(sort_array[i]) <= NBARY(sort_array[i+1]));
+    }*/
+} /* myqsort */
 
 #endif /* OWN_QUICKSORT */
 
