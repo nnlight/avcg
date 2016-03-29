@@ -1077,12 +1077,13 @@ static void graph_attributes(
 
                 switch(tag(node2)) {
                     case T_Co_status:
-                        switch(tag(son1(node2))) {
+                        assert(0);
+                        /*switch(tag(son1(node2))) {
                             case T_Co_black: NSTATE(v) = 2; break;
                             case T_Co_grey:  NSTATE(v) = 1; break;
                             case T_Co_white: NSTATE(v) = 0; break;
                             default: assert((0));
-                        }
+                        }*/
                         break;
                     case T_Co_infoname:
                     case T_Co_classname:
@@ -1168,7 +1169,7 @@ static void graph_attributes(
         add_foldstop(v);
     }
 #endif
-    if (NSTATE(v)>0 || NFOLDING(v)>0) {
+    if (/*NSTATE(v)>0 ||*/ NFOLDING(v)>0) {
         /* and the subgraph fold starters */
         add_sgfoldstart(v);
     }

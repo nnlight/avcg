@@ -313,7 +313,6 @@ void nodedefaults(GNODE node)
     NSX(node)       = 0L;
     NSY(node)       = 0L;
     NTEXTMODE(node) = CENTER;
-    NSTATE(node)    = 0;
     NWIDTH(node)    = -1;
     NHEIGHT(node)   = -1;
     NBORDERW(node)  = 2;
@@ -344,7 +343,6 @@ void foldnodedefaults(GNODE node)
     NSX(node)       = 0L;
     NSY(node)       = 0L;
     NTEXTMODE(node) = -1;
-    NSTATE(node)    = -1;
     NWIDTH(node)    = -1;
     NHEIGHT(node)   = -1;
     NBORDERW(node)  = 4;
@@ -377,7 +375,6 @@ void inherit_foldnode_attributes(GNODE fn, GNODE y)
     if (NSX(fn)!= -1L)      NSX(y)      = NSX(fn);
     if (NSY(fn)!= -1L)      NSY(y)      = NSY(fn);
     if (NTEXTMODE(fn)!= -1) NTEXTMODE(y)= NTEXTMODE(fn);
-    if (NSTATE(fn)!= -1)    NSTATE(y)   = NSTATE(fn);
     if (NWIDTH(fn)!= -1)    NWIDTH(y)   = NWIDTH(fn);
     if (NHEIGHT(fn)!= -1)   NHEIGHT(y)  = NHEIGHT(fn);
     if (NBORDERW(fn)!= -1)  NBORDERW(y) = NBORDERW(fn);
@@ -406,7 +403,6 @@ void copy_nodeattributes(GNODE x, GNODE y)
     NSX(y)      = NSX(x);
     NSY(y)      = NSY(x);
     NTEXTMODE(y)= NTEXTMODE(x);
-    NSTATE(y)   = NSTATE(x);
     NWIDTH(y)   = NWIDTH(x);
     NHEIGHT(y)  = NHEIGHT(x);
     NBORDERW(y) = NBORDERW(x);
@@ -463,7 +459,6 @@ GNODE   tmpnodealloc(
 
     NHORDER(h)      = -1;
     NTEXTMODE(h)    = textm;
-    NSTATE(h)       = 0;
     NWIDTH(h)       = width;
     NHEIGHT(h)      = height;
     NBORDERW(h)     = borderw;

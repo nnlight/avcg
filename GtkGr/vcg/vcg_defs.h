@@ -245,7 +245,6 @@ typedef struct gnode
     char    color;
     char    textcolor;
     char    bordercolor;
-    char    status;
     char    shape;
     int shrink;
     int stretch;
@@ -355,7 +354,6 @@ typedef struct gnode
 #define NTEXTMODE(x)    ((x)->textmode)
 #define NWIDTH(x)       ((x)->width)
 #define NHEIGHT(x)      ((x)->height)
-#define NSTATE(x)       ((x)->status)
 #define NSHAPE(x)       ((x)->shape)
 #define NBORDERW(x)     ((x)->borderwidth)
 #define NSX(x)          ((x)->sxloc)
