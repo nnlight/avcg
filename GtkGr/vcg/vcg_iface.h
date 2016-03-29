@@ -22,6 +22,7 @@ int            vcg_GetCmapSize();
 unsigned char *vcg_GetCmapRed();
 unsigned char *vcg_GetCmapGreen();
 unsigned char *vcg_GetCmapBlue();
+int *vcg_GetHideClass(int *len_p);
 
 
 

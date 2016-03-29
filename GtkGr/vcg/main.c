@@ -381,6 +381,11 @@ unsigned char *vcg_GetCmapBlue()
 {
     return G_bluemap;
 }
+int *vcg_GetHideClass(int *len_p)
+{
+    *len_p = max_nr_classes;
+    return hide_class;
+}
 
 
 

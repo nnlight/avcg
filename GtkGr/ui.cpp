@@ -48,6 +48,7 @@ ui_key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data)
 
     int MOVE_PIXELS = g_Preferences->GetMovePixels();
 
+    int dig = 0;
     switch (event->keyval)
     {
     case GDK_Home:
@@ -96,6 +97,25 @@ ui_key_press_cb( GtkWidget* widget, GdkEventKey* event, gpointer data)
     case GDK_t:
         printf("T key pressed\n");
         uic->RelayoutVcgGraph();
+        break;
+
+    case GDK_1: if (!dig) dig = 1;
+    case GDK_2: if (!dig) dig = 2;
+    case GDK_3: if (!dig) dig = 3;
+    case GDK_4: if (!dig) dig = 4;
+    case GDK_5: if (!dig) dig = 5;
+    case GDK_6: if (!dig) dig = 6;
+    case GDK_7: if (!dig) dig = 7;
+    case GDK_8: if (!dig) dig = 8;
+    case GDK_9: if (!dig) dig = 9;
+        {
+            int hide_class_len;
+            int *hide_class = vcg_GetHideClass( &hide_class_len);
+            if ( dig <= hide_class_len ) {
+                hide_class[dig-1] = !hide_class[dig-1];
+                uic->RelayoutVcgGraph();
+            }
+        }
         break;
 
     default:
@@ -745,6 +765,7 @@ void UIController::LoadGDLFile( const char *filename)
     m_DrawBuffer->SetVRGraphRef( m_VRGraph.get());
     m_CurrentFilename = filename;
     gtk_window_set_title( GTK_WINDOW(m_MainWindow), filename);
+    UpdateStatusbar();
 } /* UIController::LoadGDLFile */
 
 void UIController::RelayoutVcgGraph()
@@ -757,6 +778,7 @@ void UIController::RelayoutVcgGraph()
     m_VRGraph.reset( new VRGraph());
     m_VRGraph->LoadVcgGraph();
     m_DrawBuffer->SetVRGraphRef( m_VRGraph.get());
+    UpdateStatusbar();
 }
 
 void UIController::UpdateStatusbar()
@@ -777,11 +799,22 @@ void UIController::UpdateStatusbar()
         case MODE_VIEW_NODE_INFO3: mode_name = "info3"; break;
         default: break;
     }
+
+    int hide_class_len;
+    int *hide_class = vcg_GetHideClass( &hide_class_len);
+    std::string vis_classes_str("[");
+    for (int i = 0; i < hide_class_len; i++) {
+        vis_classes_str += hide_class[i] ? '0' : '1';
+        if (i != hide_class_len - 1) vis_classes_str += ",";
+    }
+    vis_classes_str += "]";
+
     m_DrawBuffer->ConvertDa2Vrg( m_MousePos[AXIS_X], m_MousePos[AXIS_Y], vrg_x, vrg_y);
     //msg = g_strdup_printf( "Current Scaling: %f  Mode: %s  x=%d y=%d  vrg_x=%d vrg_y=%d",
-    msg = g_strdup_printf( "Current Scaling: %f   Mode: %s   MousePos: (%d,%d)   vrg: (%d,%d)",
+    msg = g_strdup_printf( "Current Scaling: %f   Mode: %s   v_e_classes: %s   MousePos: (%d,%d)   vrg: (%d,%d)",
                             m_DrawBuffer->GetScaling(),
                             mode_name,
+                            vis_classes_str.c_str(),
                             m_MousePos[AXIS_X], m_MousePos[AXIS_Y], vrg_x, vrg_y);
     gtk_statusbar_push( GTK_STATUSBAR( m_Statusbar), 0, msg);
 
