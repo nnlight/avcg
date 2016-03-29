@@ -459,7 +459,7 @@ static void prepare_anchoredge(GEDGE edge)
     c = NCONNECT(ESTART(edge));
     if (!c) {
         v = create_dummy(-1);
-        NINVISIBLE(v) = 0;
+        /*NINVISIBLE(v) = 0;*/
         NLEVEL(v) = NLEVEL(ESTART(edge));
         NHORDER(v) = NHORDER(ESTART(edge));
         NANCHORNODE(v) = 1;
@@ -588,7 +588,7 @@ static void insert_bent_near_edges(void)
                 v = create_labelnode(edge1);
             else {
                 v = create_dummy(-1);
-                NINVISIBLE(v) = 0;
+                /*NINVISIBLE(v) = 0;*/
             }
             NLEVEL(v) = NLEVEL(ESOURCE(edge1));
             NHORDER(v) = NHORDER(ESOURCE(edge1));
@@ -1388,6 +1388,7 @@ static void sc_component_sort(void)
 
     for (v = nodelist; v; v = NNEXT(v))
     {
+        assert(!NINVISIBLE(v));
         if (!NINVISIBLE(v))
             add_to_nlist(v, &global_node_list);
         NTIEFE(v) = 1;
