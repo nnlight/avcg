@@ -1,0 +1,176 @@
+graph: {title: "syntax tree"
+        layoutalgorithm : tree
+        node.color      : lightcyan
+        node.textcolor  : darkblue
+        node.fontname   : "helvB08"
+        node.height     : 28
+        node.borderwidth: 2
+        edge.thickness  : 3
+        edge.color      : 8
+        edge.arrowstyle : line
+        edge.arrowsize  : 6
+        arrowmode       : free
+        portsharing     : yes
+
+node: { title: "Program" }
+node: { title: "Block"     bordercolor: black }
+edge: { source: "Program"  target: "Block" }
+
+        node.textcolor: black
+        node.height: 20
+
+node.label: "Decl"
+node: { title: "Decl0" }
+node: { title: "Decl1" }
+node: { title: "Decl2" }
+
+node.label: "StatList"
+node: { title: "SttL0" }
+node: { title: "SttL1" }
+node: { title: "SttL2" }
+node: { title: "SttL3" }
+node: { title: "SttL4" }
+node: { title: "SttL5" horizontal_order: 2 }
+
+        node.borderwidth: 1
+        node.fontname: "helvR08"
+
+node.label: "VarDecl"
+node: { title: "VDcl0" }
+node: { title: "VDcl1" }
+node: { title: "VDcl2" }
+
+node.label: "Stat"
+node: { title: "Stat0" }
+node: { title: "Stat1" }
+node: { title: "Stat2" }
+node: { title: "Stat3" }
+node: { title: "Stat4" }
+node: { title: "Stat5" }
+
+node: { title: "Aray1"  label: "Array"   }
+node: { title: "Aray2"  label: "Array"   }
+node: { title: "Itgr0"  label: "Integer" }
+node: { title: "Itgr1"  label: "Integer" horizontal_order: 3 }
+node: { title: "Itgr2"  label: "Integer" horizontal_order: 3 }
+
+        node.height: 32
+node: { title: "1It10"  label: "Int\n10" }
+node: { title: "2It10"  label: "Int\n10" }
+node: { title: "1It01"  label: "Int\n1"  }
+node: { title: "2It01"  label: "Int\n1"  }
+
+        node.borderstyle: dotted
+        node.fontname: "helvO08"
+node: { title: "1Idfb"  label: "Identifier\nb" }
+node: { title: "1Idfk"  label: "Identifier\nk" }
+node: { title: "1Idfp"  label: "Identifier\np" }
+node: { title: "tst" label: "Identifier\ntst3" }
+
+edge: { source: "Aray1"  target: "Itgr1" }
+edge: { source: "Aray1"  target: "1It10" }
+edge: { source: "Aray1"  target: "1It01" }
+edge: { source: "Aray2"  target: "Itgr2" }
+edge: { source: "Aray2"  target: "2It10" }
+edge: { source: "Aray2"  target: "2It01" }
+
+edge: { source: "VDcl0"  target: "Itgr0" }
+edge: { source: "VDcl1"  target: "Aray1" }
+edge: { source: "VDcl2"  target: "Aray2" }  edge.thickness: 2
+edge: { source: "VDcl0"  target: "1Idfb" }
+edge: { source: "VDcl1"  target: "1Idfk" }
+edge: { source: "VDcl2"  target: "1Idfp" }  edge.thickness: 3
+edge: { source: "Decl0"  target: "VDcl0" }
+edge: { source: "Decl1"  target: "VDcl1" }
+edge: { source: "Decl2"  target: "VDcl2" }
+edge: { source: "Decl1"  target: "Decl0" }
+edge: { source: "Decl2"  target: "Decl1" }
+edge: { source: "Block"  target: "Decl2" }  edge.thickness: 2
+edge: { source: "Program"  target: "tst" }
+
+node: { title: "2Idfb"  label: "Identifier\nb" }
+node: { title: "3Idfb"  label: "Identifier\nb" }
+node: { title: "2Idfk"  label: "Identifier\nk" }
+node: { title: "3Idfk"  label: "Identifier\nk" }
+node: { title: "2Idfp"  label: "Identifier\np" }
+
+        node.borderstyle: solid
+        node.fontname: "helvR08"
+node: { title: "3It01"  label: "Int\n1"   }
+node: { title: "4It01"  label: "Int\n1"   }
+node: { title: "1It19"  label: "Int\n19"  }
+node: { title: "2It19"  label: "Int\n19"  }
+node: { title: "5It01"  label: "Int\n1"   }
+node: { title: "1It09"  label: "Int\n9"   horizontal_order: 3 }
+node: { title: "2It09"  label: "Int\n9"   horizontal_order: 3 }
+node: { title: "1It02"  label: "Int\n2"   horizontal_order: 2 }
+node: { title: "1It04"  label: "Int\n4"   horizontal_order: 2 }
+node: { title: "1It00"  label: "Int\n0"   horizontal_order: 2 }
+node: { title: "BinOp"  label: "Binop\n+" horizontal_order: 2 }
+
+        node.height: 20
+node: { title: "ArRf0"  label: "ArrayRef" }
+node: { title: "ArRf1"  label: "ArrayRef" }
+node: { title: "ArRf2"  label: "ArrayRef" }
+node: { title: "Writ0"  label: "Write"    }
+node: { title: "Writ1"  label: "Write"    }
+node: { title: "Asgn1"  label: "Assign"   }
+node: { title: "Asgn2"  label: "Assign"   }
+node: { title: "Read "  label: "Read"     }
+node: { title: "WrtSt"  label: "WriteStr" }
+
+        node.color      : black
+        node.textcolor  : white
+        node.bordercolor: red
+        node.borderwidth: 2
+        node.fontname   : "helvB08"
+        node.horizontal_order: 2
+node: { title: "Vect1"  label: "Vector"   }
+node: { title: "Vect2"  label: "Vector"   }
+
+edge: { source: "Read "  target: "3Idfb" }
+edge: { source: "BinOp"  target: "2Idfb" }  edge.thickness: 3
+edge: { source: "BinOp"  target: "2It19" }
+edge: { source: "Writ0"  target: "ArRf0" }
+edge: { source: "Writ1"  target: "1It19" }
+
+edge: { source: "Vect1"  target: "3It01" }
+edge: { source: "Vect1"  target: "5It01" }
+edge: { source: "Vect1"  target: "1It09" }
+edge: { source: "Vect2"  target: "4It01" }
+edge: { source: "Vect2"  target: "1It02" }
+edge: { source: "Vect2"  target: "2It09" }  edge.thickness: 2
+edge: { source: "ArRf0"  target: "2Idfk" }
+edge: { source: "ArRf1"  target: "3Idfk" }
+edge: { source: "ArRf2"  target: "2Idfp" }  edge.thickness: 3
+edge: { source: "ArRf0"  target: "1It04" }
+edge: { source: "ArRf1"  target: "Vect1" }
+edge: { source: "ArRf2"  target: "Vect2" }
+
+edge: { source: "Asgn1"  target: "ArRf1" }
+edge: { source: "Asgn2"  target: "ArRf2" }
+edge: { source: "Asgn1"  target: "BinOp" }
+edge: { source: "Asgn2"  target: "1It00" }
+
+edge: { source: "Stat0"  target: "Writ0" }
+edge: { source: "Stat1"  target: "Writ1" }
+edge: { source: "Stat2"  target: "Asgn1" }
+edge: { source: "Stat3"  target: "WrtSt" }
+edge: { source: "Stat4"  target: "Asgn2" }
+edge: { source: "Stat5"  target: "Read " }
+
+edge: { source: "SttL0"  target: "Stat0" }
+edge: { source: "SttL1"  target: "Stat1" }
+edge: { source: "SttL2"  target: "Stat2" }
+edge: { source: "SttL3"  target: "Stat3" }
+edge: { source: "SttL4"  target: "Stat4" }
+edge: { source: "SttL5"  target: "Stat5" }
+
+edge: { source: "SttL1"  target: "SttL0" }
+edge: { source: "SttL2"  target: "SttL1" }
+edge: { source: "SttL3"  target: "SttL2" }
+edge: { source: "SttL4"  target: "SttL3" }
+edge: { source: "SttL5"  target: "SttL4" }
+edge: { source: "Block"  target: "SttL5" }
+
+}

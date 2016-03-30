@@ -1,0 +1,279 @@
+graph:    { title: "recursive subgraph nesting"
+
+    edge.arrowsize:   8
+    edge.color    :   9
+    node.color    :  28
+    node.label    : " "
+    node.height   :  70
+    node.width    :  70
+    node.borderwidth: 1
+    xbase         :  20
+    ybase         :  20
+    colorentry 42 : 174 218 255
+    colorentry 43 :   0 145 198
+    node.fontname : "helvR10"
+    scaling       : maxspect
+
+graph:    { title : "1"    label : "уровень 1"
+            status: boxed  color :  42
+            xbase : 24     ybase :  24
+
+   graph: { title : "11"   label : "уровень 2"
+            status: boxed  color :  43
+            xbase : 24     ybase :  24
+    node: { title : "111"  label : "уровень 3"}
+    node: { title : "112"                }
+    node: { title : "113"                }
+    node: { title : "114"                }
+    edge: { source: "114"  target: "111" }
+    edge: { source: "112"  target: "113" }
+nearedge: { source: "111"  target: "112" }
+nearedge: { source: "113"  target: "114" }
+                                         }
+
+   graph: { title : "12"   label : "уровень 2"
+            status: boxed  color :  43
+            xbase : 24     ybase :  24
+    node: { title : "121"  label : "уровень 3"}
+    node: { title : "122"                }
+    node: { title : "123"                }
+    node: { title : "124"                }
+    edge: { source: "122"  target: "123" }
+    edge: { source: "124"  target: "121" }
+nearedge: { source: "121"  target: "122" }
+nearedge: { source: "123"  target: "124" }
+                                         }
+
+   graph: { title : "13"   label : "уровень 2"
+            status: boxed  color :  43
+            xbase : 24     ybase :  24
+    node: { title : "131"  label : "уровень 3"}
+    node: { title : "132"                }
+    node: { title : "133"                }
+    node: { title : "134"                }
+    edge: { source: "132"  target: "133" }
+    edge: { source: "134"  target: "131" }
+nearedge: { source: "131"  target: "132" }
+nearedge: { source: "133"  target: "134" }
+                                         }
+
+   graph: { title : "14"   label : "уровень 2"
+            status: boxed  color :  43
+            xbase : 24     ybase :  24
+    node: { title : "141"  label : "уровень 3"}
+    node: { title : "142"                }
+    node: { title : "143"                }
+    node: { title : "144"                }
+    edge: { source: "142"  target: "143" }
+    edge: { source: "144"  target: "141" }
+nearedge: { source: "141"  target: "142" }
+nearedge: { source: "143"  target: "144" }
+                                         }
+
+    edge: { source: "12"   target: "13"  }
+    edge: { source: "14"   target: "11"  }
+nearedge: { source: "11"   target: "12"  }
+nearedge: { source: "13"   target: "14"  }
+}
+
+
+
+graph:    { title : "2"    label : "уровень 1"
+            status: boxed  color :  42
+            xbase : 24     ybase :  24
+
+   graph: { title : "21"   label : "уровень 2"
+            status: boxed  color :  43
+            xbase : 24     ybase :  24
+    node: { title : "211"  label : "уровень 3"}
+    node: { title : "212"                }
+    node: { title : "213"                }
+    node: { title : "214"                }
+    edge: { source: "212"  target: "213" }
+    edge: { source: "214"  target: "211" }
+nearedge: { source: "211"  target: "212" }
+nearedge: { source: "213"  target: "214" }
+                                         }
+
+   graph: { title : "22"   label : "уровень 2"
+            status: boxed  color :  43
+            xbase : 24     ybase :  24
+    node: { title : "221"  label : "уровень 3"}
+    node: { title : "222"                }
+    node: { title : "223"                }
+    node: { title : "224"                }
+    edge: { source: "222"  target: "223" }
+    edge: { source: "224"  target: "221" }
+nearedge: { source: "221"  target: "222" }
+nearedge: { source: "223"  target: "224" }
+                                         }
+
+   graph: { title : "23"   label : "уровень 2"
+            status: boxed  color :  43
+            xbase : 24     ybase :  24
+    node: { title : "231"  label : "уровень 3"}
+    node: { title : "232"                }
+    node: { title : "233"                }
+    node: { title : "234"                }
+    edge: { source: "232"  target: "233" }
+    edge: { source: "234"  target: "231" }
+nearedge: { source: "231"  target: "232" }
+nearedge: { source: "233"  target: "234" }
+                                         }
+
+   graph: { title : "24"   label : "уровень 2"
+            status: boxed  color :  43
+            xbase : 24     ybase :  24
+    node: { title : "241"  label : "уровень 3"}
+    node: { title : "242"                }
+    node: { title : "243"                }
+    node: { title : "244"                }
+    edge: { source: "242"  target: "243" }
+    edge: { source: "244"  target: "241" }
+nearedge: { source: "241"  target: "242" }
+nearedge: { source: "243"  target: "244" }
+                                         }
+
+    edge: { source: "22"   target: "23"  }
+    edge: { source: "24"   target: "21"  }
+nearedge: { source: "21"   target: "22"  }
+nearedge: { source: "23"   target: "24"  }
+}
+
+
+graph:    { title : "3"
+            status: boxed  color :  42
+            xbase : 24     ybase :  24
+
+   graph: { title : "31"   color :  43
+            status: boxed  node.shape:  circle
+            xbase : 24     ybase :  24
+    node: { title : "311"                }
+    node: { title : "312"                }
+    node: { title : "313"  color :  25   }
+    node: { title : "314"                }
+    edge: { source: "312"  target: "313" }
+    edge: { source: "314"  target: "311" }
+nearedge: { source: "311"  target: "312" }
+nearedge: { source: "313"  target: "314" }
+                                         }
+
+   graph: { title : "32"   color :  43
+            status: boxed  node.shape: triangle
+            xbase : 24     ybase :  24
+    node: { title : "321"                }
+    node: { title : "322"                }
+    node: { title : "323"                }
+    node: { title : "324"  color :  25   }
+    edge: { source: "322"  target: "323" }
+    edge: { source: "324"  target: "321" }
+nearedge: { source: "321"  target: "322" }
+nearedge: { source: "323"  target: "324" }
+                                         }
+
+   graph: { title : "33"   color :  43
+            status: boxed  node.shape:trapeze
+            xbase : 24     ybase :  24
+    node: { title : "331"  color :  25   }
+    node: { title : "332"  shape:lparallelogram}
+    node: { title : "333"  shape:rparallelogram}
+    node: { title : "334"  shape:uptrapeze     }
+    edge: { source: "332"  target: "333" }
+    edge: { source: "334"  target: "331" }
+nearedge: { source: "331"  target: "332" }
+nearedge: { source: "333"  target: "334" }
+                                         }
+
+   graph: { title : "34"   color :  43
+            status: boxed  node.shape: rhomb
+            node.height:74 node.width: 74
+    node: { title : "341"                }
+    node: { title : "342"  color :  25   }
+    node: { title : "343"                }
+    node: { title : "344"                }
+    edge: { source: "342"  target: "343" }
+    edge: { source: "344"  target: "341" }
+nearedge: { source: "341"  target: "342" }
+nearedge: { source: "343"  target: "344" }
+                                         }
+
+    edge: { source: "32"   target: "33"  }
+    edge: { source: "34"   target: "31"  }
+nearedge: { source: "31"   target: "32"  }
+nearedge: { source: "33"   target: "34"  }
+}
+
+
+graph:    { title : "4"    label : "уровень 1"
+            status: boxed  color :  42
+            xbase : 24     ybase :  24
+
+   graph: { title : "41"   label : "уровень 2"
+            status: boxed  color :  43
+            xbase : 24     ybase :  24
+   graph: { title : "411"  label : "уровень 3"
+            status: boxed  color :  28
+            xbase :   8    ybase :  23
+    node: { title : "---"  label : "и т. д."
+            height:  24    width :  54
+            textcolor: 0   color :   9
+            borderwidth:0             }  }
+    node: { title : "412"                }
+    node: { title : "413"                }
+    node: { title : "414"                }
+    edge: { source: "412"  target: "413" }
+    edge: { source: "414"  target: "411" }
+nearedge: { source: "411"  target: "412" }
+nearedge: { source: "413"  target: "414" }
+                                         }
+
+   graph: { title : "42"
+            status: boxed  color :  43
+            xbase : 24     ybase :  24
+    node: { title : "421"                }
+    node: { title : "422"                }
+    node: { title : "423"                }
+    node: { title : "424"                }
+    edge: { source: "422"  target: "423" }
+    edge: { source: "424"  target: "421" }
+nearedge: { source: "421"  target: "422" }
+nearedge: { source: "423"  target: "424" }
+                                         }
+
+   graph: { title : "43"
+            status: boxed  color :  43
+            xbase : 24     ybase :  24
+    node: { title : "431"                }
+    node: { title : "432"                }
+    node: { title : "433"                }
+    node: { title : "434"                }
+    edge: { source: "432"  target: "433" }
+    edge: { source: "434"  target: "431" }
+nearedge: { source: "431"  target: "432" }
+nearedge: { source: "433"  target: "434" }
+                                         }
+
+   graph: { title : "44"
+            status: boxed  color :  43
+            xbase : 24     ybase :  24
+    node: { title : "441"                }
+    node: { title : "442"                }
+    node: { title : "443"                }
+    node: { title : "444"                }
+    edge: { source: "442"  target: "443" }
+    edge: { source: "444"  target: "441" }
+nearedge: { source: "441"  target: "442" }
+nearedge: { source: "443"  target: "444" }
+                                         }
+
+    edge: { source: "42"   target: "43"  }
+    edge: { source: "44"   target: "41"  }
+nearedge: { source: "41"   target: "42"  }
+nearedge: { source: "43"   target: "44"  }
+}
+
+    edge: { source: "2"    target: "3"   }
+    edge: { source: "4"    target: "1"   }
+nearedge: { source: "1"    target: "2"   }
+nearedge: { source: "3"    target: "4"   }
+}

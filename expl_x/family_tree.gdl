@@ -1,0 +1,73 @@
+graph: {title: "family tree"
+        smanhattanedges : yes
+        node.bordercolor: 0
+        node.fontname: "helvR10"
+        edge.arrowstyle : none
+        edge.color      : 8
+        equalydist      : yes
+        portsharing     : yes
+node: { title: "000" label: "great grandmother" }
+node: { title: "001" label: "great grandfather" }
+node: { title: "010" label: "grandmother"    }
+node: { title: "011" label: "grandfather"    }
+node: { title: "020" label: "great aunt"     }
+node: { title: "030" label: "great uncle"    }
+node: { title: "040" label: "aunt"           }
+node: { title: "041" label: "uncle"          }
+node: { title: "050" label: "mother"         }
+node: { title: "051" label: "father"         }
+node: { title: "060" label: "mother-in-law" vertical_order: 2 }
+node: { title: "061" label: "father-in-law"  }
+node: { title: "070" label: "cousin"         }
+node: { title: "080" label: "cousine"        }
+node: { title: "090" label: "brother"        }
+node: { title: "091" label: "sister-in-law"  }
+node: { title: "100" label: "sister"         }
+node: { title: "110" label: "Jane" fontname: "helvB10" textcolor: 8 }
+node: { title: "111" label: "husband"        }
+node: { title: "120" label: "brother·in·law" }
+node: { title: "130" label: "nephew"         }
+node: { title: "140" label: "niece"          }
+node: { title: "150" label: "son"            }
+node: { title: "151" label: "daughter-in-law"}
+node: { title: "160" label: "daughter"       }
+node: { title: "161" label: "son-in-law"     }
+node: { title: "170" label: "granddaughter"  }
+node: { title: "171" label: "granddaughter's husband" }
+node: { title: "180" label: "grandson"       }
+node: { title: "190" label: "great grandson" }
+node: { title: "200" label: "great granddaughter" }
+
+edge: { source:"000" target:"010" thickness:3}
+edge: { source:"000" target:"020" }
+edge: { source:"000" target:"030" }
+edge: { source:"010" target:"040" }
+edge: { source:"010" target:"050" thickness:3}
+edge: { source:"040" target:"070" }
+edge: { source:"040" target:"080" }
+edge: { source:"050" target:"090" }
+edge: { source:"050" target:"100" }
+edge: { source:"050" target:"110" thickness:3}
+edge: { source:"060" target:"111" }
+edge: { source:"060" target:"120" }
+edge: { source:"090" target:"130" }
+edge: { source:"090" target:"140" }
+edge: { source:"110" target:"150" }
+edge: { source:"110" target:"160" thickness:3}
+edge: { source:"160" target:"170" thickness:3}
+edge: { source:"160" target:"180" }
+edge: { source:"170" target:"190" }
+edge: { source:"170" target:"200" thickness:3}
+
+nearedge: { source:"000" target:"001" }
+nearedge: { source:"010" target:"011" }
+nearedge: { source:"040" target:"041" }
+nearedge: { source:"050" target:"051" }
+nearedge: { source:"060" target:"061" }
+nearedge: { source:"090" target:"091" }
+nearedge: { source:"110" target:"111" }
+nearedge: { source:"150" target:"151" }
+nearedge: { source:"160" target:"161" }
+nearedge: { source:"170" target:"171" }
+
+}

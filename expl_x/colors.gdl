@@ -1,0 +1,105 @@
+graph: { title:"colors"
+
+         layoutalgorithm :  forcedir
+         fdmax           :704
+         tempmax         :254
+         tempmin         :  0
+         temptreshold    :  3
+         tempscheme      :  3
+         tempfactor      :  1.08
+         randomfactor    :100
+         gravity         :  0.0
+         repulsion       :161
+         attraction      : 43
+         ignore_singles  :  yes
+
+         node.fontname   : "helvB10"
+         node.shape      :  circle
+         node.width      :100
+         node.height     :100
+         node.borderwidth:  1
+         node.bordercolor: 31
+
+node: { title:"0"  color:0  label:"white" }
+node: { title:"3"  color:3  label:"green" }
+node: { title:"4"  color:4  label:"yellow" }
+node: { title:"5"  color:5  label:"magenta" }
+node: { title:"6"  color:6  label:"cyan" }
+node.textcolor:0
+node: { title:"1"  color:1  label:"blue" }
+node: { title:"2"  color:2  label:"red" }
+node: { title:"7"  color:7  label:"darkgrey" }
+node: { title:"8"  color:8  label:"darkblue" }
+node: { title:"9"  color:9  label:"darkred" }
+node: { title:"10" color:10 label:"darkgreen" }
+node: { title:"11" color:11 label:"darkyellow" }
+node: { title:"12" color:12 label:"darkmagenta" }
+node: { title:"13" color:13 label:"darkcyan" }
+node: { title:"26" color:26 label:"purple" }
+node: { title:"31" color:31 label:"black" }
+node.textcolor:31
+node: { title:"14" color:14 label:"gold" }
+node: { title:"15" color:15 label:"lightgrey" }
+node: { title:"16" color:16 label:"lightblue" }
+node: { title:"17" color:17 label:"lightred" }
+node: { title:"18" color:18 label:"lightgreen" }
+node: { title:"19" color:19 label:"lightyellow" }
+node: { title:"20" color:20 label:"lightmagenta" }
+node: { title:"21" color:21 label:"lightcyan" }
+node: { title:"22" color:22 label:"lilac" }
+node: { title:"23" color:23 label:"turquoise" }
+node: { title:"24" color:24 label:"aquamarine" }
+node: { title:"25" color:25 label:"khaki" }
+node: { title:"27" color:27 label:"yellowgreen" }
+node: { title:"28" color:28 label:"pink" }
+node: { title:"29" color:29 label:"orange" }
+node: { title:"30" color:30 label:"orchid" }
+
+edge.arrowstyle:none
+edge: { source:"0" target:"15" }
+edge: { source:"0" target:"28" }
+edge: { source:"0" target:"14" }
+edge: { source:"0" target:"19" }
+edge: { source:"0" target:"18" }
+edge: { source:"0" target:"21" }
+edge: { source:"0" target:"16" }
+edge: { source:"0" target:"20" }
+
+edge: { source:"20" target:"15" }
+edge: { source:"15" target:"28" }
+edge: { source:"28" target:"14" }
+edge: { source:"14" target:"19" }
+edge: { source:"19" target:"18" }
+edge: { source:"18" target:"21" }
+edge: { source:"21" target:"16" }
+edge: { source:"16" target:"20" }
+
+edge: { source:"15" target:"7"  }
+edge: { source:"28" target:"2"  }
+edge: { source:"14" target:"29" }
+edge: { source:"19" target:"4"  }
+edge: { source:"18" target:"3"  }
+edge: { source:"21" target:"6"  }
+edge: { source:"16" target:"1"  }
+edge: { source:"20" target:"5"  }
+
+edge: { source:"4"  target:"27" }
+edge: { source:"27" target:"3"  }
+edge: { source:"3"  target:"10" }
+edge: { source:"10" target:"6"  }
+edge: { source:"6"  target:"13" }
+edge: { source:"13" target:"1"  }
+edge: { source:"1"  target:"8"  }
+edge: { source:"8"  target:"5"  }
+edge: { source:"5"  target:"12" }
+edge: { source:"12" target:"7"  }
+edge: { source:"7"  target:"31" }
+edge: { source:"31" target:"2"  }
+edge: { source:"2"  target:"9"  }
+edge: { source:"9"  target:"29" }
+edge: { source:"29" target:"11" }
+edge: { source:"11" target:"4" }
+
+
+
+}

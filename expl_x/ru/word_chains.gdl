@@ -1,0 +1,68 @@
+graph: { title:"граф метаграмм"
+
+layoutalgorithm:minbackward
+finetuning: yes
+equalydist: yes
+splines: yes
+scaling: maxspect
+orientation: lefttoright
+xspace:50
+xlspace:30
+spline_factor:70
+
+colorentry 16: 208 228 248
+
+node.shape: ellipse
+node.width: 140
+node.color: lightblue
+node.bordercolor: darkblue
+node.textcolor: black
+node.fontname:"helvR24"
+edge.arrowstyle: none
+
+node: { title: "батог" info3: "href:http://ru.wiktionary.org/wiki/батог" }
+edge: { source: "батог" target: "батон" }
+node: { title: "батон" info3: "href:http://ru.wiktionary.org/wiki/батон" }
+edge: { source: "батон" target: "бетон" }
+edge: { source: "батон" target: "бутон" }
+edge: { source: "батон" target: "барон" }
+node: { title: "бетон" info3: "href:http://ru.wiktionary.org/wiki/бетон" }
+edge: { source: "бетон" target: "бутон" }
+edge: { source: "бетон" target: "жетон" }
+edge: { source: "бетон" target: "бекон" }
+node: { title: "бутон" info3: "href:http://ru.wiktionary.org/wiki/бутон" }
+edge: { source: "бутон" target: "бутан" }
+node: { title: "бутан" info3: "href:http://ru.wiktionary.org/wiki/бутан" }
+edge: { source: "бутан" target: "буран" }
+node: { title: "буран" info3: "href:http://ru.wiktionary.org/wiki/буран" }
+edge: { source: "буран" target: "баран" }
+node: { title: "барон" info3: "href:http://ru.wiktionary.org/wiki/барон" }
+edge: { source: "барон" target: "барин" }
+edge: { source: "барон" target: "баран" }
+node: { title: "барин" info3: "href:http://ru.wiktionary.org/wiki/барин" }
+edge: { source: "барин" target: "баран" }
+node: { title: "баран" info3: "href:http://ru.wiktionary.org/wiki/баран" }
+edge: { source: "баран" target: "варан" }
+edge: { source: "баран" target: "таран" }
+nearedge: { source: "баран" target: "банан" }
+node: { title: "варан" info3: "href:http://ru.wiktionary.org/wiki/варан" }
+edge: { source: "варан" target: "таран" }
+node: { title: "таран" info3: "href:http://ru.wiktionary.org/wiki/таран" }
+edge: { source: "таран" target: "тиран" }
+node: { title: "тиран" info3: "href:http://ru.wiktionary.org/wiki/тиран" }
+edge: { source: "тиран" target: "тираж" }
+node: { title: "тираж" info3: "href:http://ru.wiktionary.org/wiki/тираж" }
+nearedge: { source: "тираж" target: "типаж" }
+edge: { source: "тираж" target: "мираж" }
+edge: { source: "тираж" target: "вираж" }
+node: { title: "типаж" info3: "href:http://ru.wiktionary.org/wiki/типаж" }
+node: { title: "мираж" info3: "href:http://ru.wiktionary.org/wiki/мираж" }
+edge: { source: "мираж" target: "вираж" }
+node: { title: "вираж" info3: "href:http://ru.wiktionary.org/wiki/вираж" }
+edge: { source: "вираж" target: "визаж" }
+node: { title: "визаж" info3: "href:http://ru.wiktionary.org/wiki/визаж" }
+node: { title: "банан" info3: "href:http://ru.wiktionary.org/wiki/банан" }
+node: { title: "жетон" info3: "href:http://ru.wiktionary.org/wiki/жетон" }
+node: { title: "бекон" info3: "href:http://ru.wiktionary.org/wiki/бекон" }
+
+}
