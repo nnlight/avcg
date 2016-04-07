@@ -327,6 +327,7 @@ PRAGMADIR       {WSPACE}#{WSPACE}"pragma".*\n
 "solid"                 { return(LEXWORD_SOLID);               }
 "source_name"           { return(LEXWORD_SOURCENAME);          }
 "sourcename"            { return(LEXWORD_SOURCENAME);          }
+"source"                { return(LEXWORD_SOURCENAME);          }
 "splines"               { return(LEXWORD_SPLINES);             }
 "spline_factor"         { return(LEXWORD_LAYOUTSPLINEFACTOR);  }
 "splinefactor"          { return(LEXWORD_LAYOUTSPLINEFACTOR);  }
@@ -338,6 +339,7 @@ PRAGMADIR       {WSPACE}#{WSPACE}"pragma".*\n
 "straight_phase"        { return(LEXWORD_STRAIGHTPHASE);       }
 "target_name"           { return(LEXWORD_TARGETNAME);          }
 "targetname"            { return(LEXWORD_TARGETNAME);          }
+"target"                { return(LEXWORD_TARGETNAME);          }
 "text_color"            { return(LEXWORD_TEXTCOLOR);           }
 "textcolor"             { return(LEXWORD_TEXTCOLOR);           }
 "text_mode"             { return(LEXWORD_TEXTMODE);            }

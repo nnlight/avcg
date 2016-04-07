@@ -46,7 +46,6 @@ extern yysyntaxtree Syntax_Tree;
 
 union  special {
         unsigned char      byte;
-        int                num;
         long int           lnum;
         double             lrealnum;
         char              *string;
@@ -60,7 +59,7 @@ struct stree_node {
         int  last_column;
         struct stree_node *father;
         union  special     contents;
-        struct stree_node *xson[1];
+        struct stree_node *xson[0];
 };
 
 #define tag(x)           ((x)->tag_field)
@@ -72,7 +71,6 @@ struct stree_node {
 #define xfather(x)        ((x)->father)
 
 #define get_byte(x)      ((x)->contents.byte)
-#define get_num(x)       ((x)->contents.num)
 #define get_lnum(x)      ((x)->contents.lnum)
 #define get_lrealnum(x)  ((x)->contents.lrealnum)
 #define get_string(x)    ((x)->contents.string)
@@ -107,13 +105,12 @@ char * ParseMalloc(int x);
 void ParseFree(void);
 
 union special UnionByte(unsigned char x);
-union special UnionNum(int x);
 union special UnionLnum(long int x);
 union special UnionLrealnum(double x);
 union special UnionString(char *x);
 
-yysyntaxtree BuildCont(int mtag,union special x,YYLTYPE *l);
-yysyntaxtree BuildTree(int mtag,int len, YYLTYPE *l, ...);
+yysyntaxtree BuildCont(int mtag, union special x, YYLTYPE *l);
+yysyntaxtree BuildTree(int mtag, int len, YYLTYPE *l, ...);
 
 yysyntaxtree Copy(yysyntaxtree x);
 yysyntaxtree Revert(yysyntaxtree list);
@@ -384,7 +381,7 @@ int   ConstructorArity(int i);
 
 /* Build Macros */
 
-#define UnionFake() UnionNum(0)
+#define UnionFake() UnionString(NULL)
 
 #define T_index_val(s0,l) BuildCont(T_Co_index_val,UnionLnum(s0),l)
 #define T_stern(s0,l) BuildTree(T_Co_stern,1,l,s0)

@@ -455,7 +455,7 @@ static yysyntaxtree st_malloc(int x)
 {
     yysyntaxtree help;
 
-    help = parsemalloc(sizeof(struct stree_node)+x*sizeof(yysyntaxtree));
+    help = parsemalloc(sizeof(struct stree_node) + x*sizeof(yysyntaxtree));
     return (help);
 }
 
@@ -499,13 +499,6 @@ union special UnionByte(unsigned char x)
     return(help);
 }
 
-union special UnionNum(int x)
-{
-    union special help;
-    help.num = x;
-    return(help);
-}
-
 union special UnionLnum(long int x)
 {
     union special help;
@@ -532,63 +525,54 @@ union special UnionString(char *x)
 /* Build syntax tree nodes                                            */
 /*--------------------------------------------------------------------*/
 
-/* Table for varargs */
-
-static yysyntaxtree TreeTab[1024];
-
-/* without sons */
-
-yysyntaxtree BuildCont(int mtag,union special x,YYLTYPE *l)
+/* without sons
+ */
+yysyntaxtree BuildCont(int mtag, union special x, YYLTYPE *l)
 {
-        yysyntaxtree help;
-        help = st_malloc(1);
+    yysyntaxtree help = st_malloc(0);
+
+    assert(ConstructorArity(mtag) == 0);
 
     help->contents = x;
-    tag(help)          = mtag;
-    xfirst_line(help)   =l->first_line;
-    xfirst_column(help) =l->first_column;
-    xlast_line(help)    =l->last_line;
-    xlast_column(help)  =l->last_column;
-    xfather(help)       =(yysyntaxtree)0;
-    son1(help) = (yysyntaxtree)0;
+    tag(help)           = mtag;
+    xfirst_line(help)   = l->first_line;
+    xfirst_column(help) = l->first_column;
+    xlast_line(help)    = l->last_line;
+    xlast_column(help)  = l->last_column;
+    xfather(help)       = (yysyntaxtree)0;
 
-        return(help);
+    return(help);
 }
 
-/* with sons */
-
-yysyntaxtree BuildTree(int mtag,int len, YYLTYPE *l, ...)
+/* with sons
+ */
+yysyntaxtree BuildTree(int mtag, int len, YYLTYPE *l, ...)
 {
-    int i,j;
+    int i;
     va_list pvar;
-    yysyntaxtree help;
+    yysyntaxtree help = st_malloc(len);
+
+    assert(ConstructorArity(mtag) == len);
+
+    help->contents = UnionFake();
+    tag(help)           = mtag;
+    xfirst_line(help)   = l->first_line;
+    xfirst_column(help) = l->first_column;
+    xlast_line(help)    = l->last_line;
+    xlast_column(help)  = l->last_column;
+    xfather(help)       = (yysyntaxtree)0;
 
     va_start(pvar,l);
-
-    i = 0;
-    help = va_arg(pvar, yysyntaxtree);
-    while (i < len) {
-        TreeTab[i++] = help;
-        help = va_arg(pvar, yysyntaxtree);
+    for (i = 1; i <= len; i++)
+    {
+        yysyntaxtree tree_son = va_arg(pvar, yysyntaxtree);
+        son(help,i) = tree_son;
+        if (tree_son)
+            xfather(tree_son) = help;
     }
     va_end(pvar);
 
-        help = st_malloc((i<1?1:i));
-
-    help->contents = UnionNum(0);
-    tag(help)          = mtag;
-    xfirst_line(help)   =l->first_line;
-    xfirst_column(help) =l->first_column;
-    xlast_line(help)    =l->last_line;
-    xlast_column(help)  =l->last_column;
-    xfather(help)       =(yysyntaxtree)0;
-
-    for (j=1; j<=i; j++) {
-        son(help,j) = TreeTab[j-1];
-        if (TreeTab[j-1]!=(yysyntaxtree)0)
-            xfather(TreeTab[j-1]) = help;
-    }
-        return(help);
+    return(help);
 }
 
 
@@ -596,47 +580,47 @@ yysyntaxtree BuildTree(int mtag,int len, YYLTYPE *l, ...)
 
 yysyntaxtree Copy(yysyntaxtree x)
 {
-    int j,len;
-        yysyntaxtree help;
+    int i,len;
+    yysyntaxtree help;
 
     if (!x) return(x);
     len = nr_of_sons(x);
-        help = st_malloc((len<1?1:len));
+    help = st_malloc(len);
 
     help->contents = x->contents;
-    tag(help)          = tag(x);
+    tag(help)           = tag(x);
     xfirst_line(help)   = xfirst_line(x);
     xfirst_column(help) = xfirst_column(x);
     xlast_line(help)    = xlast_line(x);
     xlast_column(help)  = xlast_column(x);
     xfather(help)       = (yysyntaxtree)0;
-    son1(help) = (yysyntaxtree)0;
 
-    for (j=1; j<=len; j++) {
-        son(help,j) = Copy(son(x,j));
-        if (son(help,j))
-            xfather(son(help,j)) = help;
+    for (i=1; i<=len; i++) {
+        son(help,i) = Copy(son(x,i));
+        if (son(help,i))
+            xfather(son(help,i)) = help;
     }
-        return(help);
+    return(help);
 }
 
 /* revert list */
 
 yysyntaxtree Revert(yysyntaxtree list)
 {
-        yysyntaxtree last, act, next;
+    yysyntaxtree last, act, next;
 
     last = (yysyntaxtree)0;
     act  = list;
     while (act) {
+        assert(nr_of_sons(act) >= 2);
         next = son2(act);
         son2(act) = last;
-        if (last) xfather(last)=act;
+        if (last) xfather(last) = act;
         last = act;
         act = next;
     }
-    if (last) xfather(last)=(yysyntaxtree)0;
-        return(last);
+    if (last) xfather(last) = (yysyntaxtree)0;
+    return(last);
 }
 
 /*--------------------------------------------------------------------*/
