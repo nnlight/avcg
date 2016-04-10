@@ -1786,20 +1786,47 @@ GNODE lookup_hashnode(char *title)
 
 /*--------------------------------------------------------------------*/
 
+static void db_dump_syntax_tree_rec(FILE *f, yysyntaxtree node)
+{
+    const char *name = ConstructorName(tag(node));
+    int nr_sons = nr_of_sons(node);
+    int i;
+
+    FPRINTF(f, "node: {\n");
+    FPRINTF(f, "title: \"%p\"\n", node);
+    FPRINTF(f, "label: \"%s\"\n", name);
+    FPRINTF(f, "}\n");
+
+    for (i = 0; i < nr_sons; i++)
+    {
+        yysyntaxtree node_son = son(node, i+1);
+        if (!node_son)
+            continue;
+
+        FPRINTF(f, "edge: {\n");
+        FPRINTF(f, "sourcename: \"%p\"\n", node);
+        FPRINTF(f, "targetname: \"%p\"\n", node_son);
+        FPRINTF(f, "label: \"%d\"\n", i+1);
+        FPRINTF(f, "}\n");
+
+        db_dump_syntax_tree_rec(f, node_son);
+    }
+}
+
 /*  For debugging only:
  *  ------------------
  *  Сбросить в файл синтаксическое дерево
  */
 static void db_dump_syntax_tree()
 {
-    /* TODO: */
-    GNODE h;
+    FILE *f = fopen("Syntax_Tree.vcg", "w");
 
-    for (h = nodelist; h; h = NNEXT(h))
-    {
-        if (NREFNUM(h)==1L) {
-            return;
-        }
-    }
+    FPRINTF(f, "graph: {\n");
+    FPRINTF(f, "display_edge_labels: yes\n");
+    FPRINTF(f, "yspace: 40\n");
+
+    db_dump_syntax_tree_rec(f, Syntax_Tree);
+
+    FPRINTF(f, "}\n");
 } /* db_dump_syntax_tree */
 
