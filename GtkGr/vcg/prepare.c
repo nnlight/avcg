@@ -117,8 +117,6 @@ void prepare_nodes(void)
     GNODE v,w;
     GEDGE e;
 
-    debugmessage("prepare_nodes","");
-
     /* First, calculate width and height of each node */
     for (v = nodelist; v; v = NNEXT(v)) { calc_node_size(v); }
     for (v = labellist; v; v = NNEXT(v)) { calc_node_size(v); }
@@ -207,7 +205,6 @@ void prepare_nodes(void)
      */
     calc_max_xy_pos();
 
-    debugmessage("end of prepare_nodes","");
 } /* prepare_nodes */
 
 
@@ -235,8 +232,6 @@ static void calc_node_degree(GNODE v)
 
 void calc_node_size(GNODE v)
 {
-    debugmessage("calc_node_size","");
-
     if ((NWIDTH(v) == -1)||(NHEIGHT(v) == -1)) {
         gs_setshrink(NSTRETCH(v),NSHRINK(v));
         switch (NSHAPE(v)) {
@@ -266,7 +261,6 @@ static void calc_node_anchor(GNODE v)
     GEDGE e, nxt_e;
     int   x1,y1,x2,y2;
 
-    debugmessage("calc_node_anchor","");
     for (e = FirstSucc(v); e; e = nxt_e)
     {
         nxt_e = NextSucc(e);
@@ -316,7 +310,6 @@ static void sort_adjacencies(GNODE v)
     int i, len;
     GEDGE e;
 
-    debugmessage("sort_adjacencies","");
     assert((v));
 
     i = 0;

@@ -4578,7 +4578,6 @@ yyreturn:
 int parse()
 {
         nr_errors = 0;
-        debugmessage("yyparse()\n", "");
         yyparse();
 
         return (nr_errors);

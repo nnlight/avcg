@@ -112,33 +112,26 @@ struct gedge foldedge;
  * ----------
  */
 
-static void   node_analyse  _PP((yysyntaxtree no, GNODE ro, GNODE dfn));
-static void   edge_analyse  _PP((yysyntaxtree no, GEDGE dfe));
+static void   node_analyse  (yysyntaxtree no, GNODE ro, GNODE dfn);
+static void   edge_analyse  (yysyntaxtree no, GEDGE dfe);
 
-static void   node_attributes   _PP((yysyntaxtree n, GNODE v,int r,int s));
-static void   edge_attributes   _PP((yysyntaxtree n, GEDGE e));
-static void   graph_attributes  _PP((yysyntaxtree n, GNODE v,int r,int s));
+static void   node_attributes   (yysyntaxtree n, GNODE v,int r,int s);
+static void   edge_attributes   (yysyntaxtree n, GEDGE e);
+static void   graph_attributes  (yysyntaxtree n, GNODE v,int r,int s);
 
-static void   one_node_attribute
-    _PP((yysyntaxtree n2, GNODE v, int rh, int rs, int *bcs));
-static void   one_edge_attribute
-    _PP((yysyntaxtree node2, GEDGE e, int *es, int *as, int *bs));
+static void   one_node_attribute(yysyntaxtree n2, GNODE v, int rh, int rs, int *bcs);
+static void   one_edge_attribute(yysyntaxtree node2, GEDGE e, int *es, int *as, int *bs);
 
-static int    get_color     _PP((yysyntaxtree node));
-static int    get_yesno         _PP((yysyntaxtree node));
-static void   calc_nr_classes   _PP((yysyntaxtree x));
-static GNODE  search_node   _PP((yysyntaxtree x,char *s));
-static void   check_node    _PP((yysyntaxtree x,GNODE m));
-static void   init_hashtable    _PP((void));
-static int    hashval       _PP((char *s));
-static void   insert_hashnode   _PP((GNODE x));
+static int    get_color         (yysyntaxtree node);
+static int    get_yesno         (yysyntaxtree node);
+static void   calc_nr_classes   (yysyntaxtree x);
+static GNODE  search_node       (yysyntaxtree x,char *s);
+static void   check_node        (yysyntaxtree x,GNODE m);
+static void   init_hashtable    (void);
+static int    hashval           (char *s);
+static void   insert_hashnode   (GNODE x);
 
-
-#ifdef CHECKNODE
-static void debug_init_checknode _PP((void));
-#else
-#define debug_init_checknode()  /**/
-#endif
+static void db_dump_syntax_tree();
 
 /*--------------------------------------------------------------------*/
 /* Analysis of syntax trees                                           */
@@ -167,8 +160,6 @@ void step0_main(void)
     int i;
     struct gnode defaultnode;
     struct gedge defaultedge;
-
-    debugmessage("step0_main","");
 
     assert((nodelist==NULL));
     assert((graphlist==NULL));
@@ -244,7 +235,7 @@ void step0_main(void)
 
     /* For debugging only */
 
-    debug_init_checknode();
+    /*db_dump_syntax_tree();*/
 
 } /* step0_main */
 
@@ -322,10 +313,6 @@ static void node_analyse(yysyntaxtree node, GNODE root, GNODE defnode)
     int     h;
     int     borderc_set;    /* Flag, whether the default border color */
                             /* was set explicitely                    */
-
-    debugmessage("node_analyse","");
-
-    gs_wait_message('a');
 
     /* Copy the old default attributes into the new default node */
 
@@ -894,9 +881,6 @@ static void edge_analyse(yysyntaxtree node, GEDGE defedge)
     /* Flags, whether the default edge label color */
     /* etc. were set explicitely                   */
 
-    debugmessage("edge_analyse","");
-
-    gs_wait_message('a');
 
     /* Copy the old default attributes into the new default edge */
 
@@ -1060,7 +1044,6 @@ static void graph_attributes(
     yysyntaxtree node1, node2;
     int borderc_set;
 
-    debugmessage("graph_attributes","");
     assert((!node)||(tag(node)==T_Co_graph_entry));
 
     borderc_set = 0;
@@ -1200,7 +1183,6 @@ static void node_attributes(
     yysyntaxtree node1, node2;
     int borderc_set;
 
-    debugmessage("node_attributes","");
     assert((!node)||(tag(node)==T_Co_node_attribute));
 
     borderc_set = 0;
@@ -1255,7 +1237,6 @@ static void one_node_attribute(
             int rootstretch,
             int *borderc_set)
 {
-    debugmessage("one_node_attribute","");
     assert((node2));
 
     switch(tag(node2)) {
@@ -1382,7 +1363,6 @@ static void edge_attributes(yysyntaxtree node, GEDGE e)
     yysyntaxtree node1, node2;
     int elcol_set, arrowc_set, barrowc_set;
 
-    debugmessage("edge_attributes","");
     assert((!node)||(tag(node)==T_Co_edge_attribute));
     elcol_set   = 0;
     arrowc_set  = 0;
@@ -1414,7 +1394,6 @@ static void one_edge_attribute(
             int *arrowc_set,
             int *barrowc_set)
 {
-    debugmessage("one_edge_attribute","");
     assert((node2));
 
     switch(tag(node2)) {
@@ -1518,72 +1497,39 @@ static int get_color(yysyntaxtree node)
 {
     int res;
 
-    debugmessage("get_color","");
     switch(tag(node)) {
-        case T_Co_black:
-            return(BLACK);
-        case T_Co_blue:
-            return(BLUE);
-        case T_Co_red:
-            return(RED);
-        case T_Co_green:
-            return(GREEN);
-        case T_Co_yellow:
-            return(YELLOW);
-        case T_Co_magenta:
-            return(MAGENTA);
-        case T_Co_cyan:
-            return(CYAN);
-        case T_Co_white:
-            return(WHITE);
-        case T_Co_darkgrey:
-            return(DARKGREY);
-        case T_Co_darkblue:
-            return(DARKBLUE);
-        case T_Co_darkred:
-            return(DARKRED);
-        case T_Co_darkgreen:
-            return(DARKGREEN);
-        case T_Co_darkyellow:
-            return(DARKYELLOW);
-        case T_Co_darkmagenta:
-            return(DARKMAGENTA);
-        case T_Co_darkcyan:
-            return(DARKCYAN);
-        case T_Co_gold:
-            return(GOLD);
-        case T_Co_lightgrey:
-            return(LIGHTGREY);
-        case T_Co_lightblue:
-            return(LIGHTBLUE);
-        case T_Co_lightred:
-            return(LIGHTRED);
-        case T_Co_lightgreen:
-            return(LIGHTGREEN);
-        case T_Co_lightyellow:
-            return(LIGHTYELLOW);
-        case T_Co_lightmagenta:
-            return(LIGHTMAGENTA);
-        case T_Co_lightcyan:
-            return(LIGHTCYAN);
-        case T_Co_lilac:
-            return(LILAC);
-        case T_Co_turquoise:
-            return(TURQUOISE);
-        case T_Co_aquamarine:
-            return(AQUAMARINE);
-        case T_Co_khaki:
-            return(KHAKI);
-        case T_Co_purple:
-            return(PURPLE);
-        case T_Co_yellowgreen:
-            return(YELLOWGREEN);
-        case T_Co_pink:
-            return(PINK);
-        case T_Co_orange:
-            return(ORANGE);
-        case T_Co_orchid:
-            return(ORCHID);
+        case T_Co_black:        return(BLACK);
+        case T_Co_blue:         return(BLUE);
+        case T_Co_red:          return(RED);
+        case T_Co_green:        return(GREEN);
+        case T_Co_yellow:       return(YELLOW);
+        case T_Co_magenta:      return(MAGENTA);
+        case T_Co_cyan:         return(CYAN);
+        case T_Co_white:        return(WHITE);
+        case T_Co_darkgrey:     return(DARKGREY);
+        case T_Co_darkblue:     return(DARKBLUE);
+        case T_Co_darkred:      return(DARKRED);
+        case T_Co_darkgreen:    return(DARKGREEN);
+        case T_Co_darkyellow:   return(DARKYELLOW);
+        case T_Co_darkmagenta:  return(DARKMAGENTA);
+        case T_Co_darkcyan:     return(DARKCYAN);
+        case T_Co_gold:         return(GOLD);
+        case T_Co_lightgrey:    return(LIGHTGREY);
+        case T_Co_lightblue:    return(LIGHTBLUE);
+        case T_Co_lightred:     return(LIGHTRED);
+        case T_Co_lightgreen:   return(LIGHTGREEN);
+        case T_Co_lightyellow:  return(LIGHTYELLOW);
+        case T_Co_lightmagenta: return(LIGHTMAGENTA);
+        case T_Co_lightcyan:    return(LIGHTCYAN);
+        case T_Co_lilac:        return(LILAC);
+        case T_Co_turquoise:    return(TURQUOISE);
+        case T_Co_aquamarine:   return(AQUAMARINE);
+        case T_Co_khaki:        return(KHAKI);
+        case T_Co_purple:       return(PURPLE);
+        case T_Co_yellowgreen:  return(YELLOWGREEN);
+        case T_Co_pink:         return(PINK);
+        case T_Co_orange:       return(ORANGE);
+        case T_Co_orchid:       return(ORCHID);
         case T_Co_colindex:
             res = (int)get_lnum(son1(node));
             if (res >= G_cmap_size) {
@@ -1603,8 +1549,6 @@ static int get_color(yysyntaxtree node)
  */
 static int get_yesno(yysyntaxtree node)
 {
-    debugmessage("get_yesno","");
-
     switch(tag(node)) {
         case T_Co_yes:  return(YES);
         case T_Co_no:   return(NO);
@@ -1625,8 +1569,6 @@ static void calc_nr_classes(yysyntaxtree node)
 {
     yysyntaxtree node1, node2;
     int h;
-
-    debugmessage("calc_nr_classes","");
 
     assert((node && (tag(node) == T_Co_graph_entry)));
     while ( node && (tag(node) == T_Co_graph_entry) ) {
@@ -1702,9 +1644,7 @@ static char buffer[1024];      /* Buffer to create error messages */
  */
 static GNODE search_node(yysyntaxtree x,char *title)
 {
-    GNODE n;
-    debugmessage("search_node",(title?title:"(null)"));
-    n = lookup_hashnode(title);
+    GNODE n = lookup_hashnode(title);
     if (n==NULL) {
         SPRINTF(buffer,"Undefined node %s",title);
         SYERR(x,buffer);
@@ -1721,11 +1661,8 @@ static GNODE search_node(yysyntaxtree x,char *title)
  */
 static void check_node(yysyntaxtree x, GNODE m)
 {
-    char *title;
+    char *title = NTITLE(m);
 
-    assert((m));
-    title = NTITLE(m);
-    debugmessage("check_node",(title?title:"(null)"));
     if (title && lookup_hashnode(title)) {
         SPRINTF(buffer,"Double defined node %s",title);
         SYERR(x,buffer);
@@ -1851,28 +1788,18 @@ GNODE lookup_hashnode(char *title)
 
 /*  For debugging only:
  *  ------------------
- *  Routine that looks for a checknode. This is helpful if we need
- *  to inspect a certain node.
+ *  Сбросить в файл синтаксическое дерево
  */
-
-#ifdef CHECKNODE
-
-GNODE debug_checknode = NULL;
-
-
-static void debug_init_checknode(void)
+static void db_dump_syntax_tree()
 {
+    /* TODO: */
     GNODE h;
 
     for (h = nodelist; h; h = NNEXT(h))
     {
         if (NREFNUM(h)==1L) {
-            debug_checknode = h;
             return;
         }
     }
-}
-
-#endif /* CHECKNODE */
-
+} /* db_dump_syntax_tree */
 

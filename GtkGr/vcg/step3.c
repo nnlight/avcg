@@ -207,7 +207,6 @@ static int firstcall = 1;
  */
 void step3_main(void)
 {
-    debugmessage("step3_main","");
     assert((layer));
 
 #ifdef DRAWDEBUG
@@ -286,8 +285,6 @@ void alloc_levelshift(void)
 {
     int len;
 
-    debugmessage("alloc_levelshift","");
-
     if (sizeof(GNLIST)<sizeof(GNODE))
         Fatal_error("Assertion 1 about structs is wrong.","");
     if (sizeof(GNLIST)<sizeof(int))
@@ -329,7 +326,6 @@ void calc_all_node_sizes(void)
     GNODE v;
     int   h, hh, hhh;
 
-    debugmessage("calc_all_node_sizes","");
     for (v = nodelist; v; v = NNEXT(v))
     {
         calc_node_size(v);
@@ -419,7 +415,6 @@ static void init_xy_coordinates(void)
     GNODE   v;
     int i;
 
-    debugmessage("init_xy_coordinates","");
     if (G_yspace<5)  G_yspace=5;
     if (G_xspace<5)  G_xspace=5;
     if (G_dspace==0) {
@@ -488,7 +483,6 @@ static void center_layout(void)
     int i;
     int shift_value;
 
-    debugmessage("center_layout","");
     for (i=0; i<=maxdepth+1; i++) {
         li = TPRED(layer[i]); /* rightest node */
         if (li) {
@@ -519,8 +513,6 @@ static void shift_left_layout(void)
     GNLIST li;
     int i;
     int minx,miny;
-
-    debugmessage("shift_left_layout","");
 
     /* first, calculate minx and miny */
     minx = miny = MAXINT;
@@ -575,8 +567,6 @@ static void shift_left_together_layout(void)
     int i;
     int    minx, part_is_missing;
     GNODE  node;
-
-    debugmessage("shift_left_together_layout","");
 
     /* first, set the NMARK field to 0 */
     for (i=0; i<=maxdepth+1; i++) {
@@ -696,8 +686,6 @@ static void shift_left_part(GNODE node, int i)
 {
     GEDGE e;
 
-    debugmessage("shift_left_part","");
-
     if (NMARK(node)) return;
     NMARK(node) = 1;
 
@@ -728,8 +716,6 @@ static void shift_left_part(GNODE node, int i)
 static void mark_and_calc_maxx(GNODE node)
 {
     GEDGE e;
-
-    debugmessage("mark_and_calc_maxx","");
 
     if (NMARK(node)==2) return;
     NMARK(node) = 2;
@@ -778,8 +764,6 @@ static void shift_connect_together_layout(void)
     GNODE  node;
     CONNECT c;
 
-    debugmessage("shift_connect_together_layout","");
-
     for (i=0; i<=maxdepth+1; i++) {
         for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
         {
@@ -818,8 +802,6 @@ static void correct_connect_part(GNODE v)
     GNLIST  li;
     int i;
     int     mindist, found;
-
-    debugmessage("correct_connect_part","");
 
     /* first, set the NMARK field to 0 */
     for (i=0; i<=maxdepth+1; i++) {
@@ -863,7 +845,6 @@ static void traverse_and_search_mindist(GNODE v)
     GEDGE e;
     CONNECT c;
 
-    debugmessage("traverse_and_search_mindist","");
     if (!v) return;
     if (NMARK(v)) return;
     NMARK(v) = 1;
@@ -957,8 +938,6 @@ static void iterate_dump_mediumshifts(void)
     int changed;
     int tryout;
 
-    debugmessage("iterate_dump_mediumshifts","");
-
     /* initialize leftupper_node, rightupper_node, ... */
 
     old_nw1 = MAXINT;
@@ -973,7 +952,6 @@ static void iterate_dump_mediumshifts(void)
     dumpfactor = 2;
     while (1) {
         if (count%5==0) {
-            gs_wait_message('m');
             shift_left_layout();
         }
         count++;
@@ -986,12 +964,10 @@ static void iterate_dump_mediumshifts(void)
         if ((!changed)&&(count>=min_mediumshifts))
             break;
         if (count>=max_mediumshifts) {
-            gs_wait_message('t');
             break;
         }
         if (G_timelimit>0)
             if (test_timelimit(85)) {
-                gs_wait_message('t');
                 break;
             }
 
@@ -1018,8 +994,6 @@ static int changed_nw_sum(void)
     int i, nwval1, nwval2, k;
     int changed;
     GNLIST li;
-
-    debugmessage("changed_nw_sum","");
 
     changed = nwval1 = nwval2 = 0;
     for (i=0; i<=maxdepth+1; i++) {
@@ -1091,8 +1065,6 @@ static int dumpmediumshift(int first)
     int i;
     int layer_changed;
     int dir;
-
-    debugmessage("dumpmediumshift","");
 
     layer_changed = 0;
     dir = 0;
@@ -1235,8 +1207,6 @@ static int nwsdump_mediumshift(int i, int dir)
     int j;
     int     sign;
 
-    debugmessage("nwsdump_mediumshift","");
-
     assert((i<=maxdepth));
 
     save_plevel(i);
@@ -1297,8 +1267,6 @@ static int nwpdump_mediumshift(int i, int dir)
     int j;
     int sign;
 
-    debugmessage("nwpdump_mediumshift","");
-
     assert((i>0));
 
     save_plevel(i);
@@ -1349,8 +1317,6 @@ static int nwdump_mediumshift(int i, int dir)
     int     sign;
     GNODE lnode, node, rnode;
     int is_rnode;
-
-    debugmessage("nwdump_mediumshift","");
 
     assert((i<=maxdepth));
 
@@ -1415,8 +1381,6 @@ static int summarize_dumpshift(int i, int dir)
     int changed;
     int     oldpos,sum,nrnodes;
     GNODE   v,w;
-
-    debugmessage("summarize_dumpshift","");
 
     /* First we look whether there is space between nodes on one
      * region. If yes, we must split the region at this point.
@@ -1542,8 +1506,6 @@ static int priosummarize_dumpshift(int i, int dir)
     int     oldpos,sum,nrnodes;
     int priosum, nrprionodes, lprio, rprio;
     GNODE   v,w;
-
-    debugmessage("summarize_dumpshift","");
 
     /* First we look whether there is space between nodes on one
      * region. If yes, we must split the region at this point.
@@ -1699,8 +1661,6 @@ static int correct_priority_nodes(int i)
     GNODE   v,w,oldv;
     int dist;
 
-    debugmessage("correct_priority_nodes","");
-
     assert((i>=0));
 #ifdef DRAWDEBUG
 #ifdef NEVER
@@ -1810,20 +1770,15 @@ static void straight_line_tuning(void)
     int changed;
     GNLIST  li;
 
-    debugmessage("straight_line_tuning","");
-
     count = 0;
     changed = 1;
     while (changed) {
         count++;
-        gs_wait_message('S');
         if (count>max_straighttune) {
-            gs_wait_message('t');
             return;
         }
         if (G_timelimit>0)
             if (test_timelimit(90)) {
-                gs_wait_message('t');
                 return;
             }
         changed = 0;
@@ -1866,8 +1821,6 @@ static int do_straight_line(GNODE v)
     int     sx, tx, sminx, smaxx, diff;
     int     possible, allzero, h2;
     int     changed;
-
-    debugmessage("straight_line","");
 
     sminx = smaxx = sx = tx = NX(v) + NWIDTH(v)/2;
     sw = tw = minw = maxw = v;
@@ -2138,8 +2091,6 @@ static int full_straight_possible(GNODE sw, int sxpos, int dir)
     int     diff;
     int     sxpos_possible, h1, h2;
 
-    debugmessage("full_straight_possible","");
-
     sxpos_possible = 1;
     w = sw;
     while (w && is_fullprio_node(w)) {
@@ -2195,8 +2146,6 @@ static void straight_part(GNODE sw, int sxpos, int dir)
     GNLIST  li;
     int     diff;
     int     sxpos_possible, h1, h2;
-
-    debugmessage("straight_part","");
 
     sxpos_possible = 1;
     w = sw;
@@ -2269,23 +2218,18 @@ static void iterate_centershifts(void)
     int weight,h;
     int second_try;
 
-    debugmessage("iterate_centershifts","");
-
     if (prio_phase==1) return;
 
     weight = center_weight();
     second_try = 2;
     count=0;
     while (1) {
-        if (count%5==0) gs_wait_message('c');
         count++;
         if (count>=max_centershifts) {
-            gs_wait_message('t');
             break;
         }
         if (G_timelimit>0)
             if (test_timelimit(90)) {
-                gs_wait_message('t');
                 break;
             }
         for (i=0; i<=maxdepth+1; i++) center_layer(i);
@@ -2321,8 +2265,6 @@ static int center_weight(void)
     GNLIST  li;
     GEDGE e;
     int weight,h;
-
-    debugmessage("center_weight","");
 
     weight = 0;
     for (i=0; i<=maxdepth+1; i++) {
@@ -2366,8 +2308,6 @@ static int center_layer(int i)
     int dir;
     GNODE   lnode, node, rnode;
     int is_rnode;
-
-    debugmessage("center_layer","");
 
     save_plevel(i);
 
@@ -2869,7 +2809,6 @@ static void save_plevel(int i)
     int j;
     GNLIST li;
 
-    debugmessage("save_plevel","");
     j  = 0;
     for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
     {

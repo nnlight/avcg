@@ -46,19 +46,6 @@
 #define OWN_QUICKSORT
 
 
-/*   Window system Sunview or X11 ?
- *   Sunview is fast, but does not support remote window displaying.
- *   X11 (R5) is a little bit slower, but supports remote display.
- *   Do not define both !!!
- */
-
-#define X11
-
-#ifdef X11
-#define FAST_X11_DRAWING
-#endif
-
-
 
 /*   Memory block size for memory allocation in bytes. The allocation
  *   mechanism allocates blocks of this size, and dynamically increases
@@ -81,10 +68,6 @@
  *         function entry are produced if DEBUG is switched on.
  *      b) Assertion checking: only if an assertion fails, an
  *         appropriate message is produced.
- *      c) Node tracing: This is basically the same as the behaviour
- *         tracing. At each function entry, the status of a node
- *         will be printed. This happens if CHECKNODE is defined.
- *         See step0 for the selection of the node to be traced.
  *   Behaviour or node tracing is only needed in very serious cases.
  *   The macros "debuggingmessage" can be redefined to do some special
  *   tests on every entry.
@@ -96,19 +79,9 @@
 
 /* for internal debugging */
 #undef DEBUG
-#undef CHECKNODE
 /* for assertion checking at runtime */
 #define CHECK_ASSERTIONS
 
-
-
-/*  Check and printout the timing of phases.
- *  If CHECK_TIMING is defined, time measurement is done at some
- *  critical points. This is only for me, to fine tune the
- *  preformance. (GS)
- */
-
-#undef CHECK_TIMING
 
 /*---------------------------- End of Changes ------------------------*/
 
@@ -117,25 +90,6 @@
 
 #define _PP(x) x
 
-
-/* Debugging messages */
-
-#ifdef DEBUG
-#define debugmessage(a,b) {FPRINTF(stderr,"Debug: %s %s\n",a,b);}
-#else
-#define debugmessage(a,b) /**/
-#endif
-
-#ifdef CHECKNODE
-#define DEBUG
-#undef debugmessage
-#define debugmessage(a,b) { \
-    FPRINTF(stderr,"Debug: %s %s &",a,b); \
-    if (debug_checknode)  \
-        FPRINTF(stderr,"Checknode: |%s|\n",NTITLE(debug_checknode)); \
-    FPRINTF(stderr,"\n"); \
-}
-#endif
 
 /* Assertions */
 

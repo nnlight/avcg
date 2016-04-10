@@ -44,6 +44,14 @@
 #define DRAWLIB_H
 
 /*--------------------------------------------------------------------*/
+/*   Window system Sunview or X11 ?
+ *   Sunview is fast, but does not support remote window displaying.
+ *   X11 (R5) is a little bit slower, but supports remote display.
+ *   Do not define both !!!
+ */
+#define X11
+#define FAST_X11_DRAWING
+
 
 /* See drawlib.c for explanation
  * -----------------------------

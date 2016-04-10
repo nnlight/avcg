@@ -258,7 +258,6 @@ static void revert_subgraph(GNODE v)
     GNLIST l;
     int rev;
 
-    debugmessage("revert_subgraph",(NTITLE(v)?NTITLE(v):"(null)"));
     rev = NREVERT(v);
 
     for (l = NSGRAPH(v); l; l = GNNEXT(l))
@@ -406,8 +405,6 @@ void    folding(void)
     GNLIST  l;
     int rclass;
 
-    debugmessage("folding","");
-
     assert((labellist == NULL));
     assert((dummylist == NULL));
     assert((tmpnodelist == NULL));
@@ -420,7 +417,6 @@ void    folding(void)
      *    visible
      */
 
-    gs_wait_message('f');
     for (v = invis_nodes; v; v = vn)
     {
         vn = NNEXT(v);
@@ -566,7 +562,6 @@ static void delete_node(GNODE v, int k)
 {
     assert((v));
     assert((k!=0));
-    debugmessage("delete_node",(NTITLE(v)?NTITLE(v):"(null)"));
     if (!NINLIST(v)) return;
     NINLIST(v) = 0;
     NINVISIBLE(v) = k;
@@ -591,7 +586,6 @@ static void insert_node(GNODE v, int k)
 {
     assert((v));
     assert((k!=0));
-    debugmessage("insert_node",(NTITLE(v)?NTITLE(v):"(null)"));
     if (NINLIST(v)) return;
     if (NINVISIBLE(v)!=k) return;
     NINLIST(v) = 1;
@@ -618,7 +612,6 @@ static void delete_sgnodes(GNODE u)
     GNODE   v;
     GNLIST  l;
 
-    debugmessage("delete_sgnodes",(NTITLE(u)?NTITLE(u):"(null)"));
     for (l = NSGRAPH(u); l; l = GNNEXT(l))
     {
         v = GNNODE(l);
@@ -638,7 +631,6 @@ static void delete_sgnodes(GNODE u)
 static void fold_sg(GNODE u)
 {
     if (!u) return;
-    debugmessage("fold_sg",(NTITLE(u)?NTITLE(u):"(null)"));
 
     delete_sgnodes(u);
     insert_node(u, UNFOLDED_SGRAPH);
@@ -657,7 +649,6 @@ static void unfold_sg(GNODE u)
     GNLIST  l;
 
     if (!u) return;
-    debugmessage("unfold_sg",(NTITLE(u)?NTITLE(u):"(null)"));
 
     for (l = NSGRAPH(u); l; l = GNNEXT(l))
     {
@@ -711,7 +702,6 @@ static void fold_region(GNODE n, int k)
 
 
     assert((n));
-    debugmessage("fold_region",(NTITLE(n)?NTITLE(n):"(null)"));
 
     /* First, we create a stable replacement node, that stores
      * all information of the node. Then we use the start node
@@ -824,7 +814,6 @@ static void recursive_fold(GNODE v, GNODE n, int k)
 
     assert((v));
     assert((n));
-    debugmessage("recursive_fold",(NTITLE(v)?NTITLE(v):"(null)"));
 
     /* Check of cycle: both checks means the same */
     if ( !NINLIST(v) ) return;
@@ -864,7 +853,6 @@ static void unfold_region(GNODE n)
     GNODE   h;
 
     assert((n));
-    debugmessage("unfold_region",(NTITLE(n)?NTITLE(n):"(null)"));
 
     if (NREGREPL(n)==NULL) return; /* it was no region */
 
@@ -1024,8 +1012,6 @@ static void refresh(void)
     GEDGE   e;
     char    hh;
 
-    debugmessage("refresh","");
-
     assert((labellist    == NULL));
     assert((labellistend == NULL));
     assert((tmpnodelist == NULL));
@@ -1072,7 +1058,6 @@ static void refresh(void)
  */
 static void refresh_all_nodes(GNODE v)
 {
-    debugmessage("refresh_all_nodes","");
     for ( ; v; v = NNEXT(v))
     {
         NTIEFE(v)   = -1;
@@ -1152,7 +1137,6 @@ static void sort_all_nodes(void)
     if (G_timelimit>0) {
         if (test_timelimit(10)) {
             layout_flag = 1;
-            gs_wait_message('t');
         }
     }
 
@@ -1166,7 +1150,6 @@ static void sort_all_nodes(void)
         {
             if (G_timelimit>0) {
                 if (test_timelimit(15)) {
-                    gs_wait_message('t');
                     layout_flag = 1;
                     break;
                 }
@@ -1180,7 +1163,6 @@ static void sort_all_nodes(void)
         {
             if (G_timelimit>0) {
                 if (test_timelimit(15)) {
-                    gs_wait_message('t');
                     layout_flag = 1;
                     break;
                 }
@@ -1345,7 +1327,6 @@ GNODE   create_labelnode(GEDGE e)
 {
     GNODE   v;
 
-    debugmessage("create_labelnode","");
     v = tmpnodealloc(CENTER,-1,-1,0,
             G_color,ELABELCOL(e),ELABELCOL(e));
     NTITLE(v)   = "";
@@ -1368,8 +1349,6 @@ GNODE   create_labelnode(GEDGE e)
 static GNODE    search_visible(GNODE v)
 {
     GNODE w;
-
-    debugmessage("search_visible","");
 
     /* Dangerous: I'm not sure that this terminates always */
 
@@ -1418,7 +1397,6 @@ static GEDGE    substed_edge(GEDGE e)
     GEDGE   h;
 
     assert((e));
-    debugmessage("substed_edge","");
 
     /* We assume: e is in edgelist !!! */
 

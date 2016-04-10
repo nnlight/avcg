@@ -211,8 +211,6 @@ extern void X11_fast_triangle
     _PP((int x1,int y1,int x2,int y2,int x3,int y3, int c));
 #endif
 
-void gs_wait_message    _PP((int c));
-
 /* Static functions */
 
 static int  check_visible   _PP((int a, int b, int c, int d));
@@ -5057,7 +5055,6 @@ static void gs_bezierspline(
     int dashx, dashy;
     int d1,d2,d3,dash;
 
-    gs_wait_message('d');
     if (G_flat_factor<1)   G_flat_factor=1;
     if (G_flat_factor>100) G_flat_factor=100;
     sx1 = x0+(x1-x0) * G_flat_factor/100;
@@ -6013,8 +6010,6 @@ static void draw_spline(GEDGE e, int first)
         int     t, m,topbend,botbend;
     int     i, okay;
 
-    debugmessage("draw_spline","");
-
     /* Check whether the predecessor is a dummy node.
      * If yes, we do not draw this part of the edge here,
      * because we draw at when we draw the original edge.
@@ -6194,8 +6189,6 @@ static void draw_splineanchors(GEDGE e)
     int   h, w, x1, x2, yb, y1, y2, xx, d;
     int   t, c, m;
 
-    debugmessage("draw_splineanchors","");
-
     x1 = ESTARTX(e) * G_stretch/G_shrink;
     x2 = EENDX(e) * G_stretch/G_shrink;
     v = ESTART(e);
@@ -6356,8 +6349,6 @@ static GEDGE dummy_continue_edge(GNODE v, GEDGE e)
     GEDGE e2;
     CONNECT c;
 
-    debugmessage("dummy_continue_edge","");
-
     e2 = NULL;
     c = NCONNECT(v);
     if (c && (CEDGE(c))) {
@@ -6396,8 +6387,6 @@ static GEDGE dummy_continue_edge(GNODE v, GEDGE e)
 
 static void draw_start_part(int x0,int y0,int x1,int y1,int c,int t,int m)
 {
-    debugmessage("draw_start_part","");
-
     x1 = (x0+x1)/2;
     y1 = (y0+y1)/2;
     switch (m) {
@@ -6418,8 +6407,6 @@ static void draw_start_part(int x0,int y0,int x1,int y1,int c,int t,int m)
 
 static void draw_final_part(int x0,int y0,int x1,int y1,int c,int t,int m)
 {
-    debugmessage("draw_start_part","");
-
     x0 = (x0+x1)/2;
     y0 = (y0+y1)/2;
 
@@ -6450,8 +6437,6 @@ static void draw_spline_part(
     GNODE v,w;
     int k,r;
     double kk,rr;
-
-    debugmessage("draw_spline_part","");
 
 
     spl_x0 = x0 = (x0+x1)/2;
@@ -6576,8 +6561,6 @@ static void check_special_dummy(GNODE node,GNODE sn,int x1,int y1)
     GEDGE e1,e2,e3,e4;
     GNODE tnode,snode,tsn,ssn,h;
 
-    debugmessage("check_special_dummy","");
-
     /* assert((NTIEFE(node)==NTIEFE(sn))); */
 
     if (node==sn) return;
@@ -6637,7 +6620,6 @@ static void check_border_points(GNODE node,int x1,int y1)
     int kx,ky;
     GEDGE e;
 
-    debugmessage("check_border_points","");
     if (!NANCHORNODE(node)) {
         switch(NSHAPE(node)) {
         case BOX:
@@ -6758,8 +6740,6 @@ static void check_spline_point(int kx,int ky,int x1,int y1)
 {
     int ngx0,ngx2,ngy0,ngy2;
     int gradAZ, gradAN, gradBZ, gradBN;
-
-    debugmessage("check_spline_point","");
 
     kx = kx*G_stretch/G_shrink;
     ky = ky*G_stretch/G_shrink;

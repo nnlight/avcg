@@ -64,8 +64,6 @@ static void parse_part( FILE *f, const char *fname)
 {
     int     errs,i;
 
-    debugmessage("parse_part","");
-
     /* We start from the scratch */
 
     for (i=0; i<3; i++) info_names[i] = NULL;
@@ -73,11 +71,8 @@ static void parse_part( FILE *f, const char *fname)
     free_memory();
 
 
-    debugmessage("start_parsing", "");
-
     init_lex( f, fname);
     errs = parse();
-    debugmessage("finished_parsing", "");
 
 
     if (errs>0) Fatal_error("Syntax error","");
@@ -113,8 +108,6 @@ void Fatal_error(char *x,char *y)
  */
 static void visualize_part(void)
 {
-    debugmessage("visualize_part","");
-
     /* Init of the default values */
 
     G_title         = "G_title";
@@ -165,8 +158,6 @@ static void visualize_part(void)
  */
 static void relayout(void)
 {
-    debugmessage("relayout","");
-
     free_all_tmplists();
     folding();
 
@@ -280,15 +271,6 @@ static void add_dirty_labels()
     }
 #endif
 } /* add_dirty_labels */
-
-/*--------------------------------------------------------------------*/
-
-
-void gs_wait_message(int ch)
-{
-    return;
-}
-
 
 
 /*--------------------------------------------------------------------*/

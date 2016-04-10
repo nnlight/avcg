@@ -44,10 +44,6 @@
 #include "vcg_defs.h"
 
 
-#ifdef CHECKNODE
-extern GNODE debug_checknode;
-#endif
-
 
 typedef enum Memarea_t {
     MA_GNODE,

@@ -149,7 +149,6 @@ static int tree_factor2;
 
 int tree_main(void)
 {
-    debugmessage("tree_main","");
     assert((layer));
 
     if (tree_factor<0) tree_factor = -tree_factor;
@@ -166,8 +165,6 @@ int tree_main(void)
         tree_factor1 = 1;
         tree_factor2 = 2;
     }
-
-    gs_wait_message('T');
 
     /* Check whether it is a forest of trees */
 
@@ -206,7 +203,6 @@ int tree_main(void)
      *  NPREDL, NPREDR, NSUCCL, NSUCCR.
      */
 
-    gs_wait_message('T');
     sort_all_adjacencies();
     calc_all_ports(1);
 
@@ -233,8 +229,6 @@ static int is_tree(void)
     GNODE v;
     GNLIST li;
     CONNECT c;
-
-    debugmessage("is_tree","");
 
     for (v = nodelist; v; v = NNEXT(v)) { NMARK(v) = 1; }
     for (v = labellist; v; v = NNEXT(v)) { NMARK(v) = 1; }
@@ -307,8 +301,6 @@ static void create_tpred_lists(void)
     int i, k;
     GNLIST h1, h2;
 
-    debugmessage("create_tpred_lists","");
-
     max_nodes_per_layer = 0;
     for (i=0; i<=maxdepth+1; i++) {
         TPRED(layer[i]) = NULL;
@@ -334,8 +326,6 @@ static void sort_tsucc_and_tpred(void)
 {
     int i, k, max;
     GNLIST h1;
-
-    debugmessage("sort_tsucc_and_tpred","");
 
     for (i=0; i<=maxdepth+1; i++) {
         k = 0;
@@ -393,8 +383,6 @@ void sort_all_adjacencies(void)
     GNLIST li;
     GEDGE e;
 
-    debugmessage("sort_all_adjacencies","");
-
     for (i=0; i<=maxdepth+1; i++) {
         for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
         {
@@ -433,8 +421,6 @@ static void tree_layout(void)
     GNLIST li;
     GNODE v;
     CONNECT c;
-
-    debugmessage("tree_layout","");
 
     horder_warn = 0;
 
@@ -498,7 +484,6 @@ static void tree_layout(void)
                 if (backward_connection2(c)) fresh = 0;
             }
             if (fresh) {
-                gs_wait_message('T');
                 (void)find_position(v, G_xbase+NWIDTH(v)/2);
             }
         }
@@ -520,8 +505,6 @@ static int find_position(GNODE v, int leftest_pos)
     GNODE conn1, conn2, leftconn;
     CONNECT c;
     int outdeg = get_node_succs_num(v);
-
-    debugmessage("find_position","");
 
     if (leftest_pos<0) leftest_pos = 0;
     if (!v) return(leftest_pos);
@@ -751,9 +734,7 @@ static int find_position(GNODE v, int leftest_pos)
 static void correct_position(GNODE conn, GNODE v)
 {
     int i, depth, diff;
-    debugmessage("correct_position","");
 
-    gs_wait_message('T');
     assert((NX(v)>NX(conn)));
     for (i=0; i<=maxdepth+1; i++)
         TMINX(layer[i]) = MAXINT;
@@ -777,8 +758,6 @@ static int min_x_in_tree(GNODE v, GNODE conn)
     int maxlevel, l, h;
     GEDGE e;
     CONNECT c;
-
-    debugmessage("min_x_in_tree","");
 
     if (v==conn) return(0);
 
@@ -819,8 +798,6 @@ static int max_x_in_tree(GNODE v, int depth)
     GEDGE e;
     CONNECT c;
 
-    debugmessage("max_x_in_tree","");
-
     l = NTIEFE(v);
     if (l>depth) return(0);
     mindiff = TMINX(layer[l]) - NX(v) - NWIDTH(v);
@@ -853,8 +830,6 @@ static void correct_xpos(GNODE v, int diff)
 {
     GEDGE e;
     CONNECT c;
-
-    debugmessage("correc_xpos","");
 
     NX(v) += diff;
 

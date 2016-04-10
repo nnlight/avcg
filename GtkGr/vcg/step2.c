@@ -277,7 +277,6 @@ void step2_main(void)
     int i;
     int old_nr_crossings;
 
-    debugmessage("step2_main","");
     assert((layer));
 
 
@@ -339,12 +338,10 @@ void step2_main(void)
     nr_bary_iterations = 0;
     while (nr_crossings != old_nr_crossings) {
         if (nr_bary_iterations>=max_baryiterations) {
-            gs_wait_message('t');
             break;
         }
         if (G_timelimit>0)
             if (test_timelimit(60)) {
-                gs_wait_message('t');
                 break;
             }
         old_nr_crossings = nr_crossings;
@@ -369,9 +366,7 @@ void step2_main(void)
      * have minimal crossings.
      */
 
-    gs_wait_message('b');
     insert_connects_in_layer();
-    gs_wait_message('b');
 
     /* Again, we examine the local neighboured nodes to optimize the
      * crossings. Now, we do not optimize nodes with nearedges.
@@ -513,8 +508,6 @@ static void tree_horizontal_order(void)
     double maxbary;
     int max_eprio = 0;
 
-    debugmessage("tree_horizontal_order","");
-
     /* Not necessary, but for security reason: unmark all nodes
      * and edges.
      */
@@ -623,8 +616,6 @@ static void prepare_horizontal_order(void)
     int    i, reorder_necessary;
     GNODE  node;
 
-    debugmessage("prepare_horizontal_order","");
-
     max_horder_num = 0;
 
     for (i=0; i<=maxdepth+1; i++) {
@@ -669,8 +660,6 @@ static void unmerge_connected_parts(void)
     GNODE  node;
     int act_graph;
 
-    debugmessage("unmerge_connected_parts","");
-
     /* first, set the NBARY field to 0 */
     for (i=0; i<=maxdepth+1; i++) {
         for (li = TSUCC(tmp_layer[i]); li; li = GNNEXT(li))
@@ -684,7 +673,6 @@ static void unmerge_connected_parts(void)
     part_is_missing = 1;
     while (part_is_missing) {
 
-        gs_wait_message('u');
         part_is_missing =0;
         node = NULL;
         act_graph++;
@@ -735,8 +723,6 @@ static void mark_all_nodes(GNODE node, int i)
 {
     GEDGE e;
 
-    debugmessage("mark_all_nodes","");
-
     if (NBARY(node)) return;
     if (NHORDER(node)>=0)
         NBARY(node) = (float)i*(float)(max_horder_num+1)
@@ -768,7 +754,6 @@ static int graph_crossings(void)
     int i;
     int sumC;
 
-    debugmessage("graph_crossings","");
     assert((tmp_layer));
     sumC = 0;
     for (i=0; i<=maxdepth; i++) sumC += TCROSS(tmp_layer[i]);
@@ -787,7 +772,6 @@ static void calc_all_layers_crossings(void)
 {
     int i;
 
-    debugmessage("calc_all_layers_crossings","");
     assert(tmp_layer);
     for (i=0; i<=maxdepth; i++)
         TCROSS(tmp_layer[i]) = layer_crossing(i);
@@ -835,7 +819,6 @@ static int layer_crossing(int level)
     int i;
     ADJEDGE a;
 
-    debugmessage("layer_crossings","");
     assert((tmp_layer));
     assert((lower_list==NULL));
     assert((upper_list==NULL));
@@ -1042,7 +1025,6 @@ static void finish_upper(GNODE v)
                 /* precede an occurence of v            */
     int k3;     /* number of edges that start before v  */
                 /* to nonfinished nodes.        */
-    debugmessage("finish_upper","");
     assert((v));
     k1 = k2 = k3 = 0;
     if (NVPTR(v)) {
@@ -1090,7 +1072,6 @@ static void finish_lower(GNODE v)
                 /* precede an occurence of v            */
     int k3;     /* number of edges that start before v  */
                 /* to nonfinished nodes.        */
-    debugmessage("finish_lower","");
     assert((v));
     k1 = k2 = k3 = 0;
     if (NVPTR(v)) {
@@ -1137,7 +1118,6 @@ static void append_to_upper(GNODE n)
     DLLIST  d;
 
     assert((n));
-    debugmessage("append_to_upper", (NTITLE(n)?NTITLE(n):""));
 
     d = dllist_alloc(n,upper_list_end);
     if (!upper_list)    upper_list = d;
@@ -1155,7 +1135,6 @@ static void append_to_lower(GNODE n)
     DLLIST  d;
 
     assert((n));
-    debugmessage("append_to_lower", (NTITLE(n)?NTITLE(n):""));
 
     d = dllist_alloc(n,lower_list_end);
     if (!lower_list)    lower_list = d;
@@ -1172,8 +1151,7 @@ static void delete_upper(DLLIST x)
 {
     assert((x));
     assert((DNODE(x)));
-    debugmessage("delete_upper",
-        (NTITLE(DNODE(x))?NTITLE(DNODE(x)):""));
+
     if (DPRED(x)) DSUCC(DPRED(x)) = DSUCC(x);
     else          upper_list      = DSUCC(x);
     if (DSUCC(x)) DPRED(DSUCC(x)) = DPRED(x);
@@ -1190,8 +1168,7 @@ static void delete_lower(DLLIST x)
 {
     assert((x));
     assert((DNODE(x)));
-    debugmessage("delete_lower",
-        (NTITLE(DNODE(x))?NTITLE(DNODE(x)):""));
+
     if (DPRED(x)) DSUCC(DPRED(x)) = DSUCC(x);
     else          lower_list      = DSUCC(x);
     if (DSUCC(x)) DPRED(DSUCC(x)) = DPRED(x);
@@ -1242,22 +1219,18 @@ static void prepare_local_optimization(int level)
     int i;
     GNLIST  vl;
 
-    debugmessage("prepare_local_optimization","");
-
     if (level>0) {
         i = 1;
-        vl = TSUCC(tmp_layer[level-1]);
-        while (vl) {
-            NPOS(GNNODE(vl))  = i++;
-            vl = GNNEXT(vl);
+        for (vl = TSUCC(tmp_layer[level-1]); vl; vl = GNNEXT(vl))
+        {
+            NPOS(GNNODE(vl)) = i++;
         }
     }
     if (level<=maxdepth) {
         i = 1;
-        vl = TSUCC(tmp_layer[level+1]);
-        while (vl) {
-            NPOS(GNNODE(vl))  = i++;
-            vl = GNNEXT(vl);
+        for (vl = TSUCC(tmp_layer[level+1]); vl; vl = GNNEXT(vl))
+        {
+            NPOS(GNNODE(vl)) = i++;
         }
     }
 }
@@ -1273,8 +1246,6 @@ static int exchange_nodes_necessary(GNODE C, GNODE D)
     DLLIST actlistC, h;
     GEDGE e;
     int Sum1, Sum2;
-
-    debugmessage("exchange_nodes_necessary","");
 
     Sum1 = Sum2 = 0;
 
@@ -1339,8 +1310,6 @@ static int level_crossing_optimization(int level, int nearedges)
     GNLIST  vl1, vl2;
     GNODE n1,n2;
 
-    debugmessage("level_crossing_optimization","");
-
     assert((level>=0));
     assert((level<=maxdepth+1));
 
@@ -1379,15 +1348,11 @@ static void local_crossing_optimization(int nearedges)
 {
     int i;
 
-    debugmessage("local_crossing_optimization","");
-
     if (!local_unwind) return;
     if (G_timelimit>0)
         if (test_timelimit(60)) {
-            gs_wait_message('t');
             return;
         }
-    gs_wait_message('l');
     for (i=0; i<=maxdepth+1; i++)
         while (level_crossing_optimization(i, nearedges));
 }
@@ -1425,8 +1390,6 @@ static void prepare_positions(void)
 {
     GNLIST h1;
     int i, j;
-
-    debugmessage("prepare_positions","");
 
     /* First, give all nodes their position numbers */
     for (i=0; i<=maxdepth+1; i++) {
@@ -1471,8 +1434,6 @@ static int check_exchange(GNODE v1, GNODE v2, int dir)
     int d1, d2;
     GNODE n1, n2;
 
-    debugmessage("check_exchange","");
-
     if (is_complex(v1)) return(0);
     if (is_complex(v2)) return(0);
     d1 = NPOS(v1)-NPOS(v2);
@@ -1502,8 +1463,6 @@ static void do_exchange(GNODE v1, GNODE v2, int dir)
     int    d1, d2, h;
     GNODE  n1, n2;
     GNLIST vl1, vl2, vl3;
-
-    debugmessage("do_exchange","");
 
     if (is_complex(v1)) return;
     if (is_complex(v2)) return;
@@ -1545,8 +1504,6 @@ static void unwind_crossed_edges(GNODE v)
 {
     GEDGE e1, e2;
 
-    debugmessage("unwind_crossed_edges","");
-
     for (e1 = FirstSucc(v); e1; e1 = NextSucc(e1))
     {
         for (e2 = FirstSucc(v); e2; e2 = NextSucc(e2))
@@ -1575,14 +1532,10 @@ static void local_unwind_crossings(void)
 {
     GNODE v;
 
-    debugmessage("local_unwind_crossings","");
-
     if (G_timelimit>0)
         if (test_timelimit(60)) {
-            gs_wait_message('t');
             return;
         }
-    gs_wait_message('l');
     prepare_positions();
     for (v = nodelist; v; v = NNEXT(v))
     {
@@ -1663,8 +1616,6 @@ static void barycentering(void)
     int changed;
     int tmp_startlevel, alt_startlevel;
 
-    debugmessage("barycentering","");
-
     assert(tmp_layer);
 
     tmp_startlevel = alt_startlevel = 0;
@@ -1673,12 +1624,10 @@ static void barycentering(void)
         nr_bary_iterations++;
         if (nr_crossings==0) return; /* is already optimal */
         if (nr_bary_iterations>=max_baryiterations) {
-            gs_wait_message('t');
             break;
         }
         if (G_timelimit>0)
             if (test_timelimit(60)) {
-                gs_wait_message('t');
                 break;
             }
         changed = 0;
@@ -1734,12 +1683,10 @@ static void barycentering(void)
     while (changed) {
         nr_bary_iterations++;
         if (nr_bary_iterations>=max_baryiterations) {
-            gs_wait_message('t');
             break;
         }
         if (G_timelimit>0)
             if (test_timelimit(60)) {
-                gs_wait_message('t');
                 break;
             }
         changed = 0;
@@ -1773,12 +1720,10 @@ static void barycentering(void)
     while (changed) {
         nr_bary_iterations++;
         if (nr_bary_iterations>=max_baryiterations) {
-            gs_wait_message('t');
             break;
         }
         if (G_timelimit>0)
             if (test_timelimit(60)) {
-                gs_wait_message('t');
                 break;
             }
         changed = 0;
@@ -1827,8 +1772,6 @@ static void    Phase1_down(void)
 {
     int     i;
 
-    debugmessage("Phase1_down","");
-    gs_wait_message('b');
     for (i=0; i<=maxdepth; i++) (void)resort_down_layer(i);
 #ifdef CHECK_CROSSING
     i = graph_crossings();
@@ -1849,8 +1792,6 @@ static void    Phase1_up(void)
 {
     int     i;
 
-    debugmessage("Phase1_up","");
-    gs_wait_message('b');
     for (i=maxdepth; i>=0; i--) (void)resort_up_layer(i);
 #ifdef CHECK_CROSSING
     i = graph_crossings();
@@ -1876,7 +1817,6 @@ static int     resort_down_layer(int i)
     int c;
     int j;
 
-    debugmessage("resort_down_layer","");
     assert((i>=0));
     assert((i<=maxdepth));   /* we access to maxdepth+1 which exists */
     /* Assertion: TCROSS(tmp_layer[i]) is correctly initialized */
@@ -1920,7 +1860,6 @@ static int     resort_up_layer(int i)
     int c;
     int j;
 
-    debugmessage("resort_up_layer","");
     assert((i>=0));
     assert((i<=maxdepth));   /* we access to maxdepth+1 which exists */
     /* Assertion: TCROSS(tmp_layer[i]) is correctly initialized */
@@ -1980,14 +1919,10 @@ static void    Phase2_down(void)
     int     i,j;
     int     cross;
 
-    debugmessage("Phase2_down","");
-
-    gs_wait_message('B');
     for (i=phase2_startlevel; i<=maxdepth; i++) {
 
         if (G_timelimit>0)
             if (test_timelimit(60)) {
-                gs_wait_message('t');
                 break;
             }
         level_to_array(i,'u');
@@ -2017,7 +1952,6 @@ static void    Phase2_down(void)
 
         if (G_timelimit>0)
             if (test_timelimit(60)) {
-                gs_wait_message('t');
                 break;
             }
         level_to_array(i,'u');
@@ -2064,14 +1998,10 @@ static void    Phase2_up(void)
     int     i,j;
     int     cross;
 
-    debugmessage("Phase2_up","");
-
-    gs_wait_message('B');
     for (i=phase2_startlevel; i>0; i--) {
 
         if (G_timelimit>0)
             if (test_timelimit(60)) {
-                gs_wait_message('t');
                 break;
             }
         level_to_array(i,'d');
@@ -2101,7 +2031,6 @@ static void    Phase2_up(void)
 
         if (G_timelimit>0)
             if (test_timelimit(60)) {
-                gs_wait_message('t');
                 break;
             }
         level_to_array(i,'d');
@@ -2202,10 +2131,8 @@ static int  cycle_sort_array(int siz)
     int j,k;
     int original_sit;  /* flag: original situation reached      */
     int start_region;  /* index of the start of the part        */
-               /* of sort_array where NBARY's are equal */
+                       /* of sort_array where NBARY's are equal */
     GNODE h;
-
-    debugmessage("cycle_sort_array","");
 
     original_sit = 1;
     start_region = -1;
@@ -2251,7 +2178,6 @@ static float succbary(GNODE node)
     GEDGE e;
 
     assert(node);
-    debugmessage("succbary","");
     /* Assertion: The NPOS-values are set before by level_to_array */
 
     Sum = 0;
@@ -2279,7 +2205,6 @@ static float predbary(GNODE node)
     GEDGE e;
 
     assert(node);
-    debugmessage("predbary","");
     /* Assertion: The NPOS-values are set before by level_to_array */
 
     Sum = 0;
@@ -2317,7 +2242,6 @@ static float succmedian(GNODE node)
     assert((node));
     /* Assertion: the save_array must be unused at that time */
 
-    debugmessage("succmedian","");
     /* Assertion: The NPOS-values are set before by level_to_array */
 
     i = 0;
@@ -2358,7 +2282,6 @@ static float predmedian(GNODE node)
     assert((node));
     /* Assertion: the save_array must be unused at that time */
 
-    debugmessage("predmedian","");
     /* Assertion: The NPOS-values are set before by level_to_array */
 
     i = 0;
@@ -2568,7 +2491,6 @@ static void level_to_array(int i, int dir)
     int j;
     GNLIST hn;
 
-    debugmessage("level_to_array","");
     j = 0;
     for (hn = TSUCC(tmp_layer[i]); hn; hn = GNNEXT(hn))
     {
@@ -2600,7 +2522,6 @@ static void array_to_level(int i)
     int j;
     GNLIST hn;
 
-    debugmessage("array_to_level","");
     j  = 0;
     for (hn = TSUCC(tmp_layer[i]); hn; hn = GNNEXT(hn))
     {
@@ -2619,7 +2540,6 @@ static void save_level(int i)
     int j;
     GNLIST hn;
 
-    debugmessage("save_level","");
     j  = 0;
     for (hn = TSUCC(tmp_layer[i]); hn; hn = GNNEXT(hn))
     {
@@ -2637,7 +2557,6 @@ static void restore_level(int i)
     int j;
     GNLIST hn;
 
-    debugmessage("restore_level","");
     j  = 0;
     for (hn = TSUCC(tmp_layer[i]); hn; hn = GNNEXT(hn))
     {
@@ -2656,8 +2575,6 @@ static void apply_horder(int i)
 {
     GNLIST hn;
     int j;
-
-    debugmessage("apply_horder","");
 
     /* Assertions:
      * NBARY(nodes) is currently not needed.
@@ -2703,7 +2620,6 @@ static void copy_layers(DEPTH *l1, DEPTH *l2)
     int    i;
     GNLIST h1, h2;
 
-    debugmessage("copy_layers","");
     for (i=0; i<=maxdepth+1; i++) {
         TCROSS(l1[i]) = TCROSS(l2[i]);
         h1 = TSUCC(l1[i]);
@@ -2758,7 +2674,6 @@ static void insert_connects_in_layer(void)
     int     forward_conn;
     int     changed;
 
-    debugmessage("insert_connects_in_layer","");
     for (i=0; i<=maxdepth+1; i++) {
         changed = 0;
         for (hl = TSUCC(tmp_layer[i]); hl; hl = hln)
@@ -2886,7 +2801,6 @@ static void check_connect(int level, GNODE node)
     CONNECT c = NCONNECT(node);
     int     clr, crl;
 
-    debugmessage("check_connect","");
 
     revive_conn_edges(node, node, NULL);
 
@@ -2959,8 +2873,6 @@ static void insert_left_right(int level,GNODE node)
     GNLIST hl,*hlp;
     int j;
 
-    debugmessage("insert_left_right","");
-
     /* search insertion point */
     hlp = &TSUCC(tmp_layer[level]);
     hl  =  TSUCC(tmp_layer[level]);
@@ -3010,8 +2922,6 @@ static void left_conn_list(GNODE v,GNODE w)
     GNLIST h;
     CONNECT c;
 
-    debugmessage("left_conn_list","");
-
     h = cons_node_tmp(v, leftlist);
     leftlist = h;
     if (!leftlistend) leftlistend = h;
@@ -3031,8 +2941,6 @@ static void right_conn_list(GNODE v,GNODE w)
 {
     GNLIST h;
     CONNECT c;
-
-    debugmessage("right_conn_list","");
 
     h = cons_node_tmp(v, NULL);
     if (rightlistend) GNNEXT(rightlistend) = h;
@@ -3059,8 +2967,6 @@ static void recreate_predlists(void)
 {
     GNLIST h1, h2;
     int i,j,k;
-
-    debugmessage("recreate_predlists","");
 
     /* First, give all nodes their position numbers */
     for (i=0; i<=maxdepth+1; i++) {

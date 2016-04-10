@@ -985,7 +985,6 @@ str_const       : LEX_STRING            { $$ = T_string($1,yylocate(@1));   }
 int parse()
 {
         nr_errors = 0;
-        debugmessage("yyparse()\n", "");
         yyparse();
 
         return (nr_errors);

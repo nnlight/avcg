@@ -151,7 +151,6 @@ static void     flip_ver_edge       _PP((GEDGE e));
  */
 void    step4_main(void)
 {
-    debugmessage("step4_main","");
     assert((layer));
 
     /* Now, we assign the xy-coordinates to the edges.
@@ -230,8 +229,6 @@ void calc_all_ports(int xypos_avail)
 {
     GNODE   v;
 
-    debugmessage("calc_all_ports","");
-
     for (v = nodelist; v; v = NNEXT(v))
     {
         calc_node_ports(v, xypos_avail);
@@ -265,8 +262,6 @@ void calc_node_ports(GNODE v, int xypos_avail)
     int pcol, pstyle, psize;
     int midport,nullport,portpos;
     GEDGE e;
-
-    debugmessage("calc_node_ports","");
 
     /* First, inspect the successors */
 
@@ -457,8 +452,6 @@ static void calc_all_edge_xy(void)
 {
     GNODE   v;
 
-    debugmessage("calc_all_edge_xy","");
-
     for (v = nodelist; v; v = NNEXT(v))
     {
         calc_edge_xy(v);
@@ -486,7 +479,6 @@ void calc_edge_xy(GNODE v)
     CONNECT c;
     GEDGE   e;
 
-    debugmessage("calc_edge_xy","");
     assert((v));
     node_width  = NWIDTH(v);
     node_height = NHEIGHT(v);
@@ -659,10 +651,8 @@ static void     calc_manhatten(void)
     int topbendp, botbendp;
     int maxrow, i;
 
-    debugmessage("calc_manhatten","");
     assert((layer));
     for (i=0; i<=maxdepth; i++) {
-        if (i%20==0) gs_wait_message('e');
 
         /* First, calculate the minimal upper bendpoint `topbendp'
          * and the maximal lower bendpoint `botbendp'.
@@ -732,7 +722,6 @@ static int  fill_row_indicators(int level)
     GNLIST li1, li2;
     GEDGE e1, e2;
 
-    debugmessage("fill_row_indicator","");
     assert((level>=0));
     assert((level<=maxdepth));      /* we access to level+1
                                      * and tmp_layer[maxdepth+1] exists
@@ -811,7 +800,6 @@ static void     finish_upper(GNODE v, int xpos)
     DLLIST n, nxt_n;
     int k;
 
-    debugmessage("finish_upper","");
     assert((v));
 
     k = maxr_upper_list + maxr_lower_list;
@@ -858,7 +846,6 @@ static void     finish_lower(GNODE v, int xpos)
     DLLIST n, nxt_n;
     int k;
 
-    debugmessage("finish_lower","");
     assert((v));
 
     k = maxr_upper_list + maxr_lower_list;
@@ -905,7 +892,6 @@ static void append_to_upper(GEDGE e, GNODE n)
     DLLIST  d;
 
     assert((n));
-    debugmessage("append_to_upper", (NTITLE(n)?NTITLE(n):""));
 
     d = dllist_alloc(n,upper_list_end);
     if (!upper_list)    upper_list = d;
@@ -928,7 +914,6 @@ static void append_to_lower(GEDGE e, GNODE n)
     DLLIST  d;
 
     assert((n));
-    debugmessage("append_to_lower", (NTITLE(n)?NTITLE(n):""));
 
     d = dllist_alloc(n,lower_list_end);
     if (!lower_list)    lower_list = d;
@@ -950,7 +935,7 @@ static void     delete_upper(DLLIST x)
 {
     assert((x));
     assert((DNODE(x)));
-    debugmessage("delete_upper", (NTITLE(DNODE(x))?NTITLE(DNODE(x)):""));
+
     if (DPRED(x)) DSUCC(DPRED(x)) = DSUCC(x);
     else          upper_list      = DSUCC(x);
     if (DSUCC(x)) DPRED(DSUCC(x)) = DPRED(x);
@@ -968,7 +953,7 @@ static void     delete_lower(DLLIST x)
 {
     assert((x));
     assert((DNODE(x)));
-    debugmessage("delete_lower", (NTITLE(DNODE(x))?NTITLE(DNODE(x)):""));
+
     if (DPRED(x)) DSUCC(DPRED(x)) = DSUCC(x);
     else          lower_list      = DSUCC(x);
     if (DSUCC(x)) DPRED(DSUCC(x)) = DPRED(x);
@@ -990,7 +975,6 @@ static void     evaluate_row_indicators(int level, int maxr, int miny, int maxy)
     GEDGE e;
     GNODE node;
     int k, k1, k2;
-    debugmessage("evaluate_row_indicators","");
 
     for (li = TSUCC(layer[level]); li; li = GNNEXT(li))
     {
@@ -1103,10 +1087,8 @@ static void calc_all_bendpoints(void)
     int botbendp;
     int minx, maxx;
 
-    debugmessage("calc_all_bendpoints","");
     assert((layer));
     for (i=0; i<=maxdepth; i++) {
-        if (i%10==0) gs_wait_message('e');
 
         /* First, we correct the position of dummy nodes in
          * order to avoid such situations:
@@ -1185,12 +1167,10 @@ static void calc_all_bendpoints(void)
         while (changed) {
             j++;
             if (j>max_edgebendings) {
-                gs_wait_message('t');
                 break;
             }
             if (G_timelimit>0)
                 if (test_timelimit(100)) {
-                    gs_wait_message('t');
                     break;
                 }
 
@@ -1238,7 +1218,6 @@ static int set_topbendpoint(GNLIST li, int bendp)
     GEDGE e;
     int changed;
 
-    debugmessage("set_topbendpoint","");
     assert((li));
     assert((GNNODE(li)));
     changed = 0;
@@ -1264,7 +1243,6 @@ static int set_botbendpoint(GNLIST li, int bendp)
     GEDGE e;
     int changed;
 
-    debugmessage("set_botbendpoint","");
     assert((li));
     assert((GNNODE(li)));
     changed = 0;
@@ -1312,7 +1290,6 @@ static int calc_topbendpoint(GNLIST li)
     int    bendp, h;
     GEDGE  e;
 
-    debugmessage("calc_topbendpoint","");
     assert((li));
     assert((GNNODE(li)));
 
@@ -1351,7 +1328,6 @@ static int calc_edgetopbendpoint(GEDGE e, GNLIST li)
     int offset, myoff, cross;
     GNLIST li2;
 
-    debugmessage("calc_edgetopbendpoint","");
     bendp = 0;
 
     sx = ESTARTX(e);
@@ -1497,7 +1473,6 @@ static int calc_botbendpoint(GNLIST li)
     int    bendp, h;
     GEDGE  e;
 
-    debugmessage("calc_botbendpoint","");
     assert((li));
     assert((GNNODE(li)));
 
@@ -1537,7 +1512,6 @@ static int calc_edgebotbendpoint(GEDGE e, GNLIST li)
     int offset, myoff, cross;
     GNLIST li2;
 
-    debugmessage("calc_edgebotbendpoint","");
     bendp = MAXINT;
 
     sx = EENDX(e);
@@ -1743,11 +1717,9 @@ static void     tune_dummy_bendings(void)
     int ax, ay, mx, my, by, b2y, okay;
     int kx,ky,h;
 
-    debugmessage("tune_dummy_bendings","");
     assert((layer));
 
     for (i=0; i<=maxdepth+1; i++) {
-        if (i%10==0) gs_wait_message('e');
 
         for (li = TPRED(layer[i]); li; li = GNNEXT(li))
         {
@@ -1975,8 +1947,6 @@ static void calc_all_edgearrows(void)
 {
     GNODE v;
 
-    debugmessage("calc_all_edgearrows","");
-
     for (v = nodelist; v; v = NNEXT(v))
     {
         calc_edgearrow(v);
@@ -2005,8 +1975,6 @@ void    calc_edgearrow(GNODE v)
     GEDGE e;
     int     act_port, j;
     CONNECT c;
-
-    debugmessage("calc_edgearrow","");
 
     /* First the horizontal edges */
     c = NCONNECT(v);
@@ -2074,8 +2042,6 @@ static void check_horizontal(GEDGE e)
 {
     float   fval;
 
-    debugmessage("check_horizontal","");
-
     assert((ESTARTX(e)!=EENDX(e)));
     fval = (float)(EENDY(e)-ESTARTY(e))/(float)(EENDX(e)-ESTARTX(e));
     if (ESTARTX(e)<EENDX(e)) {
@@ -2118,8 +2084,6 @@ static void check_up_port(GEDGE edge)
     int is_north, is_northeast, is_northwest;
     GEDGE   e;
     float   fval;
-
-    debugmessage("check_up_port","");
 
     port = EWEIGHTS(edge);
 
@@ -2191,8 +2155,6 @@ static void check_down_port(GEDGE edge)
     GEDGE   e;
     float   fval;
 
-    debugmessage("check_down_port","");
-
     port = EWEIGHTP(edge);
 
     /* Check orientation */
@@ -2259,8 +2221,6 @@ static void check_down_port(GEDGE edge)
 
 static void flip_mirror(void)
 {
-    debugmessage("flip_mirror","");
-
     flip_all_nodes(nodelist);
     flip_all_nodes(labellist);
     flip_all_nodes(dummylist);
@@ -2278,7 +2238,6 @@ static void flip_all_nodes(GNODE v)
     CONNECT c;
     GEDGE e;
 
-    debugmessage("flip_all_nodes","");
     for ( ; v; v = NNEXT(v))
     {
         h     = NX(v);
@@ -2309,7 +2268,6 @@ static void flip_edge(GEDGE e)
 {
     int h;
 
-    debugmessage("flip_edge","");
     h = ESTARTX(e);
     ESTARTX(e) = ESTARTY(e);
     ESTARTY(e) = h;
@@ -2364,8 +2322,6 @@ static void flip_ver_mirror(void)
     int i;
     GNLIST k;
 
-    debugmessage("flip_ver_mirror","");
-
     my_maxy = 0;
 
     /* First: calculate maxy */
@@ -2397,7 +2353,6 @@ static void flip_ver_all_nodes(GNODE v)
     CONNECT c;
     GEDGE e;
 
-    debugmessage("flip_ver_all_nodes","");
     for ( ; v; v = NNEXT(v))
     {
         NY(v) = my_maxy - NY(v) - NHEIGHT(v);
@@ -2421,7 +2376,6 @@ static void flip_ver_all_nodes(GNODE v)
 
 static void flip_ver_edge(GEDGE e)
 {
-    debugmessage("flip_ver_edge","");
     ESTARTY(e) = my_maxy - ESTARTY(e);
     EBBENDY(e) = my_maxy - EBBENDY(e);
     ETBENDY(e) = my_maxy - ETBENDY(e);
@@ -2458,7 +2412,6 @@ void calc_max_xy_pos(void)
 {
     GNODE v;
 
-    debugmessage("calc_max_xy_pos","");
     maximal_xpos = 0;
     maximal_ypos = 0;
 
@@ -2485,7 +2438,6 @@ void calc_max_xy_pos(void)
     }
     maximal_xpos += G_xbase;
     maximal_ypos += G_ybase;
-    debugmessage("end of calc_max_xy_pos","");
 }
 
 
@@ -2514,8 +2466,6 @@ void statistics(void)
     int degree;
     int indeg;
     int outdeg;
-
-    debugmessage("statistics","");
 
     st_nr_vis_nodes     = 0;
     st_nr_vis_edges     = 0;

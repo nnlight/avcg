@@ -188,7 +188,6 @@ void step1_main(void)
 {
     int i;
 
-    debugmessage("step1_main","");
     assert((dummylist==NULL));
 
     /* prepare back edges, i.e. revert all back edges initially
@@ -320,7 +319,6 @@ static void insert_startnode(GNODE node)
     GNODE h;
 
     assert((node));
-    debugmessage("insert_startnode",(NTITLE(node)?NTITLE(node):"(null)"));
 
     /* delete the node from the nodelist */
     del_node_from_dl_list(node, nodelist, nodelistend);
@@ -348,7 +346,6 @@ static void insert_endnode(GNODE node)
     GNODE h;
 
     assert((node));
-    debugmessage("insert_endnode",(NTITLE(node)?NTITLE(node):"(null)"));
 
     /* delete the node from the nodelist */
     del_node_from_dl_list(node, nodelist, nodelistend);
@@ -371,7 +368,6 @@ static void prepare_startnodes(void)
 {
     GNODE   node, nxt_node;
 
-    debugmessage("prepare_startnodes","");
     startnodes = NULL;
     startnodesend = NULL;
     endnodes = NULL;
@@ -419,7 +415,6 @@ void insert_anchor_edges(void)
 {
     GEDGE   edge;
 
-    debugmessage("insert_anchor_edges","");
     assert((dummylist==NULL));
 
     for (edge = edgelist; edge; edge = ENEXT(edge))
@@ -448,7 +443,6 @@ static void prepare_anchoredge(GEDGE edge)
     GNODE   v;
     CONNECT c;
 
-    debugmessage("prepare_anchoredge","");
     if ((G_orientation==LEFT_TO_RIGHT)||(G_orientation==RIGHT_TO_LEFT)) {
         G_orientation= TOP_TO_BOTTOM;
         if (!silent) {
@@ -528,7 +522,6 @@ void prepare_back_edges(void)
     GEDGE e;
     GEDGE ed1, ed2;
 
-    debugmessage("prepare_back_edges","");
     for (li = back_edge_list; li; li = ANEXT(li))
     {
         e = AKANTE(li);
@@ -569,7 +562,6 @@ static void insert_bent_near_edges(void)
     GEDGE edge;
     int invisible;
 
-    debugmessage("insert_bent_near_edges","");
     for (li1 = bent_near_edge_list; li1; li1 = ANEXT(li1))
     {
         edge1 = AKANTE(li1);
@@ -636,7 +628,6 @@ static void insert_near_edges(void)
     ADJEDGE li;
     GEDGE   edge;
 
-    debugmessage("insert_near_edges","");
     for (li = near_edge_list; li; li = ANEXT(li))
     {
         edge = AKANTE(li);
@@ -646,8 +637,7 @@ static void insert_near_edges(void)
                 create_connection(ESOURCE(edge), ETARGET(edge), edge);
                 if (  (NLEVEL(ESOURCE(edge))>=0)
                     &&(NLEVEL(ETARGET(edge))>=0)
-                    &&(NLEVEL(ESOURCE(edge))!=
-                            NLEVEL(ETARGET(edge))>=0) ) {
+                    &&(NLEVEL(ESOURCE(edge))!=NLEVEL(ETARGET(edge))>=0) ) {
                     if (!silent) {
                         FPRINTF(stderr,"Nearedge connection (");
                         FPRINTF(stderr,"%s",NTITLE(ESOURCE(edge)));
@@ -657,12 +647,10 @@ static void insert_near_edges(void)
                     }
                 }
                 if (NLEVEL(ESOURCE(edge))>=0) {
-                        NLEVEL(ETARGET(edge)) =
-                            NLEVEL(ESOURCE(edge));
+                        NLEVEL(ETARGET(edge)) = NLEVEL(ESOURCE(edge));
                 }
                 if (NLEVEL(ETARGET(edge))>=0) {
-                        NLEVEL(ESOURCE(edge)) =
-                            NLEVEL(ETARGET(edge));
+                        NLEVEL(ESOURCE(edge)) = NLEVEL(ETARGET(edge));
                 }
 
                 delete_adjedge(edge);
@@ -693,8 +681,6 @@ static int check_connect_cycle(GNODE v, GNODE w, GNODE z)
     CONNECT c;
     int r;
 
-    debugmessage("check_connect_cycle","");
-
     if (!near_edge_layout) return(1);
     if (!v) return(0);
     if (v==z) return(1);
@@ -724,8 +710,7 @@ static int is_connection_possible(GNODE src, GNODE dst, GEDGE edge)
     if ((c2) && (CTARGET(c2)) && (CTARGET2(c2)))
         connection_possible = 0;
 
-    if (check_connect_cycle(ETARGET(edge),NULL,
-                ESOURCE(edge)))
+    if (check_connect_cycle(ETARGET(edge), NULL, ESOURCE(edge)))
         connection_possible = 0;
 
     return connection_possible;
@@ -802,15 +787,12 @@ static void partition_edges(void)
     GNODE   node;
     int     depth1;
 
-    debugmessage("partition_edges","");
-
     /* First try */
     /* --------- */
 
     act_dfsnum = 1L;
     maxdepth = 0;       /* maximal depth of the spanning tree */
 
-    gs_wait_message('p');
     for (node = nodelist; node; node = NNEXT(node))
     {
         if ( !NMARK(node) ) {
@@ -835,7 +817,6 @@ static void partition_edges(void)
     if (layout_flag==TREE_LAYOUT) return;
     if (G_timelimit>0)
         if (test_timelimit(30)) {
-            gs_wait_message('t');
             return;
         }
 
@@ -845,7 +826,6 @@ static void partition_edges(void)
 
     depth1 = maxdepth;
 
-    gs_wait_message('p');
     for (node = nodelist; node; node = NNEXT(node)) { NMARK(node) = 0; }
     for (node = labellist; node; node = NNEXT(node)) { NMARK(node) = 0; }
     for (node = dummylist; node; node = NNEXT(node)) { NMARK(node) = 0; }
@@ -880,7 +860,6 @@ static void partition_edges(void)
     /* First try was better: redo it */
     /* ----------------------------- */
 
-    gs_wait_message('p');
     for (node = nodelist; node; node = NNEXT(node)) { NMARK(node) = 0; }
     for (node = labellist; node; node = NNEXT(node)) { NMARK(node) = 0; }
     for (node = dummylist; node; node = NNEXT(node)) { NMARK(node) = 0; }
@@ -919,19 +898,18 @@ static void partition_edges(void)
 
 static void depth_first_search(GNODE node)
 {
-        GNODE kn;
-        GEDGE edge;
+    GNODE kn;
+    GEDGE edge;
     int   priority;
 
     assert((node));
-    debugmessage("depth_first_sea",(NTITLE(node)?NTITLE(node):"(null)"));
-        if (NMARK(node)) return;
+    if (NMARK(node)) return;
 
     NMARK(node)  = 1;
-        NDFS(node)   = act_dfsnum++;
+    NDFS(node)   = act_dfsnum++;
     if (NLEVEL(node)>=0) act_level = NLEVEL(node);
-        NTIEFE(node) = act_level;
-        maxdepth = (act_level>maxdepth) ? act_level : maxdepth;
+    NTIEFE(node) = act_level;
+    maxdepth = (act_level>maxdepth) ? act_level : maxdepth;
 
     if (NCONNECT(node)) {
         /* Connections should be on the same level !!!
@@ -964,32 +942,32 @@ static void depth_first_search(GNODE node)
             }
             assert(ESOURCE(edge)==node);
             kn = ETARGET(edge);
-                if ( !NMARK(kn) ) {
-                   /*
-                    * EKIND(edge) = 'T';
-                */
-                    act_level++;
-                    depth_first_search(kn);
+            if ( !NMARK(kn) ) {
+                /*
+                 * EKIND(edge) = 'T';
+                 */
+                act_level++;
+                depth_first_search(kn);
                 act_level = NTIEFE(node);
-                }
-                else { /* partitioning into forward, backward, cross
-                * and self edges,i.e. kinds 'F', 'B', 'C', 'S'.
-                * Note NCOMP(kn)==0 implies that dfs(kn) is not
-                * yet completed, i.e. that after all dfs it will
-                * be NCOMP(kn)>NCOMP(node).
-                *
-                        * if ( NDFS(node)<NDFS(kn) ) EKIND(edge)='F';
-                        * else if (NDFS(node)>NDFS(kn) && NCOMP(kn)==0)
-                        *   EKIND(edge) = 'B';
-                * else if (kn == node) EKIND(edge) = 'S';
-                * else EKIND(edge) = 'C';
-                *
-                * The tags 'T', 'B', 'C' and 'F' are never used!
-                * Thus it is nonsense to calculate them.
-                * The tag 'S' is important.
-                */
+            }
+            else { /* partitioning into forward, backward, cross
+                    * and self edges,i.e. kinds 'F', 'B', 'C', 'S'.
+                    * Note NCOMP(kn)==0 implies that dfs(kn) is not
+                    * yet completed, i.e. that after all dfs it will
+                    * be NCOMP(kn)>NCOMP(node).
+                    *
+                    * if ( NDFS(node)<NDFS(kn) ) EKIND(edge)='F';
+                    * else if (NDFS(node)>NDFS(kn) && NCOMP(kn)==0)
+                    *   EKIND(edge) = 'B';
+                    * else if (kn == node) EKIND(edge) = 'S';
+                    * else EKIND(edge) = 'C';
+                    *
+                    * The tags 'T', 'B', 'C' and 'F' are never used!
+                    * Thus it is nonsense to calculate them.
+                    * The tag 'S' is important.
+                    */
                 if (kn == node) EART(edge) = 'S';
-                }
+            }
         }
     } /* while priority */
 
@@ -1004,18 +982,17 @@ static void depth_first_search(GNODE node)
 static void alt_depth_first_search(GNODE node)
 {
     GNODE kn;
-        GEDGE edge;
+    GEDGE edge;
     int   priority;
 
     assert((node));
-    debugmessage("alt_depth_first",(NTITLE(node)?NTITLE(node):"(null)"));
-        if (NMARK(node)) return;
+    if (NMARK(node)) return;
 
     NMARK(node)  = 1;
-        NDFS(node)   = act_dfsnum++;
+    NDFS(node)   = act_dfsnum++;
     if (NLEVEL(node)>=0) act_level = NLEVEL(node);
-        NTIEFE(node) = act_level;
-        maxdepth = (act_level>maxdepth) ? act_level : maxdepth;
+    NTIEFE(node) = act_level;
+    maxdepth = (act_level>maxdepth) ? act_level : maxdepth;
 
     if (NCONNECT(node)) {
         /* Connections should be on the same level !!!
@@ -1052,9 +1029,7 @@ static void alt_depth_first_search(GNODE node)
  */
 static void start_dfs_backwards(GEDGE edge, GNODE node, int priority)
 {
-        GNODE   kn;
-
-    debugmessage("start_dfs_backwards","");
+    GNODE   kn;
 
     if (!edge) return;
     start_dfs_backwards(NextSucc(edge), node, priority);
@@ -1062,32 +1037,32 @@ static void start_dfs_backwards(GEDGE edge, GNODE node, int priority)
     if (EPRIO(edge)!=priority) return;
 
     kn = ETARGET(edge);
-        if ( !NMARK(kn) ) {
+    if ( !NMARK(kn) ) {
         /*
-             * EKIND(edge) = 'T';
+         * EKIND(edge) = 'T';
          */
-            act_level++;
-            alt_depth_first_search(kn);
-            act_level = NTIEFE(node);
-        }
-        else { /* partitioning into forward, backward, cross and self
-        * edges, i.e. kinds 'F', 'B', 'C', 'S'.
-        * Note NCOMP(kn)==0 implies that dfs(kn) is not
-        * yet completed, i.e. that after all dfs it will
-        * be NCOMP(kn)>NCOMP(node).
-        *
+        act_level++;
+        alt_depth_first_search(kn);
+        act_level = NTIEFE(node);
+    }
+    else { /* partitioning into forward, backward, cross and self
+            * edges, i.e. kinds 'F', 'B', 'C', 'S'.
+            * Note NCOMP(kn)==0 implies that dfs(kn) is not
+            * yet completed, i.e. that after all dfs it will
+            * be NCOMP(kn)>NCOMP(node).
+            *
             * if ( NDFS(node) < NDFS(kn) ) EKIND(edge) = 'F';
             * else if ( NDFS(node) > NDFS(kn) && NCOMP(kn) == 0)
-                *   EKIND(edge) = 'B';
-        * else if (kn == node) EKIND(edge) = 'S';
-        * else EKIND(edge) = 'C';
-        *
-        * The tags 'T', 'B', 'C' and 'F' are never used !
-        * Thus it is nonsense to calculate them.
-        * The tag 'S' is important.
-        */
+            *   EKIND(edge) = 'B';
+            * else if (kn == node) EKIND(edge) = 'S';
+            * else EKIND(edge) = 'C';
+            *
+            * The tags 'T', 'B', 'C' and 'F' are never used !
+            * Thus it is nonsense to calculate them.
+            * The tag 'S' is important.
+            */
         if (kn == node) EART(edge) = 'S';
-        }
+    }
 }
 
 /*--------------------------------------------------------------------*/
@@ -1115,7 +1090,6 @@ static void add_to_zero_indegree_list(GNODE v)
 {
     GNLIST h;
 
-    debugmessage("add_to_zero_indegree_list","");
     assert(v);
 
     if (zero_free_list) {
@@ -1137,7 +1111,6 @@ static GNODE get_zero_indegree(void)
 {
     GNLIST h;
 
-    debugmessage("get_zero_indegree","");
     h = zero_indegree_list;
     if (h) {
         zero_indegree_list = GNNEXT(h);
@@ -1157,8 +1130,6 @@ static void topological_sort(void)
     GNODE  v;
     int    not_ready, actlevel;
 
-    debugmessage("topological_sort","");
-
     /* look for the nodes without predecessor and put them into
      * the zero_indegree_list.
      */
@@ -1171,9 +1142,8 @@ static void topological_sort(void)
     }
     /* Labels don't have zero indegree here */
 
-        maxdepth = 0;       /* maximal depth of the layout */
+    maxdepth = 0;       /* maximal depth of the layout */
 
-    gs_wait_message('p');
     not_ready = 1;
     while (not_ready) {
         /* First: the normal topological sorting algorithm
@@ -1190,7 +1160,6 @@ static void topological_sort(void)
          * remaining nodes are part of cycles.
          * Check whether there are remainig parts.
          */
-        gs_wait_message('p');
         not_ready = 0;
         for (v = nodelist; v && !not_ready; v = NNEXT(v))
         {
@@ -1225,15 +1194,15 @@ static int topsort_maxlevel(GNODE node1, GNODE node2)
     GEDGE e;
     CONNECT c;
 
-    debugmessage("topsort_maxlevel","");
     result = 0;
     for (e = FirstPred(node1); e; e = NextPred(e))
     {
         if (ESOURCE(e)==node1) EART(e) = 'S';
-        else if (NMARK(ESOURCE(e))) {
-            if (NTIEFE(ESOURCE(e))>=result)
-                result = NTIEFE(ESOURCE(e))+1;
-        }
+        else
+            if (NMARK(ESOURCE(e))) {
+                if (NTIEFE(ESOURCE(e))>=result)
+                    result = NTIEFE(ESOURCE(e))+1;
+            }
     }
     c = NCONNECT(node1);
     if (c && CTARGET(c) && (CTARGET(c)!=node2)) {
@@ -1255,7 +1224,6 @@ static void topsort_setlevel(GNODE node1, GNODE node2, int level)
 {
     CONNECT c;
 
-    debugmessage("topsort_setlevel","");
     if ((NLEVEL(node1)>=0)&&(level!=NLEVEL(node1))) {
         if (!silent) {
             FPRINTF(stderr,"Level specification ignored, ");
@@ -1283,8 +1251,6 @@ static void topsort_add_succs(GNODE node1, GNODE node2)
     GEDGE e;
     CONNECT c;
 
-    debugmessage("topsort_add_succs","");
-
     for (e = FirstSucc(node1); e; e = NextSucc(e))
     {
         if (  (topsort_indegree(ETARGET(e),ETARGET(e))==0)
@@ -1310,7 +1276,6 @@ static int topsort_indegree(GNODE node1, GNODE node2)
     GEDGE e;
     CONNECT c;
 
-    debugmessage("topsort_indegree","");
     result = 0;
     for (e = FirstPred(node1); e; e = NextPred(e))
     {
@@ -1339,8 +1304,6 @@ static void add_to_nlist(GNODE v, GNLIST *l)
 {
     GNLIST h;
 
-    debugmessage("add_to_nlist","");
-
     if (zero_free_list) {
         h = zero_free_list;
         zero_free_list = GNNEXT(zero_free_list);
@@ -1360,7 +1323,6 @@ static GNODE get_nlist(GNLIST *l)
 {
     GNLIST h;
 
-    debugmessage("get_nlist","");
     h = *l;
     if (h) {
         *l = GNNEXT(h);
@@ -1378,8 +1340,6 @@ static GNODE get_nlist(GNLIST *l)
 static void sc_component_sort(void)
 {
     GNODE  v;
-
-    debugmessage("sc_component_sort","");
 
     zero_free_list   = NULL;
     global_node_list = NULL;
@@ -1421,8 +1381,6 @@ static void calc_sc_component(GNLIST *nlist)
     GNLIST open_scc_list;
     long   mydfsnum;
 
-    debugmessage("sc_component_sort","");
-
 #ifdef SCCDEBUG
     PRINTF("Calc SCC:\n");
 #endif
@@ -1441,8 +1399,6 @@ static void calc_sc_component(GNLIST *nlist)
 #endif
     open_scc_list = NULL;
     mydfsnum = 0;
-
-    gs_wait_message('p');
 
     /* It holds:
      * all nodes in nlist have      NTIEFE = 0.
@@ -1477,7 +1433,6 @@ static void scc_traversal(GNODE node, long *dfsnum, GNLIST *open_sccp)
     CONNECT c;
 
     assert((node));
-    debugmessage("scc_traversal",(NTITLE(node)?NTITLE(node):"(null)"));
     if (NMARK(node)) return;
 
     NMARK(node)     = 1;
@@ -1693,8 +1648,6 @@ static int complete_scc(GNLIST nlist)
     GNLIST h;
     int res, count;
     CONNECT c;
-
-    debugmessage("complete_scc","");
 
     assert((nlist));
     count = 0;
@@ -1954,17 +1907,13 @@ static void tune_partitioning(void)
     GNODE v;
     int   changed,count;
 
-    debugmessage("tune_partitioning","");
-
     count   = 0;
     changed = 1;
     while (changed) {
         changed = 0;
-        gs_wait_message('p');
 
         if (G_timelimit>0)
             if (test_timelimit(30)) {
-                gs_wait_message('t');
                 return;
             }
 
@@ -1995,8 +1944,6 @@ static int tune_node_depth(GNODE v,int lab)
     int   nodelevel, leveldiff, nr_edges, nr_redges, changed, delta, hdelta;
     GEDGE edge, hedge;
     GNODE hh;
-
-    debugmessage("tune_node_depth","");
 
     /*  If the node has a fixed specified level, we should not
      *  change it.
@@ -2222,8 +2169,6 @@ static void create_depth_lists(void)
     GNODE h;
     int t;
 
-    debugmessage("create_depth_lists","");
-
     for (h = nodelist; h; h = NNEXT(h))
     {
         t = NTIEFE(h);
@@ -2266,8 +2211,6 @@ static void complete_depth_lists(void)
     int     backward_connection;
     int     forward_connection;
     CONNECT c;
-
-    debugmessage("complete_depth_lists","");
 
     for (i=0; i<=maxdepth+1; i++) {
         for (n = TSUCC(layer[i]); n; n = GNNEXT(n))
@@ -2383,8 +2326,6 @@ static void inspect_edges(void)
     GEDGE   e1,e2,e3,e4;    /* for dummy edges */
     GEDGE   a1, a2;
 
-    debugmessage("inspect_edges","");
-
     for (i=0; i<=maxdepth; i++) {
         for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
         {
@@ -2471,7 +2412,6 @@ static void check_edge(GNODE node, GEDGE edge, int level)
     GEDGE e1, e2, e3;   /* for dummy edges */
     int lab_set;
 
-    debugmessage("check_edge","");
     assert(node);
     assert(edge);
     assert(NTIEFE(node) == level);
@@ -2564,7 +2504,6 @@ GEDGE revert_edge(GEDGE edge)
     GNODE h;
     char  hh;
 
-    debugmessage("revert_edge","");
     delete_adjedge(edge);
     h = ESTART(edge);
     ESTART(edge) = EEND(edge);
@@ -2663,7 +2602,6 @@ static GNODE create_dummy(int t)
 {
     GNODE  v;
 
-    debugmessage("create_dummy","");
     assert((t<=maxdepth+1));
 
     v = tmpnodealloc(CENTER,-1,-1,0,G_color,G_color,G_color);
@@ -2701,7 +2639,6 @@ static void inspect_double_edges(void)
     GNODE   node;
     GEDGE   edge, nextedge;
 
-    debugmessage("inspect_double_edge","");
     for (i=0; i<=maxdepth; i++) {
         for (li = TSUCC(layer[i]); li; li = GNNEXT(li))
         {
@@ -2730,8 +2667,6 @@ static void check_double_edge(GEDGE edge)
     GEDGE   e1; /* for dummy edges */
     GEDGE   f1, f2, nxt_f2;
     int     ide, aside1, aside2, tide;
-
-    debugmessage("check_double_edge","");
 
     f1 = edge;
     for (f2 = FirstSucc(ESOURCE(edge)); f2; f2 = nxt_f2)
