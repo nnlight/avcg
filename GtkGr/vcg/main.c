@@ -89,7 +89,7 @@ static void parse_part( FILE *f, const char *fname)
  *  different.
  */
 
-void Fatal_error(char *x,char *y)
+void Fatal_error(const char *x, const char *y)
 {
         FPRINTF(stderr,"Fatal error: %s %s !\n",x,y);
         FPRINTF(stderr,"Aborted !\n");
@@ -344,7 +344,7 @@ void vcg_Relayout()
 
 Color_t vcg_GetBgColor()
 {
-    return G_color;
+    return (Color_t)G_color;
 } /* vcg_GetBgColor */
 
 int vcg_GetCmapSize()

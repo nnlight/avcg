@@ -20,7 +20,7 @@ void lex_rule_match( char *text);
 void   line_directive (char *text);
 void   escape_transl  (char *text);
 void   syntaxerror    (int line, int pos, const char *fmt, ...);
-void   fatal_error(char *message);
+void   fatal_error(const char *message);
 
 
 

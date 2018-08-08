@@ -49,7 +49,7 @@
  *  ----------
  */
 
-extern void Fatal_error(char *x, char *y);
+extern void Fatal_error(const char *x, const char *y);
 
 /*--------------------------------------------------------------------*/
 

@@ -181,11 +181,11 @@ Tempattr_t new_temp_attr()
     for (i = 0; i < TEMP_ATTR_COUNT; i++) {
         if ( (alloced_temp_attr_mask & (1 << i)) == 0 ) {
             alloced_temp_attr_mask |= (1 << i);
-            return i;
+            return (Tempattr_t)i;
         }
     }
     assert(0);
-    return 0;
+    return (Tempattr_t)0;
 }
 
 void free_temp_attr(Tempattr_t ta)

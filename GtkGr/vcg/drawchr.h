@@ -83,13 +83,7 @@
  *   We have implemented a 16x8 bit scalable font here.
  */
 
-#ifdef ANSI_C
 static void myasciichar(int c, int col)
-#else
-static void myasciichar(c,col)
-int c;
-int col;
-#endif
 {
     switch(c) {
     case ' ':
@@ -1010,13 +1004,7 @@ int col;
  *   We have implemented a 16x8 bit scalable font here.
  */
 
-#ifdef ANSI_C
 static void myisochar(int c, int col)
-#else
-static void myisochar(c,col)
-int c;
-int col;
-#endif
 {
     switch(c) {
     case '\020':   /* dotless i */

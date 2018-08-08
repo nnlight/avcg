@@ -223,9 +223,6 @@ static void     left_conn_list        _PP((GNODE v,GNODE w));
 static void     right_conn_list       _PP((GNODE v,GNODE w));
 
 static void     recreate_predlists    _PP((void));
-static void     sort_adjedges         _PP((GNODE v));
-static int  compare_srcpos        _PP((const GEDGE *a, const GEDGE *b));
-static int  compare_tarpos        _PP((const GEDGE *a, const GEDGE *b));
 #ifdef OWN_QUICKSORT
 static void     myqsort           _PP((int l,int r));
 #endif

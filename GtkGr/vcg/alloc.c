@@ -90,6 +90,7 @@
 #include "options.h"
 #include "alloc.h"
 #include "graph.h"
+#include "steps.h" /* for init_folding_keepers_globals */
 
 
 /* Prototypes

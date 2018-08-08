@@ -637,7 +637,7 @@ static void insert_near_edges(void)
                 create_connection(ESOURCE(edge), ETARGET(edge), edge);
                 if (  (NLEVEL(ESOURCE(edge))>=0)
                     &&(NLEVEL(ETARGET(edge))>=0)
-                    &&(NLEVEL(ESOURCE(edge))!=NLEVEL(ETARGET(edge))>=0) ) {
+                    &&(NLEVEL(ESOURCE(edge))!=NLEVEL(ETARGET(edge))) ) {
                     if (!silent) {
                         FPRINTF(stderr,"Nearedge connection (");
                         FPRINTF(stderr,"%s",NTITLE(ESOURCE(edge)));

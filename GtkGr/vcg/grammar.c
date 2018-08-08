@@ -20,7 +20,7 @@ yysyntaxtree  Syntax_Tree;
 /* Fatal error: exit with message                                     */
 /*--------------------------------------------------------------------*/
 
-void fatal_error(char *message)
+void fatal_error(const char *message)
 {
     (void)fprintf(stderr,"Fatal error: %s !\n",message);
     (void)fprintf(stderr,"Aborted !\n");
@@ -453,10 +453,7 @@ static void *parsemalloc(int x)
  */
 static yysyntaxtree st_malloc(int x)
 {
-    yysyntaxtree help;
-
-    help = parsemalloc(sizeof(struct stree_node) + x*sizeof(yysyntaxtree));
-    return (help);
+    return (yysyntaxtree)parsemalloc(sizeof(struct stree_node) + x*sizeof(yysyntaxtree));
 }
 
 
