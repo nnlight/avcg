@@ -1,7 +1,7 @@
 
 
 all:
-	gcc -g -lm ext_main.cpp $(wildcard *.c)
+	gcc -g ext_main.cpp $(wildcard *.c) -lm
 
 
 

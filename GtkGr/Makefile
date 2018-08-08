@@ -2,7 +2,8 @@ CC=gcc
 CFLAGS=-g -c -Wall `pkg-config --cflags gtk+-2.0`
 VCG_CFLAGS=-g -c
 MW_CFLAGS=-g -c -Wall `pkg-config --cflags gtk+-2.0`
-LDFLAGS=-g `pkg-config --libs gtk+-2.0` -lstdc++
+LDFLAGS=-g
+LDLIBS=`pkg-config --libs gtk+-2.0` -lstdc++ -lm
 VCG_SOURCES=$(wildcard vcg/*.c)
 MW_SOURCES=$(wildcard mw/*.c)
 SOURCES=$(patsubst tes_mw.cpp,,$(wildcard *.cpp))
@@ -23,7 +24,7 @@ _=$(shell mkdir -p obj/mw obj/vcg) # there is another way via @mkdir -p $(@D) in
 all: $(EXECUTABLE)
 	
 $(EXECUTABLE): $(OBJECTS) $(VCG_OBJECTS) $(MW_OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) $(VCG_OBJECTS) $(MW_OBJECTS) -o $@
+	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 obj/%.o: %.cpp $(HEADERS) $(VCG_HEADERS)
 	$(CC) $(CFLAGS) $< -o $@
