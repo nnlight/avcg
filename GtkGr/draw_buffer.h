@@ -94,7 +94,7 @@ public:
     void PKey();
 
     /* vrg-функции */
-    void InitColormap( int cmap_size, const byte *cmap_red, const byte *cmap_green, const byte *cmap_blue);
+    void InitColormap( int cmap_size, const uint8_t *cmap_red, const uint8_t *cmap_green, const uint8_t *cmap_blue);
     void SetBackgroundColor( Color_t c);
     void SetCurrentColor( Color_t c);
     void SetLineWidth( vrgint line_width, Linestyle_t lstyle = LS_SOLID);

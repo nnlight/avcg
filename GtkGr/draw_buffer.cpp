@@ -458,7 +458,7 @@ void DrawBuffer::InvalidateDa( const GdkRectangle *da_update_rect)
                                 FALSE);
 } /* DrawBuffer::InvalidateDa */
 
-void DrawBuffer::InitColormap( int cmap_size, const byte *cmap_red, const byte *cmap_green, const byte *cmap_blue)
+void DrawBuffer::InitColormap( int cmap_size, const uint8_t *cmap_red, const uint8_t *cmap_green, const uint8_t *cmap_blue)
 {
     /* иначе надо освобождать уже выделенные цвета */
     assert( m_AllocedColors == 0 );

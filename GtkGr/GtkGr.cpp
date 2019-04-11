@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     g_Preferences = new Preferences();
     g_Preferences->LoadFromFile();
     // строим GUI
-    std::auto_ptr<UIController> uic( new UIController( filename));
+    std::unique_ptr<UIController> uic( new UIController( filename));
 
     // запускаем цикл обработки сообщений
     uic->MainLoop();

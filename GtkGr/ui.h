@@ -38,8 +38,8 @@ private:
     GtkWidget *m_MainWindow;
     GtkUIManager *m_UIManager;
     std::string m_CurrentFilename;
-    std::auto_ptr<DrawBuffer> m_DrawBuffer;
-    std::auto_ptr<VRGraph> m_VRGraph;
+    std::unique_ptr<DrawBuffer> m_DrawBuffer;
+    std::unique_ptr<VRGraph> m_VRGraph;
     Mode_t m_CurrentMode;
     GtkWidget *m_Toolbar;
     GtkWidget *m_Statusbar;
