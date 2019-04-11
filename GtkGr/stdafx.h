@@ -14,6 +14,11 @@
 #include <assert.h>
 #include <string.h>
 #include <math.h>
+#if defined(_MSC_VER) && _MSC_VER < 1600/*VS2010*/
+typedef unsigned char uint8_t;
+#else
+#include <stdint.h>
+#endif
 
 //using namespace std;
 typedef std::string string;
