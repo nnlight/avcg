@@ -18,14 +18,14 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -41,15 +41,13 @@
     <_ProjectFileVersion>15.0.26430.15</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IntDir>$(Configuration)\tes_mw\</IntDir>
-    <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(SolutionDir)$(Configuration)\tes_mw\</IntDir>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules />
     <CodeAnalysisRuleAssemblies />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IntDir>$(Configuration)\tes_mw\</IntDir>
-    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(SolutionDir)$(Configuration)\tes_mw\</IntDir>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules />
     <CodeAnalysisRuleAssemblies />
@@ -59,7 +57,6 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>C:\gtk+-bundle_2.16.6-20091013_win32\include;C:\gtk+-bundle_2.16.6-20091013_win32\include\gtk-2.0;C:\gtk+-bundle_2.16.6-20091013_win32\include\glib-2.0;C:\gtk+-bundle_2.16.6-20091013_win32\include\cairo;C:\gtk+-bundle_2.16.6-20091013_win32\include\pango-1.0;C:\gtk+-bundle_2.16.6-20091013_win32\include\atk-1.0;C:\gtk+-bundle_2.16.6-20091013_win32\lib\glib-2.0\include;C:\gtk+-bundle_2.16.6-20091013_win32\lib\gtk-2.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
