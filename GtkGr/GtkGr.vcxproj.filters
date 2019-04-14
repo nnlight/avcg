@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="vcg_headers">
+      <UniqueIdentifier>{4b88c331-148e-4630-a1be-775022de0c7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vcg_sources">
+      <UniqueIdentifier>{cbd5c2d2-b18b-4c0a-9ce4-47d8cd6ff073}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mw_headers">
+      <UniqueIdentifier>{31c56c86-96e8-436c-9625-92a9f70f5ebe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mw_sources">
+      <UniqueIdentifier>{190c2940-7bdb-4eb9-b306-cef9f99b204d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="draw_buffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GtkGr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="preferences.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_dialogs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_win32.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vr_graph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\alloc.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\drawlib.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\drawstr.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\folding.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\gdl_defs.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\grammar.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\graph.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\lex.yy.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\main.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\options.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\prepare.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\step0.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\step1.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\step2.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\step3.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\step4.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\tree.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="vcg\y.tab.c">
+      <Filter>vcg_sources</Filter>
+    </ClCompile>
+    <ClCompile Include="mw\mw_duck.c">
+      <Filter>mw_sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="draw_buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="preferences.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vr_graph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vcg\alloc.h">
+      <Filter>vcg_headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vcg\drawchr.h">
+      <Filter>vcg_headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vcg\drawlib.h">
+      <Filter>vcg_headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vcg\drawstr.h">
+      <Filter>vcg_headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vcg\gdl_defs.h">
+      <Filter>vcg_headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vcg\globals.h">
+      <Filter>vcg_headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vcg\grammar.h">
+      <Filter>vcg_headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vcg\graph.h">
+      <Filter>vcg_headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vcg\main.h">
+      <Filter>vcg_headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vcg\options.h">
+      <Filter>vcg_headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vcg\steps.h">
+      <Filter>vcg_headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vcg\vcg_defs.h">
+      <Filter>vcg_headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vcg\vcg_iface.h">
+      <Filter>vcg_headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vcg\y.tab.h">
+      <Filter>vcg_headers</Filter>
+    </ClInclude>
+    <ClInclude Include="mw\mw_duck.h">
+      <Filter>mw_headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
