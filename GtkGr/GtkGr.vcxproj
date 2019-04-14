@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{99530140-245B-4A16-9BC4-D0C545DE6AC7}</ProjectGuid>
+    <RootNamespace>GtkGr</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26430.15</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IntDir>$(Configuration)\GtkGr\</IntDir>
+    <LinkIncremental />
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IntDir>$(Configuration)\GtkGr\</IntDir>
+    <LinkIncremental />
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\gtk+-bundle_2.16.6-20091013_win32\include;C:\gtk+-bundle_2.16.6-20091013_win32\include\gtk-2.0;C:\gtk+-bundle_2.16.6-20091013_win32\include\glib-2.0;C:\gtk+-bundle_2.16.6-20091013_win32\include\cairo;C:\gtk+-bundle_2.16.6-20091013_win32\include\pango-1.0;C:\gtk+-bundle_2.16.6-20091013_win32\include\atk-1.0;C:\gtk+-bundle_2.16.6-20091013_win32\lib\glib-2.0\include;C:\gtk+-bundle_2.16.6-20091013_win32\lib\gtk-2.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level2</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\gtk+-bundle_2.16.6-20091013_win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <StackReserveSize>4194304</StackReserveSize>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\gtk+-bundle_2.16.6-20091013_win32\include;C:\gtk+-bundle_2.16.6-20091013_win32\include\gtk-2.0;C:\gtk+-bundle_2.16.6-20091013_win32\include\glib-2.0;C:\gtk+-bundle_2.16.6-20091013_win32\include\cairo;C:\gtk+-bundle_2.16.6-20091013_win32\include\pango-1.0;C:\gtk+-bundle_2.16.6-20091013_win32\include\atk-1.0;C:\gtk+-bundle_2.16.6-20091013_win32\lib\glib-2.0\include;C:\gtk+-bundle_2.16.6-20091013_win32\lib\gtk-2.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level2</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\gtk+-bundle_2.16.6-20091013_win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <StackReserveSize>4194304</StackReserveSize>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="draw_buffer.cpp" />
+    <ClCompile Include="gr.cpp" />
+    <ClCompile Include="GtkGr.cpp" />
+    <ClCompile Include="mw\mw_duck.c" />
+    <ClCompile Include="preferences.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="ui.cpp" />
+    <ClCompile Include="ui_dialogs.cpp" />
+    <ClCompile Include="ui_win32.cpp" />
+    <ClCompile Include="vcg\alloc.c" />
+    <ClCompile Include="vcg\drawlib.c" />
+    <ClCompile Include="vcg\drawstr.c" />
+    <ClCompile Include="vcg\folding.c" />
+    <ClCompile Include="vcg\gdl_defs.c" />
+    <ClCompile Include="vcg\grammar.c" />
+    <ClCompile Include="vcg\graph.c" />
+    <ClCompile Include="vcg\lex.yy.c" />
+    <ClCompile Include="vcg\main.c" />
+    <ClCompile Include="vcg\options.c" />
+    <ClCompile Include="vcg\prepare.c" />
+    <ClCompile Include="vcg\step0.c" />
+    <ClCompile Include="vcg\step1.c" />
+    <ClCompile Include="vcg\step2.c" />
+    <ClCompile Include="vcg\step3.c" />
+    <ClCompile Include="vcg\step4.c" />
+    <ClCompile Include="vcg\tree.c" />
+    <ClCompile Include="vcg\y.tab.c" />
+    <ClCompile Include="vr_graph.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="draw_buffer.h" />
+    <ClInclude Include="gr.h" />
+    <ClInclude Include="mw\mw_duck.h" />
+    <ClInclude Include="preferences.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="ui.h" />
+    <ClInclude Include="vcg\alloc.h" />
+    <ClInclude Include="vcg\drawchr.h" />
+    <ClInclude Include="vcg\drawlib.h" />
+    <ClInclude Include="vcg\drawstr.h" />
+    <ClInclude Include="vcg\gdl_defs.h" />
+    <ClInclude Include="vcg\globals.h" />
+    <ClInclude Include="vcg\grammar.h" />
+    <ClInclude Include="vcg\graph.h" />
+    <ClInclude Include="vcg\main.h" />
+    <ClInclude Include="vcg\options.h" />
+    <ClInclude Include="vcg\steps.h" />
+    <ClInclude Include="vcg\vcg_defs.h" />
+    <ClInclude Include="vcg\vcg_iface.h" />
+    <ClInclude Include="vcg\y.tab.h" />
+    <ClInclude Include="vr_graph.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

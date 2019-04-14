@@ -11,23 +11,16 @@
 #include <string>
 #include <list>
 #include <vector>
+#include <algorithm>
 #include <assert.h>
 #include <string.h>
 #include <math.h>
-#if defined(_MSC_VER) && _MSC_VER < 1600/*VS2010*/
-typedef unsigned char uint8_t;
-#else
 #include <stdint.h>
-#endif
 
 //using namespace std;
 typedef std::string string;
 using std::vector;
 using std::pair;
-
-#if __cplusplus < 201103L
-#define unique_ptr auto_ptr
-#endif
 
 
 #ifdef WIN32
