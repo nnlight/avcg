@@ -2771,32 +2771,32 @@ static void draw_arrowhead(GEDGE e, int flag)
         }
         else switch (EORI(e)) {
         case ORI_NORTH:     gs_n_arrowpoint(gbl_x2,gbl_y2,s,c,m,ls);
-                    gbl_y2 = gbl_y2 + 7 * s /10;
+                            gbl_y2 = gbl_y2 + 7 * s /10;
                     break;
         case ORI_SOUTH:     gs_s_arrowpoint(gbl_x2,gbl_y2,s,c,m,ls);
-                    gbl_y2 = gbl_y2 - 7 * s /10;
+                            gbl_y2 = gbl_y2 - 7 * s /10;
                     break;
         case ORI_WEST:      gs_w_arrowpoint(gbl_x2,gbl_y2,s,c,m,ls);
-                    gbl_x2 = gbl_x2 + 7 * s /10;
+                            gbl_x2 = gbl_x2 + 7 * s /10;
                     break;
         case ORI_EAST:      gs_e_arrowpoint(gbl_x2,gbl_y2,s,c,m,ls);
-                    gbl_x2 = gbl_x2 - 7 * s /10;
+                            gbl_x2 = gbl_x2 - 7 * s /10;
                     break;
         case ORI_SOUTHEAST: gs_se_arrowpoint(gbl_x2,gbl_y2,s,c,m,ls);
-                    gbl_x2 = gbl_x2 - s /2;
-                    gbl_y2 = gbl_y2 - s /2;
+                            gbl_x2 = gbl_x2 - s /2;
+                            gbl_y2 = gbl_y2 - s /2;
                     break;
         case ORI_NORTHWEST: gs_nw_arrowpoint(gbl_x2,gbl_y2,s,c,m,ls);
-                    gbl_x2 = gbl_x2 + s /2;
-                    gbl_y2 = gbl_y2 + s /2;
+                            gbl_x2 = gbl_x2 + s /2;
+                            gbl_y2 = gbl_y2 + s /2;
                     break;
         case ORI_SOUTHWEST: gs_sw_arrowpoint(gbl_x2,gbl_y2,s,c,m,ls);
-                    gbl_x2 = gbl_x2 + s /2;
-                    gbl_y2 = gbl_y2 - s /2;
+                            gbl_x2 = gbl_x2 + s /2;
+                            gbl_y2 = gbl_y2 - s /2;
                     break;
         case ORI_NORTHEAST: gs_ne_arrowpoint(gbl_x2,gbl_y2,s,c,m,ls);
-                    gbl_x2 = gbl_x2 - s /2;
-                    gbl_y2 = gbl_y2 + s /2;
+                            gbl_x2 = gbl_x2 - s /2;
+                            gbl_y2 = gbl_y2 + s /2;
                     break;
         }
     }
@@ -2823,32 +2823,32 @@ static void draw_arrowhead(GEDGE e, int flag)
         }
         else switch (EORI2(e)) {
         case ORI_NORTH:     gs_n_arrowpoint(gbl_x1,gbl_y1,s,c,m,ls);
-                    gbl_y1 = gbl_y1 + 7 * s /10;
+                            gbl_y1 = gbl_y1 + 7 * s /10;
                     break;
         case ORI_SOUTH:     gs_s_arrowpoint(gbl_x1,gbl_y1,s,c,m,ls);
-                    gbl_y1 = gbl_y1 - 7 * s /10;
+                            gbl_y1 = gbl_y1 - 7 * s /10;
                     break;
         case ORI_WEST:      gs_w_arrowpoint(gbl_x1,gbl_y1,s,c,m,ls);
-                    gbl_x1 = gbl_x1 + 7 * s /10;
+                            gbl_x1 = gbl_x1 + 7 * s /10;
                     break;
         case ORI_EAST:      gs_e_arrowpoint(gbl_x1,gbl_y1,s,c,m,ls);
-                    gbl_x1 = gbl_x1 - 7 * s /10;
+                            gbl_x1 = gbl_x1 - 7 * s /10;
                     break;
         case ORI_SOUTHEAST: gs_se_arrowpoint(gbl_x1,gbl_y1,s,c,m,ls);
-                    gbl_x1 = gbl_x1 - s /2;
-                    gbl_y1 = gbl_y1 - s /2;
+                            gbl_x1 = gbl_x1 - s /2;
+                            gbl_y1 = gbl_y1 - s /2;
                     break;
         case ORI_NORTHWEST: gs_nw_arrowpoint(gbl_x1,gbl_y1,s,c,m,ls);
-                    gbl_x1 = gbl_x1 + s /2;
-                    gbl_y1 = gbl_y1 + s /2;
+                            gbl_x1 = gbl_x1 + s /2;
+                            gbl_y1 = gbl_y1 + s /2;
                     break;
         case ORI_SOUTHWEST: gs_sw_arrowpoint(gbl_x1,gbl_y1,s,c,m,ls);
-                    gbl_x1 = gbl_x1 + s /2;
-                    gbl_y1 = gbl_y1 - s /2;
+                            gbl_x1 = gbl_x1 + s /2;
+                            gbl_y1 = gbl_y1 - s /2;
                     break;
         case ORI_NORTHEAST: gs_ne_arrowpoint(gbl_x1,gbl_y1,s,c,m,ls);
-                    gbl_x1 = gbl_x1 - s /2;
-                    gbl_y1 = gbl_y1 + s /2;
+                            gbl_x1 = gbl_x1 - s /2;
+                            gbl_y1 = gbl_y1 + s /2;
                     break;
         }
     }
@@ -3282,36 +3282,28 @@ static void gs_mysolidline(int x1,int y1,int x2,int y2,int t,int c)
 
     switch (gs_arroworientation(x1,y1,x2,y2)) {
     case ORI_NORTH:     if (check_visible(x2,y2,x1,y1))
-                gs_sosolidline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_sosolidline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_SOUTH:     if (check_visible(x1,y1,x2,y2))
-                gs_sosolidline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_sosolidline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_WEST:      if (check_visible(x1,y1,x2,y2))
-                gs_wesolidline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_wesolidline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_EAST:      if (check_visible(x2,y2,x1,y1))
-                gs_wesolidline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_wesolidline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_SOUTHEAST: if (check_visible(x1,y1,x2,y2))
-                gs_sesolidline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_sesolidline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_NORTHWEST: if (check_visible(x2,y2,x1,y1))
-                gs_sesolidline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_sesolidline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_SOUTHWEST: if (check_visible(x1,y1,x2,y2))
-                gs_swsolidline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_swsolidline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_NORTHEAST: if (check_visible(x2,y2,x1,y1))
-                gs_swsolidline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_swsolidline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     }
 }
@@ -3678,36 +3670,28 @@ static void gs_mydashedline(int x1,int y1,int x2,int y2,int t,int c)
 
     switch (gs_arroworientation(x1,y1,x2,y2)) {
     case ORI_NORTH:     if (check_visible(x2,y2,x1,y1))
-                gs_sodashedline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_sodashedline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_SOUTH:     if (check_visible(x1,y1,x2,y2))
-                gs_sodashedline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_sodashedline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_WEST:      if (check_visible(x1,y1,x2,y2))
-                gs_wedashedline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_wedashedline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_EAST:      if (check_visible(x2,y2,x1,y1))
-                gs_wedashedline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_wedashedline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_SOUTHEAST: if (check_visible(x1,y1,x2,y2))
-                gs_sedashedline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_sedashedline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_NORTHWEST: if (check_visible(x2,y2,x1,y1))
-                gs_sedashedline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_sedashedline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_SOUTHWEST: if (check_visible(x1,y1,x2,y2))
-                gs_swdashedline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_swdashedline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_NORTHEAST: if (check_visible(x2,y2,x1,y1))
-                gs_swdashedline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_swdashedline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     }
 }
@@ -4392,36 +4376,28 @@ static void gs_mydottedline(int x1,int y1,int x2,int y2,int t,int c)
 
     switch (gs_arroworientation(x1,y1,x2,y2)) {
     case ORI_NORTH:     if (check_visible(x2,y2,x1,y1))
-                gs_sodottedline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_sodottedline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_SOUTH:     if (check_visible(x1,y1,x2,y2))
-                gs_sodottedline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_sodottedline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_WEST:      if (check_visible(x1,y1,x2,y2))
-                gs_wedottedline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_wedottedline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_EAST:      if (check_visible(x2,y2,x1,y1))
-                gs_wedottedline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_wedottedline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_SOUTHEAST: if (check_visible(x1,y1,x2,y2))
-                gs_sedottedline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_sedottedline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_NORTHWEST: if (check_visible(x2,y2,x1,y1))
-                gs_sedottedline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_sedottedline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_SOUTHWEST: if (check_visible(x1,y1,x2,y2))
-                gs_swdottedline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_swdottedline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     case ORI_NORTHEAST: if (check_visible(x2,y2,x1,y1))
-                gs_swdottedline(gbl_x1,gbl_y1,
-                           gbl_x2,gbl_y2,t,c);
+                            gs_swdottedline(gbl_x1,gbl_y1,gbl_x2,gbl_y2,t,c);
                 break;
     }
 }
