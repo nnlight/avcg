@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-g -c -Wall `pkg-config --cflags gtk+-2.0`
+CFLAGS=-g -c -Wall `pkg-config --cflags gtk+-2.0` -std=c++11
 VCG_CFLAGS=-g -c
 MW_CFLAGS=-g -c -Wall `pkg-config --cflags gtk+-2.0`
 LDFLAGS=-g

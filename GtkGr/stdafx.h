@@ -22,10 +22,6 @@ typedef std::string string;
 using std::vector;
 using std::pair;
 
-#if __cplusplus < 201103L
-#define unique_ptr auto_ptr
-#endif
-
 
 #ifdef WIN32
 /* warning C4312: 'type cast' : conversion from 'volatile gsize' to 'gpointer' of greater size ... */
