@@ -1,3 +1,4 @@
+#include <sstream>
 #include "draw_buffer.h"
 #include "vr_graph.h"
 #include "preferences.h"
@@ -770,7 +771,28 @@ void DrawBuffer::DrawText( vrgint x, DrawTextPos_t x_pos, vrgint y, DrawTextPos_
     //pango_font_description_set_weight( font_description, PANGO_WEIGHT_NORMAL);
     pango_font_description_set_absolute_size( font_description, 13 * PANGO_SCALE  * m_Scaling);
 
-    layout = gtk_widget_create_pango_layout( m_da, text);
+    layout = gtk_widget_create_pango_layout( m_da, 0);
+    {
+        std::istringstream in( text);
+        std::ostringstream out;
+        int line = 0;
+        static const char* colors[] = {"fff", "eff", "fef", "ffe"};
+        while ( !in.eof() )
+        {
+            string str;
+            std::getline(in, str);
+            replace( str, "&", "&amp;");
+            replace( str, "<", "&lt;");
+            replace( str, ">", "&gt;");
+            out << "<span bgcolor=\"#" << colors[line] << "\">" << str << "</span>";
+            if ( !in.eof() )
+            {
+                out << '\n';
+            }
+            line = (line + 1) % (sizeof(colors) / sizeof(*colors));
+        }
+        pango_layout_set_markup( layout, out.str().c_str(), -1);
+    }
     pango_layout_set_font_description( layout, font_description);
 
     //pango_layout_set_text( layout, text, -1);
