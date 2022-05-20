@@ -789,11 +789,12 @@ void DrawBuffer::DrawText( vrgint x, DrawTextPos_t x_pos, vrgint y, DrawTextPos_
             replace( str, "&", "&amp;");
             replace( str, "<", "&lt;");
             replace( str, ">", "&gt;");
-            if ( !fstr.empty() )
+            bool found = !fstr.empty() && str.find(fstr) != string::npos;
+            if ( found )
             {
                 replace( str, fstr, hstr);
             }
-            out << "<span bgcolor=\"#" << colors[line] << "\">" << str << "</span>";
+            out << "<span bgcolor=\"#" << (found ? "ccc" : colors[line]) << "\">" << str << "</span>";
             if ( !in.eof() )
             {
                 out << '\n';
