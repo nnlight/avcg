@@ -777,6 +777,11 @@ void DrawBuffer::DrawText( vrgint x, DrawTextPos_t x_pos, vrgint y, DrawTextPos_
         std::ostringstream out;
         int line = 0;
         static const char* colors[] = {"fff", "eff", "fef", "ffe"};
+        string fstr = highlight;
+        replace( fstr, "&", "&amp;");
+        replace( fstr, "<", "&lt;");
+        replace( fstr, ">", "&gt;");
+        string hstr = "<span bgcolor=\"#000\" fgcolor=\"#fff\">" + fstr + "</span>";
         while ( !in.eof() )
         {
             string str;
@@ -784,6 +789,10 @@ void DrawBuffer::DrawText( vrgint x, DrawTextPos_t x_pos, vrgint y, DrawTextPos_
             replace( str, "&", "&amp;");
             replace( str, "<", "&lt;");
             replace( str, ">", "&gt;");
+            if ( !fstr.empty() )
+            {
+                replace( str, fstr, hstr);
+            }
             out << "<span bgcolor=\"#" << colors[line] << "\">" << str << "</span>";
             if ( !in.eof() )
             {

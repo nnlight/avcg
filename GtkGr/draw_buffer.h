@@ -66,6 +66,8 @@ private:
     Color_t m_BackgroundColor;       /*!< цвет фона */
     Color_t m_CurrentColor;          /*!< текущий (foreground) цвет */
     vector<GdkPoint> m_TmpPoints;    /*!< вспомогательный буффер для DrawLines */
+
+    string highlight;
 public:
     DrawBuffer( GtkWidget *drawing_area);
     /* не предназначен для иcпользования в качестве базового класса */
@@ -113,6 +115,9 @@ public:
     void PublicFillByBgColor()
     { InitializePixmapToBackgroundColor( m_Pixmap, m_PixmapDims[AXIS_X], m_PixmapDims[AXIS_Y]); };
 
+    void SetHighlight(string s) { highlight = s; m_IsNeedRedrawPixmap = true; InvalidateDa( NULL); }
+    void ClearHighlight() { SetHighlight(""); }
+
 private:
     void InvalidateDa( const GdkRectangle *da_update_rect);
 
@@ -148,7 +153,7 @@ private:
                pm_y >= -kPmMargin && pm_y < m_PixmapDims[AXIS_Y] + kPmMargin;
     }
     bool IsBBoxIntersectsPm( int pm_min_x, int pm_min_y, int pm_max_x, int pm_max_y)
-    { 
+    {
         bool res = pm_max_x >= -kPmMargin && pm_min_x < m_PixmapDims[AXIS_X] + kPmMargin &&
                    pm_max_y >= -kPmMargin && pm_min_y < m_PixmapDims[AXIS_Y] + kPmMargin;
         if ( res == true )

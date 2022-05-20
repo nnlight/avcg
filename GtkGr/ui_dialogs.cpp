@@ -125,6 +125,25 @@ entry_changed_cb( GtkEntry *entry,
 }
 
 static void
+entry_changed_cb2( GtkEntry *entry,
+                   gpointer  user_data)
+{
+    DrawBuffer *db = (DrawBuffer *)user_data;
+    const char *text = gtk_entry_get_text( entry);
+
+    db->SetHighlight( text);
+}
+
+static void
+destroy_cb( GtkWidget *widget,
+            gpointer   user_data)
+{
+    DrawBuffer *db = (DrawBuffer *)user_data;
+
+    db->ClearHighlight();
+}
+
+static void
 entry_activate_cb( GtkEntry *entry,
                    gpointer  user_data)
 {
@@ -194,6 +213,7 @@ void UiShowFindNodeDialog( UIController *uic)
                         NULL);
     g_signal_connect( dialog, "response", G_CALLBACK(gtk_widget_destroy), NULL);
     g_signal_connect( dialog, "destroy", G_CALLBACK(gtk_widget_destroyed), &dialog);
+    g_signal_connect( dialog, "destroy", G_CALLBACK(destroy_cb), uic->m_DrawBuffer.get());
     vbox = GTK_DIALOG(dialog)->vbox;
 
     /* Create entry with completion */
@@ -251,6 +271,7 @@ void UiShowFindNodeDialog( UIController *uic)
 
 
     g_signal_connect( entry, "changed", G_CALLBACK(entry_changed_cb), treeview);
+    g_signal_connect( entry, "changed", G_CALLBACK(entry_changed_cb2), uic->m_DrawBuffer.get());
     g_signal_connect( entry, "activate", G_CALLBACK(entry_activate_cb), treeview);
 
     g_signal_connect( completion, "match-selected", G_CALLBACK(completion_match_selected_cb),
