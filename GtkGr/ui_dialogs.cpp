@@ -135,6 +135,17 @@ entry_changed_cb2( GtkEntry *entry,
 }
 
 static void
+entry_focus_cb( GtkEntry      *entry,
+                GdkEventFocus *event,
+                gpointer       user_data)
+{
+    DrawBuffer *db = (DrawBuffer *)user_data;
+    const char *text = gtk_entry_get_text( entry);
+
+    db->SetHighlight( text);
+}
+
+static void
 destroy_cb( GtkWidget *widget,
             gpointer   user_data)
 {
@@ -272,6 +283,7 @@ void UiShowFindNodeDialog( UIController *uic)
 
     g_signal_connect( entry, "changed", G_CALLBACK(entry_changed_cb), treeview);
     g_signal_connect( entry, "changed", G_CALLBACK(entry_changed_cb2), uic->m_DrawBuffer.get());
+    g_signal_connect( entry, "focus-in-event", G_CALLBACK(entry_focus_cb), uic->m_DrawBuffer.get());
     g_signal_connect( entry, "activate", G_CALLBACK(entry_activate_cb), treeview);
 
     g_signal_connect( completion, "match-selected", G_CALLBACK(completion_match_selected_cb),
