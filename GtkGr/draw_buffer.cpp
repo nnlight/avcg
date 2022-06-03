@@ -776,7 +776,7 @@ void DrawBuffer::DrawText( vrgint x, DrawTextPos_t x_pos, vrgint y, DrawTextPos_
         std::istringstream in( text);
         std::ostringstream out;
         int line = 0;
-        static const char* colors[] = {"fff", "eff", "fef", "ffe"};
+        static const char* colors[] = {"fff", "eff", "fef"};
         string fstr = highlight;
         replace( fstr, "&", "&amp;");
         replace( fstr, "<", "&lt;");
