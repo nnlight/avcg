@@ -11,6 +11,7 @@
 static gboolean
 ui_close_cb( GtkWindow *window, gpointer data)
 {
+    return false;
     GtkWidget *dialog, *label;
 
     dialog = gtk_dialog_new_with_buttons( "quit dialog", window,
@@ -658,7 +659,7 @@ GtkWidget *UIController::ConstrMenubar( GtkWidget *main_window)
 UIController::UIController( const char *filename)
     : m_MainWindow( NULL)
     , m_UIManager( NULL)
-    , m_CurrentMode( MODE_VIEW)
+    , m_CurrentMode( MODE_VIEW_NODE_INFO1)
     , m_Toolbar( NULL)
     , m_Statusbar( NULL)
     , m_PickUped( false)
@@ -679,6 +680,7 @@ UIController::UIController( const char *filename)
     gtk_window_set_default_size( GTK_WINDOW(main_window),
                                  g_Preferences->GetSizeX(),
                                  g_Preferences->GetSizeY());
+    gtk_window_maximize( GTK_WINDOW(main_window));
     // закрытие/уничтожение главного окна
     gtk_signal_connect( GTK_OBJECT(main_window),"delete_event", GTK_SIGNAL_FUNC(ui_close_cb),NULL );
     gtk_signal_connect( GTK_OBJECT(main_window),"destroy", GTK_SIGNAL_FUNC(gtk_main_quit), NULL);
